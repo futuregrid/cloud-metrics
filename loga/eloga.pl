@@ -64,9 +64,7 @@ my $filename = $ARGV[0];
 my @raw_data = Util::fileRead($filename);
 my $length = @raw_data;
 
-my $tmp = undef;
 my $first = new Logs();
-my $tmp_kv = undef;
 my $prev_p = $first;
 my $line = undef;
 my $i = 0;
@@ -76,28 +74,37 @@ my @newArr = undef;
 if ( substr($filename, 0, 6) eq "cc.log" ) {
 
 	print "[".Util::currentTime()."][DEBUG] Set Logs class from the file data" .$END if DEBUG;
-	for ($i = 0; $i < $length; $i++) {
+	
+	for ($i = 0; $i < $length; $i++) 
+	{
+		# Allocate new Logs object
 		my $new = new Logs();
 		$line = $raw_data[$i];
-		@newArr = split(/[\[\]]/, $line); #
+		# Parsing each line
+		@newArr = split(/[\[\]]/, $line);
 			$new->{lineNumber} = $i;
 		$new->{rawData} = $line;
-		$new->{logInfo}->{logDate} = $newArr[1];
+		$new->{logInfo}->{logDate} = $newArr[1]; #[Tue Feb  1 00:18:54 2011]
 		$new->{logInfo}->{uId} = $newArr[3];
 		$new->{logInfo}->{logType} = $newArr[5]; # EUCADEBUG|EUCAINFO|EUCAWARN
-
 		# Setting values with linked list info
 		$new->{msgInfo} = $newArr[6]; # newArr[6] is about after 'function_name():'
 		$new->{first} = $first;
 		$new->{prev} = $prev_p;
 		$prev_p->{next} = $new if ($i != 0);
 
+		# Get Year/Month/Day/Hour from the logDate
+		@newArr = split(/\s+|:/, $new->{logInfo}->{logDate});
+		$new->{logInfo}->{logYear} = $newArr[6];
+		$new->{logInfo}->{logMonth} = $newArr[1];
+		$new->{logInfo}->{logDay} = sprintf ("%02d",$newArr[2]);
+		$new->{logInfo}->{logHour} = $newArr[3];
+
 		# Setting the first list values
 		$first->copy($new) if ($i == 0);
 		$first->{next} = $new if ($i == 1); 
 
 		$prev_p = $new;
-		#DEBUG
 		#last if ($i == 400) and DEBUG;
 	}
 	#$first->printAll();
@@ -114,7 +121,7 @@ my $output_type = "all"; # (all - default)
 #$first->report("refresh_resources", $theTime, $output_type);
 
 #Report 'RunInstances' data
-$first->report("RunInstances", $theTime, $output_type);
+$first->report("RunInstances", $theTime, "hourly");
 
 #Report 'TerminateInstances' data
 $first->report("TerminateInstances", $theTime, $output_type);
@@ -161,7 +168,7 @@ sub report {
 	my ( $self, $func, $time, $out_type) = @_;
 
 	print "[".Util::currentTime()."][DEBUG] Start reporting of $func" .$END if main::DEBUG;
-	$self->$func();
+	$self->$func($time, $out_type);
 	return $self;
 }
 # trying to get key=value for manipulating data e.g. summary of resource using per hr/day/week/month
@@ -182,7 +189,7 @@ sub report {
 # -- day report -- / week / month are same
 
 sub refresh_resources {
-	my ( $self ) = @_;
+	my ( $self, $time, $out_type ) = @_;
 	my $mem_m = 0;
 	my $mem_a = 0;
 	my $disk_m = 0;
@@ -234,7 +241,7 @@ sub refresh_resources {
 
 sub RunInstances {
 
-	my ( $self ) = @_;
+	my ( $self, $time, $out_type ) = @_;
 	my $newArr;
 	my $mem_m = 0;
 	my $mem_a = 0;
@@ -247,14 +254,17 @@ sub RunInstances {
 	my $new_func = "";
 	my $tmp_val = undef;
 	my @tmp = undef;
-	my $count = 0;
-	my $start_time = "";
-	my $end_time = "";
 	my $nodesArr ;
+	my %hash;
+	my $hkey;
+	my $key;
 
-
-	$start_time = $self->{logInfo}->{logDate};
 	while ($self) {
+		$hkey = $self->{logInfo}->{logYear} . $self->{logInfo}->{logMonth} . $self->{logInfo}->{logDay} . $self->{logInfo}->{logHour};
+		if ( !$hash { $hkey } ) {
+			$hash { $hkey } = 0;
+		}
+
 		if ($self->{logInfo}->{logType} ne "EUCAINFO  ") {
 			$self = $self->{next};
 			next;
@@ -283,23 +293,20 @@ sub RunInstances {
 		if (defined($tmp_val)) {
 		}
 
-		$count++ if (defined($tmp_val));
-		$end_time = $self->{logInfo}->{logDate};
+		$hash { $hkey } = $hash { $hkey } + 1 if (defined($tmp_val));
 		$self = $self->{next};
 	}
 
-	print "$count instance(s) is(are) requested to run while ($start_time ~ $end_time)"
-	#	. "mem: $mem_m/$mem_a (".&Util::restrict_num_decimal_digits(((1 - ($mem_a/$mem_m))*100), 3)."%), "
-	#	. "disk: $disk_m/$disk_a (".&Util::restrict_num_decimal_digits(((1 - ($disk_a/$disk_m))*100), 3)."%), "
-	#	. "cores: $cores_m/$cores_a (".&Util::restrict_num_decimal_digits(((1 - ($cores_a/$cores_m))*100), 3)."%)"
-		. $END;
+	foreach $key (sort keys %hash) {
+		print "$key: $hash{$key}\n";
+	}
 
 	return $self;
 }
 
 sub TerminateInstances {
 
-	my ( $self ) = @_;
+	my ( $self, $time, $out_type ) = @_;
 	my $newArr;
 	my $mem_m = 0;
 	my $mem_a = 0;
@@ -313,13 +320,17 @@ sub TerminateInstances {
 	my $tmp_val = undef;
 	my @tmp = undef;
 	my $count = 0;
-	my $start_time = "";
-	my $end_time = "";
 	my $nodesArr ;
+	my %hash;
+	my $hkey;
+	my $key;
 
-
-	$start_time = $self->{logInfo}->{logDate};
 	while ($self) {
+
+		$hkey = $self->{logInfo}->{logYear} . $self->{logInfo}->{logMonth} . $self->{logInfo}->{logDay} . $self->{logInfo}->{logHour};
+		if ( !$hash { $hkey } ) {
+			$hash { $hkey } = 0;
+		}
 
 		@newArr = split(/[\[\]]/, $self->{rawData}); #
 			$new_func = substr($newArr[6], 0, index($newArr[6], ":"));
@@ -332,16 +343,13 @@ sub TerminateInstances {
 		if (defined($tmp_val)) {
 		}
 
-		$count++ if (defined($tmp_val));
-		$end_time = $self->{logInfo}->{logDate};
+		$hash { $hkey } = $hash { $hkey } + 1 if (defined($tmp_val));
 		$self = $self->{next};
 	}
 
-	print "$count instance(s) is(are) requested to terminate while ($start_time ~ $end_time)"
-	#	. "mem: $mem_m/$mem_a (".&Util::restrict_num_decimal_digits(((1 - ($mem_a/$mem_m))*100), 3)."%), "
-	#	. "disk: $disk_m/$disk_a (".&Util::restrict_num_decimal_digits(((1 - ($disk_a/$disk_m))*100), 3)."%), "
-	#	. "cores: $cores_m/$cores_a (".&Util::restrict_num_decimal_digits(((1 - ($cores_a/$cores_m))*100), 3)."%)"
-		. $END;
+	foreach $key (sort keys %hash) {
+		print "$key: $hash{$key}\n";
+	}
 
 	return $self;
 }
@@ -385,6 +393,10 @@ sub printData {
 	print "lineNumber: $self->{lineNumber}.$END";
 	print "rawData: $self->{rawData}.$END";
 	print "logInfo->logDate: $self->{logInfo}->{logDate}.$END";
+	print "logInfo->logYear: $self->{logInfo}->{logYear}.$END";
+	print "logInfo->logMonth: $self->{logInfo}->{logMonth}.$END";
+	print "logInfo->logDay: $self->{logInfo}->{logDay}.$END";
+	print "logInfo->logHour: $self->{logInfo}->{logHour}.$END";
 	print "logInfo->uId: $self->{logInfo}->{uId}.$END";
 	print "logInfo->logType: $self->{logInfo}->{logType}.$END";
 	print "msgInfo: $self->{msgInfo}.$END";
@@ -400,6 +412,10 @@ sub new
 	my $self = {
 #[Tue Feb  1 00:18:54 2011][009030][EUCADEBUG ]
 		logDate => shift,
+		logYear => shift,
+		logMonth => shift,
+		logDay => shift,
+		logHour => shift,
 		uId => shift,
 		logType => shift,
 	};
@@ -498,7 +514,7 @@ sub currentTime {
 	$hour = sprintf ("%02d", $hour);
 	$minute = sprintf ("%02d", $minute);
 	$second = sprintf ("%02d", $second);
-	my $theTime = "$hour:$minute:$second, $weekDays[$dayOfWeek] $months[$month] $dayOfMonth, $year";
+	my $theTime = "$weekDays[$dayOfWeek] $months[$month] $dayOfMonth $hour:$minute:$second $year";
 
 	return $theTime;
 }

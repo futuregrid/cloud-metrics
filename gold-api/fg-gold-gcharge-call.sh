@@ -15,7 +15,7 @@ function DEBUG()
 #variables for gold's command
 PRJ_NAME=fg #default
 
-RES=`chargedata-from-cclog.sh`
+RES=`fg-chargedata-from-euca-cclog.sh`
 #TEST
 #RES="gcharge -J i-43060801 -p fg -u hrlee -m emi-308A11D6 -P 1 -t 642 -X WallDuration=642
 #gcharge -J i-4D0908BA -p fg -u hrlee2 -m emi-D778156D -P 1 -t 77261 -X WallDuration=77261 -X StartTime=1315866745 -X EndTime=1315944006

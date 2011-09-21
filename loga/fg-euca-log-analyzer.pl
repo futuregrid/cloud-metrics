@@ -28,7 +28,7 @@ use warnings;
 #Set variables
 my $title_perl="Log file analyzer for Eucalyptus (ElogA)";
 my $END="\n";
-use constant DEBUG => 2;
+use constant DEBUG => 0;
 
 # Descriptions of log files
 # Key = filename
@@ -99,6 +99,12 @@ if ( substr($filename, 0, 6) eq "cc.log" ) {
 		$new->{logInfo}->{logMonth} = $newArr[1];
 		$new->{logInfo}->{logDay} = sprintf ("%02d",$newArr[2]);
 		$new->{logInfo}->{logHour} = $newArr[3];
+		if (!$newArr[6] || !$newArr[1] || !$newArr[2] || !$newArr[3])
+		{
+			print $new->{logInfo}->{logDate}."\n";
+			print "$newArr[6] || !$newArr[1] || !$newArr[2] || !$newArr[3]\n";
+			exit;
+		}
 
 		# Setting the first list values
 		$first->copy($new) if ($i == 0);
@@ -298,7 +304,7 @@ sub RunInstances {
 	}
 
 	foreach $key (sort keys %hash) {
-		print "$key: $hash{$key}\n";
+		print "[RunInstances]$key: $hash{$key}\n";
 	}
 
 	return $self;
@@ -348,7 +354,7 @@ sub TerminateInstances {
 	}
 
 	foreach $key (sort keys %hash) {
-		print "$key: $hash{$key}\n";
+		print "[TerminateInstances]$key: $hash{$key}\n";
 	}
 
 	return $self;

@@ -1,0 +1,25 @@
+
+Gold API for Eucalyptus 2.0
+
+Description
+ There are two bash shell scripts to gather job charge information 
+ from Eucalyptus log files and execute Gold's 'gcharge' command via SSH.
+ Currently, fg-gold-gcharge-call.sh is only executed by crontab hourly.
+ fg-chargedata-from-euca-cclog.sh is for internal use. Also, fg-gold-gcharge-call.sh
+ should be called at a regular intervals (an hour), if not the collected 
+ data would be overlapped which is unpleasant. This will be improved in
+ the next version with python implementation.
+
+09/12/2011 Hyungro Lee (lee212@indiana.edu)
+
+How to Use
+$ fg-chargedata-from-euca-cclog.sh
+> gcharge -J test3 -p fg -u lee212 -m localhost -P 2 -t 11 -X WallDuration=1 -X StartTime=1315924212 -X EndTime=1315924213
+> gcharge -J test2 -p fg -u hrlee -m localhost -P 2 -t 10 -X WallDuration=10 -X StartTime=1315924212 -X EndTime=1315924222
+> gcharge -J test1 -p fg -u hyungro -m localhost -P 2 -t 21 -X WallDuration=100 -X StartTime=1315924212 -X EndTime=1315924312
+
+$ fg-gold-gcharge-call.sh
+> [SUCC][0][Successfully charged job i-305505BE for 1105 credits and created gold job id 52]gcharge -J i-305505BE -p fg -u sharif -m emi-38FD1610 -P 1 -t 1105 -X WallDuration=1105 -X StartTime=1316112277 -X EndTime=1316113382
+
+Crontab example
+0 * * * * ~/eloga/fg-gold-gcharge-call.sh 2>> ~/eloga/fg-gold-gcharge-call.sh.log >> ~/eloga/fg-gold-gcharge-call.sh.log

@@ -1,0 +1,17 @@
+eloa
+
+This script aims for providing resource utilization information.
+For example, how many instances are launched or terminated durin
+g a certain time period, hourly/daily/weekly/monthly, would be v
+iewed. It will also cover warning/error messages to figure out w
+hat problems you had in the past and have now.
+
+Usage: eloga.pl $filename 
+Example: -bash-3.2$ /tmp/eloga.pl cc.log.5
+	6 instance(s) is(are) requested to run while (Thu May 12 15:14:47 2011 ~ Thu May 12 15:47:10 2011)
+	10 instance(s) is(are) requested to terminate while (Thu May 12 15:14:47 2011 ~ Thu May 12 15:45:25 2011)
+
+Ongoing tasks
+* historical data will be saved on database
+* resource usage data would be viewed
+* detailed data such as nodes info, userids and error code  would be provided

@@ -36,7 +36,7 @@ cd $BASEPATH
 # ex> [Tue Sep 13 10:59:24 2011][008774][EUCADEBUG ] print_ccInstance(): refresh_instances():  instanceId=i-38F0078D reservationId=r-4E010956 emiId=emi-F3E41594 kernelId=eki-78EF12D2 ramdiskId=eri-5BB61255 emiURL=http://149.165.146.135:8773/services/Walrus/ajyounge/ubuntu-lucid-twister-0.9.img.manifest.xml kernelURL=http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml ramdiskURL=http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml state=Teardown ts=1315924212 ownerId=steenoven keyName=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFTX2d0XynEUaBJWE4KfHMcxKN5ODYOOJH1Vi3SYvXtBu8+Yxq/gUxRbqxEK3S7Pxw2xtMaKkzWsjW3Q/6VIBky/N3AeTD1w4QyqeKndNbGl7K4q1PUVbpSO5YY0lTT6C8fYiEjh6HLBrbIcTMLMJq4TG7KmIoH7LSYXvpDSEKPNo12UExhXvjNj/q0qYH8i2pbE5vijo2ijre5Jw8tv7Im1E2yxIefGMJr99uAvq1pro2tKN9FfjfJF9yUQPvncm2opYr6tf6waHj2AjC6wyCpPgt5qNbBKi6Rq8mLT+bC8o0hD3Tr4J9EPEQ8MyZtVmxfPzEv6WqWNNnqnKDz70H steenoven@eucalyptus ccnet={privateIp=10.0.2.195 publicIp=0.0.0.0 privateMac=D0:0D:38:F0:07:8D vlan=13 networkIndex=3} ccvm={cores=1 mem=1024 disk=7} ncHostIdx=21 serviceTag=http://i4:8775/axis2/services/EucalyptusNC userData= launchIndex=0 volumesSize=0 volumes={} groupNames={default }
 #
 # Once a VM instance terminated, print_ccInstance leaves information such as instanceId, emiId, state, ts (running start time), and ownerId that gcharge needs.
-# 1. print_ccInstance is what I am looking for in the cc.log
+# 1. print_ccInstance is the function that I am looking for in cc.log
 # 2. "state=Teardown" indicates a VM is terminated. Otherwise, state=Extant means it's running.
 # 3. instanceId & ts & ownerId is going to be a key to charge usage of a VM instance.
 # 4. ts is a running start time of a specific VM in the type of unixtimestamp and I ASSUME the log time stamp (e.g. [Tue Sep 13 10:59:24 2011]) is a end time of the VM.
@@ -48,10 +48,10 @@ cd $BASEPATH
 
 RES=`grep print_ccInstance $cclogs|\
 grep Teardown|\
-awk -F "[][ =]" ' { if ($16 == "instanceId" && $34 == "ts" && $36 == "ownerId")\
+awk -F "[][ =]+" ' { if ($11 == "instanceId" && $29 == "ts" && $31 == "ownerId")\
 ("date --date=\""$2" "$3" "$4" "$5" "$6"\" +%s")|getline e_time 
-("expr "e_time" - "$35"")|getline charge_duration 
-{print "gcharge -J", $17, "-p '$PRJ_NAME' -u", $37, "-m", $21, "-P '$PRC_NUM' -t", charge_duration, "-X WallDuration="charge_duration, "-X StartTime="$35, "-X EndTime="e_time } }'|\
+("expr "e_time" - "$30"")|getline charge_duration 
+{print "gcharge -J", $11, "-p '$PRJ_NAME' -u", $32, "-m", $15, "-P '$PRC_NUM' -t", charge_duration, "-X WallDuration="charge_duration, "-X StartTime="$30, "-X EndTime="e_time } }'|\
 sort -k 3,9 -u`
 
 

@@ -51,7 +51,7 @@ grep Teardown|\
 awk -F "[][ =]+" ' { if ($11 == "instanceId" && $29 == "ts" && $31 == "ownerId")\
 ("date --date=\""$2" "$3" "$4" "$5" "$6"\" +%s")|getline e_time 
 ("expr "e_time" - "$30"")|getline charge_duration 
-{print "gcharge -J", $11, "-p '$PRJ_NAME' -u", $32, "-m", $15, "-P '$PRC_NUM' -t", charge_duration, "-X WallDuration="charge_duration, "-X StartTime="$30, "-X EndTime="e_time } }'|\
+{print "gcharge -J", $12, "-p '$PRJ_NAME' -u", $32, "-m", $16, "-P '$PRC_NUM' -t", charge_duration, "-X WallDuration="charge_duration, "-X StartTime="$30, "-X EndTime="e_time } }'|\
 sort -k 3,9 -u`
 
 

@@ -484,6 +484,7 @@ sub DescribeResources {
 
 	return $self;
 }
+
 sub getVal {
 	my ( $self, $ref, $key, $regex ) = @_;
 	my $value = 0;

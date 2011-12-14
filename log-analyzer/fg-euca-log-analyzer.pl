@@ -22,6 +22,30 @@
 # - mem/disk size of ?
 # - default set is ? daily?
 #
+# Updates made by 12/13/2011
+#
+# 1. DescribeResources added
+#
+# - Eucalyptus in debug mode generates monitoring logs every 5secs. The process of monitoring is in order like 
+#   1) checking status of nodes
+#   2) checking instances in each node
+#   "monitor_thread(): running" means checking starts
+#   "monitor_thread(): done" means checking's finished
+#
+# - What we can get from the monitoring log in debug mode
+#   1) resource response summary: available instance types of m1.small, c1.medium, m1.large, m1.xlarge, and c1.xlarge
+#   2) instance response summary: running status of instances with instanceId, publicIp, and privateIp
+#   3) node resource info: available memory, disk, and core from refresh_resources()
+#   4) Detailed instance information: reservationId, ts(Start time), ownerId, etc.
+#
+# - Implementation
+#   We will use this analyzing data for 
+#   1) real-time monitoring graph report and 
+#   2) historical graph (hourly,daily,monthly, and yearly)
+#
+# - Bugs and questions
+#   lee212@indiana.edu (Hyungro Lee)
+#   
 use strict;
 use warnings;
 
@@ -127,11 +151,14 @@ my $output_type = "all"; # (all - default)
 #$first->report("refresh_resources", $theTime, $output_type);
 
 #Report 'RunInstances' data
-$first->report("RunInstances", $theTime, "hourly");
+#$first->report("RunInstances", $theTime, "hourly");
 
 #Report 'TerminateInstances' data
-$first->report("TerminateInstances", $theTime, $output_type);
+#:w
+#$first->report("TerminateInstances", $theTime, $output_type);
 
+#Report 'DescribeResources(): resource response summary'
+$first->report("DescribeResources", $theTime, "hourly", "resource response summary");
 
 print "[".Util::currentTime()."][DEBUG] Done" .$END if DEBUG;
 
@@ -171,10 +198,10 @@ sub new
 }
 
 sub report {
-	my ( $self, $func, $time, $out_type) = @_;
+	my ( $self, $func, $time, $out_type, $search_msg) = @_;
 
 	print "[".Util::currentTime()."][DEBUG] Start reporting of $func" .$END if main::DEBUG;
-	$self->$func($time, $out_type);
+	$self->$func($time, $out_type, $search_msg);
 	return $self;
 }
 # trying to get key=value for manipulating data e.g. summary of resource using per hr/day/week/month
@@ -195,7 +222,7 @@ sub report {
 # -- day report -- / week / month are same
 
 sub refresh_resources {
-	my ( $self, $time, $out_type ) = @_;
+	my ( $self, $time, $out_type, $search_msg ) = @_;
 	my $mem_m = 0;
 	my $mem_a = 0;
 	my $disk_m = 0;
@@ -247,7 +274,7 @@ sub refresh_resources {
 
 sub RunInstances {
 
-	my ( $self, $time, $out_type ) = @_;
+	my ( $self, $time, $out_type, $search_msg ) = @_;
 	my $newArr;
 	my $mem_m = 0;
 	my $mem_a = 0;
@@ -312,7 +339,7 @@ sub RunInstances {
 
 sub TerminateInstances {
 
-	my ( $self, $time, $out_type ) = @_;
+	my ( $self, $time, $out_type, $search_msg ) = @_;
 	my $newArr;
 	my $mem_m = 0;
 	my $mem_a = 0;
@@ -349,6 +376,7 @@ sub TerminateInstances {
 		if (defined($tmp_val)) {
 		}
 
+		# ex. [TerminateInstances]2011Nov1012: 0
 		$hash { $hkey } = $hash { $hkey } + 1 if (defined($tmp_val));
 		$self = $self->{next};
 	}
@@ -359,10 +387,113 @@ sub TerminateInstances {
 
 	return $self;
 }
+
+sub DescribeResources {
+
+	my ( $self, $time, $out_type, $search_msg) = @_;
+	my $newArr;
+	my $i = 0;
+	my @newArr;
+	my $new_func = "";
+	my $tmp_val = undef;
+	my @tmp = undef;
+	my $nodesArr ;
+	my %hash = ();
+	my $hkey;
+	my $key;
+	my $key2;
+	my $function_name = (caller(0))[3];
+	while ($self) {
+
+		$hkey = $self->{logInfo}->{logYear} ."-". $self->{logInfo}->{logMonth} ."-". $self->{logInfo}->{logDay} ."T". $self->{logInfo}->{logHour} . ":00:00";
+		if ( !$hash{ $hkey } ) {
+			
+			$hash{ $hkey } = { 
+				count => 0,
+				m1_small_a => 0,
+				m1_small_m => 0,
+				c1_medium_a => 0,
+				c1_medium_m => 0,
+				m1_large_a => 0,
+				m1_large_m => 0,
+				m1_xlarge_a => 0,
+				m1_xlarge_m => 0,
+				c1_xlarge_a => 0,
+				c1_xlarge_m => 0,
+			}
+		}
+
+		@newArr = split(/[\[\]]/, $self->{rawData}); #
+		$new_func = Util::trim(substr($newArr[6], 0, index($newArr[6], ":")));
+		$new_func = substr($new_func, 0, length($new_func)-2);
+		if ($function_name !~ /$new_func/) {
+			#if ($new_func =~ /DescribeResources/) {
+			$self = $self->{next};
+			next;
+		}
+		if ((length($search_msg) != 0) && ($newArr[6] !~ /$search_msg/)) {
+			$self = $self->{next};
+			next;
+		}
+		#  DescribeResources(): resource response summary (name{avail/max}): m1.small{166/192} c1.medium{166/192} m1.large{76/94} m1.xlarge{29/47} c1.xlarge{5/23}
+		$tmp_val = $self->getVal("msgInfo", "m1.small", "[{}: ]"); # third parameter is optional; regular expression
+		if (defined($tmp_val)) {
+			@tmp = split(/[\/]/, $tmp_val);
+			$hash{ $hkey }{ 'm1_small_a' } += $tmp[0];
+			$hash{ $hkey }{ 'm1_small_m' } += $tmp[1];
+		}
+
+		$tmp_val = $self->getVal("msgInfo", "c1.medium", "[{}: ]"); # third parameter is optional; regular expression
+		if (defined($tmp_val)) {
+			@tmp = split(/[\/]/, $tmp_val);
+			$hash{ $hkey }{ 'c1_medium_a' } += $tmp[0];
+			$hash{ $hkey }{ 'c1_medium_m' } += $tmp[1];
+		}
+		
+		$tmp_val = $self->getVal("msgInfo", "m1.large", "[{}: ]"); # third parameter is optional; regular expression
+		if (defined($tmp_val)) {
+			@tmp = split(/[\/]/, $tmp_val);
+			$hash{ $hkey }{ 'm1_large_a' } += $tmp[0];
+			$hash{ $hkey }{ 'm1_large_m' } += $tmp[1];
+		}
+
+		$tmp_val = $self->getVal("msgInfo", "m1.xlarge", "[{}: ]"); # third parameter is optional; regular expression
+		if (defined($tmp_val)) {
+			@tmp = split(/[\/]/, $tmp_val);
+			$hash{ $hkey }{ 'm1_xlarge_a' } += $tmp[0];
+			$hash{ $hkey }{ 'm1_xlarge_m' } += $tmp[1];
+		}
+
+		$tmp_val = $self->getVal("msgInfo", "c1.xlarge", "[{}: ]"); # third parameter is optional; regular expression
+		if (defined($tmp_val)) {
+			@tmp = split(/[\/]/, $tmp_val);
+			$hash{ $hkey }{ 'c1_xlarge_a' } += $tmp[0];
+			$hash{ $hkey }{ 'c1_xlarge_m' } += $tmp[1];
+		}
+
+		$hash{ $hkey }{ 'count' } = $hash{ $hkey }{ 'count' } + 1 if (defined($tmp_val));
+
+		$self = $self->{next};
+	}
+
+	foreach $key (sort keys %hash) {
+		foreach $key2 (sort keys %{$hash{ $key }} ) {
+			print "[$new_func][$key][$key2]: $hash{$key}{$key2}\n";
+		}
+	}
+
+	return $self;
+}
 sub getVal {
-	my ( $self, $ref, $key ) = @_;
+	my ( $self, $ref, $key, $regex ) = @_;
 	my $value = 0;
-	my @new_kv = split(/[= ]/, $self->{$ref});
+	if ( length($regex) == 0) {
+		$regex = "[= ]"; # default regular expression for the type "key=val"
+	}
+	#
+	# Som logic need to check regex is valid
+	#
+	my @new_kv = split(/$regex/, $self->{$ref});
 
 	for ($i = 0; defined($new_kv[$i]) ; $i++) {
 		if ($new_kv[$i] eq $key) {
@@ -524,7 +655,22 @@ sub currentTime {
 
 	return $theTime;
 }
-
+# Perl trim function to remove whitespace from the start and end of the string
+sub trim($)
+{
+	my $string = shift;
+	$string =~ s/^\s+//;
+	$string =~ s/\s+$//;
+	return $string;
+}
+# Left trim function to remove leading whitespace
+sub ltrim($)
+{
+	my $string = shift;
+	$string =~ s/^\s+//;
+	return $string;
+}
+# Right trim function to remove trailing whitespace
 sub rtrim($)
 {
 	my $string = shift;

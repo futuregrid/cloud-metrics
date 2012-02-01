@@ -13,8 +13,8 @@ by fg-euca-log-analyzer.pl
 collected by fg.log.analyzer.4.eucalyptus.pl
 * Reporting interval: daily
 
-3) log files from backup storage is restored and decompressed and merged
-by fg.log.merger.sh, and fg.log.gz.decompressor.sh
+3) log files from the backup storage are restored and decompressed and 
+merged by fg.log.merger.sh, and fg.log.gz.decompressor.sh
 
 4) Those routine jobs are executed by crontab with fg.crontabs.sh
 - A snapshot is available through snapshot.of.crontab.i135

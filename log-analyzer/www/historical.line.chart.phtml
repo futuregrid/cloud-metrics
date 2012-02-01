@@ -1,0 +1,70 @@
+<?php
+$metrics = $_GET["metrics"];
+$filename = "data/$metrics";
+if(!file_exists($filename))
+	return -3;
+if(!($lines = file($filename)))
+	return -2;
+foreach ($lines as $line_num => $line) {
+	$tmp = split(",", $line);
+	$arr[$line_num] = $tmp;
+}
+?>
+<!--
+You are free to copy and use this sample in accordance with the terms of the
+Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Google Visualization API Sample</title>
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load('visualization', '1', {packages: ['annotatedtimeline']});
+    function drawVisualization() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Date');
+<?php
+	$j = 0;
+	for($i = 0; $field=$arr[0][$i]; $i++) {
+		if (preg_match("/(year|month|day|hour)/i", $field))
+			continue;
+?>
+      data.addColumn('number', '<? echo trim($field); ?>');
+      data.addColumn('string', 'title<? echo ++$j; ?>');
+      data.addColumn('string', 'text<? echo $j; ?>');
+<?php 
+	}
+?>
+      data.addRows([
+<?php
+	for ($i = 1; $row = $arr[$i]; $i++) {
+?>
+      [new Date(<? echo "${row[0]}, ".($row[1] - 1)/*range 0-11 month*/.", ${row[2]}, ${row[3]}"; ?>), <?=$arr[$i][4]?>, undefined, undefined, <?=$arr[$i][5]?>, undefined, undefined, <?=$arr[$i][6]?>, undefined, undefined, <?=$arr[$i][7]?>, undefined, undefined, <?=$arr[$i][8]?>, undefined, undefined]<?
+		if ($arr[$i+1])
+			echo ",\n";
+		else
+			echo "]);";
+	}
+?>
+
+	 var options = {
+         'DissplayAnnotations' : true,
+      'dateFormat' : 'HH:mm MMM dd, yyyy',
+      'displayExactValues' : true,
+        }; 
+     
+      var annotatedtimeline = new google.visualization.AnnotatedTimeLine(
+          document.getElementById('visualization'));
+      annotatedtimeline.draw(data, options);
+    }
+    
+    google.setOnLoadCallback(drawVisualization);
+  </script>
+</head>
+<body style="font-family: Arial;border: 0 none;">
+<div id="visualization" style="width: 800px; height: 400px;"></div>
+</body>
+</html>

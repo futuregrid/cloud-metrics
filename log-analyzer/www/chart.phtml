@@ -1,0 +1,195 @@
+<?php
+$gchart_pname = "corechart";
+$gchart_cname = "google.visualization.PieChart";
+$title = "Number of running instances per user";
+#
+# Required arguments
+# 1. s_date; start date of a report (YYYYMMDD)
+# 2. e_date; end date of a report (YYYYMMDD)
+# 3. xaxis; column name of x-axis (Data file should have column names at the first line
+# 4. yaxis; column name of y-axis 
+# 5. metrics; file name of a report ex) user.data.of.eucalyptus.india
+# 6. type; google chart type
+#
+$metrics = trim($_GET["metrics"]);
+$xaxis = trim($_GET["xaxis"]);
+$yaxis = trim($_GET["yaxis"]);
+$s_date = trim($_GET["s_date"]);
+$e_date = trim($_GET["e_date"]);
+$g_type = trim($_GET["type"]);
+
+# optional
+$yaxis_count = trim($_GET["yaxis_count"]);
+$groupby = trim($_GET["groupby"]);
+$title = trim($_GET["title"]);
+
+$main_seperator = ",";
+$sub_seperator = ";";
+
+# File read
+$filename = "data/$metrics";
+if(!file_exists($filename))
+	return -3;
+if(!($lines = file($filename)))
+	return -2;
+for ($i = 0; $lines[$i]; $i++) {
+	#$csv_lines[$i] = str_getcsv($lines[$i], ",");
+	$csv_lines[$i] = split($main_seperator,$lines[$i]);
+}
+
+#Set dates
+$timestamp = strtotime($s_date);
+$syear = date("Y", $timestamp);
+$smonth = date("m", $timestamp);
+$sday = date("d", $timestamp);
+
+$timestamp = strtotime($e_date);
+$eyear = date("Y", $timestamp);
+$emonth = date("m", $timestamp);
+$eday = date("d", $timestamp);
+
+#Set title
+$title .= " ($smonth/$sday/$syear ~ $emonth/$eday)";
+
+#Set google chart type
+if (strtolower($g_type) == "pie")
+	$gchart_cname = "google.visualization.PieChart";
+else if (strtolower($g_type) == "column")
+	$gchart_cname = "google.visualization.ColumnChart";
+
+#Set column names by reading the first line
+for ($num = 0 ; $column_name = trim($csv_lines[0][$num]) ; $num++) {
+	if ($column_name == $xaxis)
+		$xnum = $num;
+	else if ($column_name == $yaxis) 
+		$ynum = $num;
+	# year, month, and day colums are mandatories
+	else if (strtolower($column_name) == "year")
+		$yearnum = $num;
+	else if (strtolower($column_name) == "month")
+		$monthnum = $num;
+	else if (strtolower($column_name) == "day")
+		$daynum = $num;
+	if((strlen($groupby) != 0) && (strtolower($groupby) == strtolower($column_name)))
+		$groups = $array($groupby);
+}
+
+if (strlen($groupby) == 0) 
+	$column_names = array( $xaxis, $yaxis );
+else if (strtolower($groupby) == "date") {
+	for ($j = 1; $col = $csv_lines[$j][$xnum]; $j++) {
+		$stacks[] = $col;
+	}
+	$stacks = array_unique($stacks);
+	asort($stacks);
+	$column_names = array_merge((array)$groupby, $stacks);
+	$groups = array ($monthnum, $daynum, $yearnum);
+} else {
+	echo "Undefined ($groupby) groupby Name.";
+	return -1;
+}
+$column_length = count($column_names);
+
+# Make a table of the graph
+for ($line_num = 1; $tmp = $csv_lines[$line_num] ; $line_num++) {
+
+	$yval = $tmp[$ynum];
+	$xval = $tmp[$xnum];
+
+	# report's range from $s_date to $e_date. Others will be ignored.
+	$d_date = $tmp[$yearnum].$tmp[$monthnum].$tmp[$daynum];
+	if (($d_date < $s_date) || ($d_date > $e_date))
+		continue;
+
+	# Will count yaxis values with unique 
+	# In case of the $yval looks 'A;B;C;...' with sub seperator ';'
+	if (strtolower($yaxis_count) == "y") {
+		$tmp2 = split($sub_seperator, trim($yval));
+		$graph[$xval] = array_merge((array)$graph[$xval], (array)$tmp2);
+	}
+	else {
+		$graph[$xval] += $yval;
+	}
+
+	if(count($groups) != 0) {
+		$groupkey = NULL;
+		foreach($groups as $key => $val) {
+			if($groupkey)
+				$groupkey .= "/";
+			$groupkey.=$tmp[$val];
+		}
+		$groupgraph[$groupkey]= array_merge((array)$groupgraph[$groupkey], array ($xval => $yval));
+	}
+}
+if (strtolower($yaxis_count) == "y") {
+	foreach ($graph as $entry_name => $entry) {
+		$graph[$entry_name] = count(array_unique($entry));
+	}
+}
+if(count($groups))
+	$graph = $groupgraph;
+
+$row_length = count($graph);
+?>
+<!--
+You are free to copy and use this sample in accordance with the terms of the
+Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title><?=$title?></title>
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('visualization', '1', {packages: ['<?=$gchart_pname?>']});
+function drawVisualization() {
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', '<?=$column_names[0] ?>');
+<? for($i = 1; $col = $column_names[$i]; $i++) { ?>
+	data.addColumn('number', '<?=$col ?>');
+<? } ?>
+	data.addRows([
+<?php
+$i = 1;
+ksort($graph);
+foreach ($graph as $key => $val) {
+	if ($i != 1)
+		echo ",\n";
+	echo "['".$key."', ";
+	if (!is_array($val))
+		echo $val."]";
+	else {
+		for ($j = 1; $column_names[$j] ; $j++)  {
+			if ($j != 1)
+				echo ", ";
+			if($val[$column_names[$j]])
+				echo $val[$column_names[$j]];
+			else
+				echo "0"; # In case of null, print zero
+		}
+		echo "]";
+	}
+	$i = 2;
+}
+?>
+]);
+
+var options = {
+	width: 650, height: 480,
+		title: '<?=$title?>'
+}; 
+
+var annotatedtimeline = new <?=$gchart_cname?>(
+	document.getElementById('visualization'));
+annotatedtimeline.draw(data, options);
+}
+
+google.setOnLoadCallback(drawVisualization);
+</script>
+</head>
+<body style="font-family: Arial;border: 0 none;">
+<div id="visualization" style="width: 650px; height: 400px;"></div>
+</body>
+</html>

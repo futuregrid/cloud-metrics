@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['gauge']});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Label');
+        data.addColumn('number', 'Value');
+        data.addRows([
+          ['m1.small', 10],
+	  ['c1.medium', 10]
+        ]);
+
+        var options = {
+		max: 200,
+          width: 430, height: 150,
+          redFrom: 180, redTo: 200,
+          yellowFrom:150, yellowTo: 180,
+          minorTicks: 5
+        };
+
+        var data2 = new google.visualization.DataTable();
+        data2.addColumn('string', 'Label');
+        data2.addColumn('number', 'Value');
+        data2.addRows([
+          ['m1.large', 10]
+        ]);
+
+        var options2 = {
+		max: 97,
+          width: 430, height: 150,
+          redFrom: 87, redTo: 97,
+          yellowFrom:73, yellowTo: 87,
+          minorTicks: 5
+        };
+
+        var data3 = new google.visualization.DataTable();
+        data3.addColumn('string', 'Label');
+        data3.addColumn('number', 'Value');
+        data3.addRows([
+          ['m1.xlarge', 10]
+        ]);
+
+        var options3 = {
+		max: 48,
+          width: 430, height: 150,
+          redFrom: 43, redTo: 48,
+          yellowFrom:36, yellowTo: 43,
+          minorTicks: 5
+        };
+
+        var data4 = new google.visualization.DataTable();
+        data4.addColumn('string', 'Label');
+        data4.addColumn('number', 'Value');
+        data4.addRows([
+          ['c1.xlarge', 10]
+        ]);
+
+        var options4 = {
+		max: 24,
+          width: 430, height: 150,
+          redFrom: 21.5, redTo: 24,
+          yellowFrom:18, yellowTo: 21.5,
+          minorTicks: 5
+        };
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        var chart2 = new google.visualization.Gauge(document.getElementById('chart_div2'));
+        var chart3 = new google.visualization.Gauge(document.getElementById('chart_div3'));
+        var chart4 = new google.visualization.Gauge(document.getElementById('chart_div4'));
+        chart.draw(data, options);
+	chart2.draw(data2, options2);
+	chart3.draw(data3, options3);
+	chart4.draw(data4, options4);
+      }
+    </script>
+  </head>
+  <body>
+<table border=0 width=100>
+<tr>
+<td>
+    <div id='chart_div'></div>
+<td>
+    <div id='chart_div2'></div>
+<td>
+    <div id='chart_div3'></div>
+<td>
+    <div id='chart_div4'></div>
+</tr>
+</table>
+  </body>
+</html>

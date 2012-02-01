@@ -12,7 +12,7 @@ should be called at a regular intervals (an hour), if not the collected
 data would be overlapped which is unpleasant. This will be improved in
 the next version with python implementation.
 
-09/12/2011 Hyungro Lee (lee212@indiana.edu)
+09/12/2011 Hyungro Lee (lee212 at indiana dot edu)
 
 How to Use the Command Line Interface
 -------------------------------------

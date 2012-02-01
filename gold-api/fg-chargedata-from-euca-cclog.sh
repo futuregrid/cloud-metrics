@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 #
-# Hyungro Lee (lee212@indiana.edu)
+# Hyungro Lee (lee212 at indiana dot edu)
 
 BASEPATH=~/eloga
 export PATH=$PATH:$BASEPATH
@@ -22,14 +22,19 @@ else
 	Hrs=1
 	Mns=60
 fi
-
-# Gathering logs last 60 mins from /var/log/eucalyptus (default log directory)
-HOUR=`/bin/date +%H` 			# current hour
-HOUR=`/usr/bin/expr $HOUR - $Hrs`	# last hour
-HOUR=`printf "%02d" $HOUR`		# make it 2 digits e.g. 9 -> 09
-/usr/bin/find $elogpath -name "cc.log*" -mmin -$Mns -exec grep " $HOUR:" {} \; > $cclogs
-
-cd $BASEPATH
+# option -f (specific log filename)
+if [ $# -ge 2 ] && [ "$1" == "-f" ]
+then
+	cclogs=$2
+	nodelete=1
+else
+	# Gathering logs last 60 mins from /var/log/eucalyptus (default log directory)
+	HOUR=`/bin/date +%H` 			# current hour
+	HOUR=`/usr/bin/expr $HOUR - $Hrs`	# last hour
+	HOUR=`printf "%02d" $HOUR`		# make it 2 digits e.g. 9 -> 09
+	/usr/bin/find $elogpath -name "cc.log*" -mmin -$Mns -exec grep " $HOUR:" {} \; > $cclogs
+	cd $BASEPATH
+fi
 
 # print_ccInstance has information of VM's termination in cc.log
 #
@@ -65,6 +70,10 @@ if [ "$RES" != "" ]
 then
 	printf "$RES\n"
 fi
+
 cd $BASEPATH
 
-rm -f $cclogs
+if [ $nodelete -ne 1 ]
+then
+	rm -f $cclogs
+fi

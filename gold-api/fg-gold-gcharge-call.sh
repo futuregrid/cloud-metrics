@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Hyungro Lee (lee212@indiana.edu)
+# Hyungro Lee (lee212 at indiana dot edu)
 
 BASEPATH=~/eloga
 export PATH=$PATH:$BASEPATH

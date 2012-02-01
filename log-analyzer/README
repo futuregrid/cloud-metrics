@@ -1,4 +1,4 @@
-eloa
+log analyzer for eucalyptus 2.0+
 
 This script aims for providing resource utilization information.
 For example, how many instances are launched or terminated durin

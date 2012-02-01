@@ -1,5 +1,10 @@
 #!/usr/bin/perl
 #
+# fg-google-line-chart.ph
+# =======================
+#
+# This script generates csv typed data file from an output of log analyzer looks like below.
+#
 #[DescribeResources][2011-Nov-10T22:00:00][c1_medium_a]: 8550
 #[DescribeResources][2011-Nov-10T22:00:00][c1_medium_m]: 9000
 #[DescribeResources][2011-Nov-10T22:00:00][c1_xlarge_a]: 630
@@ -11,6 +16,11 @@
 #[DescribeResources][2011-Nov-10T22:00:00][m1_small_m]: 9000
 #[DescribeResources][2011-Nov-10T22:00:00][m1_xlarge_a]: 1710
 #[DescribeResources][2011-Nov-10T22:00:00][m1_xlarge_m]: 2160
+#
+#
+# ======================================
+# Last updated by 12/11/2011
+# Hyungro Lee (lee212 at indiana dot edu)
 #
 
 sub trim($);

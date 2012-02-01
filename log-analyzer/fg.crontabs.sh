@@ -1,5 +1,17 @@
 #!/bin/bash
+#
+# fg.crontabs.sh
+# ==============
+#
+# This is for a batch job by crontaba daily.
+# Couple of scripts are executed by this script.
+# 
+# * Some lines should be obsolete due to security reasons
 
+# ==========================
+# Last updated by 02/01/2012
+# Hyungro Lee (lee212 at indiana dot edu)
+# 
 sdate=$1
 edate=$sdate
 YESTERDAY=`date -d '1 day ago' +%Y%m%d`

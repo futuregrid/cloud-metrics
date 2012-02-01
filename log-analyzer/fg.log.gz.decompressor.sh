@@ -1,4 +1,15 @@
 #!/bin/bash
+
+# fg.log.gz.decompressor.sh
+# =========================
+#
+# log decompressor from backup log files
+# This is basically to run 'tar'
+#
+# =========================
+# Last updated by 01/26/2012
+# Hyungro Lee (lee212 at indiana dot edu)
+
 source fg.bash.utils.cfg
 
 backup_path="/var/log/eucalyptus/logbackup/"

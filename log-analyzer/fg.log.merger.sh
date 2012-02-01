@@ -1,6 +1,8 @@
 #!/bin/bash
 
-########################################################################
+# fg.log.merger.sh
+# ================
+#
 # Description
 # - This Bash shell script reads directories that have backup log files and combines multiple log files by removing duplicated lines.
 #
@@ -23,7 +25,7 @@
 #     - cc.log.5
 #
 # Written by
-# Hyungro Lee (lee212@indiana.edu)
+# Hyungro Lee (lee212 at indiana dot edu)
 #
 # Updates
 #

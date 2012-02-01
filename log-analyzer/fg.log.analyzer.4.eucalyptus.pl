@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 #
+# fg.log.analyzer.4.eucalyptus.pl
+# ===============================
+#
 # Log file analyzer for Eucalyptus
 # This is a part of the study of Information Services on Cloud Environments
 # at Community Grids Lab - Indiana University, Bloomington
@@ -44,7 +47,7 @@
 #   2) historical graph (hourly,daily,monthly, and yearly)
 #
 # - Bugs and questions
-#   lee212@indiana.edu (Hyungro Lee)
+#   lee212 at indiana dot edu (Hyungro Lee)
 #   
 use lib qw(/N/u/hrlee/user/lib/perl5
 /N/u/hrlee/user/lib/perl5/site_perl);

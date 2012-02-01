@@ -1,4 +1,17 @@
 #!/bin/sh
+# 
+# fg-collecting-euca-cclogs.sh
+# ----------------------------
+#
+# Description
+# ============================
+# Once a result from log analyzer comes, the metrics from it will be reported via netlogger tools to inca.futuregrid.org
+# This script will be executed by crontab hourly
+#
+# ============================
+# Last updated by September 21th, 2011
+# Hyungro Lee (lee212 at indiana dot edu)
+#
 HOUR=`/bin/date +%H`
 HOUR=`/usr/bin/expr $HOUR - 1`
 HOUR=`printf "%02d" $HOUR`

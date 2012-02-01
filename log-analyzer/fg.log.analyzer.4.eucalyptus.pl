@@ -46,8 +46,11 @@
 # - Bugs and questions
 #   lee212@indiana.edu (Hyungro Lee)
 #   
+use lib qw(/N/u/hrlee/user/lib/perl5
+/N/u/hrlee/user/lib/perl5/site_perl);
 use strict;
 use warnings;
+use Date::Parse;
 
 #Set variables
 my $title_perl="Log file analyzer for Eucalyptus (ElogA)";
@@ -117,16 +120,19 @@ if ( substr($filename, 0, 6) eq "cc.log" ) {
 		$new->{prev} = $prev_p;
 		$prev_p->{next} = $new if ($i != 0);
 
-		# Get Year/Month/Day/Hour from the logDate
+		# Get Year/Month/Day/Hour/Min/Sec from the logDate
 		@newArr = split(/\s+|:/, $new->{logInfo}->{logDate});
 		$new->{logInfo}->{logYear} = $newArr[6];
 		$new->{logInfo}->{logMonth} = $newArr[1];
 		$new->{logInfo}->{logDay} = sprintf ("%02d",$newArr[2]);
 		$new->{logInfo}->{logHour} = $newArr[3];
-		if (!$newArr[6] || !$newArr[1] || !$newArr[2] || !$newArr[3])
+		$new->{logInfo}->{logMin} = $newArr[4];
+		$new->{logInfo}->{logSec} = $newArr[5];
+
+		if (!$newArr[6] || !$newArr[1] || !$newArr[2] || !$newArr[3] || !$newArr[4] || !$newArr[5])
 		{
 			print $new->{logInfo}->{logDate}."\n";
-			print "$newArr[6] || !$newArr[1] || !$newArr[2] || !$newArr[3]\n";
+			print "$newArr[6] || !$newArr[1] || !$newArr[2] || !$newArr[3] || !$newArr[4] || !$newArr[5]\n";
 			exit;
 		}
 
@@ -158,7 +164,21 @@ my $output_type = "all"; # (all - default)
 #$first->report("TerminateInstances", $theTime, $output_type);
 
 #Report 'DescribeResources(): resource response summary'
-$first->report("DescribeResources", $theTime, "hourly", "resource response summary");
+#$first->report("DescribeResources", $theTime, "hourly", "resource response summary");
+
+#Report 'print_ccInstance(): refresh_instances():'
+#$first->report("print_ccInstance", $theTime, "hourly", "refresh_instances()");
+my $s_time = str2time("11/09/2011"); # Return unix timestamp ex. 1320814800
+my $e_time = str2time("11/10/2011");
+
+# Generates a report between $s_time and $e_time
+$first->report("print_ccInstance", $s_time, $e_time, "daily", "refresh_instances()");
+
+# Note 1 (01/10/2011)
+#  Calling report above should be emerged to remove duplicated functions.
+#  1. reading cc.log takes too long
+#  2. reading lines to make an array of analyzed lines should be done by one time and need to be shared by other functions. $first should have that information
+#  3. Anything else?
 
 print "[".Util::currentTime()."][DEBUG] Done" .$END if DEBUG;
 
@@ -198,10 +218,10 @@ sub new
 }
 
 sub report {
-	my ( $self, $func, $time, $out_type, $search_msg) = @_;
+	my ( $self, $func, $s_time, $e_time, $out_type, $search_msg) = @_;
 
 	print "[".Util::currentTime()."][DEBUG] Start reporting of $func" .$END if main::DEBUG;
-	$self->$func($time, $out_type, $search_msg);
+	$self->$func($s_time, $e_time, $out_type, $search_msg);
 	return $self;
 }
 # trying to get key=value for manipulating data e.g. summary of resource using per hr/day/week/month
@@ -261,6 +281,7 @@ sub refresh_resources {
 			$cores_m += $tmp[0];
 			$cores_a += $tmp[1];
 		}
+
 		$count++ if (defined($tmp_val));
 		$self = $self->{next};
 	}
@@ -485,16 +506,189 @@ sub DescribeResources {
 	return $self;
 }
 
+sub print_ccInstance {
+
+	my ( $self, $s_time, $e_time, $out_type, $search_msg) = @_;
+	my $newArr;
+	my $i = 0;
+	my @newArr;
+	my $new_func = "";
+	my $tmp_val = undef;
+	my @tmp = undef;
+	my $instanceId = "";
+	my $nodesArr ;
+	my $hash_ref = {};
+	my $owners = {};
+	my $ownerId_ref;
+	my $instanceIds_ref = {};
+	my $hkey;
+	my $key, my $key2, my $key3;
+	my $count = 0;
+	my $function_name = (caller(0))[3];
+	my $res_ref = {};
+	
+	#Set start time from log
+	$s_time = Date::Parse::str2time($self->{logInfo}->{logDay}."/".$self->{logInfo}->{logMonth}."/".$self->{logInfo}->{logYear});
+	$e_time = Date::Parse::str2time($self->{logInfo}->{logDay}."/".$self->{logInfo}->{logMonth}."/".$self->{logInfo}->{logYear}." 23:59:59");
+
+	while ($self) {
+
+		$hkey = $self->{logInfo}->{logYear} ."-". $self->{logInfo}->{logMonth} ."-". $self->{logInfo}->{logDay};# ."T". $self->{logInfo}->{logHour} . ":00:00";
+		if ( ! exists($hash_ref -> { $hkey }) ) {
+			
+			$s_time = Date::Parse::str2time($self->{logInfo}->{logDay}."/".$self->{logInfo}->{logMonth}."/".$self->{logInfo}->{logYear});
+			$e_time = Date::Parse::str2time($self->{logInfo}->{logDay}."/".$self->{logInfo}->{logMonth}."/".$self->{logInfo}->{logYear}." 23:59:59");
+
+			$hash_ref -> { $hkey } = { 
+				instanceIds => {},
+				owners => {},
+				sTime => $s_time,
+				eTime => $e_time,
+				Year => $self->{logInfo}->{logYear},
+				Month => $self->{logInfo}->{logMonth},
+				Day => $self->{logInfo}->{logDay}
+			}
+		}
+	
+		@newArr = split(/[\[\]]/, $self->{rawData}); #
+		$new_func = Util::trim(substr($newArr[6], 0, index($newArr[6], ":")));
+		$new_func = substr($new_func, 0, length($new_func)-2);
+		if ($function_name !~ /$new_func/) {
+			#if ($new_func =~ /DescribeResources/) {
+			$self = $self->{next};
+			next;
+		}
+		if ((length($search_msg) != 0) && ($newArr[6] !~ /$search_msg/)) {
+			$self = $self->{next};
+			next;
+		}
+		#[Wed Nov  9 17:33:04 2011][008128][EUCADEBUG ] print_ccInstance(): refresh_instances():  instanceId=i-49D80872 reservationId=r-46C90856 emiId=emi-CD38102F kernelId=eki-78EF12D2 ramdiskId=eri-5BB61255 emiURL=http://149.165.146.135:8773/services/Walrus/jklingin/centos5-6.x86_64.manifest.xml kernelURL=http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml ramdiskURL=http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml state=Extant ts=1320805502 ownerId=jklingin keyName=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCSkJh2v6G76slfKVZZ4nsDaDNc+d6grFZL1dqDL9G4VGR9pNd4mFkP75qisw4GFMUfVTPrVYga267yY4d8LMBDZmf/X1mi9O91Isnmzb1bgH2hr8mH4AOjEDOTg1xh6mVTcJ6h98PQfZrg6czJ6tbKNnbkxm84V2AROrVYw3XX5JuxUtF3x4s7lUm7v4WommgXNGPNWHFDYWdUCBM4y+H/N3YCVE1mVKL4KlbX3iX646U6iUeSvZtjRvgrvQEpkXTU9snBGvzZ9dWVpx7wzOxQphDiZ2F9B+/JCAi4k0Dhxj5QcZQTVWr3XhZxTEiIRoXSVlKK7+tT+MNdB0bdCPVF jklingin@eucalyptus ccnet={privateIp=10.0.5.2 publicIp=149.165.159.134 privateMac=D0:0D:49:D8:08:72 vlan=12 networkIndex=2} ccvm={cores=1 mem=512 disk=5} ncHostIdx=16 serviceTag=http://i18:8775/axis2/services/EucalyptusNC userData= launchIndex=0 volumesSize=0 volumes={} groupNames={default }
+		
+		#Hours
+		#Hour -> instances
+		#	instance -> user
+		#                 -> etc
+		#     -> instance -> user
+		#                 -> etc
+		# Array
+		# $hash -> $hkey -> $instances -> $instanceIds
+		# $instanceid (new array) -> $key:$values ex. ownerid:jklingin
+
+		my $state, my $ts, my $ownerId;
+		$instanceId = $self->getVal("msgInfo", "instanceId");
+		$state = $self->getVal("msgInfo", "state"); # third parameter is optional; regular expression
+		$ts = $self->getVal("msgInfo", "ts");
+		$ownerId = $self->getVal("msgInfo", "ownerId");
+
+		if (defined($instanceId) && defined($ownerId)) {
+			$hash_ref -> {$hkey} -> { "instanceIds" } -> { $instanceId } -> { "ownerId" } = $ownerId;
+		}
+
+		# We assume instanceId is a unique value. Need to find out how it is generated.
+		# Ignore Teardown message once it's notified. EUCADEBUG log generates multiple messages.
+		if (defined($hash_ref -> { $hkey } -> { "instanceIds" } -> { $instanceId } -> { "state" })) {
+			if (($state eq "Teardown") && ($hash_ref -> { $hkey } -> { "instanceIds" } -> { $instanceId } -> { "state" } eq "Teardown")) {
+				$self = $self->{next};
+				next;
+			}
+		}
+
+		$hash_ref -> { $hkey } -> { "instanceIds" } -> { $instanceId } -> { "state" } = $state; # Extant, Pending, and Teardown
+		$hash_ref -> { $hkey } -> { "instanceIds" } -> { $instanceId } -> { "ts" } = $ts;
+		$hash_ref -> { $hkey } -> { "instanceIds" } -> { $instanceId } -> { "ownerId" } = $ownerId;
+		$hash_ref -> { $hkey } -> { "instanceIds" } -> { $instanceId } -> { "logDate" } = $self->{logInfo}->{logDate};
+
+		if ($state eq "Teardown") {
+			if ($ts < $s_time) {
+				$ts = $s_time;
+			}
+			my $etime = Date::Parse::str2time($self->{logInfo}->{logDate});
+			if ($etime > $e_time) {
+				$etime = $e_time;
+			}
+			$hash_ref -> { $hkey } -> { "owners" } -> { $ownerId } -> { "seconds" } += ($etime - $ts);
+		}
+
+		$self = $self->{next};
+	}
+
+	foreach $key (sort keys %$hash_ref) {
+		foreach $key2 (sort keys %{$hash_ref -> { $key } -> { "instanceIds" }} ) {
+				# This is getting complicated. We just need to display which user runs how many instances at a specific time period. ex) admin: 10, inca: 2 (09:00pm 01/05/2011)
+				$ownerId_ref = $hash_ref -> { $key } -> { "instanceIds" } -> { $key2 } -> { "ownerId" } ;
+				$hash_ref -> { $key } -> { "owners" } -> { $ownerId_ref } -> { "count" } += 1;
+				$count = $hash_ref -> { $key } -> { "owners" } -> { $ownerId_ref } -> { "count" };
+				$hash_ref -> { $key } -> { "owners" } -> { $ownerId_ref } -> { "instanceIds" } [$count-1] = $key2;
+
+				my $state = $hash_ref -> { $key } -> { "instanceIds" } -> { $key2 } -> { "state" };
+				my $logDate = $hash_ref -> { $key } -> { "instanceIds" } -> { $key2 } -> { "logDate" };
+				my $ownerId = $hash_ref -> { $key } -> { "instanceIds" } -> { $key2 } -> { "ownerId" };
+				my $ts = $hash_ref -> { $key } -> { "instanceIds" } -> { $key2 } -> { "ts" };
+				if ( $state eq "Extant" ) {
+					$s_time =  $hash_ref -> { $key } -> { "sTime" };
+					if ($ts < $s_time) {
+					$ts = $s_time;
+				}
+
+				my $etime = Date::Parse::str2time( $logDate );
+				$e_time =  $hash_ref -> { $key } -> { "eTime" };
+				if ($etime > $e_time) {
+					$etime = $e_time;
+				}
+				$hash_ref -> { $key } -> { "owners" } -> { $ownerId } -> { "seconds" } += ( $etime - $ts );
+			}
+		}
+	}
+
+	print "Year, Month, Day, ownerId, used minutes, number of running instances, instances\n";
+	foreach $key (sort keys %$hash_ref) {
+		my $owners = {};
+		$owners = $hash_ref -> { $key } -> { "owners" };
+		foreach $key2 (sort keys %$owners) {
+			print $hash_ref -> { $key } -> { "Year" };
+			print ",";
+			print sprintf("%02d", Util::month2number($hash_ref -> { $key } -> { "Month" }));
+			print ",";
+			print $hash_ref -> { $key } -> { "Day" };
+			print ",";
+			print $key2;
+			print ",";
+			print int(($owners -> { $key2 } -> { "seconds" } / 60) + 0.5); # Make it minutes from seconds
+			print ",";
+			print $owners -> { $key2 } -> { "count" };
+			print ",";
+			for ($i = 0; $owners -> { $key2 } -> { "instanceIds" }[$i] ; $i++) {
+				if ($i != 0) {
+					print ";";
+				}
+				print $owners -> { $key2 } -> { "instanceIds" }[$i];
+			}
+			print "\n";
+		}
+	}
+
+	return $self;
+}
+
 sub getVal {
 	my ( $self, $ref, $key, $regex ) = @_;
-	my $value = 0;
-	if ( length($regex) == 0) {
+	
+	if ( !$regex ) {
 		$regex = "[= ]"; # default regular expression for the type "key=val"
 	}
 	#
 	# Som logic need to check regex is valid
 	#
 	my @new_kv = split(/$regex/, $self->{$ref});
+
+	if (length($key) == 0) { # blank key means all keys
+		my $k, my $n = 0;
+		#foreach $k (@new_kv) {
+		#	print "[$n][$k]\n";
+		#	$n++;
+		#}
+		return @new_kv; #return array?
+	}
 
 	for ($i = 0; defined($new_kv[$i]) ; $i++) {
 		if ($new_kv[$i] eq $key) {
@@ -535,6 +729,8 @@ sub printData {
 	print "logInfo->logMonth: $self->{logInfo}->{logMonth}.$END";
 	print "logInfo->logDay: $self->{logInfo}->{logDay}.$END";
 	print "logInfo->logHour: $self->{logInfo}->{logHour}.$END";
+	print "logInfo->logMin: $self->{logInfo}->{logMin}.$END";
+	print "logInfo->logSec: $self->{logInfo}->{logSec}.$END";
 	print "logInfo->uId: $self->{logInfo}->{uId}.$END";
 	print "logInfo->logType: $self->{logInfo}->{logType}.$END";
 	print "msgInfo: $self->{msgInfo}.$END";
@@ -554,6 +750,8 @@ sub new
 		logMonth => shift,
 		logDay => shift,
 		logHour => shift,
+		logMin => shift,
+		logSec => shift,
 		uId => shift,
 		logType => shift,
 	};
@@ -679,3 +877,16 @@ sub rtrim($)
 	return $string;
 
 }
+
+# Convert month names to number
+sub month2number($)
+{
+	my $string = shift;
+	my %mon2num = qw(
+	jan 1  feb 2  mar 3  apr 4  may 5  jun 6
+	jul 7  aug 8  sep 9  oct 10 nov 11 dec 12
+	);
+
+	return $mon2num{ lc substr($string, 0, 3) };
+}
+

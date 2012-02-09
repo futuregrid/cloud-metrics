@@ -1,4 +1,4 @@
-log analyzer for eucalyptus 2.0+
+slog analyzer for eucalyptus 2.0+
 ================================
 
 This repository aims for collecting resource utilization information from 

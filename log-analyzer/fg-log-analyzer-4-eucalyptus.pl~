@@ -49,18 +49,8 @@
 # - Bugs and questions
 #   lee212 at indiana dot edu (Hyungro Lee)
 #   
-
-#
-# use the right version of the perl lib. This is wrong, TODO
-#
 use lib qw(/N/u/hrlee/user/lib/perl5
 /N/u/hrlee/user/lib/perl5/site_perl);
-#
-#
-# seems date::Parse is not avalable on the real system needs to be fixed on the real system. 
-# configuration needs to include the update of the perl distribution
-#
-
 use strict;
 use warnings;
 use Date::Parse;
@@ -95,7 +85,6 @@ $desc_logs{"ncClientCall"} = "This is a node controller call from cluster/handle
 if ( $#ARGV == -1 )  {
 	print $title_perl.$END;
 	print "Usage: $0 \"log filename\" \"specific log lines\"".$END;
-	# gvl: the ip number is not printed like this, must come from a variable
 	print "Ex) $0 cc.log or $0 cc.log \"...refresh_resources(): node=192.168.1.3...\"".$END;
 	exit;
 }

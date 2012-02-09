@@ -10,18 +10,11 @@
 # Last updated by 01/26/2012
 # Hyungro Lee (lee212 at indiana dot edu)
 
-source fg-log-analyzer-lib.sh 
+source fg.bash.utils.cfg
 
-# Read from log-analyzer.cfg
-#
-# EUCA_LOGINPUT_DIR= ...
-# EUCA_LOGOUTPUT_DIR= ...
-#
-source log-analyzer.cfg
-#
-
-LIST=`ls $EUCA_LOGINPUT_DIR`
-
+backup_path="/var/log/eucalyptus/logbackup/"
+LIST=`ls $backup_path`
+output_dir="logs"
 
 while getopts "s:e:" opt;
 do
@@ -84,11 +77,11 @@ do
 
 	echo "[$i] [$year/$month/$day $hour]"
 
-	dest=$EUCA_LOGOUTPUT_DIR/$i
+	dest=$output_dir/$i
 	mkdir -p $dest
 	echo mkdir -p $dest
 
-	compressed_file=$EUCA_LOGINPUT_DIR/$i/cclog.tar.gz
+	compressed_file=$backup_path/$i/cclog.tar.gz
 
 	tar xvzf $compressed_file -C $dest
 	echo tar xvzf $compressed_file -C $dest

@@ -101,4 +101,3 @@ sub month2number($)
     
 	return $mon2num{ lc substr($string, 0, 3) };
 }
-

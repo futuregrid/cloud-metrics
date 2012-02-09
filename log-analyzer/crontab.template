@@ -1,0 +1,11 @@
+######################################################################
+#
+# BIN = the path to the directory where our shell scripts for the log analyser are located
+# LOG = the path the the directory where we write out the analysis data to be displayd
+#
+######################################################################
+#
+0 * * * * BIN/fg-collecting-euca-cclogs.sh 2>> LOG/fg-collecting-euca-cclogs.sh.log >> LOG/fg-collecting-euca-cclogs.sh.log
+0 * * * * BIN/fg-gold-gcharge-call.sh 2>> LOG/fg-gold-gcharge-call.sh.log >> LOG/fg-gold-gcharge-call.sh.log
+0 1 * * * BIN/fg.crontabs.sh 2>> LOG/fg.crontabs.sh.log >> LOG/fg.crontabs.sh.log
+#

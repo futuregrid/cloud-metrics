@@ -1,0 +1,9 @@
+setup.cfg
+setup.py
+futuregrid.euca.analyzer.egg-info/PKG-INFO
+futuregrid.euca.analyzer.egg-info/SOURCES.txt
+futuregrid.euca.analyzer.egg-info/dependency_links.txt
+futuregrid.euca.analyzer.egg-info/entry_points.txt
+futuregrid.euca.analyzer.egg-info/top_level.txt
+futuregrid.euca.analyzer.egg-info/zip-safe
+futuregrideucaanalyzer/__init__.py

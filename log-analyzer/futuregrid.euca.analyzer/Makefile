@@ -1,5 +1,5 @@
 push:
-	git commit -a --author='Gregor von Laszewski <laszewski@gmail.com>' 
+	git commit -a 
 	git push
 
 pull:
@@ -12,6 +12,11 @@ distall:
 	make -f Makefile egg
 	make -f Makefile tar
 #	make -f Makefile rpm
+
+
+gitgregor:
+	git config --global user.name "Gregor von Laszewski"
+	git config --global user.email laszewski@gmail.com
 
 # #####################################################################
 # Creating the distribution

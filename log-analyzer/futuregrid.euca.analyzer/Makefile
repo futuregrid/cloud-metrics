@@ -1,9 +1,9 @@
-gitpush:
-	git commit --amend --author='Gregor von Laszewski <laszewski@gmail.com>'
+push:
+	git commit -a --author='Gregor von Laszewski <laszewski@gmail.com>' 
 	git push
 
-gitup:
-	git up 
+pull:
+	git pull 
 
 install:
 	sudo easy_install dist/futuregrid.euca.analyzer-0.1dev-py2.6.egg 

@@ -1,4 +1,0 @@
-[console_scripts]
-abc = futuregrid.euca.analyzer.futuregrideucaanalyzer:main
-fg-gen-crontab = futuregrid.euca.analyzer.futuregrideucaanalyzer:main
-

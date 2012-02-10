@@ -22,7 +22,21 @@ source log-analyzer.cfg
 
 LIST=`ls $EUCA_LOGINPUT_DIR`
 
+#####################################################################
+# COMMON FUNCTIONS
+#####################################################################
 
+# This function checks if the parameter is an integer and returns 0 if it is an integer and 1 if not.
+
+function is_integer() {
+    [ "$1" -eq "$1" ] > /dev/null 2>&1
+    return $?
+}
+
+
+#####################################################################
+# ANALYSING THE ARGUMENTS
+#####################################################################
 while getopts "s:e:" opt;
 do
 	case $opt in

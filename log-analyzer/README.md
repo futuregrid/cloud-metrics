@@ -13,7 +13,11 @@ We assume the following directory layout
   ./futurgrid/etc - location of configuration files
   ./futurgrid/www - location of the www files
 
+TODO: create a make install that installs the package into /.../futuregrid
+
 The scripts generate the folloing output files
+
+#TODO: clean the variables
 
     FG_LOG_ANALYZER_WWW_OUTPUT - location wher ethe www files for dispaly are stored
     FG_TMP - location where temporary files are located that are analyzed
@@ -26,6 +30,7 @@ The scripts assume the following input files
 
 It is assumed that this tree is installed and a ahell variable 
 
+#TODO:
   FG_HOME_LOG_ANALYZER  
 
 is set to the location of the "futuregrid" directory.
@@ -35,22 +40,16 @@ We recommend that the futureGrid directory is included in the PATH of the shell 
 INSTALATION
 ===========
 
-please download the code from github with ....
+please download the code/egg from github with ....
 
-  cd log-analyzer
-  emacs Makefile
+make distall
+make install
 
-make changes to the location of where you like to install the scripts
-e.g.
+This will install the programs in 
 
-  DEPLOY_PATH=/share
+/usr/bin/*
 
-  make install
-
-This will create directories 
-
-/share/futuregrid with its subdirectories
-
+#TODO:
 Do not forget to set the 
 
   FG_HOME_LOG_ANALYZER  

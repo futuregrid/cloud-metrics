@@ -69,6 +69,12 @@ fg.crontabs.sh
 * displays graphs about data usage metrics are in 'www'
 * Be displaying via google chart tools.
 
-
+CONTRIBUTORS
+============
 Hyungro Lee (lee212 at indiana dot edu)
 Gregor von laszewski (laszewski@gmail.com)
+
+KNOWN BUGS
+==========
+* we like to move to a python script at one point
+* we like to move to a python egg with easy_install

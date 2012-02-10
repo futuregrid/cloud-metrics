@@ -1,3 +1,5 @@
 
       # -*- Entry points: -*-
-      
+       'console_scripts': [
+              'fg-gen-crontab = futuregrid.euca.analyzer.futuregrideucaanalyzer:main', 
+	]

@@ -17,10 +17,12 @@ The package allows the analysis of Eucalyptus logs and display the information g
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
       zip_safe=True,
-      install_requires=[
-          # -*- Extra requirements: -*-
-      ],
+      #install_requires=[
+      #    # -*- Extra requirements: -*-
+      #],
       entry_points="""
-      # -*- Entry points: -*-
+        'console_scripts': [
+          'fg-gen-crontab = futuregrid.euca.analyzer.futuregrideucaanalyzer:main', 
+        ]
       """,
       )

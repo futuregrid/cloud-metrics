@@ -10,7 +10,19 @@ We assume the following directory layout
   ./futurgrid/
   ./futurgrid/bin - includes all commands needed to run the log analyzing
   ./futurgrid/lib - includes libraries that may be called from the bin files
-  ./futurgrid//etc - location of configuration files
+  ./futurgrid/etc - location of configuration files
+  ./futurgrid/www - location of the www files
+
+The scripts generate the folloing output files
+
+    FG_LOG_ANALYZER_WWW_OUTPUT - location wher ethe www files for dispaly are stored
+    FG_TMP - location where temporary files are located that are analyzed
+    FG_DATA - location where the permamnent data is being stored 
+
+The scripts assume the following input files
+
+    EUCALYPTUS_LOG_DIR - location wher the eucalyptus log dirs are stored
+
 
 It is assumed that this tree is installed and a ahell variable 
 

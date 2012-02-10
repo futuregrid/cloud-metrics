@@ -32,4 +32,4 @@ rpm:
 
 
 clean:
-	sudo rm -r build dist
+	rm -rf build dist *.egg-info *~ #*

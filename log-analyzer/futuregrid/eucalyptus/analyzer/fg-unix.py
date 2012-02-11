@@ -20,7 +20,7 @@ def merge_euca_log_files_in_dir (dirpath, output):
     logfiles = glob.glob( os.path.join(dirpath, '*.log*') 
      
     # PSEUDO CODE
-    current_log = pop (logfiles)
+    current_log = logfiles.pop ()
     for file in logfiles
        merge_euca_log (current_log, files, tmp)
        os.remove (current_log)

@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 
+import os, glob
+
 # NOTE THIS WILL NOT WORK AS SYNTAX NOT OK, JUST USED TO CATCH IDEAS, ANYONE CAN IMPROVE
 
 #
@@ -11,18 +13,19 @@ def merge_euca_log (input1, input2, output):
     '''merges the two input files and writes it to the output file with given arguments'''
     return
 
-def merge_euca_log_dir_files (dir, output):
+
+def merge_euca_log_files_in_dir (dirpath, output):
     ''' merges all logfiles in the dir'''
+
+    logfiles = glob.glob( os.path.join(dirpath, '*.log*') 
+     
     # PSEUDO CODE
-    # logfiles = *.log *.log.?
-    # if logfiles empty nothing to do
-    # current_log = pop (logfiles)
-    # while logfiles is not empty
-    #   logfile = pop(logfiles)
-    #   merge_euca_log (current_log, logfiles, tmp)
-    #   rm current_logfile
-    #   current_logfile = tmp
-    # output = current_logfile
+    current_log = pop (logfiles)
+    for file in logfiles
+       merge_euca_log (current_log, files, tmp)
+       os.remove (current_log)
+       os.move (tmp, current_log)
+    os.move (current_log, output)
 
 
 

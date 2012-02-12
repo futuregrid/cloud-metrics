@@ -3,6 +3,19 @@ import re
 import json
 import sys
 
+def convert_data_to_list(data,attribute):
+    rest = data[attribute]
+    rest = re.sub(" ","' , '", rest)
+    rest = "['" + rest[1:-1] + "']"
+    restdata = eval(rest)
+    data[attribute] = restdata
+
+def convert_data_to_dict(data,attribute):
+    rest = data[attribute]
+    rest = convert_str_to_dict_str(rest[1:-1])
+    restdata = eval(rest)
+    data[attribute] = restdata
+
 def convert_str_to_dict_str(line):
     line = re.sub(' +',' ',line)
     line = line.strip(" ")
@@ -47,19 +60,16 @@ def print_ccInstance_parser(line):
 
     # GATHER ALL SIMPLE *=* assignments into a single rest line and add each entry to dict via eval
     rest = convert_str_to_dict_str(rest)
-    
     restdata = eval (rest)
-
     data.update(restdata)
 
-    # convert ccvm to dict
+    # convert ccvm and ccnet to dict
+    convert_data_to_dict(data,"ccvm")
+    convert_data_to_dict(data,"ccnet")
 
-    rest = data["ccvm"]
-    rest = convert_str_to_dict_str(rest[1:-1])
-
-
-    restdata = eval(rest)
-    data["ccvm"] = restdata
+    # converts volumes and groupNAmes to list
+    convert_data_to_list(data,"groupNames")
+    convert_data_to_list(data,"volumes")
 
     return data
 

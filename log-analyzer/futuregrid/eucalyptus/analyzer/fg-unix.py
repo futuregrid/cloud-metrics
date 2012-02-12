@@ -114,8 +114,8 @@ def getdate_from_euca_log_line(line):
     object.
     return - datetime object of the timestamp in the line
     """
-   tmp = re.split ('\]', line.pop())
-   return datetime.strptime(tmp[0][1:], '%a %b %d %H:%M:%S %Y')
+    tmp = re.split ('\]', line.pop())
+    return datetime.strptime(tmp[0][1:], '%a %b %d %H:%M:%S %Y')
 
 ######################################################################
 # generate_filename 

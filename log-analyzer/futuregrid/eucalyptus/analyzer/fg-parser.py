@@ -79,7 +79,7 @@ def ccInstance_parser(line):
     return data
 
 def refresh_resource_parser(line):
-    line = "[Wed Nov  9 19:50:08 2011][008128][EUCADEBUG ] refresh_resources(): received data from node=i2 mem=24276/22740 disk=306400/305364 cores=8/6"
+    #[Wed Nov  9 19:50:08 2011][008128][EUCADEBUG ] refresh_resources(): received data from node=i2 mem=24276/22740 disk=306400/305364 cores=8/6
     data = {}
     data["calltype"] = "refresh_resources" 
     rest = parse_type_and_date(line,data)
@@ -96,6 +96,26 @@ def refresh_resource_parser(line):
 
     return data
 
+
+def terminate_instances_param_parser(line):
+#[Thu Nov 10 10:14:37 2011][021251][EUCADEBUG ] TerminateInstances(): params: userId=(null), instIdsLen=1, firstInstId=i-417B07B2
+    data = {}
+    data["calltype"] = "terminate_instances_param" 
+    rest = parse_type_and_date(line,data)
+    rest = re.sub("TerminateInstances\(\): params:","",rest).strip()
+    # node=i2 mem=24276/22740 disk=306400/305364 cores=8/6
+    m = re.search( r'userId=(.*) instIdsLen=(.*) firstInstId=(.*)', rest, re.M|re.I)
+    userid = m.group(1)
+    if userid == "(null),":
+        data["userId"] = "null"
+    else:
+        data["userId"] = m.group(1)
+    data["instIdsLen"] = m.group(2)
+    data["firstInstId"] = m.group(3)
+
+    return data
+
+
 #
 #####################################################################
 # MAIN
@@ -111,6 +131,11 @@ def main():
     line = "[Wed Nov  9 19:50:08 2011][008128][EUCADEBUG ] refresh_resources(): received data from node=i2 mem=24276/22740 disk=306400/305364 cores=8/6"
     print line
     data = refresh_resource_parser(line)
+    print json.dumps(data, sort_keys=False, indent=4)
+
+    line = "[Thu Nov 10 10:14:37 2011][021251][EUCADEBUG ] TerminateInstances(): params: userId=(null), instIdsLen=1, firstInstId=i-417B07B2"
+    print line
+    data = terminate_instances_param_parser(line)
     print json.dumps(data, sort_keys=False, indent=4)
 
 if __name__ == "__main__":

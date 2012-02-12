@@ -2,6 +2,7 @@
 import re
 import json
 import sys
+from datetime import datetime
 
 def convert_data_to_list(data,attribute):
     rest = data[attribute]
@@ -70,6 +71,10 @@ def print_ccInstance_parser(line):
     # converts volumes and groupNAmes to list
     convert_data_to_list(data,"groupNames")
     convert_data_to_list(data,"volumes")
+
+    #converting date
+    date_s = data["date"] 
+    data["date"] = str(datetime.strptime(date_s, '%a %b %d %H:%M:%S %Y'))
 
     return data
 

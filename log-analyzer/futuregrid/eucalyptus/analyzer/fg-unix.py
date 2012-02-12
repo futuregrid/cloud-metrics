@@ -2,6 +2,7 @@
 
 import os, glob
 import re
+import shutil
 from datetime import datetime
 
 # NOTE THIS WILL NOT WORK AS SYNTAX NOT OK, JUST USED TO CATCH IDEAS, ANYONE CAN IMPROVE
@@ -102,6 +103,26 @@ def generate_filename (date_object, postfix):
   name = str(date_object).replace(" ","-").replace(":","-")
   return name + postfix 
 
+def rename_euca_log_file (path,name):
+  old_name = os.path.join(path,name)
+  FILE = open(old_name, "r", 0) 
+  line = tail(FILE,1)
+  date_object = getdate_from_euca_log_line(line)
+  new_name = generate_filename (date_object,'-cc.log')
+  new_name = os.path.join(path,new_name)
+  if os.path.exists(new_name):
+    os.rename (old_name, new_name)
+  else:
+    print "file existed already: " + new_name, ", deleting: " + old_name   
+    os.remove(old_name)
+  return
+
+def ls(path):
+  print "----"
+  os.system ("ls " + path)
+  print "----"
+
+
 #####################################################################
 # MAIN
 #####################################################################
@@ -115,8 +136,11 @@ def main():
   date_object = getdate_from_euca_log_line(line)
   print date_object
   print generate_filename (date_object,'-cc.log')
-
-
+  
+  shutil.copy2('/tmp/cc.log.4', '/tmp/cc.log.5')
+  ls("/tmp")
+  rename_euca_log_file("/tmp", "cc.log.5")
+  ls("/tmp")
   return
   
 if __name__ == "__main__":

@@ -6,20 +6,18 @@ import shutil
 from datetime import datetime
 import fnmatch
 
-# NOTE THIS WILL NOT WORK AS SYNTAX NOT OK, JUST USED TO CATCH IDEAS,
-# ANYONE CAN IMPROVE
-
-
-#
-# from 
-# http://stackoverflow.com/questions/136168/get-last-n-lines-of-a-file-with-python-similar-to-tail
-#
-#
-
+######################################################################
+# TAIL
+######################################################################
 def tail(f, window=20):
     """
     Returns the last `window` lines of file `f` as a list.
+    f - is the file descriptor 
+    window - is the number of lines that will be returned from the end
     """
+    # from 
+    # http://stackoverflow.com/questions/136168/get-last-n-lines-of-a-file-with-python-similar-to-tail
+
     BUFSIZ = 1024
     f.seek(0, 2)
     bytes = f.tell()
@@ -92,20 +90,53 @@ def merge_euca_log (input1, input2, output):
 #
 """
 
-def head(file, lines_2find=1):
-   file.seek(0)                            #Rewind file
-   return [file.next() for x in xrange(lines_2find)]
+######################################################################
+# HEAD
+######################################################################
+def head(file, n=1):
+    """
+    Returns the first n lines in a file.
+    file - is the file descriptor
+    n - number of lines to be returned from the begining of the file
+    """
+    file.seek(0)                            #Rewind file
+    return [file.next() for x in xrange(n)]
 
 
+
+######################################################################
+# getdate_from_euca_log_line
+######################################################################
 def getdate_from_euca_log_line(line):
+    """
+    Eucalyptus log files have a time stamp at the beginning of the
+    file. This function returns the date from that line as a datetime
+    object.
+    return - datetime object of the timestamp in the line
+    """
    tmp = re.split ('\]', line.pop())
    return datetime.strptime(tmp[0][1:], '%a %b %d %H:%M:%S %Y')
 
+######################################################################
+# generate_filename 
+######################################################################
 def generate_filename (date_object, postfix):
-  name = str(date_object).replace(" ","-").replace(":","-")
-  return name + postfix 
+    """
+    This function is an internal helper function that converts a date
+    object to a string in which all : and " " are replaced with "-"
+    """
+    name = str(date_object).replace(" ","-").replace(":","-")
+    return name + postfix 
 
+######################################################################
+# rename_euca_log_file 
+######################################################################
 def rename_euca_log_file (path,name):
+    """
+    This function renames a given eucalyptus file located in
+    "path/name" based on the timestamp that can be found in the last
+    line of the file.
+    """
     old_name = os.path.join(path,name)
     print " renaming "  + old_name
     new_name = generate_euca_log_filename(path,name)
@@ -117,7 +148,17 @@ def rename_euca_log_file (path,name):
         os.remove(old_name)
     return
 
+######################################################################
+# generate_euca_log_filename 
+######################################################################
 def generate_euca_log_filename (path,name):
+    """
+    Given the location of a eucalyptus log file as "path/name", a new
+    name is generated and returned based on the time stamp in the last
+    line of the logfile. The name will be date-time.cc.log where all
+    items are separated with "-". The file will not be renamed with
+    that function.
+    """
     old_name = os.path.join(path,name)
     FILE = open(old_name, "r", 0) 
     line = tail(FILE,1)
@@ -128,13 +169,25 @@ def generate_euca_log_filename (path,name):
 
 
 
+######################################################################
+# ls
+######################################################################
 def ls(path):
-  print "----"
-  os.system ("ls " + path)
-  print "----"
+    """
+    simply does a unix ls on the path. It is used for debugging.
+    """
+    print "----"
+    os.system ("ls " + path)
+    print "----"
 
+######################################################################
+# all_euca_log_files 
+######################################################################
 def all_euca_log_files (path):
-    '''returns a list of all euca logfiles recursively starting from path'''
+    """
+    returns a list of all eucalyptus logfiles that are located in all
+    subdirectories starting from "path".
+    """
     all_files = []
     for dirname, dirnames, filenames in os.walk(path):
         for filename in filenames:
@@ -142,7 +195,21 @@ def all_euca_log_files (path):
                 all_files.append(os.path.join(dirname, filename))
     return all_files
 
+######################################################################
+# gather_all_euca_log_files 
+######################################################################
 def gather_all_euca_log_files (from_path,backup):
+    """
+    this function gathers all eucalyptus log files that are located in
+    all subdirectories starting from "from_path" and copies them into
+    the specified backup directory. In addition all log file will be
+    renamed based on the timestap in the last line of the log
+    file. The fileame is date-time.cc.log where all items are
+    separated with a "-". E.g. YYYY-MM-DD-HH-mm-ss-cc.log. If a
+    logfile already exists with that name it will not be overwritten
+    and the next file in the subdirectory will be attempted to be
+    copied to backup.
+    """
     if not os.path.exists (backup):
         os.makedirs (backup)
 
@@ -160,7 +227,7 @@ def gather_all_euca_log_files (from_path,backup):
     return
 
 #####################################################################
-# MAIN
+# main
 #####################################################################
 def main():
    dir_path = os.getenv("HOME") + "/Downloads/logbackup"
@@ -171,6 +238,9 @@ def main():
 
    return
 
+######################################################################
+# code for testing that works
+######################################################################
 def works():
   FILE = open("/tmp/cc.log.4", "r", 0) 
   print "---- head ----\n"

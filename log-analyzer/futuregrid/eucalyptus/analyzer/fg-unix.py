@@ -4,8 +4,10 @@ import os, glob
 import re
 import shutil
 from datetime import datetime
+import fnmatch
 
-# NOTE THIS WILL NOT WORK AS SYNTAX NOT OK, JUST USED TO CATCH IDEAS, ANYONE CAN IMPROVE
+# NOTE THIS WILL NOT WORK AS SYNTAX NOT OK, JUST USED TO CATCH IDEAS,
+# ANYONE CAN IMPROVE
 
 
 #
@@ -104,29 +106,72 @@ def generate_filename (date_object, postfix):
   return name + postfix 
 
 def rename_euca_log_file (path,name):
-  old_name = os.path.join(path,name)
-  FILE = open(old_name, "r", 0) 
-  line = tail(FILE,1)
-  date_object = getdate_from_euca_log_line(line)
-  new_name = generate_filename (date_object,'-cc.log')
-  new_name = os.path.join(path,new_name)
-  if os.path.exists(new_name):
-    os.rename (old_name, new_name)
-  else:
-    print "file existed already: " + new_name, ", deleting: " + old_name   
-    os.remove(old_name)
-  return
+    old_name = os.path.join(path,name)
+    print " renaming "  + old_name
+    new_name = generate_euca_log_filename(path,name)
+    print new_name
+    if not os.path.exists(new_name):
+        os.rename (old_name, new_name)
+    else:
+        print "file existed already: " + new_name, ", deleting: " + old_name   
+        os.remove(old_name)
+    return
+
+def generate_euca_log_filename (path,name):
+    old_name = os.path.join(path,name)
+    FILE = open(old_name, "r", 0) 
+    line = tail(FILE,1)
+    date_object = getdate_from_euca_log_line(line)
+    new_name = generate_filename (date_object,'-cc.log')
+    new_name = os.path.join(path,new_name)
+    return new_name
+
+
 
 def ls(path):
   print "----"
   os.system ("ls " + path)
   print "----"
 
+def all_euca_log_files (path):
+    '''returns a list of all euca logfiles recursively starting from path'''
+    all_files = []
+    for dirname, dirnames, filenames in os.walk(path):
+        for filename in filenames:
+            if fnmatch.fnmatch(filename, '*cc.log.*'):
+                all_files.append(os.path.join(dirname, filename))
+    return all_files
+
+def gather_all_euca_log_files (from_path,backup):
+    if not os.path.exists (backup):
+        os.makedirs (backup)
+
+    print from_path
+    for file in all_euca_log_files(from_path):
+        path = os.path.dirname(file)
+        name = os.path.basename(file)
+        new_name = os.path.basename(generate_euca_log_filename (path,name))
+        new_location = os.path.join(backup,new_name)
+        if not os.path.exists(new_location):
+            print new_name
+            shutil.copy2 (file, new_location)
+        else:
+            print new_name + ", WARNING: file exists, copy ignored"
+    return
 
 #####################################################################
 # MAIN
 #####################################################################
 def main():
+   dir_path = os.getenv("HOME") + "/Downloads/logbackup"
+
+   backup = "/tmp/backup"
+
+   gather_all_euca_log_files (dir_path,backup)
+
+   return
+
+def works():
   FILE = open("/tmp/cc.log.4", "r", 0) 
   print "---- head ----\n"
   print head(FILE,1)

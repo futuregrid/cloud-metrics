@@ -47,9 +47,19 @@ def print_ccInstance_parser(line):
 
     # GATHER ALL SIMPLE *=* assignments into a single rest line and add each entry to dict via eval
     rest = convert_str_to_dict_str(rest)
+    
     restdata = eval (rest)
 
     data.update(restdata)
+
+    # convert ccvm to dict
+
+    rest = data["ccvm"]
+    rest = convert_str_to_dict_str(rest[1:-1])
+
+
+    restdata = eval(rest)
+    data["ccvm"] = restdata
 
     return data
 

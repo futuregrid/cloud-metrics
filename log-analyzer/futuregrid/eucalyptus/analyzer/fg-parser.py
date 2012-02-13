@@ -37,6 +37,10 @@ def parse_type_and_date(line,data):
     data['msgtype'] = m.group(3)
     rest =  m.group(4)
     rest = re.sub(' +}','}',rest)
+    location = rest.index(":")
+    linetype = rest[0:location]
+    data['linetype'] = re.sub('\(\)','',linetype).strip()
+    rest = rest[location+1:].strip()
     return rest
 
 
@@ -48,7 +52,7 @@ def ccInstance_parser(line):
     rest = parse_type_and_date (line, data)
 
     # replace print_ccInstance(): with linetype=print_ccInstance
-    rest = rest.replace("print_ccInstance():","linetype=print_ccInstance")
+    #rest = rest.replace("print_ccInstance():","linetype=print_ccInstance")
     # replace refreshinstances(): with calltype=refresh_instances
     rest = rest.replace("refresh_instances():","calltype=refresh_instances")   # removing multiple spaces
 

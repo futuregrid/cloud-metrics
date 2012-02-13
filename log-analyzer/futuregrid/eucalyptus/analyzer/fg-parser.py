@@ -36,11 +36,19 @@ def parse_type_and_date(line,data):
     data['id']   = m.group(2)
     data['msgtype'] = m.group(3)
     rest =  m.group(4)
-    rest = re.sub(' +}','}',rest)
-    location = rest.index(":")
-    linetype = rest[0:location]
-    data['linetype'] = re.sub('\(\)','',linetype).strip()
-    rest = rest[location+1:].strip()
+    rest = re.sub(' +}','}',rest).strip()
+
+    if rest.startswith("running"):
+        data['linetype'] = "running"
+        return rest 
+    elif rest.startswith("calling"):
+        data['linetype'] = "calling"
+        return rest 
+    else:
+        location = rest.index(":")
+        linetype = rest[0:location]
+        data['linetype'] = re.sub('\(\)','',linetype).strip()
+        rest = rest[location+1:].strip()
     return rest
 
 
@@ -50,6 +58,10 @@ def ccInstance_parser(rest,data):
     # replace print_ccInstance(): with linetype=print_ccInstance
     #rest = rest.replace("print_ccInstance():","linetype=print_ccInstance")
     # replace refreshinstances(): with calltype=refresh_instances
+
+
+    #RunInstances():
+    rest = rest.replace("RunInstances():","calltype=run_instances")   # removing multiple spaces
     rest = rest.replace("refresh_instances():","calltype=refresh_instances")   # removing multiple spaces
 
     #separate easy assignments from those that would contain groups, for now simply put groups as a string
@@ -119,6 +131,53 @@ def terminate_instances_param_parser(rest,data):
     return data
 
 
+def pretty_print(data):
+    print json.dumps(data, sort_keys=False, indent=4)            
+
+def print_counter (label,counter):
+    print label + " = " + str(counter)
+
+def parse_file (filename,analyse,debug=False):
+    
+    f = open(filename, 'r')
+    lines_total = 0
+    lines_ignored = 0
+    count_terminate_instances = 0
+    count_refresh_resource = 0
+    count_ccInstance_parser = 0 
+    for line in f:
+        lines_total += 1
+        if debug:
+            print "DEBUG " + str(lines_total) +"> " + line
+        data = {}
+        rest = parse_type_and_date (line, data)
+        if data["linetype"] == "TerminateInstances":
+            count_terminate_instances += 1
+            terminate_instances_param_parser(rest, data)
+        elif data["linetype"] == "refresh_resources":
+            count_refresh_resource += 1
+            refresh_resource_parser(rest, data)
+        elif data["linetype"] == "print_ccInstance":
+            count_ccInstance_parser += 1
+            ccInstance_parser(rest, data)
+        else:
+            ignore = True
+        if ignore:
+            lines_ignored +=1
+            if debug:
+                print "IGNORE> " + line
+        else:
+            analyze(data)
+
+    print_counter("lines total",lines_total)
+    print_counter ("lines ignored = ", lines_ignored)
+    print_counter("count_terminate_instances",count_terminate_instances)
+    print_counter("count_refresh_resource",count_refresh_resource)
+    print_counter("count_ccInstance_parser ",count_ccInstance_parser )
+
+           
+    return
+
 #
 #####################################################################
 # MAIN
@@ -171,26 +230,7 @@ def main():
                "[Thu Nov 10 13:04:16 2011][016168][EUCAINFO  ] TerminateInstances(): called")
 
 
-
-
-
-    def parse_file (filename):
-    #
-    # FILE TEST
-    #
-    # while <>
-    #   line = readline
-    #   data = {}
-    #   rest = parse_type_and_date (line, data)
-    #   if data["linetype"] == "?":
-    #      terminate_instances_param_parser(rest, data)
-    #   else if ...
-        #refresh_resources
-        #TerminateInstances
-        #print_ccInstance
-
-        return
-
+    parse_file ("/tmp/cc.log.4",pretty_print,debug=False)
 
 
     #   

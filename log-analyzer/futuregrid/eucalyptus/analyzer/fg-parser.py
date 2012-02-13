@@ -4,6 +4,8 @@ import json
 import sys
 from datetime import datetime
 
+
+
 instance = {}
 
 def print_instance_info (data):
@@ -11,15 +13,16 @@ def print_instance_info (data):
     if data["linetype"] == "print_ccInstance":
         instanceId = data["instanceId"] 
         ownerId = data["ownerId"]
+        timestamp = str(datetime.fromtimestamp(int(data["ts"])))
 
         id = instanceId + " " + ownerId
         try:
             end_t = instance[id](1)
             if end_t < data["date"]:
                 end_t = data["date"]
-            instance[id] = (data["ts"], data["date"], data["instanceId"], data["ownerId"])
+            instance[id] = (timestamp, data["date"], data["instanceId"], data["ownerId"])
         except:
-            instance[id] = (data["ts"], data["date"], data["instanceId"], data["ownerId"])
+            instance[id] = (timestamp, data["date"], data["instanceId"], data["ownerId"])
 
  
 #        print  data["ts"] + " " + data["ts"], data["date"])

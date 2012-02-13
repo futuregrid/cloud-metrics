@@ -4,6 +4,27 @@ import json
 import sys
 from datetime import datetime
 
+instance = {}
+
+def print_instance_info (data):
+
+    if data["linetype"] == "print_ccInstance":
+        instanceId = data["instanceId"] 
+        ownerId = data["ownerId"]
+
+        id = instanceId + " " + ownerId
+        try:
+            end_t = instance[id](1)
+            if end_t < data["date"]:
+                end_t = data["date"]
+            instance[id] = (data["ts"], data["date"], data["instanceId"], data["ownerId"])
+        except:
+            instance[id] = (data["ts"], data["date"], data["instanceId"], data["ownerId"])
+
+ 
+#        print  data["ts"] + " " + data["ts"], data["date"])
+
+
 def convert_data_to_list(data,attribute):
     rest = data[attribute]
     rest = re.sub(" ","' , '", rest)
@@ -137,8 +158,7 @@ def pretty_print(data):
 def print_counter (label,counter):
     print label + " = " + str(counter)
 
-def parse_file (filename,analyse,debug=False):
-    
+def parse_file (filename,analyze,debug=False):
     f = open(filename, 'r')
     lines_total = 0
     lines_ignored = 0
@@ -146,6 +166,7 @@ def parse_file (filename,analyse,debug=False):
     count_refresh_resource = 0
     count_ccInstance_parser = 0 
     for line in f:
+        ignore = False
         lines_total += 1
         if debug:
             print "DEBUG " + str(lines_total) +"> " + line
@@ -230,9 +251,13 @@ def main():
                "[Thu Nov 10 13:04:16 2011][016168][EUCAINFO  ] TerminateInstances(): called")
 
 
-    parse_file ("/tmp/cc.log.4",pretty_print,debug=False)
+#    parse_file ("/tmp/cc.log.4",pretty_print,debug=False)
+
+    parse_file ("/tmp/cc.log.4",print_instance_info,debug=False)
 
 
+    print json.dumps(instance, sort_keys=False, indent=4)
+    print "total instances = " + str(len(instance))
     #   
 
 if __name__ == "__main__":

@@ -70,27 +70,6 @@ my $title_perl="Log file analyzer for Eucalyptus (ElogA)";
 my $END="\n";
 use constant DEBUG => 0;
 
-# Descriptions of log files
-# Key = filename
-# Value = description
-my %desc_files = ("cc.log", "cc.log is a cluster controller log file\nnode memory, disk and processors details on the log file\n");
-$desc_files{"nc-stats"} = "nc-stats is a node controller log\nrun/terminate tracking information\n";
-$desc_files{"sc-stats.log"} = "sc-stats.log is a storage controller log file";
-$desc_files{"walrus-stats.log"} = "walrus is a storage service like Amazon S3";
-$desc_files{"axis2c.log"} = "";
-$desc_files{"cloud-cluster.log"} = "";
-$desc_files{"cloud-debug.log"} = "";
-$desc_files{"cloud-error.log"} = "";
-$desc_files{"cloud-exhaust.log"} = "";
-$desc_files{"cloud-output.log"} = "";
-$desc_files{"httpd-cc_error_log"} = "";
-$desc_files{"upgrade.log"} = "";
-
-# Description 
-#[Mon Apr 26 22:33:09 2010][024529][EUCADEBUG ] refresh_resources(): node=192.168.1.3 mem=7773/7773 disk=267834/267834 cores=4/4
-my %desc_logs = ("refresh_resources(): received data", "mem, disk, and cores show (available)/(max) resources");
-$desc_logs{"ncClientCall"} = "This is a node controller call from cluster/handler.c. Please see the source code to analyze.";
-
 #No argument
 if ( $#ARGV == -1 )  {
 	print $title_perl.$END;
@@ -753,12 +732,51 @@ sub printData {
 	print "next: $self->{next}.$END";
 }
 
+
+# Descriptions of log files
+sub printDescriptionFiles {
+	my %desc_files = ("cc.log", "cc.log is a cluster controller log file\nnode memory, disk and processors details on the log file\n");
+	$desc_files{"nc-stats"} = "nc-stats is a node controller log\nrun/terminate tracking information\n";
+	$desc_files{"sc-stats.log"} = "sc-stats.log is a storage controller log file";
+	$desc_files{"walrus-stats.log"} = "walrus is a storage service like Amazon S3";
+	$desc_files{"axis2c.log"} = "";
+	$desc_files{"cloud-cluster.log"} = "";
+	$desc_files{"cloud-debug.log"} = "";
+	$desc_files{"cloud-error.log"} = "";
+	$desc_files{"cloud-exhaust.log"} = "";
+	$desc_files{"cloud-output.log"} = "";
+	$desc_files{"httpd-cc_error_log"} = "";
+	$desc_files{"upgrade.log"} = "";
+}
+
+# descriotion of functions of cc.log
+sub printDescriotionFunctions {
+	#[Mon Apr 26 22:33:09 2010][024529][EUCADEBUG ] refresh_resources(): node=192.168.1.3 mem=7773/7773 disk=267834/267834 cores=4/4
+	my %desc_logs = ("refresh_resources(): received data", "mem, disk, and cores show (available)/(max) resources");
+	$desc_logs{"ncClientCall"} = "This is a node controller call from cluster/handler.c. Please see the source code to analyze.";
+}
+
+#############################################
+#
+# package LogInfo
+# ===============
+# 
+# This function will parse the front string of log files
+# It looks like
+#
+# "[Tue Feb  1 00:18:54 2011][009030][EUCADEBUG ]"
+#
+# First bracket has 'DATE'
+# Second bracket has 'uid' ; unique id
+# Third bracket has 'logtype'
+#
+#############################################
+
 package LogInfo;
 sub new
 {
 	my $class = shift;
 	my $self = {
-#[Tue Feb  1 00:18:54 2011][009030][EUCADEBUG ]
 		logDate => shift,
 		logYear => shift,
 		logMonth => shift,
@@ -773,6 +791,20 @@ sub new
 	return $self;
 }
 
+#############################################
+#
+# package Instance
+# ================
+#
+# This is similar with logInfo package.
+# Here is a sample line of Instance information from log files
+#
+#userId=jklingin, emiId=emi-0B951139, kernelId=eki-78EF12D2, ramdiskId=eri-5BB61255, emiURL=http://149.165.146.135:8773/services/Walrus/centos53/centos.5-3.x86-64.img.manifest.xml, kernelURL=http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml, ramdiskURL=http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml, instIdsLen=1, netNamesLen=1, macAddrsLen=1, networkIndexListLen=1, minCount=1, maxCount=1, ownerId=jklingin, reservationId=r-431E081D, keyName=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCSkJh2v6G76slfKVZZ4nsDaDNc+d6grFZL1dqDL9G4VGR9pNd4mFkP75qisw4GFMUfVTPrVYga267yY4d8LMBDZmf/X1mi9O91Isnmzb1bgH2hr8mH4AOjEDOTg1xh6mVTcJ6h98PQfZrg6czJ6tbKNnbkxm84V2AROrVYw3XX5JuxUtF3x4s7lUm7v4WommgXNGPNWHFDYWdUCBM4y+H/N3YCVE1mVKL4KlbX3iX646U6iUeSvZtjRvgrvQEpkXTU9snBGvzZ9dWVpx7wzOxQphDiZ2F9B+/JCAi4k0Dhxj5QcZQTVWr3XhZxTEiIRoXSVlKK7+tT+MNdB0bdCPVF jklingin@eucalyptus, vlan=14, userData=, launchIndex=0, targetNode=UNSET
+#
+# It should be delimited by ", "
+# and an each key and a value are seperate by "=" 
+#
+#############################################
 package Instance;
 sub new
 {
@@ -803,17 +835,9 @@ sub new
 }
 
 
-#userId=jklingin, emiId=emi-0B951139, kernelId=eki-78EF12D2, ramdiskId=eri-5BB61255, emiURL=http://149.165.146.135:8773/services/Walrus/centos53/centos.5-3.x86-64.img.manifest.xml, kernelURL=http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml, ramdiskURL=http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml, instIdsLen=1, netNamesLen=1, macAddrsLen=1, networkIndexListLen=1, minCount=1, maxCount=1, ownerId=jklingin, reservationId=r-431E081D, keyName=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCSkJh2v6G76slfKVZZ4nsDaDNc+d6grFZL1dqDL9G4VGR9pNd4mFkP75qisw4GFMUfVTPrVYga267yY4d8LMBDZmf/X1mi9O91Isnmzb1bgH2hr8mH4AOjEDOTg1xh6mVTcJ6h98PQfZrg6czJ6tbKNnbkxm84V2AROrVYw3XX5JuxUtF3x4s7lUm7v4WommgXNGPNWHFDYWdUCBM4y+H/N3YCVE1mVKL4KlbX3iX646U6iUeSvZtjRvgrvQEpkXTU9snBGvzZ9dWVpx7wzOxQphDiZ2F9B+/JCAi4k0Dhxj5QcZQTVWr3XhZxTEiIRoXSVlKK7+tT+MNdB0bdCPVF jklingin@eucalyptus, vlan=14, userData=, launchIndex=0, targetNode=UNSET
 
 #$object = new Instance( "jklingin", "emi-0B951139", "eki-78EF12D2");
 
-# PRINT THE HASH
-#print %desc_files;
-
-# PRINT THE NEW HASH
-#while (($key, $value) = each(%desc_files)){
-#	     print $key.", ".$value."\n";
-#}
 
 # Examples
 # RunInstances 
@@ -897,9 +921,9 @@ sub month2number($)
 {
 	my $string = shift;
 	my %mon2num = qw(
-	jan 1  feb 2  mar 3  apr 4  may 5  jun 6
-	jul 7  aug 8  sep 9  oct 10 nov 11 dec 12
-	);
+			jan 1  feb 2  mar 3  apr 4  may 5  jun 6
+			jul 7  aug 8  sep 9  oct 10 nov 11 dec 12
+			);
 
 	return $mon2num{ lc substr($string, 0, 3) };
 }

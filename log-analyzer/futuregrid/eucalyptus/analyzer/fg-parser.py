@@ -43,7 +43,10 @@ def instance_json_dump(all):
     for key in all:
         instance_tostr_data (all[key])
     string = json.dumps(all, sort_keys=False, indent=4)
+
+    print "Hello"
     for key in all:
+        print all[key]
         instance_todate_data(all[key])
     
     return string 
@@ -122,7 +125,7 @@ def generate_instance_info (data):
 
         if not ("t_end" in current):
         #time in the future
-            f = data["date"] + relativedelta( year = +10 )
+            f = data["date"] + relativedelta( months = +365 )
 
             current["trace"] = { "pending" : {"start" : f, "stop": t}, "teardown" : {"start" : f, "stop": t}, "extant" : {"start" : f, "stop": t} }
             current["t_end"] = current["date"]
@@ -476,7 +479,7 @@ def test5(filename,progress=True):
     calculate_delta (instance)
     print instance
     print instance_json_dump (instance)
-    print json.dumps(instance, sort_keys=False, indent=4)
+    print instance
     print "total instances = " + str(len(instance))
     return
 

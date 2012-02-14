@@ -48,12 +48,18 @@ def display_user_stats(users):
         values.append(count)
         label_values.append(name + ":" + str(count))
     print values
+
+    # cant get the label values to work so I cheat with eval
+    # G=  Pie3D(values).title("Number of Instances").color("red","lime").label(label_values)
+
     label_values_str = str(label_values)[1:-1]
     values_str = str(values)
-
     command = "Pie3D(" + values_str + ').title("Number of Instances").color("red","lime").label(' + label_values_str +')'
     print command
     G = eval(command)
+    
+    # end of cheat 
+
     G.color('green')
     os.system ("open -a /Applications/Safari.app " + '"' + str(G) + '"')
 

@@ -1,6 +1,31 @@
 #! /usr/bin/env python
 import fg-parser
 
+''' output (CSV type) for 'used minutes by users' and 'number of running instances per user' graphs are expected like below.
+
+Year, Month, Day, ownerId, used minutes, number of running instances, instances
+2012,02,11,admin,1440,1,i-51230A25
+2012,02,11,inca,25,3,i-3F11078B;i-50230963;i-593009E3
+2012,02,11,jiaazeng,11520,8,i-274B0603;i-34B706F0;i-355906E0;i-3F81078E;i-4A390892;i-4CC608BE;i-523C0905;i-547008E6
+2012,02,11,vahi,2880,2,i-457108AE;i-4F9D0896
+2012,02,11,xiuwyang,1440,1,i-37F00737
+2012,02,12,admin,1413,1,i-51230A25
+2012,02,12,inca,49,7,i-349A0753;i-3F4607A3;i-400B0740;i-402F07B3;i-4162081F;i-48ED0853;i-4BFE07F0
+2012,02,12,jiaazeng,11303,8,i-274B0603;i-34B706F0;i-355906E0;i-3F81078E;i-4A390892;i-4CC608BE;i-523C0905;i-547008E6
+2012,02,12,vahi,2826,2,i-457108AE;i-4F9D0896
+2012,02,12,xiuwyang,2374,5,i-37F00737;i-393D0638;i-448707B6;i-48660854;i-4BA708F7
+
+How to get the result above from cc.log?
+----------------------------------------
+1) Collect lines that have 'print_ccInstance(): refresh_instances():'
+2) if an instance is down (state=Teardown), get minutes by (endtime - start time)
+* start time => (ts=)
+* end time => log date time which occurs first in the order of lines
+3) Save the minutes (result array -> date -> ownerId -> used minutes)
+4) if an instance is alive (state=Extant), get minutes by (current time or last time of log - start time)
+5) add the minutes to the result array
+6) instance ids are collected (instanceId=) for displaying a number of running instances.
+'''
 
 
 

@@ -5,8 +5,7 @@ import sys
 import os
 from datetime import datetime
 
-
-
+users = {}
 instance = {}
 
 def print_instance_info (data):
@@ -26,22 +25,36 @@ def print_instance_info (data):
         except:
             instance[id] = (data["date"], timestamp, data["instanceId"], data["ownerId"])
 
- 
-
-
 def calculate_delta (instances):
     for i in instances:
         values = instances[i]
-        print values
-        print values[0]
-        print values[1]
         t_start = datetime.strptime(values[1], '%Y-%m-%d %H:%M:%S') # convert to datetime
         t_end = datetime.strptime(values[0], '%Y-%m-%d %H:%M:%S') # convert to datetime
         t_delta = t_end - t_start
-        print t_delta
-        instances[i] += (str(t_delta),)
+        instances[i] += (str(t_delta.total_seconds()),)
 
+def calculate_user_stats (instances,users):
+    for i in instances:
+        values = instances[i]
+        name = values[3]
+        t_delta = float(values[4])
+        try:
+            users[name][0] = users[name][0] + 1 # number of instances
+        except:
+            #          count,sum,min,max,avg
+            users[name] = [1,0.0,t_delta,t_delta,0.0]
 
+        users[name][1] = users[name][1] + t_delta  # sum of time 
+        if t_delta < users[name][2]: # min
+            users[name][2] = t_delta
+        if t_delta > users[name][3]: # mmax
+            users[name][3] = t_delta
+    for name in users:
+        users[name][4] = float(users[name][1]) / float(users[name][0])
+ 
+        
+
+        
 
 
 def convert_data_to_list(data,attribute):
@@ -291,6 +304,11 @@ def main():
 
     print json.dumps(instance, sort_keys=False, indent=4)
     print "total instances = " + str(len(instance))
+
+
+    calculate_user_stats (instance,users)
+    print json.dumps(users, sort_keys=False, indent=4)
+    print "total users = " + str(len(users))
     #   
 
 if __name__ == "__main__":

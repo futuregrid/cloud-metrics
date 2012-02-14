@@ -1,50 +1,42 @@
-        "calltype": "refresh_instances", 
-        "userData": "", 
-        "kernelId": "eki-78EF12D2", 
-        "emiURL": "http://149.165.146.135:8773/services/Walrus/centos53/centos.5-3.x86-64.img.manifest.xml", 
-
-        "t_start": "2011-11-10 10:06:55", 
-        "t_end": "2011-11-10 10:06:58", 
-        "duration": "3.0", 
-        "trace_teardown_start": "2011-11-10 10:06:58", 
-        "trace_teardown_stop": "2011-11-10 10:10:02"
-        "trace_extant_start: "2011-11-10 10:06:58", 
-        "trace_extant"stop "2011-11-10 10:06:58"
-        "trace_pending_start": "2011-11-10 10:06:58", 
-        "trace_pending_stop": "2011-11-10 10:06:58"
-
-
-        "serviceTag": "http://i14:8775/axis2/services/EucalyptusNC", 
-        "instanceId": "i-4C9C0832", 
-
-        "ts": "2011-11-10 10:06:55", 
-        "groupNames": "sharifnew"
-        "keyName": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCp13CbKJLtKG5prGiet/VHct36CXzcpBKVgYsh/lxIXWKuositayvvuKux+I5GZ9bFWzMF71xAjmFinmAT3FXFKMd54FebPKZ2kBPCRqtmxz2jT1SG4hy1g1eDPzVX+qt5w8metAs7W//BCaBvWpU5IBuKSNqxO5OUIjIKkw3xkSswRpqSzrUBAmQP7e4dzQvmhqIxq4ZWqcEIWsAik0fSODTipa+Z6DvVKe02f5OtdUsXzz7pIivZ3qRGQveI5SOTdgFPqG+VglMsPURLbFFVWW1l51gCmRUwTf9ClySshSpkpAtaOx/OApQoII/vJxgr/EdYPOu1QLkubS4XH6+Z sharif@eucalyptus", 
-        "msgtype": "EUCADEBUG ", 
-        "volumesSize": "0", 
-        "linetype": "print_ccInstance", 
-        "ownerId": "sharif", 
-        "date": "2011-11-10 10:06:58", 
-        "id": "021895", 
-
-        "ncHostIdx": "12", 
-
-        "ccvm_mem": "512", 
-        "ccvm_cores": "1", 
-        "ccvm_disk": "5"
-
-        "emiId": "emi-0B951139", 
-
-        "ccnet_publicIp": "149.165.159.142", 
-        "ccnet_privateMac": "D0:0D:4C:9C:08:32", 
-        "ccnet_networkIndex": "5", 
-        "ccnet_vlan": "11", 
-        "ccnet_privateIp": "10.0.1.37"
-
-        "ramdiskURL": "http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml", 
-        "state": "Teardown", 
-        "kernelURL": "http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml", 
-        "ramdiskId": "eri-5BB61255", 
-        "volumes": ""
-        "launchIndex": "0", 
-        "reservationId": "r-4E560827"
+[sql_table_entry]
+"calltype": "refresh_instances", 
+"userData": "", 
+"kernelId": "eki-78EF12D2", 
+"emiURL": "http://149.165.146.135:8773/services/Walrus/centos53/centos.5-3.x86-64.img.manifest.xml", 
+"t_start": "2011-11-10 10:06:55", 
+"t_end": "2011-11-10 10:10:02"
+"duration": "3.0", 
+"trace_teardown_start": "2011-11-10 10:06:58", 
+"trace_teardown_stop": "2011-11-10 10:10:02"
+"trace_extant_start: "2011-11-10 10:06:58", 
+"trace_extant"stop "2011-11-10 10:06:58"
+"trace_pending_start": "2011-11-10 10:06:58", 
+"trace_pending_stop": "2011-11-10 10:06:58"
+"serviceTag": "http://i14:8775/axis2/services/EucalyptusNC", 
+"instanceId": "i-4C9C0832", 
+"ts": "2011-11-10 10:06:55", 
+"groupNames": "sharifnew"
+"keyName": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCp13CbKJLtKG5prGiet/VHct36CXzcpBKV .... /OApQoII/vJxgr/EdYPOu1QLkubS4XH6+Z sharif@eucalyptus", 
+"msgtype": "EUCADEBUG ", 
+"volumesSize": "0", 
+"linetype": "print_ccInstance", 
+"ownerId": "sharif", 
+"date": "2011-11-10 10:06:58", 
+"id": "021895", 
+"ncHostIdx": "12", 
+"ccvm_mem": "512", 
+"ccvm_cores": "1", 
+"ccvm_disk": "5"
+"emiId": "emi-0B951139", 
+"ccnet_publicIp": "149.165.159.142", 
+"ccnet_privateMac": "D0:0D:4C:9C:08:32", 
+"ccnet_networkIndex": "5", 
+"ccnet_vlan": "11", 
+"ccnet_privateIp": "10.0.1.37"
+"ramdiskURL": "http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml", 
+"state": "Teardown", 
+"kernelURL": "http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml", 
+"ramdiskId": "eri-5BB61255", 
+"volumes": ""
+"launchIndex": "0", 
+"reservationId": "r-4E560827"

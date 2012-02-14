@@ -348,8 +348,6 @@ def main():
     #   
 
     display_user_stats (users)
-    display_user_stats (users, type = "bar")
-
 
 
 

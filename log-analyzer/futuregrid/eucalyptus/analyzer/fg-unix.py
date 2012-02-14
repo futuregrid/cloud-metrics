@@ -234,7 +234,9 @@ def main():
 
    backup = "/tmp/backup"
 
-   gather_all_euca_log_files (dir_path,backup)
+   #   gather_all_euca_log_files (dir_path,backup)
+   gather_all_euca_log_files ("/Users/gregor/Desktop/logbackup", "/Users/gregor/Desktop/BACKUP/")
+
 
    return
 

@@ -10,6 +10,7 @@ import json
 import sys
 import os
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 users = {}
 instance = {}
@@ -18,91 +19,51 @@ def clear():
     users = {}
     instance = {}
 
-#
-# SQL
-#
-"""
-keynames = ()
-values = ()
+    
+######################################################################
+# PRINT DATA 
+######################################################################
 
-def getsql(key, values)
-    i = index(key,keynames)
-    return values[i]
+def instance_json_dump(all):
+    string = ""
+    for key in all:
+        instance_tostr_data (all[key])
+    string = json.dumps(all, sort_keys=False, indent=4)
+    for key in all:
+        instance_todate_data(all[key])
+    
+    return string 
 
-def get(key, values)
-    sqlkey = datakey(key)
-    return getsql(sqlkey,values)
+ 
+def value_todate(string):
+   return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
 
-get(["tarce"]["teardown"]["start"]', values)
+def instance_todate_data(data):
+    data["trace"]["teardown"]["start"] = value_todate(data["trace"]["teardown"]["start"])
+    data["trace"]["teardown"]["stop"] = value_todate(data["trace"]["teardown"]["stop"])
+    data["trace"]["extant"]["start"] = value_todate(data["trace"]["extant"]["start"])
+    data["trace"]["extant"]["stop"] = value_todate(data["trace"]["extant"]["stop"])
+    data["trace"]["pending"]["start"] = value_todate(data["trace"]["pending"]["start"])
+    data["trace"]["pending"]["stop"] = value_todate(data["trace"]["pending"]["stop"])
+    data["t_start"] = value_todate(data["t_start"])
+    data["date"] = value_todate(data["date"])
+    data["t_end"] = value_todate(data["t_end"])
+    data["ts"] = value_todate(data["ts"])
+    #return data
 
-value = a
-key = ["tarce"]["teardown"]["start"]'
-eval (instance key = value)
-
-instance["tarce"]["teardown"]["start"]' = value
-
-
-
-def sqlkey(string)
-    # '["tarce"]["teardown"]["start"]'
-    string = re.sub("][", "_", string)
-    string = re.sub("]", "", string)
-    string = re.sub("[", "", string)
-    string = re.sub('"', "", string)
-    string = re.sub("'", "", string)
-    return string
-
-def datakey(string)
-    # trace_teardown_start
-    string = re.sub("_",'"]["', string)
-    string = "['" + string + "']"
-    return string
-"""
-
-"""
-data
-        'trace': {
-            'teardown': {
-                'start': '2011-11-10 10:06:58', 
-                'stop': '2011-11-10 10:10:02'
-            }, 
-
-sql
-        trace_teardown_start: '2011-11-10 10:06:58', 
-        trace_teardown_start: '2011-11-10 10:10:02'
-
-data
-"groupNames": [
-            "sharifnew",             "sharifnewa"
-        ], 
-
-sql
-"groupNames": sharifnew sharifnewa
+def instance_tostr_data(data):
+    data["trace"]["teardown"]["start"] = str(data["trace"]["teardown"]["start"])
+    data["trace"]["teardown"]["stop"] = str(data["trace"]["teardown"]["stop"])
+    data["trace"]["extant"]["start"] = str(data["trace"]["extant"]["start"])
+    data["trace"]["extant"]["stop"] = str(data["trace"]["extant"]["stop"])
+    data["trace"]["pending"]["start"] = str(data["trace"]["pending"]["start"])
+    data["trace"]["pending"]["stop"] = str(data["trace"]["pending"]["stop"])
+    data["ts"] = str(data["ts"])
+    data["t_start"] = str(data["t_start"])
+    data["date"] = str(data["date"])
+    data["t_end"] = str(data["t_end"])
+    #return data
         
-
-
-
-null
-"""
-"""
-def emptyData():
-return data
-
-
-def writetodb(data):
-    return
-
-
-def finddata (is, timestamp, user):
-    #    return object to pass to data_from_db
-    return
-    
-def fromdb(data_from_db):
-    data{}
-    return data
-"""
-    
-
 ######################################################################
 # GENERATE INSTANCE STATISTICS
 ######################################################################
@@ -118,22 +79,24 @@ def fromdb(data_from_db):
         
     
 
-def minmax_time (a, b):
-    if a < b:
-        return (a,b)
+def minmax_time (t_a, t_b):
+    if t_a < t_b:
+        return (t_a,t_b)
     else:
-        return (b,a)
+        return (t_b,t_a)
     
 def generate_instance_info (data):
     """prints the information for each instance"""
     if data["linetype"] == "print_ccInstance":
         instanceId = data["instanceId"] 
         ownerId = data["ownerId"]
-        timestamp = str(datetime.fromtimestamp(int(data["ts"])))
+        timestamp = data["ts"]
         status = data["state"].lower()
         t = data["date"]
 
-        id = instanceId + " " + ownerId + " " + timestamp
+
+        
+        id = instanceId + " " + ownerId + " " + str(timestamp)
 
         try:
             current = instance[id]
@@ -141,10 +104,13 @@ def generate_instance_info (data):
         except:
             current = data
             
-        current["ts"] = timestamp
+#        current["ts"] = timestamp
 
         if not ("t_end" in current):
-            current["trace"] = { "pending" : {"start" : t, "stop": t}, "teardown" : {"start" : t, "stop": t}, "extant" : {"start" : t, "stop": t} }
+        #time in the future
+            f = data["date"] + relativedelta( year = +10 )
+
+            current["trace"] = { "pending" : {"start" : f, "stop": t}, "teardown" : {"start" : f, "stop": t}, "extant" : {"start" : f, "stop": t} }
             current["t_end"] = current["date"]
             current["t_start"] = current["ts"] # for naming consitency
             current["duration"] = 0.0
@@ -162,9 +128,7 @@ def calculate_delta (instances):
     """calculates how long each instance runs in seconds"""
     for i in instances:
         values = instances[i]
-        t_start = datetime.strptime(values["t_start"], '%Y-%m-%d %H:%M:%S') # convert to datetime
-        t_end = datetime.strptime(values["t_end"], '%Y-%m-%d %H:%M:%S') # convert to datetime
-        t_delta = t_end - t_start
+        t_delta = values["t_end"] - values["ts"]
         instances[i]["duration"] = str(t_delta.total_seconds())
 
 ######################################################################
@@ -273,7 +237,7 @@ def parse_type_and_date(line,data):
     # split line after the third ] to (find date, id, msgtype)
     # put the rest in the string "rest"
     m = re.search( r'\[(.*)\]\[(.*)\]\[(.*)\](.*)', line, re.M|re.I)
-    data['date'] = str(datetime.strptime(m.group(1), '%a %b %d %H:%M:%S %Y'))
+    data['date'] = datetime.strptime(m.group(1), '%a %b %d %H:%M:%S %Y')
     data['id']   = m.group(2)
     data['msgtype'] = m.group(3)
     rest =  m.group(4)
@@ -329,6 +293,10 @@ def ccInstance_parser(rest,data):
     convert_data_to_list(data,"groupNames")
     convert_data_to_list(data,"volumes")
 
+    # convert the timestamp
+    data["ts"] = datetime.fromtimestamp(int(data["ts"]))
+
+
     return data
 
 def refresh_resource_parser(rest,data):
@@ -372,8 +340,6 @@ def terminate_instances_param_parser(rest,data):
     return data
 
 
-def pretty_print(data):
-    print json.dumps(data, sort_keys=False, indent=4)            
 
 def print_counter (label,counter):
     print label + " = " + str(counter)
@@ -488,12 +454,14 @@ def test3():
     return
 
 def test4():
-    parse_file ("/tmp/cc.log.4",pretty_print,debug=False)
+    parse_file ("/tmp/cc.log.4",jason_dump,debug=False)
     return
 
 def test5(filename,progress=True):
     parse_file (filename,generate_instance_info,debug=False,progress=progress)
     calculate_delta (instance)
+    print instance
+    print instance_json_dump (instance)
     print json.dumps(instance, sort_keys=False, indent=4)
     print "total instances = " + str(len(instance))
     return
@@ -503,6 +471,10 @@ def test6():
     print json.dumps(users, sort_keys=False, indent=4)
     print "total users = " + str(len(users))
     return
+
+def test_display():
+    display_user_stats (users)
+    display_user_stats (users, type="bar")
 
 def main():
 
@@ -521,15 +493,13 @@ def main():
     # test3()
 
 
-
-    test5("/tmp/cc.log.prints_cc",progress=True)
+    test5("/tmp/cc.log.4",progress=True)
+    #test5("/tmp/cc.log.prints_cc",progress=True)
     
-    test6()
-
+    #test6()
+    #    test_display()
     #   
 
-    display_user_stats (users)
-    display_user_stats (users, type="bar")
 
 
 

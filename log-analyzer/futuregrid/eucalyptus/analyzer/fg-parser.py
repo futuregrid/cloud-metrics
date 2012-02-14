@@ -1,4 +1,8 @@
 #! /usr/bin/env python
+
+# sudo easy_install -U GChartWrapper
+from GChartWrapper import Pie3D
+
 import re
 import json
 import sys
@@ -7,6 +11,8 @@ from datetime import datetime
 
 users = {}
 instance = {}
+
+
 
 def print_instance_info (data):
 
@@ -32,6 +38,24 @@ def calculate_delta (instances):
         t_end = datetime.strptime(values[0], '%Y-%m-%d %H:%M:%S') # convert to datetime
         t_delta = t_end - t_start
         instances[i] += (str(t_delta.total_seconds()),)
+
+def display_user_stats(users):
+    values = []
+    label_values = []
+
+    for name in users:
+        count = users[name][0]
+        values.append(count)
+        label_values.append(name + ":" + str(count))
+    print values
+    label_values_str = str(label_values)[1:-1]
+    values_str = str(values)
+
+    command = "Pie3D(" + values_str + ').title("Number of Instances").color("red","lime").label(' + label_values_str +')'
+    print command
+    G = eval(command)
+    G.color('green')
+    os.system ("open -a /Applications/Safari.app " + '"' + str(G) + '"')
 
 def calculate_user_stats (instances,users):
     for i in instances:
@@ -314,6 +338,11 @@ def main():
     print json.dumps(users, sort_keys=False, indent=4)
     print "total users = " + str(len(users))
     #   
+
+    display_user_stats (users)
+
+
+
 
 if __name__ == "__main__":
     main()

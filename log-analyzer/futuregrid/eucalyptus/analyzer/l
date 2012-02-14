@@ -1,0 +1,579 @@
+Python version: sys.version_info(major=2, minor=7, micro=2, releaselevel='final', serial=0)
+------------------------------------------------------------
+- parsetest: <function ccInstance_parser at 0x1004f5398>
+------------------------------------------------------------
+INPUT>
+[Wed Nov  9 19:58:12 2011][008128][EUCADEBUG ] print_ccInstance(): refresh_instances():  instanceId=i-42BA06B1 reservationId=r-3D3306BC emiId=emi-0B951139 kernelId=eki-78EF12D2 ramdiskId=eri-5BB61255 emiURL=http://149.165.146.135:8773/services/Walrus/centos53/centos.5-3.x86-64.img.manifest.xml kernelURL=http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml ramdiskURL=http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml state=Extant ts=1320693195 ownerId=sharif keyName=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCp13CbKJLtKG5prGiet/VHct36CXzcpBKVgYsh/lxIXWKuositayvvuKux+I5GZ9bFWzMF71xAjmFinmAT3FXFKMd54FebPKZ2kBPCRqtmxz2jT1SG4hy1g1eDPzVX+qt5w8metAs7W//BCaBvWpU5IBuKSNqxO5OUIjIKkw3xkSswRpqSzrUBAmQP7e4dzQvmhqIxq4ZWqcEIWsAik0fSODTipa+Z6DvVKe02f5OtdUsXzz7pIivZ3qRGQveI5SOTdgFPqG+VglMsPURLbFFVWW1l51gCmRUwTf9ClySshSpkpAtaOx/OApQoII/vJxgr/EdYPOu1QLkubS4XH6+Z sharif@eucalyptus ccnet={privateIp=10.0.4.4 publicIp=149.165.159.130 privateMac=D0:0D:42:BA:06:B1 vlan=10 networkIndex=4} ccvm={cores=1 mem=512 disk=5} ncHostIdx=24 serviceTag=http://i1:8775/axis2/services/EucalyptusNC userData= launchIndex=0 volumesSize=0 volumes={} groupNames={sharifnew }
+REST>
+refresh_instances():  instanceId=i-42BA06B1 reservationId=r-3D3306BC emiId=emi-0B951139 kernelId=eki-78EF12D2 ramdiskId=eri-5BB61255 emiURL=http://149.165.146.135:8773/services/Walrus/centos53/centos.5-3.x86-64.img.manifest.xml kernelURL=http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml ramdiskURL=http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml state=Extant ts=1320693195 ownerId=sharif keyName=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCp13CbKJLtKG5prGiet/VHct36CXzcpBKVgYsh/lxIXWKuositayvvuKux+I5GZ9bFWzMF71xAjmFinmAT3FXFKMd54FebPKZ2kBPCRqtmxz2jT1SG4hy1g1eDPzVX+qt5w8metAs7W//BCaBvWpU5IBuKSNqxO5OUIjIKkw3xkSswRpqSzrUBAmQP7e4dzQvmhqIxq4ZWqcEIWsAik0fSODTipa+Z6DvVKe02f5OtdUsXzz7pIivZ3qRGQveI5SOTdgFPqG+VglMsPURLbFFVWW1l51gCmRUwTf9ClySshSpkpAtaOx/OApQoII/vJxgr/EdYPOu1QLkubS4XH6+Z sharif@eucalyptus ccnet={privateIp=10.0.4.4 publicIp=149.165.159.130 privateMac=D0:0D:42:BA:06:B1 vlan=10 networkIndex=4} ccvm={cores=1 mem=512 disk=5} ncHostIdx=24 serviceTag=http://i1:8775/axis2/services/EucalyptusNC userData= launchIndex=0 volumesSize=0 volumes={} groupNames={sharifnew}
+OUTPUT>
+{
+    "calltype": "refresh_instances", 
+    "userData": "", 
+    "kernelId": "eki-78EF12D2", 
+    "emiURL": "http://149.165.146.135:8773/services/Walrus/centos53/centos.5-3.x86-64.img.manifest.xml", 
+    "serviceTag": "http://i1:8775/axis2/services/EucalyptusNC", 
+    "instanceId": "i-42BA06B1", 
+    "ts": "1320693195", 
+    "groupNames": [
+        "sharifnew"
+    ], 
+    "keyName": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCp13CbKJLtKG5prGiet/VHct36CXzcpBKVgYsh/lxIXWKuositayvvuKux+I5GZ9bFWzMF71xAjmFinmAT3FXFKMd54FebPKZ2kBPCRqtmxz2jT1SG4hy1g1eDPzVX+qt5w8metAs7W//BCaBvWpU5IBuKSNqxO5OUIjIKkw3xkSswRpqSzrUBAmQP7e4dzQvmhqIxq4ZWqcEIWsAik0fSODTipa+Z6DvVKe02f5OtdUsXzz7pIivZ3qRGQveI5SOTdgFPqG+VglMsPURLbFFVWW1l51gCmRUwTf9ClySshSpkpAtaOx/OApQoII/vJxgr/EdYPOu1QLkubS4XH6+Z sharif@eucalyptus", 
+    "msgtype": "EUCADEBUG ", 
+    "volumesSize": "0", 
+    "linetype": "print_ccInstance", 
+    "ownerId": "sharif", 
+    "date": "2011-11-09 19:58:12", 
+    "id": "008128", 
+    "ncHostIdx": "24", 
+    "ccvm": {
+        "mem": "512", 
+        "cores": "1", 
+        "disk": "5"
+    }, 
+    "emiId": "emi-0B951139", 
+    "ccnet": {
+        "publicIp": "149.165.159.130", 
+        "privateMac": "D0:0D:42:BA:06:B1", 
+        "networkIndex": "4", 
+        "vlan": "10", 
+        "privateIp": "10.0.4.4"
+    }, 
+    "ramdiskURL": "http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml", 
+    "state": "Extant", 
+    "kernelURL": "http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml", 
+    "ramdiskId": "eri-5BB61255", 
+    "volumes": [
+        ""
+    ], 
+    "launchIndex": "0", 
+    "reservationId": "r-3D3306BC"
+}
+------------------------------------------------------------
+- parsetest: <function refresh_resource_parser at 0x1004f5410>
+------------------------------------------------------------
+INPUT>
+[Wed Nov  9 22:52:10 2011][008128][EUCAERROR ] refresh_resources(): bad return from ncDescribeResource(i23) (1)
+REST>
+bad return from ncDescribeResource(i23) (1)
+OUTPUT>
+{
+    "date": "2011-11-09 22:52:10", 
+    "calltype": "ignore", 
+    "msgtype": "EUCAERROR ", 
+    "id": "008128", 
+    "linetype": "refresh_resources"
+}
+------------------------------------------------------------
+- parsetest: <function refresh_resource_parser at 0x1004f5410>
+------------------------------------------------------------
+INPUT>
+[Wed Nov  9 22:52:11 2011][008128][EUCADEBUG ] refresh_resources(): done
+REST>
+done
+OUTPUT>
+{
+    "date": "2011-11-09 22:52:11", 
+    "calltype": "ignore", 
+    "msgtype": "EUCADEBUG ", 
+    "id": "008128", 
+    "linetype": "refresh_resources"
+}
+------------------------------------------------------------
+- parsetest: <function refresh_resource_parser at 0x1004f5410>
+------------------------------------------------------------
+INPUT>
+[Wed Nov  9 22:52:19 2011][008128][EUCAINFO  ] refresh_resources(): called
+REST>
+called
+OUTPUT>
+{
+    "date": "2011-11-09 22:52:19", 
+    "calltype": "ignore", 
+    "msgtype": "EUCAINFO  ", 
+    "id": "008128", 
+    "linetype": "refresh_resources"
+}
+------------------------------------------------------------
+- parsetest: <function refresh_resource_parser at 0x1004f5410>
+------------------------------------------------------------
+INPUT>
+[Wed Nov  9 19:50:08 2011][008128][EUCADEBUG ] refresh_resources(): received data from node=i2 mem=24276/22740 disk=306400/305364 cores=8/6
+REST>
+received data from node=i2 mem=24276/22740 disk=306400/305364 cores=8/6
+OUTPUT>
+{
+    "node": "i2", 
+    "mem": "24276", 
+    "disk_max": "305364", 
+    "mem_max": "22740", 
+    "msgtype": "EUCADEBUG ", 
+    "linetype": "refresh_resources", 
+    "date": "2011-11-09 19:50:08", 
+    "cores": "8", 
+    "disk": "306400", 
+    "id": "008128", 
+    "cores_max": "6"
+}
+------------------------------------------------------------
+- parsetest: <function terminate_instances_param_parser at 0x1004f5488>
+------------------------------------------------------------
+INPUT>
+[Thu Nov 10 10:14:37 2011][021251][EUCADEBUG ] TerminateInstances(): params: userId=(null), instIdsLen=1, firstInstId=i-417B07B2
+REST>
+params: userId=(null), instIdsLen=1, firstInstId=i-417B07B2
+OUTPUT>
+{
+    "userId": "null", 
+    "instIdsLen": "1,", 
+    "firstInstId": "i-417B07B2", 
+    "msgtype": "EUCADEBUG ", 
+    "linetype": "TerminateInstances", 
+    "date": "2011-11-10 10:14:37", 
+    "id": "021251"
+}
+------------------------------------------------------------
+- parsetest: <function terminate_instances_param_parser at 0x1004f5488>
+------------------------------------------------------------
+INPUT>
+[Thu Nov 10 13:04:16 2011][016124][EUCADEBUG ] TerminateInstances(): done.
+REST>
+done.
+OUTPUT>
+{
+    "date": "2011-11-10 13:04:16", 
+    "calltype": "ignore", 
+    "msgtype": "EUCADEBUG ", 
+    "id": "016124", 
+    "linetype": "TerminateInstances"
+}
+------------------------------------------------------------
+- parsetest: <function terminate_instances_param_parser at 0x1004f5488>
+------------------------------------------------------------
+INPUT>
+[Thu Nov 10 13:04:16 2011][016168][EUCAINFO  ] TerminateInstances(): called
+REST>
+called
+OUTPUT>
+{
+    "date": "2011-11-10 13:04:16", 
+    "calltype": "ignore", 
+    "msgtype": "EUCAINFO  ", 
+    "id": "016168", 
+    "linetype": "TerminateInstances"
+}
+ 9%19%29%39%48%58%68%78%88%97%lines total = 10216
+lines ignored =  = 0
+count_terminate_instances = 0
+count_refresh_resource = 0
+count_ccInstance_parser  = 10216
+{
+    "i-4B1408A1 prishah": [
+        "2011-11-09 19:53:50", 
+        "2011-11-09 10:05:18", 
+        "i-4B1408A1", 
+        "prishah"
+    ], 
+    "i-4E0E0942 sharif": [
+        "2011-11-09 19:53:42", 
+        "2011-11-07 14:13:15", 
+        "i-4E0E0942", 
+        "sharif"
+    ], 
+    "i-4F99093A jiaazeng": [
+        "2011-11-09 19:53:41", 
+        "2011-11-06 10:32:33", 
+        "i-4F99093A", 
+        "jiaazeng"
+    ], 
+    "i-52150962 dmgala": [
+        "2011-11-09 19:53:50", 
+        "2011-11-09 10:16:49", 
+        "i-52150962", 
+        "dmgala"
+    ], 
+    "i-4EDA08A8 xc7": [
+        "2011-11-09 19:53:51", 
+        "2011-11-09 11:31:28", 
+        "i-4EDA08A8", 
+        "xc7"
+    ], 
+    "i-42BA06B1 sharif": [
+        "2011-11-09 19:53:42", 
+        "2011-11-07 14:13:15", 
+        "i-42BA06B1", 
+        "sharif"
+    ], 
+    "i-30BE0611 aghegde": [
+        "2011-11-09 19:53:51", 
+        "2011-11-09 11:29:44", 
+        "i-30BE0611", 
+        "aghegde"
+    ], 
+    "i-3DA907B3 prishah": [
+        "2011-11-09 19:53:51", 
+        "2011-11-09 10:21:58", 
+        "i-3DA907B3", 
+        "prishah"
+    ], 
+    "i-4CDA08AA sharif": [
+        "2011-11-09 19:53:50", 
+        "2011-11-07 14:13:15", 
+        "i-4CDA08AA", 
+        "sharif"
+    ], 
+    "i-3E940743 zhguo": [
+        "2011-11-09 19:53:41", 
+        "2011-11-09 13:56:10", 
+        "i-3E940743", 
+        "zhguo"
+    ], 
+    "i-4E390909 inca": [
+        "2011-11-09 19:09:03", 
+        "2011-11-09 18:46:02", 
+        "i-4E390909", 
+        "inca"
+    ], 
+    "i-434307B7 xc7": [
+        "2011-11-09 19:53:51", 
+        "2011-11-09 11:30:51", 
+        "i-434307B7", 
+        "xc7"
+    ], 
+    "i-45220823 sharif": [
+        "2011-11-09 19:53:50", 
+        "2011-11-07 14:13:15", 
+        "i-45220823", 
+        "sharif"
+    ], 
+    "i-42B207E7 panoat": [
+        "2011-11-09 19:53:50", 
+        "2011-11-04 17:54:42", 
+        "i-42B207E7", 
+        "panoat"
+    ], 
+    "i-50FE087F krwojc": [
+        "2011-11-09 19:53:41", 
+        "2011-11-09 17:07:42", 
+        "i-50FE087F", 
+        "krwojc"
+    ], 
+    "i-4E3A0979 prishah": [
+        "2011-11-09 19:53:50", 
+        "2011-11-09 10:06:58", 
+        "i-4E3A0979", 
+        "prishah"
+    ], 
+    "i-419B0822 krwojc": [
+        "2011-11-09 19:53:41", 
+        "2011-11-07 03:27:53", 
+        "i-419B0822", 
+        "krwojc"
+    ], 
+    "i-378305C4 sharif": [
+        "2011-11-09 19:53:42", 
+        "2011-11-07 14:13:15", 
+        "i-378305C4", 
+        "sharif"
+    ], 
+    "i-57AB09CE panoat": [
+        "2011-11-09 19:53:42", 
+        "2011-11-04 16:26:23", 
+        "i-57AB09CE", 
+        "panoat"
+    ], 
+    "i-412907A4 panoat": [
+        "2011-11-09 19:53:41", 
+        "2011-11-07 01:54:54", 
+        "i-412907A4", 
+        "panoat"
+    ], 
+    "i-561C09CB panoat": [
+        "2011-11-09 19:53:42", 
+        "2011-11-04 17:50:00", 
+        "i-561C09CB", 
+        "panoat"
+    ], 
+    "i-49D80872 jklingin": [
+        "2011-11-09 19:53:41", 
+        "2011-11-08 21:25:02", 
+        "i-49D80872", 
+        "jklingin"
+    ], 
+    "i-467408A1 jiaazeng": [
+        "2011-11-09 19:53:42", 
+        "2011-11-06 10:46:39", 
+        "i-467408A1", 
+        "jiaazeng"
+    ], 
+    "i-3B7407FE panoat": [
+        "2011-11-09 19:53:42", 
+        "2011-11-04 16:13:54", 
+        "i-3B7407FE", 
+        "panoat"
+    ], 
+    "i-4BE5081B panoat": [
+        "2011-11-09 19:53:42", 
+        "2011-11-04 17:49:08", 
+        "i-4BE5081B", 
+        "panoat"
+    ]
+}
+{
+    "i-4B1408A1 prishah": [
+        "2011-11-09 19:53:50", 
+        "2011-11-09 10:05:18", 
+        "i-4B1408A1", 
+        "prishah", 
+        "35312.0"
+    ], 
+    "i-4E0E0942 sharif": [
+        "2011-11-09 19:53:42", 
+        "2011-11-07 14:13:15", 
+        "i-4E0E0942", 
+        "sharif", 
+        "193227.0"
+    ], 
+    "i-4F99093A jiaazeng": [
+        "2011-11-09 19:53:41", 
+        "2011-11-06 10:32:33", 
+        "i-4F99093A", 
+        "jiaazeng", 
+        "292868.0"
+    ], 
+    "i-52150962 dmgala": [
+        "2011-11-09 19:53:50", 
+        "2011-11-09 10:16:49", 
+        "i-52150962", 
+        "dmgala", 
+        "34621.0"
+    ], 
+    "i-4EDA08A8 xc7": [
+        "2011-11-09 19:53:51", 
+        "2011-11-09 11:31:28", 
+        "i-4EDA08A8", 
+        "xc7", 
+        "30143.0"
+    ], 
+    "i-42BA06B1 sharif": [
+        "2011-11-09 19:53:42", 
+        "2011-11-07 14:13:15", 
+        "i-42BA06B1", 
+        "sharif", 
+        "193227.0"
+    ], 
+    "i-30BE0611 aghegde": [
+        "2011-11-09 19:53:51", 
+        "2011-11-09 11:29:44", 
+        "i-30BE0611", 
+        "aghegde", 
+        "30247.0"
+    ], 
+    "i-3DA907B3 prishah": [
+        "2011-11-09 19:53:51", 
+        "2011-11-09 10:21:58", 
+        "i-3DA907B3", 
+        "prishah", 
+        "34313.0"
+    ], 
+    "i-4CDA08AA sharif": [
+        "2011-11-09 19:53:50", 
+        "2011-11-07 14:13:15", 
+        "i-4CDA08AA", 
+        "sharif", 
+        "193235.0"
+    ], 
+    "i-3E940743 zhguo": [
+        "2011-11-09 19:53:41", 
+        "2011-11-09 13:56:10", 
+        "i-3E940743", 
+        "zhguo", 
+        "21451.0"
+    ], 
+    "i-4E390909 inca": [
+        "2011-11-09 19:09:03", 
+        "2011-11-09 18:46:02", 
+        "i-4E390909", 
+        "inca", 
+        "1381.0"
+    ], 
+    "i-434307B7 xc7": [
+        "2011-11-09 19:53:51", 
+        "2011-11-09 11:30:51", 
+        "i-434307B7", 
+        "xc7", 
+        "30180.0"
+    ], 
+    "i-45220823 sharif": [
+        "2011-11-09 19:53:50", 
+        "2011-11-07 14:13:15", 
+        "i-45220823", 
+        "sharif", 
+        "193235.0"
+    ], 
+    "i-42B207E7 panoat": [
+        "2011-11-09 19:53:50", 
+        "2011-11-04 17:54:42", 
+        "i-42B207E7", 
+        "panoat", 
+        "439148.0"
+    ], 
+    "i-50FE087F krwojc": [
+        "2011-11-09 19:53:41", 
+        "2011-11-09 17:07:42", 
+        "i-50FE087F", 
+        "krwojc", 
+        "9959.0"
+    ], 
+    "i-4E3A0979 prishah": [
+        "2011-11-09 19:53:50", 
+        "2011-11-09 10:06:58", 
+        "i-4E3A0979", 
+        "prishah", 
+        "35212.0"
+    ], 
+    "i-419B0822 krwojc": [
+        "2011-11-09 19:53:41", 
+        "2011-11-07 03:27:53", 
+        "i-419B0822", 
+        "krwojc", 
+        "231948.0"
+    ], 
+    "i-378305C4 sharif": [
+        "2011-11-09 19:53:42", 
+        "2011-11-07 14:13:15", 
+        "i-378305C4", 
+        "sharif", 
+        "193227.0"
+    ], 
+    "i-57AB09CE panoat": [
+        "2011-11-09 19:53:42", 
+        "2011-11-04 16:26:23", 
+        "i-57AB09CE", 
+        "panoat", 
+        "444439.0"
+    ], 
+    "i-412907A4 panoat": [
+        "2011-11-09 19:53:41", 
+        "2011-11-07 01:54:54", 
+        "i-412907A4", 
+        "panoat", 
+        "237527.0"
+    ], 
+    "i-561C09CB panoat": [
+        "2011-11-09 19:53:42", 
+        "2011-11-04 17:50:00", 
+        "i-561C09CB", 
+        "panoat", 
+        "439422.0"
+    ], 
+    "i-49D80872 jklingin": [
+        "2011-11-09 19:53:41", 
+        "2011-11-08 21:25:02", 
+        "i-49D80872", 
+        "jklingin", 
+        "80919.0"
+    ], 
+    "i-467408A1 jiaazeng": [
+        "2011-11-09 19:53:42", 
+        "2011-11-06 10:46:39", 
+        "i-467408A1", 
+        "jiaazeng", 
+        "292023.0"
+    ], 
+    "i-3B7407FE panoat": [
+        "2011-11-09 19:53:42", 
+        "2011-11-04 16:13:54", 
+        "i-3B7407FE", 
+        "panoat", 
+        "445188.0"
+    ], 
+    "i-4BE5081B panoat": [
+        "2011-11-09 19:53:42", 
+        "2011-11-04 17:49:08", 
+        "i-4BE5081B", 
+        "panoat", 
+        "439474.0"
+    ]
+}
+total instances = 25
+{
+    "dmgala": [
+        1, 
+        34621.0, 
+        34621.0, 
+        34621.0, 
+        34621.0
+    ], 
+    "jiaazeng": [
+        2, 
+        584891.0, 
+        292023.0, 
+        292868.0, 
+        292445.5
+    ], 
+    "panoat": [
+        6, 
+        2445198.0, 
+        237527.0, 
+        445188.0, 
+        407533.0
+    ], 
+    "prishah": [
+        3, 
+        104837.0, 
+        34313.0, 
+        35312.0, 
+        34945.666666666664
+    ], 
+    "sharif": [
+        5, 
+        966151.0, 
+        193227.0, 
+        193235.0, 
+        193230.2
+    ], 
+    "inca": [
+        1, 
+        1381.0, 
+        1381.0, 
+        1381.0, 
+        1381.0
+    ], 
+    "aghegde": [
+        1, 
+        30247.0, 
+        30247.0, 
+        30247.0, 
+        30247.0
+    ], 
+    "zhguo": [
+        1, 
+        21451.0, 
+        21451.0, 
+        21451.0, 
+        21451.0
+    ], 
+    "xc7": [
+        2, 
+        60323.0, 
+        30143.0, 
+        30180.0, 
+        30161.5
+    ], 
+    "jklingin": [
+        1, 
+        80919.0, 
+        80919.0, 
+        80919.0, 
+        80919.0
+    ], 
+    "krwojc": [
+        2, 
+        241907.0, 
+        9959.0, 
+        231948.0, 
+        120953.5
+    ]
+}
+total users = 11

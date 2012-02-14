@@ -395,7 +395,7 @@ def main():
 #    parse_file ("/tmp/cc.log.prints_cc",generate_instance_info,debug=False)
 #    calculate_delta (instance)
 
-    parse_file ("/tmp/cc.log.prints_cc",generate_instance_info,debug=False)
+    parse_file ("/tmp/cc.log.prints_cc",generate_instance_info,debug=False,progress=False)
     calculate_delta (instance)
 
     print json.dumps(instance, sort_keys=False, indent=4)

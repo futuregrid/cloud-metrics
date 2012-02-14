@@ -2,6 +2,7 @@
 import re
 import json
 import sys
+import os
 from datetime import datetime
 
 
@@ -17,15 +18,30 @@ def print_instance_info (data):
 
         id = instanceId + " " + ownerId
         try:
-            end_t = instance[id](1)
+            end_t = instance[id](0)
             if end_t < data["date"]:
                 end_t = data["date"]
-            instance[id] = (timestamp, data["date"], data["instanceId"], data["ownerId"])
+            instance[id] = (data["date"], timestamp, data["instanceId"], data["ownerId"])
+            print  end_t
         except:
-            instance[id] = (timestamp, data["date"], data["instanceId"], data["ownerId"])
+            instance[id] = (data["date"], timestamp, data["instanceId"], data["ownerId"])
 
  
-#        print  data["ts"] + " " + data["ts"], data["date"])
+
+
+def calculate_delta (instances):
+    for i in instances:
+        values = instances[i]
+        print values
+        print values[0]
+        print values[1]
+        t_start = datetime.strptime(values[1], '%Y-%m-%d %H:%M:%S') # convert to datetime
+        t_end = datetime.strptime(values[0], '%Y-%m-%d %H:%M:%S') # convert to datetime
+        t_delta = t_end - t_start
+        print t_delta
+        instances[i] += (str(t_delta),)
+
+
 
 
 def convert_data_to_list(data,attribute):
@@ -161,16 +177,27 @@ def pretty_print(data):
 def print_counter (label,counter):
     print label + " = " + str(counter)
 
-def parse_file (filename,analyze,debug=False):
+def parse_file (filename,analyze,debug=False,progress=True):
     f = open(filename, 'r')
     lines_total = 0
     lines_ignored = 0
     count_terminate_instances = 0
     count_refresh_resource = 0
     count_ccInstance_parser = 0 
+    read_bytes = 0
+    file_size = os.path.getsize(filename)
+    if debug:
+        print "SIZE>:" + str(file_size)
+
+    progress_step = file_size / 100
     for line in f:
         ignore = False
         lines_total += 1
+        read_bytes += len(line)
+        if (debug or progress) and ((lines_total % 1000) == 0):
+            percent = int(100 * read_bytes / file_size ) 
+            sys.stdout.write("\r%2d%%" % percent)
+            sys.stdout.flush()
         if debug:
             print "DEBUG " + str(lines_total) +"> " + line
         data = {}
@@ -256,8 +283,11 @@ def main():
 
 #    parse_file ("/tmp/cc.log.4",pretty_print,debug=False)
 
-    parse_file ("/tmp/cc.log.4",print_instance_info,debug=False)
+    parse_file ("/tmp/cc.log.prints_cc",print_instance_info,debug=False)
 
+    print json.dumps(instance, sort_keys=False, indent=4)
+
+    calculate_delta (instance)
 
     print json.dumps(instance, sort_keys=False, indent=4)
     print "total instances = " + str(len(instance))

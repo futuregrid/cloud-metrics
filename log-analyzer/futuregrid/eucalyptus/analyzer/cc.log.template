@@ -1,0 +1,61 @@
+
+This is about to explain cc.log file.
+-------------------------------------
+
+Main template
+-------------
+
+Syntax
+- [ DATE ][ UID ][ LOG TYPE ] log messages
+
+  - DATE; Weekday Month Day hh:mm:ss YYYY
+	 ex. Wed Nov  9 17:33:00 2011
+  - UID; a 6 digits unique id for log thread?
+ 	ex. 028839
+  - LOG TYPE; EUCADEBUG, EUCAINFO
+
+Template of log message
+-----------------------
+
+Syntax
+- function name: sub log message	
+
+delimiter
+- ":"
+
+ function name
+ -------------
+ => string(string)
+    ex. monitor_thread()
+        ncClientCall(ncDescribeResource)
+	    
+		sub log message		
+		---------------
+
+		Syntax
+		- string key=value pairs string
+
+		Delimiter
+		- " "
+
+		Subdelimiter
+		- "="
+
+		Subsubdelimiter
+		- "{}"
+		(* When it occurs, need to go to the delimiter)
+		
+		Example
+		- called ncURL=http://i2:8775/axis2/services/EucalyptusNC timeout=5
+
+		'value' has different types
+		1) string without a white space
+		   ex. instanceId=i-4CDA08AA
+		2) string with a white space
+		   ex. keyName=ssh-rsa AA... asdf@eucalyptus
+		3) sub key=value pairs
+		
+
+It seems eucalyptus has a monitoring thread which runs every 10 secs or less.
+
+

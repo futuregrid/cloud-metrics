@@ -13,6 +13,11 @@ from datetime import datetime
 
 users = {}
 instance = {}
+
+def clear():
+    users = {}
+    instance = {}
+
 #
 # SQL
 #
@@ -79,6 +84,7 @@ sql
 
 null
 """
+"""
 def emptyData():
 return data
 
@@ -94,7 +100,7 @@ def finddata (is, timestamp, user):
 def fromdb(data_from_db):
     data{}
     return data
-
+"""
     
 
 ######################################################################
@@ -143,11 +149,10 @@ def generate_instance_info (data):
             current["t_start"] = current["ts"] # for naming consitency
             current["duration"] = 0.0
             
-        (tmp, current["t_end"]) = minmax_time(current["t_end"], current["date"])
-        (a,b) = minmax_time(current["trace"][status]["start"],t)
-        current["trace"][status]["start"] = a
-        (a,b) = minmax_time(current["trace"][status]["stop"],t)
-        current["trace"][status]["stop"] = b
+        (tmp, current["t_end"]) = minmax_time(current["t_end"], t)
+        (current["trace"][status]["start"],b) = minmax_time(current["trace"][status]["start"],t)
+        (a,current["trace"][status]["stop"]) = minmax_time(current["trace"][status]["stop"],t)
+        
 
         instance[id] = current
 
@@ -444,24 +449,17 @@ def parse_test(f, line):
     print "OUTPUT>"
     print json.dumps(data, sort_keys=False, indent=4)
 
-def main():
 
-
-
-    if sys.version_info < (2, 7):
-        print "ERROR: you must use python 2.7 or greater"
-        exit (1)
-    else:
-        print "Python version: " + str(sys.version_info)
-
+def test1():
     parse_test(ccInstance_parser, 
                "[Wed Nov  9 19:58:12 2011][008128][EUCADEBUG ] print_ccInstance(): refresh_instances():  instanceId=i-42BA06B1 reservationId=r-3D3306BC emiId=emi-0B951139 kernelId=eki-78EF12D2 ramdiskId=eri-5BB61255 emiURL=http://149.165.146.135:8773/services/Walrus/centos53/centos.5-3.x86-64.img.manifest.xml kernelURL=http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml ramdiskURL=http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml state=Extant ts=1320693195 ownerId=sharif keyName=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCp13CbKJLtKG5prGiet/VHct36CXzcpBKVgYsh/lxIXWKuositayvvuKux+I5GZ9bFWzMF71xAjmFinmAT3FXFKMd54FebPKZ2kBPCRqtmxz2jT1SG4hy1g1eDPzVX+qt5w8metAs7W//BCaBvWpU5IBuKSNqxO5OUIjIKkw3xkSswRpqSzrUBAmQP7e4dzQvmhqIxq4ZWqcEIWsAik0fSODTipa+Z6DvVKe02f5OtdUsXzz7pIivZ3qRGQveI5SOTdgFPqG+VglMsPURLbFFVWW1l51gCmRUwTf9ClySshSpkpAtaOx/OApQoII/vJxgr/EdYPOu1QLkubS4XH6+Z sharif@eucalyptus ccnet={privateIp=10.0.4.4 publicIp=149.165.159.130 privateMac=D0:0D:42:BA:06:B1 vlan=10 networkIndex=4} ccvm={cores=1 mem=512 disk=5} ncHostIdx=24 serviceTag=http://i1:8775/axis2/services/EucalyptusNC userData= launchIndex=0 volumesSize=0 volumes={} groupNames={sharifnew }")
 
+    return
 
+def test2():
     #
     # RESOURCE PARSER
     #
-
 
     parse_test(refresh_resource_parser, 
                "[Wed Nov  9 22:52:10 2011][008128][EUCAERROR ] refresh_resources(): bad return from ncDescribeResource(i23) (1)")
@@ -472,6 +470,10 @@ def main():
     parse_test(refresh_resource_parser, 
                "[Wed Nov  9 19:50:08 2011][008128][EUCADEBUG ] refresh_resources(): received data from node=i2 mem=24276/22740 disk=306400/305364 cores=8/6")
 
+
+    return
+
+def test3():
     #
     # TerminateInstance Parser
     #
@@ -483,28 +485,47 @@ def main():
 
     parse_test(terminate_instances_param_parser,
                "[Thu Nov 10 13:04:16 2011][016168][EUCAINFO  ] TerminateInstances(): called")
+    return
 
+def test4():
+    parse_file ("/tmp/cc.log.4",pretty_print,debug=False)
+    return
 
-#    parse_file ("/tmp/cc.log.4",pretty_print,debug=False)
-
-#    parse_file ("/tmp/cc.log.prints_cc",generate_instance_info,debug=False)
-#    calculate_delta (instance)
-
-    parse_file ("/tmp/cc.log.prints_cc",generate_instance_info,debug=False,progress=False)
+def test5(filename,progress=True):
+    parse_file (filename,generate_instance_info,debug=False,progress=progress)
     calculate_delta (instance)
-
-    print json.dumps(instance, sort_keys=False, indent=4)
-
-
-    
-
     print json.dumps(instance, sort_keys=False, indent=4)
     print "total instances = " + str(len(instance))
+    return
 
-
+def test6():
     calculate_user_stats (instance,users)
     print json.dumps(users, sort_keys=False, indent=4)
     print "total users = " + str(len(users))
+    return
+
+def main():
+
+
+
+    if sys.version_info < (2, 7):
+        print "ERROR: you must use python 2.7 or greater"
+        exit (1)
+    else:
+        print "Python version: " + str(sys.version_info)
+
+    clear()
+    
+    # test1()
+    # test2()
+    # test3()
+
+
+
+    test5("/tmp/cc.log.prints_cc",progress=True)
+    
+    test6()
+
     #   
 
     display_user_stats (users)

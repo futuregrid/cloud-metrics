@@ -18,31 +18,54 @@ instance = {}
 # GENERATE INSTANCE STATISTICS
 ######################################################################
 
-
+def minmax_time (a, b):
+    if a < b:
+        return (a,b)
+    else:
+        return (b,a)
+    
 def generate_instance_info (data):
     """prints the information for each instance"""
     if data["linetype"] == "print_ccInstance":
         instanceId = data["instanceId"] 
         ownerId = data["ownerId"]
         timestamp = str(datetime.fromtimestamp(int(data["ts"])))
+        status = data["state"].lower()
+        t = data["date"]
 
-        id = instanceId + " " + ownerId
+        id = instanceId + " " + ownerId + " " + timestamp
+
         try:
-            end_t = instance[id](0)
-            if end_t < data["date"]:
-                end_t = data["date"]
-            instance[id] = (data["date"], timestamp, data["instanceId"], data["ownerId"])
+            current = instance[id]
         except:
-            instance[id] = (data["date"], timestamp, data["instanceId"], data["ownerId"])
+            current = data
+            
+        current["ts"] = timestamp
+
+        if not ("t_end" in current):
+            current["trace"] = { "pending" : {"start" : t, "stop": t}, "teardown" : {"start" : t, "stop": t}, "extant" : {"start" : t, "stop": t} }
+            current["t_end"] = current["date"]
+            current["t_start"] = current["ts"] # for naming consitency
+            current["duration"] = 0.0
+            
+        (tmp, current["t_end"]) = minmax_time(current["t_end"], current["date"])
+        (a,b) = minmax_time(current["trace"][status]["start"],t)
+        current["trace"][status]["start"] = a
+        (a,b) = minmax_time(current["trace"][status]["stop"],t)
+        current["trace"][status]["stop"] = b
+
+        instance[id] = current
+
+
 
 def calculate_delta (instances):
     """calculates how long each instance runs in seconds"""
     for i in instances:
         values = instances[i]
-        t_start = datetime.strptime(values[1], '%Y-%m-%d %H:%M:%S') # convert to datetime
-        t_end = datetime.strptime(values[0], '%Y-%m-%d %H:%M:%S') # convert to datetime
+        t_start = datetime.strptime(values["t_start"], '%Y-%m-%d %H:%M:%S') # convert to datetime
+        t_end = datetime.strptime(values["t_end"], '%Y-%m-%d %H:%M:%S') # convert to datetime
         t_delta = t_end - t_start
-        instances[i] += (str(t_delta.total_seconds()),)
+        instances[i]["duration"] = str(t_delta.total_seconds())
 
 ######################################################################
 # GENERATE USER STATISTICS
@@ -100,8 +123,8 @@ def calculate_user_stats (instances,users):
     """calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time"""
     for i in instances:
         values = instances[i]
-        name = values[3]
-        t_delta = float(values[4])
+        name = values["ownerId"]
+        t_delta = float(values["duration"])
         try:
             users[name][0] = users[name][0] + 1 # number of instances
         except:
@@ -368,6 +391,9 @@ def main():
 
 
 #    parse_file ("/tmp/cc.log.4",pretty_print,debug=False)
+
+#    parse_file ("/tmp/cc.log.prints_cc",generate_instance_info,debug=False)
+#    calculate_delta (instance)
 
     parse_file ("/tmp/cc.log.prints_cc",generate_instance_info,debug=False)
     calculate_delta (instance)

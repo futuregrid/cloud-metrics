@@ -1,9 +1,8 @@
 #! /usr/bin/env python
 
-# sudo easy_install -U GChartWrapper
-from GChartWrapper import Pie3D
-from GChartWrapper import HorizontalBarGroup
-# http://code.google.com/p/google-chartwrapper/
+from pygooglechart import PieChart3D
+from pygooglechart import StackedHorizontalBarChart
+
 
 import re
 import json
@@ -14,10 +13,13 @@ from datetime import datetime
 users = {}
 instance = {}
 
+######################################################################
+# GENERATE INSTANCE STATISTICS
+######################################################################
 
 
-def print_instance_info (data):
-
+def generate_instance_info (data):
+    """prints the information for each instance"""
     if data["linetype"] == "print_ccInstance":
         instanceId = data["instanceId"] 
         ownerId = data["ownerId"]
@@ -29,11 +31,11 @@ def print_instance_info (data):
             if end_t < data["date"]:
                 end_t = data["date"]
             instance[id] = (data["date"], timestamp, data["instanceId"], data["ownerId"])
-            print  end_t
         except:
             instance[id] = (data["date"], timestamp, data["instanceId"], data["ownerId"])
 
 def calculate_delta (instances):
+    """calculates how long each instance runs in seconds"""
     for i in instances:
         values = instances[i]
         t_start = datetime.strptime(values[1], '%Y-%m-%d %H:%M:%S') # convert to datetime
@@ -41,31 +43,55 @@ def calculate_delta (instances):
         t_delta = t_end - t_start
         instances[i] += (str(t_delta.total_seconds()),)
 
+######################################################################
+# GENERATE USER STATISTICS
+######################################################################
+
+
+
+
+# Create a chart object of 250x100 pixels
+
 def display_user_stats(users,type="pie"):
+    """displays the number of VMs a user is running"""
     values = []
     label_values = []
 
+    max_v = 0
     for name in users:
         count = users[name][0]
         values.append(count)
         label_values.append(name + ":" + str(count))
+        max_v = max(max_v, count)
+
     print values
+    print label_values
 
-    # cant get the label values to work so I cheat with eval
-    # G=  Pie3D(values).title("Number of Instances").color("red","lime").label(label_values)
-
-    label_values_str = str(label_values)[1:-1]
-    values_str = str(values)
     if type == "pie": 
-        command = "Pie3D(" + values_str + ').title("Number of Instances").color("red","lime").label(' + label_values_str +')'
-        print command
-        G = eval(command)
-        # end of cheat 
-        G.color('green')
+        chart = PieChart3D(500, 200)
+        chart.set_pie_labels(label_values)
+    if type == "bar":
+        chart = StackedHorizontalBarChart(500,200,
+                                        x_range=(0, max_v))
+        # the labels seem wrong, not sure why i have to call reverse
+        chart.set_axis_labels('y', reversed(label_values))
+        chart.set_bar_width(10)
+        chart.set_colours(['00ff00', 'ff0000'])
 
-    os.system ("open -a /Applications/Safari.app " + '"' + str(G) + '"')
+    # Add some data
+    chart.add_data(values)
+
+    # Assign the labels to the pie data
+
+
+    # Print the chart URL
+    url = chart.get_url()
+
+
+    os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
 
 def calculate_user_stats (instances,users):
+    """calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time"""
     for i in instances:
         values = instances[i]
         name = values[3]
@@ -84,6 +110,11 @@ def calculate_user_stats (instances,users):
     for name in users:
         users[name][4] = float(users[name][1]) / float(users[name][0])
  
+######################################################################
+# CONVERTER 
+######################################################################
+
+
         
 def convert_data_to_list(data,attribute):
     rest = data[attribute]
@@ -332,11 +363,13 @@ def main():
 
 #    parse_file ("/tmp/cc.log.4",pretty_print,debug=False)
 
-    parse_file ("/tmp/cc.log.prints_cc",print_instance_info,debug=False)
+    parse_file ("/tmp/cc.log.prints_cc",generate_instance_info,debug=False)
+    calculate_delta (instance)
 
     print json.dumps(instance, sort_keys=False, indent=4)
 
-    calculate_delta (instance)
+
+    
 
     print json.dumps(instance, sort_keys=False, indent=4)
     print "total instances = " + str(len(instance))
@@ -348,6 +381,7 @@ def main():
     #   
 
     display_user_stats (users)
+    display_user_stats (users, type="bar")
 
 
 

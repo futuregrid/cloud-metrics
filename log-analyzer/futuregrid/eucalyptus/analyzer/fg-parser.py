@@ -2,6 +2,7 @@
 
 from pygooglechart import PieChart3D
 from pygooglechart import StackedHorizontalBarChart
+from pygooglechart import Axis
 
 
 import re
@@ -75,6 +76,11 @@ def display_user_stats(users,type="pie"):
                                         x_range=(0, max_v))
         # the labels seem wrong, not sure why i have to call reverse
         chart.set_axis_labels('y', reversed(label_values))
+        # setting the x axis labels
+        left_axis = range(0, max_v + 1, 1)
+        left_axis[0] = ''
+        chart.set_axis_labels(Axis.BOTTOM, left_axis)
+
         chart.set_bar_width(10)
         chart.set_colours(['00ff00', 'ff0000'])
 

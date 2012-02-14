@@ -2,6 +2,8 @@
 
 # sudo easy_install -U GChartWrapper
 from GChartWrapper import Pie3D
+from GChartWrapper import HorizontalBarGroup
+# http://code.google.com/p/google-chartwrapper/
 
 import re
 import json
@@ -39,7 +41,7 @@ def calculate_delta (instances):
         t_delta = t_end - t_start
         instances[i] += (str(t_delta.total_seconds()),)
 
-def display_user_stats(users):
+def display_user_stats(users,type="pie"):
     values = []
     label_values = []
 
@@ -54,13 +56,13 @@ def display_user_stats(users):
 
     label_values_str = str(label_values)[1:-1]
     values_str = str(values)
-    command = "Pie3D(" + values_str + ').title("Number of Instances").color("red","lime").label(' + label_values_str +')'
-    print command
-    G = eval(command)
-    
-    # end of cheat 
+    if type == "pie": 
+        command = "Pie3D(" + values_str + ').title("Number of Instances").color("red","lime").label(' + label_values_str +')'
+        print command
+        G = eval(command)
+        # end of cheat 
+        G.color('green')
 
-    G.color('green')
     os.system ("open -a /Applications/Safari.app " + '"' + str(G) + '"')
 
 def calculate_user_stats (instances,users):
@@ -346,6 +348,7 @@ def main():
     #   
 
     display_user_stats (users)
+    display_user_stats (users, type = "bar")
 
 
 

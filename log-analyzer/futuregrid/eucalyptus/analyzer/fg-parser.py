@@ -1,16 +1,21 @@
 #! /usr/bin/env python
 
+import re
+import json
+import os
+import datetime
+from datetime import *
+
+import sys
+
 from pygooglechart import PieChart3D
 from pygooglechart import StackedHorizontalBarChart
 from pygooglechart import Axis
 
 
-import re
-import json
-import sys
-import os
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
+
+
+
 
 users = {}
 instance = {}
@@ -18,6 +23,15 @@ instance = {}
 def clear():
     users = {}
     instance = {}
+
+
+def print_python_version():
+    if sys.version_info < (2, 7):
+        print "ERROR: you must use python 2.7 or greater"
+        exit (1)
+    else:
+        print "Python version: " + str(sys.version_info)
+
 
     
 ######################################################################
@@ -476,15 +490,11 @@ def test_display():
     display_user_stats (users)
     display_user_stats (users, type="bar")
 
+
 def main():
+    print_python_version()
 
 
-
-    if sys.version_info < (2, 7):
-        print "ERROR: you must use python 2.7 or greater"
-        exit (1)
-    else:
-        print "Python version: " + str(sys.version_info)
 
     clear()
     

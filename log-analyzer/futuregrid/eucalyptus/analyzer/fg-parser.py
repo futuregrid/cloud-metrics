@@ -219,7 +219,7 @@ def display_user_stats(users,type="pie"):
 
     max_v = 0
     for name in users:
-        count = users[name][0]
+        count = users[name]['count']
         values.append(count)
         label_values.append(name + ":" + str(count))
         max_v = max(max_v, count)

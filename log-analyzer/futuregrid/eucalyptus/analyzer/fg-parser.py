@@ -1,85 +1,142 @@
 #! /usr/bin/env python
 
-import re
-import json
-import os
-import datetime
-from datetime import *
-
-import sys
-
 from pygooglechart import PieChart3D
 from pygooglechart import StackedHorizontalBarChart
 from pygooglechart import Axis
 
 
+import re
+import json
+import pprint
+import sys
+import os
+from datetime import * 
 
+
+class Instances:
+
+    in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
+    pp = pprint.PrettyPrinter(indent=4)
+    data = {}
+    
+    def __init__(self):
+        self.clear()
+        self.data
+
+    def clear(self):
+        self.data = {}
+        return
+
+    def get(self):
+        return self.data
+
+    def print_total(self):
+        print "total instances = " + str(len(instance))
+
+    def todatetime (self,instance):
+        instance["trace"]["teardown"]["start"] = value_todate(instance["trace"]["teardown"]["start"])
+        instance["trace"]["teardown"]["stop"] = value_todate(instance["trace"]["teardown"]["stop"])
+        instance["trace"]["extant"]["start"] = value_todate(instance["trace"]["extant"]["start"])
+        instance["trace"]["extant"]["stop"] = value_todate(instance["trace"]["extant"]["stop"])
+        instance["trace"]["pending"]["start"] = value_todate(instance["trace"]["pending"]["start"])
+        instance["trace"]["pending"]["stop"] = value_todate(instance["trace"]["pending"]["stop"])
+        instance["t_start"] = value_todate(instance["t_start"])
+        instance["date"] = value_todate(instance["date"])
+        instance["t_end"] = value_todate(instance["t_end"])
+        instance["ts"] = value_todate(instance["ts"])
+
+    def tostr(self,instance):
+        instance["trace"]["teardown"]["start"] = str(instance["trace"]["teardown"]["start"])
+        instance["trace"]["teardown"]["stop"] = str(instance["trace"]["teardown"]["stop"])
+        instance["trace"]["extant"]["start"] = str(instance["trace"]["extant"]["start"])
+        instance["trace"]["extant"]["stop"] = str(instance["trace"]["extant"]["stop"])
+        instance["trace"]["pending"]["start"] = str(instance["trace"]["pending"]["start"])
+        instance["trace"]["pending"]["stop"] = str(instance["trace"]["pending"]["stop"])
+        instance["ts"] = str(instance["ts"])
+        instance["t_start"] = str(instance["t_start"])
+        instance["date"] = str(instance["date"])
+        instance["t_end"] = str(instance["t_end"])
+
+    def value_todate(self,string):
+        return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
+
+    def dump(self,index = "all"):
+        if index == "all":
+            pp.pprint(self.data)
+            self.print_total()
+        elif (index >= 0) and (index < len(str)):
+            pp.pprint(self.data[index])
+        else:
+            print "ERROR printing of index " + index
+
+    def json_dump(self):
+         string = ""
+         for key in all:
+            self.tostr (all[key])
+         string = json.dumps(all, sort_keys=False, indent=4)
+         for key in all:
+             print all[key]
+         self.todatetime (all[key])
+         return string 
+
+    def add (self,datarecord):
+        """prints the information for each instance"""
+        if datarecord["linetype"] == "print_ccInstance":
+            instanceId = datarecord["instanceId"] 
+            ownerId = datarecord["ownerId"]
+            timestamp = datarecord["ts"]
+            status = datarecord["state"].lower()
+            t = datarecord["date"]
+
+            id = instanceId + " " + ownerId + " " + str(timestamp)
+
+            try:
+                current = instance[id]
+                # if were wereto do a data base this line needs to be replaced
+            except:
+                current = datarecord
+
+            if not ("t_end" in current):
+            #time in the future
+                f = self.in_the_future
+
+                current["trace"] = {
+                    "pending" : {"start" : f, "stop": t},
+                    "teardown" : {"start" : f, "stop": t},
+                    "extant" : {"start" : f, "stop": t}
+                    }
+                current["t_end"] = current["date"]
+                current["t_start"] = current["ts"] # for naming consitency
+                current["duration"] = 0.0
+
+            current["t_end"] = min(current["t_end"], t)
+            current["trace"][status]["start"] = min(current["trace"][status]["start"],t)
+            current["trace"][status]["stop"] = max(current["trace"][status]["stop"],t)
+
+            instance[id] = current
+
+    def calculate_delta (self):
+        """calculates how long each instance runs in seconds"""
+        for i in self.data:
+            values = self.data[i]
+            t_delta = values["t_end"] - values["ts"]
+            self.data[i]["duration"] = str(t_delta.total_seconds())
 
 
 
 users = {}
-instance = {}
+
+instances = Instances()
+instance = instances.data
+
+
+pp = pprint.PrettyPrinter(indent=4)
 
 def clear():
     users = {}
     instance = {}
 
-
-def print_python_version():
-    if sys.version_info < (2, 7):
-        print "ERROR: you must use python 2.7 or greater"
-        exit (1)
-    else:
-        print "Python version: " + str(sys.version_info)
-
-
     
-######################################################################
-# PRINT DATA 
-######################################################################
-
-def instance_json_dump(all):
-    string = ""
-    for key in all:
-        instance_tostr_data (all[key])
-    string = json.dumps(all, sort_keys=False, indent=4)
-
-    print "Hello"
-    for key in all:
-        print all[key]
-        instance_todate_data(all[key])
-    
-    return string 
-
- 
-def value_todate(string):
-   return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
-
-def instance_todate_data(data):
-    data["trace"]["teardown"]["start"] = value_todate(data["trace"]["teardown"]["start"])
-    data["trace"]["teardown"]["stop"] = value_todate(data["trace"]["teardown"]["stop"])
-    data["trace"]["extant"]["start"] = value_todate(data["trace"]["extant"]["start"])
-    data["trace"]["extant"]["stop"] = value_todate(data["trace"]["extant"]["stop"])
-    data["trace"]["pending"]["start"] = value_todate(data["trace"]["pending"]["start"])
-    data["trace"]["pending"]["stop"] = value_todate(data["trace"]["pending"]["stop"])
-    data["t_start"] = value_todate(data["t_start"])
-    data["date"] = value_todate(data["date"])
-    data["t_end"] = value_todate(data["t_end"])
-    data["ts"] = value_todate(data["ts"])
-    #return data
-
-def instance_tostr_data(data):
-    data["trace"]["teardown"]["start"] = str(data["trace"]["teardown"]["start"])
-    data["trace"]["teardown"]["stop"] = str(data["trace"]["teardown"]["stop"])
-    data["trace"]["extant"]["start"] = str(data["trace"]["extant"]["start"])
-    data["trace"]["extant"]["stop"] = str(data["trace"]["extant"]["stop"])
-    data["trace"]["pending"]["start"] = str(data["trace"]["pending"]["start"])
-    data["trace"]["pending"]["stop"] = str(data["trace"]["pending"]["stop"])
-    data["ts"] = str(data["ts"])
-    data["t_start"] = str(data["t_start"])
-    data["date"] = str(data["date"])
-    data["t_end"] = str(data["t_end"])
-    #return data
         
 ######################################################################
 # GENERATE INSTANCE STATISTICS
@@ -96,57 +153,6 @@ def instance_tostr_data(data):
         
     
 
-def minmax_time (t_a, t_b):
-    if t_a < t_b:
-        return (t_a,t_b)
-    else:
-        return (t_b,t_a)
-    
-def generate_instance_info (data):
-    """prints the information for each instance"""
-    if data["linetype"] == "print_ccInstance":
-        instanceId = data["instanceId"] 
-        ownerId = data["ownerId"]
-        timestamp = data["ts"]
-        status = data["state"].lower()
-        t = data["date"]
-
-
-        
-        id = instanceId + " " + ownerId + " " + str(timestamp)
-
-        try:
-            current = instance[id]
-            # if were wereto do a data base this line needs to be replaced
-        except:
-            current = data
-            
-#        current["ts"] = timestamp
-
-        if not ("t_end" in current):
-        #time in the future
-            f = data["date"] + relativedelta( months = +365 )
-
-            current["trace"] = { "pending" : {"start" : f, "stop": t}, "teardown" : {"start" : f, "stop": t}, "extant" : {"start" : f, "stop": t} }
-            current["t_end"] = current["date"]
-            current["t_start"] = current["ts"] # for naming consitency
-            current["duration"] = 0.0
-            
-        (tmp, current["t_end"]) = minmax_time(current["t_end"], t)
-        (current["trace"][status]["start"],b) = minmax_time(current["trace"][status]["start"],t)
-        (a,current["trace"][status]["stop"]) = minmax_time(current["trace"][status]["stop"],t)
-        
-
-        instance[id] = current
-
-
-
-def calculate_delta (instances):
-    """calculates how long each instance runs in seconds"""
-    for i in instances:
-        values = instances[i]
-        t_delta = values["t_end"] - values["ts"]
-        instances[i]["duration"] = str(t_delta.total_seconds())
 
 ######################################################################
 # GENERATE USER STATISTICS
@@ -475,12 +481,10 @@ def test4():
     return
 
 def test5(filename,progress=True):
-    parse_file (filename,generate_instance_info,debug=False,progress=progress)
-    calculate_delta (instance)
-    print instance
-    print instance_json_dump (instance)
-    print instance
-    print "total instances = " + str(len(instance))
+    parse_file (filename,instances.add,debug=False,progress=progress)
+    instances.calculate_delta ()
+    instances.dump()
+
     return
 
 def test6():
@@ -493,11 +497,15 @@ def test_display():
     display_user_stats (users)
     display_user_stats (users, type="bar")
 
-
 def main():
-    print_python_version()
 
 
+
+    if sys.version_info < (2, 7):
+        print "ERROR: you must use python 2.7 or greater"
+        exit (1)
+    else:
+        print "Python version: " + str(sys.version_info)
 
     clear()
     

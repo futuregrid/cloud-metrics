@@ -212,14 +212,16 @@ def clear():
 
 # Create a chart object of 250x100 pixels
 
-def display_user_stats(users,type="pie"):
+def display_user_stats(users,type="pie",filename="chart.png"):
     """displays the number of VMs a user is running"""
     values = []
     label_values = []
 
     max_v = 0
     for name in users:
+        print name
         count = users[name]['count']
+        print count
         values.append(count)
         label_values.append(name + ":" + str(count))
         max_v = max(max_v, count)
@@ -248,12 +250,13 @@ def display_user_stats(users,type="pie"):
 
     # Assign the labels to the pie data
 
-
+    chart.download(filename)
+    
     # Print the chart URL
-    url = chart.get_url()
+    #url = chart.get_url()
 
-
-    os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
+    #print url
+    #os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
 
  
 ######################################################################
@@ -522,6 +525,36 @@ def test5(filename,progress=True, debug=False):
 
     return
 
+
+def make_html (filename, title):
+    page_template = """
+        <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+        <html> <head>
+        <title> %(title)s TEST </title>
+        </head>
+        
+        <body>
+
+        <img src="fg-logo.png" alt="FutureGrid" /> Eucalyptus Monitor
+        
+        <h1> %(title)s </h1>
+        <p>
+        <img src="a.png" alt="chart" /><img src="b.png" alt="chart" />
+
+        <hr>
+        <address>Author Gregor von Laszewski, laszewski@gmail.com</address>
+        <!-- hhmts start -->Last modified: %(now)s <!-- hhmts end -->
+        </body> </html>
+    """
+    print "========"
+    now = datetime.now()
+    now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
+    f = open(filename, "w")
+    print>>f, page_template % vars()
+    f.close()
+
+
+
 def test6():
     users = {}
     instances.calculate_user_stats (users)
@@ -539,12 +572,13 @@ def test6():
     instances.calculate_user_stats (users, a, b)
     print pp.pprint(users)
     
+    display_user_stats (users, filename="a.png")
+    display_user_stats (users, type="bar", filename="b.png")
+    make_html("sample.html", "VMs used by users")
+    os.system ("open sample.html")
 
     return
 
-def test_display():
-    display_user_stats (users)
-    display_user_stats (users, type="bar")
 
 def main():
 
@@ -570,9 +604,6 @@ def main():
 
     
     test6()
-    #    test_display()
-    #   
-
 
 
 

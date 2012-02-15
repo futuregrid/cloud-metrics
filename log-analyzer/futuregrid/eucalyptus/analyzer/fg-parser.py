@@ -16,7 +16,7 @@ from datetime import *
 class Instances:
 
     in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
-    pp = pprint.PrettyPrinter(indent=4)
+    pp = pprint.PrettyPrinter(indent=0)
     data = {}
     
     def __init__(self):
@@ -122,6 +122,55 @@ class Instances:
             t_delta = values["t_end"] - values["ts"]
             self.data[i]["duration"] = str(t_delta.total_seconds())
 
+    def calculate_user_stats (self, users, from_date="all", to_date="all"):
+        """calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time"""
+
+        # hanlde parameters
+
+        process_all = False
+        if (type(from_date).__name__ == "str"):
+            process_all = (from_date == "all")
+            if not process_all:
+                date_from = datetime.strptime(from_date, '%Y-%m-%d %H:%M:%S')
+                date_to   = datetime.strptime(to_date, '%Y-%m-%d %H:%M:%S')
+
+        if (type(from_date).__name__ == "None"):
+            process_all = True
+
+        if (type(from_date).__name__ == "datetime"):
+            date_from = from_date
+            date_to = to_date
+            process_all = False
+
+        for i in self.data:
+            values = self.data[i]
+            process_entry = process_all
+            
+            if not process_all:
+                process_entry = (values['ts'] >= date_from) and (values['ts'] < date_to)
+
+            if process_entry:
+                name = values["ownerId"]
+                t_delta = float(values["duration"])
+                try:
+                    users[name]["count"] = users[name]["count"] + 1 # number of instances
+                except:
+                #          count,sum,min,max,avg
+                    users[name] = {'count' : 1,
+                                   'sum' : 0.0,
+                                   'min' : t_delta,
+                                   'max' :t_delta,
+                                   'avg' : 0.0
+                                   }
+
+                users[name]['sum'] += t_delta  # sum of time 
+                users[name]['min'] = min (t_delta, users[name]['min'])
+                users[name]['max'] = min (t_delta, users[name]['max'])
+
+
+                for name in users:
+                    users[name]['avg'] = float(users[name]['sum']) / float(users[name]['count'])
+
 
 
 users = {}
@@ -206,25 +255,6 @@ def display_user_stats(users,type="pie"):
 
     os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
 
-def calculate_user_stats (instances,users):
-    """calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time"""
-    for i in instances:
-        values = instances[i]
-        name = values["ownerId"]
-        t_delta = float(values["duration"])
-        try:
-            users[name][0] = users[name][0] + 1 # number of instances
-        except:
-            #          count,sum,min,max,avg
-            users[name] = [1,0.0,t_delta,t_delta,0.0]
-
-        users[name][1] = users[name][1] + t_delta  # sum of time 
-        if t_delta < users[name][2]: # min
-            users[name][2] = t_delta
-        if t_delta > users[name][3]: # mmax
-            users[name][3] = t_delta
-    for name in users:
-        users[name][4] = float(users[name][1]) / float(users[name][0])
  
 ######################################################################
 # CONVERTER 
@@ -410,6 +440,11 @@ def parse_file (filename,analyze,debug=False,progress=True):
         else:
             analyze(data)
 
+
+        # For Debugging to make it faster terminate at 5
+        if debug and (len(instance) > 5):
+            break
+
     print_counter("lines total",lines_total)
     print_counter ("lines ignored = ", lines_ignored)
     print_counter("count_terminate_instances",count_terminate_instances)
@@ -436,7 +471,7 @@ def parse_test(f, line):
     print rest
     f(rest, data)
     print "OUTPUT>"
-    print json.dumps(data, sort_keys=False, indent=4)
+    print pp.pprint(data)
 
 
 def test1():
@@ -480,17 +515,31 @@ def test4():
     parse_file ("/tmp/cc.log.4",jason_dump,debug=False)
     return
 
-def test5(filename,progress=True):
-    parse_file (filename,instances.add,debug=False,progress=progress)
+def test5(filename,progress=True, debug=False):
+    parse_file (filename,instances.add,debug,progress)
     instances.calculate_delta ()
     instances.dump()
 
     return
 
 def test6():
-    calculate_user_stats (instance,users)
-    print json.dumps(users, sort_keys=False, indent=4)
-    print "total users = " + str(len(users))
+    users = {}
+    instances.calculate_user_stats (users)
+    print pp.pprint(users)
+
+    users = {}
+    instances.calculate_user_stats (users, "2011-11-06 00:13:15", "2011-11-08 14:13:15")
+    print pp.pprint(users)
+
+    users = {}
+
+    a = datetime.strptime("2011-11-06 00:13:15",'%Y-%m-%d %H:%M:%S')
+    b = datetime.strptime("2011-11-08 14:13:15",'%Y-%m-%d %H:%M:%S')
+        
+    instances.calculate_user_stats (users, a, b)
+    print pp.pprint(users)
+    
+
     return
 
 def test_display():
@@ -514,10 +563,13 @@ def main():
     # test3()
 
 
-    test5("/tmp/cc.log.4",progress=True)
-    #test5("/tmp/cc.log.prints_cc",progress=True)
+    #    test5("/tmp/cc.log.4",progress=True)
+    #    test5("/tmp/cc.log.prints_cc",progress=False, debug=False)
+    test5("/tmp/cc.log.prints_cc",progress=True, debug=True)
+
+
     
-    #test6()
+    test6()
     #    test_display()
     #   
 

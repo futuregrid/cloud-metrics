@@ -12,6 +12,7 @@ import sys
 import os
 from datetime import * 
 
+import FGEucaMetricsDB
 
 class Instances:
 
@@ -525,7 +526,18 @@ def test5(filename,progress=True, debug=False):
 
     return
 
+def testsql(filename,progress=True, debug=False):
 
+    eucadb = FGEucaMetricsDB("futuregrid.cfg")
+    
+    def add_data(date):        
+        eucadb.write(data)
+        return
+    
+    parse_file (filename,add_data,debug,progress)
+
+    return
+    
 def make_html (filename, title):
     page_template = """
         <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
@@ -599,11 +611,11 @@ def main():
 
     #    test5("/tmp/cc.log.4",progress=True)
     #    test5("/tmp/cc.log.prints_cc",progress=False, debug=False)
-    test5("/tmp/cc.log.prints_cc",progress=True, debug=True)
-
+    #test5("/tmp/cc.log.prints_cc",progress=True, debug=True)
+    testsql("/tmp/cc.log.prints_cc",progress=True, debug=True)
 
     
-    test6()
+    #test6()
 
 
 

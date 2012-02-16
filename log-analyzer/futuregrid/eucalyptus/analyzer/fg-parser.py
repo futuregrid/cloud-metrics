@@ -595,14 +595,24 @@ def test_sql_write(filename,progress=True, debug=False):
     instances.calculate_delta ()
     instances.write_to_db()
 
+def display(users):
+    display_user_stats (users, filename="a.png")
+    display_user_stats (users, type="bar", filename="b.png")
+    make_html("sample.html", "VMs used by users")
+    os.system ("open sample.html")
+
+
 def test_user_stats():
     users = {}
     instances.calculate_user_stats (users)
+    instances.write_to_db()
     print pp.pprint(users)
-
+    display(users)
+    """
     users = {}
     instances.calculate_user_stats (users, "2011-11-06 00:13:15", "2011-11-08 14:13:15")
     instances.write_to_db()
+    display(users)
 
     print pp.pprint(users)
 
@@ -612,17 +622,30 @@ def test_user_stats():
     b = datetime.strptime("2011-11-08 14:13:15",'%Y-%m-%d %H:%M:%S')
         
     instances.calculate_user_stats (users, a, b)
-    
+    instances.write_to_db()
     print pp.pprint(users)
-    
-    display_user_stats (users, filename="a.png")
-    display_user_stats (users, type="bar", filename="b.png")
-    make_html("sample.html", "VMs used by users")
-    os.system ("open sample.html")
+    display(users)
+    """
 
     return
 
+def read_all_log_files_and_store_to_db (path):
+    """
+    we assume thet the dir has only files of the form. All files have been gathere there from the fg-unix command
+    <name>.log
+    # hungruies job
+    """
+    listing = os.listdir(path)
+    count = 0
+    for filename in listing:
+        count =+ 1
+        print "Processing file is: " + filename
+        parse_file (path + "/" + filename,instances.add,debug=False,progress=True)
+    instances.calculate_delta ()
+    instances.write_to_db()
 
+
+    
 def main():
 
 
@@ -643,15 +666,23 @@ def main():
     #    test_file_read("/tmp/cc.log.4",progress=True)
     #    test_file_read("/tmp/cc.log.prints_cc",progress=False, debug=False)
 
-    #    test_file_read("/tmp/cc.log.prints_cc",progress=True, debug=True)
+    # ONLY FILE READ TEST
 
+    # test_file_read("/tmp/cc.log.prints_cc",progress=True, debug=True)
+    # test_user_stats()
 
-
-    test_sql_write("/tmp/cc.log.prints_cc",progress=True, debug=True)
+    # SQL TEST
     
+    test_sql_write("/tmp/cc.log.prints_cc",progress=True, debug=True)
     test_sql_read()
-
     test_user_stats()
 
+    # MONSTER TEST
+
+    dir_path = os.getenv("HOME") + "/Desktop/BACKUP"
+    #    read_all_log_files_and_store_to_db (dir_path)
+    test_sql_read()
+    test_user_stats()
+    
 if __name__ == "__main__":
     main()

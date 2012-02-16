@@ -223,15 +223,15 @@ class FGEucaMetricsDB(object):
                                     + self._fmtstr(" ".join(entryObj["groupNames"])) + "," \
                                     + self._fmtstr(entryObj["keyName"]) + "," \
                                     + self._fmtstr(entryObj["msgtype"]) + "," \
-                                    + entryObj["volumesSize"] + "," \
+                                    + str(entryObj["volumesSize"]) + "," \
                                     + self._fmtstr(entryObj["linetype"]) + "," \
                                     + self._fmtstr(entryObj["ownerId"]) + "," \
                                     + self._fmtstr(str(entryObj["date"])) + "," \
-                                    + entryObj["id"] + "," \
-                                    + entryObj["ncHostIdx"] + "," \
-                                    + entryObj["ccvm"]["mem"] + "," \
-                                    + entryObj["ccvm"]["cores"] + "," \
-                                    + entryObj["ccvm"]["disk"] + "," \
+                                    + str(entryObj["id"]) + "," \
+                                    + str(entryObj["ncHostIdx"]) + "," \
+                                    + str(entryObj["ccvm"]["mem"]) + "," \
+                                    + str(entryObj["ccvm"]["cores"]) + "," \
+                                    + str(entryObj["ccvm"]["disk"]) + "," \
                                     + self._fmtstr(entryObj["emiId"]) + "," \
                                     + self._fmtstr(entryObj["ccnet"]["publicIp"]) + "," \
                                     + self._fmtstr(entryObj["ccnet"]["privateMac"]) + "," \
@@ -243,7 +243,7 @@ class FGEucaMetricsDB(object):
                                     + self._fmtstr(entryObj["kernelURL"]) + "," \
                                     + self._fmtstr(entryObj["ramdiskId"]) + "," \
                                     + self._fmtstr(" ".join(entryObj["volumes"])) + "," \
-                                    + entryObj["launchIndex"] + "," \
+                                    + str(entryObj["launchIndex"]) + "," \
                                     + self._fmtstr(entryObj["reservationId"]) + ")"
         #print wquery
         try:

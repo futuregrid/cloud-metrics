@@ -1,0 +1,128 @@
+http://code.google.com/apis/ajax/playground/?type=visualization#using_the_query_language
+
+function drawVisualization() {
+  // To see the data that this visualization uses, browse to
+  // http://spreadsheets.google.com/ccc?key=pCQbetd-CptGXxxQIG7VFIQ  
+  var query = new google.visualization.Query(
+      'http://spreadsheets.google.com/tq?key=pCQbetd-CptGXxxQIG7VFIQ&pub=1');
+  
+  // Apply query language.
+  query.setQuery('SELECT A,D WHERE D > 100 ORDER BY D');
+  
+  // Send the query with a callback function.
+  query.send(handleQueryResponse);
+}
+
+function handleQueryResponse(response) {
+  if (response.isError()) {
+    alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+    return;
+  }
+
+  var data = response.getDataTable();
+  visualization = new google.visualization.LineChart(document.getElementById('visualization'));
+  visualization.draw(data, {legend: 'bottom'});
+}
+
+
+http://code.google.com/apis/ajax/playground/?type=visualization#motion_chart_time_formats
+function drawVisualization() {
+  
+  var time = [['2000W01', '2000W02'],
+              ['2002Q3', '2002Q4'],
+              [1990, 1991],
+              [(new Date(2000, 0, 1)), (new Date(2000, 0, 2))]];
+  
+  var columnType;
+  switch (timeUnits) {
+   case 0:
+   case 1:
+     columnType = 'string';
+     break;
+   case 2:
+   columnType = 'number';
+   break;
+   case 3:
+   columnType = 'date';
+   break;  
+  }
+  
+  var data = new google.visualization.DataTable();
+  data.addRows(6);
+  data.addColumn('string', 'Fruit');
+  data.addColumn(columnType, 'Time');
+  data.addColumn('number', 'Sales');
+  data.addColumn('number', 'Expenses');
+  data.addColumn('string', 'Location');
+  data.setValue(0, 0, 'Apples');
+  data.setValue(0, 1, time[timeUnits][0]);
+  data.setValue(0, 2, 1000);
+  data.setValue(0, 3, 300);
+  data.setValue(0, 4, 'East');
+  data.setValue(1, 0, 'Oranges');
+  data.setValue(1, 1, time[timeUnits][0]);
+  data.setValue(1, 2, 950);
+  data.setValue(1, 3, 200);
+  data.setValue(1, 4, 'West');
+  data.setValue(2, 0, 'Bananas');
+  data.setValue(2, 1, time[timeUnits][0]);
+  data.setValue(2, 2, 300);
+  data.setValue(2, 3, 250);
+  data.setValue(2, 4, 'West');
+  data.setValue(3, 0, 'Apples');
+  data.setValue(3, 1, time[timeUnits][1]);
+  data.setValue(3, 2, 1200);
+  data.setValue(3, 3, 400);
+  data.setValue(3, 4, "East");
+  data.setValue(4, 0, 'Oranges');
+  data.setValue(4, 1, time[timeUnits][1]);
+  data.setValue(4, 2, 900);
+  data.setValue(4, 3, 150);
+  data.setValue(4, 4, "West");
+  data.setValue(5, 0, 'Bananas');
+  data.setValue(5, 1, time[timeUnits][1]);
+  data.setValue(5, 2, 788);
+  data.setValue(5, 3, 617);
+  data.setValue(5, 4, "West");
+
+  var motionchart = new google.visualization.MotionChart(
+      document.getElementById('visualization'));
+  motionchart.draw(data, {'width': 800, 'height': 400});
+}
+
+var timeUnits = 0;
+
+
+###############
+
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {'packages':['motionchart']});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Fruit');
+        data.addColumn('date', 'Date');
+        data.addColumn('number', 'Sales');
+        data.addColumn('number', 'Expenses');
+        data.addColumn('string', 'Location');
+        data.addRows([
+          ['Apples',new Date (1988,0,1),1000,300,'East'],
+          ['Oranges',new Date (1988,0,1),1150,200,'West'],
+          ['Bananas',new Date (1988,0,1),300,250,'West'],
+          ['Apples',new Date (1989,6,1),1200,400,'East'],
+          ['Oranges',new Date (1989,6,1),750,150,'West'],
+          ['Bananas',new Date (1989,6,1),788,617,'West']
+          ]);
+        var chart = new google.visualization.MotionChart(document.getElementById('chart_div'));
+        chart.draw(data, {width: 600, height:300});
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="chart_div" style="width: 600px; height: 300px;"></div>
+  </body>
+</html>

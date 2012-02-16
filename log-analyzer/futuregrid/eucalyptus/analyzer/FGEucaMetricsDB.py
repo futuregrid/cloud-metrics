@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
+import pprint
 import os
 import ConfigParser
 import MySQLdb
 import hashlib
 
+pp = pprint.PrettyPrinter(indent=0)
+    
 class FGEucaMetricsDB(object):
 
     # Initialize
@@ -12,7 +15,8 @@ class FGEucaMetricsDB(object):
 
         #read config from file configfile
         config = ConfigParser.ConfigParser()
-        cfgfile = os.path.dirname(os.path.abspath(__file__)) + "/" + configfile
+        #cfgfile = os.path.dirname(os.path.abspath(__file__)) + "/" + configfile
+        cfgfile = os.getenv("HOME") + "/" + configfile
         config.read(cfgfile)
 
         #db parameters
@@ -83,10 +87,10 @@ class FGEucaMetricsDB(object):
 
     # help function to format values to be inserted into mysql db
     def _fmtstr(self, astr):
-        if(astr == ''):
-            ret = 'NULL'
-        else:
-            ret = "'" + astr + "'"
+        #if(astr == ''):
+        #    ret = 'NULL'
+        #else:
+        ret = "'" + astr + "'"
         return ret
 
     # read from the database.
@@ -145,12 +149,17 @@ class FGEucaMetricsDB(object):
         cur[keys[nextlevel]] = value
         return cur
 
+    def value_todate(self,string):
+        return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
+
     # write instance object into db
     def write(self, entryObj):
-        uidcat = entryObj["instanceId"] + " - " + entryObj["ts"]
+        print entryObj
+        uidcat = entryObj["instanceId"] + " - " + str(entryObj["ts"])
         m = hashlib.md5()
         m.update(uidcat)
         uid = m.hexdigest()
+        pp.pprint(entryObj)
         wquery = "INSERT INTO instance( uidentifier, \
                                     instanceId, \
                                     ts, \
@@ -196,20 +205,20 @@ class FGEucaMetricsDB(object):
                             VALUES (" \
                                     + self._fmtstr(uid) + "," \
                                     + self._fmtstr(entryObj["instanceId"]) + "," \
-                                    + self._fmtstr(entryObj["ts"]) + "," \
+                                    + self._fmtstr(str(entryObj["ts"])) + "," \
                                     + self._fmtstr(entryObj["calltype"]) + "," \
                                     + self._fmtstr(entryObj["userData"]) + "," \
                                     + self._fmtstr(entryObj["kernelId"]) + "," \
                                     + self._fmtstr(entryObj["emiURL"]) + "," \
-                                    + self._fmtstr(entryObj["t_start"]) + "," \
-                                    + self._fmtstr(entryObj["t_end"]) + "," \
-                                    + entryObj["duration"] + "," \
-                                    + self._fmtstr(entryObj["trace"]["pending"]["start"]) + "," \
-                                    + self._fmtstr(entryObj["trace"]["pending"]["stop"]) + "," \
-                                    + self._fmtstr(entryObj["trace"]["extant"]["start"]) + "," \
-                                    + self._fmtstr(entryObj["trace"]["extant"]["stop"]) + "," \
-                                    + self._fmtstr(entryObj["trace"]["teardown"]["start"]) + "," \
-                                    + self._fmtstr(entryObj["trace"]["teardown"]["stop"]) + "," \
+                                    + self._fmtstr(str(entryObj["t_start"])) + "," \
+                                    + self._fmtstr(str(entryObj["t_end"])) + "," \
+                                    + str(entryObj["duration"]) + "," \
+                                    + self._fmtstr(str(entryObj["trace"]["pending"]["start"])) + "," \
+                                    + self._fmtstr(str(entryObj["trace"]["pending"]["stop"])) + "," \
+                                    + self._fmtstr(str(entryObj["trace"]["extant"]["start"])) + "," \
+                                    + self._fmtstr(str(entryObj["trace"]["extant"]["stop"])) + "," \
+                                    + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + "," \
+                                    + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + "," \
                                     + self._fmtstr(entryObj["serviceTag"]) + "," \
                                     + self._fmtstr(" ".join(entryObj["groupNames"])) + "," \
                                     + self._fmtstr(entryObj["keyName"]) + "," \
@@ -217,7 +226,7 @@ class FGEucaMetricsDB(object):
                                     + entryObj["volumesSize"] + "," \
                                     + self._fmtstr(entryObj["linetype"]) + "," \
                                     + self._fmtstr(entryObj["ownerId"]) + "," \
-                                    + self._fmtstr(entryObj["date"]) + "," \
+                                    + self._fmtstr(str(entryObj["date"])) + "," \
                                     + entryObj["id"] + "," \
                                     + entryObj["ncHostIdx"] + "," \
                                     + entryObj["ccvm"]["mem"] + "," \

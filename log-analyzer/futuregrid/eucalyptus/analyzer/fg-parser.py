@@ -19,6 +19,12 @@ class Instances:
     in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
     pp = pprint.PrettyPrinter(indent=0)
     data = {}
+
+    eucadb = FGEucaMetricsDB.FGEucaMetricsDB("futuregrid.cfg")
+
+    withSQL=False
+
+    
     
     def __init__(self):
         self.clear()
@@ -62,9 +68,14 @@ class Instances:
         return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
 
     def dump(self,index = "all"):
+
         if index == "all":
-            pp.pprint(self.data)
+            for key in self.data:
+                print "------------------------"
+                pp.pprint(self.data[key])
+            print "------------------------"
             self.print_total()
+            print "------------------------"
         elif (index >= 0) and (index < len(str)):
             pp.pprint(self.data[index])
         else:
@@ -79,6 +90,23 @@ class Instances:
              print all[key]
          self.todatetime (all[key])
          return string 
+
+######################################################################
+# SQL
+######################################################################
+
+    def read_from_db(self):
+        key = 0 
+        instance_list = self.eucadb.read()
+
+        for element in instance_list:
+            key += 1
+            self.data[key] = element
+
+    def write_to_db(self):
+        for key_current in self.data:
+            self.eucadb.write(self.data[key_current])
+
 
     def add (self,datarecord):
         """prints the information for each instance"""
@@ -115,6 +143,8 @@ class Instances:
             current["trace"][status]["stop"] = max(current["trace"][status]["stop"],t)
 
             instance[id] = current
+
+
 
     def calculate_delta (self):
         """calculates how long each instance runs in seconds"""
@@ -515,29 +545,6 @@ def test3():
                "[Thu Nov 10 13:04:16 2011][016168][EUCAINFO  ] TerminateInstances(): called")
     return
 
-def test4():
-    parse_file ("/tmp/cc.log.4",jason_dump,debug=False)
-    return
-
-def test5(filename,progress=True, debug=False):
-    parse_file (filename,instances.add,debug,progress)
-    instances.calculate_delta ()
-    instances.dump()
-
-    return
-
-def testsql(filename,progress=True, debug=False):
-
-    eucadb = FGEucaMetricsDB("futuregrid.cfg")
-    
-    def add_data(date):        
-        eucadb.write(data)
-        return
-    
-    parse_file (filename,add_data,debug,progress)
-
-    return
-    
 def make_html (filename, title):
     page_template = """
         <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
@@ -565,15 +572,38 @@ def make_html (filename, title):
     print>>f, page_template % vars()
     f.close()
 
+def test4():
+    parse_file ("/tmp/cc.log.4",jason_dump,debug=False)
+    return
 
+def test_file_read(filename,progress=True, debug=False):
+    parse_file (filename,instances.add,debug,progress)
+    instances.calculate_delta ()
+    instances.dump()
 
-def test6():
+    return
+
+def test_sql_read():
+    instances.read_from_db()
+    instances.calculate_delta ()
+    instances.dump()
+
+    return
+
+def test_sql_write(filename,progress=True, debug=False):
+    parse_file (filename,instances.add,debug,progress)
+    instances.calculate_delta ()
+    instances.write_to_db()
+
+def test_user_stats():
     users = {}
     instances.calculate_user_stats (users)
     print pp.pprint(users)
 
     users = {}
     instances.calculate_user_stats (users, "2011-11-06 00:13:15", "2011-11-08 14:13:15")
+    instances.write_to_db()
+
     print pp.pprint(users)
 
     users = {}
@@ -582,6 +612,7 @@ def test6():
     b = datetime.strptime("2011-11-08 14:13:15",'%Y-%m-%d %H:%M:%S')
         
     instances.calculate_user_stats (users, a, b)
+    
     print pp.pprint(users)
     
     display_user_stats (users, filename="a.png")
@@ -609,15 +640,18 @@ def main():
     # test3()
 
 
-    #    test5("/tmp/cc.log.4",progress=True)
-    #    test5("/tmp/cc.log.prints_cc",progress=False, debug=False)
-    #test5("/tmp/cc.log.prints_cc",progress=True, debug=True)
-    testsql("/tmp/cc.log.prints_cc",progress=True, debug=True)
+    #    test_file_read("/tmp/cc.log.4",progress=True)
+    #    test_file_read("/tmp/cc.log.prints_cc",progress=False, debug=False)
 
+    #    test_file_read("/tmp/cc.log.prints_cc",progress=True, debug=True)
+
+
+
+    test_sql_write("/tmp/cc.log.prints_cc",progress=True, debug=True)
     
-    #test6()
+    test_sql_read()
 
-
+    test_user_stats()
 
 if __name__ == "__main__":
     main()

@@ -65,7 +65,7 @@ if __name__ == '__main__':
 		print "input dates is(are) invalid!"
 		sys.exit(-1)
 
-	# Set vaariables
+	# Set variables
 	s_date = datetime.strptime(args.s_date, "%Y%m%d")
 	e_date = datetime.strptime(args.e_date, "%Y%m%d")
 	e_date = datetime.combine(e_date,time(23, 59, 59))

@@ -1,5 +1,7 @@
 #emacs files
 *~
 \#*
-.bak
+*.bak
+*.png
+?
 #*

@@ -6,15 +6,19 @@ This script is decompressing cc.log.tar.gz files under /var/log/eucalyptus/logba
 
 Usage
 -----
-fg.log.gz.decompressor.py [options]
+fg.log.gz.decompressor.py [arguments] [options]
 
-Options
--------
+Arguments
+---------
 -s: start date
 -e: end date
 -o: output directory
 
-*All options are required*
+*All arguments are required*
+
+Options
+-------
+-i: input directory (default: /var/log/eucalyptus/logbackup)
 
 Example
 -------

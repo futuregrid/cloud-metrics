@@ -1,6 +1,6 @@
 
-This is about to explain cc.log file.
--------------------------------------
+This is about to explain type of cc.log file.
+---------------------------------------------
 
 Main template
 -------------
@@ -43,19 +43,21 @@ delimiter
 
 		Subsubdelimiter
 		- "{}"
-		(* When it occurs, need to go to the delimiter)
+		(* When it occurs, parsing process needs to go to the delimiter)
 		
 		Example
 		- called ncURL=http://i2:8775/axis2/services/EucalyptusNC timeout=5
+		 (string) (key=value)                                     (key=value)
 
 		'value' has different types
 		1) string without a white space
 		   ex. instanceId=i-4CDA08AA
-		2) string with a white space
+		2) string with a white space (only occurs in 'keyName')
 		   ex. keyName=ssh-rsa AA... asdf@eucalyptus
-		3) sub key=value pairs
-		
+		3) sub key=value pairs (only occurs in 'ccnet' and 'ccvm')
+		   ex. ccnet={privateIp=10.0.5.2 publicIp=149.165.159.134 privateMac=D0:0D:49:D8:08:72 vlan=12 networkIndex=2}
+		   * Starts with { means there are multiple values in the value
+		   * volumes and groupNames are also in this type.
+		   ex. volumes={} groupNames={sharifnew }
 
 It seems eucalyptus has a monitoring thread which runs every 10 secs or less.
-
-

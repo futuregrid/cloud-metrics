@@ -657,6 +657,42 @@ def main():
         print "Python version: " + str(sys.version_info)
 
     clear()
+
+    ''' argument parser added
+
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", dest="s_date", required=True,
+		    help="start date to begin decompression (type: YYYYMMDD)")
+    parser.add_argument("-e", dest="e_date", required=True,
+		    help="end date to finish decompression (type: YYYYMMDD)")
+    parser.add_argument("-i", dest="input_dir", default="/var/log/eucalyptus/logbackup",
+		    help="Absolute path where compressed .tar.gz files exist")
+    parser.add_argument("-o", dest="output_dir", required=True,
+		    help="Absolute path where decompressed files to be saved")
+    args = parser.parse_args()
+    '''
+    '''
+    How to use?
+    -----------
+    args.(variable name)
+    ex) args.s_date
+
+    Yes. 'dest' in parser.add_argument sets a variable name where the input to be allocated
+    dest=variable name
+    required=True; To set an argument is mandatory (required=False is default)
+    help=description for the argument
+
+    How we can use argparse in this file?
+    -------------------------------------
+    1) fg-parser.py -s start date -e end date; will parse logs between the period that specified by -s and -e options
+       ex) fg-parser.py -s 20120216 -e 20120216
+           => 2012-02-16-00-21-17-cc.log ~ 2012-02-16-23-47-16-cc.log will be parsed
+    2) fg-parser.py -f filename; Only parse the file that specified by -f option
+       ex) fg-parser.py -f 2012-02-16-00-21-17-cc.log
+           => Only that file will be parsed
+
+    '''
     
     # test1()
     # test2()

@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
 	# Set variables
 	# -------------
-	input_dir="/var/log/eucalyptus/logbackup"
+	default_input_dir="/var/log/eucalyptus/logbackup"
 	compressed_file="cclog.tar.gz"
 
 	# Parse arguments
@@ -55,7 +55,7 @@ if __name__ == '__main__':
 		help="start date to begin decompression (type: YYYYMMDD)")
 	parser.add_argument("-e", dest="e_date", required=True,
 		help="end date to finish decompression (type: YYYYMMDD)")
-	parser.add_argument("-i", dest="input_dir", default=input_dir,
+	parser.add_argument("-i", dest="input_dir", default=default_input_dir,
 		help="Absolute path where compressed .tar.gz files exist")
 	parser.add_argument("-o", dest="output_dir", required=True,
 		help="Absolute path where decompressed files to be saved")
@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
 	# Read input directory
 	import os
-	list = os.listdir(input_dir)
+	list = os.listdir(args.input_dir)
 	for infile in list:
 		if not CheckDate(infile[0:8]):
 			continue;

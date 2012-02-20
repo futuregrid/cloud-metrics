@@ -1,10 +1,7 @@
 #emacs files
 *~
 \#*
-<<<<<<< HEAD
 *.bak
 *.png
 ?
-=======
->>>>>>> change the .bak ending
 #*

@@ -323,25 +323,32 @@ def convert_str_to_dict_str(line):
 def parse_type_and_date(line,data):
     # split line after the third ] to (find date, id, msgtype)
     # put the rest in the string "rest"
-    m = re.search( r'\[(.*)\]\[(.*)\]\[(.*)\](.*)', line, re.M|re.I)
-    data['date'] = datetime.strptime(m.group(1), '%a %b %d %H:%M:%S %Y')
-    data['id']   = m.group(2)
-    data['msgtype'] = m.group(3)
-    rest =  m.group(4)
-    rest = re.sub(' +}','}',rest).strip()
+    try:
+	    m = re.search( r'\[(.*)\]\[(.*)\]\[(.*)\](.*)', line, re.M|re.I)
+	    data['date'] = datetime.strptime(m.group(1), '%a %b %d %H:%M:%S %Y')
+	    data['id']   = m.group(2)
+	    data['msgtype'] = m.group(3)
+	    rest =  m.group(4)
+	    rest = re.sub(' +}','}',rest).strip()
+	    if rest.startswith("running"):
+		    data['linetype'] = "running"
+		    return rest 
+	    elif rest.startswith("calling"):
+		    data['linetype'] = "calling"
+		    return rest 
+	    else:
+		    location = rest.index(":")
+		    linetype = rest[0:location]
+		    data['linetype'] = re.sub('\(\)','',linetype).strip()
+		    rest = rest[location+1:].strip()
+		    return rest
+    except (ValueError, AttributeError):
+	    data['linetype'] = "IGNORE"
+	    return
+    except:
+	    data['linetype'] = "IGNORE"
+	    return
 
-    if rest.startswith("running"):
-        data['linetype'] = "running"
-        return rest 
-    elif rest.startswith("calling"):
-        data['linetype'] = "calling"
-        return rest 
-    else:
-        location = rest.index(":")
-        linetype = rest[0:location]
-        data['linetype'] = re.sub('\(\)','',linetype).strip()
-        rest = rest[location+1:].strip()
-    return rest
 
 
 def ccInstance_parser(rest,data):

@@ -2,7 +2,7 @@ from setuptools import setup
 
 import sys, os
 
-version = '1.0.1'
+version = '2.0.2'
 
 setup(
     name='futuregrid.euca.analyzer',

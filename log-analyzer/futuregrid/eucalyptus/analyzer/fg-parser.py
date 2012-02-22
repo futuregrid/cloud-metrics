@@ -289,6 +289,17 @@ def display_user_stats(users,type="pie",filename="chart.png"):
     #print url
     #os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
 
+def make_csv_file(users, filename, output_dir):
+
+	f = open(output_dir + "/" + filename + ".csv", "w")
+	f.write('name, count, sum, min, avg\n')
+	for uname in users:
+		ucount = users[uname]['count']
+		usum = users[uname]['sum']
+		umin = users[uname]['min']
+		uavg = users[uname]['avg']
+		f.write(uname + ', ' + repr(ucount) + ', ' + repr(usum) + ', ' + repr(umin) + ', ' + repr(uavg) + '\n')
+	f.close()
  
 ######################################################################
 # CONVERTER 
@@ -588,7 +599,7 @@ def test4():
     return
 
 # Test 5 creates display htmls based on user input parameters.
-def test5(args): # (generate htmls)
+def make_report(args, type=["png"]): # (generate htmls, csv)
 	
 	# This function will perform:
 	# 1. Iterate -input directory
@@ -612,7 +623,11 @@ def test5(args): # (generate htmls)
 	instances.calculate_delta ()
 	instances.calculate_user_stats (users)
 	#print pp.pprint(users)
-	display(users, args.s_date+"-"+args.e_date, output_dir)
+
+	if (type[type.index("png")]):
+		display(users, args.s_date+"-"+args.e_date, output_dir)
+	if (type[type.index("csv")]):
+		make_csv_file(users, args.s_date+"-"+args.e_date, output_dir)
 
 	return
 
@@ -764,7 +779,7 @@ def main():
     #test_sql_read()
     #test_user_stats()
     
-    test5(args) # ARGUMENT - args.s_date, args.e_date,  / # Function name would be generate htmls
+    make_report(args, ["png", "csv"]) 
     
 if __name__ == "__main__":
     main()

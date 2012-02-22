@@ -598,7 +598,20 @@ def test4():
     parse_file ("/tmp/cc.log.4",jason_dump,debug=False)
     return
 
-# Test 5 creates display htmls based on user input parameters.
+# make_report
+# -----------
+# Create report with user's inputs and report types.
+#
+# args; user command arguments (array)
+#       -i input directory
+# 	-o output directory (report csv, png types)
+# 	-s start date of report (YYYYmmdd)
+#	-e end date of report (YYYYmmdd)
+# 
+# type; options for report type (array)
+#	csv (comma separated files)
+#	png (image file)
+#
 def make_report(args, type=["png"]): # (generate htmls, csv)
 	
 	# This function will perform:
@@ -606,6 +619,7 @@ def make_report(args, type=["png"]): # (generate htmls, csv)
 	# 2. Do parse_file which satisfies from s_date to e_date, otherwise it will skip.
 	# 3. analyze data (calculate_delta)
 	# 4. Generate htmls (display)
+	# 4.1. Generate csv files (records)
 
 	s_date = datetime.strptime(args.s_date, '%Y%m%d')
 	e_date = datetime.strptime(args.e_date, '%Y%m%d')
@@ -619,13 +633,17 @@ def make_report(args, type=["png"]): # (generate htmls, csv)
         	log_date = filename_todate(filename)
 		if log_date < s_date or log_date > e_date:
 			continue
+		#2.
 		parse_file(input_dir + "/" + filename, instances.add, debug=False, progress=True)
+	#3.
 	instances.calculate_delta ()
 	instances.calculate_user_stats (users)
 	#print pp.pprint(users)
 
+	#4.
 	if (type[type.index("png")]):
 		display(users, args.s_date+"-"+args.e_date, output_dir)
+	#4.1.
 	if (type[type.index("csv")]):
 		make_csv_file(users, args.s_date+"-"+args.e_date, output_dir)
 

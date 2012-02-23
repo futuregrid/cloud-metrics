@@ -6,5 +6,6 @@ push:
 
 clean:
 	rm -rf build dist *.egg-info *.pyc *~ \#* sample.html
+	cd ../../..; make -f Makefile clean
 
 

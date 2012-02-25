@@ -8,7 +8,7 @@ $day= sprintf("%02d", $day);
 $s_date=$year.$month.$day;
 $e_date=$s_date;
 
-$metrics="user.data.of.eucalyptus.india.$s_date.$e_date";
+$metrics="user.data.of.eucalyptus.india";
 ?>
 	<iframe frameborder="0" width="250" height="290" src="calendar.html"></iframe>
 	<iframe frameborder="0" width="680" height="500" src="chart.phtml?metrics=<?=$metrics?>&s_date=<?=$s_date?>&e_date=<?=$e_date?>&xaxis=ownerId&yaxis=used%20minutes&type=column&groupby=date&title=Minutes%20used%20by%20users%20of%20eucalyptus%20in%20India"></iframe>

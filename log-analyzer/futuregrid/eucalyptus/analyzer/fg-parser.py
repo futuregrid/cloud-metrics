@@ -289,6 +289,17 @@ def display_user_stats(users,type="pie",filename="chart.png"):
     #print url
     #os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
 
+def make_csv_file(users, filename, output_dir):
+
+	f = open(output_dir + "/" + filename + ".csv", "w")
+	f.write('name, count, sum, min, avg\n')
+	for uname in users:
+		ucount = users[uname]['count']
+		usum = users[uname]['sum']
+		umin = users[uname]['min']
+		uavg = users[uname]['avg']
+		f.write(uname + ', ' + repr(ucount) + ', ' + repr(usum) + ', ' + repr(umin) + ', ' + repr(uavg) + '\n')
+	f.close()
  
 ######################################################################
 # CONVERTER 
@@ -323,25 +334,32 @@ def convert_str_to_dict_str(line):
 def parse_type_and_date(line,data):
     # split line after the third ] to (find date, id, msgtype)
     # put the rest in the string "rest"
-    m = re.search( r'\[(.*)\]\[(.*)\]\[(.*)\](.*)', line, re.M|re.I)
-    data['date'] = datetime.strptime(m.group(1), '%a %b %d %H:%M:%S %Y')
-    data['id']   = m.group(2)
-    data['msgtype'] = m.group(3)
-    rest =  m.group(4)
-    rest = re.sub(' +}','}',rest).strip()
+    try:
+	    m = re.search( r'\[(.*)\]\[(.*)\]\[(.*)\](.*)', line, re.M|re.I)
+	    data['date'] = datetime.strptime(m.group(1), '%a %b %d %H:%M:%S %Y')
+	    data['id']   = m.group(2)
+	    data['msgtype'] = m.group(3)
+	    rest =  m.group(4)
+	    rest = re.sub(' +}','}',rest).strip()
+	    if rest.startswith("running"):
+		    data['linetype'] = "running"
+		    return rest 
+	    elif rest.startswith("calling"):
+		    data['linetype'] = "calling"
+		    return rest 
+	    else:
+		    location = rest.index(":")
+		    linetype = rest[0:location]
+		    data['linetype'] = re.sub('\(\)','',linetype).strip()
+		    rest = rest[location+1:].strip()
+		    return rest
+    except (ValueError, AttributeError):
+	    data['linetype'] = "IGNORE"
+	    return
+    except:
+	    data['linetype'] = "IGNORE"
+	    return
 
-    if rest.startswith("running"):
-        data['linetype'] = "running"
-        return rest 
-    elif rest.startswith("calling"):
-        data['linetype'] = "calling"
-        return rest 
-    else:
-        location = rest.index(":")
-        linetype = rest[0:location]
-        data['linetype'] = re.sub('\(\)','',linetype).strip()
-        rest = rest[location+1:].strip()
-    return rest
 
 
 def ccInstance_parser(rest,data):
@@ -432,6 +450,7 @@ def print_counter (label,counter):
     print label + " = " + str(counter)
 
 def parse_file (filename,analyze,debug=False,progress=True):
+    print filename
     f = open(filename, 'r')
     lines_total = 0
     lines_ignored = 0
@@ -545,7 +564,7 @@ def test3():
                "[Thu Nov 10 13:04:16 2011][016168][EUCAINFO  ] TerminateInstances(): called")
     return
 
-def make_html (filename, title):
+def make_html (prefix,output_dir, title):
     page_template = """
         <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
         <html> <head>
@@ -558,7 +577,7 @@ def make_html (filename, title):
         
         <h1> %(title)s </h1>
         <p>
-        <img src="a.png" alt="chart" /><img src="b.png" alt="chart" />
+        <img src="%(prefix)s.a.png" alt="chart" /><img src="%(prefix)s.b.png" alt="chart" />
 
         <hr>
         <address>Author Gregor von Laszewski, laszewski@gmail.com</address>
@@ -568,13 +587,72 @@ def make_html (filename, title):
     print "========"
     now = datetime.now()
     now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
+    filename = output_dir+"/"+prefix+".html";
     f = open(filename, "w")
-    print>>f, page_template % vars()
+    f.write(page_template % vars())
+    #print>>f, page_template % vars()
+
     f.close()
 
 def test4():
     parse_file ("/tmp/cc.log.4",jason_dump,debug=False)
     return
+
+# make_report
+# -----------
+# Create report with user's inputs and report types.
+#
+# args; user command arguments (array)
+#       -i input directory
+# 	-o output directory (report csv, png types)
+# 	-s start date of report (YYYYmmdd)
+#	-e end date of report (YYYYmmdd)
+# 
+# type; options for report type (array)
+#	csv (comma separated files)
+#	png (image file)
+#
+def make_report(args, type=["png"]): # (generate htmls, csv)
+	
+	# This function will perform:
+	# 1. Iterate -input directory
+	# 2. Do parse_file which satisfies from s_date to e_date, otherwise it will skip.
+	# 3. analyze data (calculate_delta)
+	# 4. Generate htmls (display)
+	# 4.1. Generate csv files (records)
+
+	s_date = datetime.strptime(args.s_date, '%Y%m%d')
+	e_date = datetime.strptime(args.e_date, '%Y%m%d')
+	e_date = datetime.combine(e_date, time(23, 59, 59))
+	input_dir = args.input_dir
+	output_dir = args.output_dir
+
+	users = {}
+	#1.
+	for filename in os.listdir(input_dir):
+        	log_date = filename_todate(filename)
+		if log_date < s_date or log_date > e_date:
+			continue
+		#2.
+		parse_file(input_dir + "/" + filename, instances.add, debug=False, progress=True)
+	#3.
+	instances.calculate_delta ()
+	instances.calculate_user_stats (users)
+	#print pp.pprint(users)
+
+	#4.
+	if (type[type.index("png")]):
+		display(users, args.s_date+"-"+args.e_date, output_dir)
+	#4.1.
+	if (type[type.index("csv")]):
+		make_csv_file(users, args.s_date+"-"+args.e_date, output_dir)
+
+	return
+
+# Convert 2012-01-28-04-13-04-cc.log to datetime
+def filename_todate(str):
+	return datetime.strptime(str, '%Y-%m-%d-%H-%M-%S-cc.log')
+
 
 def test_file_read(filename,progress=True, debug=False):
     parse_file (filename,instances.add,debug,progress)
@@ -595,11 +673,13 @@ def test_sql_write(filename,progress=True, debug=False):
     instances.calculate_delta ()
     instances.write_to_db()
 
-def display(users):
-    display_user_stats (users, filename="a.png")
-    display_user_stats (users, type="bar", filename="b.png")
-    make_html("sample.html", "VMs used by users")
-    os.system ("open sample.html")
+def display(users, prefix, output_dir):
+	a = output_dir+"/"+prefix+".a.png"
+	b = output_dir+"/"+prefix+".b.png"
+	display_user_stats (users, filename=a)
+	display_user_stats (users, type="bar", filename=b)
+	make_html(prefix, output_dir, "VMs used by users")
+    #os.system ("open sample.html")
 
 
 def test_user_stats():
@@ -648,56 +728,16 @@ def read_all_log_files_and_store_to_db (path):
     
 def main():
 
-
-
     if sys.version_info < (2, 7):
         print "ERROR: you must use python 2.7 or greater"
         exit (1)
     else:
         print "Python version: " + str(sys.version_info)
-
     clear()
 
-    ''' argument parser added
-
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-s", dest="s_date", required=True,
-		    help="start date to begin decompression (type: YYYYMMDD)")
-    parser.add_argument("-e", dest="e_date", required=True,
-		    help="end date to finish decompression (type: YYYYMMDD)")
-    parser.add_argument("-i", dest="input_dir", default="/var/log/eucalyptus/logbackup",
-		    help="Absolute path where compressed .tar.gz files exist")
-    parser.add_argument("-o", dest="output_dir", required=True,
-		    help="Absolute path where decompressed files to be saved")
-    args = parser.parse_args()
-    '''
-    '''
-    How to use?
-    -----------
-    args.(variable name)
-    ex) args.s_date
-
-    Yes. 'dest' in parser.add_argument sets a variable name where the input to be allocated
-    dest=variable name
-    required=True; To set an argument is mandatory (required=False is default)
-    help=description for the argument
-
-    How we can use argparse in this file?
-    -------------------------------------
-    1) fg-parser.py -s start date -e end date; will parse logs between the period that specified by -s and -e options
-       ex) fg-parser.py -s 20120216 -e 20120216
-           => 2012-02-16-00-21-17-cc.log ~ 2012-02-16-23-47-16-cc.log will be parsed
-    2) fg-parser.py -f filename; Only parse the file that specified by -f option
-       ex) fg-parser.py -f 2012-02-16-00-21-17-cc.log
-           => Only that file will be parsed
-
-    '''
-    
     # test1()
     # test2()
     # test3()
-
 
     #    test_file_read("/tmp/cc.log.4",progress=True)
     #    test_file_read("/tmp/cc.log.prints_cc",progress=False, debug=False)
@@ -709,16 +749,55 @@ def main():
 
     # SQL TEST
     
-    test_sql_write("/tmp/cc.log.prints_cc",progress=True, debug=True)
-    test_sql_read()
-    test_user_stats()
+    #test_sql_write("/tmp/cc.log.prints_cc",progress=True, debug=True)
+    #test_sql_read()
+    #test_user_stats()
 
     # MONSTER TEST
 
-    dir_path = os.getenv("HOME") + "/Desktop/BACKUP"
+    #dir_path = os.getenv("HOME") + "/Desktop/BACKUP"
     #    read_all_log_files_and_store_to_db (dir_path)
-    test_sql_read()
-    test_user_stats()
+    
+    ''' argument parser added '''
+
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", dest="s_date",
+		    help="start date to begin parsing (type: YYYYMMDD)")
+    parser.add_argument("-e", dest="e_date",
+		    help="end date to finish parsing (type: YYYYMMDD)")
+    parser.add_argument("-i", dest="input_dir", required=True,
+		    help="Absolute path where the files (e.g. 2012-02-16-00-21-17-cc.log generated by fg-unix) exist")
+    parser.add_argument("-o", dest="output_dir", required=True,
+		    help="output directory")
+    args = parser.parse_args()
+    
+    '''
+    Parameters
+    ----------
+    dest=variable name
+    - 'dest' in parser.add_argument sets a variable name where the input to be allocated
+    required=True
+    - To set an argument is mandatory (required=False is default)
+    help=text
+    - Description for the argument
+
+    How we can use argparse in this file?
+    -------------------------------------
+    1) fg-parser.py -s start date -e end date; will parse logs between the period that specified by -s and -e options
+       ex) fg-parser.py -s 20120216 -e 20120216
+           => 2012-02-16-00-21-17-cc.log ~ 2012-02-16-23-47-16-cc.log will be parsed
+    2) fg-parser.py -f filename; Only parse the file that specified by -f option
+       ex) fg-parser.py -f 2012-02-16-00-21-17-cc.log
+           => Only that file will be parsed
+    '''
+
+    #    read_all_log_files_and_store_to_db (args.input_dir)
+ 
+    #test_sql_read()
+    #test_user_stats()
+    
+    make_report(args, ["png", "csv"]) 
     
 if __name__ == "__main__":
     main()

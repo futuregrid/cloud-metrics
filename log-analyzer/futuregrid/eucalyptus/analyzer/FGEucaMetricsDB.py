@@ -26,6 +26,9 @@ class FGEucaMetricsDB(object):
         dbpasswd = config.get('EucaLogDB', 'passwd')
         dbname = config.get('EucaLogDB', 'db')
 
+	#table 
+	self.tablename = "instance" #default table
+
         #connect to db
         self.conn = MySQLdb.connect (dbhost, dbuser, dbpasswd, dbname, dbport)
         self.cursor = self.conn.cursor (MySQLdb.cursors.DictCursor)
@@ -104,9 +107,9 @@ class FGEucaMetricsDB(object):
                     querystr += " and "
                 querystr += astr            
                 #print "qstr:->" + querystr + "<---"
-                rquery = "SELECT * FROM instance where " + querystr
+                rquery = "SELECT * FROM " + self.tablename + " where " + querystr
         else:
-            rquery = "SELECT * from instance"
+            rquery = "SELECT * from " + self.tablename
             
         self.cursor.execute(rquery)
         rows = self.cursor.fetchall()
@@ -130,6 +133,26 @@ class FGEucaMetricsDB(object):
                     rowret[key] = arow[key]
             ret.append(rowret)
         return ret
+
+    def delete(self, querydict={}):
+        querystr = "";
+        if querydict:
+            for key in querydict:
+                value = querydict[key]
+                astr = key + "='" + value + "'"
+                if querystr != "":
+                    querystr += " and "
+                querystr += astr            
+                rquery = "delete FROM " + self.tablename + " where " + querystr
+        else:
+            rquery = "delete from " + self.tablename
+        
+	try:
+		self.cursor.execute(rquery)
+        except MySQLdb.Error:
+		pass
+        return 0
+        
         
     # help function to initialize(if necessary) and assign value to nested dict
     def _assignVal2Multi(self, themulti, keys, value=None):
@@ -250,6 +273,11 @@ class FGEucaMetricsDB(object):
             self.cursor.execute(wquery)
         except MySQLdb.Error:
             pass
+
+    # Change table 
+    def change_table(self, table_name):
+	    self.tablename=table_name
+	    return
 
 # testing
 def main():

@@ -2,6 +2,9 @@
 $gchart_pname = "corechart";
 $gchart_cname = "google.visualization.PieChart";
 $title = "Number of running instances per user";
+$gchart_options = "{width: 650, height: 480, title: '$title'}";
+
+
 #
 # Required arguments
 # 1. s_date; start date of a report (YYYYMMDD)
@@ -27,14 +30,26 @@ $main_seperator = ",";
 $sub_seperator = ";";
 
 # File read
-$filename = "data/$metrics";
-if(!file_exists($filename))
-	return -3;
-if(!($lines = file($filename)))
-	return -2;
-for ($i = 0; $lines[$i]; $i++) {
-	#$csv_lines[$i] = str_getcsv($lines[$i], ",");
-	$csv_lines[$i] = split($main_seperator,$lines[$i]);
+# example
+# Year, Month, Day, ownerId, used minutes, number of running instances, instances
+# 2011,11,14,admin,14399,10,i-39290662;i-39930672;i-39C8071E;i-3EF5076A;i-493707EA;i-4A21084E;i-4C540833;i-51770A7E;i-58030985;i-5AF609D3
+# 
+$cnt = 0;
+for ($c_date = $s_date, $i = 0; $c_date <= $e_date; $c_date = date("Ymd", strtotime($c_date . " +1 day")), $i++) {
+	$filename = "data/$metrics".".".$c_date.".".$c_date;
+	if(!file_exists($filename))
+		return -3;
+	if(!($lines = file($filename)))
+		return -2;
+	# When multiple files, we skip first line of the files which is a comlumn definition.
+	if ($i == 0)
+		$j = 0;
+	else
+		$j = 1;
+	for ($j; $lines[$j]; $j++) {
+		#$csv_lines[$j] = str_getcsv($lines[$j], ",");
+		$csv_lines[$cnt++] = split($main_seperator, $lines[$j]);
+	}
 }
 
 #Set dates
@@ -56,6 +71,15 @@ if (strtolower($g_type) == "pie")
 	$gchart_cname = "google.visualization.PieChart";
 else if (strtolower($g_type) == "column")
 	$gchart_cname = "google.visualization.ColumnChart";
+else if (strtolower($g_type) == "motion") {
+	$gchart_pname = "motionchart";
+	$gchart_cname = "google.visualization.MotionChart";
+	$gchart_options = " {};
+	options['state'] =
+'{\"xZoomedDataMin\":0,\"yAxisOption\":\"2\",\"yZoomedDataMin\":0,\"time\":\"$syear-$smonth-$sday\",\"yLambda\":1,\"iconType\":\"VBAR\",\"nonSelectedAlpha\":0.4,\"xZoomedIn\":false,\"showTrails\":false,\"dimensions\":{\"iconDimensions\":[\"dim0\"]},\"yZoomedIn\":false,\"xZoomedDataMax\":19,\"iconKeySettings\":[],\"xLambda\":1,\"colorOption\":\"2\",\"playDuration\":15000,\"xAxisOption\":\"2\",\"sizeOption\":\"_UNISIZE\",\"orderedByY\":false,\"uniColorForNonSelected\":false,\"duration\":{\"timeUnit\":\"D\",\"multiplier\":1},\"yZoomedDataMax\":139,\"orderedByX\":true};';
+options['width'] = 650;
+options['height'] = 480";
+}
 
 #Set column names by reading the first line
 for ($num = 0 ; $column_name = trim($csv_lines[0][$num]) ; $num++) {
@@ -88,6 +112,7 @@ else if (strtolower($groupby) == "date") {
 	echo "Undefined ($groupby) groupby Name.";
 	return -1;
 }
+
 $column_length = count($column_names);
 
 # Make a table of the graph
@@ -131,11 +156,6 @@ if(count($groups))
 
 $row_length = count($graph);
 ?>
-<!--
-You are free to copy and use this sample in accordance with the terms of the
-Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
--->
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -147,6 +167,12 @@ google.load('visualization', '1', {packages: ['<?=$gchart_pname?>']});
 function drawVisualization() {
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', '<?=$column_names[0] ?>');
+<?
+	#TEMPORARY CODE FOR MOTION CHART
+	if (strtolower($g_type) == "motion")
+		echo "	data.addColumn('date', 'Date');\n";
+	#TEMPORARY CODE FOR MOTION CHART
+?>
 <? for($i = 1; $col = $column_names[$i]; $i++) { ?>
 	data.addColumn('number', '<?=$col ?>');
 <? } ?>
@@ -158,6 +184,11 @@ foreach ($graph as $key => $val) {
 	if ($i != 1)
 		echo ",\n";
 	echo "['".$key."', ";
+
+	#TEMPORARY CODE FOR MOTION CHART
+	if (strtolower($g_type) == "motion")
+		echo "new Date(".$syear.", ".$smonth."), ";
+	#TEMPORARY CODE FOR MOTION CHART
 	if (!is_array($val))
 		echo $val."]";
 	else {
@@ -171,16 +202,12 @@ foreach ($graph as $key => $val) {
 		}
 		echo "]";
 	}
-	$i = 2;
+	$i++;
 }
 ?>
 ]);
 
-var options = {
-	width: 650, height: 480,
-		title: '<?=$title?>'
-}; 
-
+var options = <?=$gchart_options?>;
 var annotatedtimeline = new <?=$gchart_cname?>(
 	document.getElementById('visualization'));
 annotatedtimeline.draw(data, options);

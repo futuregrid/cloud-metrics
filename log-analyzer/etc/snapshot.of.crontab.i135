@@ -1,3 +1,0 @@
-0 * * * * ~/eloga/fg-collecting-euca-cclogs.sh 2>> ~/eloga/fg-collecting-euca-cclogs.sh.log >> ~/eloga/fg-collecting-euca-cclogs.sh.log
-0 * * * * ~/eloga/fg-gold-gcharge-call.sh 2>> ~/eloga/fg-gold-gcharge-call.sh.log >> ~/eloga/fg-gold-gcharge-call.sh.log
-0 1 * * * ~/eloga/logbackup/fg.crontabs.sh 2>> ~/eloga/logbackup/fg.crontabs.sh.log >> ~/eloga/logbackup/fg.crontabs.sh.log

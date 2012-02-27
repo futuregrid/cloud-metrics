@@ -1,12 +1,12 @@
 '''
-fg.log.gz.decompressor.py
+fg-log-gz-decompressor.py
 =========================
 
 This script is decompressing cc.log.tar.gz files under /var/log/eucalyptus/logbackup/YYYYMMDDhhmmss/
 
 Usage
 -----
-fg.log.gz.decompressor.py [arguments] [options]
+fg-log-gz-decompressor.py [arguments] [options]
 
 Arguments
 ---------
@@ -22,7 +22,7 @@ Options
 
 Example
 -------
-./fg.log.gz.decompressor.py -s 20120216 -e 20120216 -o /var/log/eucalyptus/BACKUP
+./fg-log-gz-decompressor.py -s 20120216 -e 20120216 -o /var/log/eucalyptus/BACKUP
 
 Contact
 =========================
@@ -47,17 +47,27 @@ if __name__ == '__main__':
 	# -------------
 	default_input_dir="/var/log/eucalyptus/logbackup"
 	compressed_file="cclog.tar.gz"
+	# 1. Set default argument values
+	# 1.1. date
+	# ---------
+	from datetime import date
+	today = date.today()
+	def_s_date = today.strftime("%Y%m%d")
+	def_e_date = def_s_date
+	# 1.2. output directory
+	def_output_dir = "/tmp/uncompressed-euca-logbackup/"
+
 
 	# Parse arguments
 	# ---------------
 	parser = argparse.ArgumentParser()
-	parser.add_argument("-s", dest="s_date", required=True,
+	parser.add_argument("-s", dest="s_date", default=def_s_date,
 		help="start date to begin decompression (type: YYYYMMDD)")
-	parser.add_argument("-e", dest="e_date", required=True,
+	parser.add_argument("-e", dest="e_date", default=def_e_date,
 		help="end date to finish decompression (type: YYYYMMDD)")
 	parser.add_argument("-i", dest="input_dir", default=default_input_dir,
 		help="Absolute path where compressed .tar.gz files exist")
-	parser.add_argument("-o", dest="output_dir", required=True,
+	parser.add_argument("-o", dest="output_dir", default=def_output_dir,
 		help="Absolute path where decompressed files to be saved")
     
 	args = parser.parse_args()
@@ -91,5 +101,8 @@ if __name__ == '__main__':
 		import tarfile
 		print "Extracting... "+infile+"/"+compressed_file+" to "+args.output_dir+"/"+infile+"/..."
 		tar = tarfile.open(args.input_dir+"/"+infile+"/"+compressed_file, "r:gz")
+		if not os.path.exists(args.output_dir):
+			os.makedirs(args.output_dir)
 		tar.extractall(args.output_dir+"/"+infile)
+
 		

@@ -78,7 +78,7 @@ OTHER
 
 CONTRIBUTORS
 ============
-Hyungro Lee (lee212 at indiana dot edu) 
+Hyungro Lee (lee212 at indiana dot edu)   
 Gregor von laszewski (laszewski@gmail.com)
 
 KNOWN BUGS

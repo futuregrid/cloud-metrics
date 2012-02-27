@@ -1,9 +1,9 @@
-SLOG ANALYZER FOR EUCALYPTUS 2.0+
-=================================
+LOG ANALYZER FOR EUCALYPTUS 2.0+
+================================
 
 We are developing an open source code that allows to analyze the log files from eucalyptus and displays the results in a convenient graphical user interface.
 
-To achieve this we are using 'cc.log' files. Te needed information must be gathered while eucalyptus runs in 'EUCADEBUG' mode.
+To achieve this we are using 'cc.log' files. The needed information must be gathered while eucalyptus runs in 'EUCADEBUG' mode.
 
 We assume the following directory layout
 
@@ -19,16 +19,16 @@ The scripts generate the folloing output files
 
 #TODO: clean the variables
 
-    FG_LOG_ANALYZER_WWW_OUTPUT - location wher ethe www files for dispaly are stored
+    FG_LOG_ANALYZER_WWW_OUTPUT - location where the www files for display are stored
     FG_TMP - location where temporary files are located that are analyzed
     FG_DATA - location where the permamnent data is being stored 
 
 The scripts assume the following input files
 
-    EUCALYPTUS_LOG_DIR - location wher the eucalyptus log dirs are stored
+    EUCALYPTUS_LOG_DIR - location where the eucalyptus log dirs are stored
 
 
-It is assumed that this tree is installed and a ahell variable 
+It is assumed that this tree is installed and a shell variable 
 
 #TODO:
   FG_HOME_LOG_ANALYZER  
@@ -37,7 +37,7 @@ is set to the location of the "futuregrid" directory.
 
 We recommend that the futureGrid directory is included in the PATH of the shell that will run the commands.
 
-INSTALATION
+INSTALLATION
 ===========
 
 please download the code/egg from github with ....
@@ -72,20 +72,15 @@ fg.log.merger.sh, and fg.log.gz.decompressor.sh
 
 OTHER
 =====
-fg.crontabs.sh
-* Those routine jobs are executed by crontab with 
-* A snapshot is available through snapshot.of.crontab.i135
-
 ./www
 * displays graphs about data usage metrics are in 'www'
 * Be displaying via google chart tools.
 
 CONTRIBUTORS
 ============
-Hyungro Lee (lee212 at indiana dot edu)
+Hyungro Lee (lee212 at indiana dot edu) 
 Gregor von laszewski (laszewski@gmail.com)
 
 KNOWN BUGS
 ==========
-* we like to move to a python script at one point
 * we like to move to a python egg with easy_install

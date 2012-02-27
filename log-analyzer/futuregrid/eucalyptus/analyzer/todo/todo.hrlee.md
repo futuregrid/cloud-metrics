@@ -2,6 +2,8 @@
 Hyungro Lee's todo list
 =======================
 
+This is only for H. Lee to remember what needs to be done by himself.
+
 * Rename & reorganize directory structure
  - /eucalyptus-cloud-metrics/log-analyzer/futuregrid/eucalyptus/analyzer
 

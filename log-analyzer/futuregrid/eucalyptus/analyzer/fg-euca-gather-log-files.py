@@ -226,20 +226,6 @@ def gather_all_euca_log_files (from_path,backup):
             print new_name + ", WARNING: file exists, copy ignored"
     return
 
-#####################################################################
-# main
-#####################################################################
-def main():
-   dir_path = os.getenv("HOME") + "/Downloads/logbackup"
-
-   backup = "/tmp/backup"
-
-   #   gather_all_euca_log_files (dir_path,backup)
-   gather_all_euca_log_files ("/Users/gregor/Desktop/logbackup", "/Users/gregor/Desktop/BACKUP/")
-
-
-   return
-
 ######################################################################
 # code for testing that works
 ######################################################################
@@ -253,12 +239,35 @@ def works():
   date_object = getdate_from_euca_log_line(line)
   print date_object
   print generate_filename (date_object,'-cc.log')
-  
+
   shutil.copy2('/tmp/cc.log.4', '/tmp/cc.log.5')
   ls("/tmp")
   rename_euca_log_file("/tmp", "cc.log.5")
   ls("/tmp")
   return
-  
+
+#####################################################################
+# main
+#####################################################################
+def main():
+
+   def_input_dir = "/tmp/uncompressed-euca-logbackup/"
+   def_output_dir = "/var/log/eucalyptus/BACKUP"
+   import argparse
+
+   # Parse arguments
+   # ---------------
+   parser = argparse.ArgumentParser()
+   parser.add_argument("-i", dest="input_dir", default=def_input_dir,
+		   help="Absolute path where (unparsed) cc.logs files exist")
+   parser.add_argument("-o", dest="output_dir", default=def_output_dir,
+		   help="Absolute path where (parsed & renamed) output cc.logs files to be saved")
+   args = parser.parse_args()
+   #print args.input_dir, args.output_dir
+
+   gather_all_euca_log_files (args.input_dir, args.output_dir)
+
+   return
+
 if __name__ == "__main__":
-    main()
+	main()

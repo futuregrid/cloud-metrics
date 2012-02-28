@@ -1,5 +1,150 @@
 #! /usr/bin/env python
 
+"""
+Manual Page Draft
+
+NAME - fg-euca-gather-log-files
+
+DESCRIPTION
+===========
+
+Eucalyptus 2.0 provides a number of log files that are written into a
+directory. The log files are maintained with the rrd tool, thus they
+will be overwritten after a particular time period. This tool copies
+the log files that end with .log.?  and copies them into a backup
+directory. A log file will only be copied into backup if it is not
+already there. This avoids unnecessary operations and allows the
+integration of this script into cron.
+
+USAGE
+=====
+
+fg-euca-gather-log-files <from_dir> <backup_dir>
+
+The program has a number of parameters by default it takes two
+directories. The first directory is the directory from which all
+log files are copied. The second is the directory to which the
+files are to be copied (e.g our BAckup directory). If the backup
+directory does not exists it is being utomatically created.
+
+One thing is important to not that the current script looks
+recuresively through all subdirectories starting from the from dir.
+This is due to the fact that our initial script backed up all files
+into various subdirectories. All files will be renamed to
+
+   YYYY-MM-DD-HH-mm-ss-cc.log
+
+Specific arguments can be controlled as follows
+
+  --recursive
+
+      switches on recursive search of the log files starting from
+      <from_dir>
+
+  --norecursive
+
+      switches on recursive search of the log files starting from
+      <from_dir>
+
+  --backup <dir>
+
+    specifies the backup directory
+
+  --source <dir>
+
+    specifies the source directory.
+
+If any of the parameters are used the specification of any
+parameters without named parameters is not allowed. Calling
+
+fg-euca-gather-log-files --recurseive --source <from_dir> --backup <backup_dir>
+
+is equicvalent to
+
+fg-euca-gather-log-files <from_dir> <backup_dir>
+
+
+In a production environment we recommend using explicit parameter naming
+in order to be more transparent.
+
+TODO: decide if we should eliminate arguments without parameters alltogether.
+Hyungro can decide, may be easier to implement and thus saves time.
+
+
+INSTALATION
+===========
+
+Download
+--------
+Download the code from Git
+
+git@github.com:futuregrid/eucalyptus-cloud-metrics.git
+
+describe here.
+
+Deploy
+------
+
+After download, please go into the directory xyzand say
+
+pip install setup
+
+This will install the program(s) into
+
+/usr/loal/bin
+
+There you will find the program
+
+fg-euca-gather-log-files
+
+
+Cron Setup
+----------
+Describe here what to do (Lee or Sharif)
+
+
+Update
+------
+
+At times there may be updates made to this program. In order to update
+the already deployed script, the following steps are recommended:
+
+(probably just like the first time, but we must make sure taht we just document
+ it here or refer to the instalation instructions.
+
+e.g. you could decide if a git pull should be called followed by a new pip install setup
+
+Easy install/Pip
+----------------
+
+In future we intent to host this program in pypi and the administrator will be able to call
+
+  pip install fg-metrics
+
+or
+
+   easyinstall install fg-metrics
+
+without needing to get the code from github
+
+Contribution
+------------
+
+If you like to contribute to the code, please contact Gregor von Laszewski
+at laszewski@gmail.com. The code is located on github at
+
+ https://github.com/futuregrid/eucalyptus-cloud-metrics
+
+in the directory cloud-metrics
+
+License
+The code is distributed under Apache 2.0 License
+Authors: Gregor von Laszewski, H. Lee
+E-mail: laszewski@gmail.com
+
+"""
+
+
 import os, glob
 import re
 import shutil

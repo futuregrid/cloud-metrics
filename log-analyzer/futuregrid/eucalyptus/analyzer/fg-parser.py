@@ -93,7 +93,7 @@ import sys
 import os
 from datetime import * 
 
-from lib import FGEucaMetricsDB
+import FGEucaMetricsDB
 
 class Instances:
 

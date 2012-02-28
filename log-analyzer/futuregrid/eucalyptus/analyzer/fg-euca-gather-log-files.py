@@ -30,7 +30,9 @@ directory does not exists it is being utomatically created.
 One thing is important to not that the current script looks
 recuresively through all subdirectories starting from the from dir.
 This is due to the fact that our initial script backed up all files
-into various subdirectories.
+into various subdirectories. All files will be renamed to
+
+   YYYY-MM-DD-HH-mm-ss-cc.log
 
 Specific arguments can be controlled as follows
 

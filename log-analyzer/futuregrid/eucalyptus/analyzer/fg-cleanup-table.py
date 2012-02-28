@@ -1,5 +1,5 @@
 import ConfigParser
-from lib import FGEucaMetricsDB
+from FGEucaMetricsDB import FGEucaMetricsDB
 import argparse
 
 def main():

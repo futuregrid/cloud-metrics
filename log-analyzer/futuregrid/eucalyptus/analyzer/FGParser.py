@@ -1,13 +1,13 @@
 #! /usr/bin/env python
 
 """
-MANULA PGAE DRAFT
+MANUAL PAGE DRAFT
 
 NAME - fg-euca-log-parser
 
 DESCRIPTION
 
-ussage
+usage
 
    cat filename.log | fg-euca-log-parser <parameters>
 

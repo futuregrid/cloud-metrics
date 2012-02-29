@@ -71,8 +71,8 @@ TODO: decide if we should eliminate arguments without parameters alltogether.
 Hyungro can decide, may be easier to implement and thus saves time.
 
 
-INSTALATION
-===========
+INSTALLATION
+============
 
 Download
 --------

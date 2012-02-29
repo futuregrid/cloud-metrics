@@ -1,8 +1,11 @@
-from setuptools import setup
+try:
+	    from setuptools import setup, find_packages
+except ImportError:
+	    from distutils.core import setup
 
 import sys, os
 
-version = '2.0.2.1'
+version = '2.0.2.2'
 
 #DISTUTILS_DEBUG=1
 
@@ -19,7 +22,8 @@ The package allows the analysis of Eucalyptus logs and display the information g
     url='http://futuregrid.org',
     license='Apache 2.0',
     package_dir = {'': '.'},
-    packages = ['futuregrid.eucalyptus.analyzer'],
+    #packages = ['futuregrid.eucalyptus.analyzer', 'futuregrid.eucalyptus.analyzer.lib'],
+    packages = find_packages(),
     
     #include_package_data=True,
     #zip_safe=True,
@@ -30,17 +34,17 @@ The package allows the analysis of Eucalyptus logs and display the information g
     entry_points={
         'console_scripts':
             [
-             'fg-cleanup-table = futuregrid.euca.analyzer.fg-cleanup-table:main'
-             'fg-euca-gather-log-files = futuregrid.euca.analyzer.fg-euca-gather-log-files:main'
-             'fg-log-gz-decompressor = futuregrid.euca.analyzer.fg-log-gz-decompressor:main'
-             'fg-parser = futuregrid.euca.analyzer.fg-parser:main'
+             'fg-cleanup-table = futuregrid.eucalyptus.analyzer.FGCleanupTable:main',
+             'fg-euca-gather-log-files = futuregrid.eucalyptus.analyzer.FGEucaGatherLogFiles:main',
+             'fg-log-gz-decompressor = futuregrid.eucalyptus.analyzer.FGLogGzDecompressor:main',
+             'fg-parser = futuregrid.eucalyptus.analyzer.FGParser:main'
              ]},
     
     install_requires = [
         'setuptools'
         ],
-    
     )
 
 # http://docs.python.org/distutils/introduction.html#distutils-simple-example
 # http://docs.python.org/distutils/setupscript.html#setup-script
+# http://mxm-mad-science.blogspot.com/2008/02/python-eggs-simple-introduction.html

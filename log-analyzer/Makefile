@@ -1,3 +1,6 @@
+euca_version=2.0.2.1
+python_version=2.7
+
 push:
 	git commit -a 
 	git push
@@ -6,7 +9,10 @@ pull:
 	git pull 
 
 install:
-	sudo easy_install dist/futuregrid.euca.analyzer-0.1dev-py2.6.egg 
+	# Version variables needed - 02/29/2012
+	# $euca_version
+	# $python_version
+	sudo easy_install dist/futuregrid.euca.analyzer-${euca_version}dev-py${python_version}.egg 
 
 distall:
 	make -f Makefile egg
@@ -32,4 +38,5 @@ rpm:
 
 
 clean:
+	sudo easy_install -m dist/futuregrid.euca.analyzer-${euca_version}dev-py${python_version}.egg 
 	rm -rf build dist *.egg-info *~ \#*

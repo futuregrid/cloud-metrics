@@ -30,10 +30,10 @@ The package allows the analysis of Eucalyptus logs and display the information g
     entry_points={
         'console_scripts':
             [
-             'fg-cleanup-table = futuregrid.eucalyptus.analyzer.fg-cleanup-table:main'
-             'fg-euca-gather-log-files = futuregrid.eucalyptus.analyzer.fg-euca-gather-log-files:main'
-             'fg-log-gz-decompressor = futuregrid.eucalyptus.analyzer.fg-log-gz-decompressor:main'
-             'fg-parser = futuregrid.eucalyptus.analyzer.fg-parser:main'
+             'fg-cleanup-table = futuregrid.euca.analyzer.fg-cleanup-table:main'
+             'fg-euca-gather-log-files = futuregrid.euca.analyzer.fg-euca-gather-log-files:main'
+             'fg-log-gz-decompressor = futuregrid.euca.analyzer.fg-log-gz-decompressor:main'
+             'fg-parser = futuregrid.euca.analyzer.fg-parser:main'
              ]},
     
     install_requires = [

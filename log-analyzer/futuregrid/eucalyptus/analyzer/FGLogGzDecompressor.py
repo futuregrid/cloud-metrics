@@ -41,8 +41,7 @@ def CheckDate(str):
 	except:
 		return False
 
-if __name__ == '__main__':
-
+def main():
 	# Set variables
 	# -------------
 	default_input_dir="/var/log/eucalyptus/logbackup"
@@ -106,3 +105,5 @@ if __name__ == '__main__':
 		tar.extractall(args.output_dir+"/"+infile)
 
 		
+if __name__ == '__main__':
+	main()

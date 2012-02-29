@@ -4,6 +4,8 @@ import sys, os
 
 version = '2.0.2.1'
 
+#DISTUTILS_DEBUG=1
+
 setup(
     name='futuregrid.euca.analyzer',
     version=version,
@@ -27,8 +29,11 @@ The package allows the analysis of Eucalyptus logs and display the information g
     
     entry_points={
         'console_scripts':
-            ['fg-gen-crontab = futuregrid.euca.analyzer.futuregrideucaanalyzer:main', 
-             'abc = futuregrid.euca.analyzer.futuregrideucaanalyzer:main'
+            [
+             'fg-cleanup-table = futuregrid.eucalyptus.analyzer.fg-cleanup-table:main'
+             'fg-euca-gather-log-files = futuregrid.eucalyptus.analyzer.fg-euca-gather-log-files:main'
+             'fg-log-gz-decompressor = futuregrid.eucalyptus.analyzer.fg-log-gz-decompressor:main'
+             'fg-parser = futuregrid.eucalyptus.analyzer.fg-parser:main'
              ]},
     
     install_requires = [
@@ -36,3 +41,6 @@ The package allows the analysis of Eucalyptus logs and display the information g
         ],
     
     )
+
+# http://docs.python.org/distutils/introduction.html#distutils-simple-example
+# http://docs.python.org/distutils/setupscript.html#setup-script

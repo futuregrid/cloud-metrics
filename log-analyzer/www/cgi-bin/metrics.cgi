@@ -53,7 +53,7 @@ gchart_options = """ {};
 	options['width'] = 650;
 	options['height'] = 480"""
 delimiter = ","
-data_dir = "../data4graph/"
+data_dir = "../data4graphs/"
 file_extension = ".csv"
 cnt = 0
 
@@ -68,11 +68,13 @@ import os.path
 import sys
 
 if os.path.isfile(filename) != True:
+	print
 	print filename
 	sys.exit(1)
 f = open(filename, 'r')
 lines = f.readlines()
 if lines is None:
+	print
 	print lines
 	sys.exit(2)
 

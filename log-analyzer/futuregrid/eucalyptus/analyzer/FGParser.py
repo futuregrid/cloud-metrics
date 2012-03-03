@@ -320,7 +320,7 @@ def clear():
 
 # Create a chart object of 250x100 pixels
 
-def display_user_stats(users,type="pie",filename="chart.png"):
+def display_user_stats(users, type="pie", filename="chart.png"):
     """displays the number of VMs a user is running"""
     values = []
     label_values = []
@@ -377,7 +377,19 @@ def make_csv_file(users, filename, output_dir):
 		uavg = users[uname]['avg']
 		f.write(uname + ', ' + repr(ucount) + ', ' + repr(usum) + ', ' + repr(umin) + ', ' + repr(uavg) + '\n')
 	f.close()
- 
+
+def make_google_motion_chart(users, args):
+
+	from lib import FGGoogleMotionChart
+
+	output_dir = args.output_dir
+	filename = output_dir + "/FGGoogleMotionChart." + args.s_date + "-" + args.e_date + ".html"
+	output = FGGoogleMotionChart.gmc_display(users, args)
+	
+	f = open(filename, "w")
+	f.write(output)
+	f.close()
+
 ######################################################################
 # CONVERTER 
 ######################################################################
@@ -654,7 +666,7 @@ def make_html (prefix,output_dir, title):
         
         <h1> %(title)s </h1>
         <p>
-        <img src="%(prefix)s.a.png" alt="chart" /><img src="%(prefix)s.b.png" alt="chart" />
+        <img src="%(prefix)s.pie.png" alt="chart" /><img src="%(prefix)s.bar.png" alt="chart" />
 
         <hr>
         <address>Author Gregor von Laszewski, laszewski@gmail.com</address>
@@ -725,6 +737,8 @@ def make_report(args, type=["png"]): # (generate htmls, csv)
 	#4.1.
 	if (type[type.index("csv")]):
 		make_csv_file(users, args.s_date+"-"+args.e_date, output_dir)
+	if (type[type.index("gmc")]): # GMC ;Google Motion Chart
+		make_google_motion_chart(users, args)# args.s_date+"-"+args.e_date, output_dir)
 
 	return
 
@@ -753,13 +767,12 @@ def test_sql_write(filename,progress=True, debug=False):
     instances.write_to_db()
 
 def display(users, prefix, output_dir):
-	a = output_dir+"/"+prefix+".a.png"
-	b = output_dir+"/"+prefix+".b.png"
+	a = output_dir+"/"+prefix+".pie.png"
+	b = output_dir+"/"+prefix+".bar.png"
 	display_user_stats (users, filename=a)
 	display_user_stats (users, type="bar", filename=b)
 	make_html(prefix, output_dir, "VMs used by users")
     #os.system ("open sample.html")
-
 
 def test_user_stats():
     users = {}
@@ -802,9 +815,6 @@ def read_all_log_files_and_store_to_db (path):
         parse_file (path + "/" + filename,instances.add,debug=False,progress=True)
     instances.calculate_delta ()
     instances.write_to_db()
-
-
-
 
 users = {}
 instances = Instances()
@@ -902,7 +912,7 @@ def main():
 	    FGCleanupTable.main()
 
     
-    make_report(args, ["png", "csv"]) 
+    make_report(args, ["png", "csv", "gmc"]) 
     
 if __name__ == "__main__":
     main()

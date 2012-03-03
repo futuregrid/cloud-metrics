@@ -24,7 +24,7 @@ fg-euca-gather-log-files <from_dir> <backup_dir>
 The program has a number of parameters by default it takes two
 directories. The first directory is the directory from which all
 log files are copied. The second is the directory to which the
-files are to be copied (e.g our BAckup directory). If the backup
+files are to be copied (e.g our Backup directory). If the backup
 directory does not exists it is being utomatically created.
 
 One thing is important to not that the current script looks
@@ -36,28 +36,23 @@ into various subdirectories. All files will be renamed to
 
 Specific arguments can be controlled as follows
 
-  --recursive
+  -r, -R, --recursive
+      search directories and their contents recursively
 
-      switches on recursive search of the log files starting from
-      <from_dir>
+  -o, --backup <dir>
+      specify the backup directory (renamed log files will be saved here)
 
-  --norecursive
+  -i, --source <dir>
+      specify the source directory of eucalyptus logs (default: /var/log/eucalyptus)
 
-      switches on recursive search of the log files starting from
-      <from_dir>
-
-  --backup <dir>
-
-    specifies the backup directory
-
-  --source <dir>
-
-    specifies the source directory.
+  -t, --log-type <filename>
+      specify a log type to be gathered (default: cc.log)
+      
 
 If any of the parameters are used the specification of any
 parameters without named parameters is not allowed. Calling
 
-fg-euca-gather-log-files --recurseive --source <from_dir> --backup <backup_dir>
+fg-euca-gather-log-files --source <from_dir> --backup <backup_dir>
 
 is equicvalent to
 
@@ -69,7 +64,7 @@ in order to be more transparent.
 
 TODO: decide if we should eliminate arguments without parameters alltogether.
 Hyungro can decide, may be easier to implement and thus saves time.
-
+=> I prefer to specify arguments. (H.Lee)
 
 INSTALLATION
 ============
@@ -85,7 +80,7 @@ describe here.
 Deploy
 ------
 
-After download, please go into the directory xyzand say
+After download, please go into the directory xyz and say
 
 pip install setup
 
@@ -100,8 +95,8 @@ fg-euca-gather-log-files
 
 Cron Setup
 ----------
-Describe here what to do (Lee or Sharif)
-
+The following line causes the fg-euca-gather-log-files to be run once an hour.
+0       *       *       *       * /usr/local/bin/fg-euca-gather-log-files --source <from_dir> --backup <backup_dir>
 
 Update
 ------
@@ -296,7 +291,7 @@ def rename_euca_log_file (path,name):
 ######################################################################
 # generate_euca_log_filename 
 ######################################################################
-def generate_euca_log_filename (path,name):
+def generate_euca_log_filename (path, name, suffix):
     """
     Given the location of a eucalyptus log file as "path/name", a new
     name is generated and returned based on the time stamp in the last
@@ -308,7 +303,7 @@ def generate_euca_log_filename (path,name):
     FILE = open(old_name, "r", 0) 
     line = tail(FILE,1)
     date_object = getdate_from_euca_log_line(line)
-    new_name = generate_filename (date_object,'-cc.log')
+    new_name = generate_filename (date_object,'-'+suffix)
     new_name = os.path.join(path,new_name)
     return new_name
 
@@ -328,7 +323,7 @@ def ls(path):
 ######################################################################
 # all_euca_log_files 
 ######################################################################
-def all_euca_log_files (path):
+def all_euca_log_files (path, name, recursive):
     """
     returns a list of all eucalyptus logfiles that are located in all
     subdirectories starting from "path".
@@ -336,14 +331,17 @@ def all_euca_log_files (path):
     all_files = []
     for dirname, dirnames, filenames in os.walk(path):
         for filename in filenames:
-            if fnmatch.fnmatch(filename, '*cc.log.*'):
+            if fnmatch.fnmatch(filename, '*' + name + '.*'):
                 all_files.append(os.path.join(dirname, filename))
+	if not recursive: # if recursive is false, this iteration works like os.listdir()
+			  # Return filenames in the directory given by path except sub directories
+		break
     return all_files
 
 ######################################################################
 # gather_all_euca_log_files 
 ######################################################################
-def gather_all_euca_log_files (from_path,backup):
+def gather_all_euca_log_files (from_path, to_path, log_type, recursive):
     """
     this function gathers all eucalyptus log files that are located in
     all subdirectories starting from "from_path" and copies them into
@@ -355,15 +353,15 @@ def gather_all_euca_log_files (from_path,backup):
     and the next file in the subdirectory will be attempted to be
     copied to backup.
     """
-    if not os.path.exists (backup):
-        os.makedirs (backup)
+    if not os.path.exists (to_path):
+        os.makedirs (to_path)
 
     print from_path
-    for file in all_euca_log_files(from_path):
+    for file in all_euca_log_files(from_path, log_type, recursive):
         path = os.path.dirname(file)
         name = os.path.basename(file)
-        new_name = os.path.basename(generate_euca_log_filename (path,name))
-        new_location = os.path.join(backup,new_name)
+        new_name = os.path.basename(generate_euca_log_filename (path, name, log_type))
+        new_location = os.path.join(to_path,new_name)
         if not os.path.exists(new_location):
             print new_name
             shutil.copy2 (file, new_location)
@@ -398,19 +396,25 @@ def main():
 
    def_input_dir = "/tmp/uncompressed-euca-logbackup/"
    def_output_dir = "/var/log/eucalyptus/BACKUP"
+   def_log_type = "cc.log"
+
    import argparse
 
    # Parse arguments
    # ---------------
    parser = argparse.ArgumentParser()
-   parser.add_argument("-i", dest="input_dir", default=def_input_dir,
-		   help="Absolute path where (unparsed) cc.logs files exist")
-   parser.add_argument("-o", dest="output_dir", default=def_output_dir,
-		   help="Absolute path where (parsed & renamed) output cc.logs files to be saved")
+   parser.add_argument("-i", "--source", dest="input_dir", default=def_input_dir,
+		   help="specify the source directory of eucalyptus logs (default: /var/log/eucalyptus)")
+   parser.add_argument("-o", "--backup", dest="output_dir", default=def_output_dir,
+		   help="specify the backup directory (renamed log files will be saved here)")
+   parser.add_argument("-r", "--recursive", action="store_true", dest="recursive", default=False,
+		   help="search directories and their contents recursively")
+   parser.add_argument("-t", "--log-type", dest="log_type", default=def_log_type,
+		   help="specify a log type to be gathered (default: cc.log)")
    args = parser.parse_args()
-   #print args.input_dir, args.output_dir
+   #print args.input_dir, args.output_dir, args.recursive
 
-   gather_all_euca_log_files (args.input_dir, args.output_dir)
+   gather_all_euca_log_files (args.input_dir, args.output_dir, args.log_type, args.recursive)
 
    return
 

@@ -42,16 +42,22 @@ from lib import FGEucaMetricsDB
 import argparse
 
 def main():
+	def_table = "instance"
+	def_db = "euca"
+	def_conf = "futuregrid.cfg.local"
+
 	parser = argparse.ArgumentParser()
-	parser.add_argument("-t", dest="table_name", required=True,
+	parser.add_argument("-t", dest="table_name", default=def_table,
 			help="table name to delete")
-	parser.add_argument("-d", dest="db_name", required=True,
+	parser.add_argument("-d", dest="db_name", default=def_db,
 			help="db name")
 	parser.add_argument("-w", dest="where_clause",
 			help="WHERE clauses")
+	parser.add_argument("--conf", dest="conf", default=def_conf,
+			help="configuraton file of the database to be used")
 	args = parser.parse_args()
 
-	eucadb = FGEucaMetricsDB("futuregrid.cfg.local") 
+	eucadb = FGEucaMetricsDB(args.conf)
 	eucadb.change_table(args.table_name)
 
 	# where_clause need to be query dict type 

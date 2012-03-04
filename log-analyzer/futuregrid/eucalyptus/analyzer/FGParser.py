@@ -856,6 +856,7 @@ def main():
     def_s_date = "19700101"
     def_e_date = "29991231"
     def_conf = "futuregrid.cfg"
+    def_linetypes = ["TerminateInstances", "refresh_resources", "print_ccInstance"]
     ''' argument parser added '''
 
     import argparse
@@ -872,7 +873,7 @@ def main():
 		    help="configuraton file of the database to be used")
     parser.add_argument("--cleandb", action="store_true", dest="cleandb", default=False,
 		    help="This command without any parameter deletes the entire database. *Be careful with this")
-    parser.add_argument("--parse", nargs="+", dest="linetypes",
+    parser.add_argument("--parse", nargs="+", dest="linetypes", default=def_linetypes,
 		    help="if one of more types separated with space ar used, those types are parsed and included into the database (types are print_ccInstance, refresh_resources)")
     args = parser.parse_args()
     print args
@@ -911,7 +912,6 @@ def main():
 	    import FGCleanupTable
 	    FGCleanupTable.main()
 
-    
     make_report(args, ["png", "csv", "gmc"]) 
     
 if __name__ == "__main__":

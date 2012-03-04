@@ -1,0 +1,10 @@
+<?
+$ini_array = parse_ini_file("futuregrid-www.cfg");
+$path_to_data4graphs = $ini_array['data4graphs'];
+
+$fname=trim($_GET["image"]);
+
+header("Content-type: image/gif");
+readfile($path_to_data4graphs . $fname);
+
+?>

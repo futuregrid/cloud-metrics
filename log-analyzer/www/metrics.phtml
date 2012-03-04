@@ -1,0 +1,74 @@
+<?
+$year=trim($_GET["year"]);
+$month=trim($_GET["month"]);
+$day=trim($_GET["day"]);
+
+$ini_array = parse_ini_file("futuregrid-www.cfg");
+$path_to_data4graphs = $ini_array['data4graphs'];
+
+$s_date = $year . $month . "01";
+$lastdate = strftime("%d", strtotime("+1 month -1 day $year/$month/01"));
+$e_date = $year . $month . $lastdate;
+
+if (!$year && !$month && !$day) {
+	# ALL SEARCH
+	if ($handle = opendir($path_to_data4graphs)) {
+		# We assume $entry is directory name of month YYYYMM typed. e.g. 201201
+		while (false !== ($entry = readdir($handle))) {
+			if (!preg_match("/[0-9]{6}/", $entry)) {
+				continue;
+			}
+			$entries[] = $entry;
+		}
+		closedir($handle);
+	}
+	sort ($entries);
+	$s_yearmonth = $entries[0];
+	$e_yearmonth = $entries[count($entries) - 1];
+	$e_year = substr($e_yearmonth, 0, 4);
+	$e_month = substr($e_yearmonth, -1, 2);
+	$s_date = $s_yearmonth . "01";
+	$lastdate = strftime("%d", strtotime("+1 month -1 day $e_year/$e_month/01"));
+	$e_date = $e_yearmonth . $lastdate;
+}
+
+$url1 = "chart.phtml?metrics=user.data.of.eucalyptus.india&s_date=$s_date&e_date=$e_date&xaxis=ownerId&yaxis=instances&yaxis_count=y&type=motion&title=General%20Utilization%20of%20number%20of%20instances%20of%20eucalyptus%20in%20India";
+$url2 = "sample.phtml?s_date=$s_date&e_date=$e_date";
+
+?>
+	<table border=0><tr><td align=center>
+	<h3>General Utilization of a number of used instances (Monthly - <? echo "$month/$year"?>)</h3>
+	(Ordered by instances)
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<iframe frameborder="0" width="660" height="500" src="<?=$url1?>"></iframe>
+	<a href="<?=$url1?>">URL</a>
+	</td>	
+	<tr>
+	<tr>
+	<td>
+	TEXT HERE
+	</td>
+	</tr>
+	<tr>
+	<td height=100>
+	<hr>
+	</td>
+	</tr>
+	<td align=center>
+	<h3>The number of used VMs by users (Monthly - <? echo "$month/$year"?>)</h3>
+	</td>
+	<tr>
+	<td>
+	<iframe frameborder="0" width="540" height="650" src="<?=$url2?>"></iframe>
+	<a href="<?=$url2?>">URL</a>
+	</td>
+	</tr>
+	<tr>
+	<td>
+	TEXT HERE
+	</td>
+	</tr>
+	</table>

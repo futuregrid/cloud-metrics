@@ -1,0 +1,233 @@
+<?php
+$gchart_pname = "corechart";
+$gchart_cname = "google.visualization.PieChart";
+$title = "Number of running instances per user";
+$gchart_options = "{width: 650, height: 480, title: '$title'}";
+
+
+#
+# Required arguments
+# 1. s_date; start date of a report (YYYYMMDD)
+# 2. e_date; end date of a report (YYYYMMDD)
+# 3. xaxis; column name of x-axis (Data file should have column names at the first line
+# 4. yaxis; column name of y-axis 
+# 5. metrics; file name of a report ex) user.data.of.eucalyptus.india
+# 6. type; google chart type
+#
+$metrics = trim($_GET["metrics"]);
+$xaxis = trim($_GET["xaxis"]);
+$yaxis = trim($_GET["yaxis"]);
+$s_date = trim($_GET["s_date"]);
+$e_date = trim($_GET["e_date"]);
+$g_type = trim($_GET["type"]);
+
+# optional
+$yaxis_count = trim($_GET["yaxis_count"]);
+$groupby = trim($_GET["groupby"]);
+$title = trim($_GET["title"]);
+
+$main_seperator = ",";
+$sub_seperator = ";";
+
+# File read
+# example
+# Year, Month, Day, ownerId, used minutes, number of running instances, instances
+# 2011,11,14,admin,14399,10,i-39290662;i-39930672;i-39C8071E;i-3EF5076A;i-493707EA;i-4A21084E;i-4C540833;i-51770A7E;i-58030985;i-5AF609D3
+# 
+$cnt = 0;
+for ($c_date = $s_date, $i = 0; $c_date <= $e_date; $c_date = date("Ymd", strtotime($c_date . " +1 day")), $i++) {
+	$filename = "/var/www/accounting/data4graphs/$metrics".".".$c_date.".".$c_date;
+	if(!file_exists($filename))
+		return -3;
+	if(!($lines = file($filename)))
+		return -2;
+	# When multiple files, we skip first line of the files which is a comlumn definition.
+	if ($i == 0)
+		$j = 0;
+	else
+		$j = 1;
+	for ($j; $lines[$j]; $j++) {
+		#$csv_lines[$j] = str_getcsv($lines[$j], ",");
+		$csv_lines[$cnt++] = split($main_seperator, $lines[$j]);
+	}
+}
+
+#Set dates
+$timestamp = strtotime($s_date);
+$syear = date("Y", $timestamp);
+$smonth = date("m", $timestamp);
+$sday = date("d", $timestamp);
+
+$timestamp = strtotime($e_date);
+$eyear = date("Y", $timestamp);
+$emonth = date("m", $timestamp);
+$eday = date("d", $timestamp);
+
+#Set title
+$title .= " ($smonth/$sday/$syear ~ $emonth/$eday)";
+
+#Set google chart type
+if (strtolower($g_type) == "pie")
+	$gchart_cname = "google.visualization.PieChart";
+else if (strtolower($g_type) == "column")
+	$gchart_cname = "google.visualization.ColumnChart";
+else if (strtolower($g_type) == "motion") {
+	$gchart_pname = "motionchart";
+	$gchart_cname = "google.visualization.MotionChart";
+	$gchart_options = " {};
+	options['state'] =
+'{\"xZoomedDataMin\":0,\"yAxisOption\":\"2\",\"yZoomedDataMin\":0,\"time\":\"$syear-$smonth-$sday\",\"yLambda\":1,\"iconType\":\"VBAR\",\"nonSelectedAlpha\":0.4,\"xZoomedIn\":false,\"showTrails\":false,\"dimensions\":{\"iconDimensions\":[\"dim0\"]},\"yZoomedIn\":false,\"xZoomedDataMax\":19,\"iconKeySettings\":[],\"xLambda\":1,\"colorOption\":\"2\",\"playDuration\":15000,\"xAxisOption\":\"2\",\"sizeOption\":\"_UNISIZE\",\"orderedByY\":false,\"uniColorForNonSelected\":false,\"duration\":{\"timeUnit\":\"D\",\"multiplier\":1},\"yZoomedDataMax\":139,\"orderedByX\":true};';
+options['width'] = 650;
+options['height'] = 480";
+}
+
+#Set column names by reading the first line
+for ($num = 0 ; $column_name = trim($csv_lines[0][$num]) ; $num++) {
+	if ($column_name == $xaxis)
+		$xnum = $num;
+	else if ($column_name == $yaxis) 
+		$ynum = $num;
+	# year, month, and day colums are mandatories
+	else if (strtolower($column_name) == "year")
+		$yearnum = $num;
+	else if (strtolower($column_name) == "month")
+		$monthnum = $num;
+	else if (strtolower($column_name) == "day")
+		$daynum = $num;
+	if((strlen($groupby) != 0) && (strtolower($groupby) == strtolower($column_name)))
+		$groups = $array($groupby);
+}
+
+if (strlen($groupby) == 0) 
+		$column_names = array( $xaxis, $yaxis );
+else if (strtolower($groupby) == "date") {
+	for ($j = 1; $col = $csv_lines[$j][$xnum]; $j++) {
+		$stacks[] = $col;
+	}
+	$stacks = array_unique($stacks);
+	asort($stacks);
+	$column_names = array_merge((array)$groupby, $stacks);
+	$groups = array ($monthnum, $daynum, $yearnum);
+} else {
+	echo "Undefined ($groupby) groupby Name.";
+	return -1;
+}
+
+$column_length = count($column_names);
+
+# Make a table of the graph
+for ($line_num = 1; $tmp = $csv_lines[$line_num] ; $line_num++) {
+
+	$yval = $tmp[$ynum];
+	$xval = $tmp[$xnum];
+	#TEMPORARY CODE FOR MOTION CHART
+	if (strtolower($g_type) == "motion")
+		$xval = $tmp[$xnum].$tmp[$yearnum].$tmp[$monthnum];
+
+	# report's range from $s_date to $e_date. Others will be ignored.
+	$d_date = $tmp[$yearnum].$tmp[$monthnum].$tmp[$daynum];
+	if (($d_date < $s_date) || ($d_date > $e_date))
+		continue;
+
+	# Will count yaxis values with unique 
+	# In case of the $yval looks 'A;B;C;...' with sub seperator ';'
+	if (strtolower($yaxis_count) == "y") {
+		$tmp2 = split($sub_seperator, trim($yval));
+		$graph[$xval] = array_merge((array)$graph[$xval], (array)$tmp2);
+	}
+	else {
+		$graph[$xval] += $yval;
+	}
+
+	if(count($groups) != 0) {
+		$groupkey = NULL;
+		foreach($groups as $key => $val) {
+			if($groupkey)
+				$groupkey .= "/";
+			$groupkey.=$tmp[$val];
+		}
+		$groupgraph[$groupkey]= array_merge((array)$groupgraph[$groupkey], array ($xval => $yval));
+	}
+}
+if (strtolower($yaxis_count) == "y") {
+	foreach ($graph as $entry_name => $entry) {
+		$graph[$entry_name] = count(array_unique($entry));
+	}
+}
+if(count($groups))
+	$graph = $groupgraph;
+
+$row_length = count($graph);
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title><?=$title?></title>
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('visualization', '1', {packages: ['<?=$gchart_pname?>']});
+function drawVisualization() {
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', '<?=$column_names[0] ?>');
+<?
+	#TEMPORARY CODE FOR MOTION CHART
+	if (strtolower($g_type) == "motion")
+		echo "	data.addColumn('date', 'Date');\n";
+	#TEMPORARY CODE FOR MOTION CHART
+?>
+<? for($i = 1; $col = $column_names[$i]; $i++) { ?>
+	data.addColumn('number', '<?=$col ?>');
+<? } ?>
+	data.addRows([
+<?php
+$i = 1;
+ksort($graph);
+foreach ($graph as $key => $val) {
+	if ($i != 1)
+		echo ",\n";
+
+	#TEMPORARY CODE FOR MOTION CHART
+	if (strtolower($g_type) == "motion")
+		echo "['". substr($key, 0, -6) . "', ";
+	else
+		echo "['".$key."', ";
+
+	#TEMPORARY CODE FOR MOTION CHART
+	if (strtolower($g_type) == "motion") {
+		$u_year = substr($key, -6, 4);
+		$u_month = substr($key, -2, 2);
+		echo "new Date(".$u_year.", ".$u_month."), ";
+	}
+	#TEMPORARY CODE FOR MOTION CHART
+	if (!is_array($val))
+		echo $val."]";
+	else {
+		for ($j = 1; $column_names[$j] ; $j++)  {
+			if ($j != 1)
+				echo ", ";
+			if($val[$column_names[$j]])
+				echo $val[$column_names[$j]];
+			else
+				echo "0"; # In case of null, print zero
+		}
+		echo "]";
+	}
+	$i++;
+}
+?>
+]);
+
+var options = <?=$gchart_options?>;
+var annotatedtimeline = new <?=$gchart_cname?>(
+	document.getElementById('visualization'));
+annotatedtimeline.draw(data, options);
+}
+
+google.setOnLoadCallback(drawVisualization);
+</script>
+</head>
+<body style="font-family: Arial;border: 0 none;">
+<div id="visualization" style="width: 650px; height: 400px;"></div>
+</body>
+</html>

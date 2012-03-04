@@ -1,0 +1,31 @@
+<?
+$s_date = trim($_GET["s_date"]);
+$e_date = trim($_GET["e_date"]);
+
+$dir = substr($s_date, 0, 6);
+$month = substr($s_date, 4, 2);
+$year = substr($s_date, 0, 4);
+$pie_fname = $dir . "/" . $s_date . "-" . $e_date . ".pie.png";
+$bar_fname = $dir . "/" . $s_date . "-" . $e_date . ".bar.png";
+
+$title = "VMs used by users (" . strftime("%b, %Y", mktime (0, 0, 0, $month, 1, $year)). ")";
+$subject = $title;
+?>
+        <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+        <html> <head>
+	<title><?=$title?> </title>
+        </head>
+        
+        <body>
+
+        <img src="fg-logo.png" alt="FutureGrid" /> Eucalyptus Monitor
+        
+	<h1><?=$subject?></h1>
+        <p>
+	<img src="image.phtml?image=<?=$pie_fname?>" alt="chart" /><img src="image.phtml?image=<?=$bar_fname?>" alt="chart" />
+
+        <hr>
+        <address>Author Gregor von Laszewski, laszewski@gmail.com</address>
+	<!-- hhmts start -->Last modified: <? echo date ("Y-m-d H:i:s"); ?> <!-- hhmts end -->
+        </body> </html>
+    

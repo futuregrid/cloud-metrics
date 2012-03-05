@@ -369,13 +369,14 @@ def display_user_stats(users, type="pie", filename="chart.png"):
 def make_csv_file(users, filename, output_dir):
 
 	f = open(output_dir + "/" + filename + ".csv", "w")
-	f.write('name, count, sum, min, avg\n')
+	f.write('ownerId, count of used instances, total runtime, min runtime, max runtime, avg runtime\n')
 	for uname in users:
 		ucount = users[uname]['count']
 		usum = users[uname]['sum']
 		umin = users[uname]['min']
+		umax = users[uname]['max']
 		uavg = users[uname]['avg']
-		f.write(uname + ', ' + repr(ucount) + ', ' + repr(usum) + ', ' + repr(umin) + ', ' + repr(uavg) + '\n')
+		f.write(uname + ', ' + repr(ucount) + ', ' + repr(usum) + ', ' + repr(umin) + ', ' + repr(umax) + ', ' + repr(uavg) + '\n')
 	f.close()
 
 def make_google_motion_chart(users, args):

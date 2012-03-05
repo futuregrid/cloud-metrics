@@ -22,8 +22,8 @@ $e_date = trim($_GET["e_date"]);
 $g_type = trim($_GET["type"]);
 
 # optional
-$yaxis_count = trim($_GET["yaxis_count"]);
-$groupby = trim($_GET["groupby"]);
+$yaxis_count = isset($_GET["yaxis_count"]) ? trim($_GET["yaxis_count"]) : NULL;
+$groupby = isset($_GET["groupby"]) ? trim($_GET["groupby"]) : NULL;
 $title = trim($_GET["title"]);
 
 $main_seperator = ",";
@@ -46,7 +46,7 @@ for ($c_date = $s_date, $i = 0; $c_date <= $e_date; $c_date = date("Ymd", strtot
 		$j = 0;
 	else
 		$j = 1;
-	for ($j; $lines[$j]; $j++) {
+	for ($j; $j < count($lines); $j++) {
 		#$csv_lines[$j] = str_getcsv($lines[$j], ",");
 		$csv_lines[$cnt++] = split($main_seperator, $lines[$j]);
 	}
@@ -82,7 +82,10 @@ options['height'] = 480";
 }
 
 #Set column names by reading the first line
-for ($num = 0 ; $column_name = trim($csv_lines[0][$num]) ; $num++) {
+$groups = array();
+$xnum = 0; $ynum = 0; $monthnum = 0; $daynum = 0;
+for ($num = 0 ; $num < count($csv_lines[0]) ; $num++) {
+	$column_name = trim($csv_lines[0][$num]);
 	if ($column_name == $xaxis)
 		$xnum = $num;
 	else if ($column_name == $yaxis) 
@@ -116,8 +119,10 @@ else if (strtolower($groupby) == "date") {
 $column_length = count($column_names);
 
 # Make a table of the graph
-for ($line_num = 1; $tmp = $csv_lines[$line_num] ; $line_num++) {
+$graph = array();
+for ($line_num = 1; $line_num < count($csv_lines) ; $line_num++) {
 
+	$tmp = $csv_lines[$line_num];
 	$yval = $tmp[$ynum];
 	$xval = $tmp[$xnum];
 	#TEMPORARY CODE FOR MOTION CHART
@@ -133,9 +138,11 @@ for ($line_num = 1; $tmp = $csv_lines[$line_num] ; $line_num++) {
 	# In case of the $yval looks 'A;B;C;...' with sub seperator ';'
 	if (strtolower($yaxis_count) == "y") {
 		$tmp2 = split($sub_seperator, trim($yval));
+		$graph[$xval] = isset($graph[$xval]) ? $graph[$xval] : "";
 		$graph[$xval] = array_merge((array)$graph[$xval], (array)$tmp2);
 	}
 	else {
+		$graph[$xval] = isset($graph[$xval]) ? $graph[$xval] : "";
 		$graph[$xval] += $yval;
 	}
 
@@ -175,8 +182,10 @@ function drawVisualization() {
 	if (strtolower($g_type) == "motion")
 		echo "	data.addColumn('date', 'Date');\n";
 	#TEMPORARY CODE FOR MOTION CHART
-?>
-<? for($i = 1; $col = $column_names[$i]; $i++) { ?>
+	
+	for($i = 1; $i < count($column_names); $i++) {
+	$col = $column_names[$i];
+ ?>
 	data.addColumn('number', '<?=$col ?>');
 <? } ?>
 	data.addRows([

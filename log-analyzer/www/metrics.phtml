@@ -1,10 +1,11 @@
 <?
-$year=trim($_GET["year"]);
-$month=trim($_GET["month"]);
-$day=trim($_GET["day"]);
-
 $ini_array = parse_ini_file("futuregrid-www.cfg");
 $path_to_data4graphs = $ini_array['data4graphs'];
+
+
+$year = isset($_GET["year"]) ? trim($_GET["year"]) : NULL;
+$month = isset($_GET["month"]) ? trim($_GET["month"]) : NULL;
+$day = isset($_GET["day"]) ? trim($_GET["day"]) : NULL;
 
 $s_date = $year . $month . "01";
 $lastdate = strftime("%d", strtotime("+1 month -1 day $year/$month/01"));
@@ -32,24 +33,40 @@ if (!$year && !$month && !$day) {
 	$e_date = $e_yearmonth . $lastdate;
 }
 
-$url1 = "chart.phtml?metrics=user.data.of.eucalyptus.india&s_date=$s_date&e_date=$e_date&xaxis=ownerId&yaxis=instances&yaxis_count=y&type=motion&title=General%20Utilization%20of%20number%20of%20instances%20of%20eucalyptus%20in%20India";
-$url2 = "sample.phtml?s_date=$s_date&e_date=$e_date";
+$url1 = "chart-new.phtml?s_date=$s_date&e_date=$e_date&xaxis=ownerId&yaxis=count%20of%20used%20instances&type=motion&period=monthly&title=General%20Utilization%20of%20number%20of%20instances%20of%20eucalyptus%20in%20India";
+#$url2 = "chart.phtml?metrics=user.data.of.eucalyptus.india&s_date=$s_date&e_date=$e_date&xaxis=ownerId&yaxis=used%20minutes&type=motion&title=General%20Utilization%20of%20total%20runtime%20of%20VM%20instances%20of%20eucalyptus%20in%20India";
+$url2 = "chart-new.phtml?s_date=$s_date&e_date=$e_date&xaxis=ownerId&yaxis=total runtime&type=motion&period=monthly&&title=General%20Utilization%20of%20total%20runtime%20of%20VM%20instances%20of%20eucalyptus%20in%20India";
+$url3 = "chart-new.phtml?s_date=$s_date&e_date=$e_date&xaxis=ownerId&yaxis[]=avg%20runtime&yaxis[]=max%20runtime&yaxis[]=min%20runtime&type=motion&period=monthly&g_options=1";
+$url4 = "sample.phtml?s_date=$s_date&e_date=$e_date";
 
+#TEMP
+$machine="india";
+
+if($month && $year) {
+	$p_month = strftime("%b", mktime (0, 0, 0, $month, 1, $year));
+	$period = "by day - $p_month/$year";
+}
+else
+	$period = "by month";
 ?>
-	<table border=0><tr><td align=center>
-	<h3>General Utilization of a number of used instances (Monthly - <? echo "$month/$year"?>)</h3>
-	(Ordered by instances)
+	<table border=0>
+	<tr>
+	<td align=center>
+	<h3>General Utilization of a number of used instances (<?=$period?>)</h3>
+	(ordered by instances)
 	</td>
 	</tr>
 	<tr>
 	<td>
 	<iframe frameborder="0" width="660" height="500" src="<?=$url1?>"></iframe>
-	<a href="<?=$url1?>">URL</a>
+	<a href="<?=$url1?>" target=_blank>url</a>
 	</td>	
 	<tr>
 	<tr>
 	<td>
-	TEXT HERE
+	figure 1: this figure shows for the month of <?=$month?>, <?=$year?> how many virtual machines were started on machine <?=$machine?>.
+	<br>
+	text here
 	</td>
 	</tr>
 	<tr>
@@ -57,18 +74,70 @@ $url2 = "sample.phtml?s_date=$s_date&e_date=$e_date";
 	<hr>
 	</td>
 	</tr>
-	<td align=center>
-	<h3>The number of used VMs by users (Monthly - <? echo "$month/$year"?>)</h3>
-	</td>
 	<tr>
-	<td>
-	<iframe frameborder="0" width="540" height="650" src="<?=$url2?>"></iframe>
-	<a href="<?=$url2?>">URL</a>
+	<td align=center>
+	<h3>general utilization of a total runtime of vm instances (<?=$period?>)</h3>
+	(ordered by total runtime)
 	</td>
 	</tr>
 	<tr>
 	<td>
+	<iframe frameborder="0" width="660" height="500" src="<?=$url2?>"></iframe>
+	<a href="<?=$url2?>" target=_blank>url</a>
+	</td>	
+	<tr>
+	<tr>
+	<td>
+	figure 2: this figure shows for the month of <?=$month?>, <?=$year?> total runtime of virtual machine instances on machine <?=$machine?>.
+	<br>
+	text here
+	</td>
+	</tr>
+	<tr>
+	<td height=100>
+	<hr>
+	</td>
+	</tr>
+	<tr>
+	<td align=center>
+	<h3>general utilization of a average/min/max runtime of vm instances (<?=$period?>)</h3>
+	(ordered by max runtime)
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<iframe frameborder="0" width="660" height="500" src="<?=$url3?>"></iframe>
+	<a href="<?=$url3?>" target=_blank>url</a>
+	</td>	
+	<tr>
+	<tr>
+	<td>
+	figure 3: this figure shows for the month of <?=$month?>, <?=$year?> average/min/max runtime of virtual machine instances on machine <?=$machine?>.
+	<br>
+	text here
+	</td>
+	</tr>
+	<tr>
+	<td height=100>
+	<hr>
+	</td>
+	</tr>
+<!--
+	<td align=center>
+	<h3>the number of used vms by users (<?=$period?>)</h3>
+	</td>
+	<tr>
+	<td>
+	<iframe frameborder="0" width="540" height="650" src="<?=$url4?>"></iframe>
+	<a href="<?=$url4?>" target=_blank>URL</a>
+	</td>
+	</tr>
+	<tr>
+	<td>
+	Figure 4: This figure shows for the month of <?=$month?>, <?=$year?> total runtime of virtual machine instances on machine <?=$machine?>.
+	<br>
 	TEXT HERE
 	</td>
 	</tr>
+-->
 	</table>

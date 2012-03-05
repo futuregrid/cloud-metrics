@@ -5,7 +5,7 @@ $path_to_data4graphs = $ini_array['data4graphs'];
 $base_url = "http://129.79.49.76/accounting/new/";
 $base_url_entry = $base_url . "metrics.phtml?";
 $base_url_all = $base_url . "metrics.phtml";
-$base_url_search = $base_url . "metrics.phtml?";
+$base_url_search = $base_url . "report.phtml";
 
 if ($handle = opendir($path_to_data4graphs)) {
 
@@ -25,22 +25,22 @@ sort($entries);
 /* DISPLAY START */
 
 echo "<p>&nbsp;</p>";
-echo "Month<br>";
 
 foreach ($entries as $key => $entry) {
 	$year = substr($entry, 0, 4);
 	$month = substr($entry, 4, 2);
-	echo "<a href=\"" . $base_url_entry . "year=$year&month=$month&day=$day\" target=right>" . strftime("%b", mktime (0, 0, 0, $month, 1, $year)) . " " . $year  . "</a>";
+	$day = "";
+	echo "<a href=\"" . $base_url_entry . "year=$year&month=$month&day=$day\" target=right> VM usage by day (" . strftime("%b", mktime (0, 0, 0, $month, 1, $year)) . " " . $year  . ")</a>";
 	echo "<br>";
 }
 
 /* For all statistics */
 
-echo "<a href=\"" . $base_url_all . "\" target=right>All</a>";
+echo "<a href=\"" . $base_url_all . "\" target=right>VM usage by month</a>";
 echo "<br>";
 
 /* For search statistics */
 
-echo "<a href=\"" . $base_url_search . "year=$year&month=$month&day=$day\" target=right>Search</a>";
+echo "<a href=\"" . $base_url_search . "\" target=right>Report</a>";
 echo "<br>";
 ?>

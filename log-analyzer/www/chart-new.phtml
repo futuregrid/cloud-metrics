@@ -1,0 +1,214 @@
+<?php
+$ini_array = parse_ini_file("futuregrid-www.cfg");
+$path_to_data4graphs = $ini_array['data4graphs'];
+
+
+#
+# Required arguments
+# 1. s_date; start date of a report (YYYYMMDD)
+# 2. e_date; end date of a report (YYYYMMDD)
+# 3. xaxis; column name of x-axis (Data file should have column names at the first line
+# 4. yaxis; column name of y-axis 
+# 5. metrics; file name of a report ex) user.data.of.eucalyptus.india
+# 6. type; google chart type
+#
+$metrics = isset($_GET['metrics']) ? trim($_GET["metrics"]) : NULL;
+$xaxis = trim($_GET["xaxis"]);
+$yaxis_arr = $_GET["yaxis"];
+$s_date = trim($_GET["s_date"]);
+$e_date = trim($_GET["e_date"]);
+$g_type = trim($_GET["type"]);
+$g_options = isset($_GET['g_options']) ? trim($_GET['g_options']) : 0;
+$period = isset($_GET['period']) ? trim($_GET["period"]) : NULL;
+# optional
+$title = isset($_GET['title']) ? trim($_GET["title"]) : NULL;
+
+$main_seperator = ",";
+$sub_seperator = ";";
+
+# File read
+# example
+# name, count, sum, min, avg
+# steenoven, 5, 6785400.0, 1357080.0, 1357080.0
+# jiaazeng, 9, 11505561.0, 924651.0, 1278395.6666666667
+# 
+
+include 'csv_in_array.php';
+
+for ($c_date = $s_date; $c_date <= $e_date; $c_date = date("Ymd", strtotime($c_date . " +1 day"))) {
+	$yearmonth = substr($c_date, 0, 6);
+	$filename = $path_to_data4graphs . "/". $yearmonth . "/" . $c_date . "-" . $c_date . ".csv";
+	if( !file_exists($filename))
+		continue;
+	$res = csv_in_array( $filename , ", ", "", true ); 
+	if (count($res) >= 1)
+		$csvdata[basename($filename)] = csv_in_array( $filename , ", ", "", true ); 
+
+}
+#Set dates
+$timestamp = strtotime($s_date);
+$syear = date("Y", $timestamp);
+$smonth = date("m", $timestamp);
+$sday = date("d", $timestamp);
+
+$timestamp = strtotime($e_date);
+$eyear = date("Y", $timestamp);
+$emonth = date("m", $timestamp);
+$eday = date("d", $timestamp);
+
+/*class Daily 
+{
+	public $entries = array();
+	public function addEntry($key, $val) {
+		$this->entries[$key] = $val;
+	}
+}
+class Entry
+{
+	public $self = array();
+	public function __construct($key, $val) {
+		$this->self[$key] = $val;
+	}
+}*/
+$cnt = 0;
+//$days = new Daily();
+foreach ($csvdata as $fname => $entries) {
+	$ymd = substr($fname, 0, 8); # fname YYYYMMDD-YYYYMMDD.csv. First 8 letters are assumed as a date; (TEMPORARY)
+	foreach ($entries as $k => $entry) {
+		$key1 = $entry[$xaxis];
+		$key2 = $ymd;
+//	$entry = new Entry($key2, $entries[$cnt]);
+//	$days->addEntry($key1, $entry);
+		$day[$key1][$key2] = $entry;
+	}
+}
+
+# Merge daily data to montly
+# --------------------------
+foreach ($day as $k1 => $entries) {
+
+	$key1 = $k1;
+	foreach ($entries as $k => $entry) {
+		$ym = substr($k, 0, 6);
+		$key2 = $ym;
+		foreach ($entry as $column_name => $value) {
+			$month[$key1][$key2][$column_name] = isset($month[$key1][$key2][$column_name]) ? $month[$key1][$key2][$column_name] : NULL;
+			if (is_numeric($value))
+				$month[$key1][$key2][$column_name] += $value;
+			else
+				$month[$key1][$key2][$column_name] = $value;
+		}
+	}
+}
+if (strtolower($period) == "monthly")
+	$graph = $month;
+else
+	$graph = $day;
+$column_names = array_merge( (array)$xaxis, is_array($yaxis_arr) ? $yaxis_arr : (array) $yaxis_arr );
+$column_length = count($column_names);
+
+# PREPARE DISPLAY GRAPH
+# =====================
+$gchart_pname = "corechart";
+$gchart_cname = "google.visualization.PieChart";
+$title = "Number of running instances per user";
+$title .= " ($smonth/$sday/$syear ~ $emonth/$eday)";
+$gchart_options = "{width: 650, height: 480, title: '$title'}";
+
+# Set google chart type
+# ---------------------
+if (strtolower($g_type) == "pie")
+	$gchart_cname = "google.visualization.PieChart";
+else if (strtolower($g_type) == "column")
+	$gchart_cname = "google.visualization.ColumnChart";
+else if (strtolower($g_type) == "motion") {
+	$gchart_pname = "motionchart";
+	$gchart_cname = "google.visualization.MotionChart";
+	$options[0] = " {};
+	options['state'] =
+'{\"xZoomedDataMin\":0,\"yAxisOption\":\"2\",\"yZoomedDataMin\":0,\"time\":\"$syear-$smonth-$sday\",\"yLambda\":1,\"iconType\":\"VBAR\",\"nonSelectedAlpha\":0.4,\"xZoomedIn\":false,\"showTrails\":false,\"dimensions\":{\"iconDimensions\":[\"dim0\"]},\"yZoomedIn\":false,\"xZoomedDataMax\":19,\"iconKeySettings\":[],\"xLambda\":1,\"colorOption\":\"2\",\"playDuration\":15000,\"xAxisOption\":\"2\",\"sizeOption\":\"_UNISIZE\",\"orderedByY\":false,\"uniColorForNonSelected\":false,\"duration\":{\"timeUnit\":\"D\",\"multiplier\":1},\"yZoomedDataMax\":139,\"orderedByX\":true};';
+options['width'] = 650;
+options['height'] = 480";
+	$options[1] = " {};
+	options['state'] = 
+'{\"yZoomedDataMax\":4684,\"iconType\":\"BUBBLE\",\"yAxisOption\":\"3\",\"time\":\"2011-12-01\",\"nonSelectedAlpha\":0.4,\"yZoomedDataMin\":0,\"uniColorForNonSelected\":false,\"yLambda\":1,\"xAxisOption\":\"4\",\"orderedByX\":false,\"xZoomedDataMin\":0,\"showTrails\":false,\"dimensions\":{\"iconDimensions\":[\"dim0\"]},\"yZoomedIn\":false,\"xZoomedDataMax\":4684,\"duration\":{\"multiplier\":1,\"timeUnit\":\"D\"},\"xLambda\":1,\"colorOption\":\"2\",\"playDuration\":15000,\"orderedByY\":false,\"sizeOption\":\"2\",\"xZoomedIn\":false,\"iconKeySettings\":[]};';
+options['width'] = 650;
+options['height'] = 480";
+	$gchart_options = $options[$g_options];
+}
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title><?=$title?></title>
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('visualization', '1', {packages: ['<?=$gchart_pname?>']});
+function drawVisualization() {
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', '<?=$column_names[0] ?>');
+<?
+#TEMPORARY CODE FOR MOTION CHART
+if (strtolower($g_type) == "motion")
+	echo "	data.addColumn('date', 'Date');\n";
+#TEMPORARY CODE FOR MOTION CHART
+for($i = 1; $i < count($column_names) ; $i++) { 
+	$col = $column_names[$i];
+?>
+	data.addColumn('number', '<?=$col ?>');
+<? } ?>
+	data.addRows([
+<?php
+	$i = 1;
+	foreach ($graph as $key => $val) {
+		foreach ($val as $key2 => $val2) {
+			# 3 - dimentional array
+			if ($i != 1)
+				echo ",\n";
+
+				echo "['".$val2[$column_names[0]]."', ";
+
+			#TEMPORARY CODE FOR MOTION CHART
+			if (strtolower($g_type) == "motion") {
+				$u_year = substr($key2, 0, 4);
+				$u_month = substr($key2, 4, 2);
+				echo "new Date(".$u_year.", ".$u_month."), ";
+			}
+			if (!is_array($val))
+				echo $val."]";
+			else {
+				for ($j = 1; $j < count($column_names) ; $j++)  {
+					if ($j != 1)
+						echo ", ";
+					if(isset($val2[$column_names[$j]])) {
+						# TEMPORARY CODE FOR SEC => MINUTES
+						if (preg_match("/runtime/", $column_names[$j]))
+							echo round($val2[$column_names[$j]]/60);
+						else
+							echo $val2[$column_names[$j]];
+					}
+					else
+						echo "0"; # In case of null, print zero
+				}
+				echo "]";
+			}
+			$i++;
+		}
+	}
+?>
+]);
+
+var options = <?=$gchart_options?>;
+var annotatedtimeline = new <?=$gchart_cname?>(
+	document.getElementById('visualization'));
+annotatedtimeline.draw(data, options);
+}
+
+google.setOnLoadCallback(drawVisualization);
+</script>
+</head>
+<body style="font-family: Arial;border: 0 none;">
+<div id="visualization" style="width: 650px; height: 400px;"></div>
+</body>
+</html>

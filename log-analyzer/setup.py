@@ -41,7 +41,8 @@ The package allows the analysis of Eucalyptus logs and display the information g
              ]},
     
     install_requires = [
-        'setuptools'
+        'setuptools',
+        'cmd2'
         ],
     )
 

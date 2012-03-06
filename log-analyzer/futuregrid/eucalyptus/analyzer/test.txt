@@ -1,0 +1,17 @@
+printlist
+
+clear users
+analyze
+graph --type pie --filename piechart.png
+graph --type bar --filename barchart.png
+open barchart.png
+open piechart.png
+
+clear users
+analyze --start 2011-11-01T00:00:00 --end 2011-11-04T23:59:59
+graph --type pie --filename piechart2.png
+graph --type bar --filename barchart2.png
+open barchart2.png
+open piechart2.png
+
+#dump

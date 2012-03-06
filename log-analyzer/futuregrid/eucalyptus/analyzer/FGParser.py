@@ -93,8 +93,9 @@ import sys
 import os
 from datetime import * 
 
-from lib import FGEucaMetricsDB
-
+import FGEucaMetricsDB
+import FGGoogleMotionChart
+        
 class Instances:
 
     in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
@@ -105,7 +106,6 @@ class Instances:
 
     withSQL=False
 
-    
     
     def __init__(self):
         self.clear()
@@ -154,7 +154,7 @@ class Instances:
 
     def dump(self,index = "all"):
 
-        if index == "all":
+        if index == "all" or (index == "") :
             for key in self.data:
                 print "------------------------"
                 pp.pprint(self.data[key])
@@ -165,6 +165,20 @@ class Instances:
             pp.pprint(self.data[index])
         else:
             print "ERROR printing of index " + index
+
+    def print_list(self,index = "all"):
+
+        if (index == "all") or (index == "") :
+            for key in self.data:
+                print(self.data[key]["instanceId"])
+            print "------------------------"
+            self.print_total()
+            print "------------------------"
+        elif (index >= 0) and (index < len(str)):
+            print(self.data[index]["instanceId"])
+        else:
+            print "ERROR printing of index " + index
+
 
     def json_dump(self):
          string = ""
@@ -247,8 +261,8 @@ class Instances:
         if (type(from_date).__name__ == "str"):
             process_all = (from_date == "all")
             if not process_all:
-                date_from = datetime.strptime(from_date, '%Y-%m-%d %H:%M:%S')
-                date_to   = datetime.strptime(to_date, '%Y-%m-%d %H:%M:%S')
+                date_from = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
+                date_to   = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
 
         if (type(from_date).__name__ == "None"):
             process_all = True
@@ -257,6 +271,7 @@ class Instances:
             date_from = from_date
             date_to = to_date
             process_all = False
+
 
         for i in self.data:
             values = self.data[i]
@@ -275,7 +290,7 @@ class Instances:
                     users[name] = {'count' : 1,
                                    'sum' : 0.0,
                                    'min' : t_delta,
-                                   'max' :t_delta,
+                                   'max' : t_delta,
                                    'avg' : 0.0
                                    }
 
@@ -286,6 +301,7 @@ class Instances:
 
                 for name in users:
                     users[name]['avg'] = float(users[name]['sum']) / float(users[name]['count'])
+
 
 
 
@@ -320,51 +336,6 @@ def clear():
 
 # Create a chart object of 250x100 pixels
 
-def display_user_stats(users, type="pie", filename="chart.png"):
-    """displays the number of VMs a user is running"""
-    values = []
-    label_values = []
-
-    max_v = 0
-    for name in users:
-        print name
-        count = users[name]['count']
-        print count
-        values.append(count)
-        label_values.append(name + ":" + str(count))
-        max_v = max(max_v, count)
-
-    print values
-    print label_values
-
-    if type == "pie": 
-        chart = PieChart3D(500, 200)
-        chart.set_pie_labels(label_values)
-    if type == "bar":
-        chart = StackedHorizontalBarChart(500,200,
-                                        x_range=(0, max_v))
-        # the labels seem wrong, not sure why i have to call reverse
-        chart.set_axis_labels('y', reversed(label_values))
-        # setting the x axis labels
-        left_axis = range(0, max_v + 1, 1)
-        left_axis[0] = ''
-        chart.set_axis_labels(Axis.BOTTOM, left_axis)
-
-        chart.set_bar_width(10)
-        chart.set_colours(['00ff00', 'ff0000'])
-
-    # Add some data
-    chart.add_data(values)
-
-    # Assign the labels to the pie data
-
-    chart.download(filename)
-    
-    # Print the chart URL
-    #url = chart.get_url()
-
-    #print url
-    #os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
 
 def make_csv_file(users, filename, output_dir):
 
@@ -380,8 +351,6 @@ def make_csv_file(users, filename, output_dir):
 	f.close()
 
 def make_google_motion_chart(users, args):
-
-	from lib import FGGoogleMotionChart
 
 	output_dir = args.output_dir
 	filename = output_dir + "/FGGoogleMotionChart." + args.s_date + "-" + args.e_date + ".html"

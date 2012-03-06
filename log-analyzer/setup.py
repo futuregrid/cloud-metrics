@@ -34,9 +34,8 @@ The package allows the analysis of Eucalyptus logs and display the information g
     entry_points={
         'console_scripts':
             [
-             'fg-cleanup-table = futuregrid.eucalyptus.analyzer.FGCleanupTable:main',
+             'fg-cleanup-db = futuregrid.eucalyptus.analyzer.FGEucaMetricsDB:command_clean_database',
              'fg-euca-gather-log-files = futuregrid.eucalyptus.analyzer.FGEucaGatherLogFiles:main',
-             'fg-log-gz-decompressor = futuregrid.eucalyptus.analyzer.FGLogGzDecompressor:main',
              'fg-parser = futuregrid.eucalyptus.analyzer.FGParser:main'
              ]},
     
@@ -45,6 +44,10 @@ The package allows the analysis of Eucalyptus logs and display the information g
         'cmd2'
         ],
     )
+
+    # Removed console script
+    # 'fg-log-gz-decompressor = futuregrid.eucalyptus.analyzer.FGLogGzDecompressor:main',
+
 
 # http://docs.python.org/distutils/introduction.html#distutils-simple-example
 # http://docs.python.org/distutils/setupscript.html#setup-script

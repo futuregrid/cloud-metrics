@@ -252,7 +252,7 @@ class Instances:
             t_delta = values["t_end"] - values["ts"]
             self.data[i]["duration"] = str(t_delta.total_seconds())
 
-    def calculate_user_stats (self, users, from_date="all", to_date="all"):
+    def calculate_user_stats (self, user_data, from_date="all", to_date="all"):
         """calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time"""
 
         # hanlde parameters
@@ -284,23 +284,23 @@ class Instances:
                 name = values["ownerId"]
                 t_delta = float(values["duration"])
                 try:
-                    users[name]["count"] = users[name]["count"] + 1 # number of instances
+                    user_data[name]["count"] = user_data[name]["count"] + 1 # number of instances
                 except:
                 #          count,sum,min,max,avg
-                    users[name] = {'count' : 1,
+                    user_data[name] = {'count' : 1,
                                    'sum' : 0.0,
                                    'min' : t_delta,
                                    'max' : t_delta,
                                    'avg' : 0.0
                                    }
 
-                users[name]['sum'] += t_delta  # sum of time 
-                users[name]['min'] = min (t_delta, users[name]['min'])
-                users[name]['max'] = min (t_delta, users[name]['max'])
+                user_data[name]['sum'] += t_delta  # sum of time 
+                user_data[name]['min'] = min (t_delta, user_data[name]['min'])
+                user_data[name]['max'] = min (t_delta, user_data[name]['max'])
 
 
-                for name in users:
-                    users[name]['avg'] = float(users[name]['sum']) / float(users[name]['count'])
+                for name in user_data:
+                    user_data[name]['avg'] = float(user_data[name]['sum']) / float(user_data[name]['count'])
 
 
 

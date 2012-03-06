@@ -8,4 +8,6 @@ clean:
 	rm -rf build dist *.egg-info *.pyc *~ \#* sample.html
 	cd ../../..; make -f Makefile clean
 
-
+all:
+	cd ../../..; make upgrade
+	cat test.txt | ./AnalyzeEucaData.py

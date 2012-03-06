@@ -19,7 +19,14 @@ from cmd2 import Cmd2TestCase
 
 import unittest, sys
 
-def display_user_stats(users, type="pie", filename="chart.png"):
+def print_user_table(user_data, seperator=" "):
+    if seperator == None:
+        seperator = " "
+    for name in user_data:
+        print name + seperator + user_data[name]['count']
+
+
+def display_user_stats(user_data, type="pie", filename="chart.png"):
     """ filename = display, filename = url, filename = real filename"""
     """displays the number of VMs a user is running"""
     """ types supported pie, bar"""
@@ -28,9 +35,9 @@ def display_user_stats(users, type="pie", filename="chart.png"):
     label_values = []
 
     max_v = 0
-    for name in users:
+    for name in user_data:
         print name
-        count = users[name]['count']
+        count = user_data[name]['count'],
         print count
         values.append(count)
         label_values.append(name + ":" + str(count))
@@ -97,8 +104,19 @@ class CmdLineAnalyzeEucaData(Cmd):
         else:
             print "Setting chart type to " + arg
             self.charttype = arg
-        
-    
+
+    @options([
+        make_option('-s', '--seperator', type="string", help="seperator between attribute and value"),
+        ])
+    def do_table(self, arg, opts):
+        if opts.seperator == "" or opts.seperator == None:
+            seperator = "="
+        else:
+            seperator = opts.seperator
+        if arg == "users":
+            print_user_table(self.users, seperator)
+
+            
     def do_loaddb(self, arg):
         # configuration file
         # if no parameter is given config is read from ~/.futuregrid/futuregrid.cfg

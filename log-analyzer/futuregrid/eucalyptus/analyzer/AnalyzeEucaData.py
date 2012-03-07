@@ -58,7 +58,6 @@ class CmdLineAnalyzeEucaData(Cmd):
         print self.instances.count()
         for i in self.instances.get():
             values = self.instances.getdata(i)
-            print values
             process_entry = process_all
             
             if not process_all:

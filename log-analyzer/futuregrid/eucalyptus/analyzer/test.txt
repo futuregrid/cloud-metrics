@@ -2,9 +2,14 @@ printlist
 
 clear users
 analyze
+table --type users --seperator ,  --caption Testing_the_csv_table
+
+clear users
+analyze --start=2011-11-01T00:00:00 --end=2011-11-04T23:59:59
+table --type users --seperator ,  --caption Testing_the_csv_table
 
 
-
+quit
 
 graph --type=pie --filename=piechart.png
 graph --type=bar --filename=barchart.png
@@ -12,8 +17,10 @@ open barchart.png
 open piechart.png
 
 # FOR SOME REASON THIS DOES NOT WORK global var issue
-clear users
-analyze --start=2011-11-01T00:00:00 --end=2011-11-04T23:59:59
+
+
+
+quit
 graph --type=pie --filename=piechart2.png
 graph --type=bar --filename=barchart2.png
 open barchart2.png
@@ -23,7 +30,7 @@ open piechart2.png
 
 
 table -t users -s :  -c Testing_the_table
-table --type users --seperator ,  --caption Testing_the_csv_table
+
 
 #
 

@@ -15,6 +15,7 @@ from cmd2 import Cmd
 from cmd2 import make_option
 from cmd2 import options
 from cmd2 import Cmd2TestCase
+from datetime import *
 
 import unittest, sys
 
@@ -25,8 +26,8 @@ class CmdLineAnalyzeEucaData(Cmd):
     #maxrepeats = 3
     #Cmd.settable.append('maxrepeats')
 
-    instances = None
-    users = None
+    instances = {}
+    users = {}
     pp = pprint.PrettyPrinter(indent=0)
     charttype = "pie"
 
@@ -54,10 +55,9 @@ class CmdLineAnalyzeEucaData(Cmd):
             date_to = to_date
             process_all = False
 
-
-        for i in self.instances.count():
-            ### BUG IS HERE
-            values = self.instances.get()[i]
+        print self.instances.count()
+        for i in self.instances.get():
+            values = self.instances.getdata(i)
             print values
             process_entry = process_all
             
@@ -96,6 +96,9 @@ class CmdLineAnalyzeEucaData(Cmd):
         values = []
         label_values = []
 
+        print self.users
+
+        
         max_v = 0
         for name in self.users:
             print name
@@ -223,7 +226,8 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         print "analyze [" + from_date + ", " + to_date + "]" 
             
-        self.instances.calculate_delta()
+        self.instances.refresh()
+        print "now calculating"
         self.calculate_user_stats (from_date=from_date, to_date=to_date)
 
     def do_printusers(self, arg):

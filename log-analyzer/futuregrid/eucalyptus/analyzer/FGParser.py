@@ -204,6 +204,7 @@ class Instances:
         for element in instance_list:
             key += 1
             self.data[key] = element
+        
 
     def write_to_db(self):
         for key_current in self.data:
@@ -247,8 +248,9 @@ class Instances:
             instance[id] = current
 
 
-
-    def calculate_delta (self):
+            #
+            #        was calculate delta
+    def refresh(self):
         """calculates how long each instance runs in seconds"""
         for i in self.data:
             values = self.data[i]

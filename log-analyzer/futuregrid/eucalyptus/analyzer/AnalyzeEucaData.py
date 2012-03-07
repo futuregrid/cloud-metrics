@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-#THIS DOCUMENT IS TO BE COMPLETED, JUST A START
 
 #import argparse
 
@@ -19,63 +18,6 @@ from cmd2 import Cmd2TestCase
 
 import unittest, sys
 
-def print_user_table(user_data, seperator=" "):
-    if seperator == None:
-        seperator = " "
-    for name in user_data:
-        print name + seperator + user_data[name]['count']
-
-
-def display_user_stats(user_data, type="pie", filename="chart.png"):
-    """ filename = display, filename = url, filename = real filename"""
-    """displays the number of VMs a user is running"""
-    """ types supported pie, bar"""
-    
-    values = []
-    label_values = []
-
-    max_v = 0
-    for name in user_data:
-        print name
-        count = user_data[name]['count'],
-        print count
-        values.append(count)
-        label_values.append(name + ":" + str(count))
-        max_v = max(max_v, count)
-
-    print values
-    print label_values
-
-    if type == "pie": 
-        chart = PieChart3D(500, 200)
-        chart.set_pie_labels(label_values)
-    if type == "bar":
-        chart = StackedHorizontalBarChart(500,200,
-                                        x_range=(0, max_v))
-        # the labels seem wrong, not sure why i have to call reverse
-        chart.set_axis_labels('y', reversed(label_values))
-        # setting the x axis labels
-        left_axis = range(0, max_v + 1, 1)
-        left_axis[0] = ''
-        chart.set_axis_labels(Axis.BOTTOM, left_axis)
-
-        chart.set_bar_width(10)
-        chart.set_colours(['00ff00', 'ff0000'])
-
-    # Add some data
-    chart.add_data(values)
-        
-    # Assign the labels to the pie data
-
-    if filename == "display":
-        #os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
-        os.system ("open " + filename)
-    elif filename == "url":
-        url = chart.get_url()
-        print url
-    else:
-        chart.download(filename)
-
 
 class CmdLineAnalyzeEucaData(Cmd):
     #multilineCommands = ['None']
@@ -90,6 +32,110 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     echo = True
     timing = True
+
+
+    def calculate_user_stats (self, from_date="all", to_date="all"):
+        """calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time"""
+
+        # hanlde parameters
+
+        process_all = False
+        if (type(from_date).__name__ == "str"):
+            process_all = (from_date == "all")
+            if not process_all:
+                date_from = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
+                date_to   = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
+
+        if (type(from_date).__name__ == "None"):
+            process_all = True
+
+        if (type(from_date).__name__ == "datetime"):
+            date_from = from_date
+            date_to = to_date
+            process_all = False
+
+
+        for i in self.data:
+            values = self.data[i]
+            process_entry = process_all
+            
+            if not process_all:
+                process_entry = (values['ts'] >= date_from) and (values['ts'] < date_to)
+
+            if process_entry:
+                name = values["ownerId"]
+                t_delta = float(values["duration"])
+                try:
+                    self.users[name]["count"] = self.users[name]["count"] + 1 # number of instances
+                except:
+                #          count,sum,min,max,avg
+                    self.users[name] = {'count' : 1,
+                                   'sum' : 0.0,
+                                   'min' : t_delta,
+                                   'max' : t_delta,
+                                   'avg' : 0.0
+                                   }
+
+                self.users[name]['sum'] += t_delta  # sum of time 
+                self.users[name]['min'] = min (t_delta, self.users[name]['min'])
+                self.users[name]['max'] = min (t_delta, self.users[name]['max'])
+
+
+                for name in self.users:
+                    self.users[name]['avg'] = float(self.users[name]['sum']) / float(self.users[name]['count'])
+
+
+
+    def display_user_stats(self, type="pie", filename="chart.png"):
+        """ filename = display, filename = url, filename = real filename"""
+        """displays the number of VMs a user is running"""
+        """ types supported pie, bar"""
+
+        values = []
+        label_values = []
+
+        max_v = 0
+        for name in self.users:
+            print name
+            count = self.users[name]['count'],
+            print count
+            values.append(count)
+            label_values.append(name + ":" + str(count))
+            max_v = max(max_v, count)
+
+        print values
+        print label_values
+
+        if type == "pie": 
+            chart = PieChart3D(500, 200)
+            chart.set_pie_labels(label_values)
+        if type == "bar":
+            chart = StackedHorizontalBarChart(500,200,
+                                            x_range=(0, max_v))
+            # the labels seem wrong, not sure why i have to call reverse
+            chart.set_axis_labels('y', reversed(label_values))
+            # setting the x axis labels
+            left_axis = range(0, max_v + 1, 1)
+            left_axis[0] = ''
+            chart.set_axis_labels(Axis.BOTTOM, left_axis)
+
+            chart.set_bar_width(10)
+            chart.set_colours(['00ff00', 'ff0000'])
+
+        # Add some data
+        chart.add_data(values)
+
+        # Assign the labels to the pie data
+
+        if filename == "display":
+            #os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
+            os.system ("open " + filename)
+        elif filename == "url":
+            url = chart.get_url()
+            print url
+        else:
+            chart.download(filename)
+
 
     def preloop(self):
         self.do_loaddb("")
@@ -106,16 +152,25 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.charttype = arg
 
     @options([
+        make_option('-t', '--type', type="string", help="users"),
         make_option('-s', '--seperator', type="string", help="seperator between attribute and value"),
+        make_option('-c', '--caption', type="string", help="title of the table"),
         ])
     def do_table(self, arg, opts):
+        print opts.caption
         if opts.seperator == "" or opts.seperator == None:
             seperator = "="
         else:
             seperator = opts.seperator
-        if arg == "users":
-            print_user_table(self.users, seperator)
-
+        if opts.caption != "" and opts.caption != None:
+            print "# " + opts.caption
+            print "# -----------------------------------------"
+        if opts.type == "users":
+            print arg
+            for name in self.users:
+                print "%s %s %s" % (name, seperator, self.users[name]['count'])
+        else:
+            print "Error: Printing <" + opts.type + "> is not supported"
             
     def do_loaddb(self, arg):
         # configuration file
@@ -141,7 +196,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         # takes as additional parameters fields to be printed
         self.instances.print_list(arg)
 
-    def do_clear(slef, arg):
+    def do_clear(self, arg):
         if arg == "users":
             self.users = {}
         elif arg == "instances":
@@ -166,8 +221,8 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         print "analyze [" + from_date + ", " + to_date + "]" 
             
-        self.instances.calculate_delta ()
-        self.instances.calculate_user_stats (self.users, from_date=from_date, to_date=to_date)
+        self.instances.calculate_delta()
+        self.calculate_user_stats (from_date=from_date, to_date=to_date)
 
     def do_printusers(self, arg):
         print self.pp.pprint(self.users)
@@ -195,7 +250,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         else:
             display_type = opts.filename
 
-        display_user_stats(self.users, graph_type,filename=display_type)
+        self.display_user_stats(graph_type,filename=display_type)
 
 
 parser = optparse.OptionParser()

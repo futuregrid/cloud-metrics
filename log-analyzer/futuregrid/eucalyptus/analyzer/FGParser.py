@@ -252,65 +252,9 @@ class Instances:
             t_delta = values["t_end"] - values["ts"]
             self.data[i]["duration"] = str(t_delta.total_seconds())
 
-    def calculate_user_stats (self, user_data, from_date="all", to_date="all"):
-        """calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time"""
-
-        # hanlde parameters
-
-        process_all = False
-        if (type(from_date).__name__ == "str"):
-            process_all = (from_date == "all")
-            if not process_all:
-                date_from = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
-                date_to   = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
-
-        if (type(from_date).__name__ == "None"):
-            process_all = True
-
-        if (type(from_date).__name__ == "datetime"):
-            date_from = from_date
-            date_to = to_date
-            process_all = False
-
-
-        for i in self.data:
-            values = self.data[i]
-            process_entry = process_all
-            
-            if not process_all:
-                process_entry = (values['ts'] >= date_from) and (values['ts'] < date_to)
-
-            if process_entry:
-                name = values["ownerId"]
-                t_delta = float(values["duration"])
-                try:
-                    user_data[name]["count"] = user_data[name]["count"] + 1 # number of instances
-                except:
-                #          count,sum,min,max,avg
-                    user_data[name] = {'count' : 1,
-                                   'sum' : 0.0,
-                                   'min' : t_delta,
-                                   'max' : t_delta,
-                                   'avg' : 0.0
-                                   }
-
-                user_data[name]['sum'] += t_delta  # sum of time 
-                user_data[name]['min'] = min (t_delta, user_data[name]['min'])
-                user_data[name]['max'] = min (t_delta, user_data[name]['max'])
-
-
-                for name in user_data:
-                    user_data[name]['avg'] = float(user_data[name]['sum']) / float(user_data[name]['count'])
 
 
 
-
-def clear():
-    users = {}
-    instance = {}
-
-    
-        
 ######################################################################
 # GENERATE INSTANCE STATISTICS
 ######################################################################
@@ -673,48 +617,48 @@ def test4():
 #
 def make_report(args, type=["png"]): # (generate htmls, csv)
 	
-	# This function will perform:
-	# 1. Iterate -input directory
-	# 2. Do parse_file which satisfies from s_date to e_date, otherwise it will skip.
-	# 3. analyze data (calculate_delta)
-	# 4. Generate htmls (display)
-	# 4.1. Generate csv files (records)
+    # This function will perform:
+    # 1. Iterate -input directory
+    # 2. Do parse_file which satisfies from s_date to e_date, otherwise it will skip.
+    # 3. analyze data (calculate_delta)
+    # 4. Generate htmls (display)
+    # 4.1. Generate csv files (records)
+    
+    s_date = datetime.strptime(args.s_date, '%Y%m%d')
+    e_date = datetime.strptime(args.e_date, '%Y%m%d')
+    e_date = datetime.combine(e_date, time(23, 59, 59))
+    input_dir = args.input_dir
+    output_dir = args.output_dir
 
-	s_date = datetime.strptime(args.s_date, '%Y%m%d')
-	e_date = datetime.strptime(args.e_date, '%Y%m%d')
-	e_date = datetime.combine(e_date, time(23, 59, 59))
-	input_dir = args.input_dir
-	output_dir = args.output_dir
-
-	users = {}
-	#1.
-	for filename in os.listdir(input_dir):
-        	log_date = filename_todate(filename)
-		if log_date < s_date or log_date > e_date:
-			continue
-		#2.
-		parse_file(input_dir + "/" + filename, instances.add, args.linetypes, debug=False, progress=True)
+    users = {}
+    #1.
+    for filename in os.listdir(input_dir):
+        log_date = filename_todate(filename)
+        if log_date < s_date or log_date > e_date:
+            continue
+        #2.
+        parse_file(input_dir + "/" + filename, instances.add, args.linetypes, debug=False, progress=True)
 	#3.
-	instances.calculate_delta ()
-	# WRITE to DB
-	#instances.write_to_db()
-	instances.calculate_user_stats (users)
-	#print pp.pprint(users)
+    instances.calculate_delta ()
+    # WRITE to DB
+    #instances.write_to_db()
+    instances.calculate_user_stats (users)
+    #print pp.pprint(users)
 
-	#4.
-	if (type[type.index("png")]):
-		display(users, args.s_date+"-"+args.e_date, output_dir)
-	#4.1.
-	if (type[type.index("csv")]):
-		make_csv_file(users, args.s_date+"-"+args.e_date, output_dir)
-	if (type[type.index("gmc")]): # GMC ;Google Motion Chart
-		make_google_motion_chart(users, args)# args.s_date+"-"+args.e_date, output_dir)
+    #4.
+    if (type[type.index("png")]):
+        display(users, args.s_date+"-"+args.e_date, output_dir)
+    #4.1.
+    if (type[type.index("csv")]):
+        make_csv_file(users, args.s_date+"-"+args.e_date, output_dir)
+    if (type[type.index("gmc")]): # GMC ;Google Motion Chart
+        make_google_motion_chart(users, args)# args.s_date+"-"+args.e_date, output_dir)
 
-	return
+    return
 
 # Convert 2012-01-28-04-13-04-cc.log to datetime
 def filename_todate(str):
-	return datetime.strptime(str, '%Y-%m-%d-%H-%M-%S-cc.log')
+    return datetime.strptime(str, '%Y-%m-%d-%H-%M-%S-cc.log')
 
 
 def test_file_read(filename,progress=True, debug=False):
@@ -737,11 +681,11 @@ def test_sql_write(filename,progress=True, debug=False):
     instances.write_to_db()
 
 def display(users, prefix, output_dir):
-	a = output_dir+"/"+prefix+".pie.png"
-	b = output_dir+"/"+prefix+".bar.png"
-	display_user_stats (users, filename=a)
-	display_user_stats (users, type="bar", filename=b)
-	make_html(prefix, output_dir, "VMs used by users")
+    a = output_dir+"/"+prefix+".pie.png"
+    b = output_dir+"/"+prefix+".bar.png"
+    display_user_stats (users, filename=a)
+    display_user_stats (users, type="bar", filename=b)
+    make_html(prefix, output_dir, "VMs used by users")
     #os.system ("open sample.html")
 
 def test_user_stats():
@@ -786,19 +730,19 @@ def read_all_log_files_and_store_to_db (path):
     instances.calculate_delta ()
     instances.write_to_db()
 
-users = {}
-instances = Instances()
-instance = instances.data
-pp = pprint.PrettyPrinter(indent=4)
     
 def main():
+
+    users = {}
+    instances = Instances()
+    instance = instances.data
+    pp = pprint.PrettyPrinter(indent=4)
 
     if sys.version_info < (2, 7):
         print "ERROR: you must use python 2.7 or greater"
         exit (1)
     else:
         print "Python version: " + str(sys.version_info)
-    clear()
     
     # test1()
     # test2()

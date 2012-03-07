@@ -67,15 +67,16 @@ class CmdLineAnalyzeEucaData(Cmd):
                 name = values["ownerId"]
                 t_delta = float(values["duration"])
                 try:
-                    self.users[name]["count"] = self.users[name]["count"] + 1 # number of instances
+                    self.users[name]["count"] += 1
+                    # number of instances
                 except:
                 #          count,sum,min,max,avg
                     self.users[name] = {'count' : 1,
-                                   'sum' : 0.0,
-                                   'min' : t_delta,
-                                   'max' : t_delta,
-                                   'avg' : 0.0
-                                   }
+                                        'sum' : 0.0,
+                                        'min' : t_delta,
+                                        'max' : t_delta,
+                                        'avg' : 0.0
+                                        }
 
                 self.users[name]['sum'] += t_delta  # sum of time 
                 self.users[name]['min'] = min (t_delta, self.users[name]['min'])
@@ -95,20 +96,18 @@ class CmdLineAnalyzeEucaData(Cmd):
         values = []
         label_values = []
 
-        print self.users
+        #        print self.users
 
         
         max_v = 0
         for name in self.users:
-            print name
-            count = self.users[name]['count'],
-            print count
-            values.append(count)
-            label_values.append(name + ":" + str(count))
-            max_v = max(max_v, count)
+            number = self.users[name]['count']
+            values.append(number)
+            label_values.append(name + ":" + str(number))
+            max_v = max(max_v, number)
 
-        print values
-        print label_values
+        # print values
+        # print label_values
 
         if type == "pie": 
             chart = PieChart3D(500, 200)

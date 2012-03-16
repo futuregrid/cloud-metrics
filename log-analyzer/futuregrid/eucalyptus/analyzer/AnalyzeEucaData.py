@@ -38,7 +38,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     def calculate_user_stats (self, from_date="all", to_date="all"):
         """calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time"""
 
-        # hanlde parameters
+        # handle parameters
 
         process_all = False
         if (type(from_date).__name__ == "str"):
@@ -206,24 +206,30 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.instances = {}
 
     @options([
-        make_option('-f', '--start', type="string", help="start time of the interval YYYYMMDD"),
-        make_option('-t', '--end', type="string", help="end time of the interval YYYYMMDD"),
+        make_option('-f', '--start', default="all", type="string", help="start time of the interval YYYYMMDD"),
+        make_option('-t', '--end',  default="all",  type="string", help="end time of the interval YYYYMMDD"),
+        make_option('-M', '--month', type="string", help="month of the interval MM"),
+        make_option('-Y', '--year', type="string", help="year of the interval YYYY"),
         ])
     def do_analyze (self, arg, opts=None):
 
-        to_date="all"
-        if opts.start == "" or opts.start == None:
-            from_date="all"
-        else:
-            from_date = opts.start
-            
-        if opts.end == "" or opts.end == None:
-            to_date="all"
-        else:
-            to_date = opts.end
+	from_date = opts.start
+	to_date = opts.end
 
-        print "analyze [" + from_date + ", " + to_date + "]" 
+	if opts.year:
+		from_date = opts.year + "01" + "01"
+		to_date = opts.year + "12" + "31"
+		if opts.month:
+			from_date = opts.year + opts.month + "01"
+			to_date = opts.year + opts.month + "31"
+	else:
+		if opts.month:
+			now = datetime.now()
+			from_date = str(now.year) + opts.month + "01"
+			to_date = str(now.year) + opts.month + "31"
             
+        print "analyze [" + from_date + ", " + to_date + "]" 
+
         self.instances.refresh()
         print "now calculating"
         self.calculate_user_stats (from_date=from_date, to_date=to_date)

@@ -328,13 +328,16 @@ def ccInstance_parser(rest,data):
     #separate easy assignments from those that would contain groups, for now simply put groups as a string
     # all others are merged into a string with *=* into rest
     m = re.search( r'(.*)keyName=(.*)ccnet=(.*)ccvm=(.*)ncHostIdx=(.*)volumes=(.*)groupNames=(.*)', rest, re.M|re.I)
-    data['keyName'] = m.group(2).strip()
-    data["ccnet"] = m.group(3).strip()
-    data["ccvm"] = m.group(4).strip()
-    data["volumes"] = m.group(6).strip()
-    data["groupNames"] = m.group(7).strip()
-    # assemble the rest string
-    rest = m.group(1) + "ncHostIdx=" +m.group(5)
+    try:
+	    data['keyName'] = m.group(2).strip()
+	    data["ccnet"] = m.group(3).strip()
+	    data["ccvm"] = m.group(4).strip()
+	    data["volumes"] = m.group(6).strip()
+	    data["groupNames"] = m.group(7).strip()
+	    # assemble the rest string
+	    rest = m.group(1) + "ncHostIdx=" +m.group(5)
+    except:
+	    return
 
     # GATHER ALL SIMPLE *=* assignments into a single rest line and add each entry to dict via eval
     rest = convert_str_to_dict_str(rest)
@@ -434,7 +437,8 @@ def parse_file (filename, analyze, parse_types, debug=False, progress=True):
             refresh_resource_parser(rest, data)
         elif data["linetype"] == "print_ccInstance" and "print_ccInstance" in parse_types:
             count_ccInstance_parser += 1
-            ccInstance_parser(rest, data)
+	    if not ccInstance_parser(rest, data):
+		    ignore = True
         else:
             ignore = True
         if ignore:
@@ -608,7 +612,7 @@ def test_user_stats():
 
     return
 
-def read_all_log_files_and_store_to_db (path):
+def read_all_log_files_and_store_to_db (path, args):
     """
     we assume thet the dir has only files of the form. All files have been gathere there from the fg-unix command
     <name>.log
@@ -619,7 +623,8 @@ def read_all_log_files_and_store_to_db (path):
     for filename in listing:
         count =+ 1
         print "Processing file is: " + filename
-        parse_file (path + "/" + filename,instances.add,debug=False,progress=True)
+        #parse_file (path + "/" + filename,instances.add,debug=False,progress=True)
+	parse_file(path + "/" + filename, instances.add, args.linetypes, debug=False, progress=True)
     instances.calculate_delta ()
     instances.write_to_db()
 
@@ -705,7 +710,7 @@ def main():
            => Only that file will be parsed
     '''
 
-    #    read_all_log_files_and_store_to_db (args.input_dir)
+    #    read_all_log_files_and_store_to_db (args.input_dir, args)
  
     #test_sql_read()
     #test_user_stats()

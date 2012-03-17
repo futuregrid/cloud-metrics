@@ -13,6 +13,7 @@ class fgData
 	public $e_date;
 	public $ini_array;
 	public $data;
+	public $duration = "monthly"; # daily, weekly, monthly, quarterly, yearly
 
 	public function __construct($s_date, $e_date) {
 		$this->s_date = $s_date;
@@ -40,13 +41,86 @@ class fgData
 				foreach ($res as $k => $v)
 					$tmp[$k] = array_merge($v, array("Date" => $c_date));
 				#TEMPORARY LINES DONE <==
-				$csvdata = array_merge($tmp, $csvdata);
+				$csvdata = array_merge($csvdata, $tmp);
 			}
 		}
 		return $csvdata;
 
 	}
 	public function getMysqlDatabase() {
+	}
+	public function getUniqElement($key) {
+		foreach($this->data as $k => $v) {
+			$res[] = $v[$key];
+		}
+		$res = array_unique($res);
+		return $res;
+	}
+	public function getSelectedData($fields, $where) {
+
+		$cnt = 0;
+		preg_match("/(.+)=(.+)$/",$where, $matches);
+		$search_field = $matches[1];
+		$search_value = $matches[2];
+		$res = array();
+		$tmp = array();
+		foreach ($this->data as $entry) {
+			if($entry[$search_field] == $search_value) {
+				foreach ($fields as $field)
+					$tmp[$field] = $entry[$field];
+				$res[] = $tmp;
+			}
+			$cnt++;
+		}
+		$res = $this->convertDataInDuration($res);
+		return $res;
+	}
+	private function convertDataInDuration($data, $duration="") {
+		if(!isset($data) || !isset($data[0]['Date']))
+			return $data;
+		$res = array();
+		foreach ($data as $entry) {
+			$new_date = $this->getNewDate($entry['Date'], $duration);
+			foreach ($entry as $key => $value)
+				isset($res[$new_date][$key]) ? $res[$new_date][$key] += $value : $res[$new_date][$key] = $value;
+			$res[$new_date]['Date'] = $new_date;
+		}
+		#return array_merge(array(),$res);
+		return $res;
+	}
+	public function getDateRange($duration="") {
+		$res = array();
+		if($duration == "")
+			$duration = $this->duration;
+		for ($c_date = $this->s_date; $c_date <= $this->e_date; $c_date = date("Ymd", strtotime($c_date . " +1 day")))
+			$res[] = $this->getNewDate($c_date, $duration);
+		$res = array_unique($res);
+		sort($res);
+		return $res;
+	}
+	private function getNewDate($date, $duration="") {
+		if($duration == "")
+			$duration = $this->duration;
+		switch(strtolower($duration)) {
+		case "daily":
+			return date("Ymd", strtotime($date));
+			break;
+		case "weekly":
+			return date("Y\WW", strtotime($date));
+			break;
+		case "monthly":
+			return date("Ym", strtotime($date));
+			break;
+		case "quarterly":
+			return  date("Y", strtotime($date)).ceil(date("m", strtotime($date))/3);
+			break;
+		case "yearly":
+			return date("Y", strtotime($date));
+			break;
+		}
+	}
+	public function setDuration($duration) {
+		$this->duration = $duration;
 	}
 }
 ?>

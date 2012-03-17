@@ -15,10 +15,22 @@ $g_title = utility::httpReq("g_title");
 
 $data = new fgData($s_date, $e_date);
 $data->getDatabase();
-$stackedAreaChart = new fgChart();
-$stackedAreaChart->addDataSet(array(112,315,66,40));
-$stackedAreaChart->setLegend(array("first", "second", "third","fourth"));
+$data->setDuration($duration);
+$legends_array = $data->getUniqElement($legend);
+
+$stackedAreaChart = new fgChart($g_type);
+$date_range = $data->getDateRange();
+foreach($legends_array as $id) {
+	$res = $data->getSelectedData(array("Date", $yaxis), "$legend=$id");
+	$dataset_array = array();
+	foreach($date_range as $dval)
+		$dataset_array[] = isset($res[$dval]) ? $res[$dval][$yaxis] : 0;
+	$stackedAreaChart->addDataSet($dataset_array);
+}
+$stackedAreaChart->setLegend($legends_array);
 $stackedAreaChart->addAxisRange(0, 1, 4, 1);
+$stackedAreaChart->setOptions($g_options);
+$stackedAreaChart->setTitle($g_title);
 $stackedAreaChart->getChartHtml();
 
 ?>

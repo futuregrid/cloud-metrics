@@ -12,6 +12,15 @@ use gchart\gChart;
 
 class fgChart extends gChart
 {
+	public $options;
+	public $title;
+
+	public function setOptions($val) {
+		$this->options = $val;
+	}
+	public function setTitle($title) {
+		$this->title = $title;
+	}
 	public function getChartHtml() {
 		echo <<<END
 <html>

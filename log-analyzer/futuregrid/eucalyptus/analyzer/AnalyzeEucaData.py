@@ -18,6 +18,7 @@ from cmd2 import Cmd2TestCase
 from datetime import *
 
 import unittest, sys
+import calendar
 
 
 class CmdLineAnalyzeEucaData(Cmd):
@@ -228,12 +229,12 @@ class CmdLineAnalyzeEucaData(Cmd):
 		to_date = opts.year + "12" + "31"
 		if opts.month:
 			from_date = opts.year + opts.month + "01"
-			to_date = opts.year + opts.month + "31"
+			to_date = opts.year + opts.month + str(calendar.monthrange(int(opts.year), int(opts.month))[1])
 	else:
 		if opts.month:
 			now = datetime.now()
 			from_date = str(now.year) + opts.month + "01"
-			to_date = str(now.year) + opts.month + "31"
+			to_date = str(now.year) + opts.month + str(calendar.monthrange(now.year, int(opts.month))[1])
             
         print "analyze [" + from_date + ", " + to_date + "]" 
 

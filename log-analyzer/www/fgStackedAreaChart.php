@@ -2,6 +2,7 @@
 namespace fgchart;
 
 require("fgChartInit.php");
+require("gChartPhp/gChartInit.php");
 
 $xaxis = utility::httpReq("xaxis");
 $yaxis = utility::httpReq("yaxis");
@@ -9,9 +10,9 @@ $s_date = utility::httpReq("s_date");
 $e_date = utility::httpReq("e_date");
 $legend = utility::httpReq("legend");
 $duration = utility::httpReq("duration");
-$g_options = utility::httpReq("g_options");
-$g_type = utility::httpReq("g_type");
-$g_title = utility::httpReq("g_title");
+$g_options = utility::httpReq("options");
+$g_type = utility::httpReq("type");
+$g_title = utility::httpReq("title");
 
 $data = new fgData($s_date, $e_date);
 $data->getDatabase();
@@ -28,9 +29,10 @@ foreach($legends_array as $id) {
 	$stackedAreaChart->addDataSet($dataset_array);
 }
 $stackedAreaChart->setLegend($legends_array);
-$stackedAreaChart->addAxisRange(0, 1, 4, 1);
+$stackedAreaChart->addXaxisRange($xaxis, $data->getDateRange());
+$stackedAreaChart->setYaxis($yaxis);
 $stackedAreaChart->setOptions($g_options);
 $stackedAreaChart->setTitle($g_title);
 $stackedAreaChart->getChartHtml();
-
+//echo $stackedAreaChart->getUrl();
 ?>

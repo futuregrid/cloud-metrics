@@ -13,48 +13,71 @@ use gchart\gChart;
 class fgChart extends gChart
 {
 	public $options;
-	public $title;
+	public $xaxis_label;
+	public $xaxis_range;
+	public $yaxis_label;
+	public $is_stacked;
 
-	public function setOptions($val) {
+	public static $googleChartTemplate = "googleChartTemplate.txt";
+
+	/* Chart parameter APIs - http://code.google.com/apis/chart/image/docs/chart_params.html */
+
+	public function __construct($g_type, $width=650, $height=480)
+	{
+		$this->setChartType($g_type);
+		$this->setDimensions($width, $height);
+	}
+	public function setChartType($type)
+	{
+		$this->setProperty('cht', $type);
+		switch($type) {
+		case "stackedArea":
+			$this->is_stacked = "true";
+			break;
+		}
+	}
+	public function setOptions($val) 
+	{
 		$this->options = $val;
 	}
-	public function setTitle($title) {
-		$this->title = $title;
+	public function addXaxisRange($xaxis_label, $xaxis_range) 
+	{
+		$this->xaxis_label = $xaxis_label;
+		$this->xaxis_range = $xaxis_range;
 	}
-	public function getChartHtml() {
-		echo <<<END
-<html>
-  <head>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Year');
-        data.addColumn('number', 'Sales');
-        data.addColumn('number', 'Expenses');
-        data.addRows([
-          ['2004', 1000, 400],
-          ['2005', 1170, 460],
-          ['2006', 660, 1120],
-          ['2007', 1030, 540]
-        ]);
+	public function setYaxis($yaxis_label) 
+	{
+		$this->yaxis_label = $yaxis_label;
+	}
+	public function getUrl()
+	{
+		$retStr = parent::getUrl();
+		return $retStr;
+	}
+	private function getLegends()
+	{
+		return "'".str_replace("|", "', '", urldecode($this->getProperty('chdl')))."'";
+	}
+	private function getXaxisRange()
+	{
+		return "'".implode("', '", $this->xaxis_range)."'";
+	}
+	private function getDataSets()
+	{
+		return  "[".str_replace("|", "], [", $this->encodeData($this->values,',')) . "]";
+	}
+	private function getTitle()
+	{
+		return "'".$this->getProperty('chtt')."'";
+	}
 
-        var options = {
-          title: 'Company Performance',
-          hAxis: {title: 'Year',  titleTextStyle: {color: 'red'}}
-        };
+	public function getChartHtml() 
+	{
+		$val = file_get_contents(self::$googleChartTemplate);
+		$new_val = str_replace(array("%legends%", "%date_range%", "%data_sets%", "%xaxis%", "%yaxis%", "%title%", "%width%", "%height%",  "%is_stacked%"),
+			array($this->getLegends(), $this->getXaxisRange(), $this->getDataSets(), "'".$this->xaxis_label."'", "'".$this->yaxis_label."'", $this->getTitle(), $this->getWidth(), $this->getHeight(), $this->is_stacked),
+			$val);
 
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
-  </head>
-  <body>
-    <div id="chart_div" style="width: 900px; height: 500px;"></div>
-  </body>
-</html>
-END;
+		echo $new_val;
 	}
 }

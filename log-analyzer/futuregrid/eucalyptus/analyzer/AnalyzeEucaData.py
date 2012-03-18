@@ -144,7 +144,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.do_loaddb("")
         
     def postloop(self):
-        print "BYE FORM GREGOR"
+        print "BYE ..."
         
 
     def do_charttype (self, arg):
@@ -215,6 +215,13 @@ class CmdLineAnalyzeEucaData(Cmd):
 
 	from_date = opts.start
 	to_date = opts.end
+	
+	# GVL: I think this logic needs improvement
+	# a) I think the last day of a month is incorrect and could be fixed with
+	# import calendar
+        # last_day_of_month = calendar.monthrange(year, month)[1]
+        # your 31 would probably be than the last day of the month
+        # b) what about the time. I think this needs o be added to ...?
 
 	if opts.year:
 		from_date = opts.year + "01" + "01"

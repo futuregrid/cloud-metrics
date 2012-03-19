@@ -1,5 +1,5 @@
-LOG ANALYZER FOR EUCALYPTUS 2.0+
-================================
+LOG ANALYZER FOR CLOUDS v2.1
+============================
 
 We are developing an open source code that allows to analyze the log files from eucalyptus and displays the results in a convenient graphical user interface.
 

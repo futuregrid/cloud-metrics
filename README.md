@@ -118,17 +118,20 @@ Do not forget to set the
 COMMANDS
 ========
 
-fg-euca-log-analyzer.pl 
-* Analyses the number of running instances and terminated instances are 
-  collected 
-* Reporting interval: hourly
+fg-clenaup-db
+* erases the content of the database
 
-fg.log.analyzer.4.eucalyptus.pl
-* Analyses minutes used by users and the number of instances used by users 
-* Reporting interval: daily
+fg-parser
+* parses eucalyptus log entries and includes them into the database
 
-fg.log.merger.sh, and fg.log.gz.decompressor.sh
-* mereges log files from the backup storage are restored and decompressed 
+fg-euca-gather-log-files 
+* gathers all eucalyptus log files into a single directory from the
+eucalyptus log file directory. This script can be called from cron
+repeatedly in order to avoid that log data is lost by using log file
+rotation in eucalyptus.
+
+fg-metric
+* a shell to interact with the metric database. 
 
 OTHER
 =====

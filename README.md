@@ -102,8 +102,7 @@ INSTALLATION
 
 please download the code/egg from github with ....
 
-make distall
-make install
+make force
 
 This will install the programs in 
 
@@ -113,6 +112,12 @@ This will install the programs in
 Do not forget to set the 
 
   FG_HOME_LOG_ANALYZER  
+
+than call 
+fg-metric
+
+If you like to use the php framework, we have not yet written a
+documentation for that.
 
 
 COMMANDS

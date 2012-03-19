@@ -1,0 +1,5 @@
+clear users
+analyze -M 01
+table --type users --seperator ,  --caption Testing_the_csv_table
+graph --type=pie --filename=piechart.png
+open piechart.png

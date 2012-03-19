@@ -28,6 +28,38 @@ We are developing an open source code that allows to analyze the log
 files from eucalyptus and displays the results in a convenient
 graphical user interface.
 
+
+Shell to analyze data
+---------------------
+
+Our framework is build around analyzing some data from various
+production clouds and uploading this data into a database.  We have
+several mechanisms to deal with the data. First we can create summary
+data that we can export in a variety of formats. This includes png,
+googlecharts, and cvs tables. Second, we provide a simpel php
+framework that displayse the information in some web pages.
+
+However, as part of our analyzis we are also developing an interactive
+shell that can be used to query data directly from our database.
+
+In the source code we included som simple example so you can test this
+interface out. However it requires hat you have set up the database.
+
+The following will create a table with data produced for the month of January
+
+> fg-metric
+fg> clear users
+fg> analyze -M 01
+fg> table --type users --seperator ,  --caption Testing_the_csv_table
+fg> quit
+
+Naturally you could store this script in a file and pipe to fg-metric
+in case you have more complex analysis to do. 
+
+
+Eucalyptus Integration
+----------------------
+
 To achieve this we are using 'cc.log' files. The needed information
 must be gathered while eucalyptus runs in 'EUCADEBUG' mode.
 

@@ -60,8 +60,9 @@ in case you have more complex analysis to do.
 Eucalyptus Integration
 ----------------------
 
-To achieve this we are using 'cc.log' files. The needed information
-must be gathered while eucalyptus runs in 'EUCADEBUG' mode.
+To achieve analysiz of eucalyptus data we are using 'cc.log'
+files. The needed information must be gathered while eucalyptus runs
+in 'EUCADEBUG' mode.
 
 We assume the following directory layout
 

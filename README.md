@@ -1,9 +1,35 @@
 LOG ANALYZER FOR CLOUDS v2.1
 ============================
 
-We are developing an open source code that allows to analyze the log files from eucalyptus and displays the results in a convenient graphical user interface.
+FEATURE REQUESTS
+================
 
-To achieve this we are using 'cc.log' files. The needed information must be gathered while eucalyptus runs in 'EUCADEBUG' mode.
+This project is under active development. In order for us to identify
+priorities please let us know what features you like us to add.  We
+will than include a list here and identify based on resources and
+priorities how to integrate them.
+
+JOINING THE TEAM AND CONTRIBUTIONS
+==================================
+
+Uf you like to join the development efforts, please e-mail us. We can
+than discuss how best you can contribute. You may have enhenced our
+code already or used it in your system. If so, please let us know.
+
+CONTACT
+=======
+
+send mail to laszewski@gmail.com
+
+INTRODUCTION
+============
+
+We are developing an open source code that allows to analyze the log
+files from eucalyptus and displays the results in a convenient
+graphical user interface.
+
+To achieve this we are using 'cc.log' files. The needed information
+must be gathered while eucalyptus runs in 'EUCADEBUG' mode.
 
 We assume the following directory layout
 
@@ -35,7 +61,8 @@ It is assumed that this tree is installed and a shell variable
 
 is set to the location of the "futuregrid" directory.
 
-We recommend that the futureGrid directory is included in the PATH of the shell that will run the commands.
+We recommend that the futureGrid directory is included in the PATH of
+the shell that will run the commands.
 
 INSTALLATION
 ===========

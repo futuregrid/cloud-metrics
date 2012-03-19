@@ -12,7 +12,7 @@ except ImportError:
 
 import sys, os
 
-version = '2.1'
+version = '2.1.1'
 
 classifiers = """\
 Intended Audience :: Developers

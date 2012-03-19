@@ -231,6 +231,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         if (opts.year != None) or (opts.month != None):
             from_date = "%s-%s-01T00:00:00" % (analyze_year,
                                                analyze_month)
+                # TODO: this misses one second
             to_date =   "%s-%s-%sT23:59:59" % (analyze_year,
                                                analyze_month,
                                                str(calendar.monthrange(int(analyze_year), int(analyze_month))[1]))

@@ -44,7 +44,7 @@ doclines = __doc__.split("\n")
 #DISTUTILS_DEBUG=1
 
 setup(
-    name='futuregrid.euca.analyzer',
+    name='futuregrid.cloud.metric',
     version=version,
     description=doclines[0],
     long_description = "\n".join(doclines[2:]),
@@ -54,7 +54,7 @@ setup(
     maintainer='Gregor von Laszewski, Hyungro Lee',
     maintainer_email="laszewski@gmail.com",
     author_email='laszewski@gmail.com',
-    url='https://github.com/futuregrid/eucalyptus-cloud-metrics',
+    url='https://github.com/futuregrid/futuregrid-cloud-metrics',
     license='Apache 2.0',
     package_dir = {'': '.'},
     #packages = ['futuregrid.eucalyptus.analyzer', 'futuregrid.eucalyptus.analyzer.lib'],

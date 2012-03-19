@@ -207,34 +207,38 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.instances = {}
 
     @options([
-        make_option('-f', '--start', default="all", type="string", help="start time of the interval YYYYMMDD"),
-        make_option('-t', '--end',  default="all",  type="string", help="end time of the interval YYYYMMDD"),
+        make_option('-f', '--start', default="all", type="string", help="start time of the interval YYYYMMDDThh:mm:ss"),
+        make_option('-t', '--end',  default="all",  type="string", help="end time of the interval YYYYMMDDThh:mm:ss"),
         make_option('-M', '--month', type="string", help="month of the interval MM"),
         make_option('-Y', '--year', type="string", help="year of the interval YYYY"),
         ])
     def do_analyze (self, arg, opts=None):
 
-	from_date = opts.start
-	to_date = opts.end
-	
-	# GVL: I think this logic needs improvement
-	# a) I think the last day of a month is incorrect and could be fixed with
-	# import calendar
-        # last_day_of_month = calendar.monthrange(year, month)[1]
-        # your 31 would probably be than the last day of the month
-        # b) what about the time. I think this needs o be added to ...?
+        print ">", opts.month
+        print ">", opts.year
 
-	if opts.year:
-		from_date = opts.year + "01" + "01"
-		to_date = opts.year + "12" + "31"
-		if opts.month:
-			from_date = opts.year + opts.month + "01"
-			to_date = opts.year + opts.month + str(calendar.monthrange(int(opts.year), int(opts.month))[1])
-	else:
-		if opts.month:
-			now = datetime.now()
-			from_date = str(now.year) + opts.month + "01"
-			to_date = str(now.year) + opts.month + str(calendar.monthrange(now.year, int(opts.month))[1])
+        if opts.year:
+            analyze_year = opts.year
+            if opts.month:
+                analyze_month = opts.month
+        else:
+            if opts.month:
+                now = datetime.now()
+                analyze_year = str(now.year)  
+                analyze_month = str(opts.month) 
+
+        
+        if (opts.year != None) or (opts.month != None):
+            from_date = "%s-%s-01T00:00:00" % (analyze_year,
+                                               analyze_month)
+            to_date =   "%s-%s-%sT23:59:59" % (analyze_year,
+                                               analyze_month,
+                                               str(calendar.monthrange(int(analyze_year), int(analyze_month))[1]))
+        else:
+            from_date = opts.start
+            to_date = opts.end
+
+
             
         print "analyze [" + from_date + ", " + to_date + "]" 
 
@@ -270,15 +274,21 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         self.display_user_stats(graph_type,filename=display_type)
 
+#####################################################################
+# main
+#####################################################################
+def main():
 
-parser = optparse.OptionParser()
-parser.add_option('-t', '--test', dest='unittests', action='store_true', default=False, help='Run unit test suite')
-(callopts, callargs) = parser.parse_args()
-if callopts.unittests:
-    sys.argv = [sys.argv[0]]  # the --test argument upsets unittest.main()
-    unittest.main()
-else:
-    app = CmdLineAnalyzeEucaData()
-    app.cmdloop()
+    parser = optparse.OptionParser()
+    parser.add_option('-t', '--test', dest='unittests', action='store_true', default=False, help='Run unit test suite')
+    (callopts, callargs) = parser.parse_args()
+    if callopts.unittests:
+        sys.argv = [sys.argv[0]]  # the --test argument upsets unittest.main()
+        unittest.main()
+    else:
+        app = CmdLineAnalyzeEucaData()
+        app.cmdloop()
 
 
+if __name__ == "__main__":
+	main()

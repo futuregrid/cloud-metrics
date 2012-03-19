@@ -70,7 +70,8 @@ setup(
             [
              'fg-cleanup-db = futuregrid.eucalyptus.analyzer.FGEucaMetricsDB:command_clean_database',
              'fg-euca-gather-log-files = futuregrid.eucalyptus.analyzer.FGEucaGatherLogFiles:main',
-             'fg-parser = futuregrid.eucalyptus.analyzer.FGParser:main'
+             'fg-parser = futuregrid.eucalyptus.analyzer.FGParser:main',
+             'fg-metric = futuregrid.eucalyptus.analyzer.AnalyzeEucaData:main'
              ]},
     
     install_requires = [

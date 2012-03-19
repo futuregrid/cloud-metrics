@@ -1,0 +1,15 @@
+Metadata-Version: 1.0
+Name: futuregrid.euca.analyzer
+Version: 2.0.2.2dev
+Summary: FutureGrid: Cloud Metrics
+Home-page: https://github.com/futuregrid/eucalyptus-cloud-metrics
+Author: Gregor von Laszewski, Hyungro Lee
+Author-email: laszewski@gmail.com
+License: Apache 2.0
+Description: This project is the basis for providing several metrics as part of the
+        usage analysis of multiple cloud environments.  At this time
+        Eucalyptus is supported.
+        
+        
+Keywords: FutureGrid Eucalyptys Log File Analysis
+Platform: UNKNOWN

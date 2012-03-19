@@ -1,0 +1,3 @@
+setuptools
+cmd2
+pip

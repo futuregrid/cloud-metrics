@@ -214,9 +214,6 @@ class CmdLineAnalyzeEucaData(Cmd):
         ])
     def do_analyze (self, arg, opts=None):
 
-        print ">", opts.month
-        print ">", opts.year
-
         if opts.year:
             analyze_year = opts.year
             if opts.month:

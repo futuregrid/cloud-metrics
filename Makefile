@@ -45,6 +45,7 @@ test:
 ######################################################################
 
 upload:
+	make -f Makefile clean
 	make -f Makefile pip
 #	python setup.py register
 	python setup.py sdist upload

@@ -20,6 +20,7 @@ from datetime import *
 import unittest, sys
 import calendar
 
+from FGGoogleMotionChart import GoogleMotionChart
 
 class CmdLineAnalyzeEucaData(Cmd):
     #multilineCommands = ['None']
@@ -31,10 +32,10 @@ class CmdLineAnalyzeEucaData(Cmd):
     users = {}
     pp = pprint.PrettyPrinter(indent=0)
     charttype = "pie"
+    from_date = ""
 
     echo = True
     timing = True
-
 
     def calculate_user_stats (self, from_date="all", to_date="all"):
         """calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time"""
@@ -140,6 +141,14 @@ class CmdLineAnalyzeEucaData(Cmd):
         else:
             chart.download(filename)
 
+    def make_google_motion_chart(self):
+	filename = "FGGoogleMotionChart.html"
+	test = GoogleMotionChart()
+	output = test.display(self.users, self.from_date)
+	f = open(filename, "w")
+	f.write(output)
+	f.close()
+	print filename + " created"
 
     def preloop(self):
         self.do_loaddb("")
@@ -239,6 +248,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
             
         print "analyze [" + from_date + ", " + to_date + "]" 
+	self.from_date = from_date
 
         self.instances.refresh()
         print "now calculating"
@@ -271,6 +281,9 @@ class CmdLineAnalyzeEucaData(Cmd):
             display_type = opts.filename
 
         self.display_user_stats(graph_type,filename=display_type)
+
+    def do_html(self, arg):
+	self.make_google_motion_chart()
 
 #####################################################################
 # main

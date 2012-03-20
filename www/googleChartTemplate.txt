@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+  // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+  // Some raw data (not necessarily accurate)
+  var legends = [%legends%];
+  var months = [%date_range%];
+  var datasets = [%data_sets%];
+
+  data.addColumn('string', %xaxis%);
+  for (var i = 0; i < legends.length; ++i) {
+    data.addColumn('number', legends[i]);
+  }
+  data.addRows(months.length);
+  for (var i = 0; i < months.length; ++i) {
+    data.setCell(i, 0, months[i]);
+  }
+  for (var i = 0; i < legends.length; ++i) {
+    var dataset = datasets[i];
+    for (var month = 0; month < months.length; ++month) {
+      data.setCell(month, i + 1, dataset[month]);
+    }
+  }
+        var options = {
+          title: %title%,
+		  isStacked: %is_stacked%,
+		  width: %width%,
+    height: %height%,
+    vAxis: {title: %yaxis%},
+    hAxis: {title: %xaxis%}
+
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: %width%px; height: %height%px;"></div>
+  </body>
+</html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 LOG ANALYZER FOR CLOUDS v2.1
 ============================
 
@@ -63,6 +64,14 @@ Eucalyptus Integration
 To achieve analysiz of eucalyptus data we are using 'cc.log'
 files. The needed information must be gathered while eucalyptus runs
 in 'EUCADEBUG' mode.
+=======
+LOG ANALYZER FOR EUCALYPTUS 2.0+
+================================
+
+We are developing an open source code that allows to analyze the log files from eucalyptus and displays the results in a convenient graphical user interface.
+
+To achieve this we are using 'cc.log' files. The needed information must be gathered while eucalyptus runs in 'EUCADEBUG' mode.
+>>>>>>> new_www
 
 We assume the following directory layout
 
@@ -94,15 +103,24 @@ It is assumed that this tree is installed and a shell variable
 
 is set to the location of the "futuregrid" directory.
 
+<<<<<<< HEAD
 We recommend that the futureGrid directory is included in the PATH of
 the shell that will run the commands.
+=======
+We recommend that the futureGrid directory is included in the PATH of the shell that will run the commands.
+>>>>>>> new_www
 
 INSTALLATION
 ===========
 
 please download the code/egg from github with ....
 
+<<<<<<< HEAD
 make force
+=======
+make distall
+make install
+>>>>>>> new_www
 
 This will install the programs in 
 
@@ -113,16 +131,20 @@ Do not forget to set the
 
   FG_HOME_LOG_ANALYZER  
 
+<<<<<<< HEAD
 than call 
 fg-metric
 
 If you like to use the php framework, we have not yet written a
 documentation for that.
 
+=======
+>>>>>>> new_www
 
 COMMANDS
 ========
 
+<<<<<<< HEAD
 fg-clenaup-db
 * erases the content of the database
 
@@ -137,6 +159,19 @@ rotation in eucalyptus.
 
 fg-metric
 * a shell to interact with the metric database. 
+=======
+fg-euca-log-analyzer.pl 
+* Analyses the number of running instances and terminated instances are 
+  collected 
+* Reporting interval: hourly
+
+fg.log.analyzer.4.eucalyptus.pl
+* Analyses minutes used by users and the number of instances used by users 
+* Reporting interval: daily
+
+fg.log.merger.sh, and fg.log.gz.decompressor.sh
+* mereges log files from the backup storage are restored and decompressed 
+>>>>>>> new_www
 
 OTHER
 =====

@@ -1,30 +1,64 @@
+"""FutureGrid: Cloud Metrics
+
+This project is the basis for providing several metrics as part of the
+usage analysis of multiple cloud environments.  At this time
+Eucalyptus is supported.
+
+"""
 try:
-	    from setuptools import setup, find_packages
+        from setuptools import setup, find_packages
 except ImportError:
-	    from distutils.core import setup
+        from distutils.core import setup
 
 import sys, os
 
-version = '2.0.2.2'
+version = '2.1.1'
+
+classifiers = """\
+Intended Audience :: Developers
+Intended Audience :: Education
+Intended Audience :: Science/Research
+Development Status :: 3 - Alpha
+Intended Audience :: Developers
+License :: OSI Approved :: Apache Software License
+Programming Language :: Python
+Topic :: Database
+Topic :: Software Development :: Libraries :: Python Modules
+Operating System :: POSIX :: Linux
+Programming Language :: Python :: 2.7
+Operating System :: MacOS :: MacOS X
+Topic :: Scientific/Engineering
+Topic :: System :: Clustering
+Topic :: System :: Distributed Computing
+"""
+
+if sys.version_info < (2, 7):
+    _setup = setup
+    def setup(**kwargs):
+        if kwargs.has_key("classifiers"):
+            del kwargs["classifiers"]
+        _setup(**kwargs)
+
+doclines = __doc__.split("\n")
 
 #DISTUTILS_DEBUG=1
 
 setup(
-    name='futuregrid.euca.analyzer',
+    name='futuregrid.cloud.metric',
     version=version,
-    description="The package allows the analysis of Eucalyptus logs and display the information graphically",
-    long_description="""\
-The package allows the analysis of Eucalyptus logs and display the information graphically""",
+    description=doclines[0],
+    long_description = "\n".join(doclines[2:]),
     classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
     keywords='FutureGrid Eucalyptys Log File Analysis',
-    author='Gregor von Laszewski',
+    author='Gregor von Laszewski, Hyungro Lee, Fugang Wang',
+    maintainer='Gregor von Laszewski, Hyungro Lee',
+    maintainer_email="laszewski@gmail.com",
     author_email='laszewski@gmail.com',
-    url='http://futuregrid.org',
+    url='https://github.com/futuregrid/futuregrid-cloud-metrics',
     license='Apache 2.0',
     package_dir = {'': '.'},
     #packages = ['futuregrid.eucalyptus.analyzer', 'futuregrid.eucalyptus.analyzer.lib'],
-    packages = find_packages(),
-    
+    packages = find_packages(exclude=['ez_setup', 'examples', 'tests']),
     #include_package_data=True,
     #zip_safe=True,
     #install_requires=[
@@ -36,12 +70,14 @@ The package allows the analysis of Eucalyptus logs and display the information g
             [
              'fg-cleanup-db = futuregrid.eucalyptus.analyzer.FGEucaMetricsDB:command_clean_database',
              'fg-euca-gather-log-files = futuregrid.eucalyptus.analyzer.FGEucaGatherLogFiles:main',
-             'fg-parser = futuregrid.eucalyptus.analyzer.FGParser:main'
+             'fg-parser = futuregrid.eucalyptus.analyzer.FGParser:main',
+             'fg-metric = futuregrid.eucalyptus.analyzer.AnalyzeEucaData:main'
              ]},
     
     install_requires = [
         'setuptools',
-        'cmd2'
+        'cmd2',
+        'pip'
         ],
     )
 

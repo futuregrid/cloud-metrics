@@ -1,4 +1,5 @@
 <?php
+namespace fgchart;
 $ini_array = parse_ini_file("futuregrid-www.cfg");
 $path_to_data4graphs = $ini_array['data4graphs'];
 
@@ -33,16 +34,16 @@ $sub_seperator = ";";
 # jiaazeng, 9, 11505561.0, 924651.0, 1278395.6666666667
 # 
 
-include 'csv_in_array.php';
+require("utility.php");
 
 for ($c_date = $s_date; $c_date <= $e_date; $c_date = date("Ymd", strtotime($c_date . " +1 day"))) {
 	$yearmonth = substr($c_date, 0, 6);
 	$filename = $path_to_data4graphs . "/". $yearmonth . "/" . $c_date . "-" . $c_date . ".csv";
 	if( !file_exists($filename))
 		continue;
-	$res = csv_in_array( $filename , ", ", "", true ); 
+	$res = utility::csv_in_array( $filename , ", ", "", true ); 
 	if (count($res) >= 1)
-		$csvdata[basename($filename)] = csv_in_array( $filename , ", ", "", true ); 
+		$csvdata[basename($filename)] = utility::csv_in_array( $filename , ", ", "", true ); 
 
 }
 #Set dates

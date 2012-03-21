@@ -19,7 +19,7 @@ integration of this script into cron.
 USAGE
 =====
 
-fg-euca-gather-log-files <from_dir> <backup_dir>
+fg-euca-gather-log-files -i <from_dir> -o <backup_dir>
 
 The program has a number of parameters by default it takes two
 directories. The first directory is the directory from which all
@@ -56,7 +56,7 @@ fg-euca-gather-log-files --source <from_dir> --backup <backup_dir>
 
 is equicvalent to
 
-fg-euca-gather-log-files <from_dir> <backup_dir>
+fg-euca-gather-log-files -i <from_dir> -o <backup_dir>
 
 
 In a production environment we recommend using explicit parameter naming
@@ -140,11 +140,12 @@ E-mail: laszewski@gmail.com
 """
 
 
-import os, glob
+import os, errno, glob
 import re
 import shutil
 from datetime import datetime
 import fnmatch
+import argparse
 
 ######################################################################
 # TAIL
@@ -354,7 +355,17 @@ def gather_all_euca_log_files (from_path, to_path, log_type, recursive):
     copied to backup.
     """
     if not os.path.exists (to_path):
-        os.makedirs (to_path)
+        try:
+            os.makedirs (to_path)
+        except OSError, e:
+            if e.errno != errno.EEXIST:
+                print e
+                print "to_path '" + to_path + "' is not accessible"
+                return
+
+    if not os.path.exists (from_path):
+        print "from_path '" + from_path + "' doesn't exist"
+	return;
 
     print from_path
     for file in all_euca_log_files(from_path, log_type, recursive):
@@ -398,7 +409,6 @@ def main():
    def_output_dir = "/var/log/eucalyptus/BACKUP"
    def_log_type = "cc.log"
 
-   import argparse
 
    # Parse arguments
    # ---------------

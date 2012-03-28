@@ -28,11 +28,6 @@ class GoogleMotionChart:
 		title = "General%20Utilization%20of%20number%20of%20instances%20of%20eucalyptus%20in%20India"
 		gchart_pname = "motionchart"
 		gchart_cname = "google.visualization.MotionChart"
-		gchart_options = """ {};
-			options['state'] =
-			'{\"xZoomedDataMin\":0,\"yAxisOption\":\"2\",\"yZoomedDataMin\":0,\"time\":\"$syear-$smonth-$sday\",\"yLambda\":1,\"iconType\":\"VBAR\",\"nonSelectedAlpha\":0.4,\"xZoomedIn\":false,\"showTrails\":false,\"dimensions\":{\"iconDimensions\":[\"dim0\"]},\"yZoomedIn\":false,\"xZoomedDataMax\":19,\"iconKeySettings\":[],\"xLambda\":1,\"colorOption\":\"2\",\"playDuration\":15000,\"xAxisOption\":\"2\",\"sizeOption\":\"_UNISIZE\",\"orderedByY\":false,\"uniColorForNonSelected\":false,\"duration\":{\"timeUnit\":\"D\",\"multiplier\":1},\"yZoomedDataMax\":139,\"orderedByX\":true};';
-			options['width'] = 650;
-			options['height'] = 480"""
 		
 		cnt = 0
 	
@@ -52,7 +47,14 @@ class GoogleMotionChart:
 		
 		
 		column_size = 3
-		
+
+		ymd = s_date.strftime("%Y") + "-" + s_date.strftime("%m") + "-" + s_date.strftime("%d")
+		gchart_options = """ {};
+			options['state'] =
+			'{\"xZoomedDataMin\":0,\"yAxisOption\":\"2\",\"yZoomedDataMin\":0,\"time\":\"""" + ymd + """\",\"yLambda\":1,\"iconType\":\"VBAR\",\"nonSelectedAlpha\":0.4,\"xZoomedIn\":false,\"showTrails\":false,\"dimensions\":{\"iconDimensions\":[\"dim0\"]},\"yZoomedIn\":false,\"xZoomedDataMax\":19,\"iconKeySettings\":[],\"xLambda\":1,\"colorOption\":\"2\",\"playDuration\":15000,\"xAxisOption\":\"2\",\"sizeOption\":\"_UNISIZE\",\"orderedByY\":false,\"uniColorForNonSelected\":false,\"duration\":{\"timeUnit\":\"D\",\"multiplier\":1},\"yZoomedDataMax\":139,\"orderedByX\":true};';
+			options['width'] = 650;
+			options['height'] = 480"""
+	
 		# HTML
 		#print metrics
 		#print lines

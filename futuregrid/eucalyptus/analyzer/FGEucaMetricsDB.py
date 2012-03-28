@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 
-
-
 import pprint
 import os
 import ConfigParser
 import MySQLdb
 import hashlib
 import argparse
-
-
+import sys
 
 pp = pprint.PrettyPrinter(indent=0)
     
@@ -25,11 +22,15 @@ class FGEucaMetricsDB(object):
         config.read(cfgfile)
 
         #db parameters
-        dbhost = config.get('EucaLogDB', 'host')
-        dbport = int(config.get('EucaLogDB', 'port'))
-        dbuser = config.get('EucaLogDB', 'user')
-        dbpasswd = config.get('EucaLogDB', 'passwd')
-        dbname = config.get('EucaLogDB', 'db')
+        try:
+            dbhost = config.get('EucaLogDB', 'host')
+            dbport = int(config.get('EucaLogDB', 'port'))
+            dbuser = config.get('EucaLogDB', 'user')
+            dbpasswd = config.get('EucaLogDB', 'passwd')
+            dbname = config.get('EucaLogDB', 'db')
+        except ConfigParser.NoSectionError:
+            print cfgfile + " does not exist"
+            sys.exit()
 
 	#table 
 	self.tablename = "instance" #default table
@@ -90,8 +91,11 @@ class FGEucaMetricsDB(object):
 
     # destructor
     def __del__(self):
-        self.cursor.close()
-        self.conn.close()
+        try:
+            self.cursor.close()
+            self.conn.close()
+        except:
+            pass
 
     # help function to format values to be inserted into mysql db
     def _fmtstr(self, astr):

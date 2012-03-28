@@ -81,7 +81,6 @@ from pygooglechart import PieChart3D
 from pygooglechart import StackedHorizontalBarChart
 from pygooglechart import Axis
 
-
 import re
 import json
 import pprint
@@ -93,19 +92,17 @@ import FGEucaMetricsDB
 import FGGoogleMotionChart
         
 class Instances:
-
-    in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
-    pp = pprint.PrettyPrinter(indent=0)
-    data = {}
-
-    eucadb = FGEucaMetricsDB.FGEucaMetricsDB("futuregrid.cfg")
-
-    withSQL=False
-
     
     def __init__(self):
         self.clear()
         self.data
+
+        self.in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
+        self.pp = pprint.PrettyPrinter(indent=0)
+        self.data = {}
+        self.eucadb = FGEucaMetricsDB.FGEucaMetricsDB("futuregrid.cfg")
+        self.withSQL=False
+
 
     def clear(self):
         self.data = {}

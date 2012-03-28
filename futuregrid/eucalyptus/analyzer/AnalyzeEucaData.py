@@ -2,7 +2,7 @@
 
 #import argparse
 
-from futuregrid.eucalyptus.analyzer.FGParser import Instances
+from FGParser import Instances
 
 from pygooglechart import PieChart3D
 from pygooglechart import StackedHorizontalBarChart

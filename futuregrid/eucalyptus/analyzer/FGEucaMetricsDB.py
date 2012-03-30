@@ -106,7 +106,7 @@ class FGEucaMetricsDB(object):
         return ret
 
     # read from the database.
-    def read(self, querydict={}):
+    def read(self, querydict={}, optional=""):
         querystr = "";
         if querydict:
             for key in querydict:
@@ -115,10 +115,10 @@ class FGEucaMetricsDB(object):
                 if querystr != "":
                     querystr += " and "
                 querystr += astr            
-                #print "qstr:->" + querystr + "<---"
-                rquery = "SELECT * FROM " + self.tablename + " where " + querystr
+                print "qstr:->" + querystr + "<---"
+                rquery = "SELECT * FROM " + self.tablename + " where " + querystr + optional
         else:
-            rquery = "SELECT * from " + self.tablename
+            rquery = "SELECT * from " + self.tablename + optional
             
         self.cursor.execute(rquery)
         rows = self.cursor.fetchall()

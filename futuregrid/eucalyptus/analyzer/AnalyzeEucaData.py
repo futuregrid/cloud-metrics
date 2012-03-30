@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 
-#import argparse
-
-from FGParser import Instances
-
 from pygooglechart import PieChart3D
 from pygooglechart import StackedHorizontalBarChart
 from pygooglechart import Axis
@@ -11,29 +7,27 @@ from pygooglechart import Axis
 import os
 import pprint
 import optparse
-from cmd2 import Cmd
-from cmd2 import make_option
-from cmd2 import options
-from cmd2 import Cmd2TestCase
+from cmd2 import Cmd, make_option, options, Cmd2TestCase
 from datetime import *
 
 import unittest, sys
 import calendar
 
+from FGParser import Instances
 from FGGoogleMotionChart import GoogleMotionChart
+from FGUtility import FGUtility
 
 class CmdLineAnalyzeEucaData(Cmd):
     #multilineCommands = ['None']
     #Cmd.shortcuts.update({'&': 'speak'})
     #maxrepeats = 3
     #Cmd.settable.append('maxrepeats')
-
+    
     instances = {}
     users = {}
     pp = pprint.PrettyPrinter(indent=0)
     charttype = "pie"
     from_date = ""
-
     echo = True
     timing = True
 
@@ -156,7 +150,6 @@ class CmdLineAnalyzeEucaData(Cmd):
     def postloop(self):
         print "BYE ..."
         
-
     def do_charttype (self, arg):
         if (arg != "pie") and (arg != "bar") and (arg != "motion"):
             print "Error: charttype " + arg + " not supported."
@@ -244,15 +237,20 @@ class CmdLineAnalyzeEucaData(Cmd):
         else:
             from_date = opts.start
             to_date = opts.end
-
-
             
         print "analyze [" + from_date + ", " + to_date + "]" 
 	self.from_date = from_date
 
         self.instances.refresh()
         print "now calculating"
-        self.calculate_user_stats (from_date=from_date, to_date=to_date)
+        self.calculate_user_stats (from_date, to_date)
+
+    def do_daterange(self, arg): #Get Date range of 'instances' table in mysql db
+        res = self.instances.getDateRange()
+        print FGUtility.convertOutput(res[0], "first_date")
+        print FGUtility.convertOutput(res[1], "last_date")
+	#print self.instances.eucadb.read("", " order by date limit 1");
+	#print self.instances.eucadb.read("", " order by date DESC limit 1");
 
     def do_printusers(self, arg):
         print self.pp.pprint(self.users)

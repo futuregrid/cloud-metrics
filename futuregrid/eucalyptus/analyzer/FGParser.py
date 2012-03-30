@@ -76,10 +76,7 @@ using fgrep to search for the types before piping it into this program could
 speed up processing. multiple files, can be concatenated simply with cat.
 """
 
-
-from pygooglechart import PieChart3D
-from pygooglechart import StackedHorizontalBarChart
-from pygooglechart import Axis
+from pygooglechart import PieChart3D, StackedHorizontalBarChart, Axis
 
 import re
 import json
@@ -101,8 +98,9 @@ class Instances:
         self.pp = pprint.PrettyPrinter(indent=0)
         self.data = {}
         self.eucadb = FGEucaMetricsDB.FGEucaMetricsDB("futuregrid.cfg")
-        self.withSQL=False
-
+        self.withSQL = False
+        self.first_date  = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
+        self.last_date = datetime.strptime("1981-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
 
     def clear(self):
         self.data = {}
@@ -123,7 +121,6 @@ class Instances:
 
     def count(self):
         return str(len(self.data))
-
 
     def todatetime (self,instance):
         instance["trace"]["teardown"]["start"] = value_todate(instance["trace"]["teardown"]["start"])
@@ -179,7 +176,6 @@ class Instances:
         else:
             print "ERROR printing of index " + index
 
-
     def json_dump(self):
          string = ""
          for key in all:
@@ -202,11 +198,9 @@ class Instances:
             key += 1
             self.data[key] = element
         
-
     def write_to_db(self):
         for key_current in self.data:
             self.eucadb.write(self.data[key_current])
-
 
     def add (self,datarecord):
         """prints the information for each instance"""
@@ -244,8 +238,6 @@ class Instances:
 
             instance[id] = current
 
-
-            #
             #        was calculate delta
     def refresh(self):
         """calculates how long each instance runs in seconds"""
@@ -254,6 +246,14 @@ class Instances:
             t_delta = values["t_end"] - values["ts"]
             self.data[i]["duration"] = str(t_delta.total_seconds())
 
+    def getDateRange(self):
+	for i in self.data:
+            element = self.data[i]
+            if self.first_date > element["date"]:
+                self.first_date = element["date"]
+            if self.last_date < element["date"]:
+                self.last_date = element["date"]
+        return (str(self.first_date), str(self.last_date))
 
 def convert_data_to_list(data,attribute):
     rest = data[attribute]
@@ -308,15 +308,12 @@ def parse_type_and_date(line,data):
 	    data['linetype'] = "IGNORE"
 	    return
 
-
-
 def ccInstance_parser(rest,data):
     """parses the line and returns a dict"""
 
     # replace print_ccInstance(): with linetype=print_ccInstance
     #rest = rest.replace("print_ccInstance():","linetype=print_ccInstance")
     # replace refreshinstances(): with calltype=refresh_instances
-
 
     #RunInstances():
     rest = rest.replace("RunInstances():","calltype=run_instances")   # removing multiple spaces
@@ -352,7 +349,6 @@ def ccInstance_parser(rest,data):
     # convert the timestamp
     data["ts"] = datetime.fromtimestamp(int(data["ts"]))
 
-
     return data
 
 def refresh_resource_parser(rest,data):
@@ -372,17 +368,13 @@ def refresh_resource_parser(rest,data):
         data["calltype"] = "ignore" 
     return data
 
-    return data
-
-
 def terminate_instances_param_parser(rest,data):
 
     rest = rest.strip()
     if rest.startswith("params"):
-#params: userId=(null), instIdsLen=1, firstInstId=i-417B07B2
-
+	#params: userId=(null), instIdsLen=1, firstInstId=i-417B07B2
         rest = re.sub("params:","",rest).strip()
-    # node=i2 mem=24276/22740 disk=306400/305364 cores=8/6
+    	# node=i2 mem=24276/22740 disk=306400/305364 cores=8/6
         m = re.search( r'userId=(.*) instIdsLen=(.*) firstInstId=(.*)', rest, re.M|re.I)
         userid = m.group(1)
         if userid == "(null),":

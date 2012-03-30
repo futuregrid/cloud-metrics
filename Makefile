@@ -6,15 +6,15 @@ pull:
 	git pull 
 
 install:
-	sudo easy_install dist/futuregrid.euca.analyzer-*.egg 
+	sudo easy_install dist/futuregrid.cloud.metric-*.egg 
 
 pip:
 	make -f Makefile distall
-	sudo pip install dist/futuregrid.euca.analyzer-*.tar.gz 
+	sudo pip install dist/futuregrid.cloud.metric-*.tar.gz 
 
 upgrade:
 	make -f Makefile distall
-	sudo pip install --upgrade dist/futuregrid.euca.analyzer-*.tar.gz 
+	sudo pip install --upgrade dist/futuregrid.cloud.metric-*.tar.gz 
 
 
 distall:
@@ -41,5 +41,5 @@ rpm:
 
 
 clean:
-	pip uninstall dist/futuregrid.euca.analyzer-*.tar.gz
+	pip uninstall dist/futuregrid.cloud.metric-*.tar.gz
 	rm -rf build dist *.egg-info *~ \#*

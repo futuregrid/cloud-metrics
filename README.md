@@ -152,3 +152,48 @@ Gregor von laszewski (laszewski@gmail.com)
 KNOWN BUGS
 ==========
 * we like to move to a python egg with easy_install
+
+Example ussage of the script
+============================
+
+Assume you like to create a nice html page directory with the analysis
+of the data contained.
+
+This can be done as follows. Assume the following contents is in the file
+
+analyze.txt
+
+clear users
+analyze -M 01 -Y 2012
+print "<h1> Analysis for the month of April <h1>" --filename=2012-01/index.html
+graph --type=pie --filename=2012-01/piechart.png
+graph --type=bar --filename=2012-01/barchart.png
+
+analyze -M 02 -Y 2012
+print "<h1> Analysis for the month of April <h1>" --filename=2012-02/index.html
+graph --type=pie --filename=2012-02/piechart.png
+graph --type=bar --filename=2012-02/barchart.png
+
+analyze -M 03 -Y 2012
+print "<h1> Analysis for the month of April <h1>" --filename=2012-03/index.html
+graph --type=pie --filename=2012-03/piechart.png
+graph --type=bar --filename=2012-03/barchart.png
+
+analyze -M 04 -Y 2012
+print "<h1> Analysis for the month of April <h1>" --filename=2012-04/index.html
+graph --type=pie --filename=2012-04/piechart.png
+graph --type=bar --filename=2012-04/barchart.png
+
+
+create-report -d 2012-01 2012-02  2012-03 2012-04
+
+# this page creates a beautiful report page with links to the genrated
+# graphs contained in the directories specified. All index files in
+# the directories are printed before the images in the derectory are
+# included. The resulting report is an html report.
+
+
+cat analyze.txt | fg-metric
+
+This will produce a nice directory tree with all the data needed for a
+display.

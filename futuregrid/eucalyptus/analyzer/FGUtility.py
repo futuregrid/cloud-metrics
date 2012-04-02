@@ -1,8 +1,16 @@
-class FGUtility:
-    
+import os
+
+class Utility:
+
     prefix = "[output]"
 
     @staticmethod
     def convertOutput(argument, name):
-        return FGUtility.prefix + "[" + name + "]" + argument 
+        return Utility.prefix + "[" + name + "]" + argument 
+
+    @staticmethod
+    def ensure_dir(f):
+        d = os.path.dirname(f)
+        if not os.path.exists(d):
+            os.makedirs(d)
 

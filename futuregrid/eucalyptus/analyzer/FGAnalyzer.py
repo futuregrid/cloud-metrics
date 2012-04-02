@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-from pygooglechart import PieChart3D
-from pygooglechart import StackedHorizontalBarChart
-from pygooglechart import Axis
+from pygooglechart import PieChart3D, StackedHorizontalBarChart, Axis
 
 import os
 import pprint
@@ -15,7 +13,7 @@ import calendar
 
 from FGParser import Instances
 from FGGoogleMotionChart import GoogleMotionChart
-from FGUtility import FGUtility
+from FGUtility import Utility
 
 class CmdLineAnalyzeEucaData(Cmd):
     #multilineCommands = ['None']
@@ -84,8 +82,8 @@ class CmdLineAnalyzeEucaData(Cmd):
 
 
 
-    def display_user_stats(self, type="pie", filename="chart.png"):
-        """ filename = display, filename = url, filename = real filename"""
+    def display_user_stats(self, type="pie", filepath="chart.png"):
+        """ filepath = display, filepath = url, filepath = real filepath"""
         """displays the number of VMs a user is running"""
         """ types supported pie, bar"""
 
@@ -126,14 +124,15 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         # Assign the labels to the pie data
 
-        if filename == "display":
+        if filepath == "display":
             #os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
-            os.system ("open " + filename)
-        elif filename == "url":
+            os.system ("open " + filepath)
+        elif filepath == "url":
             url = chart.get_url()
             print url
         else:
-            chart.download(filename)
+            Utility.ensure_dir(filepath)
+            chart.download(filepath)
 
     def make_google_motion_chart(self):
 	filename = "FGGoogleMotionChart.html"
@@ -247,8 +246,8 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def do_daterange(self, arg): #Get Date range of 'instances' table in mysql db
         res = self.instances.getDateRange()
-        print FGUtility.convertOutput(res[0], "first_date")
-        print FGUtility.convertOutput(res[1], "last_date")
+        print Utility.convertOutput(res[0], "first_date")
+        print Utility.convertOutput(res[1], "last_date")
 	#print self.instances.eucadb.read("", " order by date limit 1");
 	#print self.instances.eucadb.read("", " order by date DESC limit 1");
 
@@ -265,20 +264,14 @@ class CmdLineAnalyzeEucaData(Cmd):
         os.system ("open " + arg)
         
     @options([
-        make_option('-t', '--type', type="string", help="pie, bar, motion"),
-        make_option('-f', '--filename', type="string", help="the filename to which we store the graph")
+        make_option('-t', '--type', default = charttype, type="string", help="pie, bar, motion"),
+        make_option('-f', '--filepath', default = "chart.png", type="string", help="the filepath in which we store a chart")
         ])
     def do_graph(self, arg, opts=None):
-        if opts.type==None:
-            graph_type = self.charttype
-        else:
-            graph_type=opts.type
-        if opts.filename==None:
-            display_type = "display"
-        else:
-            display_type = opts.filename
-
-        self.display_user_stats(graph_type,filename=display_type)
+        graph_type =  opts.type
+        filepath = opts.filepath
+        print graph_type + " typed " + filepath + " file created"
+        self.display_user_stats(graph_type, filepath)
 
     def do_html(self, arg):
 	self.make_google_motion_chart()

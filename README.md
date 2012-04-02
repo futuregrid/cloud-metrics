@@ -168,6 +168,8 @@ analyze -M 01 -Y 2012
 print "<h1> Analysis for the month of April <h1>" --filename=2012-01/index.html
 graph --type=pie --filename=2012-01/piechart.png
 graph --type=bar --filename=2012-01/barchart.png
+graph --type=motion --filename=2012-01/motionchart.html
+
 
 analyze -M 02 -Y 2012
 print "<h1> Analysis for the month of April <h1>" --filename=2012-02/index.html

@@ -10,4 +10,4 @@ clean:
 
 all:
 	cd ../../..; make upgrade
-	cat test.txt | ./AnalyzeEucaData.py
+	cat test.txt | ./FGAnalyzer.py

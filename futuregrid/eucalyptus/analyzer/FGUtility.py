@@ -11,6 +11,7 @@ class Utility:
     @staticmethod
     def ensure_dir(f):
         d = os.path.dirname(f)
-        if not os.path.exists(d):
-            os.makedirs(d)
+        if d:
+            if not os.path.exists(d):
+                os.makedirs(d)
 

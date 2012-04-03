@@ -76,11 +76,8 @@ class CmdLineAnalyzeEucaData(Cmd):
                 self.users[name]['min'] = min (t_delta, self.users[name]['min'])
                 self.users[name]['max'] = min (t_delta, self.users[name]['max'])
 
-
                 for name in self.users:
                     self.users[name]['avg'] = float(self.users[name]['sum']) / float(self.users[name]['count'])
-
-
 
     def display_user_stats(self, type="pie", filepath="chart.png"):
         """ filepath = display, filepath = url, filepath = real filepath"""
@@ -91,7 +88,6 @@ class CmdLineAnalyzeEucaData(Cmd):
         label_values = []
 
         #        print self.users
-
         
         max_v = 0
         for name in self.users:
@@ -208,31 +204,31 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.instances = {}
 
     @options([
-        make_option('-f', '--start', default="all", type="string", help="start time of the interval YYYYMMDDThh:mm:ss"),
-        make_option('-t', '--end',  default="all",  type="string", help="end time of the interval YYYYMMDDThh:mm:ss"),
-        make_option('-M', '--month', type="string", help="month of the interval MM"),
-        make_option('-Y', '--year', type="string", help="year of the interval YYYY"),
+        make_option('-f', '--start', default="all", type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-t', '--end',  default="all",  type="string", help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-M', '--month', type="string", help="month to analyze (type. MM)"),
+        make_option('-Y', '--year', type="string", help="year to analyze (type. YYYY)"),
         ])
     def do_analyze (self, arg, opts=None):
 
+        # Default set year and month by current date
+        now = datetime.now()
+        analyze_year = str(now.year)  
+        analyze_s_month = "01"
+        analyze_e_month = "12"
+
+        if opts.year == analyze_year:
+            analyze_e_month = str(now.month)
         if opts.year:
             analyze_year = opts.year
-            if opts.month:
-                analyze_month = opts.month
-        else:
-            if opts.month:
-                now = datetime.now()
-                analyze_year = str(now.year)  
-                analyze_month = str(opts.month) 
+        if opts.month:
+            analyze_s_month = opts.month
+            analyze_e_month = opts.month
 
-        
-        if (opts.year != None) or (opts.month != None):
-            from_date = "%s-%s-01T00:00:00" % (analyze_year,
-                                               analyze_month)
-                # TODO: this misses one second
-            to_date =   "%s-%s-%sT23:59:59" % (analyze_year,
-                                               analyze_month,
-                                               str(calendar.monthrange(int(analyze_year), int(analyze_month))[1]))
+        if opts.year or opts.month:
+            from_date = "%s-%s-01T00:00:00" % (analyze_year, analyze_s_month)
+            to_date = "%s-%s-%sT23:59:59" % (analyze_year, analyze_e_month,
+                    str(calendar.monthrange(int(analyze_year), int(analyze_e_month))[1]))
         else:
             from_date = opts.start
             to_date = opts.end
@@ -290,7 +286,6 @@ def main():
     else:
         app = CmdLineAnalyzeEucaData()
         app.cmdloop()
-
 
 if __name__ == "__main__":
 	main()

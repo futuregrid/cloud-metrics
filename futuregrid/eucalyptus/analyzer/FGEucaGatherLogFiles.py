@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 """
-Manual Page Draft
+Manual Page
 
 NAME - fg-euca-gather-log-files
 

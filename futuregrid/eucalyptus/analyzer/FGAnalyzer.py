@@ -130,22 +130,129 @@ class CmdLineAnalyzeEucaData(Cmd):
             Utility.ensure_dir(filepath)
             chart.download(filepath)
 
-    def make_google_motion_chart(self):
-	filename = "FGGoogleMotionChart.html"
-	test = GoogleMotionChart()
-	output = test.display(self.users, self.from_date)
-	f = open(filename, "w")
-	f.write(output)
-	f.close()
-	print filename + " created"
+    def make_html (self, output_dir, title):
+        page_template = """
+        <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+        <html> <head>
+        <title> %(title)s </title>
+        </head>
+        <body>
+        <img src="fg-logo.png" alt="FutureGrid" /> Eucalyptus Monitor
+        <h1> %(title)s </h1>
+        <p>
+        <img src="pie.png" alt="chart" /><img src="bar.png" alt="chart" />
+        <hr>
+        <address>Author Gregor von Laszewski, laszewski@gmail.com</address>
+        <!-- hhmts start -->Last modified: %(now)s <!-- hhmts end -->
+        </body> </html>
+        """
+        print "========"
+        now = datetime.now()
+        now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
+        filename = output_dir+"/index.html"
+        Utility.ensure_dir(filename)
+        f = open(filename, "w")
+        f.write(page_template % vars())
+        f.close()
+    
+    def make_index_html (self, output_dir, title):
+        page_template = """
+        <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+        <html> <head>
+        <title> %(title)s </title>
+        </head>
+        <body>
+        <img src="https://portal.futuregrid.org/sites/default/files/u30/fg-logo-md.gif" width="94" height="65" alt="FutureGrid" /> Eucalyptus Monitor
+        <h1> %(title)s </h1>
+        <table>
+        <tr>
+        <td>
+        <img src="pie.png" alt="chart" />
+        </td>
+        <td>
+        <img src="bar.png" alt="chart" />
+        </td>
+        </tr>
+        <tr>
+        <td>
+        Figure 1. Running instances per user of eucalyptus in India (pie type)
+        </td>
+        <td>
+        Figure 2. Running instances per user of eucalyptus in India (bar type)
+        </td>
+        </tr>
+        <tr>
+        <td colspan="2">
+        %(motion_chart)s
+        </td>
+        </tr>
+        <tr>
+        <td colspan="2">
+        <br><br><br><br>
+        Figure 3. Running instances per user of eucalyptus in India (motion chart)
+        </td>
+        </tr>
+        </table>
+        <hr>
+        <address>Author Gregor von Laszewski, laszewski@gmail.com</address>
+        <!-- hhmts start -->Last modified: %(now)s <!-- hhmts end -->
+        </body> </html>
+        """
+        print "========"
+        now = datetime.now()
+        now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
+        gmc = GoogleMotionChart()
+        motion_chart = gmc.display(self.users, self.from_date)
+        filename = output_dir+"/index.html"
+        Utility.ensure_dir(filename)
+        f = open(filename, "w")
+        f.write(page_template % vars())
+        f.close()
+    
+    def make_frame_html (self):
+        page_template = """
+        <HTML>
+            <HEAD> 
+                <TITLE>FutureGrid Statistical reports</TITLE>
+            </HEAD>
+            <FRAMESET COLS="11%,89%">
+                <FRAME scrolling=yes SRC="menu.html" NAME="left">
+                <FRAME SRC="main.html" NAME="right">
+            </FRAMESET>
+        </HTML>
+        """
+        filename = "index.html"
+        f = open(filename, "w")
+        f.write(page_template)
+        f.close()
+
+    def make_menu_html (self, directories):
+        page_template = str("")
+        for dirname in directories:
+            page_template += "<a href=\"" + dirname + "/index.html\" target=right> VM usage by day " + dirname + "</a>\n"
+        filename = "menu.html"
+        f = open(filename, "w")
+        f.write(page_template)
+        f.close()
+
+    def make_google_motion_chart(self, directory):
+        filename = "FGGoogleMotionChart.html"
+        filepath = directory + "/" + filename
+        Utility.ensure_dir(filepath)
+        test = GoogleMotionChart()
+        output = test.display(self.users, self.from_date)
+        f = open(filepath, "w")
+        f.write(output)
+        f.close()
+        print filepath + " created"
 
     def preloop(self):
         self.do_loaddb("")
-        
+
     def postloop(self):
         print "BYE ..."
-        
-    def do_charttype (self, arg):
+
+    def do_changecharttype (self, arg):
         if (arg != "pie") and (arg != "bar") and (arg != "motion"):
             print "Error: charttype " + arg + " not supported."
         else:
@@ -172,7 +279,7 @@ class CmdLineAnalyzeEucaData(Cmd):
                 print "%s %s %s" % (name, seperator, self.users[name]['count'])
         else:
             print "Error: Printing <" + opts.type + "> is not supported"
-            
+
     def do_loaddb(self, arg):
         # configuration file
         # if no parameter is given config is read from ~/.futuregrid/futuregrid.cfg
@@ -232,24 +339,24 @@ class CmdLineAnalyzeEucaData(Cmd):
         else:
             from_date = opts.start
             to_date = opts.end
-            
+
         print "analyze [" + from_date + ", " + to_date + "]" 
-	self.from_date = from_date
+        self.from_date = from_date
 
         self.instances.refresh()
         print "now calculating"
         self.calculate_user_stats (from_date, to_date)
 
-    def do_daterange(self, arg): #Get Date range of 'instances' table in mysql db
+    def do_getdaterange(self, arg): #Get Date range of 'instances' table in mysql db
         res = self.instances.getDateRange()
         print Utility.convertOutput(res[0], "first_date")
         print Utility.convertOutput(res[1], "last_date")
-	#print self.instances.eucadb.read("", " order by date limit 1");
-	#print self.instances.eucadb.read("", " order by date DESC limit 1");
+        #print self.instances.eucadb.read("", " order by date limit 1")
+        #print self.instances.eucadb.read("", " order by date DESC limit 1")
 
     def do_printusers(self, arg):
         print self.pp.pprint(self.users)
-            
+
     def do_timing (self, arg):
         self.timing = True
 
@@ -258,19 +365,37 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def do_open(self,arg):
         os.system ("open " + arg)
-        
+
     @options([
         make_option('-t', '--type', default = charttype, type="string", help="pie, bar, motion"),
         make_option('-f', '--filepath', default = "chart.png", type="string", help="the filepath in which we store a chart")
         ])
-    def do_graph(self, arg, opts=None):
+    def do_creategraph(self, arg, opts=None):
         graph_type =  opts.type
         filepath = opts.filepath
         print graph_type + " typed " + filepath + " file created"
         self.display_user_stats(graph_type, filepath)
 
-    def do_html(self, arg):
-	self.make_google_motion_chart()
+    @options([
+        make_option('-d', '--directory', type="string", help="directory name which the chart html will be stored.")
+        ])
+    def do_createhtml(self, arg):
+        self.make_google_motion_chart(opts.directory)
+
+    @options([
+        make_option('-d', '--directory', type="string", help="directory name which contains report graphs."),
+        make_option('-t', '--title', type="string", help="A report title in the index.html")
+        ])
+    def do_createreport(self, arg, opts=None):
+        #self.make_html(opts.directory, opts.title)
+        self.display_user_stats("pie", opts.directory + "/pie.png")
+        self.display_user_stats("bar", opts.directory + "/bar.png")
+        #self.make_google_motion_chart(opts.directory)
+        self.make_index_html(opts.directory, opts.title)
+
+    def do_createreports(self, arg):
+        self.make_frame_html()
+        self.make_menu_html(arg.split())
 
 #####################################################################
 # main
@@ -288,4 +413,4 @@ def main():
         app.cmdloop()
 
 if __name__ == "__main__":
-	main()
+    main()

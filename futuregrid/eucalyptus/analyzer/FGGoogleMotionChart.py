@@ -20,6 +20,10 @@
 # s_date
 # e_date
 # title
+
+# https://developers.google.com/chart/interactive/docs/gallery/motionchart
+# Note for Developers: Because of Flash security settings, this (and all Flash-based visualizations) might not work correctly when accessed from a file location in the browser (e.g., file:///c:/webhost/myhost/myviz.html) rather than from a web server URL (e.g., http://www.myhost.com/myviz.html). This is typically a testing issue only. You can overcome this issue as described on the Adobe web site.
+
 class GoogleMotionChart:
 	def display(self, users, s_date):
 		from datetime import date, timedelta, datetime

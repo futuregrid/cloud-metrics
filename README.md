@@ -12,7 +12,7 @@ priorities how to integrate them.
 JOINING THE TEAM AND CONTRIBUTIONS
 ==================================
 
-Uf you like to join the development efforts, please e-mail us. We can
+If you like to join the development efforts, please e-mail us. We can
 than discuss how best you can contribute. You may have enhenced our
 code already or used it in your system. If so, please let us know.
 
@@ -98,11 +98,13 @@ We recommend that the futureGrid directory is included in the PATH of
 the shell that will run the commands.
 
 INSTALLATION
-===========
+============
 
-please download the code/egg from github with ....
+(please download the code/egg from github with ....)
 
-make force
+1. wget https://github.com/futuregrid/futuregrid-cloud-metrics/tarball/v2.1
+
+2. make force
 
 This will install the programs in 
 
@@ -116,31 +118,32 @@ Do not forget to set the
 than call 
 fg-metric
 
-If you like to use the php framework, we have not yet written a
-documentation for that.
-
-
 COMMANDS
 ========
 
 fg-clenaup-db
+
 * erases the content of the database
 
 fg-parser
+
 * parses eucalyptus log entries and includes them into the database
 
 fg-euca-gather-log-files 
+
 * gathers all eucalyptus log files into a single directory from the
 eucalyptus log file directory. This script can be called from cron
 repeatedly in order to avoid that log data is lost by using log file
 rotation in eucalyptus.
 
 fg-metric
+
 * a shell to interact with the metric database. 
 
 OTHER
 =====
 ./www
+
 * displays graphs about data usage metrics are in 'www'
 * Be displaying via google chart tools.
 
@@ -151,6 +154,7 @@ Gregor von laszewski (laszewski@gmail.com)
 
 KNOWN BUGS
 ==========
+
 * we like to move to a python egg with easy_install
 
 Example ussage of the script
@@ -161,33 +165,19 @@ of the data contained.
 
 This can be done as follows. Assume the following contents is in the file
 
+```
 analyze.txt
 
 clear users
 analyze -M 01 -Y 2012
-print "<h1> Analysis for the month of April <h1>" --filename=2012-01/index.html
-graph --type=pie --filename=2012-01/piechart.png
-graph --type=bar --filename=2012-01/barchart.png
-graph --type=motion --filename=2012-01/motionchart.html
+createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
 
-
+clear users
 analyze -M 02 -Y 2012
-print "<h1> Analysis for the month of April <h1>" --filename=2012-02/index.html
-graph --type=pie --filename=2012-02/piechart.png
-graph --type=bar --filename=2012-02/barchart.png
+createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
 
-analyze -M 03 -Y 2012
-print "<h1> Analysis for the month of April <h1>" --filename=2012-03/index.html
-graph --type=pie --filename=2012-03/piechart.png
-graph --type=bar --filename=2012-03/barchart.png
-
-analyze -M 04 -Y 2012
-print "<h1> Analysis for the month of April <h1>" --filename=2012-04/index.html
-graph --type=pie --filename=2012-04/piechart.png
-graph --type=bar --filename=2012-04/barchart.png
-
-
-create-report -d 2012-01 2012-02  2012-03 2012-04
+createreports 2012-01 2012-02
+```
 
 # this page creates a beautiful report page with links to the genrated
 # graphs contained in the directories specified. All index files in

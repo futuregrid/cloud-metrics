@@ -32,11 +32,11 @@ Example: Create a summary table for the month of January
 --------------------------------------------------------
 The following will create a table with data produced for the month of January
 
-> fg-metric
-fg> clear users
-fg> analyze -M 01
-fg> table --type users --seperator ,  --caption Testing_the_csv_table
-fg> quit
+  > fg-metric
+  fg> clear users
+  fg> analyze -M 01
+  fg> table --type users --seperator ,  --caption Testing_the_csv_table
+  fg> quit
 
 Naturally you could store this script in a file and pipe to fg-metric
 in case you have more complex or repetitive analysis to do. 

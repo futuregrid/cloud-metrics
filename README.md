@@ -8,7 +8,6 @@ We are developing an open source code that allows to analyze the log
 files from eucalyptus and displays the results in a convenient
 graphical user interface.
 
-
 Shell to analyze data
 ---------------------
 
@@ -41,7 +40,6 @@ The following will create a table with data produced for the month of January
 Naturally you could store this script in a file and pipe to fg-metric
 in case you have more complex or repetitive analysis to do. 
 
-
 Example: How to create a summary analysis for multiple month
 ------------------------------------------------------------
 
@@ -58,7 +56,6 @@ contents is in the file analyze.txt
     createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
   
     createreports 2012-01 2012-02
-    ```
 
 This page creates a beautiful report page with links to the genrated
 graphs contained in the directories specified. All index files in
@@ -72,11 +69,10 @@ To start the script, simply use
 This will produce a nice directory tree with all the data needed for a
 display.
 
-
 Eucalyptus 2.0 Data Integration
 -------------------------------
 
-To achieve analysiz of eucalyptus data we are using 'cc.log'
+To achieve analysis of eucalyptus data, we are using 'cc.log'
 files. The needed information must be gathered while eucalyptus runs
 in 'EUCADEBUG' mode.
 
@@ -88,29 +84,18 @@ We assume the following directory layout
     ./futurgrid/etc - location of configuration files
     ./futurgrid/www - location of the www files
 
-TODO: create a make install that installs the package into /.../futuregrid
+TODO
+----
 
-The scripts generate the folloing output files
-
-#TODO: clean the variables
+define variables
 
     FG_LOG_ANALYZER_WWW_OUTPUT - location where the www files for display are stored
     FG_TMP - location where temporary files are located that are analyzed
-    FG_DATA - location where the permamnent data is being stored 
-
-The scripts assume the following input files
-
+    FG_DATA - location where the permanent data is being stored 
+    FG_HOME_LOG_ANALYZER - is set to the location of the "futuregrid" directory.
     EUCALYPTUS_LOG_DIR - location where the eucalyptus log dirs are stored
 
-
-It is assumed that this tree is installed and a shell variable 
-
-#TODO:
-    FG_HOME_LOG_ANALYZER  
-
-is set to the location of the "futuregrid" directory.
-
-We recommend that the futureGrid directory is included in the PATH of
+We recommend that the FutureGrid directory is included in the PATH of
 the shell that will run the commands.
 
 INSTALLATION
@@ -121,19 +106,11 @@ INSTALLATION
     > wget https://github.com/futuregrid/futuregrid-cloud-metrics/tarball/v2.1
     > tar xvzf v2.1
     > cd futuregrid-futuregrid-cloud-metrics-e137c05
-    > make force
+    > make force (with root privileges)
 
 This will install the programs in 
 
-    /usr/bin/*
-
-#TODO:
-Do not forget to set the 
-
-    FG_HOME_LOG_ANALYZER  
-
-than call 
-    > fg-metric
+    /usr/bin/
 
 COMMANDS
 ========
@@ -166,33 +143,29 @@ OTHER
 
 CONTRIBUTORS
 ============
-* Hyungro Lee (lee212 at indiana dot edu)   
+* Hyungro Lee (lee212@indiana.edu)   
 * Gregor von laszewski (laszewski@gmail.com)
 
 KNOWN BUGS
 ==========
-
-* we like to move to a python egg with easy_install
 
 FEATURE REQUESTS
 ================
 
 This project is under active development. In order for us to identify
 priorities please let us know what features you like us to add.  We
-will than include a list here and identify based on resources and
+will include a list here and identify based on resources and
 priorities how to integrate them.
 
 JOINING THE TEAM AND CONTRIBUTIONS
 ==================================
 
 If you like to join the development efforts, please e-mail us. We can
-than discuss how best you can contribute. You may have enhenced our
+than discuss how best you can contribute. You may have enhanced our
 code already or used it in your system. If so, please let us know.
 
 CONTACT
 =======
 
 send mail to laszewski@gmail.com
-
-Please. use the subject prefix: "METRICS: " to the e-mail to us.
-
+(Please insert the prefix: "METRICS: " in the subject of email messages)

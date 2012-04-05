@@ -119,6 +119,8 @@ INSTALLATION
 (please download the code/egg from github with ....)
 
     > wget https://github.com/futuregrid/futuregrid-cloud-metrics/tarball/v2.1
+    > tar xvzf v2.1
+    > cd futuregrid-futuregrid-cloud-metrics-e137c05
     > make force
 
 This will install the programs in 

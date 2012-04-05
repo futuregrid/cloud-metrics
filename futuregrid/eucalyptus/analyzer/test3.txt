@@ -1,9 +1,0 @@
-clear users
-analyze -M 01
-createreport -d 2012-01 -t Running_instances_per_user_of_eucalyptus_in_India
-
-clear users
-analyze -M 02
-createreport -d 2012-02 -t Running_instances_per_user_of_eucalyptus_in_India
-
-createreports 2012-01 2012-02

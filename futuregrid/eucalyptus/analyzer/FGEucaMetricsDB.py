@@ -493,7 +493,7 @@ def command_clean_database():
 			help="db name")
     parser.add_argument("-w", dest="where_clause",
 			help="WHERE clauses")
-    parser.add_argument("--conf", dest="conf", default=def_conf,
+    parser.add_argument("-C", "--conf", dest="conf", default=def_conf,
 			help="configuraton file of the database to be used")
     args = parser.parse_args()
 

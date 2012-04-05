@@ -1,26 +1,6 @@
 LOG ANALYZER FOR CLOUDS v2.1
 ============================
 
-FEATURE REQUESTS
-================
-
-This project is under active development. In order for us to identify
-priorities please let us know what features you like us to add.  We
-will than include a list here and identify based on resources and
-priorities how to integrate them.
-
-JOINING THE TEAM AND CONTRIBUTIONS
-==================================
-
-If you like to join the development efforts, please e-mail us. We can
-than discuss how best you can contribute. You may have enhenced our
-code already or used it in your system. If so, please let us know.
-
-CONTACT
-=======
-
-send mail to laszewski@gmail.com
-
 INTRODUCTION
 ============
 
@@ -32,19 +12,24 @@ graphical user interface.
 Shell to analyze data
 ---------------------
 
-Our framework is build around analyzing some data from various
+Our framework is build around analyzing data from various
 production clouds and uploading this data into a database.  We have
-several mechanisms to deal with the data. First we can create summary
-data that we can export in a variety of formats. This includes png,
+several mechanisms to deal with the data. First, we can create summary
+of the data and can export in a variety of formats. This summary is 
+especially important for administrators who like to find out what is 
+happening on their clouds, but also for users to see with who they 
+compete for resources. The outout format includes png,
 googlecharts, and cvs tables. Second, we provide a simpel php
 framework that displayse the information in some web pages.
 
 However, as part of our analyzis we are also developing an interactive
 shell that can be used to query data directly from our database.
 
-In the source code we included som simple example so you can test this
-interface out. However it requires hat you have set up the database.
+As part of our source code and in this manual we included some simple 
+examples so you can test this interface out and explore the data you may have gathered. 
 
+Example: Create a summary table for the month of January
+--------------------------------------------------------
 The following will create a table with data produced for the month of January
 
 > fg-metric
@@ -54,11 +39,42 @@ fg> table --type users --seperator ,  --caption Testing_the_csv_table
 fg> quit
 
 Naturally you could store this script in a file and pipe to fg-metric
-in case you have more complex analysis to do. 
+in case you have more complex or repetitive analysis to do. 
 
 
-Eucalyptus Integration
-----------------------
+Example: How to create a summary analysis for multiple month
+------------------------------------------------------------
+
+Assume you like to create a nice html page directory with the analysis
+of the data contained. This can be done as follows. Assume the following 
+contents is in the file analyze.txt
+
+  clear users
+  analyze -M 01 -Y 2012
+  createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+  
+  clear users
+  analyze -M 02 -Y 2012
+  createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+  
+  createreports 2012-01 2012-02
+  ```
+
+This page creates a beautiful report page with links to the genrated
+graphs contained in the directories specified. All index files in
+the directories are printed before the images in the derectory are
+included. The resulting report is an html report.
+
+To start the script, simply use
+
+  cat analyze.txt | fg-metric
+
+This will produce a nice directory tree with all the data needed for a
+display.
+
+
+Eucalyptus 2.0 Data Integration
+-------------------------------
 
 To achieve analysiz of eucalyptus data we are using 'cc.log'
 files. The needed information must be gathered while eucalyptus runs
@@ -157,35 +173,25 @@ KNOWN BUGS
 
 * we like to move to a python egg with easy_install
 
-Example ussage of the script
-============================
+FEATURE REQUESTS
+================
 
-Assume you like to create a nice html page directory with the analysis
-of the data contained.
+This project is under active development. In order for us to identify
+priorities please let us know what features you like us to add.  We
+will than include a list here and identify based on resources and
+priorities how to integrate them.
 
-This can be done as follows. Assume the following contents is in the file
+JOINING THE TEAM AND CONTRIBUTIONS
+==================================
 
-```
-analyze.txt
+If you like to join the development efforts, please e-mail us. We can
+than discuss how best you can contribute. You may have enhenced our
+code already or used it in your system. If so, please let us know.
 
-clear users
-analyze -M 01 -Y 2012
-createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+CONTACT
+=======
 
-clear users
-analyze -M 02 -Y 2012
-createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+send mail to laszewski@gmail.com
 
-createreports 2012-01 2012-02
-```
+Please. use the subject prefix: "METRICS: " to the e-mail to us.
 
-# this page creates a beautiful report page with links to the genrated
-# graphs contained in the directories specified. All index files in
-# the directories are printed before the images in the derectory are
-# included. The resulting report is an html report.
-
-
-cat analyze.txt | fg-metric
-
-This will produce a nice directory tree with all the data needed for a
-display.

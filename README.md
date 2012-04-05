@@ -32,11 +32,11 @@ Example: Create a summary table for the month of January
 --------------------------------------------------------
 The following will create a table with data produced for the month of January
 
-  > fg-metric
-  fg> clear users
-  fg> analyze -M 01
-  fg> table --type users --seperator ,  --caption Testing_the_csv_table
-  fg> quit
+    > fg-metric
+    fg> clear users
+    fg> analyze -M 01
+    fg> table --type users --seperator ,  --caption Testing_the_csv_table
+    fg> quit
 
 Naturally you could store this script in a file and pipe to fg-metric
 in case you have more complex or repetitive analysis to do. 
@@ -49,16 +49,16 @@ Assume you like to create a nice html page directory with the analysis
 of the data contained. This can be done as follows. Assume the following 
 contents is in the file analyze.txt
 
-  clear users
-  analyze -M 01 -Y 2012
-  createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+    clear users
+    analyze -M 01 -Y 2012
+    createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+    
+    clear users
+    analyze -M 02 -Y 2012
+    createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
   
-  clear users
-  analyze -M 02 -Y 2012
-  createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
-  
-  createreports 2012-01 2012-02
-  ```
+    createreports 2012-01 2012-02
+    ```
 
 This page creates a beautiful report page with links to the genrated
 graphs contained in the directories specified. All index files in
@@ -67,7 +67,7 @@ included. The resulting report is an html report.
 
 To start the script, simply use
 
-  cat analyze.txt | fg-metric
+    > cat analyze.txt | fg-metric
 
 This will produce a nice directory tree with all the data needed for a
 display.
@@ -82,11 +82,11 @@ in 'EUCADEBUG' mode.
 
 We assume the following directory layout
 
-  ./futurgrid/
-  ./futurgrid/bin - includes all commands needed to run the log analyzing
-  ./futurgrid/lib - includes libraries that may be called from the bin files
-  ./futurgrid/etc - location of configuration files
-  ./futurgrid/www - location of the www files
+    ./futurgrid/
+    ./futurgrid/bin - includes all commands needed to run the log analyzing
+    ./futurgrid/lib - includes libraries that may be called from the bin files
+    ./futurgrid/etc - location of configuration files
+    ./futurgrid/www - location of the www files
 
 TODO: create a make install that installs the package into /.../futuregrid
 
@@ -106,7 +106,7 @@ The scripts assume the following input files
 It is assumed that this tree is installed and a shell variable 
 
 #TODO:
-  FG_HOME_LOG_ANALYZER  
+    FG_HOME_LOG_ANALYZER  
 
 is set to the location of the "futuregrid" directory.
 
@@ -118,21 +118,20 @@ INSTALLATION
 
 (please download the code/egg from github with ....)
 
-1. wget https://github.com/futuregrid/futuregrid-cloud-metrics/tarball/v2.1
-
-2. make force
+    > wget https://github.com/futuregrid/futuregrid-cloud-metrics/tarball/v2.1
+    > make force
 
 This will install the programs in 
 
-/usr/bin/*
+    /usr/bin/*
 
 #TODO:
 Do not forget to set the 
 
-  FG_HOME_LOG_ANALYZER  
+    FG_HOME_LOG_ANALYZER  
 
 than call 
-fg-metric
+    > fg-metric
 
 COMMANDS
 ========
@@ -165,8 +164,8 @@ OTHER
 
 CONTRIBUTORS
 ============
-Hyungro Lee (lee212 at indiana dot edu)   
-Gregor von laszewski (laszewski@gmail.com)
+* Hyungro Lee (lee212 at indiana dot edu)   
+* Gregor von laszewski (laszewski@gmail.com)
 
 KNOWN BUGS
 ==========

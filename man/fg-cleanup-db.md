@@ -10,10 +10,12 @@ SYNOPSIS
 
 DESCRIPTION
 ===========
-Delete table records in which -t table name and -d database name are spe
-cified. Default table name is 'instance' and database name is 'euca'. My
-SQL user and password information are from the configuration file. Condi
-tions can be specified by -w where_condition option.
+
+Delete table records in which -t table name and -d database name are
+specified. Default table name is 'instance' and database name is
+'euca'. My SQL user and password information are from the
+configuration file. Condi tions can be specified by -w where_condition
+option.
 
 **-t tbl_name**
 
@@ -47,8 +49,8 @@ location for this file is in
 EXAMPLES
 ========
 
-Delete all records in a default table and database with default configuration fi
-le
+Delete all records in a default table and database with default
+configuration file
 
     $ fg-cleanup-table
 

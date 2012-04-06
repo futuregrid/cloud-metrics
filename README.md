@@ -183,6 +183,20 @@ rotation in eucalyptus.
 
 * a shell to interact with the metric database. 
 
+EXAMPLES
+========
+
+[example1.txt](./examples/example1.txt)
+* ????
+
+[example2.txt](./examples/example2.txt)
+* ????
+
+[test.txt](./examples/test.txt)
+* ????
+
+
+
 OTHER
 =====
 ./www

@@ -8,7 +8,9 @@ Eucalyptus is supported.
 from setuptools import setup, find_packages
 import sys, os
 
-execfile ('VERSION.py')
+#execfile ('VERSION.py')
+# hack as VERSION does not get included in packaged tar file for some reason
+version = '2.1.2'
 
 classifiers = """\
 Intended Audience :: Developers

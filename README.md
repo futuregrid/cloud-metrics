@@ -103,10 +103,14 @@ This will install several commands in the bin directory. Make sure that it is in
 
 Now you can call the command
 
-   fg-???
+   [fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)
    
 which will copy all logfiles  that has not yet been copied into our backup directory. The log files have a numerical value from 1 to 9 as a postfix
 Once this is done, our analysis scripts can be called from the commandline or a web page to create information about usage and utilization.
+
+To see more information ablout this command, please visit the manual page [fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)
+
+
 
 TODO
 ----

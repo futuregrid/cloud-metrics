@@ -16,29 +16,29 @@ SQL user and password information are from the configuration file. Condi
 tions can be specified by -w where_condition option.
 
 -t tbl_name
-   deletes rows from tbl_name
+>   deletes rows from tbl_name
 
 -d db_name
-   a database name of a table specified by -t tbl_name
+>   a database name of a table specified by -t tbl_name
 
 -w where_condition (optional)
-   specifies the conditions that identify which rows to delete
+>   specifies the conditions that identify which rows to delete
 
 -C, --conf filename
-   configuraton file of the database to be used. The configuration file has the 
-   following format
-	   
-   [EucaLogDB]
-   host=HOST
-   port=PORT
-   user=USER
-   passwd=PASS
-   db=DB
-	   
-   if this parameter is not specified and a database is used the default locatio
-   n for this file is in
-	   
-   ~/.futuregrid/futuregrid.cfg
+>   configuraton file of the database to be used. The configuration file has the 
+>   following format
+>	   
+>   [EucaLogDB]
+>   host=HOST
+>   port=PORT
+>   user=USER
+>   passwd=PASS
+>   db=DB
+>	   
+>   if this parameter is not specified and a database is used the default locatio
+>   n for this file is in
+>	   
+>   ~/.futuregrid/futuregrid.cfg
 
 EXAMPLES
 ========

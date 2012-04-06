@@ -1,45 +1,85 @@
+######################################################################
+# GIT INTERFACES
+######################################################################
 push:
+	make -f Makefile clean
 	git commit -a 
 	git push
 
 pull:
 	git pull 
 
-install:
-	sudo easy_install dist/futuregrid.cloud.metric-*.egg 
-
-pip:
-	make -f Makefile distall
-	sudo pip install dist/futuregrid.cloud.metric-*.tar.gz 
-
-upgrade:
-	make -f Makefile distall
-	sudo pip install --upgrade dist/futuregrid.cloud.metric-*.tar.gz 
-
-
-distall:
-	make -f Makefile egg
-	make -f Makefile tar
-#	make -f Makefile rpm
-
-
-gitgregor:
+gregor:
 	git config --global user.name "Gregor von Laszewski"
 	git config --global user.email laszewski@gmail.com
 
-# #####################################################################
-# Creating the distribution
-# #####################################################################
-egg:
-	python setup.py bdist_egg
+######################################################################
+# INSTALLATION
+######################################################################
+dist:
+	make -f Makefile pip
 
-tar:
+pip:
+	make -f Makefile clean
 	python setup.py sdist
 
-rpm:
-	python setup.py bdist_rpm
+
+force:
+	make -f Makefile pip
+	sudo pip install -U dist/*.tar.gz
+
+install:
+	sudo pip install dist/*.tar.gz
+
+test:
+	make -f Makefile clean	
+	make -f Makefile distall
+	sudo pip install --upgrade dist/*.tar.gz
+	fg-cluster
+	fg-local
+
+######################################################################
+# PYPI
+######################################################################
+
+upload:
+	make -f Makefile pip
+#	python setup.py register
+	python setup.py sdist upload
+
+######################################################################
+# QC
+######################################################################
+
+qc-install:
+	sudo pip install pep8
+	sudo pip install pylint
+	sudo pip install pyflakes
+
+qc:
+	pep8 ./futuregrid/virtual/cluster/
+	pylint ./futuregrid/virtual/cluster/ | less
+	pyflakes ./futuregrid/virtual/cluster/
+
+# #####################################################################
+# CLEAN
+# #####################################################################
 
 
 clean:
-	pip uninstall dist/futuregrid.cloud.metric-*.tar.gz
-	rm -rf build dist *.egg-info *~ \#*
+	find . -name "*~" -exec rm {} \;  
+	find . -name "*.pyc" -exec rm {} \;  
+	rm -rf build dist *.egg-info *~ #*
+
+######################################################################
+# pypi
+######################################################################
+
+pip-register:
+	python setup.py register
+
+upload:
+	make -f Makefile pip
+	python setup.py sdist upload
+
+#############################################################################

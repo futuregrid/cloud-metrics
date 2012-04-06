@@ -227,9 +227,13 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.close()
 
     def make_menu_html (self, directories):
-        page_template = str("")
+        page_template = str("<b>Metrics</b><br>")
+        page_template += str("<b>Monthly VM Ussage by User</b>")
+
+        page_template += str("<ul>")
         for dirname in directories:
-            page_template += "<a href=\"" + dirname + "/index.html\" target=right> VM usage by day " + dirname + "</a>\n"
+            page_template += "<li><a href=\"" + dirname + "/index.html\" target=right> VM usage by day " + dirname + "</a></li>\n"
+        page_template += str("</ul>")
         filename = "menu.html"
         f = open(filename, "w")
         f.write(page_template)

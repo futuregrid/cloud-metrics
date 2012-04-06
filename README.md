@@ -84,6 +84,29 @@ We assume the following directory layout
     ./futurgrid/lib - includes libraries that may be called from the bin files
     ./futurgrid/etc - location of configuration files
     ./futurgrid/www - location of the www files
+    
+    
+## Eucalyptus data gathering
+
+Euaclyptus provides a supsantial set of log information. The information is typically stored in the eucalyptus log directory
+Typically it is also confu=igured by the system administartor with log rotation. THis naturally would mean that the information is lost after a time period specified by the log rotation configuration. There are
+two mechanisms of avoiding this. The first method is to cahnge the eucalyptus configuartion files in order to disable log rotation. However this has the disadvantage that the directories may fill up and eucalyptus runs out of space. 
+How to disable Eucalyptus log rotation is discussed in the manaula at ... .
+However we decided to go another route, buy copying the Eucalyptsu log files after a particular period of time and place them onto our analysis server and also a backup server. To set this mechanism up, a Eucalyptus system administrator
+simply can insatall our tools in a predefined directory and call a command that copies the log files. Idially This is integrated into a cron script so that the process is done on regular basis.
+
+Here is how you set this up
+
+    pip install ....
+    
+This will install several commands in the bin directory. Make sure that it is in your path
+
+Now you can call the command
+
+   fg-???
+   
+which will copy all logfiles  that has not yet been copied into our backup directory. The log files have a numerical value from 1 to 9 as a postfix
+Once this is done, our analysis scripts can be called from the commandline or a web page to create information about usage and utilization.
 
 TODO
 ----

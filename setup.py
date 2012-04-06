@@ -3,16 +3,12 @@
 This project is the basis for providing several metrics as part of the
 usage analysis of multiple cloud environments.  At this time
 Eucalyptus is supported.
-
 """
-try:
-        from setuptools import setup, find_packages
-except ImportError:
-        from distutils.core import setup
 
+from setuptools import setup, find_packages
 import sys, os
 
-version = '2.1.1'
+execfile ('VERSION.py')
 
 classifiers = """\
 Intended Audience :: Developers
@@ -57,7 +53,6 @@ setup(
     url='https://github.com/futuregrid/futuregrid-cloud-metrics',
     license='Apache 2.0',
     package_dir = {'': '.'},
-    #packages = ['futuregrid.eucalyptus.analyzer', 'futuregrid.eucalyptus.analyzer.lib'],
     packages = find_packages(exclude=['ez_setup', 'examples', 'tests']),
     #include_package_data=True,
     #zip_safe=True,

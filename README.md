@@ -86,7 +86,7 @@ We assume the following directory layout
     ./futurgrid/www - location of the www files
     
     
-## Eucalyptus data gathering
+### Eucalyptus data gathering
 
 Euaclyptus provides a supsantial set of log information. The information is typically stored in the eucalyptus log directory
 Typically it is also confu=igured by the system administartor with log rotation. THis naturally would mean that the information is lost after a time period specified by the log rotation configuration. There are
@@ -129,16 +129,36 @@ the shell that will run the commands.
 INSTALLATION
 ============
 
-(please download the code/egg from github with ....)
+### Instalation from pypi 
+
+The programs are distributed in [pypi](xyz). It contains our current release version of the software. 
+
+
+
+
+
+
+### Installation form the source in github
+
+If you are adventerus, you can work with our newests code checked into github. To obtain this code, please conduct the following steps.
+We assume you have root priveledges to execute "make force"
 
     > wget https://github.com/futuregrid/futuregrid-cloud-metrics/tarball/v2.1.1
     > tar xvzf v2.1.1
     > cd futuregrid-futuregrid-cloud-metrics-4635fc9
-    > make force (with root privileges)
-
+    > make force 
+    
 This will install the programs in 
 
     /usr/bin/
+    
+### What to do if I do not have root priveledge
+
+If you do not have root priveleges, you can also install the program via pythons virtualenv.
+
+Note: Please see our documentation on virtual cluster on how to do that ;-)
+
+
 
 COMMANDS
 ========

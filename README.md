@@ -1,6 +1,8 @@
 LOG ANALYZER FOR CLOUDS v2.1
 ============================
 
+[fg-cleanup-db](./man/fg-cleanup-db.md)
+
 INTRODUCTION
 ============
 

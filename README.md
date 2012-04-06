@@ -115,6 +115,9 @@ This will install the programs in
 COMMANDS
 ========
 
+./man/fg-cleanup-db.md
+
+
 fg-clenaup-db
 
 * erases the content of the database

@@ -79,6 +79,7 @@ REPORTING BUGS
 ==============
 
 Report fg-cleanup-table bugs to laszewski@gmail.com
+
 Github home page: <https://github.com/futuregrid/futuregrid-cloud-metrics>
 
 COPYRIGHT

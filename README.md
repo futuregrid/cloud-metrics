@@ -1,7 +1,6 @@
 LOG ANALYZER FOR CLOUDS v2.1
 ============================
 
-[fg-cleanup-db](./man/fg-cleanup-db.md)
 
 INTRODUCTION
 ============
@@ -117,25 +116,23 @@ This will install the programs in
 COMMANDS
 ========
 
-./man/fg-cleanup-db.md
 
-
-fg-clenaup-db
+[fg-cleanup-db](./man/fg-cleanup-db.md)
 
 * erases the content of the database
 
-fg-parser
+[fg-parser](./man/fg-parser.md)
 
 * parses eucalyptus log entries and includes them into the database
 
-fg-euca-gather-log-files 
+[fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)
 
 * gathers all eucalyptus log files into a single directory from the
 eucalyptus log file directory. This script can be called from cron
 repeatedly in order to avoid that log data is lost by using log file
 rotation in eucalyptus.
 
-fg-metric
+[fg-metric](./man/fg-metric.md)
 
 * a shell to interact with the metric database. 
 

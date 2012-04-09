@@ -130,75 +130,10 @@ class CmdLineAnalyzeEucaData(Cmd):
             Utility.ensure_dir(filepath)
             chart.download(filepath)
 
-    def make_html (self, output_dir, title):
-        page_template = """
-        <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-        <html> <head>
-        <title> %(title)s </title>
-        </head>
-        <body>
-        <img src="fg-logo.png" alt="FutureGrid" /> Eucalyptus Monitor
-        <h1> %(title)s </h1>
-        <p>
-        <img src="pie.png" alt="chart" /><img src="bar.png" alt="chart" />
-        <hr>
-        <address>Author Gregor von Laszewski, laszewski@gmail.com</address>
-        <!-- hhmts start -->Last modified: %(now)s <!-- hhmts end -->
-        </body> </html>
-        """
-        print "========"
-        now = datetime.now()
-        now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
-        filename = output_dir+"/index.html"
-        Utility.ensure_dir(filename)
-        f = open(filename, "w")
-        f.write(page_template % vars())
-        f.close()
-    
     def make_index_html (self, output_dir, title):
-        page_template = """
-        <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-        <html> <head>
-        <title> %(title)s </title>
-        </head>
-        <body>
-        <img src="https://portal.futuregrid.org/sites/default/files/u30/fg-logo-md.gif" width="94" height="65" alt="FutureGrid" /> Eucalyptus Monitor
-        <h1> %(title)s </h1>
-        <table>
-        <tr>
-        <td>
-        <img src="pie.png" alt="chart" />
-        </td>
-        <td>
-        <img src="bar.png" alt="chart" />
-        </td>
-        </tr>
-        <tr>
-        <td>
-        Figure 1. Running instances per user of eucalyptus in India (pie type)
-        </td>
-        <td>
-        Figure 2. Running instances per user of eucalyptus in India (bar type)
-        </td>
-        </tr>
-        <tr>
-        <td colspan="2">
-        %(motion_chart)s
-        </td>
-        </tr>
-        <tr>
-        <td colspan="2">
-        <br><br><br><br>
-        Figure 3. Running instances per user of eucalyptus in India (motion chart)
-        </td>
-        </tr>
-        </table>
-        <hr>
-        <address>Author Gregor von Laszewski, laszewski@gmail.com</address>
-        <!-- hhmts start -->Last modified: %(now)s <!-- hhmts end -->
-        </body> </html>
-        """
-        print "========"
+        f = open("htmlIndex.tmpl", "r")
+        page_template = f.read()
+        f.close()
         now = datetime.now()
         now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
         gmc = GoogleMotionChart()
@@ -391,7 +326,6 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-t', '--title', type="string", help="A report title in the index.html")
         ])
     def do_createreport(self, arg, opts=None):
-        #self.make_html(opts.directory, opts.title)
         self.display_user_stats("pie", opts.directory + "/pie.png")
         self.display_user_stats("bar", opts.directory + "/bar.png")
         #self.make_google_motion_chart(opts.directory)

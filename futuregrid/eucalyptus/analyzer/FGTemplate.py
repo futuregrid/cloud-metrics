@@ -39,6 +39,21 @@ class HtmlTemplate:
 	</tr>
 	</table>
 	<hr>
-	<address>Author Hyungro Lee, Gregor von Laszewski, laszewski@gmail.com</address>
+	<address>Authors Hyungro Lee, Gregor von Laszewski, laszewski@gmail.com</address>
 	<!-- hhmts start -->Last modified: %(now)s <!-- hhmts end -->
 	</body> </html>""")
+
+    @staticmethod
+    def frame():
+        return str(
+        """<HTML>
+            <HEAD> 
+                <TITLE>FutureGrid Statistical reports</TITLE>
+            </HEAD>
+            <FRAMESET COLS="11%,89%">
+                <FRAME scrolling=yes SRC="menu.html" NAME="left">
+                <FRAME SRC="main.html" NAME="right">
+            </FRAMESET>
+        </HTML>
+        """
+

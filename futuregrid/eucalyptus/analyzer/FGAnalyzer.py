@@ -14,6 +14,7 @@ import calendar
 from FGParser import Instances
 from FGGoogleMotionChart import GoogleMotionChart
 from FGUtility import Utility
+from FGTemplate import HtmlTemplate
 
 class CmdLineAnalyzeEucaData(Cmd):
     #multilineCommands = ['None']
@@ -131,9 +132,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             chart.download(filepath)
 
     def make_index_html (self, output_dir, title):
-        f = open("htmlIndex.tmpl", "r")
-        page_template = f.read()
-        f.close()
+        page_template = HtmlTemplate.index()
         now = datetime.now()
         now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
         gmc = GoogleMotionChart()

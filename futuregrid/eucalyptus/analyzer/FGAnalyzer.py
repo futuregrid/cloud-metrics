@@ -144,17 +144,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.close()
     
     def make_frame_html (self):
-        page_template = """
-        <HTML>
-            <HEAD> 
-                <TITLE>FutureGrid Statistical reports</TITLE>
-            </HEAD>
-            <FRAMESET COLS="11%,89%">
-                <FRAME scrolling=yes SRC="menu.html" NAME="left">
-                <FRAME SRC="main.html" NAME="right">
-            </FRAMESET>
-        </HTML>
-        """
+        page_template = HtmlTemplate.frame()
         filename = "index.html"
         f = open(filename, "w")
         f.write(page_template)

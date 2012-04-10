@@ -225,8 +225,7 @@ rotation in eucalyptus.
 EXAMPLES
 --------------------
 
-
-:doc:`./examples/example1.txt`
+`example.txt <./examples/example1.txt>`_
 * ????
 
 [example2.txt](./examples/example2.txt)

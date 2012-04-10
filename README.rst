@@ -10,10 +10,6 @@ CONTRIBUTORS
 * Gregor von laszewski (laszewski@gmail.com)
 * Fugang Wang (kevinwangfg@gmail.com)
 
-
- CONTACT
-=======
-
 Please contact laszewski@gmail.com for mor information. Please insert the prefix: "METRICS: " in the subject of email messages.
 
 -------------

@@ -204,22 +204,24 @@ COMMANDS
 
 [fg-cleanup-db](./man/fg-cleanup-db.md)
 
-* erases the content of the database
+erases the content of the database
 
 [fg-parser](./man/fg-parser.md)
 
-* parses eucalyptus log entries and includes them into the database
+parses eucalyptus log entries and includes them into the database
+
 
 [fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)
 
-* gathers all eucalyptus log files into a single directory from the
+gathers all eucalyptus log files into a single directory from the
 eucalyptus log file directory. This script can be called from cron
 repeatedly in order to avoid that log data is lost by using log file
 rotation in eucalyptus.
 
+
 [fg-metric](./man/fg-metric.md)
 
-* a shell to interact with the metric database. 
+a shell to interact with the metric database. 
 
 --------------------
 EXAMPLES
@@ -242,6 +244,7 @@ OTHER
 ./www
 
 * displays graphs about data usage metrics are in 'www'
+
 * Be displaying via google chart tools.
 
 

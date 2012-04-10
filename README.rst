@@ -230,7 +230,7 @@ EXAMPLES
 --------------------
 
 
-:doc:`example1.txt </./examples/example1.txt>`
+:doc:`./examples/example1.txt`
 * ????
 
 [example2.txt](./examples/example2.txt)

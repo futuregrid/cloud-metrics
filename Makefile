@@ -83,3 +83,10 @@ upload:
 	python setup.py sdist upload
 
 #############################################################################
+# SPHINX DOC
+###############################################################################
+
+sphinx:
+	cd doc; make examples
+	cd doc; make html
+	cd doc; make epub

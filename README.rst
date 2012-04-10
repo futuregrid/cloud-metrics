@@ -10,11 +10,11 @@ CONTRIBUTORS
 * Gregor von laszewski (laszewski@gmail.com)
 * Fugang Wang (kevinwangfg@gmail.com)
 
+
  CONTACT
 =======
 
-send mail to laszewski@gmail.com
-(Please insert the prefix: "METRICS: " in the subject of email messages)
+Please contact laszewski@gmail.com for mor information. Please insert the prefix: "METRICS: " in the subject of email messages.
 
 -------------
 INTRODUCTION
@@ -193,7 +193,8 @@ This will install the programs in::
 
     /usr/bin/
     
-### What to do if I do not have root privilege
+What to do if I do not have root privilege
+====================
 
 If you do not have root privileges, you can also install the program
 via pythons virtualenv.
@@ -229,7 +230,7 @@ EXAMPLES
 --------------------
 
 
-`example1.txt file:./examples/example1.txt`_
+:doc:`example1.txt </./examples/example1.txt>`
 * ????
 
 [example2.txt](./examples/example2.txt)

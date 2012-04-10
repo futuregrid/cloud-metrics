@@ -54,7 +54,7 @@ usage of the shell.
 Example: Create a summary table for the month of January
 =====================================
 
-The following will create a table with data produced for the month of January
+The following will create a table with data produced for the month of January::
 
     > fg-metric
     fg> clear users
@@ -100,9 +100,7 @@ Eucalyptus 2.0 Data Integration
 
 To achieve analysis of eucalyptus data, we are using 'cc.log'
 files. The needed information must be gathered while eucalyptus runs
-in 'EUCADEBUG' mode.
-
-We assume the following directory layout::
+in 'EUCADEBUG' mode. We assume the following directory layout::
 
     ./futurgrid/
     ./futurgrid/bin - includes all commands needed to run the log analyzing
@@ -132,14 +130,14 @@ and call a command that copies the log files. Ideally This is
 integrated into a cron script so that the process is done on regular
 basis.
 
-Here is how you set this up
+Here is how you set this up::
 
     pip install ....
     
 This will install several commands in the bin directory. Make sure
 that it is in your path
 
-Now you can call the command
+Now you can call the command::
 
    [fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)
    
@@ -231,7 +229,7 @@ EXAMPLES
 --------------------
 
 
-`example1.txt ./examples/example1.txt`_
+`example1.txt file:./examples/example1.txt`_
 * ????
 
 [example2.txt](./examples/example2.txt)

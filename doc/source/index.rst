@@ -20,11 +20,3 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-
-Modules
-=====
-
-.. automodule:: futuregrid.futuregrid.cloud.metric
-    :members:
-    :undoc-members:
-    :show-inheritance:

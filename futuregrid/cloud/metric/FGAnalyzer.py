@@ -11,10 +11,10 @@ from datetime import *
 import unittest, sys
 import calendar
 
-from FGParser import Instances
-from FGGoogleMotionChart import GoogleMotionChart
-from FGUtility import Utility
-from FGTemplate import HtmlTemplate
+from futuregrid.cloud.metric.FGParser import Instances
+from futuregrid.cloud.metric.FGGoogleMotionChart import GoogleMotionChart
+from futuregrid.cloud.metric.FGUtility import Utility
+from futuregrid.cloud.metric.FGTemplate import HtmlTemplate
 
 class CmdLineAnalyzeEucaData(Cmd):
     #multilineCommands = ['None']

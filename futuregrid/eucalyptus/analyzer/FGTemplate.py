@@ -12,10 +12,10 @@ class HtmlTemplate:
 	<table>
 	<tr>
 	<td>
-	<img src="pie.png" alt="chart" />
+	<img src="pie.count.png" alt="chart" />
 	</td>
 	<td>
-	<img src="bar.png" alt="chart" />
+	<img src="bar.count.png" alt="chart" />
 	</td>
 	</tr>
 	<tr>
@@ -37,6 +37,22 @@ class HtmlTemplate:
 	Figure 3. Running instances per user of eucalyptus in India (motion chart)
 	</td>
 	</tr>
+	<tr>
+	<td>
+	<img src="pie.sum.png" alt="chart" />
+	</td>
+	<td>
+	<img src="bar.sum.png" alt="chart" />
+	</td>
+	</tr>
+	<tr>
+	<td>
+	Figure 4. Runtime of instances per user of eucalyptus in India (pie type)
+	</td>
+	<td>
+	Figure 5. Runtime of instances per user of eucalyptus in India (bar type)
+	</td>
+	</tr>
 	</table>
 	<hr>
 	<address>Authors Hyungro Lee, Gregor von Laszewski, laszewski@gmail.com</address>
@@ -55,5 +71,5 @@ class HtmlTemplate:
                 <FRAME SRC="main.html" NAME="right">
             </FRAMESET>
         </HTML>
-        """
+        """)
 

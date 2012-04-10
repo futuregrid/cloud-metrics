@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+'''FGAnalyser Module'''
 
 from pygooglechart import PieChart3D, StackedHorizontalBarChart, Axis
 
@@ -17,6 +18,7 @@ from futuregrid.cloud.metric.FGUtility import Utility
 from futuregrid.cloud.metric.FGTemplate import HtmlTemplate
 
 class CmdLineAnalyzeEucaData(Cmd):
+    '''Cmd Shell Analyzer'''
     #multilineCommands = ['None']
     #Cmd.shortcuts.update({'&': 'speak'})
     #maxrepeats = 3
@@ -31,7 +33,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     timing = True
 
     def calculate_user_stats (self, from_date="all", to_date="all"):
-        """calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time"""
+        '''calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time'''
 
         # handle parameters
 

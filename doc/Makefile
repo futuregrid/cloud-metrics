@@ -41,7 +41,7 @@ help:
 clean:
 	-rm -rf $(BUILDDIR)/*
 
-html: examples
+html: clean examples
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
@@ -153,4 +153,8 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 examples:
+	mkdir -p build/html
 	cp -r ../examples build/html/examples
+
+create:
+	cd ..; make force

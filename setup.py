@@ -65,10 +65,10 @@ setup(
     entry_points={
         'console_scripts':
             [
-             'fg-cleanup-db = futuregrid.eucalyptus.analyzer.FGEucaMetricsDB:command_clean_database',
-             'fg-euca-gather-log-files = futuregrid.eucalyptus.analyzer.FGEucaGatherLogFiles:main',
-             'fg-parser = futuregrid.eucalyptus.analyzer.FGParser:main',
-             'fg-metric = futuregrid.eucalyptus.analyzer.FGAnalyzer:main'
+             'fg-cleanup-db = futuregrid.cloud.metric.FGEucaMetricsDB:command_clean_database',
+             'fg-euca-gather-log-files = futuregrid.cloud.metric.FGEucaGatherLogFiles:main',
+             'fg-parser = futuregrid.cloud.metric.FGParser:main',
+             'fg-metric = futuregrid.cloud.metric.FGAnalyzer:main'
              ]},
     
     install_requires = [

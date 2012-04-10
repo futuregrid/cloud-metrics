@@ -85,8 +85,8 @@ import sys
 import os
 from datetime import * 
 
-import FGEucaMetricsDB
-import FGGoogleMotionChart
+import futuregrid.cloud.metric.FGEucaMetricsDB
+import futuregrid.cloud.metric.FGGoogleMotionChart
         
 class Instances:
     
@@ -97,7 +97,7 @@ class Instances:
         self.in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.pp = pprint.PrettyPrinter(indent=0)
         self.data = {}
-        self.eucadb = FGEucaMetricsDB.FGEucaMetricsDB("futuregrid.cfg")
+        self.eucadb = futuregrid.cloud.metric.FGEucaMetricsDB.FGEucaMetricsDB("futuregrid.cfg")
         self.withSQL = False
         self.first_date  = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.last_date = datetime.strptime("1981-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')

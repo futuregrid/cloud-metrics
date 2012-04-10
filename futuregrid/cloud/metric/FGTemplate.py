@@ -1,4 +1,5 @@
 class HtmlTemplate:
+
     @staticmethod
     def index():
         return str(
@@ -20,10 +21,10 @@ class HtmlTemplate:
 	</tr>
 	<tr>
 	<td>
-	Figure 1. Running instances per user of eucalyptus in India (pie type)
+	Figure 1. Running instances per user of eucalyptus in India (pie chart)
 	</td>
 	<td>
-	Figure 2. Running instances per user of eucalyptus in India (bar type)
+	Figure 2. Running instances per user of eucalyptus in India (bar chart)
 	</td>
 	</tr>
 	<tr>

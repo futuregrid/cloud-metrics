@@ -80,7 +80,7 @@ class CmdLineAnalyzeEucaData(Cmd):
                 for name in self.users:
                     self.users[name]['avg'] = float(self.users[name]['sum']) / float(self.users[name]['count'])
 
-    def display_user_stats(self, type="pie", filepath="chart.png"):
+    def display_user_stats(self, metric="count", type="pie", filepath="chart.png"):
         """ filepath = display, filepath = url, filepath = real filepath"""
         """displays the number of VMs a user is running"""
         """ types supported pie, bar"""
@@ -92,7 +92,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         
         max_v = 0
         for name in self.users:
-            number = self.users[name]['count']
+            number = self.users[name][metric]
+            # Temporary lines for converting sec to min 
+            if metric != "count":
+                number = int (number / 60)
             values.append(number)
             label_values.append(name + ":" + str(number))
             max_v = max(max_v, number)
@@ -109,7 +112,9 @@ class CmdLineAnalyzeEucaData(Cmd):
             # the labels seem wrong, not sure why i have to call reverse
             chart.set_axis_labels('y', reversed(label_values))
             # setting the x axis labels
-            left_axis = range(0, max_v + 1, 1)
+            interval = int(max_v) / 10
+            left_axis = range(0, int(max_v + 1), interval)
+            print left_axis
             left_axis[0] = ''
             chart.set_axis_labels(Axis.BOTTOM, left_axis)
 
@@ -151,10 +156,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.close()
 
     def make_menu_html (self, directories):
-        page_template = str("<b>Metrics</b><br>")
-        page_template += str("<b>Monthly VM Ussage by User</b>")
-
-        page_template += str("<ul>")
+        page_template = str("<b>Metrics</b><br><b>Monthly VM Ussage by User</b><ul>")
         for dirname in directories:
             page_template += "<li><a href=\"" + dirname + "/index.html\" target=right> VM usage by day " + dirname + "</a></li>\n"
         page_template += str("</ul>")
@@ -302,7 +304,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         graph_type =  opts.type
         filepath = opts.filepath
         print graph_type + " typed " + filepath + " file created"
-        self.display_user_stats(graph_type, filepath)
+        self.display_user_stats("count", graph_type, filepath)
 
     @options([
         make_option('-d', '--directory', type="string", help="directory name which the chart html will be stored.")
@@ -315,8 +317,11 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-t', '--title', type="string", help="A report title in the index.html")
         ])
     def do_createreport(self, arg, opts=None):
-        self.display_user_stats("pie", opts.directory + "/pie.png")
-        self.display_user_stats("bar", opts.directory + "/bar.png")
+        self.display_user_stats("count", "pie", opts.directory + "/pie.count.png")
+        self.display_user_stats("count", "bar", opts.directory + "/bar.count.png")
+        self.display_user_stats("sum", "pie", opts.directory + "/pie.sum.png")
+        self.display_user_stats("sum", "bar", opts.directory + "/bar.sum.png")
+
         #self.make_google_motion_chart(opts.directory)
         self.make_index_html(opts.directory, opts.title)
 

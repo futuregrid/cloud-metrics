@@ -12,6 +12,8 @@ Contents:
    :maxdepth: 2
 
    intro
+   lighttpd
+   results
 
 Indices and tables
 ==================

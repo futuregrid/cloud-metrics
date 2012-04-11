@@ -184,6 +184,13 @@ class CmdLineAnalyzeEucaData(Cmd):
     def postloop(self):
         print "BYE ..."
 
+    # def do_server_start (self,arg):
+    #     os.system('lighttpd -D -f lighttpd.conf &')
+
+
+    # def do_server_stop (self,arg):
+    #     os.system('killall lighttpd')
+
     def do_changecharttype (self, arg):
         if (arg != "pie") and (arg != "bar") and (arg != "motion"):
             print "Error: charttype " + arg + " not supported."

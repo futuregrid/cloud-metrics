@@ -1,0 +1,5 @@
+#! /bin/sh
+
+killall lighttpd
+
+

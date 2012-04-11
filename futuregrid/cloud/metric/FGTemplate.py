@@ -67,7 +67,7 @@ class HtmlTemplate:
             <HEAD> 
                 <TITLE>FutureGrid Statistical reports</TITLE>
             </HEAD>
-            <FRAMESET COLS="11%,89%">
+            <FRAMESET COLS="30%,70%">
                 <FRAME scrolling=yes SRC="menu.html" NAME="left">
                 <FRAME SRC="main.html" NAME="right">
             </FRAMESET>

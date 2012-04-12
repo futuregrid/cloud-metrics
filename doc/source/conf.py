@@ -19,11 +19,6 @@ import sys, os
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../../futuregrid/cloud/metric'))
 
-print "AAAAA"
-print os.system("pwd")
-print os.system("ls ../../futuregrid/cloud/metric")
-print "AAAAA"
-
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.

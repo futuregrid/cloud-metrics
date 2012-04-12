@@ -1,15 +1,15 @@
 Stand Allone Web Server
-===============
+------------------------------
 
 Often it is convenient to test some features of the metrics framework. If you do not have access to a preinstalled web server, we offer you to use lighttpd. 
 
 Instalation of lighttpd
------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All you need to do is to insall lighttpd in your machine and make sure you have it in your path.
 
 Using the Standalone server
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Make sure you download the code from github.
 
@@ -27,7 +27,7 @@ If you like to sop the server say::
   make stop
 
 Browsing the contents
-------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To browse the contents of the created data, simply open your browser  and type in the address
 

@@ -7,7 +7,7 @@ CONTRIBUTORS
 --------------------
 
 * Hyungro Lee (lee212@indiana.edu)   
-* Gregor von laszewski (laszewski@gmail.com)
+* Gregor von Laszewski (laszewski@gmail.com)
 * Fugang Wang (kevinwangfg@gmail.com)
 
 Please contact laszewski@gmail.com for mor information. Please insert the prefix: "METRICS: " in the subject of email messages.

@@ -165,3 +165,7 @@ create:
 metric:
 	mkdir -p build/html/data/
 	cd build/html/data; cat ../../../../lighttpd/metric-script.fg | fg-metric
+
+tar:
+	tar cvfz fg-metric.tar.gz build/html/
+

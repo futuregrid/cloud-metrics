@@ -45,6 +45,7 @@ html: clean examples
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+	make -f Makefile metric
 
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
@@ -158,3 +159,7 @@ examples:
 
 create:
 	cd ..; make force
+
+metric:
+	mkdir -p build/html/data/
+	cd build/html/data; cat ../../../../lighttpd/metric-script.fg | fg-metric

@@ -1,14 +1,6 @@
-=====================
-LOG ANALYZER FOR CLOUDS v2.1
-=====================
+Details
+=======
 
-
--------------
-INTRODUCTION
--------------
-
-
-----------------
 Shell to analyze data
 ----------------
 
@@ -24,8 +16,11 @@ we are also developing an interactive shell that can be used to query
 data directly from our database. Some simple example illustrate our
 usage of the shell. 
  
-Example: Create a summary table for the month of January
-=====================================
+Examples
+--------
+
+Create a summary table for the month of January
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following will create a table with data produced for the month of January::
 
@@ -38,8 +33,8 @@ The following will create a table with data produced for the month of January::
 Naturally you could store this script in a file and pipe to fg-metric
 in case you have more complex or repetitive analysis to do. 
 
-Example: How to create a summary analysis for multiple month
-=====================================
+Create a summary analysis for multiple month
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Assume you like to create a nice html page directory with the analysis
 of the data contained. This can be done as follows. Assume the following 
@@ -67,23 +62,11 @@ To start the script, simply use::
 This will produce a nice directory tree with all the data needed for a
 display.
 
--------------------------
-Eucalyptus 2.0 Data Integration
--------------------------
+Eucalyptus 2.0
+----------------
 
-To achieve analysis of eucalyptus data, we are using 'cc.log'
-files. The needed information must be gathered while eucalyptus runs
-in 'EUCADEBUG' mode. We assume the following directory layout::
-
-    ./futurgrid/
-    ./futurgrid/bin - includes all commands needed to run the log analyzing
-    ./futurgrid/lib - includes libraries that may be called from the bin files
-    ./futurgrid/etc - location of configuration files
-    ./futurgrid/www - location of the www files
-    
-    
-Eucalyptus data gathering
-=================
+Data gathering
+~~~~~~~~~~~~~~~~~~~~
 
 Eucalyptus provides a substantial set of log information. The
 information is typically stored in the eucalyptus log directory
@@ -123,35 +106,34 @@ utilization.
 To see more information about this command, please visit the manual
 page [fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)
 
+Data Analysis
+~~~~~~~~~~~~~
 
------
-TODO
------
+To achieve analysis of eucalyptus data, we are using 'cc.log'
+files. The needed information must be gathered while eucalyptus runs
+in 'EUCADEBUG' mode. We assume the following directory layout::
 
-define variables::
+    ./futurgrid/
+    ./futurgrid/bin - includes all commands needed to run the log analyzing
+    ./futurgrid/lib - includes libraries that may be called from the bin files
+    ./futurgrid/etc - location of configuration files
+    ./futurgrid/www - location of the www files
+    
+    
 
-    FG_LOG_ANALYZER_WWW_OUTPUT - location where the www files for display are stored
-    FG_TMP - location where temporary files are located that are analyzed
-    FG_DATA - location where the permanent data is being stored 
-    FG_HOME_LOG_ANALYZER - is set to the location of the "futuregrid" directory.
-    EUCALYPTUS_LOG_DIR - location where the eucalyptus log dirs are stored
 
-We recommend that the FutureGrid directory is included in the PATH of
-the shell that will run the commands.
-
-------------
-INSTALLATION
+Installation
 ------------
 
 
 Installation from pypi 
-=================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The programs are distributed in [pypi](xyz). It contains our current release version of the software. 
 
 
 Installation form the source in github
-========================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you are adventures, you can work with our newest code checked into
 github. To obtain this code, please conduct the following steps.  We
@@ -167,7 +149,8 @@ This will install the programs in::
     /usr/bin/
     
 What to do if I do not have root privilege
-====================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 If you do not have root privileges, you can also install the program
 via pythons virtualenv.
@@ -175,71 +158,67 @@ via pythons virtualenv.
 Note: Please see our documentation on virtual cluster on how to do that ;-)
 
 
---------------------
-COMMANDS
---------------------
-
-[fg-cleanup-db](./man/fg-cleanup-db.md)
-
-erases the content of the database
-
-[fg-parser](./man/fg-parser.md)
-
-parses eucalyptus log entries and includes them into the database
-
-
-[fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)
-
-gathers all eucalyptus log files into a single directory from the
-eucalyptus log file directory. This script can be called from cron
-repeatedly in order to avoid that log data is lost by using log file
-rotation in eucalyptus.
-
-
-[fg-metric](./man/fg-metric.md)
-
-a shell to interact with the metric database. 
-
---------------------
-EXAMPLES
+Commands
 --------------------
 
-`example.txt <./examples/example1.txt>`_
+`fg-cleanup-db <./man/fg-cleanup-db.html>`_
+
+ erases the content of the database
+
+`fg-parser <./man/fg-parser.html>`_
+
+ parses eucalyptus log entries and includes them into the database
+
+
+`fg-euca-gather-log-files <./man/fg-euca-gather-log-files.html>`_
+
+ gathers all eucalyptus log files into a single directory from the
+ eucalyptus log file directory. This script can be called from cron
+ repeatedly in order to avoid that log data is lost by using log file
+ rotation in eucalyptus.
+
+`fg-metric <./man/fg-metric.html>`_
+
+ a shell to interact with the metric database. 
+
+
+Examples
+--------------------
+
+`example1.txt <./examples/example1.txt>`_
 * ????
 
-[example2.txt](./examples/example2.txt)
+`example2.txt <./examples/example2.txt>`_
 * ????
 
-[test.txt](./examples/test.txt)
+`test.txt <./examples/test.txt>`_
 * ????
 
 
---------------------
-OTHER
---------------------
+TODO
+-----
 
-./www
+define variables::
 
-* displays graphs about data usage metrics are in 'www'
+    FG_LOG_ANALYZER_WWW_OUTPUT - location where the www files for display are stored
+    FG_TMP - location where temporary files are located that are analyzed
+    FG_DATA - location where the permanent data is being stored 
+    FG_HOME_LOG_ANALYZER - is set to the location of the "futuregrid" directory.
+    EUCALYPTUS_LOG_DIR - location where the eucalyptus log dirs are stored
 
-* Be displaying via google chart tools.
-
+We recommend that the FutureGrid directory is included in the PATH of
+the shell that will run the commands.
 
 KNOWN BUGS
-==========
+--------------------
+* a
+* b
 
 FEATURE REQUESTS
-================
+--------------------
 
 This project is under active development. In order for us to identify
 priorities please let us know what features you like us to add.  We
 will include a list here and identify based on resources and
 priorities how to integrate them.
-
-JOINING THE TEAM AND CONTRIBUTIONS
-==================================
-
-If you like to join the development efforts, please e-mail us. We can
-than discuss how best you can contribute. You may have enhanced our
-code already or used it in your system. If so, please let us know.
 

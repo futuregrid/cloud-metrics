@@ -9,15 +9,14 @@ Welcome to Cloud Metrics's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
-   intro
    about
    quickstart
-   documentation
+   details
+   lighttpd
    download
    support
-   lighttpd
    results
 
 Indices and tables

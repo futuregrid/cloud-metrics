@@ -139,6 +139,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             chart.download(filepath)
 
     def make_index_html (self, output_dir, title):
+        '''this command is in the worng file'''
         page_template = HtmlTemplate.index()
         now = datetime.now()
         now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
@@ -151,6 +152,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.close()
     
     def make_frame_html (self):
+        '''this command is in the worng file'''
         page_template = HtmlTemplate.frame()
         filename = "index.html"
         f = open(filename, "w")
@@ -158,6 +160,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.close()
 
     def make_menu_html (self, directories):
+        '''this command is in the worng file'''
         page_template = str("<b>Metrics</b><br><b>Monthly VM Ussage by User</b><ul>")
         for dirname in directories:
             page_template += "<li><a href=\"" + dirname + "/index.html\" target=right> VM usage by day " + dirname + "</a></li>\n"
@@ -168,6 +171,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.close()
 
     def make_google_motion_chart(self, directory):
+        '''this command is in the worng file'''
         filename = "FGGoogleMotionChart.html"
         filepath = directory + "/" + filename
         Utility.ensure_dir(filepath)
@@ -192,6 +196,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     #     os.system('killall lighttpd')
 
     def do_changecharttype (self, arg):
+        '''changes the default caht type. You can choese bar, pie, motion'''
         if (arg != "pie") and (arg != "bar") and (arg != "motion"):
             print "Error: charttype " + arg + " not supported."
         else:
@@ -204,6 +209,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-c', '--caption', type="string", help="title of the table"),
         ])
     def do_table(self, arg, opts):
+        '''prints a table from the instance data'''
         print opts.caption
         if opts.seperator == "" or opts.seperator == None:
             seperator = "="
@@ -230,20 +236,23 @@ class CmdLineAnalyzeEucaData(Cmd):
         print "\r... data loaded"
 
     def do_pause(slef, arg):
+        '''Waits for a return to be typed in with the keyboard'''
         os.system("pause")
 
     def do_dump(self, arg):
-        # prints the data from all instances
+        '''Prints the data from all instances.'''
         # if we specify key, prints it from an instance with a given instance id
         self.instances.dump()
 
     def do_printlist(self, arg):
-        print "\n... list\n"
-        # lists all instance ids id's
+        '''lists all instance ids id's'''
         # takes as additional parameters fields to be printed
+
+        print "\n... list\n"
         self.instances.print_list(arg)
 
     def do_clear(self, arg):
+        '''clears all instance data and user data from the memory'''
         if arg == "users":
             self.users = {}
         elif arg == "instances":
@@ -286,7 +295,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         print "now calculating"
         self.calculate_user_stats (from_date, to_date)
 
-    def do_getdaterange(self, arg): #Get Date range of 'instances' table in mysql db
+    def do_getdaterange(self, arg): 
+        '''Get Date range of the instances table in mysql db'''
         res = self.instances.getDateRange()
         print Utility.convertOutput(res[0], "first_date")
         print Utility.convertOutput(res[1], "last_date")

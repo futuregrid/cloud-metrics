@@ -74,7 +74,9 @@ setup(
     install_requires = [
         'setuptools',
         'cmd2',
-        'pip'
+        'pip',
+        'pygooglechart',
+        'MySQLdb'
         ],
     )
 

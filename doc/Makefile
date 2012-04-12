@@ -46,8 +46,8 @@ html: clean examples
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
-force: html
-	make -f Makefile metric
+force: create html metric
+	@echo "make force done"
 
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml

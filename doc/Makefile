@@ -158,3 +158,7 @@ examples:
 
 create:
 	cd ..; make force
+
+metric:
+	mkdir -p build/html/data/
+	cd build/html/data; cat ../../../../lighttpd/metric-script.fg | fg-metric

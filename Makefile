@@ -70,6 +70,7 @@ clean:
 	find . -name "*~" -exec rm {} \;  
 	find . -name "*.pyc" -exec rm {} \;  
 	rm -rf build dist *.egg-info *~ #*
+	cd doc; make clean
 
 ######################################################################
 # pypi

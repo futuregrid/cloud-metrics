@@ -12,6 +12,11 @@ Contents:
    :maxdepth: 2
 
    intro
+   about
+   quickstart
+   documentation
+   download
+   support
 
 Indices and tables
 ==================

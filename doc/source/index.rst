@@ -17,6 +17,8 @@ Contents:
    documentation
    download
    support
+   lighttpd
+   results
 
 Indices and tables
 ==================

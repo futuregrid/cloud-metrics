@@ -1,0 +1,6 @@
+[console_scripts]
+fg-cleanup-db = futuregrid.cloud.metric.FGEucaMetricsDB:command_clean_database
+fg-parser = futuregrid.cloud.metric.FGParser:main
+fg-euca-gather-log-files = futuregrid.cloud.metric.FGEucaGatherLogFiles:main
+fg-metric = futuregrid.cloud.metric.FGAnalyzer:main
+

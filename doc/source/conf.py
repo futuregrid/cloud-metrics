@@ -27,13 +27,33 @@ sys.path.insert(0, os.path.abspath('../../futuregrid/cloud/metric'))
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc',
+              'sphinx.ext.autosummary',
               'sphinx.ext.doctest',
               'sphinx.ext.intersphinx',
               'sphinx.ext.todo',
+              'sphinx.ext.graphviz',
+              'sphinxcontrib.googlechart',
+              'sphinx.ext.inheritance_diagram',
               'sphinx.ext.coverage',
               'sphinx.ext.pngmath',
               'sphinx.ext.ifconfig',
-              'sphinx.ext.viewcode']
+              'sphinx.ext.viewcode',
+              'sphinx.ext.extlinks',
+              'sphinx.ext.intersphinx',
+              'sphinxcontrib.issuetracker']
+
+extensions.append('sphinxcontrib.autorun')
+
+issuetracker = 'bitbucket'
+issuetracker_project = 'birkenfeld/sphinx'
+
+
+extlinks = {
+    'jira':('http://jira.futuregrid.org/browse/FG-%s', 'jira:'),
+    'portal':('http://portal.futuregrid.org/%s', 'portal:')
+}
+
+plantuml = 'java -jar /Applications/plantuml.jar'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

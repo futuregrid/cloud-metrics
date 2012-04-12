@@ -71,13 +71,13 @@ setup(
              'fg-metric = futuregrid.cloud.metric.FGAnalyzer:main'
              ]},
     
-    install_requires = [
-        'setuptools',
-        'cmd2',
-        'pip',
-        'pygooglechart',
-        'MySQLdb'
-        ],
+    # install_requires = [
+    #     'setuptools',
+    #     'cmd2',
+    #     'pip',
+    #     'pygooglechart',
+    #     'mysql-python'
+    #     ],
     )
 
     # Removed console script

@@ -199,8 +199,8 @@ class Instances:
         instance_list = self.eucadb.read()
 
         for element in instance_list:
-            key += 1
             self.data[key] = element
+            key += 1
         
     def write_to_db(self):
         for key_current in self.data:
@@ -242,13 +242,12 @@ class Instances:
 
             instance[id] = current
 
-            #        was calculate delta
     def refresh(self):
         """calculates how long each instance runs in seconds"""
         for i in self.data:
             values = self.data[i]
             t_delta = values["t_end"] - values["ts"]
-            self.data[i]["duration"] = str(t_delta.total_seconds())
+            values["duration"] = str(t_delta.total_seconds())
 
     def getDateRange(self):
 	for i in self.data:

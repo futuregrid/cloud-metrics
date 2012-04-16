@@ -44,7 +44,7 @@ class GoogleMotionChart:
 		i = 0
 		rows = []
 		row_size = 0
-		s_date = datetime.strptime(s_date, '%Y-%m-%dT%H:%M:%S')
+		s_date = datetime.strptime(s_date, '%Y-%m-%d %H:%M:%S')
 		for uname in users:
 			rows.append([uname, 'new Date(' + s_date.strftime("%Y") + ',' + s_date.strftime("%m") + ')', str(users[uname]['count'])]) # csv_line[0] = ownerId, csv_line[1] = instances
 			row_size = row_size + 1

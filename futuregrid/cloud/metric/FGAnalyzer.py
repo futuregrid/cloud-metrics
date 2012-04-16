@@ -40,8 +40,6 @@ class CmdLineAnalyzeEucaData(Cmd):
     def calculate_stats (self, from_date="all", to_date="all"):
         '''calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time'''
 
-        # handle parameters
-
         process_all = False
         if (type(from_date).__name__ == "str"):
             process_all = (from_date == "all")
@@ -101,9 +99,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         # instance based data
         for i in range(0, int(self.instances.count())):
             instance = self.instances.getdata(i)
-            if instance["ownerId"] == username:
-                res = self.daily_histogram(instance, metric)
-                merged_res = self.merge_daily_histogram(res, merged_res, "sum") # Or "avg"
+            if instance["ownerId"] != username:
+                continue
+            res = self.daily_histogram(instance, metric)
+            merged_res = self.merge_daily_histogram(res, merged_res, "sum") # Or "avg"
         return merged_res
 
     # This is going to be counting hours for daily
@@ -117,13 +116,15 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         month = [ 0 for n in range(self.day_count) ]
         if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date :
-            print "This instance data is out of analyzing range."
+            #print "This instance data is out of analyzing range." + "(" + str(instance["t_start"]) + "," + str(instance["t_end"]) + ")"
             return month
         offset = (instance["t_start"] - self.from_date).days
 
         day_count_ins = (instance["t_end"] - instance["t_start"]).days + 1
         i = 0
         for single_date in (instance["t_start"] + timedelta(n) for n in range(day_count_ins)):
+            if single_date > self.to_date:
+                break
             if metric == "runtime":
                 a = datetime.strptime("00:00:00", "%H:%M:%S")
                 first_second_of_a_day = datetime.combine(single_date.date(), a.time())
@@ -146,7 +147,6 @@ class CmdLineAnalyzeEucaData(Cmd):
                 td = instance["t_end"] - instance["t_start"]
                 hour = td.seconds / 60 / 60
                 month[offset] = hour
-        
         return month
 
     def merge_daily_histogram(self, new, current, type="sum"):
@@ -167,13 +167,13 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def line_chart(self, output):
        
-        maxY = 30 #maxY = getmaxYvalue( between value1, value2 and ...)
+        maxY = int(round(max(self.user_stats) / 10) * 10)
         chart = PyGoogleChart("line", maxY)
         chart.set_data(self.user_stats)
         #chart.set_data(value2)
         
         # + 1 will add last value to the list. In here, the last value is 24
-        chart.set_yaxis([ str(x)+"hr" for x in range(0, maxY + 1, 6)])
+        chart.set_yaxis([ str(x)+"hr" for x in range(0, maxY + 1, (maxY / 4))])
         chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, 3)])
         chart.set_output_path(output)
         chart.set_filename(self.userid + "-" + "linechart.png")

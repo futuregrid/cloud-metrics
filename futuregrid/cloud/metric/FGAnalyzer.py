@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 '''FGAnalyser Module'''
 
-from pygooglechart import PieChart3D, StackedHorizontalBarChart, Axis
-
+from pygooglechart import PieChart3D, StackedHorizontalBarChart, SimpleLineChart, Axis
 import os
 import pprint
 import optparse
@@ -14,6 +13,7 @@ import calendar
 
 from futuregrid.cloud.metric.FGParser import Instances
 from futuregrid.cloud.metric.FGGoogleMotionChart import GoogleMotionChart
+from futuregrid.cloud.metric.FGPygooglechart import PyGoogleChart
 from futuregrid.cloud.metric.FGUtility import Utility
 from futuregrid.cloud.metric.FGTemplate import HtmlTemplate
 
@@ -29,10 +29,15 @@ class CmdLineAnalyzeEucaData(Cmd):
     pp = pprint.PrettyPrinter(indent=0)
     charttype = "pie"
     from_date = ""
+    to_date = ""
+    day_count = 0
     echo = True
     timing = True
 
-    def calculate_user_stats (self, from_date="all", to_date="all"):
+    userid = None
+    user_stats = None
+
+    def calculate_stats (self, from_date="all", to_date="all"):
         '''calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time'''
 
         # handle parameters
@@ -52,8 +57,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             date_to = to_date
             process_all = False
 
-        print self.instances.count()
-        for i in self.instances.get():
+        for i in range(0, int(self.instances.count())):
             values = self.instances.getdata(i)
             process_entry = process_all
             
@@ -82,17 +86,108 @@ class CmdLineAnalyzeEucaData(Cmd):
                 for name in self.users:
                     self.users[name]['avg'] = float(self.users[name]['sum']) / float(self.users[name]['count'])
 
-    def display_user_stats(self, metric="count", type="pie", filepath="chart.png"):
+    def set_date(self, from_date, to_date):
+        try:
+            self.from_date = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
+            self.to_date = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
+            self.day_count = (self.to_date - self.from_date).days + 1
+        except:
+            print "from and to date not specified." 
+            pass
+
+    def get_user_stats(self, username, metric, period="daily"):
+      
+        merged_res = []
+        # instance based data
+        for i in range(0, int(self.instances.count())):
+            instance = self.instances.getdata(i)
+            if instance["ownerId"] == username:
+                res = self.daily_histogram(instance, metric)
+                merged_res = self.merge_daily_histogram(res, merged_res, "sum") # Or "avg"
+        return merged_res
+
+    # This is going to be counting hours for daily
+    # This logic is kind of messy, will be changed/updated though soon, Hopefully.
+    def daily_histogram(self, instance, metric):
+        ''' Make a list filled with metric values in a daily basis.
+            The size of the list is the date range of analyze. 
+            e.g. [0 (1st), 0 (2nd), ... , 0 (31th)] list will be 
+            returned when 'analyze -M 01' which is for January 2012
+            is requested. '''
+
+        month = [ 0 for n in range(self.day_count) ]
+        if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date :
+            print "This instance data is out of analyzing range."
+            return month
+        offset = (instance["t_start"] - self.from_date).days
+
+        day_count_ins = (instance["t_end"] - instance["t_start"]).days + 1
+        i = 0
+        for single_date in (instance["t_start"] + timedelta(n) for n in range(day_count_ins)):
+            if metric == "runtime":
+                a = datetime.strptime("00:00:00", "%H:%M:%S")
+                first_second_of_a_day = datetime.combine(single_date.date(), a.time())
+                last_second_of_a_day = first_second_of_a_day + timedelta(days=1)
+                if i == 0:
+                    td = last_second_of_a_day - single_date
+                    hour = td.seconds / 60 / 60
+                    month[offset + i] = hour
+                elif i + 1 == day_count_ins:
+                    td = instance["t_end"] - first_second_of_a_day
+                    hour = td.seconds / 60 / 60
+                    month[offset + i] = hour
+                else:
+                    month[offset + i] = 24 # hours
+            i += 1
+        td = instance["t_end"] - instance["t_start"]
+
+        if metric == "runtime":
+            if day_count_ins == 1:
+                td = instance["t_end"] - instance["t_start"]
+                hour = td.seconds / 60 / 60
+                month[offset] = hour
+        
+        return month
+
+    def merge_daily_histogram(self, new, current, type="sum"):
+        ''' merge daily_historam lists 
+            e.g. [1,2,3] + [2,3,4]
+            expect => [ 1+2, 2+3, 3+4] = [ 3, 5, 7]
+        '''
+        if len(current) == 0:
+            current = [0 for n in range(self.day_count) ]
+
+        if type == "avg":
+            divide = 2.0
+        else:
+            divide = 1.0
+
+        array = [new, current]
+        return [(sum(a)/divide) for a in zip(*array)]
+
+    def line_chart(self, output):
+       
+        maxY = 30 #maxY = getmaxYvalue( between value1, value2 and ...)
+        chart = PyGoogleChart("line", maxY)
+        chart.set_data(self.user_stats)
+        #chart.set_data(value2)
+        
+        # + 1 will add last value to the list. In here, the last value is 24
+        chart.set_yaxis([ str(x)+"hr" for x in range(0, maxY + 1, 6)])
+        chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, 3)])
+        chart.set_output_path(output)
+        chart.set_filename(self.userid + "-" + "linechart.png")
+        chart.display()
+
+    def display_stats(self, metric="count", type="pie", filepath="chart.png"):
         """ filepath = display, filepath = url, filepath = real filepath"""
         """displays the number of VMs a user is running"""
         """ types supported pie, bar"""
 
         values = []
         label_values = []
-
-        #        print self.users
-        
         max_v = 0
+
         for name in self.users:
             number = self.users[name][metric]
             # Temporary lines for converting sec to min 
@@ -101,9 +196,6 @@ class CmdLineAnalyzeEucaData(Cmd):
             values.append(number)
             label_values.append(name + ":" + str(number))
             max_v = max(max_v, number)
-
-        # print values
-        # print label_values
 
         if type == "pie": 
             chart = PieChart3D(500, 200)
@@ -116,20 +208,14 @@ class CmdLineAnalyzeEucaData(Cmd):
             # setting the x axis labels
             interval = int(max_v) / 10
             left_axis = range(0, int(max_v + 1), interval)
-            print left_axis
             left_axis[0] = ''
             chart.set_axis_labels(Axis.BOTTOM, left_axis)
-
             chart.set_bar_width(10)
             chart.set_colours(['00ff00', 'ff0000'])
 
-        # Add some data
         chart.add_data(values)
 
-        # Assign the labels to the pie data
-
         if filepath == "display":
-            #os.system ("open -a /Applications/Safari.app " + '"' + url + '"')
             os.system ("open " + filepath)
         elif filepath == "url":
             url = chart.get_url()
@@ -144,7 +230,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         now = datetime.now()
         now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
         gmc = GoogleMotionChart()
-        motion_chart = gmc.display(self.users, self.from_date)
+        motion_chart = gmc.display(self.users, str(self.from_date))
         filename = output_dir+"/index.html"
         Utility.ensure_dir(filename)
         f = open(filename, "w")
@@ -176,7 +262,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         filepath = directory + "/" + filename
         Utility.ensure_dir(filepath)
         test = GoogleMotionChart()
-        output = test.display(self.users, self.from_date)
+        output = test.display(self.users, str(self.from_date))
         f = open(filepath, "w")
         f.write(output)
         f.close()
@@ -289,11 +375,11 @@ class CmdLineAnalyzeEucaData(Cmd):
             to_date = opts.end
 
         print "analyze [" + from_date + ", " + to_date + "]" 
-        self.from_date = from_date
+        self.set_date(from_date, to_date)
 
         self.instances.refresh()
         print "now calculating"
-        self.calculate_user_stats (from_date, to_date)
+        self.calculate_stats (from_date, to_date)
 
     def do_getdaterange(self, arg): 
         '''Get Date range of the instances table in mysql db'''
@@ -323,7 +409,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         graph_type =  opts.type
         filepath = opts.filepath
         print graph_type + " typed " + filepath + " file created"
-        self.display_user_stats("count", graph_type, filepath)
+        self.display_stats("all", "count", graph_type, filepath)
 
     @options([
         make_option('-d', '--directory', type="string", help="directory name which the chart html will be stored.")
@@ -336,10 +422,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-t', '--title', type="string", help="A report title in the index.html")
         ])
     def do_createreport(self, arg, opts=None):
-        self.display_user_stats("count", "pie", opts.directory + "/pie.count.png")
-        self.display_user_stats("count", "bar", opts.directory + "/bar.count.png")
-        self.display_user_stats("sum", "pie", opts.directory + "/pie.sum.png")
-        self.display_user_stats("sum", "bar", opts.directory + "/bar.sum.png")
+        self.display_stats("count", "pie", opts.directory + "/pie.count.png")
+        self.display_stats("count", "bar", opts.directory + "/bar.count.png")
+        self.display_stats("sum", "pie", opts.directory + "/pie.sum.png")
+        self.display_stats("sum", "bar", opts.directory + "/bar.sum.png")
 
         #self.make_google_motion_chart(opts.directory)
         self.make_index_html(opts.directory, opts.title)
@@ -347,6 +433,51 @@ class CmdLineAnalyzeEucaData(Cmd):
     def do_createreports(self, arg):
         self.make_frame_html()
         self.make_menu_html(arg.split())
+
+    @options([
+        make_option('-f', '--start', type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-t', '--end',  type="string", help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-M', '--month', default=datetime.now().month, type="string", help="month to analyze (type. MM)"),
+        make_option('-Y', '--year', default=datetime.now().year, type="string", help="year to analyze (type. YYYY)"),
+        ])
+    def do_set_range (self, arg, opts=None):
+
+        if opts.start and opts.end:
+            from_date = opts.start
+            to_date = opts.end
+        else:
+            from_date = "%s-%s-01T00:00:00" % (opts.year, opts.month)
+            to_date = "%s-%s-%sT23:59:59" % (opts.year, opts.month,
+                    str(calendar.monthrange(int(opts.year), int(opts.month))[1]))
+
+        print "Set date range to analyze: [" + from_date + ", " + to_date + "]" 
+        self.set_date(from_date, to_date)
+
+    @options([
+        make_option('-u', '--user', type="string", help="user id to analyze"),
+        make_option('-m', '--metric', default="runtime", type="string", help="metric name to display (runtime, vms)")
+        ])
+    def do_analyze_user(self, arg, opts=None):
+        if not opts.user:
+            print "user id is required."
+            return
+
+        self.user_stats = self.get_user_stats(opts.user, opts.metric)
+        self.userid = opts.user
+
+    @options([
+        make_option('-o', '--output', type="string", help="the filepath in which we store a chart")
+        ])
+    def do_user_report(self, arg, opts=None):
+        # set default output by Year-month typed string
+        if not opts.output:
+            opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
+
+        self.line_chart(opts.output)
+
+    def do_filled_line_example(self, arg, opts=None):
+        chart = PyGoogleChart("line", 0)
+        chart.filledLineExample()
 
 #####################################################################
 # main

@@ -84,7 +84,7 @@ class FGEucaMetricsDB(object):
                     launchIndex INT, \
                     reservationId VARCHAR(32) )"
         try:
-            self.cursor.execute(createTb)
+            pass#self.cursor.execute(createTb)
         except MySQLdb.Error:
             pass
         #print "initilized!"

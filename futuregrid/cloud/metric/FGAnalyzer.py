@@ -178,6 +178,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         chart.set_output_path(output)
         chart.set_filename(self.userid + "-" + "linechart.png")
         chart.display()
+        print chart.filepath + "/" + chart.filename + " created."
 
     def display_stats(self, metric="count", type="pie", filepath="chart.png"):
         """ filepath = display, filepath = url, filepath = real filepath"""
@@ -474,6 +475,13 @@ class CmdLineAnalyzeEucaData(Cmd):
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
 
         self.line_chart(opts.output)
+
+        print
+        print "This line chart displays statistics of a specific user's metric."
+        print self.userid + " (userid) is selected to display 'instance runtime' of " + str(self.from_date.month) + "/" + str(self.from_date.year) + "."
+        print "Y-axis indicates total running hours of instances."
+        print "X-axis indicates date of the month."
+        print
 
     def do_filled_line_example(self, arg, opts=None):
         chart = PyGoogleChart("line", 0)

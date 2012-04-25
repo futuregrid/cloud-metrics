@@ -1,9 +1,6 @@
 #! /usr/bin/env python
 '''FGParser'''
 
-
-from pygooglechart import PieChart3D, StackedHorizontalBarChart, Axis
-
 import re
 import json
 import pprint
@@ -12,7 +9,6 @@ import os
 from datetime import * 
 
 import futuregrid.cloud.metric.FGEucaMetricsDB
-import futuregrid.cloud.metric.FGGoogleMotionChart
 
 manual="""
 MANUAL PAGE DRAFT
@@ -390,8 +386,6 @@ def terminate_instances_param_parser(rest,data):
         data["calltype"] = "ignore" 
     return data
 
-
-
 def print_counter (label,counter):
     print label + " = " + str(counter)
 
@@ -450,11 +444,9 @@ def parse_file (filename, analyze, parse_types, debug=False, progress=True):
     print_counter("count_terminate_instances",count_terminate_instances)
     print_counter("count_refresh_resource",count_refresh_resource)
     print_counter("count_ccInstance_parser ",count_ccInstance_parser )
-
            
     return
 
-#
 #####################################################################
 # MAIN
 #####################################################################
@@ -472,7 +464,6 @@ def parse_test(f, line):
     f(rest, data)
     print "OUTPUT>"
     print pp.pprint(data)
-
 
 def test1():
     parse_test(ccInstance_parser, 
@@ -493,7 +484,6 @@ def test2():
                "[Wed Nov  9 22:52:19 2011][008128][EUCAINFO  ] refresh_resources(): called")
     parse_test(refresh_resource_parser, 
                "[Wed Nov  9 19:50:08 2011][008128][EUCADEBUG ] refresh_resources(): received data from node=i2 mem=24276/22740 disk=306400/305364 cores=8/6")
-
 
     return
 
@@ -620,7 +610,6 @@ def read_all_log_files_and_store_to_db (path, args):
     instances.calculate_delta ()
     instances.write_to_db()
 
-    
 def main():
 
     users = {}

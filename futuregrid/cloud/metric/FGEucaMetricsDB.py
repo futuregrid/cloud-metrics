@@ -28,19 +28,23 @@ class FGEucaMetricsDB(object):
             dbuser = config.get('EucaLogDB', 'user')
             dbpasswd = config.get('EucaLogDB', 'passwd')
             dbname = config.get('EucaLogDB', 'db')
+            dbtable = config.get('EucaLogDB', 'table')
         except ConfigParser.NoSectionError:
             print cfgfile + " does not exist"
             sys.exit()
 
 	#table 
-	self.tablename = "instance" #default table
+        if dbtable:
+        	self.tablename = dbtable
+       else:
+        	self.tablename = "instance" #default table
 
         #connect to db
         self.conn = MySQLdb.connect (dbhost, dbuser, dbpasswd, dbname, dbport)
         self.cursor = self.conn.cursor (MySQLdb.cursors.DictCursor)
         
         #create table if not exist
-        createTb = "create table if not exists instance (\
+        createTb = "create table if not exists " + self.tablename + " (\
                     uidentifier VARCHAR(32) PRIMARY KEY NOT NULL, \
                     instanceId VARCHAR(16), \
                     ts DATETIME, \

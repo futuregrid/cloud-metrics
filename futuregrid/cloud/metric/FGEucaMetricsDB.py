@@ -36,7 +36,7 @@ class FGEucaMetricsDB(object):
 	#table 
         if dbtable:
         	self.tablename = dbtable
-       else:
+        else:
         	self.tablename = "instance" #default table
 
         #connect to db

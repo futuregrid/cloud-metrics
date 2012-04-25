@@ -157,6 +157,15 @@ Installation
  You have various options to install this program. However it requiers
  the MYSQL python library which is on some platforms not that easy to install.
 
+Prerequisite
+------------
+
+ Python version >= 2.7
+ 
+ (Required Python packages)
+ setuptools
+ pygooglechart
+
 Installation from pypi 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

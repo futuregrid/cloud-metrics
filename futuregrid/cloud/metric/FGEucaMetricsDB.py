@@ -88,7 +88,7 @@ class FGEucaMetricsDB(object):
                     launchIndex INT, \
                     reservationId VARCHAR(32) )"
         try:
-            pass#self.cursor.execute(createTb)
+            self.cursor.execute(createTb)
         except MySQLdb.Error:
             pass
         #print "initilized!"
@@ -196,7 +196,7 @@ class FGEucaMetricsDB(object):
         m.update(uidcat)
         uid = m.hexdigest()
         pp.pprint(entryObj)
-        wquery = "INSERT INTO instance( uidentifier, \
+        wquery = "INSERT INTO " + self.tablename + " ( uidentifier, \
                                     instanceId, \
                                     ts, \
                                     calltype, \

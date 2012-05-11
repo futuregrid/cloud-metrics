@@ -20,8 +20,8 @@ def main():
             count = bucket_dict.get(bucket, 0)
             bucket_dict[bucket] = count + 1
 
-for key, value in bucket_dict.items():
-    print("\t".join([key, str(value)]))
+    for key, value in bucket_dict.items():
+        print("\t".join([key, str(value)]))
 
 if __name__ == "__main__":
     main()

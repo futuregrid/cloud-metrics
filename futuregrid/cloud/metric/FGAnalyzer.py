@@ -487,6 +487,61 @@ class CmdLineAnalyzeEucaData(Cmd):
         chart = PyGoogleChart("line", 0)
         chart.filledLineExample()
 
+    @options([
+        make_option('-u', '--user', type="string", help="Show only image numbers owned by the userid specified."),
+        make_option('-d', '--detail', action="store_true", default=False, help="Show details about images"),
+        make_option('-s', '--summary', action="store_true", default=False, help="Show summary values about images")
+        ])
+    def do_count_images(self, arg, opts=None):
+        # Written by Klinginsmith, Jonathan Alan <jklingin@indiana.edu>
+        import subprocess
+        bucket_dict = {}
+        details = {}
+        detail = {}
+        max_user = ["", 0]
+        bin_path = subprocess.check_output(["which", "euca-describe-images"])
+        eucabin = bin_path.split("\n")
+        output = subprocess.check_output(["python2.7", eucabin[0]])
+        # Split the output by end-of-line chars.
+        lines = output.split("\n")
+
+        # Loop through lines. The image path is the third item.
+        # Split by "/" to get bucket and key.
+        for line in lines:
+            if line:
+                values = line.split()
+                bucket, key = values[2].split("/")
+                count = bucket_dict.get(bucket, 0)
+                detail[count] = line 
+                details[bucket] = detail
+                bucket_dict[bucket] = count + 1
+                if bucket_dict[bucket] > max_user[1]:
+                    max_user[0] = bucket
+                    max_user[1] = bucket_dict[bucket]
+
+        for key, value in bucket_dict.items():
+            if opts.user:
+                if opts.user != key:
+                    continue
+            print("\t".join([key, str(value)]))
+
+        # show detail information of imasge owned by a specific user from -u, --user option
+        if opts.user and opts.detail:
+            for key, value in details[opts.user].items():
+                print (value)
+
+        # Show summary of images. i.e. number of total images, number of users, average numbers of images, and maximum numbers of images.
+        if opts.summary:
+            total_image_count = str(len(lines) - 1) # Except (-1) last \n line count
+            total_user_count = str(len(bucket_dict))
+            print ""
+            print "= Summary ="
+            print "Total image counts:\t" + total_image_count
+            print "Total user counts:\t" + total_user_count
+            print "Average image counts per user:\t" + str(float(total_image_count) / float(total_user_count))
+            print "Maximum image counts and userid:\t" + max_user[0] + " has " +  str(max_user[1])
+            print "=========="
+
 #####################################################################
 # main
 #####################################################################

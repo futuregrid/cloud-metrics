@@ -29,6 +29,8 @@ class FGEucaMetricsDB(object):
             dbpasswd = config.get('EucaLogDB', 'passwd')
             dbname = config.get('EucaLogDB', 'db')
             dbtable = config.get('EucaLogDB', 'table')
+            self.euca_hostname = config.get('EucaLogDB', 'euca_hostname')
+            self.euca_version = config.get('EucaLogDB', 'euca_version')
         except ConfigParser.NoSectionError:
             print cfgfile + " does not exist"
             sys.exit()
@@ -86,7 +88,9 @@ class FGEucaMetricsDB(object):
                     ramdiskId VARCHAR(32), \
                     volumes VARCHAR(32), \
                     launchIndex INT, \
-                    reservationId VARCHAR(32) )"
+                    reservationId VARCHAR(32), \
+                    euca_hostname VARCHAR(32), \
+                    euca_version VARCHAR(32))"
         try:
             self.cursor.execute(createTb)
         except MySQLdb.Error:
@@ -195,7 +199,7 @@ class FGEucaMetricsDB(object):
         m = hashlib.md5()
         m.update(uidcat)
         uid = m.hexdigest()
-        pp.pprint(entryObj)
+        #pp.pprint(entryObj)
         wquery = "INSERT INTO " + self.tablename + " ( uidentifier, \
                                     instanceId, \
                                     ts, \
@@ -237,7 +241,9 @@ class FGEucaMetricsDB(object):
                                     ramdiskId, \
                                     volumes, \
                                     launchIndex, \
-                                    reservationId) \
+                                    reservationId, \
+                                    euca_hostname, \
+                                    euca_version ) \
                             VALUES (" \
                                     + self._fmtstr(uid) + "," \
                                     + self._fmtstr(entryObj["instanceId"]) + "," \
@@ -280,11 +286,20 @@ class FGEucaMetricsDB(object):
                                     + self._fmtstr(entryObj["ramdiskId"]) + "," \
                                     + self._fmtstr(" ".join(entryObj["volumes"])) + "," \
                                     + str(entryObj["launchIndex"]) + "," \
-                                    + self._fmtstr(entryObj["reservationId"]) + ")"
+                                    + self._fmtstr(entryObj["reservationId"]) + "," \
+                                    + self._fmtstr(self.euca_hostname) + "," \
+                                    + self._fmtstr(self.euca_version) + ")"
         #print wquery
         try:
             self.cursor.execute(wquery)
+            print "ok"
+            print self.euca_hostname
+            print self.euca_version
+
         except MySQLdb.Error:
+            print "error"
+            print self.euca_hostname
+            print self.euca_version
             pass
 
     # Change table 

@@ -272,12 +272,14 @@ def convert_data_to_dict(data,attribute):
 def convert_str_to_dict_str(line):
     line = re.sub(' +',' ',line)
     line = line.strip(" ")
+    line = re.sub(',','%2C',line) # , value converts '%2C'
     line = re.sub(' ',',',line)
 
     # more regular dict
     line = re.sub('=','\'=\'',line)
     line = re.sub(',','\',\'',line)
     line = re.sub('=',' : ',line)
+    line = re.sub('%2C', ',', line) # Back to , value
     return '{\'' + line + '\'}'
 
 def parse_type_and_date(line,data):
@@ -323,6 +325,12 @@ def ccInstance_parser(rest,data):
     #separate easy assignments from those that would contain groups, for now simply put groups as a string
     # all others are merged into a string with *=* into rest
     m = re.search( r'(.*)keyName=(.*)ccnet=(.*)ccvm=(.*)ncHostIdx=(.*)volumes=(.*)groupNames=(.*)', rest, re.M|re.I)
+
+    # Version 3.0.2
+    # Deleted: emiId, kernelId, ramdistId, emiURL, kernelURL and ramdiskURL
+    # Added: accountId, platform, and bundleTaskStateName
+    # Changed: value of ownerId is changed
+
     try:
 	    data['keyName'] = m.group(2).strip()
 	    data["ccnet"] = m.group(3).strip()
@@ -473,6 +481,10 @@ def test1():
 
     # Version 3.0.2
     # [Wed May 16 11:59:25 2012][032119][EUCADEBUG ] print_ccInstance(): refresh_instances():  instanceId=i-5CDD447C reservationId=r-A8053C5D state=Extant accountId=514855794567 ownerId=EJMBZFNPMDQ73AUDPOUS3 ts=1337194539 keyName=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCMm5cR9ukIHyy7w3V3FJ45LkdHjafTrfuGU6aonaJ10SJb8oLlqRiT+fPlGcLaZWrHSMbK+TODUa7hgu297BIAN0gUm68ZNKpkLoSXw+IeK0W3u42BYs1+imBMmyXFa8qWjVqt+Xrw2RPImnH+zqqGUvB8DOwLfzXBfJ09o/GuwapZahUm5FjaVCSTp2JptAR7F2nTrKXVTn7S81yzhUF/oM+ublfcav87MDetKVtB591rspjUhtDVnDS+tkvSZfWYpkpKR/4VB3ZXqhzWM5HXw/RFS6J5ywY3a1/FbsOFUFj5y94EAqQkWzSBcJ4cig1e+DQ2SkMAnHraWHL8hQpB 514855794567@eucalyptus.euca3-test ccnet={privateIp=10.135.86.238 publicIp=198.202.120.202 privateMac=D0:0D:5C:DD:44:7C vlan=3759 networkIndex=110} ccvm={cores=1 mem=256 disk=4} ncHostIdx=0 serviceTag=http://s61:8775/axis2/services/EucalyptusNC userData= launchIndex=21 platform=linux bundleTaskStateName=none, volumesSize=0 volumes={} groupNames={514855794567-fd6a9f37-b775-43ec-918c-cc9584f74043 }
+
+    # Deleted: emiId, kernelId, ramdistId, emiURL, kernelURL and ramdiskURL
+    # Added: accountId, platform, and bundleTaskStateName
+    # Changed: Value of ownerId is changed
 
     return
 

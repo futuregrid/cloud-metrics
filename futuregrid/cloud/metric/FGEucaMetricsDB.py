@@ -292,14 +292,8 @@ class FGEucaMetricsDB(object):
         #print wquery
         try:
             self.cursor.execute(wquery)
-            print "ok"
-            print self.euca_hostname
-            print self.euca_version
 
         except MySQLdb.Error:
-            print "error"
-            print self.euca_hostname
-            print self.euca_version
             pass
 
     # Change table 

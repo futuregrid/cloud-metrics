@@ -84,10 +84,13 @@ class FGEucaMetricsDB(object):
                     ccnet_privateIp VARCHAR(32), \
                     ramdiskURL VARCHAR(128), \
                     state VARCHAR(16), \
+                    accountId VARCHAR(32), \
                     kernelURL VARCHAR(128), \
                     ramdiskId VARCHAR(32), \
                     volumes VARCHAR(32), \
                     launchIndex INT, \
+                    platform VARCHAR(16), \
+                    bundleTaskStateName VARCHAR(16), \
                     reservationId VARCHAR(32), \
                     euca_hostname VARCHAR(32), \
                     euca_version VARCHAR(32))"
@@ -112,6 +115,12 @@ class FGEucaMetricsDB(object):
         #else:
         ret = "'" + astr + "'"
         return ret
+
+    def _fillempty(self, entry, key):
+        if not key in entry:
+            return ""
+        else:
+            return entry[key]
 
     # read from the database.
     def read(self, querydict={}, optional=""):
@@ -194,12 +203,12 @@ class FGEucaMetricsDB(object):
 
     # write instance object into db
     def write(self, entryObj):
-        print entryObj
+        #print entryObj
         uidcat = entryObj["instanceId"] + " - " + str(entryObj["ts"])
         m = hashlib.md5()
         m.update(uidcat)
         uid = m.hexdigest()
-        #pp.pprint(entryObj)
+        pp.pprint(entryObj)
         wquery = "INSERT INTO " + self.tablename + " ( uidentifier, \
                                     instanceId, \
                                     ts, \
@@ -237,10 +246,13 @@ class FGEucaMetricsDB(object):
                                     ccnet_privateIp, \
                                     ramdiskURL, \
                                     state, \
+                                    accountId, \
                                     kernelURL, \
                                     ramdiskId, \
                                     volumes, \
                                     launchIndex, \
+                                    platform, \
+                                    bundleTaskStateName, \
                                     reservationId, \
                                     euca_hostname, \
                                     euca_version ) \
@@ -250,8 +262,8 @@ class FGEucaMetricsDB(object):
                                     + self._fmtstr(str(entryObj["ts"])) + "," \
                                     + self._fmtstr(entryObj["calltype"]) + "," \
                                     + self._fmtstr(entryObj["userData"]) + "," \
-                                    + self._fmtstr(entryObj["kernelId"]) + "," \
-                                    + self._fmtstr(entryObj["emiURL"]) + "," \
+                                    + self._fmtstr(self._fillempty(entryObj, "kernelId")) + "," \
+                                    + self._fmtstr(self._fillempty(entryObj, "emiURL")) + "," \
                                     + self._fmtstr(str(entryObj["t_start"])) + "," \
                                     + self._fmtstr(str(entryObj["t_end"])) + "," \
                                     + str(entryObj["duration"]) + "," \
@@ -274,18 +286,21 @@ class FGEucaMetricsDB(object):
                                     + str(entryObj["ccvm"]["mem"]) + "," \
                                     + str(entryObj["ccvm"]["cores"]) + "," \
                                     + str(entryObj["ccvm"]["disk"]) + "," \
-                                    + self._fmtstr(entryObj["emiId"]) + "," \
+                                    + self._fmtstr(self._fillempty(entryObj, "emiId")) + "," \
                                     + self._fmtstr(entryObj["ccnet"]["publicIp"]) + "," \
                                     + self._fmtstr(entryObj["ccnet"]["privateMac"]) + "," \
                                     + self._fmtstr(entryObj["ccnet"]["networkIndex"]) + "," \
                                     + self._fmtstr(entryObj["ccnet"]["vlan"]) + "," \
                                     + self._fmtstr(entryObj["ccnet"]["privateIp"]) + "," \
-                                    + self._fmtstr(entryObj["ramdiskURL"]) + "," \
+                                    + self._fmtstr(self._fillempty(entryObj, "ramdiskURL")) + "," \
                                     + self._fmtstr(entryObj["state"]) + "," \
-                                    + self._fmtstr(entryObj["kernelURL"]) + "," \
-                                    + self._fmtstr(entryObj["ramdiskId"]) + "," \
+                                    + self._fmtstr(self._fillempty(entryObj, "accountId")) + "," \
+                                    + self._fmtstr(self._fillempty(entryObj, "kernelURL")) + "," \
+                                    + self._fmtstr(self._fillempty(entryObj, "ramdiskId")) + "," \
                                     + self._fmtstr(" ".join(entryObj["volumes"])) + "," \
                                     + str(entryObj["launchIndex"]) + "," \
+                                    + self._fmtstr(self._fillempty(entryObj, "platform")) + "," \
+                                    + self._fmtstr(self._fillempty(entryObj, "bundleTaskStateName")) + "," \
                                     + self._fmtstr(entryObj["reservationId"]) + "," \
                                     + self._fmtstr(self.euca_hostname) + "," \
                                     + self._fmtstr(self.euca_version) + ")"

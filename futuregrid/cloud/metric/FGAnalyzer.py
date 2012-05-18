@@ -198,17 +198,21 @@ class CmdLineAnalyzeEucaData(Cmd):
             label_values.append(name + ":" + str(number))
             max_v = max(max_v, number)
 
-        if type == "pie": 
-            chart = PieChart3D(500, 200)
-            chart.set_pie_labels(label_values)
-        if type == "bar":
-            chart = StackedHorizontalBarChart(500,200,
-                                            x_range=(0, max_v))
-            # the labels seem wrong, not sure why i have to call reverse
-            chart.set_axis_labels('y', reversed(label_values))
+        self.generate_pygooglechart(type, label_values, max_v, values, filepath)
+
+    def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200): 
+
+        if chart_type == "pie": 
+            chart = PieChart3D(width, height)
+            chart.set_pie_labels(labels)
+        if chart_type == "bar":
+            chart = StackedHorizontalBarChart(width, height, x_range=(0, max_value))
+            chart.set_axis_labels('y', reversed(labels))
             # setting the x axis labels
-            interval = int(max_v) / 10
-            left_axis = range(0, int(max_v + 1), interval)
+            interval = int(max_value) / 10
+            if interval < 1:
+                interval = 1
+            left_axis = range(0, int(max_value + 1), interval)
             left_axis[0] = ''
             chart.set_axis_labels(Axis.BOTTOM, left_axis)
             chart.set_bar_width(10)
@@ -268,6 +272,20 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.write(output)
         f.close()
         print filepath + " created"
+
+    def convert_accountId_str(self, id):
+        # Temporarily add here 
+        # But it will be replaced by 'euare-accountlist|grep $accountid'
+        # e.g. euare-accountlist|grep fg82
+        # fg82    281408815495
+        if id == "458299102773" :
+            return "eucalyptus"
+        elif id == "281408815495" :
+            return "fg82"
+        elif id == "000000000001" :
+            return "system"
+        else :
+            return id
 
     def preloop(self):
         self.do_loaddb("")
@@ -466,6 +484,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.user_stats = self.get_user_stats(opts.user, opts.metric)
         self.userid = opts.user
 
+        print self.user_stats
+
     @options([
         make_option('-o', '--output', type="string", help="the filepath in which we store a chart")
         ])
@@ -493,7 +513,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-s', '--summary', action="store_true", default=False, help="Show summary values about images")
         ])
     def do_count_images(self, arg, opts=None):
-        # Written by Klinginsmith, Jonathan Alan <jklingin@indiana.edu>
+       # Written by Klinginsmith, Jonathan Alan <jklingin@indiana.edu>
         import subprocess
         bucket_dict = {}
         details = {}
@@ -504,6 +524,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         output = subprocess.check_output(["python2.7", eucabin[0]])
         # Split the output by end-of-line chars.
         lines = output.split("\n")
+        chart_labels = []
 
         # Loop through lines. The image path is the third item.
         # Split by "/" to get bucket and key.
@@ -511,6 +532,9 @@ class CmdLineAnalyzeEucaData(Cmd):
             if line:
                 values = line.split()
                 bucket, key = values[2].split("/")
+                # replace bucket with accountId - hrlee
+                # No reason to gather bucket name. Instead, accountid would be meaningful.
+                bucket = values[3] + "(" + self.convert_accountId_str(values[3]) + ")"
                 count = bucket_dict.get(bucket, 0)
                 detail[count] = line 
                 details[bucket] = detail
@@ -524,8 +548,17 @@ class CmdLineAnalyzeEucaData(Cmd):
                 if opts.user != key:
                     continue
             print("\t".join([key, str(value)]))
+            chart_labels.append( key + ":" + str(value))
 
-        # show detail information of imasge owned by a specific user from -u, --user option
+        # Generate pygooglchart
+        import math
+        chart_max_v = int(math.ceil(max(bucket_dict.values()) * 1.1))
+        chart_type = "bar"
+        chart_filepath = "image_counts.png"
+        chart_values = bucket_dict.values()
+        self.generate_pygooglechart(chart_type, chart_labels, chart_max_v, chart_values, chart_filepath)
+
+        # show detail information of image owned by a specific user from -u, --user option
         if opts.user and opts.detail:
             for key, value in details[opts.user].items():
                 print (value)
@@ -541,6 +574,24 @@ class CmdLineAnalyzeEucaData(Cmd):
             print "Average image counts per user:\t" + str(float(total_image_count) / float(total_user_count))
             print "Maximum image counts and userid:\t" + max_user[0] + " has " +  str(max_user[1])
             print "=========="
+
+    @options([
+        make_option('-u', '--user', type="string", help="Specify user name")
+        ])
+    def do_user_stats(self, arg, opts=None):
+
+        #(cmd) user_stats -u username
+        #period: 01/01/2011 ~ 01/01/2012
+        #instances:
+        #    total instances launched: 14
+        #    total seconds used: 3600
+        #    average ccvms (cores/mems/disks): 2, 512, 5
+        #    min/max ccvms: 1/2, 512/6000, 5/15
+        print "period:" +  self.from_date + " ~ " + self.to_date
+
+        # instances stats
+        print "instances:"
+
 
 #####################################################################
 # main

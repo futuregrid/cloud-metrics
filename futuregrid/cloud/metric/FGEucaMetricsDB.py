@@ -308,7 +308,8 @@ class FGEucaMetricsDB(object):
         try:
             self.cursor.execute(wquery)
 
-        except MySQLdb.Error:
+        except MySQLdb.Error, e:
+            print "Error %d: %s" % (e.args[0], e.args[1])
             pass
 
     # Change table 

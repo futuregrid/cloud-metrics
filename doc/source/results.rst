@@ -20,6 +20,26 @@ Results for Eucalyptus on india.futuregrid.org
 Feb 2012
 ~~~~~~~~
 
+India
+- - - -
+
+  .. figure:: data/2012-02/bar.count.png
+     :width: 100 %
+     
+     Number of VMs submitted by a user for this month
+
+
+  .. figure:: data/2012-02/bar.sum.png
+     :width: 100 %
+
+     Sum of the wallclock time for all VMs executed by a user for this month 
+
+
+ .. .. figure:: data/2012-02/pie.count.png
+ .. .. figure:: data/2012-02/pie.sum.png
+
+Sierra
+- - - -
   .. figure:: data/2012-02/bar.count.png
      :width: 100 %
      

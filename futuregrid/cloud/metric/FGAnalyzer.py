@@ -278,12 +278,20 @@ class CmdLineAnalyzeEucaData(Cmd):
         # But it will be replaced by 'euare-accountlist|grep $accountid'
         # e.g. euare-accountlist|grep fg82
         # fg82    281408815495
+
+        ## TEST ONLY ~!!!!! ##
         if id == "458299102773" :
             return "eucalyptus"
         elif id == "281408815495" :
             return "fg82"
         elif id == "000000000001" :
             return "system"
+        elif id == "081364875274" :
+            return "fg168"
+        elif id == "150119767462" :
+            return "fg3"
+        elif id == "355794507465" :
+            return "fg201"
         else :
             return id
 

@@ -344,7 +344,12 @@ def ccInstance_parser(rest,data):
 
     # GATHER ALL SIMPLE *=* assignments into a single rest line and add each entry to dict via eval
     rest = convert_str_to_dict_str(rest)
-    restdata = eval (rest)
+    try:
+        restdata = eval (rest)
+    except:
+        print "eval failed:(" + str(sys.exc_info()[0]) + "), (" + str(rest) + ")"
+        return
+
     data.update(restdata)
 
     # convert ccvm and ccnet to dict

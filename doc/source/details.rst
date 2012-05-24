@@ -101,7 +101,7 @@ Show machine image counts for Eucalyptus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  Based on Jonathan's code, we are able to get image counts via cmd2 tools.
- It's established on 'euca-describe-images' command.
+ It's established on 'euca-describe-images' command::
 
         (Cmd) count_images
         ...
@@ -112,12 +112,12 @@ Show machine image counts for Eucalyptus
         ...
 
  There are additional options which might be useful,
- 1) showing only image numbers owned by the userid specified,
+ 1) showing only image numbers owned by the userid specified::
 
     (Cmd) count_image -u jdiaz
     jdiaz   7
    
- 2) displaying details about images,
+ 2) displaying details about images::
     
     (Cmd) count_images -u jdiaz -d
     jdiaz   7
@@ -136,7 +136,7 @@ Show machine image counts for Eucalyptus
 
  3) displaying summary values about images.
     e.g. total image counts, total user counts, average image counts 
-    per user, and maximum image counts and userid.
+    per user, and maximum image counts and userid::
 
     (Cmd) count_images -s
     ...

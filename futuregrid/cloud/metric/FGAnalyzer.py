@@ -36,6 +36,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     userid = None
     user_stats = None
+    sys_stats = None
 
     def calculate_stats (self, from_date="all", to_date="all"):
         '''calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time'''
@@ -93,20 +94,26 @@ class CmdLineAnalyzeEucaData(Cmd):
             print "from and to date not specified." 
             pass
 
-    def get_user_stats(self, username, metric, period="daily"):
-      
+    def get_stats(self, metric, period="daily", username=""):
         merged_res = []
         # instance based data
         for i in range(0, int(self.instances.count())):
             instance = self.instances.getdata(i)
-            if instance["ownerId"] != username:
+            if username and username != instance["ownerId"] :
+                print "skip\n"
                 continue
             res = self.daily_histogram(instance, metric)
             merged_res = self.merge_daily_histogram(res, merged_res, "sum") # Or "avg"
         return merged_res
 
+    def get_user_stats(self, username, metric, period="daily"):
+        return self.get_stats(metric, period, username)
+
+    def get_sys_stats(self, metric, period="daily"):
+        return self.get_stats(metric, period)
+
     # This is going to be counting hours for daily
-    # This logic is kind of messy, will be changed/updated though soon, Hopefully.
+    # This logic is kind of messy but it will be changed/updated soon, Hopefully.
     def daily_histogram(self, instance, metric):
         ''' Make a list filled with metric values in a daily basis.
             The size of the list is the date range of analyze. 
@@ -165,18 +172,17 @@ class CmdLineAnalyzeEucaData(Cmd):
         array = [new, current]
         return [(sum(a)/divide) for a in zip(*array)]
 
-    def line_chart(self, output):
+    def line_chart(self, chart_data, output):
        
-        maxY = int(round(max(self.user_stats) / 10) * 10)
+        maxY = int(round(max(chart_data) / 10) * 10)
         chart = PyGoogleChart("line", maxY)
-        chart.set_data(self.user_stats)
-        #chart.set_data(value2)
-        
+        chart.set_data(chart_data)
         # + 1 will add last value to the list. In here, the last value is 24
         chart.set_yaxis([ str(x)+"hr" for x in range(0, maxY + 1, (maxY / 4))])
         chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, 3)])
         chart.set_output_path(output)
-        chart.set_filename(self.userid + "-" + "linechart.png")
+        #chart.set_filename(self.userid + "-" + "linechart.png")
+        chart.set_filename("linechart.png")
         chart.display()
         print chart.filepath + "/" + chart.filename + " created."
 
@@ -376,6 +382,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-t', '--end',  default="all",  type="string", help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
         make_option('-M', '--month', type="string", help="month to analyze (type. MM)"),
         make_option('-Y', '--year', type="string", help="year to analyze (type. YYYY)"),
+        make_option('-S', '--stats', dest="metric", type="string", help="item name to measure (e.g. runtime, vms)")
         ])
     def do_analyze (self, arg, opts=None):
 
@@ -407,6 +414,12 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.instances.refresh()
         print "now calculating"
         self.calculate_stats (from_date, to_date)
+
+        # new way to calculate metrics
+        # get_sys_stats return a list of daily values not specified by a user name
+        # It can display daily/weekly/monthly graphs for system utilization
+        self.sys_stats = self.get_sys_stats(opts.metric)
+        print self.sys_stats
 
     def do_getdaterange(self, arg): 
         '''Get Date range of the instances table in mysql db'''
@@ -495,14 +508,16 @@ class CmdLineAnalyzeEucaData(Cmd):
         print self.user_stats
 
     @options([
-        make_option('-o', '--output', type="string", help="the filepath in which we store a chart")
+        make_option('-o', '--output', type="string", help="Filepath in which we store a chart")
         ])
     def do_user_report(self, arg, opts=None):
         # set default output by Year-month typed string
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
 
-        self.line_chart(opts.output)
+        # user_stats has a user's data analyzed by 'analyze_user' command.
+        # user_report requires prior execution of 'analyze_user' command.
+        self.line_chart(self.user_stats, opts.output)
 
         print
         print "This line chart displays statistics of a specific user's metric."
@@ -510,6 +525,14 @@ class CmdLineAnalyzeEucaData(Cmd):
         print "Y-axis indicates total running hours of instances."
         print "X-axis indicates date of the month."
         print
+
+    @options([
+        make_option('-o', '--output', type="string", help="Filepath in which we store a chart")
+        ])
+    def do_sys_report(self, arg, opts=None):
+        if not opts.output:
+            opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
+        self.line_chart(self.sys_stats, opts.output)
 
     def do_filled_line_example(self, arg, opts=None):
         chart = PyGoogleChart("line", 0)
@@ -521,7 +544,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-s', '--summary', action="store_true", default=False, help="Show summary values about images")
         ])
     def do_count_images(self, arg, opts=None):
-       # Written by Klinginsmith, Jonathan Alan <jklingin@indiana.edu>
+       # by Klinginsmith, Jonathan Alan <jklingin@indiana.edu>
         import subprocess
         bucket_dict = {}
         details = {}
@@ -599,7 +622,6 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         # instances stats
         print "instances:"
-
 
 #####################################################################
 # main

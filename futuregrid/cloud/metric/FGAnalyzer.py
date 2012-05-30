@@ -102,8 +102,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             if username and username != instance["ownerId"] :
                 print "skip\n"
                 continue
-            res = self.daily_histogram(instance, metric)
-            merged_res = self.merge_daily_histogram(res, merged_res, "sum") # Or "avg"
+            merged_res = self.daily_stats(instance, metric, merged_res, "sum") # or "avg"
         return merged_res
 
     def get_user_stats(self, username, metric, period="daily"):
@@ -112,9 +111,13 @@ class CmdLineAnalyzeEucaData(Cmd):
     def get_sys_stats(self, metric, period="daily"):
         return self.get_stats(metric, period)
 
+    def daily_stats(self, instance, metric, current_stats, type="sum"):
+        new_stats = self.daily_stat(instance, metric)
+        return self.merge_daily_stat(new_stats, current_stats, type)
+
     # This is going to be counting hours for daily
     # This logic is kind of messy but it will be changed/updated soon, Hopefully.
-    def daily_histogram(self, instance, metric):
+    def daily_stat(self, instance, metric):
         ''' Make a list filled with metric values in a daily basis.
             The size of the list is the date range of analyze. 
             e.g. [0 (1st), 0 (2nd), ... , 0 (31th)] list will be 
@@ -123,7 +126,6 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         month = [ 0 for n in range(self.day_count) ]
         if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date :
-            #print "This instance data is out of analyzing range." + "(" + str(instance["t_start"]) + "," + str(instance["t_end"]) + ")"
             return month
         offset = (instance["t_start"] - self.from_date).days
 
@@ -133,30 +135,33 @@ class CmdLineAnalyzeEucaData(Cmd):
             if single_date > self.to_date:
                 break
             if metric == "runtime":
-                a = datetime.strptime("00:00:00", "%H:%M:%S")
-                first_second_of_a_day = datetime.combine(single_date.date(), a.time())
+                first_second_of_a_day = datetime.combine(single_date.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
                 last_second_of_a_day = first_second_of_a_day + timedelta(days=1)
-                if i == 0:
+                if i == 0: # First day of instance (same with instance["t_start"] and single_date)
                     td = last_second_of_a_day - single_date
                     hour = td.seconds / 60 / 60
                     month[offset + i] = hour
-                elif i + 1 == day_count_ins:
+                elif i + 1 == day_count_ins: # Last day of instance (same day with instance["t_end"] and single_date)
                     td = instance["t_end"] - first_second_of_a_day
                     hour = td.seconds / 60 / 60
                     month[offset + i] = hour
-                else:
+                else: # days between first and last days of instance
                     month[offset + i] = 24 # hours
+            elif metric == "count":
+                    month[offset + i] = 1
             i += 1
-        td = instance["t_end"] - instance["t_start"]
 
         if metric == "runtime":
             if day_count_ins == 1:
                 td = instance["t_end"] - instance["t_start"]
                 hour = td.seconds / 60 / 60
                 month[offset] = hour
+        elif metric == "count":
+            month[offset] = 1
+
         return month
 
-    def merge_daily_histogram(self, new, current, type="sum"):
+    def merge_daily_stat(self, new, current, type="sum"):
         ''' merge daily_historam lists 
             e.g. [1,2,3] + [2,3,4]
             expect => [ 1+2, 2+3, 3+4] = [ 3, 5, 7]
@@ -178,8 +183,9 @@ class CmdLineAnalyzeEucaData(Cmd):
         chart = PyGoogleChart("line", maxY)
         chart.set_data(chart_data)
         # + 1 will add last value to the list. In here, the last value is 24
-        chart.set_yaxis([ str(x)+"hr" for x in range(0, maxY + 1, (maxY / 4))])
-        chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, 3)])
+        #chart.set_yaxis([ str(x)+"hr" for x in range(0, maxY + 1, (maxY / 4))])
+        chart.set_yaxis([ str(x) for x in range(0, maxY + 1, (maxY / 4))])
+        chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, ((self.day_count + 1) / 9))])
         chart.set_output_path(output)
         #chart.set_filename(self.userid + "-" + "linechart.png")
         chart.set_filename("linechart.png")

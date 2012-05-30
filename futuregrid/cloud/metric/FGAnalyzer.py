@@ -94,26 +94,27 @@ class CmdLineAnalyzeEucaData(Cmd):
             print "from and to date not specified." 
             pass
 
-    def get_stats(self, metric, period="daily", username=""):
-        merged_res = []
-        # instance based data
-        for i in range(0, int(self.instances.count())):
-            instance = self.instances.getdata(i)
-            if username and username != instance["ownerId"] :
-                print "skip\n"
-                continue
-            merged_res = self.daily_stats(instance, metric, merged_res, "sum") # or "avg"
-        return merged_res
-
     def get_user_stats(self, username, metric, period="daily"):
         return self.get_stats(metric, period, username)
 
     def get_sys_stats(self, metric, period="daily"):
         return self.get_stats(metric, period)
 
+    def get_stats(self, metric, period="daily", username=""):
+        merged_res = []
+        # instance based data
+        for i in range(0, int(self.instances.count())):
+            instance = self.instances.getdata(i)
+            if username and username != instance["ownerId"] :
+                continue
+            merged_res = self.daily_stats(instance, metric, merged_res, "sum") # or "avg"
+        print merged_res
+        return merged_res
+
     def daily_stats(self, instance, metric, current_stats, type="sum"):
         new_stats = self.daily_stat(instance, metric)
-        return self.merge_daily_stat(new_stats, current_stats, type)
+        res= self.merge_daily_stat(new_stats, current_stats, type)
+        return res
 
     # This is going to be counting hours for daily
     # This logic is kind of messy but it will be changed/updated soon, Hopefully.
@@ -148,7 +149,13 @@ class CmdLineAnalyzeEucaData(Cmd):
                 else: # days between first and last days of instance
                     month[offset + i] = 24 # hours
             elif metric == "count":
-                    month[offset + i] = 1
+                month[offset + i] = 1
+            elif metric == "ccvm_cores":
+                month[offset + i] = int(instance["ccvm"]["cores"])
+            elif metric == "ccvm_mem":
+                month[offset + i] = int(instance["ccvm"]["mem"])
+            elif metric == "ccvm_disk":
+                month[offset + i] = int(instance["ccvm"]["disk"])
             i += 1
 
         if metric == "runtime":
@@ -156,8 +163,14 @@ class CmdLineAnalyzeEucaData(Cmd):
                 td = instance["t_end"] - instance["t_start"]
                 hour = td.seconds / 60 / 60
                 month[offset] = hour
-        elif metric == "count":
+        elif metric == "count" and day_count_ins == 1:
             month[offset] = 1
+        elif metric == "ccvm_cores" and day_count_ins == 1:
+            month[offset] = int(instance["ccvm"]["cores"])
+        elif metric == "ccvm_mem" and day_count_ins == 1:
+            month[offset] = int(instance["ccvm"]["mem"])
+        elif metric == "ccvm_disk" and day_count_ins == 1:
+            month[offset] = int(instance["ccvm"]["disk"])
 
         return month
 

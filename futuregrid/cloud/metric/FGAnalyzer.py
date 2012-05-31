@@ -108,7 +108,6 @@ class CmdLineAnalyzeEucaData(Cmd):
             if username and username != instance["ownerId"] :
                 continue
             merged_res = self.daily_stats(instance, metric, merged_res, "sum") # or "avg"
-        print merged_res
         return merged_res
 
     def daily_stats(self, instance, metric, current_stats, type="sum"):

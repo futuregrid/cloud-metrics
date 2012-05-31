@@ -2,7 +2,7 @@
 # These commands will produce a line chart for system usage
 
 # A user can specify a data range
-set_range -f 2011-11-01T00:00:00 -t 2012-04-30T23:59:59
+set_range -f 2011-11-01T00:00:00 -t 2012-05-14T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set_nodename -N india
@@ -11,4 +11,4 @@ set_nodename -N india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report 
+sys_report -o 2011-11/runtime

@@ -511,6 +511,22 @@ class CmdLineAnalyzeEucaData(Cmd):
         print "Set date range to analyze: [" + from_date + ", " + to_date + "]" 
         self.set_date(from_date, to_date)
 
+    def do_set (self, arg, oprts=None):
+
+        args = arg.split()
+        cmd = args[0]
+        param = args[1:]
+
+        if cmd == "search_range":
+            self.search_range(param)
+
+    # Example. set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
+    def search_range(self, param):
+        from_date = param[0]
+        to_date = param[1]
+        print "Set date range to analyze: [" + from_date + ", " + to_date + "]" 
+        self.set_date(from_date, to_date)
+
     @options([
         make_option('-u', '--user', type="string", help="user id to analyze"),
         make_option('-m', '--metric', default="runtime", type="string", help="metric name to display (runtime, vms)")

@@ -164,7 +164,12 @@ create:
 
 metric:
 	mkdir -p build/html/data/
-	cd build/html/data; cat ../../../../lighttpd/metric-script.fg | fg-metric
+	#cd build/html/data; cat ../../../../lighttpd/metric-script.fg | fg-metric
+	cd build/html/data; cat ../../../../examples/example2.txt | fg-metric
+	#cd build/html/data; cat ../../../../examples/example4.txt | fg-metric
+	cd build/html/data; cat ../../../../examples/example5.txt | fg-metric
+	cd build/html/data; cat ../../../../examples/example5-1.txt | fg-metric
+	cd build/html/data; cat ../../../../examples/example5-2.txt | fg-metric
 
 tar:
 	tar cvfz fg-metric.tar.gz build/html/

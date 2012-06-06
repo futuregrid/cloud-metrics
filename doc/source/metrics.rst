@@ -1,84 +1,314 @@
 Metrics
 =======
-There are currently eight different metrics to deliver system utilization, a user activity and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as used VM instances, registered bucket VM images, used virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, there are descriptions, instructions, examples and manuals for the metrics.
+There are currently eight different metrics to deliver system utilization, user activities and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as virtual machine (VM) instances, registered VM images, virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, you can find descriptions, instructions, examples and manuals for the metrics.
 
 Current metrics
 ---------------
-1. The number of VM instances used by a user
-        It is virtual machine instance counts grouped by users or accounts based on log files of eucalyptus. It shows a user's activity and a system utilization by counting launched VM instances during a certain period.
+1. **The number of VM instances used by a user**
+        It is virtual machine instance count launched by users or accounts based on log files of eucalyptus. It shows a user's activity and a system utilization by counting launched VM instances during a certain period.
         
-2. The total runtime of VM instance used by a user
+2. **Total runtime of VM instance used by a user**
         It is the total running time for virtual machine instances grouped by users or accounts based on log files of eucalyptus. It shows the amount of resources used by users and a system utilization by adding up the total lifetime of instances during a certain period.
 
-3. A count of VM images owned by a user (euca-describe-images)
-        It is virtual machine image counts grouped by users or accounts based on euca2ools. It shows that which user or account currently owns how many virtual machine images on the system. This metric is based on the euca2ool command *euca-describe-images* that a eucalyptus user can see a list of machine images. For example in Eucalyptus 3.0, the euca-describe-images generates information like below.
+3. **A count of VM images owned by a user**
+        It is virtual machine image count grouped by users or accounts based on euca2ools. It shows that which user or account currently owns how many virtual machine images on the system. This metric is based on the euca2ool command *euca-describe-images* that a eucalyptus user can see a list of machine images. For example in Eucalyptus 3.0, the euca-describe-images generates information like below.
          ::
 
-         $ euca-describe-images
-         IMAGE emi-0E19393A jdiaz/ubuntuprecisejdiaz2122518911.img.manifest.xml 281408815495 available public i386 machine eki-226638E6 eri-32DE3771 instance-store
-         IMAGE eri-4E163AA8 ramdik/initrd.img-2.6.28-11-generic.manifest.xml 000000000001 available public i386 ramdisk instance-store
+          $ euca-describe-images
+          IMAGE emi-0E19393A jdiaz/ubuntuprecisejdiaz2122518911.img.manifest.xml 281408815495 available public i386 machine eki-226638E6 eri-32DE3771 instance-store
+          IMAGE eri-4E163AA8 ramdik/initrd.img-2.6.28-11-generic.manifest.xml 000000000001 available public i386 ramdisk instance-store
+          ...
 
-4. The total number of VM instances used in a system
-        It is 
-5. Total runtime of VM instances used in a system
-6. Total CPU cores of VM instances used in a system
-7. Total memories of VM instances used in a system
-8. Total disks of VM instances used in a system
+4. **The total number of VM instances used in a system**
+        It is a count of virtual machine instance used during a certain period in a system. It shows a system utilization and a performance comparison among other systems by counting launched VM instances. It is similar to the metric of the number of VM instances used by a user but it is grouped by a system instead of a user.
+5. **Total runtime of VM instances used in a system**
+        It is a total running hour(s) for virtual machine instances used in a system. It shows the amount of resources allocated and a system utilization by adding up the total lifetime of instances during a certain period. It is similar to the metric of total runtime of VM instance used by a user but it is grouped by a system instead of a user.
+6. **Total CPU cores of VM instances used in a system**
+        It is a total amount of CPU cores for VM instances requested by users in a system. It shows CPU resource allocation by adding up the CPU cores requested during a certain period.
+7. **Total memories of VM instances used in a system**
+        It is a total size of memories for VM instances requested by users in a system. It shows memory resource allocation by adding up the size of a memory block requested during a certain period.
+8. **Total disks of VM instances used in a system**
+        It is a total size of storage for VM instances requested by users in a system. It shows disk allocation by adding up the the size of a disk requested during a certain period.
 
 Examples
 --------
+In this section, graphs, and commands for each metric will be viewed.
 
-Dictionary for metrics
-----------------------
+1. The number of VM instances used by a user
+   generates a graph like below.
 
-Commands
-========
+        .. figure:: data/2012-01/bar.count.png
+           :scale: 50 %
+           :alt: The number of VM instances used by a user
 
-count_images
-------------
+           Figure 1. The number of used VM instances grouped by an ownerid (January 2012 in India)
 
-Description
-~~~~~~~~~~~
-count_images generates a bar chart about virtual machine image counts per users or accounts. The image counts are 
+           ====== ========================================================================
+           ====== ========================================================================
+           X-axis indicates the number of VM instances.
+           Y-axis indicates an ownerid and the number of VM instances used by the ownerid.
+           ====== ========================================================================
+           
+           Table 1. Specifications for the example options
 
-calulated by the euca-describe-images Eucalyptus cmd2ools. It provides a current status when it is executed.
+        **Example commands**
 
-Note
-~~~~
-Why we count images?
-It is a simple approach to show how many virtual machine images are currently registered by users or accounts.
+        .. literalinclude:: ../../examples/example2.txt 
 
-Note
-~~~~
-What is an Account?
-Accounts are the primary unit for resource usage accounting. Each account is a separate name space and is 
+        *This included block is from examples/example2.txt*
 
-identified by its UUID (Universal Unique Identifier). Tasks performed at the account level can only be done by the 
+        **Related commands**
 
-users in the eucalyptus account [1]. For example, .fg82. has .281408815495. account id and all users in .fg82. 
+        clear users
+                clear memory for user data
+        analyze
+                analyze user data for a certain period
+        createreport
+                create a graph
+        createreports
+                create an index html page for including graphs
 
-group can use this account id for the image management.
+2. Total runtime of VM instance used by a user
+   generates a graph like below.
 
-Note
-~~~~
-Is there any prerequisite condition to run this new metric?
-In order to execute euca2ools e.g. euca-describe-images, a user should read config and credentials from the config file i.e. eucarc. If a user already set up euca2ools properly, there should be no problem to have the new metric.
+        .. figure:: data/2012-01/bar.sum.png
+           :scale: 50 %
+           :alt: The wall-clock hour for all VM instances executed by a user
 
-Syntax
-~~~~~~
+           Figure 2. The wall-clock hour for all VM instances executed by a user (January 2012 in India)
 
-Options
-~~~~~~~
+           ====== =================================================================================
+           ====== =================================================================================
+           X-axis indicates the total running hours for all VM instances.
+           Y-axis indicates the an ownerid and the total hours of VM instances used by the ownerid.
+           ====== =================================================================================
 
-Common options
-~~~~~~~~~~~~~~
+           Table 2. Specifications for the example options
 
-Output
-~~~~~~
+        **Example commands**
 
-Graph
-~~~~~
-bar chart
+        .. literalinclude:: ../../examples/example2.txt
 
-Examples
-~~~~~~~~
+        *This included block is from examples/example2.txt*
+
+3. A count of VM images owned by a user
+   generates a graph like below.
+
+        .. figure:: data/image_counts.png
+           :scale: 50 %
+           :alt: A count of VM images owned by a user in India
+
+           Figure 3. A count of VM images owned by a user (Current data in India)
+
+           ====== =====================================================
+           ====== =====================================================
+           X-axis indicates a count of VM images owned by an ownerid.
+           Y-axis indicates an account id or an user id with the count.
+           ====== =====================================================
+
+           Table 3. Specifications for the example options
+
+        **Example commands**
+
+        .. literalinclude:: ../../examples/example4.txt
+
+        *This included block is from examples/example4.txt*
+        
+        **Related commands**
+
+        count_images
+                | Count virtual machine images by an user id or an account id.
+                | A user should read configurations and credentials of euca2ools from the config file i.e. eucarc.
+                | Otherwise, this command does not return anything.
+                | Typically, this is only allowed for administrators.
+        
+4. The total number of VM instances used in a system
+   generates a graph like below.
+
+        .. figure:: data/2011-11/count/linechart.png
+           :scale: 50 %
+           :alt: The total number of VM instances used in a system
+
+           Figure 4. The total number of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)
+
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |X-axis:       | a day for the search range                                                                                                             |
+           |              | (e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)|
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Y-axis:       | instance counts                                                                                                                        |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Search range: | 2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)                                                                                   |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Period:       | daily                                                                                                                                  |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+
+           Table 4. Specifications for the example options
+
+        **Example commands**
+
+        .. literalinclude:: ../../examples/example5-1.txt
+
+        *This included block is from examples/example5-1.txt*
+
+        **Related commands**
+
+        set_range
+                Specify search range
+        set_nodename
+                Specify search node name
+        analyze
+                Analyze for a metric specified by -S option
+
+                *Options*
+
+                count
+                        Analyze for counting the total number of VM instances
+                runtime
+                        Analyze for wall-clock hours for VM instances
+                ccvm_cores
+                        Analyze for CPU cores of VM instances
+                ccvm_mem
+                        Analyze for memory allocation for VM instances
+                ccvm_disk
+                        Analyze for disk allocation for VM instances
+                        
+        sys_report
+                | Generate a graph for the analyzed data
+                | 'analyze' command needs to be executed prior to run this command
+
+5. Total runtime of VM instances used in a system
+   generates a graph like below.
+
+        .. figure:: data/2011-11/runtime/linechart.png
+           :scale: 50 %
+           :alt: The total running hours of VM instances used in a system
+
+           Figure 5. The total running hours of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)
+
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |X-axis:       | a day for the search range                                                                                                             |
+           |              | (e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)|
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Y-axis:       | total running hours                                                                                                                    |
+           |              | (e.g. 1860 indicates maximum used hours during this search range)                                                                      |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Search range: | 2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)                                                                                   |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Period:       | daily                                                                                                                                  |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+
+           Table 5. Specifications for the example options
+
+        **Example commands**
+
+        .. literalinclude:: ../../examples/example5.txt
+
+        *This included block is from examples/example5.txt*
+
+        **Related commands**
+
+        set_range
+                Specify search range
+        set_nodename
+                Specify search node name
+        analyze
+                Analyze for a metric specified by -S option
+        sys_report
+                | Generate a graph for the analyzed data
+                | 'analyze' command needs to be executed prior to run this command
+
+6. Total CPU cores of VM instances used in a system
+   generates a graph like below.
+
+        .. figure:: data/2011-11/cores/linechart.png
+           :scale: 50 %
+           :alt: The total CPU cores of VM instances used in a system
+
+           Figure 6. The total CPU cores of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)
+
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |X-axis:       | a day for the search range                                                                                                             |
+           |              | (e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)|
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Y-axis:       | the number of CPU cores                                                                                                                |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Search range: | 2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)                                                                                   |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Period:       | daily                                                                                                                                  |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+
+           Table 6. Specifications for the example options
+
+        **Example commands**
+
+        .. literalinclude:: ../../examples/example5-2.txt
+
+        *This included block is from examples/example5-2.txt*
+
+        **Related commands**
+
+        analyze
+                Analyze for a metric specified by -S option
+
+                *Options*
+
+                count
+                        Analyze for counting the total number of VM instances
+                runtime
+                        Analyze for wall-clock hours for VM instances
+                ccvm_cores
+                        Analyze for CPU cores of VM instances
+                ccvm_mem
+                        Analyze for memory allocation for VM instances
+                ccvm_disk
+                        Analyze for disk allocation for VM instances
+
+7. Total memories of VM instances used in a system
+   generates a graph like below.
+
+        .. figure:: data/2011-11/mem/linechart.png
+           :scale: 50 %
+           :alt: The total memories of VM instances used in a system
+
+           Figure 7. The total memories of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)
+
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |X-axis:       | a day for the search range                                                                                                             |
+           |              | (e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)|
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Y-axis:       | the total memory allocation                                                                                                            |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Search range: | 2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)                                                                                   |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Period:       | daily                                                                                                                                  |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+
+           Table 7. Specifications for the example options
+
+8. Total disks of VM instances used in a system
+   generates a graph like below.
+
+        .. figure:: data/2011-11/disk/linechart.png
+           :scale: 50 %
+           :alt: The total disk of VM instances used in a system
+
+           Figure 8. The total disks of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)
+
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |X-axis:       | a day for the search range                                                                                                             |
+           |              | (e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)|
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Y-axis:       | the total disk allocation                                                                                                              |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Search range: | 2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)                                                                                   |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+           |Period:       | daily                                                                                                                                  |
+           +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
+
+           Table 8. Specifications for the example options
+

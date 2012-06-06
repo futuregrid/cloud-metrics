@@ -1,17 +1,55 @@
 Cloud Metric Results
-=============
+====================
 
 Results for Eucalyptus on india.futuregrid.org
-------------------------------------
+----------------------------------------------
 
-.. Mar 2012
-.. ~~~~~~~~
+May 2012
+~~~~~~~~
 
- .. .. image:: data/2012-03/bar.count.png
- .. Number of VMs submitted by a user for this month
+ .. figure:: data/2012-05/bar.count.png
+    :width: 100 %
 
- .. .. image:: data/2012-03/bar.sum.png
- .. Sum of the wallclock time for all VMs executed by a user for this month 
+    Number of VMs submitted by a user for this month
+
+ .. figure:: data/2012-05/bar.sum.png
+    :width: 100 %
+
+    Sum of the wallclock time for all VMs executed by a user for this month 
+
+
+ .. .. image:: data/2012-05/pie.count.png
+ .. .. image:: data/2012-05/pie.sum.png
+
+Apr 2012
+~~~~~~~~
+
+ .. figure:: data/2012-04/bar.count.png
+    :width: 100 %
+
+    Number of VMs submitted by a user for this month
+
+ .. figure:: data/2012-04/bar.sum.png
+    :width: 100 %
+
+    Sum of the wallclock time for all VMs executed by a user for this month 
+
+
+ .. .. image:: data/2012-04/pie.count.png
+ .. .. image:: data/2012-04/pie.sum.png
+
+Mar 2012
+~~~~~~~~
+
+ .. figure:: data/2012-03/bar.count.png
+    :width: 100 %
+
+    Number of VMs submitted by a user for this month
+
+ .. figure:: data/2012-03/bar.sum.png
+    :width: 100 %
+
+    Sum of the wallclock time for all VMs executed by a user for this month 
 
 
  .. .. image:: data/2012-03/pie.count.png
@@ -20,9 +58,6 @@ Results for Eucalyptus on india.futuregrid.org
 Feb 2012
 ~~~~~~~~
 
-India
-- - - -
-
   .. figure:: data/2012-02/bar.count.png
      :width: 100 %
      
@@ -38,22 +73,6 @@ India
  .. .. figure:: data/2012-02/pie.count.png
  .. .. figure:: data/2012-02/pie.sum.png
 
-Sierra
-- - - -
-  .. figure:: data/2012-02/bar.count.png
-     :width: 100 %
-     
-     Number of VMs submitted by a user for this month
-
-
-  .. figure:: data/2012-02/bar.sum.png
-     :width: 100 %
-
-     Sum of the wallclock time for all VMs executed by a user for this month 
-
-
- .. .. figure:: data/2012-02/pie.count.png
- .. .. figure:: data/2012-02/pie.sum.png
 
 Jan 2012
 ~~~~~~~~

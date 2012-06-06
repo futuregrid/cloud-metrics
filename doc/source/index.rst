@@ -18,6 +18,7 @@ Contents:
    download
    support
    results
+   metrics
 
 
 Indices and tables

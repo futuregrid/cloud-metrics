@@ -59,7 +59,7 @@ DESCRIPTION
        
         types we have not yet included include
            terminate_instances
-           ....
+           ...
            put all the other once we ignore here
 
       --from date_from --to date_to
@@ -71,7 +71,7 @@ DESCRIPTION
 
   
 Usage tip:
-=========
+==========
 
  Using fgrep to search for the types before piping it into this program could
  speed up processing. multiple files, can be concatenated simply with cat.

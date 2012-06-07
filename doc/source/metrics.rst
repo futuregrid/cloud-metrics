@@ -1,6 +1,6 @@
 Metrics
 =======
-There are currently eight different metrics to deliver system utilization, user activities and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as virtual machine (VM) instances, registered VM images, virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, you can find descriptions, instructions, examples and manuals for the metrics.
+There are currently eight different metrics to deliver system utilization, user activities and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as virtual machine (VM) instances, registered VM images, virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, you can find descriptions, instructions, and examples for the metrics.
 
 Current metrics
 ---------------
@@ -8,7 +8,7 @@ Current metrics
         It is virtual machine instance count launched by users or accounts based on log files of eucalyptus. It shows a user's activity and a system utilization by counting launched VM instances during a certain period.
         
 2. **Total runtime of VM instance used by a user**
-        It is the total running time for virtual machine instances grouped by users or accounts based on log files of eucalyptus. It shows the amount of resources used by users and a system utilization by adding up the total lifetime of instances during a certain period.
+        It is the total runtime for virtual machine instances grouped by users or accounts based on log files of eucalyptus. It shows the amount of resources used by users and a system utilization by adding up the total lifetime of instances during a certain period.
 
 3. **A count of VM images owned by a user**
         It is virtual machine image count grouped by users or accounts based on euca2ools. It shows that which user or account currently owns how many virtual machine images on the system. This metric is based on the euca2ool command *euca-describe-images* that a eucalyptus user can see a list of machine images. For example in Eucalyptus 3.0, the euca-describe-images generates information like below.
@@ -22,7 +22,7 @@ Current metrics
 4. **The total number of VM instances used in a system**
         It is a count of virtual machine instance used during a certain period in a system. It shows a system utilization and a performance comparison among other systems by counting launched VM instances. It is similar to the metric of the number of VM instances used by a user but it is grouped by a system instead of a user.
 5. **Total runtime of VM instances used in a system**
-        It is a total running hour(s) for virtual machine instances used in a system. It shows the amount of resources allocated and a system utilization by adding up the total lifetime of instances during a certain period. It is similar to the metric of total runtime of VM instance used by a user but it is grouped by a system instead of a user.
+        It is a total wall-clock hour(s) for virtual machine instances used in a system. It shows the amount of resources allocated and a system utilization by adding up the total lifetime of instances during a certain period. It is similar to the metric of total runtime of VM instance used by a user but it is grouped by a system instead of a user.
 6. **Total CPU cores of VM instances used in a system**
         It is a total amount of CPU cores for VM instances requested by users in a system. It shows CPU resource allocation by adding up the CPU cores requested during a certain period.
 7. **Total memories of VM instances used in a system**
@@ -53,9 +53,9 @@ In this section, graphs, and commands for each metric will be viewed.
 
         **Example commands**
 
-        .. literalinclude:: ../../examples/example2.txt 
+        .. literalinclude:: ../../examples/example2-1.txt 
 
-        *This included block is from examples/example2.txt*
+        *This included block is from examples/example2-1.txt*
 
         **Related commands**
 
@@ -65,8 +65,6 @@ In this section, graphs, and commands for each metric will be viewed.
                 analyze user data for a certain period
         createreport
                 create a graph
-        createreports
-                create an index html page for including graphs
 
 2. Total runtime of VM instance used by a user
    generates a graph like below.
@@ -79,7 +77,7 @@ In this section, graphs, and commands for each metric will be viewed.
 
            ====== =================================================================================
            ====== =================================================================================
-           X-axis indicates the total running hours for all VM instances.
+           X-axis indicates the total wall-clock hours for all VM instances.
            Y-axis indicates the an ownerid and the total hours of VM instances used by the ownerid.
            ====== =================================================================================
 
@@ -87,9 +85,9 @@ In this section, graphs, and commands for each metric will be viewed.
 
         **Example commands**
 
-        .. literalinclude:: ../../examples/example2.txt
+        .. literalinclude:: ../../examples/example2-1.txt
 
-        *This included block is from examples/example2.txt*
+        *This included block is from examples/example2-1.txt*
 
 3. A count of VM images owned by a user
    generates a graph like below.
@@ -182,16 +180,16 @@ In this section, graphs, and commands for each metric will be viewed.
 
         .. figure:: data/2011-11/runtime/linechart.png
            :scale: 50 %
-           :alt: The total running hours of VM instances used in a system
+           :alt: The total wall-clock hours of VM instances used in a system
 
-           Figure 5. The total running hours of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)
+           Figure 5. The total wall-clock hours of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)
 
            +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
            +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
            |X-axis:       | a day for the search range                                                                                                             |
            |              | (e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)|
            +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
-           |Y-axis:       | total running hours                                                                                                                    |
+           |Y-axis:       | total wall-clock hours                                                                                                                 |
            |              | (e.g. 1860 indicates maximum used hours during this search range)                                                                      |
            +--------------+----------------------------------------------------------------------------------------------------------------------------------------+
            |Search range: | 2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)                                                                                   |
@@ -244,9 +242,9 @@ In this section, graphs, and commands for each metric will be viewed.
 
         **Example commands**
 
-        .. literalinclude:: ../../examples/example5-2.txt
+        .. literalinclude:: ../../examples/example5-3.txt
 
-        *This included block is from examples/example5-2.txt*
+        *This included block is from examples/example5-3.txt*
 
         **Related commands**
 
@@ -289,6 +287,12 @@ In this section, graphs, and commands for each metric will be viewed.
 
            Table 7. Specifications for the example options
 
+        **Example commands**
+
+        .. literalinclude:: ../../examples/example5-4.txt
+
+        *This included block is from examples/example5-4.txt*
+
 8. Total disks of VM instances used in a system
    generates a graph like below.
 
@@ -312,3 +316,8 @@ In this section, graphs, and commands for each metric will be viewed.
 
            Table 8. Specifications for the example options
 
+        **Example commands**
+
+        .. literalinclude:: ../../examples/example5-5.txt
+
+        *This included block is from examples/example5-5.txt*

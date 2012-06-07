@@ -9,7 +9,7 @@ Commands for FutureGrid Cloud Metrics
 Contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
 
    fg-cleanup-db
    fg-euca-gather-log-files

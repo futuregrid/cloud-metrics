@@ -38,7 +38,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     user_stats = None
     sys_stats = None
 
-    nodename = ""
+    nodename = None
 
     def calculate_stats (self, from_date="all", to_date="all"):
         '''calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time'''
@@ -66,6 +66,11 @@ class CmdLineAnalyzeEucaData(Cmd):
                 process_entry = (values['ts'] >= date_from) and (values['ts'] < date_to)
 
             if process_entry:
+
+                # If a nodename is set, stats is only for the compute cluster node specified
+                if self.nodename and self.nodename != values['euca_hostname']:
+                    continue
+
                 name = values["ownerId"]
                 t_delta = float(values["duration"])
                 try:
@@ -223,7 +228,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             if metric != "count":
                 number = int (number / 60)
             values.append(number)
-            label_values.append(name + ":" + str(number))
+            label_values.append(self.convert_ownerId_str(name) + ":" + str(number))
             max_v = max(max_v, number)
 
         self.generate_pygooglechart(type, label_values, max_v, values, filepath)
@@ -300,6 +305,12 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.write(output)
         f.close()
         print filepath + " created"
+
+    def convert_ownerId_str(self, id):
+        if id == "EJMBZFNPMDQ73AUDPOUS3":
+            return "eucalyptus-admin"
+        else: 
+            return id
 
     def convert_accountId_str(self, id):
         # Temporarily add here 

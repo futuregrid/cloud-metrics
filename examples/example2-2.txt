@@ -11,4 +11,4 @@ set nodename sierra
 
 analyze -M 05 -Y 2012
 
-createreport -d 2012-05 -t Launched_instances_per_user_of_eucalyptus_in_Sierra
+createreport -d 2012-05/sierra/ -t Launched_instances_per_user_of_eucalyptus_in_Sierra

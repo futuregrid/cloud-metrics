@@ -29,6 +29,7 @@ analyze -M 04
 createreport -d 2012-04 -t Running_instances_per_user_of_eucalyptus_in_India
 
 clear users
+set nodename india
 analyze -M 05
 createreport -d 2012-05 -t Running_instances_per_user_of_eucalyptus_in_India
 

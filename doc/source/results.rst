@@ -1,6 +1,26 @@
 Cloud Metric Results
 ====================
 
+Results for Eucalyptus on sierra.futuregrid.org
+----------------------------------------------
+
+May 2012
+~~~~~~~~
+
+ .. figure:: data/2012-05/sierra/bar.count.png
+    :width: 100 %
+
+    Number of VMs submitted by a user for this month
+
+ .. figure:: data/2012-05/sierra/bar.sum.png
+    :width: 100 %
+
+    Sum of the wallclock time for all VMs executed by a user for this month 
+
+
+ .. .. image:: data/2012-05/pie.count.png
+ .. .. image:: data/2012-05/pie.sum.png
+
 Results for Eucalyptus on india.futuregrid.org
 ----------------------------------------------
 

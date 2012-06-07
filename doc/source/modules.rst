@@ -1,5 +1,5 @@
 Modules
-=====
+=======
 
 .. automodule:: futuregrid.cloud.metric.FGAnalyzer
     :members:

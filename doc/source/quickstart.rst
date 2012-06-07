@@ -2,12 +2,12 @@ Quickstart
 ==========
 
 Backing up Eucalyptus log data
--------------------------
+------------------------------
 
  TBD
 
 Creating Results
--------------------------
+----------------
 
  We assume you have a valid pthon version (2.7.2) and all the needed
  libraries on the system where you run the code. We also assume you

@@ -64,8 +64,8 @@ DESCRIPTION
 EXAMPLES
 ========
 
- Cron Setup
- ----------
+ **Cron Setup**
+ 
  The following line causes the fg-euca-gather-log-files to be run once an hour::
 
     0 * * * * /usr/local/bin/fg-euca-gather-log-files --source <from_dir> --backup <backup_dir>

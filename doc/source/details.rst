@@ -3,7 +3,7 @@ Details
 
 
 Shell to analyze data
-----------------
+---------------------
 
  The purpose of our framework is to identify and analyze data from
  various production clouds. Relevant data will be uploaded into a
@@ -55,7 +55,7 @@ Examples
 --------
 
 Create a summary table for the month of January
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  The following will create a table with data produced for the month of January::
 
@@ -69,7 +69,7 @@ Create a summary table for the month of January
  in case you have more complex or repetitive analysis to do. 
 
 Create a summary analysis for multiple month
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  Assume you like to create a nice html page directory with the
  analysis of the data contained. This can be done as follows. Assume
@@ -98,7 +98,7 @@ Create a summary analysis for multiple month
  display.
 
 Show machine image counts for Eucalyptus
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  Based on Jonathan's code, we are able to get image counts via cmd2 tools.
  It's established on 'euca-describe-images' command::
@@ -112,49 +112,47 @@ Show machine image counts for Eucalyptus
         ...
 
  There are additional options which might be useful,
+
  1) showing only image numbers owned by the userid specified::
 
     (Cmd) count_image -u jdiaz
     jdiaz   7
    
  2) displaying details about images::
-    
-    (Cmd) count_images -u jdiaz -d
-    jdiaz   7
-    IMAGE   emi-1CA015A7    centos-image-bucket/centos.5-3.x86-64.img.manifest.xml  taklwu  available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
-    IMAGE   emi-DBC4106B    ubuntu-0904-saga-1.5.2/image.manifest.xml       luckow  available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
-    IMAGE   emi-F840162A    myubuntubucket/ubuntufloeserver.img.manifest.xml        sreedharnat1    available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
-    IMAGE   eki-7A031340    mybucket/vmlinuz-2.6.28-11-generic.manifest.xml ajyounge        available       public          x86_64  kernel                  instance-store
-    IMAGE   emi-E5D514DA    jdiaz/ubuntunattyjdiaz3595279807.img_0.manifest.xml     javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
-    IMAGE   emi-46861248    jdiaz/centos6jdiaz2698814667.img.manifest.xml   javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
-    IMAGE   emi-431F1230    jdiaz/centos6jdiaz2710350825.img.manifest.xml   javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
-    IMAGE   emi-0E0E165E    ajyounge/ubuntu-twister-memcached.img.manifest.xml      ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
-    IMAGE   emi-A5B6148A    ajyounge/ubuntu-lucid-minimal.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
-    IMAGE   emi-4A051306    ajyounge/ubuntu-lucid-mpj.img.manifest.xml      ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
-    IMAGE   emi-48141244    ajyounge/ajyounge-1563160039.img.manifest.xml   ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
-    IMAGE   emi-FC6A1197    ajyounge/ubuntu-natty.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+
+        (Cmd) count_images -u jdiaz -d
+        jdiaz   7
+        IMAGE   emi-1CA015A7    centos-image-bucket/centos.5-3.x86-64.img.manifest.xml  taklwu  available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+        IMAGE   emi-DBC4106B    ubuntu-0904-saga-1.5.2/image.manifest.xml       luckow  available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+        IMAGE   emi-F840162A    myubuntubucket/ubuntufloeserver.img.manifest.xml        sreedharnat1    available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+        IMAGE   eki-7A031340    mybucket/vmlinuz-2.6.28-11-generic.manifest.xml ajyounge        available       public          x86_64  kernel                  instance-store
+        IMAGE   emi-E5D514DA    jdiaz/ubuntunattyjdiaz3595279807.img_0.manifest.xml     javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+        IMAGE   emi-46861248    jdiaz/centos6jdiaz2698814667.img.manifest.xml   javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+        IMAGE   emi-431F1230    jdiaz/centos6jdiaz2710350825.img.manifest.xml   javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+        IMAGE   emi-0E0E165E    ajyounge/ubuntu-twister-memcached.img.manifest.xml      ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+        IMAGE   emi-A5B6148A    ajyounge/ubuntu-lucid-minimal.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+        IMAGE   emi-4A051306    ajyounge/ubuntu-lucid-mpj.img.manifest.xml      ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+        IMAGE   emi-48141244    ajyounge/ajyounge-1563160039.img.manifest.xml   ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+        IMAGE   emi-FC6A1197    ajyounge/ubuntu-natty.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
 
  3) displaying summary values about images.
     e.g. total image counts, total user counts, average image counts 
     per user, and maximum image counts and userid::
 
-    (Cmd) count_images -s
-    ...
-    = Summary =
-    Total image counts:     128
-    Total user counts:      71
-    Average image counts per user:  1.80281690141
-    Maximum image counts and userid:        ajyounge has 12
-    ==========
-
- Contributed by
- Klinginsmith, Jonathan Alan <jklingin@indiana.edu>
+        (Cmd) count_images -s
+        ...
+        = Summary =
+        Total image counts:     128
+        Total user counts:      71
+        Average image counts per user:  1.80281690141
+        Maximum image counts and userid:        ajyounge has 12
+        ==========
 
 Eucalyptus 2.0
-----------------
+--------------
 
 Data gathering
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
  Eucalyptus provides a substantial set of log information. The
  information is stored in the eucalyptus log directory.
@@ -220,14 +218,14 @@ Prerequisite
  pygooglechart
 
 Installation from pypi 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
  The programs are distributed in `pypi <http://pypi.python.org/pypi/futuregrid.cloud.metric/>`_ . It
  contains our current release version of the software.
 
 
 Installation form the source in github
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  If you are adventures, you can work with our newest code checked into
  github. To obtain this code, please conduct the following steps.  We
@@ -243,14 +241,14 @@ Installation form the source in github
     /usr/bin/
     
 What to do if I do not have root privilege
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  If you do not have root privileges, you can also install the program
  via pythons virtualenv.
 
 
 Commands
---------------------
+--------
 
  `fg-cleanup-db <./man/fg-cleanup-db.html>`_
 
@@ -274,7 +272,7 @@ Commands
 
 
 Examples Scripts
---------------------
+----------------
 
  Please find a small set of example scripts. Example 2 is most
  interesting as it produces output for multiple month on VM ussage and 
@@ -286,7 +284,7 @@ Examples Scripts
 
 
 FEATURE REQUESTS
---------------------
+----------------
 
  This project is under active development. In order for us to identify
  priorities please let us know what features you like us to add.  We

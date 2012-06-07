@@ -106,8 +106,8 @@ class Instances:
         self.data = {}
         return
 
-    def set_conf(filename):
-	self.eucadb = FGEucaMetricsDB.FGEucaMetricsDB(filename)
+    def set_conf(self, filename):
+	self.eucadb = futuregrid.cloud.metric.FGEucaMetricsDB.FGEucaMetricsDB(filename)
 	return
 
     def get(self):

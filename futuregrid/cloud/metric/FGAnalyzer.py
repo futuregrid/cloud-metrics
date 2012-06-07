@@ -38,6 +38,8 @@ class CmdLineAnalyzeEucaData(Cmd):
     user_stats = None
     sys_stats = None
 
+    nodename = ""
+
     def calculate_stats (self, from_date="all", to_date="all"):
         '''calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time'''
 
@@ -106,6 +108,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         for i in range(0, int(self.instances.count())):
             instance = self.instances.getdata(i)
             if username and username != instance["ownerId"] :
+                continue
+            if self.nodename and self.nodename != instance["euca_hostname"] :
                 continue
             merged_res = self.daily_stats(instance, metric, merged_res, "sum") # or "avg"
         return merged_res
@@ -519,13 +523,20 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         if cmd == "search_range":
             self.search_range(param)
+        elif cmd == "nodename":
+            self.set_nodename(param)
 
     # Example. set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
     def search_range(self, param):
         from_date = param[0]
         to_date = param[1]
-        print "Set date range to analyze: [" + from_date + ", " + to_date + "]" 
+        print "Set a date range to analyze: [" + from_date + ", " + to_date + "]" 
         self.set_date(from_date, to_date)
+
+    def set_nodename(self, param):
+        nodename = param[0]
+        print "Set a nodename by to analyze: [" + nodename + "]"
+        self.nodename = nodename
 
     @options([
         make_option('-u', '--user', type="string", help="user id to analyze"),

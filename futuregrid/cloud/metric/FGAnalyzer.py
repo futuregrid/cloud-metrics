@@ -500,7 +500,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.display_stats("sum", "pie", opts.directory + "/pie.sum.png")
         self.display_stats("sum", "bar", opts.directory + "/bar.sum.png")
 
-        #self.make_google_motion_chart(opts.directory)
+        self.make_google_motion_chart(opts.directory)
         self.make_index_html(opts.directory, opts.title)
 
     def do_createreports(self, arg):

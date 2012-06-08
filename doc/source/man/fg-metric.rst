@@ -54,6 +54,10 @@ DESCRIPTION
 
  **createreports**
 
+ count_images_
+
+ .. _count_images: fg-metric/commands.htm
+
 
 EXAMPLES
 ========

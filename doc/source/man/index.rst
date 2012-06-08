@@ -14,7 +14,6 @@ Contents:
    fg-cleanup-db
    fg-euca-gather-log-files
    fg-metric  
-   fg-metric/commands
    fg-parser
 
 Indices and tables

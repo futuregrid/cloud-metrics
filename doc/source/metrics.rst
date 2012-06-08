@@ -4,13 +4,13 @@ There are currently eight different metrics to deliver system utilization, user 
 
 Current metrics
 ---------------
-1. **The number of VM instances used by a user**
+1. **The number of VM instances used per user**
         It is virtual machine instance count launched by users or accounts based on log files of eucalyptus. It shows a user's activity and a system utilization by counting launched VM instances during a certain period.
         
-2. **Total runtime of VM instance used by a user**
+2. **Total runtime of VM instance used per user**
         It is the total runtime for virtual machine instances grouped by users or accounts based on log files of eucalyptus. It shows the amount of resources used by users and a system utilization by adding up the total lifetime of instances during a certain period.
 
-3. **A count of VM images owned by a user**
+3. **A count of VM images owned per user**
         It is virtual machine image count grouped by users or accounts based on euca2ools. It shows that which user or account currently owns how many virtual machine images on the system. This metric is based on the euca2ool command *euca-describe-images* that a eucalyptus user can see a list of machine images. For example in Eucalyptus 3.0, the euca-describe-images generates information like below.
          ::
 
@@ -20,9 +20,9 @@ Current metrics
           ...
 
 4. **The total number of VM instances used in a system**
-        It is a count of virtual machine instance used during a certain period in a system. It shows a system utilization and a performance comparison among other systems by counting launched VM instances. It is similar to the metric of the number of VM instances used by a user but it is grouped by a system instead of a user.
+        It is a count of virtual machine instance used during a certain period in a system. It shows a system utilization and a performance comparison among other systems by counting launched VM instances. It is similar to the metric of the number of VM instances used per user but it is grouped by a system instead of a user.
 5. **Total runtime of VM instances used in a system**
-        It is a total wall-clock hour(s) for virtual machine instances used in a system. It shows the amount of resources allocated and a system utilization by adding up the total lifetime of instances during a certain period. It is similar to the metric of total runtime of VM instance used by a user but it is grouped by a system instead of a user.
+        It is a total wall-clock hour(s) for virtual machine instances used in a system. It shows the amount of resources allocated and a system utilization by adding up the total lifetime of instances during a certain period. It is similar to the metric of total runtime of VM instance used per user but it is grouped by a system instead of a user.
 6. **Total CPU cores of VM instances used in a system**
         It is a total amount of CPU cores for VM instances requested by users in a system. It shows CPU resource allocation by adding up the CPU cores requested during a certain period.
 7. **Total memories of VM instances used in a system**
@@ -34,12 +34,12 @@ Examples
 --------
 In this section, graphs, and commands for each metric will be viewed.
 
-1. The number of VM instances used by a user
+1. The number of VM instances used per user
    generates a graph like below.
 
         .. figure:: data/2012-01/bar.count.png
            :scale: 50 %
-           :alt: The number of VM instances used by a user
+           :alt: The number of VM instances used per user
 
            Figure 1. The number of used VM instances grouped by an ownerid (January 2012 in India)
 
@@ -66,14 +66,14 @@ In this section, graphs, and commands for each metric will be viewed.
         createreport
                 create a graph
 
-2. Total runtime of VM instance used by a user
+2. Total runtime of VM instance used per user
    generates a graph like below.
 
         .. figure:: data/2012-01/bar.sum.png
            :scale: 50 %
-           :alt: The wall-clock hour for all VM instances executed by a user
+           :alt: The wall-clock hour for all VM instances executed per user
 
-           Figure 2. The wall-clock hour for all VM instances executed by a user (January 2012 in India)
+           Figure 2. The wall-clock hour for all VM instances executed per user (January 2012 in India)
 
            ====== =================================================================================
            ====== =================================================================================
@@ -89,14 +89,14 @@ In this section, graphs, and commands for each metric will be viewed.
 
         *This included block is from examples/example2-1.txt*
 
-3. A count of VM images owned by a user
+3. A count of VM images owned per user
    generates a graph like below.
 
         .. figure:: data/image_counts.png
            :scale: 50 %
-           :alt: A count of VM images owned by a user in India
+           :alt: A count of VM images owned per user in India
 
-           Figure 3. A count of VM images owned by a user (Current data in India)
+           Figure 3. A count of VM images owned per user (Current data in India)
 
            ====== =====================================================
            ====== =====================================================
@@ -115,7 +115,7 @@ In this section, graphs, and commands for each metric will be viewed.
         **Related commands**
 
         count_images
-                | Count virtual machine images by an user id or an account id.
+                | Count virtual machine images per user id or account id.
                 | A user should read configurations and credentials of euca2ools from the config file i.e. eucarc.
                 | Otherwise, this command does not return anything.
                 | Typically, this is only allowed for administrators.

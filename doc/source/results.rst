@@ -2,7 +2,7 @@ Cloud Metric Results
 ====================
 
 Results for Eucalyptus on sierra.futuregrid.org
-----------------------------------------------
+-----------------------------------------------
 
 May 2012
 ~~~~~~~~

@@ -56,7 +56,7 @@ DESCRIPTION
 
  count_images_
 
- .. _count_images: fg-metric/commands.htm
+ .. _count_images: fg-metric/commands.html
 
 
 EXAMPLES

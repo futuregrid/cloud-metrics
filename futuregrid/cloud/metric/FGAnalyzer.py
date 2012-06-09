@@ -199,9 +199,15 @@ class CmdLineAnalyzeEucaData(Cmd):
         return [(sum(a)/divide) for a in zip(*array)]
 
     def line_chart(self, chart_data, output):
+        self.create_chart(chart_data, output, chart_type = "line")
        
+    def bar_chart(self, chart_data, output):
+        self.create_chart(chart_data, output, chart_type = "bar")
+
+    def create_chart(self, chart_data, output, chart_type = "line"):
+
         maxY = int(round(max(chart_data) / 10) * 10)
-        chart = PyGoogleChart("line", maxY)
+        chart = PyGoogleChart(chart_type, maxY)
         chart.set_data(chart_data)
         # + 1 will add last value to the list. In here, the last value is 24
         #chart.set_yaxis([ str(x)+"hr" for x in range(0, maxY + 1, (maxY / 4))])
@@ -209,7 +215,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, ((self.day_count + 1) / 9))])
         chart.set_output_path(output)
         #chart.set_filename(self.userid + "-" + "linechart.png")
-        chart.set_filename("linechart.png")
+        chart.set_filename(chart_type + "chart.png")
         chart.display()
         print chart.filepath + "/" + chart.filename + " created."
 
@@ -589,6 +595,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
         self.line_chart(self.sys_stats, opts.output)
+        #self.bar_chart(self.sys_stats, opts.output)
 
     def do_filled_line_example(self, arg, opts=None):
         chart = PyGoogleChart("line", 0)

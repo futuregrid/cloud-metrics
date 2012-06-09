@@ -1,5 +1,4 @@
-from pygooglechart import SimpleLineChart
-from pygooglechart import Axis
+from pygooglechart import SimpleLineChart, StackedVerticalBarChart, Axis
 from futuregrid.cloud.metric.FGUtility import Utility
 
 class PyGoogleChart:
@@ -16,11 +15,17 @@ class PyGoogleChart:
     filename = "user.linechart.png"
 
     def __init__(self, chart_type, maxY):
-        if chart_type == "line":
-            self.chart_type = chart_type
-            self.max_y = maxY
-            self.chart = SimpleLineChart(self.width, self.height, y_range=[0, self.max_y])
 
+        self.chart_type = chart_type
+        self.max_y = maxY
+       
+        if chart_type == "line":
+            self.chart = SimpleLineChart(self.width, self.height, y_range=[0, self.max_y])
+        elif chart_type == "bar":
+            self.chart = StackedVerticalBarChart(self.width, self.height, y_range=[0, self.max_y])
+            self.chart.set_bar_width(10)
+            self.chart.set_colours(['00ff00', 'ff0000'])
+ 
     def set_data(self, value):
         self.chart.add_data(value)
 

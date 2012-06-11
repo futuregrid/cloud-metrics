@@ -117,7 +117,22 @@ class CmdLineAnalyzeEucaData(Cmd):
             if self.nodename and self.nodename != instance["euca_hostname"] :
                 continue
             merged_res = self.daily_stats(instance, metric, merged_res, "sum") # or "avg"
+
+        if period == "weekly":
+            merged_res = self.convert_stats_from_daily_to_weekly(merged_res)
         return merged_res
+
+    def convert_stats_from_daily_to_weekly(self, daily_stats):
+        j = 0
+        k = 0
+        weekly_stats = [ 0 for n in range (0, (len(daily_stats) / 7) + 1)]
+        for i in range(0, len(daily_stats)):
+            j = j + 1
+            weekly_stats[k] = weekly_stats[k] + daily_stats[i]
+            if j == 7:
+                j = 0
+                k = k + 1
+        return weekly_stats
 
     def daily_stats(self, instance, metric, current_stats, type="sum"):
         new_stats = self.daily_stat(instance, metric)
@@ -212,7 +227,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         # + 1 will add last value to the list. In here, the last value is 24
         #chart.set_yaxis([ str(x)+"hr" for x in range(0, maxY + 1, (maxY / 4))])
         chart.set_yaxis([ str(x) for x in range(0, maxY + 1, (maxY / 4))])
-        chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, ((self.day_count + 1) / 9))])
+#        chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, ((self.day_count + 1) / 9))])
+        chart.set_xaxis([ str(x) for x in range(1, len(chart_data))])
         chart.set_output_path(output)
         #chart.set_filename(self.userid + "-" + "linechart.png")
         chart.set_filename(chart_type + "chart.png")
@@ -421,7 +437,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-t', '--end',  default="all",  type="string", help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
         make_option('-M', '--month', type="string", help="month to analyze (type. MM)"),
         make_option('-Y', '--year', type="string", help="year to analyze (type. YYYY)"),
-        make_option('-S', '--stats', dest="metric", type="string", help="item name to measure (e.g. runtime, vms)")
+        make_option('-S', '--stats', dest="metric", type="string", help="item name to measure (e.g. runtime, vms)"),
+        make_option('-P', '--period', dest="period", type="string", help="search period (weekly, daily)")
         ])
     def do_analyze (self, arg, opts=None):
 
@@ -457,8 +474,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         # new way to calculate metrics
         # get_sys_stats return a list of daily values not specified by a user name
         # It can display daily/weekly/monthly graphs for system utilization
-        self.sys_stats = self.get_sys_stats(opts.metric)
-        print self.sys_stats
+        self.sys_stats = self.get_sys_stats(opts.metric, opts.period)
+        #print self.sys_stats
 
     def do_getdaterange(self, arg): 
         '''Get Date range of the instances table in mysql db'''
@@ -595,7 +612,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
         self.line_chart(self.sys_stats, opts.output)
-        #self.bar_chart(self.sys_stats, opts.output)
+        self.bar_chart(self.sys_stats, opts.output)
 
     def do_filled_line_example(self, arg, opts=None):
         chart = PyGoogleChart("line", 0)

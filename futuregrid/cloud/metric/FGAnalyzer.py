@@ -16,6 +16,7 @@ from futuregrid.cloud.metric.FGGoogleMotionChart import GoogleMotionChart
 from futuregrid.cloud.metric.FGPygooglechart import PyGoogleChart
 from futuregrid.cloud.metric.FGUtility import Utility
 from futuregrid.cloud.metric.FGTemplate import HtmlTemplate
+from futuregrid.cloud.metric.FGHighcharts import Highcharts
 
 class CmdLineAnalyzeEucaData(Cmd):
     '''Cmd Shell Analyzer'''
@@ -39,6 +40,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     sys_stats = None
 
     nodename = None
+    metric = None
 
     def calculate_stats (self, from_date="all", to_date="all"):
         '''calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time'''
@@ -105,6 +107,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         return self.get_stats(metric, period, username)
 
     def get_sys_stats(self, metric, period="daily"):
+        self.metric = metric
         return self.get_stats(metric, period)
 
     def get_stats(self, metric, period="daily", username=""):
@@ -234,6 +237,18 @@ class CmdLineAnalyzeEucaData(Cmd):
         chart.set_filename(chart_type + "chart.png")
         chart.display()
         print chart.filepath + "/" + chart.filename + " created."
+
+    def create_highcharts(self, chart_data, output, chart_type = "bar"):
+        highchart = Highcharts(chart_type)
+        highchart.set_data(chart_data)
+        highchart.set_yaxis(self.metric)
+        highchart.set_xaxis([ d.strftime("%Y-%m-%d") + " ~ " + (d + timedelta(6)).strftime("%Y-%m-%d") for d in (self.from_date + timedelta(n) for n in range(0, self.day_count, 7))])
+        highchart.set_output_path(output)
+        highchart.set_title("Total " + self.metric + " of VM instances")
+        highchart.set_subtitle("source : " + self.nodename)
+        highchart.set_filename(chart_type + "highcharts.html")
+        highchart.display()
+        print highchart.filepath + "/" + highchart.filename + " created."
 
     def display_stats(self, metric="count", type="pie", filepath="chart.png"):
         """ filepath = display, filepath = url, filepath = real filepath"""
@@ -613,6 +628,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
         self.line_chart(self.sys_stats, opts.output)
         self.bar_chart(self.sys_stats, opts.output)
+        self.create_highcharts(self.sys_stats, opts.output)
 
     def do_filled_line_example(self, arg, opts=None):
         chart = PyGoogleChart("line", 0)

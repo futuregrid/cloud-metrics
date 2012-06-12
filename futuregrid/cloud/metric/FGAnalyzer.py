@@ -241,6 +241,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     def create_highcharts(self, chart_data, output, chart_type = "bar"):
         highchart = Highcharts(chart_type)
         highchart.set_data(chart_data)
+        highchart.set_data_name(self.nodename)
         highchart.set_yaxis(self.metric)
         highchart.set_xaxis([ d.strftime("%Y-%m-%d") + " ~ " + (d + timedelta(6)).strftime("%Y-%m-%d") for d in (self.from_date + timedelta(n) for n in range(0, self.day_count, 7))])
         highchart.set_output_path(output)

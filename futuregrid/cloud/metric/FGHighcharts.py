@@ -17,12 +17,16 @@ class Highcharts:
     xAxis_label = []
     yAxis_title = ""
     data = None
+    data_name = None
 
     def __init__(self, chart_type):
         self.chart_type = chart_type
 
     def set_data(self, data):
         self.data = data
+
+    def set_data_name(self, data_name):
+        self.data_name = data_name
 
     def set_yaxis(self, title):
         self.yAxis_title = title
@@ -103,6 +107,7 @@ class Highcharts:
                             },
                         series: [
                             {
+                                name: '%(data_name)s',
                                 data: %(data)s
                             }]
                         });

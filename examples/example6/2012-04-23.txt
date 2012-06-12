@@ -1,0 +1,43 @@
+# Stats like one Nimbus has from start to end of data in database.
+#
+# 10 weeks
+#
+set search_range 2012-02-20T00:00:00 2012-04-29T23:59:59
+
+# 1. Node 
+#    It is grouped by a node such as India and Sierra.
+set nodename india
+
+# 1.1. Minutes Used by Week
+analyze -S runtime -P weekly
+
+sys_report -o 2012-04-29/india/runtime/
+
+# 1.2. Requests Made by Week
+analyze -S count -P weekly
+
+sys_report -o 2012-04-29/india/count/
+
+# 1.3. Minutes Used by User
+# 1.4. Requests Made by User
+clear users
+analyze -f 2012-04-23T00:00:00 -t 2012-04-29T23:59:59
+createreport -d 2012-04-29/india
+
+set nodename sierra
+
+# 1.1. Minutes Used by Week
+analyze -S runtime -P weekly
+
+sys_report -o 2012-04-29/sierra/runtime/
+
+# 1.2. Requests Made by Week
+analyze -S count -P weekly
+
+sys_report -o 2012-04-29/sierra/count/
+
+# 1.3. Minutes Used by User
+# 1.4. Requests Made by User
+clear users
+analyze -f 2012-04-23T00:00:00 -t 2012-04-29T23:59:59
+createreport -d 2012-04-29/sierra

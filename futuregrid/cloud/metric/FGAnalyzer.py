@@ -228,7 +228,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         #chart.set_yaxis([ str(x)+"hr" for x in range(0, maxY + 1, (maxY / 4))])
         chart.set_yaxis([ str(x) for x in range(0, maxY + 1, (maxY / 4))])
 #        chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, ((self.day_count + 1) / 9))])
-        chart.set_xaxis([ str(x) for x in range(1, len(chart_data))])
+        chart.set_xaxis([ str(x) for x in range(1, len(chart_data) + 1)])
         chart.set_output_path(output)
         #chart.set_filename(self.userid + "-" + "linechart.png")
         chart.set_filename(chart_type + "chart.png")

@@ -25,7 +25,11 @@ class PyGoogleChart:
             self.chart = StackedVerticalBarChart(self.width, self.height, y_range=[0, self.max_y])
             self.chart.set_bar_width(10)
             self.chart.set_colours(['00ff00', 'ff0000'])
- 
+
+    def set_option(self, key, value):
+        ''' Passing a function name as an argument in a function '''
+        self.chart.key(value)
+
     def set_data(self, value):
         self.chart.add_data(value)
 

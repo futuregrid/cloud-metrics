@@ -18,7 +18,7 @@ Contents:
    download
    support
    results
-   results-ext
+   results-nimbus-look
    metrics
 
 

@@ -165,13 +165,12 @@ create:
 metric:
 	mkdir -p build/html/data/
 	#cd build/html/data; cat ../../../../lighttpd/metric-script.fg | fg-metric
-	cd build/html/data; cat ../../../../examples/example2.txt | fg-metric
-	cd build/html/data; cat ../../../../examples/example2-2.txt | fg-metric
+	cd build/html/data; cat ../../../../examples/example2.txt ../../../../examples/example2-2.txt | fg-metric
 	#cd build/html/data; cat ../../../../examples/example4.txt | fg-metric
 	cp ../examples/example4.png build/html/data/image_counts.png
-	cd build/html/data; cat ../../../../examples/example5.txt | fg-metric
-	cd build/html/data; cat ../../../../examples/example5-1.txt | fg-metric
-	cd build/html/data; cat ../../../../examples/example5-2.txt | fg-metric
+	cd build/html/data; cat ../../../../examples/example5.txt  ../../../../examples/example5-1.txt ../../../../examples/example5-2.txt | fg-metric
+	mkdir -p build/html/results-nimbus-look/data/
+	cd build/html/results-nimbus-look/data/; cat ../../../../../examples/example6/*.txt | fg-metric
 
 tar:
 	tar cvfz fg-metric.tar.gz build/html/

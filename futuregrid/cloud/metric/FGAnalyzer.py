@@ -128,7 +128,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     def convert_stats_from_daily_to_weekly(self, daily_stats):
         j = 0
         k = 0
-        weekly_stats = [ 0 for n in range (0, (len(daily_stats) / 7) + 1)]
+        weekly_stats = [ 0 for n in range (0, (len(daily_stats) / 7))]
         for i in range(0, len(daily_stats)):
             j = j + 1
             weekly_stats[k] = weekly_stats[k] + daily_stats[i]

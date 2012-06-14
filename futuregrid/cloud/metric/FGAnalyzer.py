@@ -1,5 +1,13 @@
-#!/usr/bin/env python
-'''FGAnalyser Module'''
+"""
+.. module:: FGAnalyzer
+   :platform: Unix
+   :synopsis: An analyzer of system utilization for the cloud based on the database collected by log files.
+              It calculates metrics data and generates graph images like PNG files and html files with javascript.
+
+.. moduleauthor:: Gregor von laszewski, Hyungro Lee <lee212@indiana.edu>
+
+
+"""
 
 from pygooglechart import PieChart3D, StackedHorizontalBarChart, SimpleLineChart, Axis
 import os
@@ -7,7 +15,6 @@ import pprint
 import optparse
 from cmd2 import Cmd, make_option, options, Cmd2TestCase
 from datetime import *
-
 import unittest, sys
 import calendar
 
@@ -19,11 +26,15 @@ from futuregrid.cloud.metric.FGTemplate import HtmlTemplate
 from futuregrid.cloud.metric.FGHighcharts import Highcharts
 
 class CmdLineAnalyzeEucaData(Cmd):
-    '''Cmd Shell Analyzer'''
-    #multilineCommands = ['None']
-    #Cmd.shortcuts.update({'&': 'speak'})
-    #maxrepeats = 3
-    #Cmd.settable.append('maxrepeats')
+    '''This class analyzes utilization data to make a report
+    
+    It uses the extended python cmd package to support command-line iterpreter (CLI) programs.
+
+    .. note::
+        
+        Examples of this class are in the examples/ directory from the root repository of /futuregrid-cloud-metrics/
+    
+    '''
     
     instances = {}
     users = {}
@@ -43,7 +54,17 @@ class CmdLineAnalyzeEucaData(Cmd):
     metric = None
 
     def calculate_stats (self, from_date="all", to_date="all"):
-        '''calculates some elementary statusticks about the instances per user: count, min time, max time, avg time, total time'''
+        """Calculate user-based statstics about VM instances per user: count, min time, max time, avg time, total time
+        
+        Args:
+            from_date (str): date to start calculation. Types are 'all' or '%Y-%m-%dT%H:%M:%S'
+            to_date (str): end date to finish calculation.
+        Returns:
+            n/a
+        Raises:
+            n/a
+
+        """
 
         process_all = False
         if (type(from_date).__name__ == "str"):
@@ -95,6 +116,18 @@ class CmdLineAnalyzeEucaData(Cmd):
                     self.users[name]['avg'] = float(self.users[name]['sum']) / float(self.users[name]['count'])
 
     def set_date(self, from_date, to_date):
+        """Set search/analyze period
+        
+        Args:
+            from_date (str): date to start calculation. '%Y-%m-%dT%H:%M:%S' is only allowed.
+            to_date (str): end date to finish calculation.
+        Returns:
+            n/a
+        Raises:
+            n/a
+
+        """
+
         try:
             self.from_date = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
             self.to_date = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
@@ -111,6 +144,19 @@ class CmdLineAnalyzeEucaData(Cmd):
         return self.get_stats(metric, period)
 
     def get_stats(self, metric, period="daily", username=""):
+         """Return the list of calculated data
+        
+        Args:
+            metric (str): a metric name to be analyzed (i.e. runtime, count, ccvm_cores, ccvm_mem, ccvm_disk)
+            period (str): a search term (i.e. weekly, daily)
+            username (str): a ownerid to be analyzed
+        Returns:
+            n/a
+        Raises:
+            n/a
+
+        """
+
         merged_res = []
         # instance based data
         for i in range(0, int(self.instances.count())):

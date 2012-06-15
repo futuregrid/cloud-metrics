@@ -137,14 +137,17 @@ class CmdLineAnalyzeEucaData(Cmd):
             pass
 
     def get_user_stats(self, username, metric, period="daily"):
-        return self.get_stats(metric, period, username)
+        """ Call a private function """
+        self.metric = metric
+        return self._get_stats(metric, period, username)
 
     def get_sys_stats(self, metric, period="daily"):
+        """ Call a private function """
         self.metric = metric
-        return self.get_stats(metric, period)
+        return self._get_stats(metric, period)
 
-    def get_stats(self, metric, period="daily", username=""):
-         """Return the list of calculated data
+    def _get_stats(self, metric, period="daily", username=""):
+        """Return the list of calculated data
         
         Args:
             metric (str): a metric name to be analyzed (i.e. runtime, count, ccvm_cores, ccvm_mem, ccvm_disk)
@@ -172,6 +175,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         return merged_res
 
     def convert_stats_from_daily_to_weekly(self, daily_stats):
+
         j = 0
         k = 0
         weekly_stats = [ 0 for n in range (0, (len(daily_stats) / 7))]

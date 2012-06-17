@@ -154,7 +154,10 @@ class CmdLineAnalyzeEucaData(Cmd):
             period (str): a search term (i.e. weekly, daily)
             username (str): a ownerid to be analyzed
         Returns:
-            n/a
+            a list of numerical values of a metric for the search period range from the start date to the end date.
+            Each element of the list indicates a statistical value for a day or a week depends on the period specified.
+            For example, in the list of [0, 2, 5, ... 1], the 1st value (0) indicates a first day or a first week of the
+            search period.
         Raises:
             n/a
 
@@ -168,38 +171,62 @@ class CmdLineAnalyzeEucaData(Cmd):
                 continue
             if self.nodename and self.nodename != instance["euca_hostname"] :
                 continue
-            merged_res = self.daily_stats(instance, metric, merged_res, "sum") # or "avg"
+            merged_res = self._daily_stats(instance, metric, merged_res, "sum") # or "avg"
 
         if period == "weekly":
             merged_res = self.convert_stats_from_daily_to_weekly(merged_res)
         return merged_res
 
-    def convert_stats_from_daily_to_weekly(self, daily_stats):
+    def convert_stats_from_daily_to_weekly(self, stats):
+        """Convert a daily list of calculated data to a weekly list of data in case the period specified with 'weekly'
+
+        Args:
+            stats (list): a daily list of calculated data
+        Returns:
+            a shrinked list of data
+        Raises:
+            n/a
+        """
 
         j = 0
         k = 0
-        weekly_stats = [ 0 for n in range (0, (len(daily_stats) / 7))]
-        for i in range(0, len(daily_stats)):
+        weekly_stats = [ 0 for n in range (0, (len(stats) / 7))]
+        for i in range(0, len(stats)):
             j = j + 1
-            weekly_stats[k] = weekly_stats[k] + daily_stats[i]
+            weekly_stats[k] = weekly_stats[k] + stats[i]
             if j == 7:
                 j = 0
                 k = k + 1
         return weekly_stats
 
-    def daily_stats(self, instance, metric, current_stats, type="sum"):
-        new_stats = self.daily_stat(instance, metric)
-        res= self.merge_daily_stat(new_stats, current_stats, type)
+    def _daily_stats(self, instance, metric, current_stats, type="sum"):
+        new_stats = self._daily_stat(instance, metric)
+        res= self._merge_daily_stat(new_stats, current_stats, type)
         return res
 
-    # This is going to be counting hours for daily
-    # This logic is kind of messy but it will be changed/updated soon, Hopefully.
-    def daily_stat(self, instance, metric):
-        ''' Make a list filled with metric values in a daily basis.
-            The size of the list is the date range of analyze. 
-            e.g. [0 (1st), 0 (2nd), ... , 0 (31th)] list will be 
-            returned when 'analyze -M 01' which is for January 2012
-            is requested. '''
+   def _daily_stat(self, instance, metric):
+       """Return a list of calculated data for the search period on a daily basis
+
+       # This is going to be counting hours for daily
+       # This logic is kind of messy but it should be changed/updated soon, Hopefully.
+       
+       Make a list filled with metric values in a daily basis.
+       The size of the list is the date range of analyze. 
+       e.g. [0 (1st), 0 (2nd), ... , 0 (31th)] list will be 
+       returned when 'analyze -M 01' which is for January 2012
+       is requested. 
+
+       Args:
+           instance(dict): Dictionary from the getdata() function of the class Instances. (instances.getdata())
+           metric(str): runtime, count, ccvm_cores, ccvm_mem, and ccvm_disk are available
+
+       Returns:
+           a list of calculated data
+
+       Raises:
+           n/a
+
+       """
 
         month = [ 0 for n in range(self.day_count) ]
         if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date :
@@ -250,11 +277,22 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         return month
 
-    def merge_daily_stat(self, new, current, type="sum"):
-        ''' merge daily_historam lists 
-            e.g. [1,2,3] + [2,3,4]
+    def _merge_daily_stat(self, new, current, type="sum"):
+        """Merge daily_historam lists 
+            
+            E.g. [1,2,3] + [2,3,4]
             expect => [ 1+2, 2+3, 3+4] = [ 3, 5, 7]
-        '''
+
+            Args:
+                new(list): The new list for the stats
+                current(list): The exist list of the stats
+                type(str): The operation name of the merging which is one of sum (summation) or avg (average).
+            Returns:
+                a merged list from the new and current arguments
+            Raises:
+            n/a
+        """
+
         if len(current) == 0:
             current = [0 for n in range(self.day_count) ]
 
@@ -267,28 +305,29 @@ class CmdLineAnalyzeEucaData(Cmd):
         return [(sum(a)/divide) for a in zip(*array)]
 
     def line_chart(self, chart_data, output):
-        self.create_chart(chart_data, output, chart_type = "line")
+        """Create python Google Chart (line type) in a PNG file format"""
+        self._create_chart(chart_data, output, chart_type = "line")
        
     def bar_chart(self, chart_data, output):
-        self.create_chart(chart_data, output, chart_type = "bar")
+        """Create python Google Chart (bar type) in a PNG file format"""
+        self._create_chart(chart_data, output, chart_type = "bar")
 
-    def create_chart(self, chart_data, output, chart_type = "line"):
+    def _create_chart(self, chart_data, output, chart_type = "line"):
+        """Create python Google Chart in a PNG file format"""
 
         maxY = int(round(max(chart_data) / 10) * 10)
         chart = PyGoogleChart(chart_type, maxY)
         chart.set_data(chart_data)
-        # + 1 will add last value to the list. In here, the last value is 24
-        #chart.set_yaxis([ str(x)+"hr" for x in range(0, maxY + 1, (maxY / 4))])
         chart.set_yaxis([ str(x) for x in range(0, maxY + 1, (maxY / 4))])
 #        chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, ((self.day_count + 1) / 9))])
         chart.set_xaxis([ str(x) for x in range(1, len(chart_data) + 1)])
         chart.set_output_path(output)
-        #chart.set_filename(self.userid + "-" + "linechart.png")
         chart.set_filename(chart_type + "chart.png")
         chart.display()
         print chart.filepath + "/" + chart.filename + " created."
 
     def create_highcharts(self, chart_data, output, chart_type = "bar"):
+        """Create highcharts in a javascript html file format"""
         highchart = Highcharts(chart_type)
         highchart.set_data(chart_data)
         highchart.set_data_name(self.nodename)
@@ -302,6 +341,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         print highchart.filepath + "/" + highchart.filename + " created."
 
     def display_stats(self, metric="count", type="pie", filepath="chart.png"):
+        """Create Python Google Chart but this should be merged to _create_chart()"""
         """ filepath = display, filepath = url, filepath = real filepath"""
         """displays the number of VMs a user is running"""
         """ types supported pie, bar"""
@@ -322,6 +362,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.generate_pygooglechart(type, label_values, max_v, values, filepath)
 
     def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200): 
+        """Create Python Google Chart but this should be merged to _create_chart()"""
 
         if chart_type == "pie": 
             chart = PieChart3D(width, height)
@@ -351,7 +392,10 @@ class CmdLineAnalyzeEucaData(Cmd):
             chart.download(filepath)
 
     def make_index_html (self, output_dir, title):
-        '''this command is in the worng file'''
+        """Create index.html for generated PNG charts
+
+        * Should be obsolete due to the new way to display charts
+        """
         page_template = HtmlTemplate.index()
         now = datetime.now()
         now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
@@ -364,7 +408,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.close()
     
     def make_frame_html (self):
-        '''this command is in the worng file'''
+        """Create frame.html for menu and main frames
+
+        * Should be obsolete due to the new way to display charts
+        """
         page_template = HtmlTemplate.frame()
         filename = "index.html"
         f = open(filename, "w")
@@ -372,7 +419,11 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.close()
 
     def make_menu_html (self, directories):
-        '''this command is in the worng file'''
+        """Create menu.html
+
+        * Should be obsolete due to the new way to display charts
+        """
+ 
         page_template = str("<b>Metrics</b><br><b>Monthly VM Ussage by User</b><ul>")
         for dirname in directories:
             page_template += "<li><a href=\"" + dirname + "/index.html\" target=right> VM usage by day " + dirname + "</a></li>\n"
@@ -383,7 +434,11 @@ class CmdLineAnalyzeEucaData(Cmd):
         f.close()
 
     def make_google_motion_chart(self, directory):
-        '''this command is in the worng file'''
+        """Create "FGGoogleMotionChart.html"
+
+        * Should be obsolete due to the new way to display charts
+        """
+
         filename = "FGGoogleMotionChart.html"
         filepath = directory + "/" + filename
         Utility.ensure_dir(filepath)
@@ -395,16 +450,27 @@ class CmdLineAnalyzeEucaData(Cmd):
         print filepath + " created"
 
     def convert_ownerId_str(self, id):
+        """Convert a owner id to a user name
+        
+        * This should be working with retrieving ldap commands
+        * Currently, this function is a test version
+        """
         if id == "EJMBZFNPMDQ73AUDPOUS3":
             return "eucalyptus-admin"
         else: 
             return id
 
     def convert_accountId_str(self, id):
+        """Convert an account id to a user name
+
+        * This should be working with retrieving ldap commands
+        * Currently, this function is a test version
+
         # Temporarily add here 
         # But it will be replaced by 'euare-accountlist|grep $accountid'
         # e.g. euare-accountlist|grep fg82
         # fg82    281408815495
+        """
 
         ## TEST ONLY ~!!!!! ##
         if id == "458299102773" :
@@ -436,7 +502,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     #     os.system('killall lighttpd')
 
     def do_changecharttype (self, arg):
-        '''changes the default caht type. You can choese bar, pie, motion'''
+        '''Change the default caht type. You can choese bar, pie, motion'''
         if (arg != "pie") and (arg != "bar") and (arg != "motion"):
             print "Error: charttype " + arg + " not supported."
         else:
@@ -449,7 +515,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-c', '--caption', type="string", help="title of the table"),
         ])
     def do_table(self, arg, opts):
-        '''prints a table from the instance data'''
+        '''Print a table from the instance data'''
         print opts.caption
         if opts.seperator == "" or opts.seperator == None:
             seperator = "="
@@ -476,23 +542,23 @@ class CmdLineAnalyzeEucaData(Cmd):
         print "\r... data loaded"
 
     def do_pause(slef, arg):
-        '''Waits for a return to be typed in with the keyboard'''
+        '''Wait for a return to be typed in with the keyboard'''
         os.system("pause")
 
     def do_dump(self, arg):
-        '''Prints the data from all instances.'''
+        '''Print the data from all instances.'''
         # if we specify key, prints it from an instance with a given instance id
         self.instances.dump()
 
     def do_printlist(self, arg):
-        '''lists all instance ids id's'''
+        '''List all instance ids id's'''
         # takes as additional parameters fields to be printed
 
         print "\n... list\n"
         self.instances.print_list(arg)
 
     def do_clear(self, arg):
-        '''clears all instance data and user data from the memory'''
+        '''Clear all instance data and user data from the memory'''
         if arg == "users":
             self.users = {}
         elif arg == "instances":
@@ -507,7 +573,11 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-P', '--period', dest="period", type="string", help="search period (weekly, daily)")
         ])
     def do_analyze (self, arg, opts=None):
+        """Analyze utilization data
 
+        This is main function to get statistical data
+
+        """
         # Default set year and month by current date
         now = datetime.now()
         analyze_year = str(now.year)  

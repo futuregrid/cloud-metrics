@@ -502,7 +502,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     #     os.system('killall lighttpd')
 
     def do_changecharttype (self, arg):
-        '''Change the default caht type. You can choese bar, pie, motion'''
+        """Change the default caht type. You can choese bar, pie, motion"""
         if (arg != "pie") and (arg != "bar") and (arg != "motion"):
             print "Error: charttype " + arg + " not supported."
         else:
@@ -515,7 +515,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-c', '--caption', type="string", help="title of the table"),
         ])
     def do_table(self, arg, opts):
-        '''Print a table from the instance data'''
+        """Print a table from the instance data"""
         print opts.caption
         if opts.seperator == "" or opts.seperator == None:
             seperator = "="
@@ -532,6 +532,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             print "Error: Printing <" + opts.type + "> is not supported"
 
     def do_loaddb(self, arg):
+        """Read the statistical data from MySQL database"""
         # configuration file
         # if no parameter is given config is read from ~/.futuregrid/futuregrid.cfg
         print "\r... loading data from database"
@@ -542,23 +543,23 @@ class CmdLineAnalyzeEucaData(Cmd):
         print "\r... data loaded"
 
     def do_pause(slef, arg):
-        '''Wait for a return to be typed in with the keyboard'''
+        """Wait for a return to be typed in with the keyboard"""
         os.system("pause")
 
     def do_dump(self, arg):
-        '''Print the data from all instances.'''
+        """Print the data from all instances."""
         # if we specify key, prints it from an instance with a given instance id
         self.instances.dump()
 
     def do_printlist(self, arg):
-        '''List all instance ids id's'''
+        """List all instance ids id's"""
         # takes as additional parameters fields to be printed
 
         print "\n... list\n"
         self.instances.print_list(arg)
 
     def do_clear(self, arg):
-        '''Clear all instance data and user data from the memory'''
+        """Clear all instance data and user data from the memory"""
         if arg == "users":
             self.users = {}
         elif arg == "instances":
@@ -614,7 +615,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         #print self.sys_stats
 
     def do_getdaterange(self, arg): 
-        '''Get Date range of the instances table in mysql db'''
+        """Get Date range of the instances table in mysql db"""
+
         res = self.instances.getDateRange()
         print Utility.convertOutput(res[0], "first_date")
         print Utility.convertOutput(res[1], "last_date")
@@ -638,6 +640,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-f', '--filepath', default = "chart.png", type="string", help="the filepath in which we store a chart")
         ])
     def do_creategraph(self, arg, opts=None):
+        """Create PNG graphs (obsolete)"""
         graph_type =  opts.type
         filepath = opts.filepath
         print graph_type + " typed " + filepath + " file created"
@@ -647,6 +650,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-d', '--directory', type="string", help="directory name which the chart html will be stored.")
         ])
     def do_createhtml(self, arg):
+        """Create google motion chart (obsolete)"""
         self.make_google_motion_chart(opts.directory)
 
     @options([
@@ -654,6 +658,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-t', '--title', type="string", help="A report title in the index.html")
         ])
     def do_createreport(self, arg, opts=None):
+        """Create PNG graphs which display statistics"""
+
         self.display_stats("count", "pie", opts.directory + "/pie.count.png")
         self.display_stats("count", "bar", opts.directory + "/bar.count.png")
         self.display_stats("sum", "pie", opts.directory + "/pie.sum.png")
@@ -663,6 +669,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         #self.make_index_html(opts.directory, opts.title)
 
     def do_createreports(self, arg):
+        """Create index.html page that includes PNG graphs"""
         self.make_frame_html()
         self.make_menu_html(arg.split())
 
@@ -673,6 +680,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-Y', '--year', default=datetime.now().year, type="string", help="year to analyze (type. YYYY)"),
         ])
     def do_set_range (self, arg, opts=None):
+        """Set search period (obsolete)"""
 
         if opts.start and opts.end:
             from_date = opts.start
@@ -686,24 +694,30 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.set_date(from_date, to_date)
 
     def do_set (self, arg, oprts=None):
+        """Set a function with parameter(s)"""
 
         args = arg.split()
         cmd = args[0]
         param = args[1:]
 
         if cmd == "search_range":
-            self.search_range(param)
+            self._search_range(param)
         elif cmd == "nodename":
-            self.set_nodename(param)
+            self._set_nodename(param)
 
-    # Example. set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
-    def search_range(self, param):
+    def _search_range(self, param):
+        """Set search period
+            # E.g. cmd) set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
+        """
         from_date = param[0]
         to_date = param[1]
         print "Set a date range to analyze: [" + from_date + ", " + to_date + "]" 
         self.set_date(from_date, to_date)
 
-    def set_nodename(self, param):
+    def _set_nodename(self, param):
+        """Set node name
+            E.g. cmd) set nodename india
+        """
         nodename = param[0]
         print "Set a nodename by to analyze: [" + nodename + "]"
         self.nodename = nodename
@@ -713,6 +727,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-m', '--metric', default="runtime", type="string", help="metric name to display (runtime, vms)")
         ])
     def do_analyze_user(self, arg, opts=None):
+        """Analyze user statistics"""
+
         if not opts.user:
             print "user id is required."
             return
@@ -726,6 +742,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-o', '--output', type="string", help="Filepath in which we store a chart")
         ])
     def do_user_report(self, arg, opts=None):
+        """Generate a user report through Google line chart """
+
         # set default output by Year-month typed string
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
@@ -745,6 +763,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-o', '--output', type="string", help="Filepath in which we store a chart")
         ])
     def do_sys_report(self, arg, opts=None):
+        """Generate system reports such as usage of CPU, memories, and disks."""
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
         self.line_chart(self.sys_stats, opts.output)
@@ -752,6 +771,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.create_highcharts(self.sys_stats, opts.output)
 
     def do_filled_line_example(self, arg, opts=None):
+        """Example for python Google line chart"""
         chart = PyGoogleChart("line", 0)
         chart.filledLineExample()
 
@@ -761,7 +781,13 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-s', '--summary', action="store_true", default=False, help="Show summary values about images")
         ])
     def do_count_images(self, arg, opts=None):
-       # by Klinginsmith, Jonathan Alan <jklingin@indiana.edu>
+        """Count bucket images per user
+
+            It is virtual machine image counts grouped by users or accounts based on euca2ools. 
+            It shows that which user or account currently owns how many virtual machine images on the system. 
+            This metric is based on the euca2ool command .euca-describe-images. that a eucalyptus user can see
+            a list of machine images. 
+        """
         import subprocess
         bucket_dict = {}
         details = {}
@@ -827,7 +853,12 @@ class CmdLineAnalyzeEucaData(Cmd):
         make_option('-u', '--user', type="string", help="Specify user name")
         ])
     def do_user_stats(self, arg, opts=None):
+        """Print user statistics
 
+            It is supposed to provide a user's statistics for a search period
+            Not yet implemented.
+
+        Prototype for usage
         #(cmd) user_stats -u username
         #period: 01/01/2011 ~ 01/01/2012
         #instances:
@@ -835,6 +866,9 @@ class CmdLineAnalyzeEucaData(Cmd):
         #    total seconds used: 3600
         #    average ccvms (cores/mems/disks): 2, 512, 5
         #    min/max ccvms: 1/2, 512/6000, 5/15
+
+        """
+
         print "period:" +  self.from_date + " ~ " + self.to_date
 
         # instances stats

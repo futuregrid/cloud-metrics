@@ -203,30 +203,30 @@ class CmdLineAnalyzeEucaData(Cmd):
         new_stats = self._daily_stat(instance, metric)
         res= self._merge_daily_stat(new_stats, current_stats, type)
         return res
+    
+    def _daily_stat(self, instance, metric):
+        """Return a list of calculated data for the search period on a daily basis
 
-   def _daily_stat(self, instance, metric):
-       """Return a list of calculated data for the search period on a daily basis
+        # This is going to be counting hours for daily
+        # This logic is kind of messy but it should be changed/updated soon, Hopefully.
 
-       # This is going to be counting hours for daily
-       # This logic is kind of messy but it should be changed/updated soon, Hopefully.
-       
-       Make a list filled with metric values in a daily basis.
-       The size of the list is the date range of analyze. 
-       e.g. [0 (1st), 0 (2nd), ... , 0 (31th)] list will be 
-       returned when 'analyze -M 01' which is for January 2012
-       is requested. 
+           Make a list filled with metric values in a daily basis.
+           The size of the list is the date range of analyze. 
+           e.g. [0 (1st), 0 (2nd), ... , 0 (31th)] list will be 
+           returned when 'analyze -M 01' which is for January 2012
+           is requested. 
 
-       Args:
-           instance(dict): Dictionary from the getdata() function of the class Instances. (instances.getdata())
-           metric(str): runtime, count, ccvm_cores, ccvm_mem, and ccvm_disk are available
+        Args:
+            instance(dict): Dictionary from the getdata() function of the class Instances. (instances.getdata())
+            metric(str): runtime, count, ccvm_cores, ccvm_mem, and ccvm_disk are available
 
-       Returns:
-           a list of calculated data
-
-       Raises:
-           n/a
-
-       """
+        Returns:
+            a list of calculated data
+            
+        Raises:
+            n/a
+    
+        """
 
         month = [ 0 for n in range(self.day_count) ]
         if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date :

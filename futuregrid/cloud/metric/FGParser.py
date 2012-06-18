@@ -561,7 +561,6 @@ def test4():
 def filename_todate(str):
     return datetime.strptime(str, '%Y-%m-%d-%H-%M-%S-cc.log')
 
-
 def test_file_read(filename,progress=True, debug=False):
     parse_file (filename,instances.add,debug,progress)
     instances.calculate_delta ()
@@ -639,9 +638,13 @@ def read_log_files_and_store_to_db (instances, path, from_date, to_date, linetyp
     t_date = datetime.strptime(to_date + " 23:59:59", '%Y%m%d %H:%M:%S')
 
     for filename in listing:
-        if f_date <= filename_todate(filename) and filename_todate(filename) <= t_date:
-            print "Processing file is: " + filename
-	    parse_file(path + "/" + filename, instances.add, linetypes, debug=False, progress=True)
+        try:
+            if f_date <= filename_todate(filename) and filename_todate(filename) <= t_date:
+                print "Processing file is: " + filename
+                parse_file(path + "/" + filename, instances.add, linetypes, debug=False, progress=True)
+        except (ValueError):
+            continue
+
     instances.write_to_db()
 
 def main():

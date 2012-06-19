@@ -10,6 +10,7 @@
 """
 
 from pygooglechart import PieChart3D, StackedHorizontalBarChart, SimpleLineChart, Axis
+import math
 import os
 import pprint
 import optparse
@@ -326,16 +327,21 @@ class CmdLineAnalyzeEucaData(Cmd):
     def _create_chart(self, chart_data, output, chart_type = "line"):
         """Create python Google Chart in a PNG file format"""
 
-        maxY = int(round(max(chart_data) / 10) * 10)
-        chart = PyGoogleChart(chart_type, maxY)
-        chart.set_data(chart_data)
-        chart.set_yaxis([ str(x) for x in range(0, maxY + 1, (maxY / 4))])
-#        chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, ((self.day_count + 1) / 9))])
-        chart.set_xaxis([ str(x) for x in range(1, len(chart_data) + 1)])
-        chart.set_output_path(output)
-        chart.set_filename(chart_type + "chart.png")
-        chart.display()
-        print chart.filepath + "/" + chart.filename + " created."
+        try:
+            maxY = int(round(max(chart_data) / 10) * 10)
+            chart = PyGoogleChart(chart_type, maxY)
+            chart.set_data(chart_data)
+            topY = maxY + 1
+            chart.set_yaxis([ str(x) for x in range(0, topY, int(math.ceil(topY / 4)))])
+    #        chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, ((self.day_count + 1) / 9))])
+            chart.set_xaxis([ str(x) for x in range(1, len(chart_data) + 1)])
+            chart.set_output_path(output)
+            chart.set_filename(chart_type + "chart.png")
+            chart.display()
+            print chart.filepath + "/" + chart.filename + " created."
+        except:
+            print "chart is not created.", sys.exc_info()[0]
+            pass
 
     def create_highcharts(self, chart_data, output, chart_type = "bar"):
         """Create highcharts in a javascript html file format"""
@@ -837,7 +843,6 @@ class CmdLineAnalyzeEucaData(Cmd):
             chart_labels.append( key + ":" + str(value))
 
         # Generate pygooglchart
-        import math
         chart_max_v = int(math.ceil(max(bucket_dict.values()) * 1.1))
         chart_type = "bar"
         chart_filepath = "image_counts.png"

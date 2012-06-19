@@ -35,3 +35,7 @@ Contents:
 	results-nimbus-look/2012-05-06
 	results-nimbus-look/2012-05-13
 	results-nimbus-look/2012-05-20
+	results-nimbus-look/2012-05-27
+	results-nimbus-look/2012-06-03
+	results-nimbus-look/2012-06-10
+	results-nimbus-look/2012-06-17

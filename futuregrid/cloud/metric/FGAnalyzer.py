@@ -200,7 +200,11 @@ class CmdLineAnalyzeEucaData(Cmd):
         return weekly_stats
 
     def _daily_stats(self, instance, metric, current_stats, type="sum"):
-        new_stats = self._daily_stat(instance, metric)
+        try:
+            new_stats = self._daily_stat(instance, metric)
+        except:
+            print "Unexpected error:", sys.exc_info()[0]
+            raise
         res= self._merge_daily_stat(new_stats, current_stats, type)
         return res
     
@@ -231,13 +235,20 @@ class CmdLineAnalyzeEucaData(Cmd):
         month = [ 0 for n in range(self.day_count) ]
         if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date :
             return month
-        offset = (instance["t_start"] - self.from_date).days
+        if instance["t_start"] > self.from_date:
+            offset = (instance["t_start"] - self.from_date).days
+            ins_start = instance["t_start"]
+        else:
+            offset = 0
+            ins_start = self.from_date
 
-        day_count_ins = (instance["t_end"] - instance["t_start"]).days + 1
+        day_count_ins = (instance["t_end"] - ins_start).days + 1
         i = 0
-        for single_date in (instance["t_start"] + timedelta(n) for n in range(day_count_ins)):
+
+        for single_date in (ins_start + timedelta(n) for n in range(day_count_ins)):
             if single_date > self.to_date:
                 break
+
             if metric == "runtime":
                 first_second_of_a_day = datetime.combine(single_date.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
                 last_second_of_a_day = first_second_of_a_day + timedelta(days=1)
@@ -263,7 +274,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         if metric == "runtime":
             if day_count_ins == 1:
-                td = instance["t_end"] - instance["t_start"]
+                td = instance["t_end"] - ins_start
                 hour = td.seconds / 60 / 60
                 month[offset] = hour
         elif metric == "count" and day_count_ins == 1:
@@ -764,6 +775,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         ])
     def do_sys_report(self, arg, opts=None):
         """Generate system reports such as usage of CPU, memories, and disks."""
+
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
         self.line_chart(self.sys_stats, opts.output)

@@ -1,7 +1,7 @@
 import datetime
 start_date = datetime.date(2011, 10, 31)
 start_date_for_weekly = start_date
-t_end_date = datetime.date(2012, 05, 14)
+t_end_date = datetime.date(2012, 06, 11)
 week = datetime.timedelta(weeks=1)
 
 template_file = ".template"

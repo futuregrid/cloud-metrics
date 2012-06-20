@@ -12,6 +12,12 @@ pp = pprint.PrettyPrinter(indent=0)
     
 class FGEucaMetricsDB(object):
 
+    # Default values
+    euca_version = "3.0.2"
+    euca_hostname = None
+    instance_table = "instance"
+    username_table = "userinfo"
+
     # Initialize
     def __init__(self, configfile="futuregrid.cfg"):
 
@@ -28,74 +34,78 @@ class FGEucaMetricsDB(object):
             dbuser = config.get('EucaLogDB', 'user')
             dbpasswd = config.get('EucaLogDB', 'passwd')
             dbname = config.get('EucaLogDB', 'db')
-            dbtable = config.get('EucaLogDB', 'table')
-            self.euca_hostname = config.get('EucaLogDB', 'euca_hostname')
-            self.euca_version = config.get('EucaLogDB', 'euca_version')
+            euca_hostname = config.get('EucaLogDB', 'euca_hostname')
+            euca_version = config.get('EucaLogDB', 'euca_version')
         except ConfigParser.NoSectionError:
             print cfgfile + " does not exist"
             sys.exit()
 
-	#table 
-        if dbtable:
-        	self.tablename = dbtable
-        else:
-        	self.tablename = "instance" #default table
+        #set parameters
+        self.euca_version = euca_version
+        self.euca_hostname = euca_hostname
 
         #connect to db
         self.conn = MySQLdb.connect (dbhost, dbuser, dbpasswd, dbname, dbport)
         self.cursor = self.conn.cursor (MySQLdb.cursors.DictCursor)
         
         #create table if not exist
-        createTb = "create table if not exists " + self.tablename + " (\
-                    uidentifier VARCHAR(32) PRIMARY KEY NOT NULL, \
-                    instanceId VARCHAR(16), \
-                    ts DATETIME, \
-                    calltype VARCHAR(32), \
-                    userData VARCHAR(32), \
-                    kernelId VARCHAR(32), \
-                    emiURL VARCHAR(128), \
-                    t_start DATETIME, \
-                    t_end DATETIME, \
-                    duration FLOAT, \
-                    trace_pending_start DATETIME, \
-                    trace_pending_stop DATETIME, \
-                    trace_extant_start DATETIME, \
-                    trace_extant_stop DATETIME, \
-                    trace_teardown_start DATETIME, \
-                    trace_teardown_stop DATETIME, \
-                    serviceTag VARCHAR(128), \
-                    groupNames VARCHAR(64), \
-                    keyName VARCHAR(512), \
-                    msgtype VARCHAR(16), \
-                    volumesSize FLOAT, \
-                    linetype VARCHAR(32), \
-                    ownerId VARCHAR(32), \
-                    date DATETIME, \
-                    id INT, \
-                    ncHostIdx INT, \
-                    ccvm_mem INT, \
-                    ccvm_cores INT, \
-                    ccvm_disk INT, \
-                    emiId VARCHAR(32), \
-                    ccnet_publicIp VARCHAR(32), \
-                    ccnet_privateMac VARCHAR(32), \
-                    ccnet_networkIndex VARCHAR(32), \
-                    ccnet_vlan VARCHAR(32), \
-                    ccnet_privateIp VARCHAR(32), \
-                    ramdiskURL VARCHAR(128), \
-                    state VARCHAR(16), \
-                    accountId VARCHAR(32), \
-                    kernelURL VARCHAR(128), \
-                    ramdiskId VARCHAR(32), \
-                    volumes VARCHAR(32), \
-                    launchIndex INT, \
-                    platform VARCHAR(16), \
-                    bundleTaskStateName VARCHAR(16), \
-                    reservationId VARCHAR(32), \
-                    euca_hostname VARCHAR(32), \
-                    euca_version VARCHAR(32))"
+        create_instance_table = "create table if not exists " + self.instance_table + " (\
+                uidentifier VARCHAR(32) PRIMARY KEY NOT NULL, \
+                instanceId VARCHAR(16), \
+                ts DATETIME, \
+                calltype VARCHAR(32), \
+                userData VARCHAR(32), \
+                kernelId VARCHAR(32), \
+                emiURL VARCHAR(128), \
+                t_start DATETIME, \
+                t_end DATETIME, \
+                duration FLOAT, \
+                trace_pending_start DATETIME, \
+                trace_pending_stop DATETIME, \
+                trace_extant_start DATETIME, \
+                trace_extant_stop DATETIME, \
+                trace_teardown_start DATETIME, \
+                trace_teardown_stop DATETIME, \
+                serviceTag VARCHAR(128), \
+                groupNames VARCHAR(64), \
+                keyName VARCHAR(512), \
+                msgtype VARCHAR(16), \
+                volumesSize FLOAT, \
+                linetype VARCHAR(32), \
+                ownerId VARCHAR(32), \
+                date DATETIME, \
+                id INT, \
+                ncHostIdx INT, \
+                ccvm_mem INT, \
+                ccvm_cores INT, \
+                ccvm_disk INT, \
+                emiId VARCHAR(32), \
+                ccnet_publicIp VARCHAR(32), \
+                ccnet_privateMac VARCHAR(32), \
+                ccnet_networkIndex VARCHAR(32), \
+                ccnet_vlan VARCHAR(32), \
+                ccnet_privateIp VARCHAR(32), \
+                ramdiskURL VARCHAR(128), \
+                state VARCHAR(16), \
+                accountId VARCHAR(32), \
+                kernelURL VARCHAR(128), \
+                ramdiskId VARCHAR(32), \
+                volumes VARCHAR(32), \
+                launchIndex INT, \
+                platform VARCHAR(16), \
+                bundleTaskStateName VARCHAR(16), \
+                reservationId VARCHAR(32), \
+                euca_hostname VARCHAR(32), \
+                euca_version VARCHAR(32))"
+
+        create_userinfo_table = "create table if not exists " + self.userinfo_table + " (\
+                id varchar(32) primary key not null, \
+                first_name varchar(32), \
+                last_name varchar(32), \
+                uid INT)"
         try:
-            self.cursor.execute(createTb)
+            self.cursor.execute(create_instance_table)
+            self.cursor.execute(create_userinfo_table)
         except MySQLdb.Error:
             pass
         #print "initilized!"
@@ -133,9 +143,9 @@ class FGEucaMetricsDB(object):
                     querystr += " and "
                 querystr += astr            
                 print "qstr:->" + querystr + "<---"
-                rquery = "SELECT * FROM " + self.tablename + " where " + querystr + optional
+                rquery = "SELECT * FROM " + self.instance_table + " where " + querystr + optional
         else:
-            rquery = "SELECT * from " + self.tablename + optional
+            rquery = "SELECT * from " + self.instance_table + optional
             
         self.cursor.execute(rquery)
         rows = self.cursor.fetchall()
@@ -160,6 +170,38 @@ class FGEucaMetricsDB(object):
             ret.append(rowret)
         return ret
 
+    # read from the database.
+    def _read(self, tablename, querydict, optional=""):
+        
+        querystr = "";
+        ret = []
+
+        if querydict:
+            for key in querydict:
+                value = querydict[key]
+                astr = key + "='" + value + "'"
+                if querystr != "":
+                    querystr += " and "
+                querystr += astr            
+                print "qstr:->" + querystr + "<---"
+                rquery = "SELECT * FROM " + tablename + " where " + querystr + optional
+        else:
+            rquery = "SELECT * from " + tablename + optional
+           
+        try:
+            self.cursor.execute(rquery)
+        except MYSQLdb.Error:
+            pass
+
+        rows = self.cursor.fetchall()
+
+        for arow in list(rows):
+            ret.append(arow)
+        return ret
+
+    def read_userinfo(self, querydict={}):
+        self._read(self.userinfo_table, querydict)
+
     def delete(self, querydict={}):
         querystr = "";
         if querydict:
@@ -169,16 +211,40 @@ class FGEucaMetricsDB(object):
                 if querystr != "":
                     querystr += " and "
                 querystr += astr            
-                rquery = "delete FROM " + self.tablename + " where " + querystr
+                rquery = "delete FROM " + self.instance_table + " where " + querystr
         else:
-            rquery = "delete from " + self.tablename
+            rquery = "delete from " + self.instance_table
         
 	try:
 		self.cursor.execute(rquery)
         except MySQLdb.Error:
 		pass
         return 0
+
+    def delete_instance(self, querydict={}):
+        self._delete(self.instance_table, querydict)
+
+    def delete_userinfo(self, querydict={}):
+        self._delete(self.userinfo_table, querydict)
+
+    def _delete(self, tablename, querydict):
+
+        querystr = "";
+        if querydict:
+            for key in querydict:
+                value = querydict[key]
+                astr = key + "='" + value + "'"
+                if querystr != "":
+                    querystr += " and "
+                querystr += astr            
+                rquery = "delete FROM " + tablename + " where " + querystr
+        else:
+            rquery = "delete from " + tablename 
         
+	try:
+	    self.cursor.execute(rquery)
+        except MySQLdb.Error:
+            pass
         
     # help function to initialize(if necessary) and assign value to nested dict
     def _assignVal2Multi(self, themulti, keys, value=None):
@@ -209,7 +275,7 @@ class FGEucaMetricsDB(object):
         m.update(uidcat)
         uid = m.hexdigest()
         pp.pprint(entryObj)
-        wquery = "INSERT INTO " + self.tablename + " ( uidentifier, \
+        wquery = "INSERT INTO " + self.instance_table + " ( uidentifier, \
                                     instanceId, \
                                     ts, \
                                     calltype, \
@@ -312,9 +378,23 @@ class FGEucaMetricsDB(object):
             print "Error %d: %s" % (e.args[0], e.args[1])
             pass
 
+    # write userinfo object into db
+    def write_userinfo(self, entryObj):
+        wquery = "INSERT INTO " + self.userinfo_table + " ( id, first_name, last_name, uid ) VALUES (" \
+                                    + self._fmtstr(entryObj["id"]) + "," \
+                                    + self._fmtstr(entryObj["first_name"]) + "," \
+                                    + self._fmtstr(entryObj["last_name"]) + "," \
+                                    + str(entryObj["uid"]) + ")"
+        try:
+            self.cursor.execute(wquery)
+
+        except MySQLdb.Error, e:
+            print "Error %d: %s" % (e.args[0], e.args[1])
+            pass
+
     # Change table 
     def change_table(self, table_name):
-	    self.tablename=table_name
+	    self.instance_table = table_name
 	    return
 
 # testing

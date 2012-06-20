@@ -6,6 +6,8 @@ import json
 import pprint
 import sys
 import os
+import re
+import subprocess
 from datetime import * 
 
 import futuregrid.cloud.metric.FGEucaMetricsDB
@@ -202,6 +204,10 @@ class Instances:
         for key_current in self.data:
             self.eucadb.write(self.data[key_current])
 
+    def write_userinfo_to_db(self):
+        for key_current in self.userinfo_data:
+            self.eucadb.write_userinfo(self.userinfo_data[key_current])
+
     def add (self,datarecord):
         """prints the information for each instance"""
         if datarecord["linetype"] == "print_ccInstance":
@@ -255,6 +261,21 @@ class Instances:
             if self.last_date < element["date"]:
                 self.last_date = element["date"]
         return (str(self.first_date), str(self.last_date))
+
+    def get_userinfo(self):
+        for i in self.data:
+            ownerid = self.data[i]["ownerId"]
+
+def retrieve_userinfo_ldap(ownerid):
+
+    cmd = ['python', 'fg-user-project-info.py', '-u', ownerid, '-n']
+    output = subprocess.check_output(cmd)
+    res = re.split(',', output.rstrip())
+    firstname = res[0]
+    lastname = res[1]
+    uid = res[2]
+    result = { 'first_name':res[0], 'last_name' : res[1], 'uid' : res[2] }
+    return result
 
 def convert_data_to_list(data,attribute):
     rest = data[attribute]

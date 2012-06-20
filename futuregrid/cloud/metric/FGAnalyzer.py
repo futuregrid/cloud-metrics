@@ -710,18 +710,6 @@ class CmdLineAnalyzeEucaData(Cmd):
         print "Set date range to analyze: [" + from_date + ", " + to_date + "]" 
         self.set_date(from_date, to_date)
 
-    def do_set (self, arg, oprts=None):
-        """Set a function with parameter(s)"""
-
-        args = arg.split()
-        cmd = args[0]
-        param = args[1:]
-
-        if cmd == "search_range":
-            self._search_range(param)
-        elif cmd == "nodename":
-            self._set_nodename(param)
-
     def _search_range(self, param):
         """Set search period
             # E.g. cmd) set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
@@ -890,6 +878,56 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         # instances stats
         print "instances:"
+
+    def do_set (self, arg, oprts=None):
+        """Set a function with parameter(s)"""
+
+        args = arg.split()
+        cmd = args[0]
+        param = args[1:]
+
+        if cmd == "search_range":
+            self._search_range(param)
+        elif cmd == "nodename":
+            self._set_nodename(param)
+
+#########################################################
+# UNDER DEVELOPING
+#########################################################
+'''
+    def do_get(self, args, opts=None):
+        """Perform an action to obtain possession of"""
+
+        args = arg.split()
+        cmd = args[0]
+        param = args[1:]
+
+        if cmd == "stats":
+            # get stats
+            self.get_stats()
+
+    def get_stats(self):
+        """Provide statistics"""
+
+        # check required fields
+        self.is_exist(self.metric)
+        self.is_exist(self.groupby)
+        self.is_exist(self.search_length_of_time)
+        self.is_exist(self.search_interval)
+
+        self.select_data_source("instance")
+
+    def a(self):
+
+        data = self.data_source
+        result = []
+        first_column = self.get_val("groupby")
+        second_column = self.get_val("metric")
+        third_column = self.get_val("search_interval")
+        for i in range(len(data)):
+            row = {first_column:first_value, second_column:second_value, third_column:third_value}
+            result.append()
+'''
 
 #####################################################################
 # main

@@ -26,6 +26,8 @@ createreport -d 2012-05-20/india
 
 set nodename sierra
 
+set search_range 2012-03-12T00:00:00 2012-05-20T23:59:59
+
 # 1.1. Minutes Used by Week
 analyze -S runtime -P weekly
 

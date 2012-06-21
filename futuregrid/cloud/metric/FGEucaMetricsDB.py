@@ -385,7 +385,7 @@ class FGEucaMetricsDB(object):
                                     + self._fmtstr(entryObj["first_name"]) + "," \
                                     + self._fmtstr(entryObj["last_name"]) + "," \
                                     + str(entryObj["uid"]) + ")"
-        print wquery
+        #print wquery
         try:
             self.cursor.execute(wquery)
 

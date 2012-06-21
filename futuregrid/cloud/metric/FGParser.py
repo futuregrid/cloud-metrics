@@ -94,6 +94,7 @@ class Instances:
     def __init__(self):
         self.clear()
         self.data
+        self.userinfo_data = []
 
         self.in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.pp = pprint.PrettyPrinter(indent=0)
@@ -206,7 +207,7 @@ class Instances:
 
     def write_userinfo_to_db(self):
         for key_current in self.userinfo_data:
-            self.eucadb.write_userinfo(self.userinfo_data[key_current])
+            self.eucadb.write_userinfo(key_current)
 
     def add (self,datarecord):
         """prints the information for each instance"""
@@ -262,9 +263,18 @@ class Instances:
                 self.last_date = element["date"]
         return (str(self.first_date), str(self.last_date))
 
-    def get_userinfo(self):
+    def set_userinfo(self):
         for i in self.data:
             ownerid = self.data[i]["ownerId"]
+            try:
+                new_userinfo = retrieve_userinfo_ldap(ownerid)
+                self.add_userinfo(new_userinfo)
+            except:
+                continue
+
+    def add_userinfo(self, new_userinfo):
+        if self.userinfo_data.count(new_userinfo) == 0:
+            self.userinfo_data.append(new_userinfo)
 
 def retrieve_userinfo_ldap(ownerid):
 
@@ -274,7 +284,7 @@ def retrieve_userinfo_ldap(ownerid):
     firstname = res[0]
     lastname = res[1]
     uid = res[2]
-    result = { 'first_name':res[0], 'last_name' : res[1], 'uid' : res[2] }
+    result = { 'id': ownerid, 'first_name':res[0], 'last_name' : res[1], 'uid' : res[2] }
     return result
 
 def convert_data_to_list(data,attribute):
@@ -667,6 +677,39 @@ def read_log_files_and_store_to_db (instances, path, from_date, to_date, linetyp
             continue
 
     instances.write_to_db()
+
+    # set userinfo
+    instances.set_userinfo()
+    instances.write_userinfo_to_db()
+
+def utility_insert_userinfo_from_file_or_std():
+
+    i = Instances()
+    filename = ""
+    userid = ""
+
+    if len(argv[0]) == 0:
+        return
+
+    if argv[0] == "-i":
+        filename = argv[1]
+    else:
+        userid = argv[0]
+
+    if os.path.exists(filename):
+        f = open(filename, "r")
+        while 1:
+            line = f.readline()
+            if not line:
+                break
+
+            res = retrieve_userinfo_ldap(line.rstrip())
+            i.userinfo_data.append(res)
+    else:
+            res = retrieve_userinfo_ldap(userid)
+            i.userinfo_data.append(res)
+
+    i.write_userinfo_to_db()
 
 def main():
 

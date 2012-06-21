@@ -16,7 +16,7 @@ class FGEucaMetricsDB(object):
     euca_version = "3.0.2"
     euca_hostname = None
     instance_table = "instance"
-    username_table = "userinfo"
+    userinfo_table = "userinfo"
 
     # Initialize
     def __init__(self, configfile="futuregrid.cfg"):
@@ -385,6 +385,7 @@ class FGEucaMetricsDB(object):
                                     + self._fmtstr(entryObj["first_name"]) + "," \
                                     + self._fmtstr(entryObj["last_name"]) + "," \
                                     + str(entryObj["uid"]) + ")"
+        print wquery
         try:
             self.cursor.execute(wquery)
 

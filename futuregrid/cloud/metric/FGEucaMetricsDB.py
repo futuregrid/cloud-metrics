@@ -99,7 +99,7 @@ class FGEucaMetricsDB(object):
                 euca_version VARCHAR(32))"
 
         create_userinfo_table = "create table if not exists " + self.userinfo_table + " (\
-                id varchar(32) primary key not null, \
+                ownerid varchar(32) primary key not null, \
                 first_name varchar(32), \
                 last_name varchar(32), \
                 uid INT)"
@@ -200,7 +200,7 @@ class FGEucaMetricsDB(object):
         return ret
 
     def read_userinfo(self, querydict={}):
-        self._read(self.userinfo_table, querydict)
+        return self._read(self.userinfo_table, querydict)
 
     def delete(self, querydict={}):
         querystr = "";
@@ -380,8 +380,8 @@ class FGEucaMetricsDB(object):
 
     # write userinfo object into db
     def write_userinfo(self, entryObj):
-        wquery = "INSERT INTO " + self.userinfo_table + " ( id, first_name, last_name, uid ) VALUES (" \
-                                    + self._fmtstr(entryObj["id"]) + "," \
+        wquery = "INSERT INTO " + self.userinfo_table + " ( ownerid, first_name, last_name, uid ) VALUES (" \
+                                    + self._fmtstr(entryObj["ownerid"]) + "," \
                                     + self._fmtstr(entryObj["first_name"]) + "," \
                                     + self._fmtstr(entryObj["last_name"]) + "," \
                                     + str(entryObj["uid"]) + ")"

@@ -200,6 +200,13 @@ class Instances:
         for element in instance_list:
             self.data[key] = element
             key += 1
+
+    def read_userinfo_from_db(self):
+
+        userinfo_list = self.eucadb.read_userinfo()
+
+        for element in userinfo_list:
+            self.userinfo_data.append(element)
         
     def write_to_db(self):
         for key_current in self.data:
@@ -683,6 +690,17 @@ def read_log_files_and_store_to_db (instances, path, from_date, to_date, linetyp
     instances.write_userinfo_to_db()
 
 def utility_insert_userinfo_from_file_or_std():
+
+    '''Store userinfo into database by reading a userid(s) from a text file or a standard input
+    This command will read a userid(s) and do ldapsearch to find userinfo. And then it will
+    store the userinfo into mysql database.
+
+    Usage: $ fg-metrics-utility insert_userinfo -i filename
+           or
+           $ fg-metrics-utility userid
+
+    THIS IS NOT TESTED. NEED TO BE VERIFIED - 06/22/2012 Hyungro Lee
+    '''
 
     i = Instances()
     filename = ""

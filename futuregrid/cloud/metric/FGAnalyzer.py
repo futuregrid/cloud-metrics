@@ -358,10 +358,21 @@ class CmdLineAnalyzeEucaData(Cmd):
         print highchart.filepath + "/" + highchart.filename + " created."
 
     def display_stats(self, metric="count", type="pie", filepath="chart.png"):
-        """Create Python Google Chart but this should be merged to _create_chart()"""
-        """ filepath = display, filepath = url, filepath = real filepath"""
-        """displays the number of VMs a user is running"""
-        """ types supported pie, bar"""
+        """Create Python Google Chart
+           This should be merged to _create_chart()
+        
+            It displays the number of VMs per user
+
+            Args:
+                metric(str): metric name to display (e.g. count, )
+                type(str): chart type (e.g. pie, bar)
+                filepath(str): A location the output will be saved. It includes a directory path and a filename.
+                               (other options are available e.g. display; open a browser, url; )
+            Returns:
+                n/a
+            Raises:
+                n/a
+        """
 
         values = []
         label_values = []
@@ -472,6 +483,11 @@ class CmdLineAnalyzeEucaData(Cmd):
         * This should be working with retrieving ldap commands
         * Currently, this function is a test version
         """
+
+        for element in self.instances.userinfo_data:
+            if element['ownerid'] == id:
+                return element['first_name'] + " " + element['last_name']
+
         if id == "EJMBZFNPMDQ73AUDPOUS3":
             return "eucalyptus-admin"
         else: 
@@ -557,6 +573,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.instances = Instances()
         # gets also data from the database
         self.instances.read_from_db()
+
+        # Gets also userinfo data from the database
+        self.instances.read_userinfo_from_db()
+
         print "\r... data loaded"
 
     def do_pause(slef, arg):

@@ -24,6 +24,19 @@ class Highcharts:
 
     def set_data(self, data):
         self.data = data
+        if type(data) == type({}):
+            self.data = self.convert_dict_to_list(data)
+        self.sort_data()
+    
+    def convert_dict_to_list(self, data):
+        dictlist = []
+        for key, value in data.iteritems():
+            temp = [key,value]
+            dictlist.append(temp)
+        return dictlist
+
+    def sort_data(self):
+        self.data = sorted(self.data, key=lambda key: key)
 
     def set_data_name(self, data_name):
         self.data_name = data_name
@@ -46,6 +59,12 @@ class Highcharts:
 
     def set_subtitle(self, subtitle):
         self.subtitle = subtitle
+
+    def set_tooltip(self, tooltip):
+        if self.chart_type == "pie":
+            self.tooltip = "'<b>'+ this.point.name +'</b>: '+ this.y"
+        else:
+            self.tooltip = "this.x +': '+ this.y"
 
     def display(self):
         
@@ -96,7 +115,7 @@ class Highcharts:
                         tooltip: {
                             formatter: function() {
                                 return ''+
-                                this.x +': '+ this.y;
+                                %(tooltip)s;
                                 }
                             },
                         plotOptions: {
@@ -107,6 +126,7 @@ class Highcharts:
                             },
                         series: [
                             {
+                                type: '%(chart_type)s',
                                 name: '%(data_name)s',
                                 data: %(data)s
                             }]

@@ -18,6 +18,7 @@ from cmd2 import Cmd, make_option, options, Cmd2TestCase
 from datetime import *
 import unittest, sys
 import calendar
+import re
 
 from futuregrid.cloud.metric.FGParser import Instances
 from futuregrid.cloud.metric.FGGoogleMotionChart import GoogleMotionChart
@@ -50,6 +51,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     userid = None
     user_stats = None
     sys_stats = None
+    sys_stat_new = None # sys_stats will be converted to this
 
     nodename = None
     metric = None
@@ -172,11 +174,45 @@ class CmdLineAnalyzeEucaData(Cmd):
                 continue
             if self.nodename and self.nodename != instance["euca_hostname"] :
                 continue
+            self._total_stats(instance, metric)
             merged_res = self._daily_stats(instance, metric, merged_res, "sum") # or "avg"
 
         if period == "weekly":
             merged_res = self.convert_stats_from_daily_to_weekly(merged_res)
         return merged_res
+
+    def _total_stats(self, instance, metric):
+        """Calculate key and value statistics
+        Every entry of keys has one value
+        This is only for pie typed chart which is using key:value
+
+        Args:
+            instance(dict): instance 
+            metric(str): metric name
+
+        Returns:
+            n/a 
+        Raises:
+            n/a
+
+        """
+        
+        if metric == "count_node":
+            sys_stat = self.sys_stat_new['total']['count_node']
+            if instance["t_start"] < self.from_date or instance["t_start"] > self.to_date:
+                return
+            try:
+                m = re.search(r'http://(.*):8775/axis2/services/EucalyptusNC', str(instance["serviceTag"]), re.M|re.I)
+                nodename = str(m.group(1))
+
+                if nodename in sys_stat:
+                    sys_stat[nodename] = int(sys_stat[nodename]) + 1
+                else:
+                    sys_stat[nodename] = 1
+                self.sys_stat_new['total']['count_node'] = sys_stat
+            except:
+                print "total_stats is not calculated.", sys.exc_info()[0]
+                return
 
     def convert_stats_from_daily_to_weekly(self, stats):
         """Convert a daily list of calculated data to a weekly list of data in case the period specified with 'weekly'
@@ -206,7 +242,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         except:
             print "Unexpected error:", sys.exc_info()[0]
             raise
-        res= self._merge_daily_stat(new_stats, current_stats, type)
+        res = self._merge_daily_stat(new_stats, current_stats, type)
         return res
     
     def _daily_stat(self, instance, metric):
@@ -343,19 +379,32 @@ class CmdLineAnalyzeEucaData(Cmd):
             print "chart is not created.", sys.exc_info()[0]
             pass
 
-    def create_highcharts(self, chart_data, output, chart_type = "bar"):
+    def create_highcharts(self, chart_data, output, chart_type = "column"):
         """Create highcharts in a javascript html file format"""
-        highchart = Highcharts(chart_type)
-        highchart.set_data(chart_data)
-        highchart.set_data_name(self.nodename)
-        highchart.set_yaxis(self.metric)
-        highchart.set_xaxis([ d.strftime("%Y-%m-%d") + " ~ " + (d + timedelta(6)).strftime("%Y-%m-%d") for d in (self.from_date + timedelta(n) for n in range(0, self.day_count, 7))])
-        highchart.set_output_path(output)
-        highchart.set_title("Total " + self.metric + " of VM instances")
-        highchart.set_subtitle("source : " + self.nodename)
-        highchart.set_filename(chart_type + "highcharts.html")
-        highchart.display()
-        print highchart.filepath + "/" + highchart.filename + " created."
+        try:
+            highchart = Highcharts(chart_type)
+            highchart.set_data(chart_data)
+            if self.nodename:
+                data_name = self.nodename
+            else:
+                data_name = "all"
+            highchart.set_data_name(data_name)
+            highchart.set_subtitle("source : " + data_name)
+            highchart.set_yaxis(self.metric)
+            highchart.set_xaxis([ d.strftime("%Y-%m-%d") + " ~ " + (d + timedelta(6)).strftime("%Y-%m-%d") for d in (self.from_date + timedelta(n) for n in range(0, self.day_count, 7))])
+            highchart.set_output_path(output)
+            if self.metric == "count_node":
+                title = "Total VMs count per a node cluster"
+            else:
+                title = "Total " + self.metric + " of VM instances"
+            highchart.set_title(title)
+            highchart.set_filename(chart_type + "highcharts.html")
+            highchart.set_tooltip("")
+            highchart.display()
+            print highchart.filepath + "/" + highchart.filename + " created."
+        except:
+            print "highcharts is not created.", sys.exc_info()[0]
+            pass
 
     def display_stats(self, metric="count", type="pie", filepath="chart.png"):
         """Create Python Google Chart
@@ -523,6 +572,10 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def preloop(self):
         self.do_loaddb("")
+
+        # Initialize values
+        self.sys_stat_new = {'total' : ""}
+        self.sys_stat_new['total'] = { 'count_node' : {}}
 
     def postloop(self):
         print "BYE ..."
@@ -792,6 +845,9 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
+        if 'count_node' in self.sys_stat_new['total']:
+            self.create_highcharts(self.sys_stat_new['total']['count_node'], opts.output, "pie")
+            return
         self.line_chart(self.sys_stats, opts.output)
         self.bar_chart(self.sys_stats, opts.output)
         self.create_highcharts(self.sys_stats, opts.output)

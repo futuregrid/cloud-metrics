@@ -286,13 +286,16 @@ class Instances:
 def retrieve_userinfo_ldap(ownerid):
 
     cmd = ['python', 'fg-user-project-info.py', '-u', ownerid, '-n']
-    output = subprocess.check_output(cmd)
-    res = re.split(',', output.rstrip())
-    firstname = res[0]
-    lastname = res[1]
-    uid = res[2]
-    result = { 'id': ownerid, 'first_name':res[0], 'last_name' : res[1], 'uid' : res[2] }
-    return result
+    try:
+        output = subprocess.check_output(cmd)
+        res = re.split(',', output.rstrip())
+        firstname = res[0]
+        lastname = res[1]
+        uid = res[2]
+        result = { 'ownerid': ownerid, 'first_name':res[0], 'last_name' : res[1], 'uid' : res[2] }
+        return result
+    except:
+        return None
 
 def convert_data_to_list(data,attribute):
     rest = data[attribute]
@@ -706,13 +709,13 @@ def utility_insert_userinfo_from_file_or_std():
     filename = ""
     userid = ""
 
-    if len(argv[0]) == 0:
+    if len(sys.argv[1]) == 0:
         return
 
-    if argv[0] == "-i":
-        filename = argv[1]
+    if sys.argv[1] == "-i":
+        filename = sys.argv[2]
     else:
-        userid = argv[0]
+        userid = sys.argv[1]
 
     if os.path.exists(filename):
         f = open(filename, "r")
@@ -722,10 +725,12 @@ def utility_insert_userinfo_from_file_or_std():
                 break
 
             res = retrieve_userinfo_ldap(line.rstrip())
-            i.userinfo_data.append(res)
+            if res:
+                i.userinfo_data.append(res)
     else:
             res = retrieve_userinfo_ldap(userid)
-            i.userinfo_data.append(res)
+            if res:
+                i.userinfo_data.append(res)
 
     i.write_userinfo_to_db()
 

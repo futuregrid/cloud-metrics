@@ -11,4 +11,4 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/runtime
+sys_report -o 2011-11/india/runtime

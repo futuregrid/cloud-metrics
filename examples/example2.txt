@@ -6,35 +6,39 @@
 # Analyze entire data and create report
 clear users
 analyze -M 11 -Y 2011
-createreport -d 2011-11 -t Running_instances_per_user_of_eucalyptus_in_India
+createreport -d 2011-11/india -t Running_instances_per_user_of_eucalyptus_in_India
 
 clear users
 analyze -M 12 -Y 2011
-createreport -d 2011-12 -t Running_instances_per_user_of_eucalyptus_in_India
+createreport -d 2011-12/india -t Running_instances_per_user_of_eucalyptus_in_India
 
 clear users
 analyze -M 01
-createreport -d 2012-01 -t Running_instances_per_user_of_eucalyptus_in_India
+createreport -d 2012-01/india -t Running_instances_per_user_of_eucalyptus_in_India
 
 clear users
 analyze -M 02
-createreport -d 2012-02 -t Running_instances_per_user_of_eucalyptus_in_India
+createreport -d 2012-02/india -t Running_instances_per_user_of_eucalyptus_in_India
 
 clear users
 analyze -M 03
-createreport -d 2012-03 -t Running_instances_per_user_of_eucalyptus_in_India
+createreport -d 2012-03/india -t Running_instances_per_user_of_eucalyptus_in_India
 
 clear users
 analyze -M 04
-createreport -d 2012-04 -t Running_instances_per_user_of_eucalyptus_in_India
+createreport -d 2012-04/india -t Running_instances_per_user_of_eucalyptus_in_India
 
 clear users
 set nodename india
 analyze -M 05
-createreport -d 2012-05 -t Running_instances_per_user_of_eucalyptus_in_India
+createreport -d 2012-05/india -t Running_instances_per_user_of_eucalyptus_in_India
 
+clear users
+set nodename india
+analyze -M 06
+createreport -d 2012-06/india -t Running_instances_per_user_of_eucalyptus_in_India
 
 # Create index.html for the reports above
-createreports 2011-11 2011-12 2012-01 2012-02 2012-03 2012-04 2012-05
+#createreports 2011-11 2011-12 2012-01 2012-02 2012-03 2012-04 2012-05
 
 #createreports 2011-11 2011-12 2012-01 2012-02

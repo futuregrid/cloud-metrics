@@ -18,6 +18,11 @@ analyze -S count -P weekly
 
 sys_report -o 2012-04-01/india/count/
 
+# 1.2.1. Total VMs count per a node cluster
+analyze -s count_node
+
+sys_report -o 2012-04-01/india/count_node/
+
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User
 clear users
@@ -37,6 +42,11 @@ sys_report -o 2012-04-01/sierra/runtime/
 analyze -S count -P weekly
 
 sys_report -o 2012-04-01/sierra/count/
+
+# 1.2.1. Total VMs count per a node cluster
+analyze -s count_node
+
+sys_report -o 2012-04-01/sierra/count_node/
 
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User

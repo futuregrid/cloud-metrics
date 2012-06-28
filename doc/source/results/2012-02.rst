@@ -1,0 +1,20 @@
+February 2012
+~~~~~~~~~~~~~
+
+  .. figure:: data/2012-02/india/bar.count.png
+     :scale: 80 %
+
+     Figure 1. The number of VMs submitted by a user for February 2012 on India
+
+  .. figure:: data/2012-02/india/bar.sum.png
+     :scale: 80 %
+
+     Figure 2. Total wallclock time for all VMs executed by a user for February 2012 on India
+
+.. raw:: html
+
+   <div style="margin-top:10px;">
+   <iframe width="660" height="500" src="data/2012-02/india/FGGoogleMotionChart.html" frameborder="0"></iframe>
+   </div>
+   
+   Figure 3. Number of VMs submitted per user for February 2012 on India

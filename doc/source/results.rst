@@ -1,144 +1,49 @@
-Cloud Metric Results
-====================
+Cloud Metric Results like one Nimbus has
+========================================
 
-Results for Eucalyptus on sierra.futuregrid.org
------------------------------------------------
+Contents:
 
-May 2012
-~~~~~~~~
+.. toctree::
+	:maxdepth: 1
 
- .. figure:: data/2012-05/sierra/bar.count.png
-    :width: 100 %
-
-    Number of VMs submitted by a user for this month
-
- .. figure:: data/2012-05/sierra/bar.sum.png
-    :width: 100 %
-
-    Sum of the wallclock time for all VMs executed by a user for this month 
-
-
- .. .. image:: data/2012-05/pie.count.png
- .. .. image:: data/2012-05/pie.sum.png
-
-Results for Eucalyptus on india.futuregrid.org
-----------------------------------------------
-
-May 2012
-~~~~~~~~
-
- .. figure:: data/2012-05/bar.count.png
-    :width: 100 %
-
-    Number of VMs submitted by a user for this month
-
- .. figure:: data/2012-05/bar.sum.png
-    :width: 100 %
-
-    Sum of the wallclock time for all VMs executed by a user for this month 
-
-
- .. .. image:: data/2012-05/pie.count.png
- .. .. image:: data/2012-05/pie.sum.png
-
-Apr 2012
-~~~~~~~~
-
- .. figure:: data/2012-04/bar.count.png
-    :width: 100 %
-
-    Number of VMs submitted by a user for this month
-
- .. figure:: data/2012-04/bar.sum.png
-    :width: 100 %
-
-    Sum of the wallclock time for all VMs executed by a user for this month 
-
-
- .. .. image:: data/2012-04/pie.count.png
- .. .. image:: data/2012-04/pie.sum.png
-
-Mar 2012
-~~~~~~~~
-
- .. figure:: data/2012-03/bar.count.png
-    :width: 100 %
-
-    Number of VMs submitted by a user for this month
-
- .. figure:: data/2012-03/bar.sum.png
-    :width: 100 %
-
-    Sum of the wallclock time for all VMs executed by a user for this month 
-
-
- .. .. image:: data/2012-03/pie.count.png
- .. .. image:: data/2012-03/pie.sum.png
-
-Feb 2012
-~~~~~~~~
-
-  .. figure:: data/2012-02/bar.count.png
-     :width: 100 %
-     
-     Number of VMs submitted by a user for this month
-
-
-  .. figure:: data/2012-02/bar.sum.png
-     :width: 100 %
-
-     Sum of the wallclock time for all VMs executed by a user for this month 
-
-
- .. .. figure:: data/2012-02/pie.count.png
- .. .. figure:: data/2012-02/pie.sum.png
-
-
-Jan 2012
-~~~~~~~~
-
-  .. figure:: data/2012-01/bar.count.png
-     :width: 100 %
-
-     Number of VMs submitted by a user for this month
-
-  .. figure:: data/2012-01/bar.sum.png
-     :width: 100 %
-
-     Sum of the wallclock time for all VMs executed by a user for this month 
-
-.. .. figure:: data/2012-01/pie.count.png
-.. .. figure:: data/2012-01/pie.sum.png
-
-Dec 2011
-~~~~~~~~
-
-  .. figure:: data/2011-12/bar.count.png
-     :width: 100 %
-
-     Number of VMs submitted by a user for this month
-
-
-  .. figure:: data/2011-12/bar.sum.png
-     :width: 100 %
-
-     Sum of the wallclock time for all VMs executed by a user for this month 
-
-.. .. figure:: data/2011-12/pie.count.png
-.. .. figure:: data/2011-12/pie.sum.png
-
-Nov 2011
-~~~~~~~~
-
-  .. figure:: data/2011-11/bar.count.png
-     :width: 100 %
-
-     Number of VMs submitted by a user for this month
-
-  .. figure:: data/2011-11/bar.sum.png
-     :width: 100 %
-
-     Sum of the wallclock time for all VMs executed by a user for this month 
-
-.. .. figure:: data/2011-11/pie.count.png
-.. .. figure:: data/2011-11/pie.sum.png
+	results/2012-06-17
+	results/2012-06-10
+	results/2012-06-03
+	results/2012-06
+	results/2012-05-27
+	results/2012-05-20
+	results/2012-05-13
+	results/2012-05-06
+	results/2012-05
+	results/2012-04-29
+	results/2012-04-22
+	results/2012-04-15
+	results/2012-04-08
+	results/2012-04-01
+	results/2012-04
+	results/2012-03-25
+	results/2012-03-18
+	results/2012-03-11
+	results/2012-03-04
+	results/2012-03
+	results/2012-02-26
+	results/2012-02-19
+	results/2012-02-12
+	results/2012-02-05
+	results/2012-02
+	results/2012-01-29
+	results/2012-01-22
+	results/2012-01-15
+	results/2012-01-08
+	results/2012-01-01
+	results/2012-01
+	results/2011-12-25
+	results/2011-12-18
+	results/2011-12-11
+	results/2011-12-04
+	results/2011-12
+	results/2011-11-27
+	results/2011-11-20
+	results/2011-11-13
+	results/2011-11-06
+	results/2011-11

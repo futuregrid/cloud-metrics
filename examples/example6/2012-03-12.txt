@@ -2,6 +2,8 @@
 #
 # 10 weeks
 #
+clear all
+
 set search_range 2012-01-09T00:00:00 2012-03-18T23:59:59
 
 # 1. Node 
@@ -19,7 +21,7 @@ analyze -S count -P weekly
 sys_report -o 2012-03-18/india/count/
 
 # 1.2.1. Total VMs count per a node cluster
-analyze -s count_node
+analyze -S count_node
 
 sys_report -o 2012-03-18/india/count_node/
 
@@ -28,6 +30,8 @@ sys_report -o 2012-03-18/india/count_node/
 clear users
 analyze -f 2012-03-12T00:00:00 -t 2012-03-18T23:59:59
 createreport -d 2012-03-18/india
+
+clear all
 
 set nodename sierra
 
@@ -44,7 +48,7 @@ analyze -S count -P weekly
 sys_report -o 2012-03-18/sierra/count/
 
 # 1.2.1. Total VMs count per a node cluster
-analyze -s count_node
+analyze -S count_node
 
 sys_report -o 2012-03-18/sierra/count_node/
 

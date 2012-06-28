@@ -5,6 +5,8 @@
 #
 # Analyze entire data and create report
 
+clear all
+
 clear users
 
 set nodename sierra
@@ -12,3 +14,9 @@ set nodename sierra
 analyze -M 05 -Y 2012
 
 createreport -d 2012-05/sierra/ -t Launched_instances_per_user_of_eucalyptus_in_Sierra
+
+clear users
+
+analyze -M 06 -Y 2012
+
+createreport -d 2012-06/sierra/ -t Launched_instances_per_user_of_eucalyptus_in_Sierra

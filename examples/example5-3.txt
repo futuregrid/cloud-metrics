@@ -11,4 +11,4 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/cores/
+sys_report -o 2011-11/india/cores/

@@ -1,5 +1,6 @@
 # New metric for system utilization
 # These commands will produce a line chart for system usage
+clear all
 
 # A user can specify a data range
 set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
@@ -11,12 +12,12 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/cores/
+sys_report -o 2011-11/india/cores/
 
 analyze -S ccvm_mem
 
-sys_report -o 2011-11/mem
+sys_report -o 2011-11/india/mem
 
 analyze -S ccvm_disk
 
-sys_report -o 2011-11/disk
+sys_report -o 2011-11/india/disk

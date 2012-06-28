@@ -654,6 +654,18 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.users = {}
         elif arg == "instances":
             self.instances = {}
+        elif arg == "all":
+            self.users = {}
+            self.from_date = ""
+            self.to_date = ""
+            self.day_count = 0
+            self.userid = None
+            self.user_stats = None
+            self.sys_stats = None
+            self.sys_stat_new = {'total' : ""}
+            self.sys_stat_new['total'] = { 'count_node' : {}}
+            self.metric = None
+            self.nodename = None
 
     @options([
         make_option('-f', '--start', default="all", type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
@@ -755,7 +767,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.display_stats("sum", "pie", opts.directory + "/pie.sum.png")
         self.display_stats("sum", "bar", opts.directory + "/bar.sum.png")
 
-        #self.make_google_motion_chart(opts.directory)
+        self.make_google_motion_chart(opts.directory)
         #self.make_index_html(opts.directory, opts.title)
 
     def do_createreports(self, arg):
@@ -845,7 +857,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
-        if 'count_node' in self.sys_stat_new['total']:
+        if 'count_node' in self.sys_stat_new['total'] and len(self.sys_stat_new['total']['count_node']) != 0:
             self.create_highcharts(self.sys_stat_new['total']['count_node'], opts.output, "pie")
             return
         self.line_chart(self.sys_stats, opts.output)

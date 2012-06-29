@@ -18,7 +18,6 @@ Contents:
    download
    support
    results
-   results-nimbus-look
    metrics
 
 

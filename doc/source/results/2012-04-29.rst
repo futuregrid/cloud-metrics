@@ -34,3 +34,13 @@ Results for Eucalyptus on sierra.futuregrid.org
 	<iframe width="800" height="450" src="data/2012-04-29/sierra/runtime/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total runtime of VMs submitted per user for 2012-04-23  ~ 2012-04-29 on sierra
+
+Results for Eucalyptus on india.futuregrid.org
+-----------------------------------------------
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="450" src="data/2012-04-29/india/count_node/piehighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 5. Total VMs count per node cluster for 2012-04-23  ~ 2012-04-29 on india

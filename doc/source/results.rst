@@ -9,7 +9,6 @@ Contents:
 	results/2012-06-17
 	results/2012-06-10
 	results/2012-06-03
-	results/2012-06
 	results/2012-05-27
 	results/2012-05-20
 	results/2012-05-13

@@ -1,12 +1,12 @@
 February 2012
 ~~~~~~~~~~~~~
 
-  .. figure:: data/2012-02/india/bar.count.png
+  .. figure:: /data/2012-02/india/bar.count.png
      :scale: 80 %
 
      Figure 1. The number of VMs submitted by a user for February 2012 on India
 
-  .. figure:: data/2012-02/india/bar.sum.png
+  .. figure:: /data/2012-02/india/bar.sum.png
      :scale: 80 %
 
      Figure 2. Total wallclock time for all VMs executed by a user for February 2012 on India
@@ -18,3 +18,13 @@ February 2012
    </div>
    
    Figure 3. Number of VMs submitted per user for February 2012 on India
+
+.. figure:: /data/2012-02/india/count/linechart.png
+     :scale: 80 %
+
+     Figure 4. Total number of VMs launched on India (daily)
+
+.. figure:: /data/2012-02/india/runtime/linechart.png
+     :scale: 80 %
+
+     Figure 5. Total wallclock time for all VMs launched on India (daily)

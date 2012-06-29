@@ -78,15 +78,34 @@ class Results:
 
         content = content + (self.get_content() % vars()) % vars()
 
-        number = "3"
+        number = 3
+        metric = "count_node"
+
+        src = "data/%(end_date)s/%(nodename)s/%(metric)s/piehighcharts.html"
+        title = "Figure %(number)s. Total VMs count per node cluster for %(start_date)s  ~ %(end_date)s on %(nodename)s"
+ 
+        content = content + (self.get_content() % vars()) % vars()
+
+        number = "4"
         metric = "count"
         nodename = "sierra"
 
+        src = "data/%(end_date)s/%(nodename)s/%(metric)s/columnhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
+ 
         content = content + (main_title + self.get_content() % vars()) % vars()
 
-        number = 4
+        number = 5
         metric = "runtime"
 
+        content = content + (self.get_content() % vars()) % vars()
+
+        number = 6
+        metric = "count_node"
+
+        src = "data/%(end_date)s/%(nodename)s/%(metric)s/piehighcharts.html"
+        title = "Figure %(number)s. Total VMs count per node cluster for %(start_date)s  ~ %(end_date)s on %(nodename)s"
+ 
         content = content + (self.get_content() % vars()) % vars()
 
         return content

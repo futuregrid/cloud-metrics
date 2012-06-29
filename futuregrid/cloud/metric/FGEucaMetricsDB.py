@@ -389,7 +389,7 @@ class FGEucaMetricsDB(object):
         keys = ", ".join(entryObj.keys())
         values = "'" + "' ,'".join(str(x) for x in entryObj.values()) + "'"
         wquery = "INSERT INTO " + tablename + " ( " + keys + " ) VALUES ( " + values + " )"
-        print wquery
+        #print wquery
         try:
             self.cursor.execute(wquery)
 

@@ -520,6 +520,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         filepath = directory + "/" + filename
         Utility.ensure_dir(filepath)
         test = GoogleMotionChart()
+        self.set_fullname()
         output = test.display(self.users, str(self.from_date))
         f = open(filepath, "w")
         f.write(output)
@@ -536,6 +537,12 @@ class CmdLineAnalyzeEucaData(Cmd):
         for element in self.instances.userinfo_data:
             if element['ownerid'] == id:
                 return element['first_name'] + " " + element['last_name']
+
+        # Second try if it does not exist
+        for element in self.instances.userinfo_data:
+            if element['username'] == id:
+                return element['first_name'] + " " + element['last_name']
+
 
         if id == "EJMBZFNPMDQ73AUDPOUS3":
             return "eucalyptus-admin"
@@ -569,6 +576,10 @@ class CmdLineAnalyzeEucaData(Cmd):
             return "fg201"
         else :
             return id
+    def set_fullname(self):
+        for uname in self.users:
+            fullname = self.convert_ownerId_str(uname)
+            self.users[uname]['fullname'] = fullname
 
     def preloop(self):
         self.do_loaddb("")

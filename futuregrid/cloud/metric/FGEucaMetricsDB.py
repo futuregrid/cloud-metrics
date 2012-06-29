@@ -102,7 +102,9 @@ class FGEucaMetricsDB(object):
                 ownerid varchar(32) primary key not null, \
                 first_name varchar(32), \
                 last_name varchar(32), \
-                uid INT)"
+                uid INT, \
+                username varchar(32), \
+                project varchar(16))"
         try:
             self.cursor.execute(create_instance_table)
             self.cursor.execute(create_userinfo_table)
@@ -380,12 +382,14 @@ class FGEucaMetricsDB(object):
 
     # write userinfo object into db
     def write_userinfo(self, entryObj):
-        wquery = "INSERT INTO " + self.userinfo_table + " ( ownerid, first_name, last_name, uid ) VALUES (" \
-                                    + self._fmtstr(entryObj["ownerid"]) + "," \
-                                    + self._fmtstr(entryObj["first_name"]) + "," \
-                                    + self._fmtstr(entryObj["last_name"]) + "," \
-                                    + str(entryObj["uid"]) + ")"
-        #print wquery
+        self._write("userinfo", entryObj)
+
+    def _write(self, tablename, entryObj):
+
+        keys = ", ".join(entryObj.keys())
+        values = "'" + "' ,'".join(str(x) for x in entryObj.values()) + "'"
+        wquery = "INSERT INTO " + tablename + " ( " + keys + " ) VALUES ( " + values + " )"
+        print wquery
         try:
             self.cursor.execute(wquery)
 

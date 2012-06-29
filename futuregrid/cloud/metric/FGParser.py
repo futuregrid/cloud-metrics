@@ -701,13 +701,14 @@ def utility_insert_userinfo_from_file_or_std():
     Usage: $ fg-metrics-utility insert_userinfo -i filename
            or
            $ fg-metrics-utility userid
-
-    THIS IS NOT TESTED. NEED TO BE VERIFIED - 06/22/2012 Hyungro Lee
     '''
 
     i = Instances()
     filename = ""
     userid = ""
+    ownerid = ""
+    username = ""
+    project = ""
 
     if len(sys.argv[1]) == 0:
         return
@@ -724,13 +725,37 @@ def utility_insert_userinfo_from_file_or_std():
             if not line:
                 break
 
-            res = retrieve_userinfo_ldap(line.rstrip())
+            ownerid = line.rstrip()
+            # For comma seperated lines
+            # E.g. 5TQVNLFFHPWOH22QHXERX,hyunjoo,fg45
+            # Ownerid, username, projectid
+            m = re.search(r'(.*),(.*),(.*)', line.rstrip())
+
+            if m:
+                try:
+                    userid = m.group(1)
+                    username = m.group(2)
+                    project = m.group(3)
+                except:
+                    m = None
+                    pass
+
+                # In euca3.0+, username is an ownerid of past version of euca
+                if username:
+                    ownerid = username
+
+            res = retrieve_userinfo_ldap(ownerid)
             if res:
+                if m:
+                    # if m exists, res (dict) should be merged with the comma separated values in order to store the info into db
+                    res["ownerid"] = userid
+                    res["username"] = username
+                    res["project"] = project
                 i.userinfo_data.append(res)
     else:
-            res = retrieve_userinfo_ldap(userid)
-            if res:
-                i.userinfo_data.append(res)
+        res = retrieve_userinfo_ldap(userid)
+        if res:
+            i.userinfo_data.append(res)
 
     i.write_userinfo_to_db()
 

@@ -1,5 +1,7 @@
-Cloud Metric Results like one Nimbus has
-========================================
+Cloud Metric Results
+====================
+
+We have collected cloud utilization data from Eucalyptus on FutureGrid such as India and Sierra resources and provide weekly and monthly reports to show usage of system resources measured by FG Cloud Metric.
 
 Contents:
 

@@ -111,8 +111,9 @@ class Results:
         return content
 
     def get_index_header(self):
-        res =   "Cloud Metric Results like one Nimbus has" + self.newline + \
-                "========================================" + self.newline + \
+        res =   "Cloud Metric Results" + self.newline + \
+                "====================" + self.newline + \
+                "We have collected cloud utilization data from Eucalyptus on FutureGrid such as India and Sierra resources and provide weekly and monthly reports to show usage of system resources measured by FG Cloud Metric." + self.newline + \
                 self.newline + \
                 "Contents:" + self.newline + \
                 self.newline + \

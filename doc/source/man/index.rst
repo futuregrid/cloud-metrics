@@ -11,10 +11,10 @@ Contents:
 .. toctree::
    :maxdepth: 1
 
-   fg-cleanup-db
-   fg-euca-gather-log-files
    fg-metric  
    fg-parser
+   fg-cleanup-db
+   fg-euca-gather-log-files
 
 Indices and tables
 ==================

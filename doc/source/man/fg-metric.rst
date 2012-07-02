@@ -74,8 +74,6 @@ DESCRIPTION
 EXAMPLES
 ========
 
- TODO
-
 AUTHOR
 ======
 

@@ -25,7 +25,8 @@ The Cluster Controller (CC) of eucalyptus generates a log file (named cc.log) wh
 
 Once we collected log backup by fg-euca-gather-log-files, we need to parse and store log files into database. MySQL configuration should be set by .futuregrid.cfg such as hostname, id, password, and port number.
 
-::
+ ::
+
         fg-parser -i <directory of the backup>
 
 4. Generate Results
@@ -33,12 +34,14 @@ Once we collected log backup by fg-euca-gather-log-files, we need to parse and s
 
 Using examples
 
-::
+ ::
+
         cat examples/example2.txt | fg-metric
 
 Or typing commands on python command-line interpreter.
 
-::
+ ::
+
         $ fg-metric
         ...
         (Cmd) analyze -Y 2012

@@ -53,9 +53,13 @@ DESCRIPTION
         Clear all instance data and user data from the memory
         ::
                 clear users (clear user data)
+
         ::
+
                 clear instances (clear instance data)
+        
         ::
+
                 clear all (clear all data)
 
  **createreport**

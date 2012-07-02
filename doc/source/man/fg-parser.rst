@@ -9,8 +9,6 @@ NAME
 DESCRIPTION
 ===========
 
- TODO
-
  cat filename.log | fg-euca-log-parser <parameters>
 
  All log entries are included through a pipe into the program
@@ -82,8 +80,6 @@ Usage tip:
 
 EXAMPLES
 ========
-
- TODO
 
 AUTHOR
 ======

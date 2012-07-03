@@ -7,7 +7,8 @@ import sys
 
 class NovaDB(object):
 
-    instances_table = "instances"
+    instances_table = "instances" # in nova
+    userinfo_table = "user" # in keystone
 
     def __init__(self, configfile="futuregrid.cfg"):
 
@@ -30,16 +31,23 @@ class NovaDB(object):
         #connect to db
         self.conn = MySQLdb.connect (dbhost, dbuser, dbpasswd, dbname, dbport)
         self.cursor = self.conn.cursor (MySQLdb.cursors.DictCursor)
+
+        self.conn_keystone = MySQLdb.connect (dbhost, dbuser, dbpasswd, keystonedbname, dbport)
+        self.cursor_keystone = self.conn_keystone.cursor (MySQLdb.cursors.DictCursor)
         
     def __del__(self):
         try:
             self.cursor.close()
             self.conn.close()
+
+            self.cursor_keystone.close()
+            self.conn_keystone.close()
+
         except:
             pass
 
     # read from the database.
-    def _read(self, tablename, querydict, optional=""):
+    def _read(self, mysql_cursor, tablename, querydict, optional=""):
         
         querystr = "";
         ret = []
@@ -57,18 +65,21 @@ class NovaDB(object):
             rquery = "SELECT * from " + tablename + optional
            
         try:
-            self.cursor.execute(rquery)
+            mysql_cursor.execute(rquery)
         except MYSQLdb.Error:
             pass
 
-        rows = self.cursor.fetchall()
+        rows = mysql_cursor.fetchall()
 
         for arow in list(rows):
             ret.append(arow)
         return ret
 
     def read_instances(self, querydict={}):
-        return self._read(self.instances_table, querydict)
+        return self._read(self.cursor, self.instances_table, querydict)
+
+    def read_userinfo(self, querydict={}):
+        return self._read(self.cursor_keystone, self.userinfo_table, querydict)
 
     def value_todate(self,string):
         return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')

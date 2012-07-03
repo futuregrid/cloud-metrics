@@ -54,6 +54,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     sys_stats = None
     sys_stat_new = None # sys_stats will be converted to this
 
+    platform = None
     nodename = None
     metric = None
 
@@ -114,7 +115,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
                 self.users[name]['sum'] += t_delta  # sum of time 
                 self.users[name]['min'] = min (t_delta, self.users[name]['min'])
-                self.users[name]['max'] = min (t_delta, self.users[name]['max'])
+                self.users[name]['max'] = max (t_delta, self.users[name]['max'])
 
                 for name in self.users:
                     self.users[name]['avg'] = float(self.users[name]['sum']) / float(self.users[name]['count'])
@@ -439,6 +440,23 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         self.generate_pygooglechart(type, label_values, max_v, values, filepath)
 
+        # Temporary Nova stats added here
+        values = []
+        label_values = []
+        max_v = 0
+
+        for name in self.nova.users:
+            number = self.nova.users[name][metric]
+            # Temporary lines for converting sec to min 
+            if metric != "count":
+                number = int (number / 60)
+            values.append(number)
+            label_values.append(self.convert_ownerId_str(self.convert_nova_userid_to_username(name)) + ":" + str(number))
+            max_v = max(max_v, number)
+
+        if values:
+            self.generate_pygooglechart(type, label_values, max_v, values, "nova" + filepath)
+
     def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200): 
         """Create Python Google Chart but this should be merged to _create_chart()"""
 
@@ -544,7 +562,6 @@ class CmdLineAnalyzeEucaData(Cmd):
             if element['username'] == id:
                 return element['first_name'] + " " + element['last_name']
 
-
         if id == "EJMBZFNPMDQ73AUDPOUS3":
             return "eucalyptus-admin"
         else: 
@@ -577,6 +594,18 @@ class CmdLineAnalyzeEucaData(Cmd):
             return "fg201"
         else :
             return id
+
+    def convert_nova_userid_to_username(self, id):
+        """Convert a owner id to a user name
+        
+        * This should be working with retrieving ldap commands
+        * Currently, this function is a test version
+        """
+
+        for element in self.nova.userinfo:
+            if element['id'] == id:
+                return element['name']
+
     def set_fullname(self):
         for uname in self.users:
             fullname = self.convert_ownerId_str(uname)
@@ -836,6 +865,14 @@ class CmdLineAnalyzeEucaData(Cmd):
         print "Set a nodename by to analyze: [" + nodename + "]"
         self.nodename = nodename
 
+    def _set_platform(self, param):
+        """Select platform (e.g. eucalyptus, openstack)
+        """
+
+        platform = param[0]
+        print "Set a platform by to analyze: [" + platform + "]"
+        self.platform = platform
+
     @options([
         make_option('-u', '--user', type="string", help="user id to analyze"),
         make_option('-m', '--metric', default="runtime", type="string", help="metric name to display (runtime, vms)")
@@ -1002,6 +1039,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             self._search_range(param)
         elif cmd == "nodename":
             self._set_nodename(param)
+        elif cmd == "platform":
+            self._set_platform(param)
 
 #########################################################
 # UNDER DEVELOPING

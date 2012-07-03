@@ -26,6 +26,7 @@ from futuregrid.cloud.metric.FGPygooglechart import PyGoogleChart
 from futuregrid.cloud.metric.FGUtility import Utility
 from futuregrid.cloud.metric.FGTemplate import HtmlTemplate
 from futuregrid.cloud.metric.FGHighcharts import Highcharts
+from futuregrid.cloud.metric.FGNovaMetric import NovaMetric
 
 class CmdLineAnalyzeEucaData(Cmd):
     '''This class analyzes utilization data to make a report
@@ -584,6 +585,8 @@ class CmdLineAnalyzeEucaData(Cmd):
     def preloop(self):
         self.do_loaddb("")
 
+        self.do_loadnovadb("")
+
         # Initialize values
         self.sys_stat_new = {'total' : ""}
         self.sys_stat_new['total'] = { 'count_node' : {}}
@@ -630,8 +633,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def do_loaddb(self, arg):
         """Read the statistical data from MySQL database"""
-        # configuration file
-        # if no parameter is given config is read from ~/.futuregrid/futuregrid.cfg
+        
         print "\r... loading data from database"
         self.users = {}
         self.instances = Instances()
@@ -640,6 +642,15 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         # Gets also userinfo data from the database
         self.instances.read_userinfo_from_db()
+
+        print "\r... data loaded"
+
+    def do_loadnovadb(self, arg):
+
+        print "\r... loading data from nova database"
+        self.nova = NovaMetric()
+        # gets also data from the database
+        self.nova.read_from_db()
 
         print "\r... data loaded"
 
@@ -726,6 +737,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         # It can display daily/weekly/monthly graphs for system utilization
         self.sys_stats = self.get_sys_stats(opts.metric, opts.period)
         #print self.sys_stats
+
+        self.nova.calculate_stats(from_date, to_date)
 
     def do_getdaterange(self, arg): 
         """Get Date range of the instances table in mysql db"""

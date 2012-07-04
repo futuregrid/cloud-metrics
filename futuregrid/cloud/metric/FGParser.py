@@ -259,6 +259,8 @@ class Instances:
         for i in self.data:
             values = self.data[i]
             t_delta = values["t_end"] - values["ts"]
+            if t_delta.total_seconds() < 0:
+                t_delta = values["t_end"] - values["t_end"]
             values["duration"] = str(t_delta.total_seconds())
 
     def getDateRange(self):

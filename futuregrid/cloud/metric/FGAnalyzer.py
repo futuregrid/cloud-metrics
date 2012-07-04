@@ -447,7 +447,6 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         for name in self.nova.users:
             number = self.nova.users[name][metric]
-            # Temporary lines for converting sec to min 
             if metric != "count":
                 number = int (number / 60)
             values.append(number)

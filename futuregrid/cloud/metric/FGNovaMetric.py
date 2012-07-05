@@ -75,6 +75,8 @@ class NovaMetric:
                                     'max' : t_delta,
                                     'avg' : 0.0
                                     }
+    def clear_stats(self):
+        self.users = {}
 
     def get_start_time(self, instance):
 

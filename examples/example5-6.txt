@@ -166,14 +166,14 @@ set nodename sierra
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-05/sierra/cores/
+sys_report -o 2012-05/sierra/eucalyptus/cores/
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-05/sierra/mem
+sys_report -o 2012-05/sierra/eucalyptus/mem
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-05/sierra/disk
+sys_report -o 2012-05/sierra/eucalyptus/disk
 
 

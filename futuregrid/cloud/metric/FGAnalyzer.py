@@ -710,6 +710,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.metric = None
             self.nodename = None
 
+            self.nova.clear_stats()
+
     @options([
         make_option('-f', '--start', default="all", type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
         make_option('-t', '--end',  default="all",  type="string", help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),

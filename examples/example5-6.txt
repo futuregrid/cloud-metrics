@@ -12,15 +12,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/cores/
+sys_report -o 2011-11/india/eucalyptus/cores/
 
 analyze -S ccvm_mem
 
-sys_report -o 2011-11/india/mem
+sys_report -o 2011-11/india/eucalyptus/mem
 
 analyze -S ccvm_disk
 
-sys_report -o 2011-11/india/disk
+sys_report -o 2011-11/india/eucalyptus/disk
 
 clear all
 
@@ -34,15 +34,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-12/india/cores/
+sys_report -o 2011-12/india/eucalyptus/cores/
 
 analyze -S ccvm_mem
 
-sys_report -o 2011-12/india/mem
+sys_report -o 2011-12/india/eucalyptus/mem
 
 analyze -S ccvm_disk
 
-sys_report -o 2011-12/india/disk
+sys_report -o 2011-12/india/eucalyptus/disk
 
 clear all
 
@@ -56,15 +56,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-01/india/cores/
+sys_report -o 2012-01/india/eucalyptus/cores/
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-01/india/mem
+sys_report -o 2012-01/india/eucalyptus/mem
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-01/india/disk
+sys_report -o 2012-01/india/eucalyptus/disk
 
 clear all
 
@@ -78,15 +78,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-02/india/cores/
+sys_report -o 2012-02/india/eucalyptus/cores/
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-02/india/mem
+sys_report -o 2012-02/india/eucalyptus/mem
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-02/india/disk
+sys_report -o 2012-02/india/eucalyptus/disk
 
 clear all
 
@@ -100,15 +100,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-03/india/cores/
+sys_report -o 2012-03/india/eucalyptus/cores/
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-03/india/mem
+sys_report -o 2012-03/india/eucalyptus/mem
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-03/india/disk
+sys_report -o 2012-03/india/eucalyptus/disk
 
 clear all
 
@@ -122,15 +122,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-04/india/cores/
+sys_report -o 2012-04/india/eucalyptus/cores/
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-04/india/mem
+sys_report -o 2012-04/india/eucalyptus/mem
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-04/india/disk
+sys_report -o 2012-04/india/eucalyptus/disk
 
 clear all
 
@@ -144,15 +144,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-05/india/cores/
+sys_report -o 2012-05/india/eucalyptus/cores/
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-05/india/mem
+sys_report -o 2012-05/india/eucalyptus/mem
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-05/india/disk
+sys_report -o 2012-05/india/eucalyptus/disk
 
 clear all
 

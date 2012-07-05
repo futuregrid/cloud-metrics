@@ -761,7 +761,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.sys_stats = self.get_sys_stats(opts.metric, opts.period)
         #print self.sys_stats
 
-        self.nova.calculate_stats(from_date, to_date)
+        self.nova.calculate_stats(self.from_date, self.to_date)
 
     def do_getdaterange(self, arg): 
         """Get Date range of the instances table in mysql db"""

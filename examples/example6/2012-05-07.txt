@@ -13,23 +13,23 @@ set nodename india
 # 1.1. Minutes Used by Week
 analyze -S runtime -P weekly
 
-sys_report -o 2012-05-13/india/runtime/
+sys_report -o 2012-05-13/india/eucalyptus/runtime/
 
 # 1.2. Requests Made by Week
 analyze -S count -P weekly
 
-sys_report -o 2012-05-13/india/count/
+sys_report -o 2012-05-13/india/eucalyptus/count/
 
 # 1.2.1. Total VMs count per a node cluster
 analyze -S count_node
 
-sys_report -o 2012-05-13/india/count_node/
+sys_report -o 2012-05-13/india/eucalyptus/count_node/
 
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User
 clear users
 analyze -f 2012-05-07T00:00:00 -t 2012-05-13T23:59:59
-createreport -d 2012-05-13/india
+createreport -d 2012-05-13/india/eucalyptus
 
 clear all
 
@@ -40,20 +40,20 @@ set search_range 2012-03-05T00:00:00 2012-05-13T23:59:59
 # 1.1. Minutes Used by Week
 analyze -S runtime -P weekly
 
-sys_report -o 2012-05-13/sierra/runtime/
+sys_report -o 2012-05-13/sierra/eucalyptus/runtime/
 
 # 1.2. Requests Made by Week
 analyze -S count -P weekly
 
-sys_report -o 2012-05-13/sierra/count/
+sys_report -o 2012-05-13/sierra/eucalyptus/count/
 
 # 1.2.1. Total VMs count per a node cluster
 analyze -S count_node
 
-sys_report -o 2012-05-13/sierra/count_node/
+sys_report -o 2012-05-13/sierra/eucalyptus/count_node/
 
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User
 clear users
 analyze -f 2012-05-07T00:00:00 -t 2012-05-13T23:59:59
-createreport -d 2012-05-13/sierra
+createreport -d 2012-05-13/sierra/eucalyptus

@@ -1,4 +1,3 @@
-from datetime import *
 
 import futuregrid.cloud.metric.FGNovaDB
 
@@ -39,11 +38,8 @@ class NovaMetric:
 
         """
 
-        date_from = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
-        date_to   = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
-
-        self.from_date = date_from
-        self.to_date = date_to
+        self.from_date = from_date
+        self.to_date = to_date
 
         for instance in self.instances:
 
@@ -55,7 +51,7 @@ class NovaMetric:
 
             t_delta = self.get_t_delta(instance)
             
-            if start_time < date_from or start_time > date_to:
+            if start_time < self.from_date or start_time > self.to_date:
                 continue
             
             # If a nodename is set, stats is only for the compute cluster node specified

@@ -12,7 +12,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/count
+sys_report -o 2011-11/india/eucalyptus/count
 
 clear all
 
@@ -26,7 +26,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/runtime
+sys_report -o 2011-11/india/eucalyptus/runtime
 
 clear all
 
@@ -40,7 +40,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-12/india/count
+sys_report -o 2011-12/india/eucalyptus/count
 
 clear all
 
@@ -54,7 +54,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-12/india/runtime
+sys_report -o 2011-12/india/eucalyptus/runtime
 
 clear all
 
@@ -68,7 +68,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-01/india/count
+sys_report -o 2012-01/india/eucalyptus/count
 
 clear all
 
@@ -82,7 +82,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-01/india/runtime
+sys_report -o 2012-01/india/eucalyptus/runtime
 
 clear all
 
@@ -96,7 +96,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-02/india/count
+sys_report -o 2012-02/india/eucalyptus/count
 
 clear all
 
@@ -110,7 +110,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-02/india/runtime
+sys_report -o 2012-02/india/eucalyptus/runtime
 
 clear all
 
@@ -124,7 +124,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-03/india/count
+sys_report -o 2012-03/india/eucalyptus/count
 
 clear all
 
@@ -138,7 +138,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-03/india/runtime
+sys_report -o 2012-03/india/eucalyptus/runtime
 
 clear all
 
@@ -152,7 +152,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-04/india/count
+sys_report -o 2012-04/india/eucalyptus/count
 
 clear all
 
@@ -166,7 +166,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-04/india/runtime
+sys_report -o 2012-04/india/eucalyptus/runtime
 
 clear all
 
@@ -180,7 +180,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-05/india/count
+sys_report -o 2012-05/india/eucalyptus/count
 
 clear all
 
@@ -194,4 +194,4 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-05/india/runtime
+sys_report -o 2012-05/india/eucalyptus/runtime

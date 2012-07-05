@@ -429,8 +429,14 @@ class CmdLineAnalyzeEucaData(Cmd):
         label_values = []
         max_v = 0
 
-        for name in self.users:
-            number = self.users[name][metric]
+        if self.platform and (self.platform == "nova" or self.platform == "openstack"):
+            user_list = self.nova.users
+        else:
+            user_list = self.users
+
+
+        for name in user_list:
+            number = user_list[name][metric]
             # Temporary lines for converting sec to min 
             if metric != "count":
                 number = int (number / 60)
@@ -439,22 +445,6 @@ class CmdLineAnalyzeEucaData(Cmd):
             max_v = max(max_v, number)
 
         self.generate_pygooglechart(type, label_values, max_v, values, filepath)
-
-        # Temporary Nova stats added here
-        values = []
-        label_values = []
-        max_v = 0
-
-        for name in self.nova.users:
-            number = self.nova.users[name][metric]
-            if metric != "count":
-                number = int (number / 60)
-            values.append(number)
-            label_values.append(self.convert_ownerId_str(self.convert_nova_userid_to_username(name)) + ":" + str(number))
-            max_v = max(max_v, number)
-
-        if values:
-            self.generate_pygooglechart(type, label_values, max_v, values, "nova" + filepath)
 
     def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200): 
         """Create Python Google Chart but this should be merged to _create_chart()"""
@@ -551,6 +541,9 @@ class CmdLineAnalyzeEucaData(Cmd):
         * This should be working with retrieving ldap commands
         * Currently, this function is a test version
         """
+
+        if self.platform and (self.platform == "nova" or self.platform == "openstack"):
+            id = self.convert_nova_userid_to_username(id)
 
         for element in self.instances.userinfo_data:
             if element['ownerid'] == id:

@@ -63,12 +63,13 @@ class Results:
         number = "1"
         metric = "count"
         nodename = "india"
+        platform = "eucalyptus"
 
         main_title =   self.newline + "Results for Eucalyptus on %(nodename)s.futuregrid.org" + self.newline + \
                     "-----------------------------------------------" + self.newline + \
                     ""
  
-        src = "data/%(end_date)s/%(nodename)s/%(metric)s/columnhighcharts.html"
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
         title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
         content = main_title + self.get_content() % vars()
         content = content % vars()
@@ -81,7 +82,7 @@ class Results:
         number = 3
         metric = "count_node"
 
-        src = "data/%(end_date)s/%(nodename)s/%(metric)s/piehighcharts.html"
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/piehighcharts.html"
         title = "Figure %(number)s. Total VMs count per node cluster for %(start_date)s  ~ %(end_date)s on %(nodename)s"
  
         content = content + (self.get_content() % vars()) % vars()
@@ -90,7 +91,7 @@ class Results:
         metric = "count"
         nodename = "sierra"
 
-        src = "data/%(end_date)s/%(nodename)s/%(metric)s/columnhighcharts.html"
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
         title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
  
         content = content + (main_title + self.get_content() % vars()) % vars()
@@ -103,7 +104,7 @@ class Results:
         number = 6
         metric = "count_node"
 
-        src = "data/%(end_date)s/%(nodename)s/%(metric)s/piehighcharts.html"
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/piehighcharts.html"
         title = "Figure %(number)s. Total VMs count per node cluster for %(start_date)s  ~ %(end_date)s on %(nodename)s"
  
         content = content + (self.get_content() % vars()) % vars()

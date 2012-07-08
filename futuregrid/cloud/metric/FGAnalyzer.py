@@ -27,6 +27,7 @@ from futuregrid.cloud.metric.FGUtility import Utility
 from futuregrid.cloud.metric.FGTemplate import HtmlTemplate
 from futuregrid.cloud.metric.FGHighcharts import Highcharts
 from futuregrid.cloud.metric.FGNovaMetric import NovaMetric
+from futuregrid.cloud.metric.FGCharts import Charts
 
 class CmdLineAnalyzeEucaData(Cmd):
     '''This class analyzes utilization data to make a report
@@ -57,6 +58,10 @@ class CmdLineAnalyzeEucaData(Cmd):
     platform = None
     nodename = None
     metric = None
+
+    nova = None
+
+    chart = None
 
     def calculate_stats (self, from_date="all", to_date="all"):
         """Calculate user-based statstics about VM instances per user: count, min time, max time, avg time, total time
@@ -910,14 +915,39 @@ class CmdLineAnalyzeEucaData(Cmd):
     def do_sys_report(self, arg, opts=None):
         """Generate system reports such as usage of CPU, memories, and disks."""
 
+        # Set output directory
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
-        if 'count_node' in self.sys_stat_new['total'] and len(self.sys_stat_new['total']['count_node']) != 0:
-            self.create_highcharts(self.sys_stat_new['total']['count_node'], opts.output)
-            return
-        self.line_chart(self.sys_stats, opts.output)
-        self.bar_chart(self.sys_stats, opts.output)
-        self.create_highcharts(self.sys_stats, opts.output)
+
+        self.chart = Charts()
+        self.chart.set_chart("highcharts")
+        self.chart.set_type("column")
+        self.chart.set_output_path(opts.output)
+
+        # Display metric: count_node
+        try:
+            self.chart.set_xaxis(self.sys_stat_new['total']['count_node'].keys())
+            self.chart.set_yaxis(self.sys_stat_new['total']['count_node'].values())
+            self.chart.display()
+        except:
+            pass
+
+        # Display other metrics in three different types; highcharts, line, and bar
+        try:
+            self.chart.clear_data()
+            self.chart.set_data(self.sys_stats)
+            self.chart.display()
+
+            self.chart.clear_chart()
+            self.chart.set_chart("googlechart")
+            self.chart.set_type("line")
+            self.chart.set_output_type("png")
+            self.chart.display()
+
+            self.chart.set_type("bar")
+            self.chart.display()
+        except:
+            pass
 
     def do_filled_line_example(self, arg, opts=None):
         """Example for python Google line chart"""

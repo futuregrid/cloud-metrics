@@ -124,7 +124,7 @@ class Results:
         return res
 
     def get_content_header(self):
-        res =   str(self.start_date) + " ~ " + str(self.end_date) + self.newline + \
+        res =   self.start_date.strftime("%m/%d/%Y") + " - " + self.end_date.strftime("%m/%d/%Y") + self.newline + \
                 "========================================" + self.newline
         return res
     

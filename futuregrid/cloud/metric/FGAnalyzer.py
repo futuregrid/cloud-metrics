@@ -913,7 +913,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
         if 'count_node' in self.sys_stat_new['total'] and len(self.sys_stat_new['total']['count_node']) != 0:
-            self.create_highcharts(self.sys_stat_new['total']['count_node'], opts.output, "pie")
+            self.create_highcharts(self.sys_stat_new['total']['count_node'], opts.output)
             return
         self.line_chart(self.sys_stats, opts.output)
         self.bar_chart(self.sys_stats, opts.output)

@@ -1,3 +1,6 @@
+from futuregrid.cloud.metric.FGPygooglechart import PyGoogleChart
+from futuregrid.cloud.metric.FGHighcharts import Highcharts
+
 class Charts:
 
     def __init__(self):

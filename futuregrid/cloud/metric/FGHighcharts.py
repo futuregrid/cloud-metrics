@@ -19,8 +19,11 @@ class Highcharts:
     data = None
     data_name = None
 
-    def __init__(self, chart_type):
+    def __init__(self, chart_type=""):
         self.chart_type = chart_type
+
+    def set_type(self, name):
+        self.chart_type = name
 
     def set_data(self, data):
         self.data = data

@@ -944,8 +944,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.chart.set_output_type("png")
             self.chart.display()
 
-            self.chart.set_type("bar")
-            self.chart.display()
+#            self.chart.set_type("bar")
+#            self.chart.display()
         except:
             pass
 

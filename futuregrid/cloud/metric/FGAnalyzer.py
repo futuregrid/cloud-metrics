@@ -113,18 +113,18 @@ class CmdLineAnalyzeEucaData(Cmd):
                 except:
                 #          count,sum,min,max,avg
                     self.users[name] = {'count' : 1,
-                                        'sum' : 0.0,
+                                        'runtime' : 0.0,
                                         'min' : t_delta,
                                         'max' : t_delta,
                                         'avg' : 0.0
                                         }
 
-                self.users[name]['sum'] += t_delta  # sum of time 
+                self.users[name]['runtime'] += t_delta  # sum of time 
                 self.users[name]['min'] = min (t_delta, self.users[name]['min'])
                 self.users[name]['max'] = max (t_delta, self.users[name]['max'])
 
                 for name in self.users:
-                    self.users[name]['avg'] = float(self.users[name]['sum']) / float(self.users[name]['count'])
+                    self.users[name]['avg'] = float(self.users[name]['runtime']) / float(self.users[name]['count'])
 
     def set_date(self, from_date, to_date):
         """Set search/analyze period
@@ -841,7 +841,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.make_google_motion_chart(opts.directory)
         #self.make_index_html(opts.directory, opts.title)
         self.display_stats("count", "highchart-column", opts.directory)
-        self.display_stats("sum", "highchart-column", opts.directory)
+        self.display_stats("runtime", "highchart-column", opts.directory)
 
     def do_createreports(self, arg):
         """Create index.html page that includes PNG graphs"""

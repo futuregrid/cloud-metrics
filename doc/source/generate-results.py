@@ -1,5 +1,5 @@
 import datetime
-from futuregrid.cloud.metric.FGUtility import Utility
+from futuregrid.cloud.metric.FGUtility import FGUtility
 class Results:
     ''' This generates reports from (start_date) to (t_end_date) in (name) directory as restructuredText files.
         In case that you want to change period of reports, simple change (start_date) and (t_end_date) in this file.
@@ -7,41 +7,38 @@ class Results:
 
     name = "results"
     docs_ext = ".rst"
-    start_date = datetime.date(2011, 10, 31)
+    start_date = datetime.date(2011, 11, 01)
     start_date_for_weekly = start_date
-    t_end_date = datetime.date(2012, 06, 11)
+    t_end_date = datetime.date(2012, 06, 12)
     end_date = start_date + datetime.timedelta(days=6)
     week = datetime.timedelta(weeks=1)
     index_txt = None
     index_filename = name + docs_ext
+    month = start_date.timetuple()[1]
 
     docs_path = name + "/"
     indent = "\t"
     newline = "\n"
 
-    def generate_index_and_contents(self):
+    def generate_index(self):
 
         index_txt = ""
 
-        while (1):
-            if self.start_date > self.t_end_date:
+        start_date = self.start_date
+        end_date = self.t_end_date
+
+        while(1):
+            if start_date > end_date:
                 break
-            
-            self.end_date = self.start_date + datetime.timedelta(days=6)
-            if (self.start_date_for_weekly + (10 * self.week)) == self.start_date:
-                self.start_date_for_weekly = self.start_date_for_weekly + self.week
 
-            index_content = self.indent + self.docs_path + str(self.end_date) + self.newline
+            current_month = start_date.timetuple()[1]
+            #results.rst (index file)
+            content_filename = start_date.strftime("%Y-%m")
+            index_content = self.indent + self.docs_path + content_filename + self.newline
             index_txt = index_content + index_txt
-
-            contents = self.generate_contents()
-            content_filename = self.docs_path + str(self.end_date) + self.docs_ext
-            Utility.ensure_dir(content_filename)
-            f = open (content_filename, "w")
-            f.write(contents)
-            f.close
-
-            self.start_date = self.start_date + self.week
+            year, month, day = start_date.timetuple()[:3]
+            new_month = month + 1
+            start_date = datetime.date(year + (new_month / 13), (new_month % 12) or 12, day)
 
         self.index_txt = self.get_index_header() + index_txt
 
@@ -50,64 +47,201 @@ class Results:
         f.close
 
     def generate_contents(self):
-        header = self.get_content_header()
-        body = self.generate_content()
-        return header + body
+        """ Generate reports in this order: 1) monthly report, 2) weekly reports (normally 4-5 reports per month).
+        They are grouped by: 1) nodename e.g. India, Sierra, 2) and platform e.g. eucalyptus, openstack.
 
-    def generate_content(self):
+        It looks like:
+
+        Report
+        ------
+            Monthly
+            -------
+                Jan ...
+                ---
+                    India
+                    -----
+                        Eucalyptus
+                        ----------
+                        Openstack
+                        ---------
+                    Sierra
+                    ------
+                        Eucalyptus
+                        ----------
+                        Openstack
+                        ---------
+            Weekly
+            ------
+                1 week
+                ------
+                    India
+                    -----
+                    ...
+        """
+
+        monthly_report = self.get_content_monthly()
+        weekly_report = ""
+
+        while (1):
+            if self.start_date > self.t_end_date:
+                break
+ 
+            # If a next month comes, generate contents and clear variables for the next
+            current_month = self.start_date.timetuple()[1]
+            if ((self.month + 1) % 12 or 12) == current_month:
+                contents = monthly_report + weekly_report
+                FGUtility.ensure_dir(content_filepath)
+                f = open (content_filepath, "w")
+                f.write(contents)
+                f.close
+
+                # Clear variables
+                monthly_report = self.get_content_monthly()
+                weekly_report = ""
+                self.month = current_month
+
+            content_filename = self.start_date.strftime("%Y-%m")
+            content_filepath = self.docs_path + content_filename + self.docs_ext
+           
+            self.end_date = self.start_date + datetime.timedelta(days=6)
+            if (self.start_date_for_weekly + (10 * self.week)) == self.start_date:
+                self.start_date_for_weekly = self.start_date_for_weekly + self.week
+
+            # stacking up weekly reports
+            weekly_report += self.get_content_weekly()
+ 
+            self.start_date = self.start_date + self.week
+            ## END OF LOOP
+
+        contents = monthly_report + weekly_report
+        FGUtility.ensure_dir(content_filepath)
+        f = open (content_filepath, "w")
+        f.write(contents)
+        f.close
+
+    def get_content_monthly(self):
+        width = 800
+        height = 450
+        start_date = str(self.start_date)
+        end_date = str(self.end_date)
+        month_n_year = self.start_date.strftime("%B %Y")
+        month = self.start_date.strftime("%Y-%m")
+
+        number = 1
+        metric = "count"
+        platform = "eucalyptus"
+        nodename = "india"
+
+        main_title = month_n_year + self.newline + \
+                "========================================" + self.newline
+
+        main_title += self.get_content_sub_header(nodename, platform)
+ 
+        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/columnhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        content = main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
+        metric = "runtime"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count_node"
+
+        src = "data/%(month)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
+        title = "Figure %(number)s. Total VMs count per node cluster for %(month_n_year)s on %(nodename)s"
+ 
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count"
+        platform = "eucalyptus"
+        nodename = "sierra"
+
+        main_title = content + self.get_content_sub_header(nodename, platform)
+ 
+        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/columnhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        content = main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
+        metric = "runtime"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count_node"
+
+        src = "data/%(month)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
+        title = "Figure %(number)s. Total VMs count per node cluster for %(month_n_year)s on %(nodename)s"
+ 
+        content = content + (self.get_chart() % vars()) % vars()
+
+        return content
+
+
+    def get_content_weekly(self):
         width = 800
         height = 450
         start_date = str(self.start_date)
         end_date = str(self.end_date)
 
-        number = "1"
+        number = 1
         metric = "count"
-        nodename = "india"
         platform = "eucalyptus"
+        nodename = "india"
 
-        main_title =   self.newline + "Results for Eucalyptus on %(nodename)s.futuregrid.org" + self.newline + \
-                    "-----------------------------------------------" + self.newline + \
+        main_title = self.newline +  self.start_date.strftime("%m/%d/%Y") + " - " + self.end_date.strftime("%m/%d/%Y") + self.newline + \
+                    "------------------------------------------------------------" + self.newline + \
                     ""
  
-        src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
+        main_title += self.get_content_sub_header(nodename, platform)
+
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/columnhighcharts.html"
         title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
-        content = main_title + self.get_content() % vars()
+        content = main_title + self.get_chart() % vars()
         content = content % vars()
 
-        number = "2"
+        number += 1
         metric = "runtime"
 
-        content = content + (self.get_content() % vars()) % vars()
+        content = content + (self.get_chart() % vars()) % vars()
 
-        number = 3
+        number += 1
         metric = "count_node"
 
         src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
         title = "Figure %(number)s. Total VMs count per node cluster for %(start_date)s  ~ %(end_date)s on %(nodename)s"
  
-        content = content + (self.get_content() % vars()) % vars()
+        content = content + (self.get_chart() % vars()) % vars()
 
-        number = "4"
+        number += 1
         metric = "count"
+        platform = "eucalyptus"
         nodename = "sierra"
 
-        src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
- 
-        content = content + (main_title + self.get_content() % vars()) % vars()
+        main_title = self.get_content_sub_header(nodename, platform)
 
-        number = 5
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/columnhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
+        content = content + main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
         metric = "runtime"
 
-        content = content + (self.get_content() % vars()) % vars()
+        content = content + (self.get_chart() % vars()) % vars()
 
-        number = 6
+        number += 1
         metric = "count_node"
 
         src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
         title = "Figure %(number)s. Total VMs count per node cluster for %(start_date)s  ~ %(end_date)s on %(nodename)s"
  
-        content = content + (self.get_content() % vars()) % vars()
+        content = content + (self.get_chart() % vars()) % vars()
 
         return content
 
@@ -119,16 +253,16 @@ class Results:
                 "Contents:" + self.newline + \
                 self.newline + \
                 ".. toctree::" + self.newline + \
-                self.indent + ":maxdepth: 1" + self.newline + \
+                self.indent + ":maxdepth: 3" + self.newline + \
                 self.newline 
         return res
 
-    def get_content_header(self):
-        res =   self.start_date.strftime("%m/%d/%Y") + " - " + self.end_date.strftime("%m/%d/%Y") + self.newline + \
-                "========================================" + self.newline
+    def get_content_sub_header(self, nodename, platform):
+        res = self.newline + "Results for " + platform + " on " + nodename + ".futuregrid.org" + self.newline + \
+                "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + self.newline
         return res
     
-    def get_content(self):
+    def get_chart(self):
         res =   "" + self.newline + \
                 ".. raw:: html" + self.newline + \
                 "" + self.newline + \
@@ -141,7 +275,8 @@ class Results:
 
 def main():
     result = Results()
-    result.generate_index_and_contents()
+    result.generate_index()
+    result.generate_contents()
 
 if __name__ == "__main__":
     main()

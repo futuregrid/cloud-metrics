@@ -1,0 +1,91 @@
+# Stats like one Nimbus has from start to end of data in database.
+#
+# 10 weeks
+#
+clear all
+
+set search_range 2011-12-13T00:00:00 2012-02-20T23:59:59
+
+# 1. Node 
+#    It is grouped by a node such as India and Sierra.
+set nodename india
+
+# 1.1. Minutes Used by Week
+analyze -S runtime -P weekly
+
+sys_report -o 2012-02-20/india/eucalyptus/runtime/
+
+# 1.2. Requests Made by Week
+analyze -S count -P weekly
+
+sys_report -o 2012-02-20/india/eucalyptus/count/
+
+# 1.2.1. Total VMs count per a node cluster
+analyze -S count_node
+
+sys_report -o 2012-02-20/india/eucalyptus/count_node/
+
+# 1.3. Minutes Used by User
+# 1.4. Requests Made by User
+clear users
+analyze -f 2012-02-14T00:00:00 -t 2012-02-20T23:59:59
+createreport -d 2012-02-20/india/eucalyptus/user/
+
+clear all
+
+set nodename sierra
+
+set search_range 2011-12-13T00:00:00 2012-02-20T23:59:59
+
+# 1.1. Minutes Used by Week
+analyze -S runtime -P weekly
+
+sys_report -o 2012-02-20/sierra/eucalyptus/runtime/
+
+# 1.2. Requests Made by Week
+analyze -S count -P weekly
+
+sys_report -o 2012-02-20/sierra/eucalyptus/count/
+
+# 1.2.1. Total VMs count per a node cluster
+analyze -S count_node
+
+sys_report -o 2012-02-20/sierra/eucalyptus/count_node/
+
+# 1.3. Minutes Used by User
+# 1.4. Requests Made by User
+clear users
+analyze -f 2012-02-14T00:00:00 -t 2012-02-20T23:59:59
+createreport -d 2012-02-20/sierra/eucalyptus/user/
+
+## NOVA ##
+clear all
+
+set search_range 2011-12-13T00:00:00 2012-02-20T23:59:59
+
+# 1. Node 
+#    It is grouped by a node such as India and Sierra.
+set nodename india
+
+set platform nova
+
+# 1.1. Minutes Used by Week
+#analyze -S runtime -P weekly
+
+#sys_report -o 2012-02-20/india/eucalyptus/runtime/
+
+# 1.2. Requests Made by Week
+#analyze -S count -P weekly
+
+#sys_report -o 2012-02-20/india/eucalyptus/count/
+
+# 1.2.1. Total VMs count per a node cluster
+#analyze -S count_node
+
+#sys_report -o 2012-02-20/india/eucalyptus/count_node/
+
+# 1.3. Minutes Used by User
+# 1.4. Requests Made by User
+clear users
+analyze -f 2012-02-14T00:00:00 -t 2012-02-20T23:59:59
+createreport -d 2012-02-20/india/openstack/user/

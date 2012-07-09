@@ -60,13 +60,13 @@ class FGNovaMetric:
 
             if userid in self.users:
                 self.users[userid]['count'] += 1
-                self.users[userid]['sum'] += t_delta  # sum of time 
+                self.users[userid]['runtime'] += t_delta  # sum of time 
                 self.users[userid]['min'] = min (t_delta, self.users[userid]['min'])
                 self.users[userid]['max'] = max (t_delta, self.users[userid]['max'])
-                self.users[userid]['avg'] = self.users[userid]['sum'] / float(self.users[userid]['count'])
+                self.users[userid]['avg'] = self.users[userid]['runtime'] / float(self.users[userid]['count'])
             else:
                 self.users[userid] = {'count' : 1,
-                                    'sum' : 0,
+                                    'runtime' : 0,
                                     'min' : t_delta,
                                     'max' : t_delta,
                                     'avg' : 0.0

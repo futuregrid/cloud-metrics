@@ -1,15 +1,21 @@
 March 2012
 ~~~~~~~~~~~~~
 
-  .. figure:: /data/2012-03/india/eucalyptus/bar.count.png
-     :scale: 80 %
+.. raw:: html
 
-     Figure 1. The number of VMs submitted by a user for March 2012 on India
+        <div style="margin-top:10px;">
+	<iframe width="800" height="450" src="data/2012-03/india/eucalyptus/user/count/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+        
+        Figure 1. The number of VMs submitted by a user for March 2012 on India
 
-  .. figure:: /data/2012-03/india/eucalyptus/bar.sum.png
-     :scale: 80 %
+.. raw:: html
 
-     Figure 2. Total wallclock time for all VMs executed by a user for March 2012 on India
+        <div style="margin-top:10px;">
+	<iframe width="800" height="450" src="data/2012-03/india/eucalyptus/user/runtime/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+
+        Figure 2. Total wallclock time for all VMs executed by a user for March 2012 on India
 
 .. raw:: html
 

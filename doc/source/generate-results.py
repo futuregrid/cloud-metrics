@@ -141,7 +141,7 @@ class Results:
 
         main_title += self.get_content_sub_header(nodename, platform)
  
-        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/columnhighcharts.html"
+        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
         title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
@@ -166,7 +166,7 @@ class Results:
 
         main_title = content + self.get_content_sub_header(nodename, platform)
  
-        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/columnhighcharts.html"
+        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
         title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
@@ -204,7 +204,7 @@ class Results:
  
         main_title += self.get_content_sub_header(nodename, platform)
 
-        src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/columnhighcharts.html"
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
         title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
@@ -229,7 +229,7 @@ class Results:
 
         main_title = self.get_content_sub_header(nodename, platform)
 
-        src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/columnhighcharts.html"
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
         title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
         content = content + main_title + self.get_chart() % vars()
         content = content % vars()

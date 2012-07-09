@@ -85,14 +85,14 @@ class FGStats:
         t_delta = float(ins['duration'])
         if self.stat[grouped]:
             self.stat[grouped]['count'] += 1
-            self.stat[grouped]['sum'] += t_delta
+            self.stat[grouped]['runtime'] += t_delta
             self.stat[grouped]['max'] = max(t_delta, self.stat[grouped]['max'])
             self.stat[grouped]['min'] = min(t_delta, self.stat[grouped]['min'])
-            self.stat[grouped]['avg'] = self.stat[grouped]['sum'] / self.stat[grouped]['count']
+            self.stat[grouped]['avg'] = self.stat[grouped]['runtime'] / self.stat[grouped]['count']
         else:
             self.stat[grouped] = { groupname : grouped,
                     'count' : 1,
-                    'sum' : t_delta,
+                    'runtime' : t_delta,
                     'max' : t_delta,
                     'min' : t_delta,
                     'avg' : t_delta }

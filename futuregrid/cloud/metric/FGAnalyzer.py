@@ -461,7 +461,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             max_v = max(max_v, number)
 
         #self.generate_pygooglechart(type, label_values, max_v, values, filepath)
-        self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", "column")
+        self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", "bar")
 
     def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200): 
         """Create Python Google Chart but this should be merged to _create_chart()"""

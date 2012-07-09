@@ -128,9 +128,9 @@ class FGHighcharts:
                         legend: {
                             layout: 'vertical',
                             backgroundColor: '#FFFFFF',
-                            align: 'left',
+                            align: 'right',
                             verticalAlign: 'top',
-                            x: 100,
+                            x: -100,
                             y: 70,
                             floating: true,
                             shadow: true

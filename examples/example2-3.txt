@@ -15,4 +15,4 @@ set platform nova
 
 analyze -M 06 -Y 2012
 
-createreport -d 2012-06/india/openstack/openstack -t Launched_instances_per_user_of_Openstack_in_India
+createreport -d 2012-06/india/openstack/user/ -t Launched_instances_per_user_of_Openstack_in_India

@@ -29,7 +29,7 @@ sys_report -o 2012-01-15/india/eucalyptus/count_node/
 # 1.4. Requests Made by User
 clear users
 analyze -f 2012-01-09T00:00:00 -t 2012-01-15T23:59:59
-createreport -d 2012-01-15/india/eucalyptus
+createreport -d 2012-01-15/india/eucalyptus/user/
 
 clear all
 
@@ -56,7 +56,7 @@ sys_report -o 2012-01-15/sierra/eucalyptus/count_node/
 # 1.4. Requests Made by User
 clear users
 analyze -f 2012-01-09T00:00:00 -t 2012-01-15T23:59:59
-createreport -d 2012-01-15/sierra/eucalyptus
+createreport -d 2012-01-15/sierra/eucalyptus/user/
 
 ## NOVA ##
 clear all
@@ -88,4 +88,4 @@ set platform nova
 # 1.4. Requests Made by User
 clear users
 analyze -f 2012-01-09T00:00:00 -t 2012-01-15T23:59:59
-createreport -d 2012-01-15/india/openstack
+createreport -d 2012-01-15/india/openstack/user/

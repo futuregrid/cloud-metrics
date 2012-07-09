@@ -15,7 +15,7 @@ Results for Openstack on india.futuregrid.org (draft)
 .. raw:: html
 
         <div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-06/india/openstack/user/runtime/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="450" src="data/2012-06/india/openstack/user/sum/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 
         Figure 2. Total wallclock time for all VMs executed by a user for June 2012 on India

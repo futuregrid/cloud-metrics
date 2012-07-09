@@ -398,15 +398,18 @@ class CmdLineAnalyzeEucaData(Cmd):
                 data_name = "all"
             highchart.set_data_name(data_name)
             highchart.set_subtitle("source : " + data_name)
-            highchart.set_yaxis(self.metric)
-            highchart.set_xaxis([ d.strftime("%Y-%m-%d") + " ~ " + (d + timedelta(6)).strftime("%Y-%m-%d") for d in (self.from_date + timedelta(n) for n in range(0, self.day_count, 7))])
             highchart.set_output_path(output)
             if self.metric == "count_node":
                 title = "Total VMs count per a node cluster"
                 highchart.set_xaxis(highchart.get_data(0))
-            elif self.metric == "": # This from user stats. display_stats
+                highchart.set_yaxis(self.metric)
+            elif not self.metric: # This from user stats. display_stats
                 highchart.set_xaxis(highchart.get_data(0))
+                highchart.set_yaxis("")
+                title = ""
             else:
+                highchart.set_yaxis(self.metric)
+                highchart.set_xaxis([ d.strftime("%Y-%m-%d") + " ~ " + (d + timedelta(6)).strftime("%Y-%m-%d") for d in (self.from_date + timedelta(n) for n in range(0, self.day_count, 7))])
                 title = "Total " + self.metric + " of VM instances"
             highchart.set_title(title)
             highchart.set_filename(chart_type + "highcharts.html")
@@ -438,6 +441,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         label_values = []
         max_v = 0
 
+        list_for_highchart = []
+
         if self.platform and (self.platform == "nova" or self.platform == "openstack"):
             user_list = self.nova.users
         else:
@@ -456,7 +461,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             max_v = max(max_v, number)
 
         #self.generate_pygooglechart(type, label_values, max_v, values, filepath)
-        self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", type="column")
+        self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", "column")
 
     def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200): 
         """Create Python Google Chart but this should be merged to _create_chart()"""

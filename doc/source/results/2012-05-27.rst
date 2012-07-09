@@ -21,7 +21,7 @@ Results for Eucalyptus on india.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-05-27/india/eucalyptus/count_node/piehighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="450" src="data/2012-05-27/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-05-21  ~ 2012-05-27 on india
 
@@ -45,6 +45,6 @@ Results for Eucalyptus on sierra.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-05-27/sierra/eucalyptus/count_node/piehighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="450" src="data/2012-05-27/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total VMs count per node cluster for 2012-05-21  ~ 2012-05-27 on sierra

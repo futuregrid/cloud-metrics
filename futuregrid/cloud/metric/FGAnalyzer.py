@@ -22,12 +22,13 @@ import re
 
 from futuregrid.cloud.metric.FGParser import Instances
 from futuregrid.cloud.metric.FGGoogleMotionChart import GoogleMotionChart
-from futuregrid.cloud.metric.FGPygooglechart import PyGoogleChart
-from futuregrid.cloud.metric.FGUtility import Utility
+from futuregrid.cloud.metric.FGPygooglechart import FGPyGoogleChart
+from futuregrid.cloud.metric.FGUtility import FGUtility
 from futuregrid.cloud.metric.FGTemplate import HtmlTemplate
-from futuregrid.cloud.metric.FGHighcharts import Highcharts
-from futuregrid.cloud.metric.FGNovaMetric import NovaMetric
-from futuregrid.cloud.metric.FGCharts import Charts
+from futuregrid.cloud.metric.FGHighcharts import FGHighcharts
+from futuregrid.cloud.metric.FGNovaMetric import FGNovaMetric
+from futuregrid.cloud.metric.FGCharts import FGCharts
+from futuregrid.cloud.metric.FGStats import FGStats
 
 class CmdLineAnalyzeEucaData(Cmd):
     '''This class analyzes utilization data to make a report
@@ -91,7 +92,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             date_to = to_date
             process_all = False
 
-        for i in range(0, int(self.instances.count())):
+        for i in range(0, self.instances.count()):
             values = self.instances.getdata(i)
             process_entry = process_all
             
@@ -181,21 +182,18 @@ class CmdLineAnalyzeEucaData(Cmd):
                 continue
             if self.nodename and self.nodename != instance["euca_hostname"] :
                 continue
-            self._total_stats(instance, metric)
+            self._count_node(instance)
             merged_res = self._daily_stats(instance, metric, merged_res, "sum") # or "avg"
 
         if period == "weekly":
             merged_res = self.convert_stats_from_daily_to_weekly(merged_res)
         return merged_res
 
-    def _total_stats(self, instance, metric):
-        """Calculate key and value statistics
-        Every entry of keys has one value
-        This is only for pie typed chart which is using key:value
+    def _count_node(self, instance):
+        """Count nodes
 
         Args:
             instance(dict): instance 
-            metric(str): metric name
 
         Returns:
             n/a 
@@ -204,22 +202,25 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         """
         
-        if metric == "count_node":
-            sys_stat = self.sys_stat_new['total']['count_node']
-            if instance["t_start"] < self.from_date or instance["t_start"] > self.to_date:
-                return
-            try:
-                m = re.search(r'http://(.*):8775/axis2/services/EucalyptusNC', str(instance["serviceTag"]), re.M|re.I)
-                nodename = str(m.group(1))
+        if self.metric != "count_node":
+            return
 
-                if nodename in sys_stat:
-                    sys_stat[nodename] = int(sys_stat[nodename]) + 1
-                else:
-                    sys_stat[nodename] = 1
-                self.sys_stat_new['total']['count_node'] = sys_stat
-            except:
-                print "total_stats is not calculated.", sys.exc_info()[0]
-                return
+        #sys_stat = self.stats.get('count_node')
+        sys_stat = self.sys_stat_new['total']['count_node']
+        if instance["t_start"] < self.from_date or instance["t_start"] > self.to_date:
+            return
+        try:
+            m = re.search(r'http://(.*):8775/axis2/services/EucalyptusNC', str(instance["serviceTag"]), re.M|re.I)
+            nodename = str(m.group(1))
+
+            if nodename in sys_stat:
+                sys_stat[nodename] = int(sys_stat[nodename]) + 1
+            else:
+                sys_stat[nodename] = 1
+            self.sys_stat_new['total']['count_node'] = sys_stat
+        except:
+            print "total_stats is not calculated.", sys.exc_info()[0]
+            return
 
     def convert_stats_from_daily_to_weekly(self, stats):
         """Convert a daily list of calculated data to a weekly list of data in case the period specified with 'weekly'
@@ -372,7 +373,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         try:
             maxY = int(round(max(chart_data) / 10) * 10)
-            chart = PyGoogleChart(chart_type, maxY)
+            chart = FGPyGoogleChart(chart_type, maxY)
             chart.set_data(chart_data)
             topY = maxY + 1
             chart.set_yaxis([ str(x) for x in range(0, topY, int(math.ceil(topY / 4)))])
@@ -389,7 +390,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     def create_highcharts(self, chart_data, output, chart_type = "column"):
         """Create highcharts in a javascript html file format"""
         try:
-            highchart = Highcharts(chart_type)
+            highchart = FGHighcharts(chart_type)
             highchart.set_data(chart_data)
             if self.nodename:
                 data_name = self.nodename
@@ -402,6 +403,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             highchart.set_output_path(output)
             if self.metric == "count_node":
                 title = "Total VMs count per a node cluster"
+                highchart.set_xaxis(highchart.get_data(0))
             else:
                 title = "Total " + self.metric + " of VM instances"
             highchart.set_title(title)
@@ -478,7 +480,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             url = chart.get_url()
             print url
         else:
-            Utility.ensure_dir(filepath)
+            FGUtility.ensure_dir(filepath)
             chart.download(filepath)
 
     def make_index_html (self, output_dir, title):
@@ -492,7 +494,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         gmc = GoogleMotionChart()
         motion_chart = gmc.display(self.users, str(self.from_date))
         filename = output_dir+"/index.html"
-        Utility.ensure_dir(filename)
+        FGUtility.ensure_dir(filename)
         f = open(filename, "w")
         f.write(page_template % vars())
         f.close()
@@ -531,7 +533,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         filename = "FGGoogleMotionChart.html"
         filepath = directory + "/" + filename
-        Utility.ensure_dir(filepath)
+        FGUtility.ensure_dir(filepath)
         test = GoogleMotionChart()
         self.set_fullname()
         output = test.display(self.users, str(self.from_date))
@@ -617,6 +619,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.sys_stat_new = {'total' : ""}
         self.sys_stat_new['total'] = { 'count_node' : {}}
 
+        self.stats = FGStats()
+        
+        self.chart = FGCharts()
+
     def postloop(self):
         print "BYE ..."
 
@@ -674,7 +680,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     def do_loadnovadb(self, arg):
 
         print "\r... loading data from nova database"
-        self.nova = NovaMetric()
+        self.nova = FGNovaMetric()
         # gets also data from the database
         self.nova.read_from_db()
 
@@ -755,6 +761,9 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         print "analyze [" + from_date + ", " + to_date + "]" 
         self.set_date(from_date, to_date)
+        self.stats.set_search_date(from_date, to_date)
+        self.stats.set_metric(opts.metric)
+        self.stats.set_period(opts.period)
 
         self.instances.refresh()
         print "now calculating"
@@ -772,8 +781,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         """Get Date range of the instances table in mysql db"""
 
         res = self.instances.getDateRange()
-        print Utility.convertOutput(res[0], "first_date")
-        print Utility.convertOutput(res[1], "last_date")
+        print FGUtility.convertOutput(res[0], "first_date")
+        print FGUtility.convertOutput(res[1], "last_date")
         #print self.instances.eucadb.read("", " order by date limit 1")
         #print self.instances.eucadb.read("", " order by date DESC limit 1")
 
@@ -872,6 +881,21 @@ class CmdLineAnalyzeEucaData(Cmd):
         print "Set a platform by to analyze: [" + platform + "]"
         self.platform = platform
 
+    def _set_chart(self, param):
+        """Set chart options (e.g. type, name, etc)
+        """
+
+        function = "set_" + str(param[0])
+        value = param[1]
+
+        try:
+            func = getattr(self.chart, function)
+            func(value)
+
+            print "Set a chart option (" + function + ") to : " + value
+        except:
+            pass
+
     @options([
         make_option('-u', '--user', type="string", help="user id to analyze"),
         make_option('-m', '--metric', default="runtime", type="string", help="metric name to display (runtime, vms)")
@@ -919,9 +943,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         if not opts.output:
             opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
 
-        self.chart = Charts()
-        self.chart.set_chart("highcharts")
-        self.chart.set_type("column")
+        '''
         self.chart.set_output_path(opts.output)
 
         # Display metric: count_node
@@ -931,23 +953,15 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.chart.display()
         except:
             pass
+        '''
 
-        # Display other metrics in three different types; highcharts, line, and bar
-        try:
-            self.chart.clear_data()
-            self.chart.set_data(self.sys_stats)
-            self.chart.display()
-
-            self.chart.clear_chart()
-            self.chart.set_chart("googlechart")
-            self.chart.set_type("line")
-            self.chart.set_output_type("png")
-            self.chart.display()
-
-#            self.chart.set_type("bar")
-#            self.chart.display()
-        except:
-            pass
+        if 'count_node' in self.sys_stat_new['total'] and len(self.sys_stat_new['total']['count_node']) != 0:
+            self.create_highcharts(self.sys_stat_new['total']['count_node'], opts.output, "column")
+            return
+           
+        self.line_chart(self.sys_stats, opts.output)
+        self.bar_chart(self.sys_stats, opts.output)
+        self.create_highcharts(self.sys_stats, opts.output)
 
     def do_filled_line_example(self, arg, opts=None):
         """Example for python Google line chart"""
@@ -1065,6 +1079,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             self._set_nodename(param)
         elif cmd == "platform":
             self._set_platform(param)
+        elif cmd == "chart":
+            self._set_chart(param)
 
 #########################################################
 # UNDER DEVELOPING

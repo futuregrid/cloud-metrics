@@ -120,10 +120,10 @@ class Instances:
         return self.data[i]
 
     def print_total(self):
-        print "total instances = " + self.count()
+        print "total instances = " + str(self.count())
 
     def count(self):
-        return str(len(self.data))
+        return len(self.data)
 
     def todatetime (self,instance):
         instance["trace"]["teardown"]["start"] = value_todate(instance["trace"]["teardown"]["start"])

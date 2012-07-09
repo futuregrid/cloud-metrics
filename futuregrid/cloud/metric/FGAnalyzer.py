@@ -404,6 +404,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             if self.metric == "count_node":
                 title = "Total VMs count per a node cluster"
                 highchart.set_xaxis(highchart.get_data(0))
+            elif self.metric == "": # This from user stats. display_stats
+                highchart.set_xaxis(highchart.get_data(0))
             else:
                 title = "Total " + self.metric + " of VM instances"
             highchart.set_title(title)
@@ -448,10 +450,13 @@ class CmdLineAnalyzeEucaData(Cmd):
             if metric != "count":
                 number = int (number / 60)
             values.append(number)
-            label_values.append(self.convert_ownerId_str(name) + ":" + str(number))
+            label = self.convert_ownerId_str(name) + ":" + str(number)
+            label_values.append(label)
+            list_for_highchart.append([label, number])
             max_v = max(max_v, number)
 
-        self.generate_pygooglechart(type, label_values, max_v, values, filepath)
+        #self.generate_pygooglechart(type, label_values, max_v, values, filepath)
+        self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", type="column")
 
     def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200): 
         """Create Python Google Chart but this should be merged to _create_chart()"""
@@ -823,13 +828,15 @@ class CmdLineAnalyzeEucaData(Cmd):
     def do_createreport(self, arg, opts=None):
         """Create PNG graphs which display statistics"""
 
-        self.display_stats("count", "pie", opts.directory + "/pie.count.png")
-        self.display_stats("count", "bar", opts.directory + "/bar.count.png")
-        self.display_stats("sum", "pie", opts.directory + "/pie.sum.png")
-        self.display_stats("sum", "bar", opts.directory + "/bar.sum.png")
+        #self.display_stats("count", "pie", opts.directory + "/pie.count.png")
+        #self.display_stats("count", "bar", opts.directory + "/bar.count.png")
+        #self.display_stats("sum", "pie", opts.directory + "/pie.sum.png")
+        #self.display_stats("sum", "bar", opts.directory + "/bar.sum.png")
 
         self.make_google_motion_chart(opts.directory)
         #self.make_index_html(opts.directory, opts.title)
+        self.display_stats("count", "highchart-column", opts.directory)
+        self.display_stats("sum", "highchart-column", opts.directory)
 
     def do_createreports(self, arg):
         """Create index.html page that includes PNG graphs"""

@@ -125,6 +125,7 @@ class Results:
         start_date = str(self.start_date)
         end_date = str(self.end_date)
         month_n_year = self.start_date.strftime("%B %Y")
+        month_n_year2 = self.start_date.strftime("%m/%Y")
         month = self.start_date.strftime("%Y-%m")
 
         number = 1
@@ -134,6 +135,9 @@ class Results:
 
         main_title = month_n_year + self.newline + \
                 "========================================" + self.newline
+
+        main_title += "Monthly report (" + month_n_year2 + ")" + self.newline + \
+                "----------------------------------------" + self.newline
 
         main_title += self.get_content_sub_header(nodename, platform)
  

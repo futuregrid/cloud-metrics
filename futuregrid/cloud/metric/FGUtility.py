@@ -1,12 +1,12 @@
 import os
 
-class Utility:
+class FGUtility:
 
     prefix = "[output]"
 
     @staticmethod
     def convertOutput(argument, name):
-        return Utility.prefix + "[" + name + "]" + argument 
+        return FGUtility.prefix + "[" + name + "]" + argument 
 
     @staticmethod
     def ensure_dir(f):

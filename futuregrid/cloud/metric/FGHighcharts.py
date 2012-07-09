@@ -3,9 +3,11 @@
 
 # FGHighcharts.py (python)
 # ------------------------
-from futuregrid.cloud.metric.FGUtility import Utility
+import re
 
-class Highcharts:
+from futuregrid.cloud.metric.FGUtility import FGUtility
+
+class FGHighcharts:
 
     chart_type = ""
     res_txt = ""
@@ -29,7 +31,17 @@ class Highcharts:
         self.data = data
         if type(data) == type({}):
             self.data = self.convert_dict_to_list(data)
-        self.sort_data()
+            #self.sort_data()
+            self.human_sort_data()
+
+    def get_data(self, index=""):
+        if not index == "":
+            res = []
+            for i in self.data:
+                res.append(i[int(index)])
+            return res
+            
+        return self.data
     
     def convert_dict_to_list(self, data):
         dictlist = []
@@ -41,6 +53,14 @@ class Highcharts:
     def sort_data(self):
         self.data = sorted(self.data, key=lambda key: key)
 
+    def human_sort_data(self):
+        key_pat = re.compile( r"^(\D+)(\d+)$" )
+        def key( item ):
+            item = item[0]
+            m= key_pat.match( item )
+            return m.group(1), int(m.group(2))
+        self.data.sort(key=key)
+
     def set_data_name(self, data_name):
         self.data_name = data_name
 
@@ -48,10 +68,10 @@ class Highcharts:
         self.yAxis_title = title
 
     def set_xaxis(self, label):
-        self.xAxis_label = label
+        self.xAxis_categories = label
 
     def set_output_path(self, path):
-        Utility.ensure_dir(path + "/" + self.filename)
+        FGUtility.ensure_dir(path + "/" + self.filename)
         self.filepath = path
 
     def set_filename(self, filename):
@@ -97,7 +117,7 @@ class Highcharts:
                             },
                         xAxis: {
                             categories: 
-                                %(xAxis_label)s
+                                %(xAxis_categories)s
                             },
                         yAxis: {
                             min: 0,

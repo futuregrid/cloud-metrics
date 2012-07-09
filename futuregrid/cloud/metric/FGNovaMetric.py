@@ -1,14 +1,14 @@
 
 import futuregrid.cloud.metric.FGNovaDB
 
-class NovaMetric:
+class FGNovaMetric:
 
     def __init__(self):
         self.instances = []
         self.userinfo = []
         self.users = {}
         self.nodename = None
-        self.novadb = futuregrid.cloud.metric.FGNovaDB.NovaDB("futuregrid.cfg")
+        self.novadb = futuregrid.cloud.metric.FGNovaDB.FGNovaDB("futuregrid.cfg")
 
         self.from_date = None
         self.to_date = None

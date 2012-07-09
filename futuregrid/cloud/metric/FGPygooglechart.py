@@ -1,7 +1,7 @@
 from pygooglechart import SimpleLineChart, StackedVerticalBarChart, Axis
-from futuregrid.cloud.metric.FGUtility import Utility
+from futuregrid.cloud.metric.FGUtility import FGUtility
 
-class PyGoogleChart:
+class FGPyGoogleChart:
 
     Name = "PyGoogleChart"
 
@@ -40,7 +40,7 @@ class PyGoogleChart:
         self.chart.set_axis_labels(Axis.BOTTOM, value)
 
     def set_output_path(self, directory):
-        Utility.ensure_dir(directory + "/" + self.filename)
+        FGUtility.ensure_dir(directory + "/" + self.filename)
         self.filepath = directory
 
     def set_filename(self, filename):

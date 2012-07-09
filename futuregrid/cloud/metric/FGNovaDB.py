@@ -5,7 +5,7 @@ import ConfigParser
 import MySQLdb
 import sys
 
-class NovaDB(object):
+class FGNovaDB(object):
 
     instances_table = "instances" # in nova
     userinfo_table = "user" # in keystone

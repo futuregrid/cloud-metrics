@@ -82,7 +82,7 @@ class Results:
         number = 3
         metric = "count_node"
 
-        src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/piehighcharts.html"
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
         title = "Figure %(number)s. Total VMs count per node cluster for %(start_date)s  ~ %(end_date)s on %(nodename)s"
  
         content = content + (self.get_content() % vars()) % vars()
@@ -104,7 +104,7 @@ class Results:
         number = 6
         metric = "count_node"
 
-        src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/piehighcharts.html"
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
         title = "Figure %(number)s. Total VMs count per node cluster for %(start_date)s  ~ %(end_date)s on %(nodename)s"
  
         content = content + (self.get_content() % vars()) % vars()

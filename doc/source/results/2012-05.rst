@@ -15,7 +15,7 @@ Results for Eucalyptus on india.futuregrid.org
 .. raw:: html
 
         <div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-05/india/eucalyptus/user/runtime/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="450" src="data/2012-05/india/eucalyptus/user/sum/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 
         Figure 2. Total wallclock time for all VMs executed by a user for May 2012 on India
@@ -52,7 +52,7 @@ Results for Eucalyptus on sierra.futuregrid.org
 .. raw:: html
 
         <div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-05/sierra/eucalyptus/user/runtime/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="450" src="data/2012-05/sierra/eucalyptus/user/sum/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 
         Figure 7. Total wallclock time for all VMs executed by a user for May 2012 on Sierra

@@ -40,7 +40,7 @@ class FGHighcharts:
     def __init__(self, chart_type=""):
         self.chart_type = chart_type
         self.width = 400
-        self.height = 400
+        self.height = 550
 
     def set_type(self, name):
         self.chart_type = name
@@ -457,7 +457,7 @@ class FGHighcharts:
         <body>
         <script src="http://code.highcharts.com/highcharts.js"></script>
         <script src="http://code.highcharts.com/modules/exporting.js"></script>
-        <div id="container" style="min-width: %(width)s px; height: %(height)s px; margin: 0 auto"></div>
+        <div id="container" style="min-width: %(width)spx; height: %(height)spx; margin: 0 auto"></div>
         </body>
         </html>
         ''' 

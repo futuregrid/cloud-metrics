@@ -40,6 +40,9 @@ class Results:
             new_month = month + 1
             start_date = datetime.date(year + (new_month / 13), (new_month % 12) or 12, day)
 
+        #EXCEPTION FOR ALL ENTRY
+        index_txt = self.indent + self.docs_path + "all" + self.newline + index_txt
+
         self.index_txt = self.get_index_header() + index_txt
 
         f = open (self.index_filename, "w")
@@ -121,7 +124,7 @@ class Results:
 
     def get_content_monthly(self):
         width = 800
-        height = 450
+        height = 600
         start_date = str(self.start_date)
         end_date = str(self.end_date)
         month_n_year = self.start_date.strftime("%B %Y")
@@ -147,7 +150,12 @@ class Results:
         content = content % vars()
 
         number += 1
+        src = "data/%(month)s/%(nodename)s/%(platform)s/user/FGGoogleMotionChart.html"
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
         metric = "runtime"
+        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -189,7 +197,7 @@ class Results:
 
     def get_content_weekly(self):
         width = 800
-        height = 450
+        height = 600
         start_date = str(self.start_date)
         end_date = str(self.end_date)
 

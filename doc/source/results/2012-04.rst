@@ -9,23 +9,30 @@ Results for eucalyptus on india.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for April 2012 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04/india/eucalyptus/user/FGGoogleMotionChart.html" frameborder="0"></iframe>
 	</div>
-	Figure 2. Total runtime of VMs submitted per user for April 2012 on india
+	Figure 2. Total count of VMs submitted per user for April 2012 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 3. Total VMs count per node cluster for April 2012 on india
+	Figure 3. Total runtime of VMs submitted per user for April 2012 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-04/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 4. Total VMs count per node cluster for April 2012 on india
 
 Results for eucalyptus on sierra.futuregrid.org
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -33,23 +40,23 @@ Results for eucalyptus on sierra.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 4. Total count of VMs submitted per user for April 2012 on sierra
+	Figure 5. Total count of VMs submitted per user for April 2012 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 5. Total runtime of VMs submitted per user for April 2012 on sierra
+	Figure 6. Total runtime of VMs submitted per user for April 2012 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 6. Total VMs count per node cluster for April 2012 on sierra
+	Figure 7. Total VMs count per node cluster for April 2012 on sierra
 
 04/03/2012 - 04/09/2012
 ------------------------------------------------------------
@@ -60,21 +67,21 @@ Results for eucalyptus on india.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-09/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-09/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for 2012-04-03  ~ 2012-04-09 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-09/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-09/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 2. Total runtime of VMs submitted per user for 2012-04-03  ~ 2012-04-09 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-09/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-09/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-04-03  ~ 2012-04-09 on india
 
@@ -84,21 +91,21 @@ Results for eucalyptus on sierra.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-09/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-09/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total count of VMs submitted per user for 2012-04-03  ~ 2012-04-09 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-09/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-09/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 5. Total runtime of VMs submitted per user for 2012-04-03  ~ 2012-04-09 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-09/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-09/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total VMs count per node cluster for 2012-04-03  ~ 2012-04-09 on sierra
 
@@ -111,21 +118,21 @@ Results for eucalyptus on india.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-16/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-16/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for 2012-04-10  ~ 2012-04-16 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-16/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-16/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 2. Total runtime of VMs submitted per user for 2012-04-10  ~ 2012-04-16 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-16/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-16/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-04-10  ~ 2012-04-16 on india
 
@@ -135,21 +142,21 @@ Results for eucalyptus on sierra.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-16/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-16/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total count of VMs submitted per user for 2012-04-10  ~ 2012-04-16 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-16/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-16/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 5. Total runtime of VMs submitted per user for 2012-04-10  ~ 2012-04-16 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-16/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-16/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total VMs count per node cluster for 2012-04-10  ~ 2012-04-16 on sierra
 
@@ -162,21 +169,21 @@ Results for eucalyptus on india.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-23/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-23/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for 2012-04-17  ~ 2012-04-23 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-23/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-23/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 2. Total runtime of VMs submitted per user for 2012-04-17  ~ 2012-04-23 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-23/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-23/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-04-17  ~ 2012-04-23 on india
 
@@ -186,21 +193,21 @@ Results for eucalyptus on sierra.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-23/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-23/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total count of VMs submitted per user for 2012-04-17  ~ 2012-04-23 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-23/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-23/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 5. Total runtime of VMs submitted per user for 2012-04-17  ~ 2012-04-23 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-23/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-23/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total VMs count per node cluster for 2012-04-17  ~ 2012-04-23 on sierra
 
@@ -213,21 +220,21 @@ Results for eucalyptus on india.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-30/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-30/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for 2012-04-24  ~ 2012-04-30 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-30/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-30/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 2. Total runtime of VMs submitted per user for 2012-04-24  ~ 2012-04-30 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-30/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-30/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-04-24  ~ 2012-04-30 on india
 
@@ -237,20 +244,20 @@ Results for eucalyptus on sierra.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-30/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-30/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total count of VMs submitted per user for 2012-04-24  ~ 2012-04-30 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-30/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-30/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 5. Total runtime of VMs submitted per user for 2012-04-24  ~ 2012-04-30 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="800" height="450" src="data/2012-04-30/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="800" height="600" src="data/2012-04-30/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total VMs count per node cluster for 2012-04-24  ~ 2012-04-30 on sierra

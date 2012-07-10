@@ -21,7 +21,7 @@ import calendar
 import re
 
 from futuregrid.cloud.metric.FGParser import Instances
-from futuregrid.cloud.metric.FGGoogleMotionChart import GoogleMotionChart
+from futuregrid.cloud.metric.FGGoogleMotionChart import FGGoogleMotionChart
 from futuregrid.cloud.metric.FGPygooglechart import FGPyGoogleChart
 from futuregrid.cloud.metric.FGUtility import FGUtility
 from futuregrid.cloud.metric.FGTemplate import HtmlTemplate
@@ -411,6 +411,10 @@ class CmdLineAnalyzeEucaData(Cmd):
                 highchart.set_yaxis(self.metric)
                 highchart.set_xaxis([ d.strftime("%Y-%m-%d") + " ~ " + (d + timedelta(6)).strftime("%Y-%m-%d") for d in (self.from_date + timedelta(n) for n in range(0, self.day_count, 7))])
                 title = "Total " + self.metric + " of VM instances"
+
+            if chart_type == "master-detail":
+                highchart.set_from_date(self.from_date)
+                highchart.set_to_date(self.to_date)
             highchart.set_title(title)
             highchart.set_filename(chart_type + "highcharts.html")
             highchart.set_tooltip("")
@@ -493,48 +497,6 @@ class CmdLineAnalyzeEucaData(Cmd):
             FGUtility.ensure_dir(filepath)
             chart.download(filepath)
 
-    def make_index_html (self, output_dir, title):
-        """Create index.html for generated PNG charts
-
-        * Should be obsolete due to the new way to display charts
-        """
-        page_template = HtmlTemplate.index()
-        now = datetime.now()
-        now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
-        gmc = GoogleMotionChart()
-        motion_chart = gmc.display(self.users, str(self.from_date))
-        filename = output_dir+"/index.html"
-        FGUtility.ensure_dir(filename)
-        f = open(filename, "w")
-        f.write(page_template % vars())
-        f.close()
-    
-    def make_frame_html (self):
-        """Create frame.html for menu and main frames
-
-        * Should be obsolete due to the new way to display charts
-        """
-        page_template = HtmlTemplate.frame()
-        filename = "index.html"
-        f = open(filename, "w")
-        f.write(page_template)
-        f.close()
-
-    def make_menu_html (self, directories):
-        """Create menu.html
-
-        * Should be obsolete due to the new way to display charts
-        """
- 
-        page_template = str("<b>Metrics</b><br><b>Monthly VM Ussage by User</b><ul>")
-        for dirname in directories:
-            page_template += "<li><a href=\"" + dirname + "/index.html\" target=right> VM usage by day " + dirname + "</a></li>\n"
-        page_template += str("</ul>")
-        filename = "menu.html"
-        f = open(filename, "w")
-        f.write(page_template)
-        f.close()
-
     def make_google_motion_chart(self, directory):
         """Create "FGGoogleMotionChart.html"
 
@@ -544,7 +506,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         filename = "FGGoogleMotionChart.html"
         filepath = directory + "/" + filename
         FGUtility.ensure_dir(filepath)
-        test = GoogleMotionChart()
+        test = FGGoogleMotionChart()
         self.set_fullname()
         output = test.display(self.users, str(self.from_date))
         f = open(filepath, "w")
@@ -839,14 +801,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         #self.display_stats("sum", "bar", opts.directory + "/bar.sum.png")
 
         self.make_google_motion_chart(opts.directory)
-        #self.make_index_html(opts.directory, opts.title)
         self.display_stats("count", "highchart-column", opts.directory)
         self.display_stats("runtime", "highchart-column", opts.directory)
-
-    def do_createreports(self, arg):
-        """Create index.html page that includes PNG graphs"""
-        self.make_frame_html()
-        self.make_menu_html(arg.split())
 
     @options([
         make_option('-f', '--start', type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
@@ -946,7 +902,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         print
 
     @options([
-        make_option('-o', '--output', type="string", help="Filepath in which we store a chart")
+        make_option('-o', '--output', type="string", help="Filepath in which we store a chart"),
+        make_option('-A', '--all', action='store_true', default=False, help="report all period data")
         ])
     def do_sys_report(self, arg, opts=None):
         """Generate system reports such as usage of CPU, memories, and disks."""
@@ -974,6 +931,9 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.line_chart(self.sys_stats, opts.output)
         self.bar_chart(self.sys_stats, opts.output)
         self.create_highcharts(self.sys_stats, opts.output)
+
+        if opts.all:
+            self.create_highcharts(self.sys_stats, opts.output, "master-detail")
 
     def do_filled_line_example(self, arg, opts=None):
         """Example for python Google line chart"""

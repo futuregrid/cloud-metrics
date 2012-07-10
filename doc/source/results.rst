@@ -5,7 +5,7 @@ We have collected cloud utilization data from Eucalyptus on FutureGrid such as I
 Contents:
 
 .. toctree::
-	:maxdepth: 3
+	:maxdepth: 2
 
 	results/all
 	results/2012-06

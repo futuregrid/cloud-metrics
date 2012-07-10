@@ -692,6 +692,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.sys_stat_new['total'] = { 'count_node' : {}}
             self.metric = None
             self.nodename = None
+            self.platform = None
 
             self.nova.clear_stats()
 

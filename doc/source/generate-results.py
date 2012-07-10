@@ -265,7 +265,7 @@ class Results:
                 "Contents:" + self.newline + \
                 self.newline + \
                 ".. toctree::" + self.newline + \
-                self.indent + ":maxdepth: 3" + self.newline + \
+                self.indent + ":maxdepth: 2" + self.newline + \
                 self.newline 
         return res
 

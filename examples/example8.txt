@@ -12,4 +12,4 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o all/india/count --all
+sys_report -o all/india/eucalyptus/count --all

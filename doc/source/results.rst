@@ -7,6 +7,7 @@ Contents:
 .. toctree::
 	:maxdepth: 3
 
+	results/all
 	results/2012-06
 	results/2012-05
 	results/2012-04

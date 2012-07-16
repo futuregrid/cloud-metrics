@@ -155,6 +155,7 @@ class Results:
 
         number += 1
         metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
         src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
 
         content = content + (self.get_chart() % vars()) % vars()
@@ -181,6 +182,7 @@ class Results:
 
         number += 1
         metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -219,6 +221,7 @@ class Results:
 
         number += 1
         metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -244,6 +247,7 @@ class Results:
 
         number += 1
         metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s hour of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 

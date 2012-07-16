@@ -299,11 +299,11 @@ class CmdLineAnalyzeEucaData(Cmd):
                 last_second_of_a_day = first_second_of_a_day + timedelta(days=1)
                 if i == 0: # First day of instance (same with instance["t_start"] and single_date)
                     td = last_second_of_a_day - single_date
-                    hour = td.seconds / 60 / 60
+                    hour = int(math.ceil(float(td.seconds) / 60 / 60))
                     month[offset + i] = hour
                 elif i + 1 == day_count_ins: # Last day of instance (same day with instance["t_end"] and single_date)
                     td = instance["t_end"] - first_second_of_a_day
-                    hour = td.seconds / 60 / 60
+                    hour = int(math.ceil(float(td.seconds) / 60 / 60))
                     month[offset + i] = hour
                 else: # days between first and last days of instance
                     month[offset + i] = 24 # hours
@@ -320,7 +320,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         if metric == "runtime":
             if day_count_ins == 1:
                 td = instance["t_end"] - ins_start
-                hour = td.seconds / 60 / 60
+                hour = int(math.ceil(float(td.seconds) / 60 / 60))
                 month[offset] = hour
         elif metric == "count" and day_count_ins == 1:
             month[offset] = 1
@@ -410,7 +410,11 @@ class CmdLineAnalyzeEucaData(Cmd):
             else:
                 highchart.set_yaxis(self.metric)
                 highchart.set_xaxis([ d.strftime("%Y-%m-%d") + " ~ " + (d + timedelta(6)).strftime("%Y-%m-%d") for d in (self.from_date + timedelta(n) for n in range(0, self.day_count, 7))])
-                title = "Total " + self.metric + " of VM instances"
+                if self.metric == "runtime":
+                    tmp = " (hour) "
+                else:
+                    tmp = ""
+                title = "Total " + self.metric + tmp + " of VM instances"
 
             if chart_type == "master-detail":
                 highchart.set_from_date(self.from_date)
@@ -457,7 +461,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             number = user_list[name][metric]
             # Temporary lines for converting sec to min 
             if metric != "count":
-                number = int (number / 60)
+                number = int (math.ceil(number / 60 / 60))
             values.append(number)
             label = self.convert_ownerId_str(name) + ":" + str(number)
             label_values.append(label)

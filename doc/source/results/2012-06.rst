@@ -25,7 +25,7 @@ Results for eucalyptus on india.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="800" height="600" src="data/2012-06/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 3. Total runtime of VMs submitted per user for June 2012 on india
+	Figure 3. Total runtime (hour) of VMs submitted per user for June 2012 on india
 
 .. raw:: html
 
@@ -49,7 +49,7 @@ Results for eucalyptus on sierra.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="800" height="600" src="data/2012-06/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 6. Total runtime of VMs submitted per user for June 2012 on sierra
+	Figure 6. Total runtime (hour) of VMs submitted per user for June 2012 on sierra
 
 .. raw:: html
 
@@ -76,7 +76,7 @@ Results for eucalyptus on india.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="800" height="600" src="data/2012-06-11/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 2. Total runtime of VMs submitted per user for 2012-06-05  ~ 2012-06-11 on india
+	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-06-05  ~ 2012-06-11 on india
 
 .. raw:: html
 
@@ -100,7 +100,7 @@ Results for eucalyptus on sierra.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="800" height="600" src="data/2012-06-11/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 5. Total runtime of VMs submitted per user for 2012-06-05  ~ 2012-06-11 on sierra
+	Figure 5. Total runtime hour of VMs submitted per user for 2012-06-05  ~ 2012-06-11 on sierra
 
 .. raw:: html
 
@@ -127,7 +127,7 @@ Results for eucalyptus on india.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="800" height="600" src="data/2012-06-18/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 2. Total runtime of VMs submitted per user for 2012-06-12  ~ 2012-06-18 on india
+	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-06-12  ~ 2012-06-18 on india
 
 .. raw:: html
 
@@ -151,7 +151,7 @@ Results for eucalyptus on sierra.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="800" height="600" src="data/2012-06-18/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 5. Total runtime of VMs submitted per user for 2012-06-12  ~ 2012-06-18 on sierra
+	Figure 5. Total runtime hour of VMs submitted per user for 2012-06-12  ~ 2012-06-18 on sierra
 
 .. raw:: html
 

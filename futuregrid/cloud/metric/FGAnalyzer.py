@@ -456,7 +456,6 @@ class CmdLineAnalyzeEucaData(Cmd):
         else:
             user_list = self.users
 
-
         for name in user_list:
             number = user_list[name][metric]
             # Temporary lines for converting sec to min 

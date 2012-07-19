@@ -49,11 +49,11 @@ class FGNovaMetric:
             nodename = instance['availability_zone']
             userid = instance['user_id']
 
-            t_delta = self.get_t_delta(instance)
-            
             if start_time < self.from_date or start_time > self.to_date:
                 continue
             
+            t_delta = self.get_t_delta(instance)
+
             # If a nodename is set, stats is only for the compute cluster node specified
             if self.nodename and self.nodename != nodename:
                 continue
@@ -66,10 +66,10 @@ class FGNovaMetric:
                 self.users[userid]['avg'] = self.users[userid]['runtime'] / float(self.users[userid]['count'])
             else:
                 self.users[userid] = {'count' : 1,
-                                    'runtime' : 0,
+                                    'runtime' : t_delta,
                                     'min' : t_delta,
                                     'max' : t_delta,
-                                    'avg' : 0.0
+                                    'avg' : t_delta
                                     }
     def clear_stats(self):
         self.users = {}
@@ -88,13 +88,18 @@ class FGNovaMetric:
             end_time = instance['terminated_at']
         elif instance['deleted_at']:
             end_time = instance['deleted_at']
-        elif instance['updated_at']:
-            end_time = instance['updated_at']
+        #elif instance['updated_at']:
+        #    end_time = instance['updated_at']
         else:
             end_time = self.to_date
         return end_time
 
     def get_t_delta(self, instance):
 
-        t_delta = (self.get_end_time(instance) - self.get_start_time(instance)).seconds
+        delta = self.get_end_time(instance) - self.get_start_time(instance)
+        # under python 2.7
+        #t_delta = delta.seconds + delta.days * 86400
+
+        # Python 2.7+
+        t_delta = delta.total_seconds()
         return t_delta

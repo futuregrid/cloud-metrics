@@ -1,0 +1,60 @@
+clear all
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+set nodename india
+analyze -S count
+sys_report -o 2012-05/india/eucalyptus/count --all
+
+clear all
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+set nodename india
+analyze -S runtime
+sys_report -o 2012-05/india/eucalyptus/runtime --all
+
+clear all
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+set nodename india
+analyze -S ccvm_cores
+sys_report -o 2012-05/india/eucalyptus/ccvm_cores --all
+
+clear all
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+set nodename india
+analyze -S ccvm_mem
+sys_report -o 2012-05/india/eucalyptus/ccvm_mem --all
+
+clear all
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+set nodename india
+analyze -S ccvm_disk
+sys_report -o 2012-05/india/eucalyptus/ccvm_disk --all
+
+
+clear all
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+set nodename sierra
+analyze -S count
+sys_report -o 2012-05/sierra/eucalyptus/count --all
+
+clear all
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+set nodename sierra
+analyze -S runtime
+sys_report -o 2012-05/sierra/eucalyptus/runtime --all
+
+clear all
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+set nodename sierra
+analyze -S ccvm_cores
+sys_report -o 2012-05/sierra/eucalyptus/ccvm_cores --all
+
+clear all
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+set nodename sierra
+analyze -S ccvm_mem
+sys_report -o 2012-05/sierra/eucalyptus/ccvm_mem --all
+
+clear all
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+set nodename sierra
+analyze -S ccvm_disk
+sys_report -o 2012-05/sierra/eucalyptus/ccvm_disk --all

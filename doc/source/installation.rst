@@ -65,10 +65,6 @@ We have a development version on github that you can install with::
 
         git clone https://github.com/futuregrid/futuregrid-cloud-metrics.git
 
-
- Create a ~/.futuregrid/futuregrid.cfg file that includes the
- following::
-
 2. Create Web pages using Sphinx
 --------------------------------
  Now you are ready to create results in a sphinx web page::

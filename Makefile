@@ -26,7 +26,7 @@ pip:
 
 force:
 	make -f Makefile pip
-	pip install -U dist/*.tar.gz
+	sudo pip install -U dist/*.tar.gz
 
 install:
 	sudo pip install dist/*.tar.gz

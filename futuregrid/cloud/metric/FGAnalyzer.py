@@ -419,6 +419,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             if chart_type == "master-detail":
                 highchart.set_from_date(self.from_date)
                 highchart.set_to_date(self.to_date)
+                highchart.set_height(400)
             highchart.set_title(title)
             highchart.set_filename(chart_type + "highcharts.html")
             highchart.set_tooltip("")

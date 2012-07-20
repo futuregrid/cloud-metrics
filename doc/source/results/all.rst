@@ -1,7 +1,7 @@
-All (11/01/2011 - 05/14/2012)
+Daily VM instances for Eucalyptus
 ========================================
 
-Results for eucalyptus on india.futuregrid.org
+Results on india.futuregrid.org
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -9,4 +9,28 @@ Results for eucalyptus on india.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="800" height="650" src="data/all/india/eucalyptus/count/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 1. Total count of VMs launched on india
+	Figure 1. Total count of VMs launched on india (11/01/2011 - 06/30/2012)
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="650" src="data/all/india/eucalyptus/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 2. Total runtime (hour) of VMs launched on india (11/01/2011 - 06/30/2012)
+
+Results on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="650" src="data/all/sierra/eucalyptus/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 3. Total count of VMs launched on sierra (05/01/2012 - 06/30/2012) 
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="650" src="data/all/sierra/eucalyptus/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 4. Total runtime (hour) of VMs launched on sierra (05/01/2012 - 06/30/2012)

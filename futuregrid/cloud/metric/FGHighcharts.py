@@ -120,6 +120,12 @@ class FGHighcharts:
         else:
             self.tooltip = "this.x +': '+ this.y"
 
+    def set_width(self, width):
+        self.width = width
+
+    def set_height(self, height):
+        self.height = height
+
     def display(self):
         
         self.html_txt = self.get_html_header() + self.get_html_script() + self.get_html_footer()

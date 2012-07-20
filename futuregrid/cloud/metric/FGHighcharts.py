@@ -141,9 +141,7 @@ class FGHighcharts:
         <html>
         <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
-        <link rel="stylesheet" type="text/css" href="/css/normalize.css">
-        <link rel="stylesheet" type="text/css" href="/css/result-light.css">'''
+        <script type='text/javascript' src='../../../../../../../_static/js/jquery-1.7.2.min.js'></script>'''
         return self.html_header
 
     def get_html_script(self):
@@ -461,8 +459,8 @@ class FGHighcharts:
         self.html_footer = '''
         </head>
         <body>
-        <script src="http://code.highcharts.com/highcharts.js"></script>
-        <script src="http://code.highcharts.com/modules/exporting.js"></script>
+        <script src="../../../../../../../_static/js/highcharts.js"></script>
+        <script src="../../../../../../../_static/js/modules/exporting.js"></script>
         <div id="container" style="min-width: %(width)spx; height: %(height)spx; margin: 0 auto"></div>
         </body>
         </html>

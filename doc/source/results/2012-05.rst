@@ -30,9 +30,44 @@ Results for eucalyptus on india.futuregrid.org
 .. raw:: html
 
 	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-05/india/eucalyptus/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 4. Total count of VMs submitted on india in May 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-05/india/eucalyptus/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 5. Total runtime of VMs submitted on india in May 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-05/india/eucalyptus/ccvm_cores/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 6. Total ccvm_cores of VMs submitted on india in May 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-05/india/eucalyptus/ccvm_mem/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 7. Total ccvm_mem of VMs submitted on india in May 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-05/india/eucalyptus/ccvm_disk/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 8. Total ccvm_disk of VMs submitted on india in May 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
 	<iframe width="800" height="600" src="data/2012-05/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 4. Total VMs count per node cluster for May 2012 on india
+	Figure 9. Total VMs count per node cluster for May 2012 on india
 
 Results for eucalyptus on sierra.futuregrid.org
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -42,21 +77,56 @@ Results for eucalyptus on sierra.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="800" height="600" src="data/2012-05/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 5. Total count of VMs submitted per user for May 2012 on sierra
+	Figure 10. Total count of VMs submitted per user for May 2012 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="800" height="600" src="data/2012-05/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 6. Total runtime (hour) of VMs submitted per user for May 2012 on sierra
+	Figure 11. Total runtime (hour) of VMs submitted per user for May 2012 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-05/sierra/eucalyptus/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 12. Total count of VMs submitted on sierra in May 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-05/sierra/eucalyptus/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 13. Total runtime of VMs submitted on sierra in May 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-05/sierra/eucalyptus/ccvm_cores/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 14. Total ccvm_cores of VMs submitted on sierra in May 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-05/sierra/eucalyptus/ccvm_mem/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 15. Total ccvm_mem of VMs submitted on sierra in May 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-05/sierra/eucalyptus/ccvm_disk/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 16. Total ccvm_disk of VMs submitted on sierra in May 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="800" height="600" src="data/2012-05/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 7. Total VMs count per node cluster for May 2012 on sierra
+	Figure 17. Total VMs count per node cluster for May 2012 on sierra
 
 05/01/2012 - 05/07/2012
 ------------------------------------------------------------

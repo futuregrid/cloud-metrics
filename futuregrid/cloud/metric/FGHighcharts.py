@@ -141,7 +141,7 @@ class FGHighcharts:
         <html>
         <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <script type='text/javascript' src='../../../../../../../_static/js/jquery-1.7.2.min.js'></script>'''
+        <script type='text/javascript' src='../../../../../../_static/js/jquery-1.7.2.min.js'></script>'''
         return self.html_header
 
     def get_html_script(self):
@@ -459,8 +459,8 @@ class FGHighcharts:
         self.html_footer = '''
         </head>
         <body>
-        <script src="../../../../../../../_static/js/highcharts.js"></script>
-        <script src="../../../../../../../_static/js/modules/exporting.js"></script>
+        <script src="../../../../../../_static/js/highcharts.js"></script>
+        <script src="../../../../../../_static/js/modules/exporting.js"></script>
         <div id="container" style="min-width: %(width)spx; height: %(height)spx; margin: 0 auto"></div>
         </body>
         </html>

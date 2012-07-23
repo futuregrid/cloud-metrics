@@ -34,30 +34,6 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 4. Total VMs count per node cluster for February 2012 on india
 
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total count of VMs submitted per user for February 2012 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total runtime (hour) of VMs submitted per user for February 2012 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 7. Total VMs count per node cluster for February 2012 on sierra
-
 02/07/2012 - 02/13/2012
 ------------------------------------------------------------
 
@@ -84,30 +60,6 @@ Results for eucalyptus on india.futuregrid.org
 	<iframe width="800" height="600" src="data/2012-02-13/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-02-07  ~ 2012-02-13 on india
-
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02-13/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 4. Total count of VMs submitted per user for 2012-02-07  ~ 2012-02-13 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02-13/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total runtime hour of VMs submitted per user for 2012-02-07  ~ 2012-02-13 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02-13/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total VMs count per node cluster for 2012-02-07  ~ 2012-02-13 on sierra
 
 02/14/2012 - 02/20/2012
 ------------------------------------------------------------
@@ -136,30 +88,6 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-02-14  ~ 2012-02-20 on india
 
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02-20/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 4. Total count of VMs submitted per user for 2012-02-14  ~ 2012-02-20 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02-20/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total runtime hour of VMs submitted per user for 2012-02-14  ~ 2012-02-20 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02-20/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total VMs count per node cluster for 2012-02-14  ~ 2012-02-20 on sierra
-
 02/21/2012 - 02/27/2012
 ------------------------------------------------------------
 
@@ -187,30 +115,6 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-02-21  ~ 2012-02-27 on india
 
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02-27/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 4. Total count of VMs submitted per user for 2012-02-21  ~ 2012-02-27 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02-27/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total runtime hour of VMs submitted per user for 2012-02-21  ~ 2012-02-27 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-02-27/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total VMs count per node cluster for 2012-02-21  ~ 2012-02-27 on sierra
-
 02/28/2012 - 03/05/2012
 ------------------------------------------------------------
 
@@ -237,27 +141,3 @@ Results for eucalyptus on india.futuregrid.org
 	<iframe width="800" height="600" src="data/2012-03-05/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-02-28  ~ 2012-03-05 on india
-
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-03-05/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 4. Total count of VMs submitted per user for 2012-02-28  ~ 2012-03-05 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-03-05/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total runtime hour of VMs submitted per user for 2012-02-28  ~ 2012-03-05 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2012-03-05/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total VMs count per node cluster for 2012-02-28  ~ 2012-03-05 on sierra

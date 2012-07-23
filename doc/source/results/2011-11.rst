@@ -34,30 +34,6 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 4. Total VMs count per node cluster for November 2011 on india
 
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total count of VMs submitted per user for November 2011 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total runtime (hour) of VMs submitted per user for November 2011 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 7. Total VMs count per node cluster for November 2011 on sierra
-
 11/01/2011 - 11/07/2011
 ------------------------------------------------------------
 
@@ -84,30 +60,6 @@ Results for eucalyptus on india.futuregrid.org
 	<iframe width="800" height="600" src="data/2011-11-07/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2011-11-01  ~ 2011-11-07 on india
-
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-07/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 4. Total count of VMs submitted per user for 2011-11-01  ~ 2011-11-07 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-07/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total runtime hour of VMs submitted per user for 2011-11-01  ~ 2011-11-07 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-07/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total VMs count per node cluster for 2011-11-01  ~ 2011-11-07 on sierra
 
 11/08/2011 - 11/14/2011
 ------------------------------------------------------------
@@ -136,30 +88,6 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 3. Total VMs count per node cluster for 2011-11-08  ~ 2011-11-14 on india
 
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-14/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 4. Total count of VMs submitted per user for 2011-11-08  ~ 2011-11-14 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-14/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total runtime hour of VMs submitted per user for 2011-11-08  ~ 2011-11-14 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-14/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total VMs count per node cluster for 2011-11-08  ~ 2011-11-14 on sierra
-
 11/15/2011 - 11/21/2011
 ------------------------------------------------------------
 
@@ -186,30 +114,6 @@ Results for eucalyptus on india.futuregrid.org
 	<iframe width="800" height="600" src="data/2011-11-21/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2011-11-15  ~ 2011-11-21 on india
-
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-21/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 4. Total count of VMs submitted per user for 2011-11-15  ~ 2011-11-21 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-21/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total runtime hour of VMs submitted per user for 2011-11-15  ~ 2011-11-21 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-21/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total VMs count per node cluster for 2011-11-15  ~ 2011-11-21 on sierra
 
 11/22/2011 - 11/28/2011
 ------------------------------------------------------------
@@ -238,30 +142,6 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 3. Total VMs count per node cluster for 2011-11-22  ~ 2011-11-28 on india
 
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-28/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 4. Total count of VMs submitted per user for 2011-11-22  ~ 2011-11-28 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-28/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total runtime hour of VMs submitted per user for 2011-11-22  ~ 2011-11-28 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-11-28/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total VMs count per node cluster for 2011-11-22  ~ 2011-11-28 on sierra
-
 11/29/2011 - 12/05/2011
 ------------------------------------------------------------
 
@@ -288,27 +168,3 @@ Results for eucalyptus on india.futuregrid.org
 	<iframe width="800" height="600" src="data/2011-12-05/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2011-11-29  ~ 2011-12-05 on india
-
-Results for eucalyptus on sierra.futuregrid.org
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-12-05/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 4. Total count of VMs submitted per user for 2011-11-29  ~ 2011-12-05 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-12-05/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 5. Total runtime hour of VMs submitted per user for 2011-11-29  ~ 2011-12-05 on sierra
-
-.. raw:: html
-
-	<div style="margin-top:10px;">
-	<iframe width="800" height="600" src="data/2011-12-05/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
-	</div>
-	Figure 6. Total VMs count per node cluster for 2011-11-29  ~ 2011-12-05 on sierra

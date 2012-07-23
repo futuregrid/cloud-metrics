@@ -12,7 +12,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/eucalyptus/count
+sys_report -o 2011-11/india/eucalyptus/count --all
 
 clear all
 
@@ -26,7 +26,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/eucalyptus/runtime
+sys_report -o 2011-11/india/eucalyptus/runtime --all
 
 clear all
 
@@ -40,7 +40,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-12/india/eucalyptus/count
+sys_report -o 2011-12/india/eucalyptus/count --all
 
 clear all
 
@@ -54,7 +54,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-12/india/eucalyptus/runtime
+sys_report -o 2011-12/india/eucalyptus/runtime --all
 
 clear all
 
@@ -68,7 +68,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-01/india/eucalyptus/count
+sys_report -o 2012-01/india/eucalyptus/count --all
 
 clear all
 
@@ -82,7 +82,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-01/india/eucalyptus/runtime
+sys_report -o 2012-01/india/eucalyptus/runtime --all
 
 clear all
 
@@ -96,7 +96,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-02/india/eucalyptus/count
+sys_report -o 2012-02/india/eucalyptus/count --all
 
 clear all
 
@@ -110,7 +110,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-02/india/eucalyptus/runtime
+sys_report -o 2012-02/india/eucalyptus/runtime --all
 
 clear all
 
@@ -124,7 +124,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-03/india/eucalyptus/count
+sys_report -o 2012-03/india/eucalyptus/count --all
 
 clear all
 
@@ -138,7 +138,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-03/india/eucalyptus/runtime
+sys_report -o 2012-03/india/eucalyptus/runtime --all
 
 clear all
 
@@ -152,7 +152,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-04/india/eucalyptus/count
+sys_report -o 2012-04/india/eucalyptus/count --all
 
 clear all
 
@@ -166,7 +166,7 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-04/india/eucalyptus/runtime
+sys_report -o 2012-04/india/eucalyptus/runtime --all
 
 clear all
 
@@ -180,7 +180,7 @@ set nodename india
 analyze -S count
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-05/india/eucalyptus/count
+sys_report -o 2012-05/india/eucalyptus/count --all
 
 clear all
 
@@ -194,4 +194,88 @@ set nodename india
 analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-05/india/eucalyptus/runtime
+sys_report -o 2012-05/india/eucalyptus/runtime --all
+
+clear all
+
+# A user can specify a data range
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+
+# A user can specify a node name (e.g. india, sierra)
+set nodename sierra
+
+# It requires a metric which can be specified with -S, --stat option with analyze command.
+analyze -S count
+
+# Finally, it can create a graph for the analyzed data
+sys_report -o 2012-05/sierra/eucalyptus/count --all
+
+clear all
+
+# A user can specify a data range
+set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
+
+# A user can specify a node name (e.g. india, sierra)
+set nodename sierra
+
+# It requires a metric which can be specified with -S, --stat option with analyze command.
+analyze -S runtime
+
+# Finally, it can create a graph for the analyzed data
+sys_report -o 2012-05/sierra/eucalyptus/runtime --all
+
+clear all
+
+# A user can specify a data range
+set search_range 2012-06-01T00:00:00 2012-06-30T23:59:59
+
+# A user can specify a node name (e.g. india, sierra)
+set nodename india
+
+# It requires a metric which can be specified with -S, --stat option with analyze command.
+analyze -S count
+
+# Finally, it can create a graph for the analyzed data
+sys_report -o 2012-06/india/eucalyptus/count --all
+
+clear all
+
+# A user can specify a data range
+set search_range 2012-06-01T00:00:00 2012-06-30T23:59:59
+
+# A user can specify a node name (e.g. india, sierra)
+set nodename india
+
+# It requires a metric which can be specified with -S, --stat option with analyze command.
+analyze -S runtime
+
+# Finally, it can create a graph for the analyzed data
+sys_report -o 2012-06/india/eucalyptus/runtime --all
+
+clear all
+
+# A user can specify a data range
+set search_range 2012-06-01T00:00:00 2012-06-30T23:59:59
+
+# A user can specify a node name (e.g. india, sierra)
+set nodename sierra
+
+# It requires a metric which can be specified with -S, --stat option with analyze command.
+analyze -S count
+
+# Finally, it can create a graph for the analyzed data
+sys_report -o 2012-06/sierra/eucalyptus/count --all
+
+clear all
+
+# A user can specify a data range
+set search_range 2012-06-01T00:00:00 2012-06-30T23:59:59
+
+# A user can specify a node name (e.g. india, sierra)
+set nodename sierra
+
+# It requires a metric which can be specified with -S, --stat option with analyze command.
+analyze -S runtime
+
+# Finally, it can create a graph for the analyzed data
+sys_report -o 2012-06/sierra/eucalyptus/runtime --all

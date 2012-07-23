@@ -12,15 +12,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/eucalyptus/cores/
+sys_report -o 2011-11/india/eucalyptus/ccvm_cores/ --all
 
 analyze -S ccvm_mem
 
-sys_report -o 2011-11/india/eucalyptus/mem
+sys_report -o 2011-11/india/eucalyptus/ccvm_mem --all
 
 analyze -S ccvm_disk
 
-sys_report -o 2011-11/india/eucalyptus/disk
+sys_report -o 2011-11/india/eucalyptus/ccvm_disk --all
 
 clear all
 
@@ -34,15 +34,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2011-12/india/eucalyptus/cores/
+sys_report -o 2011-12/india/eucalyptus/ccvm_cores/ --all
 
 analyze -S ccvm_mem
 
-sys_report -o 2011-12/india/eucalyptus/mem
+sys_report -o 2011-12/india/eucalyptus/ccvm_mem --all
 
 analyze -S ccvm_disk
 
-sys_report -o 2011-12/india/eucalyptus/disk
+sys_report -o 2011-12/india/eucalyptus/ccvm_disk --all
 
 clear all
 
@@ -56,15 +56,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-01/india/eucalyptus/cores/
+sys_report -o 2012-01/india/eucalyptus/ccvm_cores/ --all
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-01/india/eucalyptus/mem
+sys_report -o 2012-01/india/eucalyptus/ccvm_mem --all
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-01/india/eucalyptus/disk
+sys_report -o 2012-01/india/eucalyptus/ccvm_disk --all
 
 clear all
 
@@ -78,15 +78,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-02/india/eucalyptus/cores/
+sys_report -o 2012-02/india/eucalyptus/ccvm_cores/ --all
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-02/india/eucalyptus/mem
+sys_report -o 2012-02/india/eucalyptus/ccvm_mem --all
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-02/india/eucalyptus/disk
+sys_report -o 2012-02/india/eucalyptus/ccvm_disk --all
 
 clear all
 
@@ -100,15 +100,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-03/india/eucalyptus/cores/
+sys_report -o 2012-03/india/eucalyptus/ccvm_cores/ --all
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-03/india/eucalyptus/mem
+sys_report -o 2012-03/india/eucalyptus/ccvm_mem --all
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-03/india/eucalyptus/disk
+sys_report -o 2012-03/india/eucalyptus/ccvm_disk --all
 
 clear all
 
@@ -122,15 +122,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-04/india/eucalyptus/cores/
+sys_report -o 2012-04/india/eucalyptus/ccvm_cores/ --all
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-04/india/eucalyptus/mem
+sys_report -o 2012-04/india/eucalyptus/ccvm_mem --all
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-04/india/eucalyptus/disk
+sys_report -o 2012-04/india/eucalyptus/ccvm_disk --all
 
 clear all
 
@@ -144,15 +144,15 @@ set nodename india
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-05/india/eucalyptus/cores/
+sys_report -o 2012-05/india/eucalyptus/ccvm_cores/ --all
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-05/india/eucalyptus/mem
+sys_report -o 2012-05/india/eucalyptus/ccvm_mem --all
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-05/india/eucalyptus/disk
+sys_report -o 2012-05/india/eucalyptus/ccvm_disk --all
 
 clear all
 
@@ -166,14 +166,56 @@ set nodename sierra
 analyze -S ccvm_cores
 
 # Finally, it can create a graph for the analyzed data
-sys_report -o 2012-05/sierra/eucalyptus/cores/
+sys_report -o 2012-05/sierra/eucalyptus/ccvm_cores/ --all
 
 analyze -S ccvm_mem
 
-sys_report -o 2012-05/sierra/eucalyptus/mem
+sys_report -o 2012-05/sierra/eucalyptus/ccvm_mem --all
 
 analyze -S ccvm_disk
 
-sys_report -o 2012-05/sierra/eucalyptus/disk
+sys_report -o 2012-05/sierra/eucalyptus/ccvm_disk --all
 
+clear all
 
+# A user can specify a data range
+set search_range 2012-06-01T00:00:00 2012-06-30T23:59:59
+
+# A user can specify a node name (e.g. india, sierra)
+set nodename india
+
+# It requires a metric which can be specified with -S, --stat option with analyze command.
+analyze -S ccvm_cores
+
+# Finally, it can create a graph for the analyzed data
+sys_report -o 2012-06/india/eucalyptus/ccvm_cores/ --all
+
+analyze -S ccvm_mem
+
+sys_report -o 2012-06/india/eucalyptus/ccvm_mem --all
+
+analyze -S ccvm_disk
+
+sys_report -o 2012-06/india/eucalyptus/ccvm_disk --all
+
+clear all
+
+# A user can specify a data range
+set search_range 2012-06-01T00:00:00 2012-06-30T23:59:59
+
+# A user can specify a node name (e.g. india, sierra)
+set nodename sierra
+
+# It requires a metric which can be specified with -S, --stat option with analyze command.
+analyze -S ccvm_cores
+
+# Finally, it can create a graph for the analyzed data
+sys_report -o 2012-06/sierra/eucalyptus/ccvm_cores/ --all
+
+analyze -S ccvm_mem
+
+sys_report -o 2012-06/sierra/eucalyptus/ccvm_mem --all
+
+analyze -S ccvm_disk
+
+sys_report -o 2012-06/sierra/eucalyptus/ccvm_disk --all

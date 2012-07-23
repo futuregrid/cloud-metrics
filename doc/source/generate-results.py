@@ -161,6 +161,34 @@ class Results:
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
+        metric = "count"
+
+        src = "data/%(month)s/%(nodename)s/%(platform)s/%(metric)s/master-detailhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+ 
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "runtime"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "ccvm_cores"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "ccvm_mem"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "ccvm_disk"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
         metric = "count_node"
 
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(metric)s/columnhighcharts.html"
@@ -205,6 +233,34 @@ class Results:
             number += 1
             metric = "runtime"
             title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+
+            content = content + (self.get_chart() % vars()) % vars()
+
+            number += 1
+            metric = "count"
+
+            src = "data/%(month)s/%(nodename)s/%(platform)s/%(metric)s/master-detailhighcharts.html"
+            title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+     
+            content = content + (self.get_chart() % vars()) % vars()
+
+            number += 1
+            metric = "runtime"
+
+            content = content + (self.get_chart() % vars()) % vars()
+
+            number += 1
+            metric = "ccvm_cores"
+
+            content = content + (self.get_chart() % vars()) % vars()
+
+            number += 1
+            metric = "ccvm_mem"
+
+            content = content + (self.get_chart() % vars()) % vars()
+
+            number += 1
+            metric = "ccvm_disk"
 
             content = content + (self.get_chart() % vars()) % vars()
 

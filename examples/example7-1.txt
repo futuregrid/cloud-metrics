@@ -77,3 +77,13 @@ clear all
 set nodename sierra
 analyze -S count_node -M 06 -Y 2012
 sys_report -o 2012-06/sierra/eucalyptus/count_node
+
+clear all
+set nodename india
+analyze -S count_node -M 07 -Y 2012
+sys_report -o 2012-07/india/eucalyptus/count_node
+
+clear all
+set nodename sierra
+analyze -S count_node -M 07 -Y 2012
+sys_report -o 2012-07/sierra/eucalyptus/count_node

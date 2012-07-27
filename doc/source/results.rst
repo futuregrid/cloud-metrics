@@ -9,6 +9,7 @@ Contents:
 
 	results/all
 	results/realtime
+	results/2012-07
 	results/2012-06
 	results/2012-05
 	results/2012-04

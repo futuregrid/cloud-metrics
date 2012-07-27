@@ -9,7 +9,7 @@ class Results:
     docs_ext = ".rst"
     start_date = datetime.date(2011, 11, 01)
     start_date_for_weekly = start_date
-    t_end_date = datetime.date(2012, 06, 12)
+    t_end_date = datetime.date(2012, 07, 26)
     end_date = start_date + datetime.timedelta(days=6)
     week = datetime.timedelta(weeks=1)
     index_txt = None

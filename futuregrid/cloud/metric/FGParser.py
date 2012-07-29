@@ -791,9 +791,8 @@ def read_from_stdin_and_store_to_db(instances, linetypes):
                 if not ccInstance_parser(rest, data):
                     lines_ignored += 1 
                 else:
-                    if data["instanceId"] == "i-F9554066":
-                        single_data = instances.update_traceinfo(data)
-                        instances.eucadb.write(single_data)
+                    single_data = instances.update_traceinfo(data)
+                    instances.eucadb.write(single_data)
         except:
             break
 

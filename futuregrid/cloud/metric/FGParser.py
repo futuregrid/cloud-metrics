@@ -285,8 +285,8 @@ class Instances:
 	res = self.update_trace_datetime(key, row)
         # Update - this needs to be changed. 
         res["state"] = row["state"]
-        res["date"] = row["date"]
-        res["duration"] = row["duration"]
+        res["date"] = max(res["date"], row["date"]) # we don't need date column
+        res["duration"] = max(res["duration"], row["duration"])
 	self.data[key] = res
 
         return res

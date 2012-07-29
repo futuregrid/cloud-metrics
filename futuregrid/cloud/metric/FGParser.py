@@ -283,8 +283,10 @@ class Instances:
 	key = instanceId + " " + ownerId + " " + str(ts)
 
 	res = self.update_trace_datetime(key, row)
-        # Update state
+        # Update - this needs to be changed. 
         res["state"] = row["state"]
+        res["date"] = row["date"]
+        res["duration"] = row["duration"]
 	self.data[key] = res
 
         return res

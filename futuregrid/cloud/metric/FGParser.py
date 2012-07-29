@@ -287,6 +287,7 @@ class Instances:
         res["state"] = row["state"]
         res["date"] = max(res["date"], row["date"]) # we don't need date column
         res["duration"] = max(res["duration"], row["duration"])
+        res["t_end"] = min(res["t_end"], row["t_end"])
 	self.data[key] = res
 
         return res

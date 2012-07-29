@@ -372,7 +372,29 @@ class FGEucaMetricsDB(object):
                                     + self._fmtstr(entryObj["reservationId"]) + "," \
                                     + self._fmtstr(self.euca_hostname) + "," \
                                     + self._fmtstr(self.euca_version) + ")"
-        #print wquery
+
+
+        wquery += " on duplicate key update " \
+                + "t_end=" \
+                + self._fmtstr(str(entryObj["t_end"])) + "," \
+                + " duration=" \
+                + str(entryObj["duration"]) + "," \
+                + " trace_pending_start=" \
+                + self._fmtstr(str(entryObj["trace"]["pending"]["start"])) + "," \
+                + " trace_pending_stop=" \
+                + self._fmtstr(str(entryObj["trace"]["pending"]["stop"])) + "," \
+                + " trace_extant_start=" \
+                + self._fmtstr(str(entryObj["trace"]["extant"]["start"])) + "," \
+                + " trace_extant_stop=" \
+                + self._fmtstr(str(entryObj["trace"]["extant"]["stop"])) + "," \
+                + " trace_teardown_start=" \
+                + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + "," \
+                + " trace_teardown_stop=" \
+                + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + "," \
+                + " state=" \
+                + self._fmtstr(entryObj["state"])
+
+        print wquery
         try:
             self.cursor.execute(wquery)
 

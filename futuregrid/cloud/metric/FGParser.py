@@ -9,6 +9,7 @@ import os
 import re
 import subprocess
 from datetime import * 
+from collections import deque
 
 import futuregrid.cloud.metric.FGEucaMetricsDB
 
@@ -120,10 +121,10 @@ class Instances:
         return self.data[i]
 
     def print_total(self):
-        print "total instances = " + str(self.count())
+        print "total instances = " + self.count()
 
     def count(self):
-        return len(self.data)
+        return str(len(self.data))
 
     def todatetime (self,instance):
         instance["trace"]["teardown"]["start"] = value_todate(instance["trace"]["teardown"]["start"])
@@ -253,6 +254,81 @@ class Instances:
             current["trace"][status]["stop"] = max(current["trace"][status]["stop"],t)
 
             instance[id] = current
+
+    def update_traceinfo(self, row):
+	''' New version of add function  '''
+        res = self.set_datetime(row)
+	updated_res = self.update_to_list(res)
+        return updated_res
+
+    def set_datetime(self, row):
+	# Set datetime
+	row["t_start"] = row["ts"]
+	row["t_end"] = self.get_t_end(row)
+	row["duration"] = self.get_t_delta(row)
+        row["trace"] = {
+                "pending" : { "start" : None, "stop" : None, "queue" : deque()},
+                "extant" : { "start" : None, "stop" : None, "queue" : deque()},
+                "teardown" : { "start" : None, "stop" : None, "queue" : deque()}
+                }
+        
+        return row
+
+    def update_to_list(self, row):
+	''' Reflect to the current list '''
+
+	instanceId = row["instanceId"]
+	ownerId = row["ownerId"]
+	ts = row["ts"]
+	key = instanceId + " " + ownerId + " " + str(ts)
+
+	res = self.update_trace_datetime(key, row)
+        # Update state
+        res["state"] = row["state"]
+	self.data[key] = res
+
+        return res
+
+    def update_trace_datetime(self, key, new):
+
+        if key in self.data:
+            old = self.data[key]
+        else:
+            old = new
+        old["trace"][new["state"].lower()]["queue"].append(new["date"])
+        old["trace"][new["state"].lower()]["start"] = min(old["trace"][new["state"].lower()]["queue"])
+        old["trace"][new["state"].lower()]["stop"] = max(old["trace"][new["state"].lower()]["queue"])
+
+        return old
+
+    def get_previous_state(self, state):
+	state = state.lower()
+	if state == "pending":
+		return state
+	elif state == "extant":
+		return "pending"
+	elif state == "teardown":
+		return "extant"
+
+    def get_t_end(self, row):
+	if row["state"] == "Teardown":
+		return row["date"]
+	else:
+		return self.in_the_future
+
+    def get_t_delta(self, row):
+
+	start = row["t_start"]
+	last = row["date"]
+
+	if row["state"] == "Teardown":
+		if row["t_end"]:
+			last = min(row["date"], row["t_end"])
+
+	t_delta = (last - start).total_seconds()
+	if t_delta < 0:
+		t_delta = timedelta(0).total_seconds()
+	return t_delta
 
     def refresh(self):
         """calculates how long each instance runs in seconds"""
@@ -694,6 +770,39 @@ def read_log_files_and_store_to_db (instances, path, from_date, to_date, linetyp
     instances.set_userinfo()
     instances.write_userinfo_to_db()
 
+def read_from_stdin_and_store_to_db(instances, linetypes):
+
+    lines_total = 0 
+    lines_ignored = 0 
+    count_ccInstance_parser = 0
+
+    while 1:
+	try:
+            line = sys.stdin.readline()
+            line = line.rstrip()
+
+            lines_total += 1
+		
+            data = {}
+            rest = parse_type_and_date (line, data)
+            if data["linetype"] == "print_ccInstance" and "print_ccInstance" in linetypes:
+
+                count_ccInstance_parser += 1
+                if not ccInstance_parser(rest, data):
+                    lines_ignored += 1 
+                else:
+                    if data["instanceId"] == "i-F9554066":
+                        single_data = instances.update_traceinfo(data)
+                        instances.eucadb.write(single_data)
+        except:
+            break
+
+    print_counter("lines total",lines_total)
+    print_counter("lines ignored", lines_ignored)
+    print_counter("count_ccInstance_parser",count_ccInstance_parser )
+
+    return
+
 def utility_insert_userinfo_from_file_or_std():
 
     '''Store userinfo into database by reading a userid(s) from a text file or a standard input
@@ -848,7 +957,10 @@ def main():
 	    import FGCleanupTable
 	    FGCleanupTable.main()
 
-    read_log_files_and_store_to_db(instances, args.input_dir, args.s_date, args.e_date, args.linetypes)
+    if args.input_dir == "-":
+	read_from_stdin_and_store_to_db(instances, args.linetypes)
+    else:
+	read_log_files_and_store_to_db(instances, args.input_dir, args.s_date, args.e_date, args.linetypes)
     
 if __name__ == "__main__":
     main()

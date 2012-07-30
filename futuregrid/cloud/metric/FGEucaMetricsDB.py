@@ -391,6 +391,8 @@ class FGEucaMetricsDB(object):
                 + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + ") ," \
                 + " trace_teardown_stop=GREATEST(trace_teardown_stop, " \
                 + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + ") ," \
+                + " date=" \
+                + self._fmtstr(str(entryObj["date"])) + "," \
                 + " state=" \
                 + self._fmtstr(entryObj["state"])
 

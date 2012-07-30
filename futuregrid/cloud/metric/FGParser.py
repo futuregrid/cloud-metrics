@@ -285,7 +285,7 @@ class Instances:
 	res = self.update_trace_datetime(key, row)
         # Update - this needs to be changed. 
         res["state"] = row["state"]
-        res["date"] = max(res["date"], row["date"]) # we don't need date column
+        res["date"] = row["date"] #max(res["date"], row["date"]) # we don't need date column
         res["duration"] = max(res["duration"], row["duration"])
         res["t_end"] = min(res["t_end"], row["t_end"])
 	self.data[key] = res
@@ -301,8 +301,9 @@ class Instances:
 
         state = new["state"].lower()
         old["trace"][state]["queue"].append(new["date"])
-        old["trace"][state]["start"] = min(old["trace"][state]["start"], new["date"])
-        old["trace"][state]["stop"] = max(old["trace"][state]["stop"], new["date"])
+        queue = old["trace"][state]["queue"]
+        old["trace"][state]["start"] = min(queue) #min(old["trace"][state]["start"], new["date"])
+        old["trace"][state]["stop"] = max(queue) #max(old["trace"][state]["stop"], new["date"])
 
         return old
 

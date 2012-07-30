@@ -267,9 +267,9 @@ class Instances:
 	row["t_end"] = self.get_t_end(row)
 	row["duration"] = self.get_t_delta(row)
         row["trace"] = {
-                "pending" : { "start" : None, "stop" : None, "queue" : deque()},
-                "extant" : { "start" : None, "stop" : None, "queue" : deque()},
-                "teardown" : { "start" : None, "stop" : None, "queue" : deque()}
+                "pending" : { "start" : None, "stop" : None, "queue" : deque("",10)},
+                "extant" : { "start" : None, "stop" : None, "queue" : deque("",10)},
+                "teardown" : { "start" : None, "stop" : None, "queue" : deque("",10)}
                 }
         
         return row
@@ -298,9 +298,11 @@ class Instances:
             old = self.data[key]
         else:
             old = new
-        old["trace"][new["state"].lower()]["queue"].append(new["date"])
-        old["trace"][new["state"].lower()]["start"] = min(old["trace"][new["state"].lower()]["queue"])
-        old["trace"][new["state"].lower()]["stop"] = max(old["trace"][new["state"].lower()]["queue"])
+
+        state = new["state"].lower()
+        old["trace"][state]["queue"].append(new["date"])
+        old["trace"][state]["start"] = min(old["trace"][state]["start"], new["date"])
+        old["trace"][state]["stop"] = max(old["trace"][state]["stop"], new["date"])
 
         return old
 

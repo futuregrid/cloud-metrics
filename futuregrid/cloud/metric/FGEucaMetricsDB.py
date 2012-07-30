@@ -380,17 +380,17 @@ class FGEucaMetricsDB(object):
                 + " duration=" \
                 + str(entryObj["duration"]) + "," \
                 + " trace_pending_start=LEAST(trace_pending_start, " \
-                + self._fmtstr(str(entryObj["trace"]["pending"]["start"])) + "," \
+                + self._fmtstr(str(entryObj["trace"]["pending"]["start"])) + ") ," \
                 + " trace_pending_stop=GREATEST(trace_pending_stop, " \
-                + self._fmtstr(str(entryObj["trace"]["pending"]["stop"])) + "," \
+                + self._fmtstr(str(entryObj["trace"]["pending"]["stop"])) + ") ," \
                 + " trace_extant_start=LEAST(trace_extant_start, " \
-                + self._fmtstr(str(entryObj["trace"]["extant"]["start"])) + "," \
+                + self._fmtstr(str(entryObj["trace"]["extant"]["start"])) + ") ," \
                 + " trace_extant_stop=GREATEST(trace_extant_stop, " \
-                + self._fmtstr(str(entryObj["trace"]["extant"]["stop"])) + "," \
+                + self._fmtstr(str(entryObj["trace"]["extant"]["stop"])) + ") ," \
                 + " trace_teardown_start=LEAST(trace_teardown_start, " \
-                + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + "," \
+                + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + ") ," \
                 + " trace_teardown_stop=GREATEST(trace_teardown_stop, " \
-                + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + "," \
+                + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + ") ," \
                 + " state=" \
                 + self._fmtstr(entryObj["state"])
 

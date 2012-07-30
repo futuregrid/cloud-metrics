@@ -98,6 +98,7 @@ class Instances:
         self.userinfo_data = []
 
         self.in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
+        self.in_the_past = datetime.strptime("1970-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.pp = pprint.PrettyPrinter(indent=0)
         self.data = {}
         self.eucadb = futuregrid.cloud.metric.FGEucaMetricsDB.FGEucaMetricsDB("futuregrid.cfg")
@@ -262,14 +263,17 @@ class Instances:
         return updated_res
 
     def set_datetime(self, row):
+
+        future = self.in_the_future
+        past = self.in_the_past
 	# Set datetime
 	row["t_start"] = row["ts"]
 	row["t_end"] = self.get_t_end(row)
 	row["duration"] = self.get_t_delta(row)
         row["trace"] = {
-                "pending" : { "start" : None, "stop" : None, "queue" : deque("",10)},
-                "extant" : { "start" : None, "stop" : None, "queue" : deque("",10)},
-                "teardown" : { "start" : None, "stop" : None, "queue" : deque("",10)}
+                "pending" : { "start" : future, "stop" : past, "queue" : deque("",10)},
+                "extant" : { "start" : future, "stop" : past, "queue" : deque("",10)},
+                "teardown" : { "start" : future, "stop" : past, "queue" : deque("",10)}
                 }
         
         return row

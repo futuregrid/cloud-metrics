@@ -379,22 +379,22 @@ class FGEucaMetricsDB(object):
                 + self._fmtstr(str(entryObj["t_end"])) + "," \
                 + " duration=" \
                 + str(entryObj["duration"]) + "," \
-                + " trace_pending_start=" \
+                + " trace_pending_start=LEAST(trace_pending_start, " \
                 + self._fmtstr(str(entryObj["trace"]["pending"]["start"])) + "," \
-                + " trace_pending_stop=" \
+                + " trace_pending_stop=GREATEST(trace_pending_stop, " \
                 + self._fmtstr(str(entryObj["trace"]["pending"]["stop"])) + "," \
-                + " trace_extant_start=" \
+                + " trace_extant_start=LEAST(trace_extant_start, " \
                 + self._fmtstr(str(entryObj["trace"]["extant"]["start"])) + "," \
-                + " trace_extant_stop=" \
+                + " trace_extant_stop=GREATEST(trace_extant_stop, " \
                 + self._fmtstr(str(entryObj["trace"]["extant"]["stop"])) + "," \
-                + " trace_teardown_start=" \
+                + " trace_teardown_start=LEAST(trace_teardown_start, " \
                 + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + "," \
-                + " trace_teardown_stop=" \
+                + " trace_teardown_stop=GREATEST(trace_teardown_stop, " \
                 + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + "," \
                 + " state=" \
                 + self._fmtstr(entryObj["state"])
 
-        print wquery
+        #print wquery
         try:
             self.cursor.execute(wquery)
 

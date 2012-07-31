@@ -818,9 +818,9 @@ def utility_insert_userinfo_from_file_or_std():
     This command will read a userid(s) and do ldapsearch to find userinfo. And then it will
     store the userinfo into mysql database.
 
-    Usage: $ fg-metrics-utility insert_userinfo -i filename
+    Usage: $ fg-metrics-utility insert_userinfo -i filename [hostname]
            or
-           $ fg-metrics-utility userid
+           $ fg-metrics-utility insert_userinfo userid [hostname]
     '''
 
     i = Instances()
@@ -830,13 +830,18 @@ def utility_insert_userinfo_from_file_or_std():
     username = ""
     project = ""
 
-    if len(sys.argv[1]) == 0:
+    if len(sys.argv) < 3 or sys.argv[1] != "insert_userinfo":
+        print "usage: ./$ fg-metrics-utility insert_userinfo -i filename [hostname] \n\
+               or \n\
+               $ fg-metrics-utility insert_userinfo userid [hostname]"
         return
 
-    if sys.argv[1] == "-i":
-        filename = sys.argv[2]
+    if sys.argv[2] == "-i":
+        filename = sys.argv[3]
+        hostname = sys.argv[4]
     else:
-        userid = sys.argv[1]
+        userid = sys.argv[2]
+        hostname = sys.argv[3]
 
     if os.path.exists(filename):
         f = open(filename, "r")
@@ -871,6 +876,8 @@ def utility_insert_userinfo_from_file_or_std():
                     res["ownerid"] = userid
                     res["username"] = username
                     res["project"] = project
+                    if hostname:
+                        res["hostname"] = hostname
                 i.userinfo_data.append(res)
     else:
         res = retrieve_userinfo_ldap(userid)

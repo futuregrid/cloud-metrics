@@ -586,6 +586,31 @@ class CmdLineAnalyzeEucaData(Cmd):
             fullname = self.convert_ownerId_str(uname)
             self.users[uname]['fullname'] = fullname
 
+    def realtime(self, cmd, param):
+
+        users = {}
+        metric = param[0]
+        # Temporary for test
+        self.instances.eucadb.change_table("instance_for_realtime")
+        self.instances.read_from_db()
+        for i in range(0, int(self.instances.count())):
+            values = self.instances.getdata(i)
+            if values["date"] < datetime.today():
+                continue
+            if values["state"] != "Extant":
+                continue
+            if self.nodename and self.nodename != values['euca_hostname']:
+                continue
+            ownerId = values["ownerId"]
+            if ownerId in users:
+                metric_val = users[ownerId][metric] + 1
+            else:
+                metric_val = 1
+            users[ownerId] = { metric: metric_val }
+        for user in users:
+            output = self.convert_ownerId_str(user) + ", " + str(users[user][metric])
+            print FGUtility.convertOutput(output, "realtime")
+
     def preloop(self):
         self.do_loaddb("")
 
@@ -1043,7 +1068,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         # instances stats
         print "instances:"
 
-    def do_set (self, arg, oprts=None):
+    def do_set (self, arg, opts=None):
         """Set a function with parameter(s)"""
 
         args = arg.split()
@@ -1058,6 +1083,15 @@ class CmdLineAnalyzeEucaData(Cmd):
             self._set_platform(param)
         elif cmd == "chart":
             self._set_chart(param)
+
+    def do_show(self, arg, opts=None):
+        """ Display realtime usage data"""
+
+        args = arg.split()
+        cmd = args[0]
+        param = args[1:]
+
+        self.realtime(cmd, param)
 
 #########################################################
 # UNDER DEVELOPING

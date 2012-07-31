@@ -19,7 +19,7 @@ Grouped by a user on India (top 5 users)
         <div style="margin-top:10px;">
 	<iframe width="800" height="420" src="data/realtime/count_vms_users_india.html" frameborder="0"></iframe>
 	</div>
-	figure 2. total count of running vms per user on India for Eucalyptus
+	Figure 2. Total count of running VMs per user on India for Eucalyptus
 
 Grouped by a user on Sierra (top 5 users)
 -----------------------------------------
@@ -29,7 +29,7 @@ Grouped by a user on Sierra (top 5 users)
         <div style="margin-top:10px;">
 	<iframe width="800" height="420" src="data/realtime/count_vms_users_sierra.html" frameborder="0"></iframe>
 	</div>
-	figure 3. total count of running vms per user on Sierra for Eucalyptus
+	Figure 3. Total count of running VMs per user on Sierra for Eucalyptus
 
 Grouped by a user on India for Openstack (TBD)
 ----------------------------------------------

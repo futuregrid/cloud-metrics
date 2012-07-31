@@ -591,12 +591,13 @@ class CmdLineAnalyzeEucaData(Cmd):
         users = {}
         metric = param[0]
         # Temporary for test
+        self.instances.clear()
         self.instances.eucadb.change_table("instance_for_realtime")
         self.instances.read_from_db()
         for i in range(0, int(self.instances.count())):
             values = self.instances.getdata(i)
-            if values["date"] < datetime.today():
-                continue
+            #if values["date"] < datetime.today():
+            #    continue
             if values["state"] != "Extant":
                 continue
             if self.nodename and self.nodename != values['euca_hostname']:
@@ -613,7 +614,6 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def preloop(self):
         self.do_loaddb("")
-
         self.do_loadnovadb("")
 
         # Initialize values
@@ -621,7 +621,6 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.sys_stat_new['total'] = { 'count_node' : {}}
 
         self.stats = FGStats()
-        
         self.chart = FGCharts()
 
     def postloop(self):

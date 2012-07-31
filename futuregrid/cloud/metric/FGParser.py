@@ -868,7 +868,6 @@ def utility_insert_userinfo_from_file_or_std():
                 # In euca3.0+, username is an ownerid of past version of euca
                 if username:
                     ownerid = username
-
             res = retrieve_userinfo_ldap(ownerid)
             if res:
                 if m:
@@ -878,6 +877,7 @@ def utility_insert_userinfo_from_file_or_std():
                     res["project"] = project
                     if hostname:
                         res["hostname"] = hostname
+                print res
                 i.userinfo_data.append(res)
     else:
         res = retrieve_userinfo_ldap(userid)

@@ -9,14 +9,27 @@ Total count of running VM instances (updated every 5 seconds)
 	<div style="margin-top:10px;">
 	<iframe width="800" height="420" src="data/realtime/count_vms_all.html" frameborder="0"></iframe>
 	</div>
-	Figure 1. Total count of running VMs on india and sierra for Eucalyptus and OpenStack
+	Figure 1. Total count of running VMs on India and Sierra for Eucalyptus and OpenStack
 
-Grouped by a user
------------------
+Grouped by a user on India (top 5 users)
+----------------------------------------
 
 .. raw:: html
 
         <div style="margin-top:10px;">
-	<iframe width="800" height="420" src="data/realtime/count_vms_users.html" frameborder="0"></iframe>
+	<iframe width="800" height="420" src="data/realtime/count_vms_users_india.html" frameborder="0"></iframe>
 	</div>
-	Figure 2. Total count of running VMs per user on india and sierra for Eucalyptus
+	figure 2. total count of running vms per user on India for Eucalyptus
+
+Grouped by a user on Sierra (top 5 users)
+-----------------------------------------
+
+.. raw:: html
+
+        <div style="margin-top:10px;">
+	<iframe width="800" height="420" src="data/realtime/count_vms_users_sierra.html" frameborder="0"></iframe>
+	</div>
+	figure 3. total count of running vms per user on Sierra for Eucalyptus
+
+Grouped by a user on India for Openstack (TBD)
+----------------------------------------------

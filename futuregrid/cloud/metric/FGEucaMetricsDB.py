@@ -104,7 +104,8 @@ class FGEucaMetricsDB(object):
                 last_name varchar(32), \
                 uid INT, \
                 username varchar(32), \
-                project varchar(16))"
+                project varchar(16), \
+                hostname varchar(16))"
         try:
             self.cursor.execute(create_instance_table)
             self.cursor.execute(create_userinfo_table)

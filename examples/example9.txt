@@ -1,0 +1,3 @@
+set nodename india
+# retrieve current usage data
+show users count

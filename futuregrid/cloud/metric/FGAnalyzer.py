@@ -92,7 +92,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             date_to = to_date
             process_all = False
 
-        for i in range(0, self.instances.count()):
+        for i in range(0, int(self.instances.count())):
             values = self.instances.getdata(i)
             process_entry = process_all
             

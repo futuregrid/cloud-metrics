@@ -68,7 +68,7 @@ class FGGoogleMotionChart:
 		<head>
 		  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		    <title>%(title)s</title>
-		      <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+                      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		      <script type="text/javascript">
 		      google.load('visualization', '1', {packages: ['%(gchart_pname)s']});
 		      function drawVisualization() {

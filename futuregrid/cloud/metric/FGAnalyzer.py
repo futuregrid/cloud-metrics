@@ -591,13 +591,14 @@ class CmdLineAnalyzeEucaData(Cmd):
         users = {}
         metric = param[0]
         # Temporary for test
-        self.instances.clear()
-        self.instances.eucadb.change_table("instance_for_realtime")
-        self.instances.read_from_db()
+        #self.instances.clear()
+        #self.instances.eucadb.change_table("instance_for_realtime")
+        #self.instances.read_from_db()
         for i in range(0, int(self.instances.count())):
             values = self.instances.getdata(i)
-            #if values["date"] < datetime.today():
-            #    continue
+            # TEMPORARY
+            if values["date"] < datetime.date(2012, 7, 27):
+                continue
             if values["state"] != "Extant":
                 continue
             if self.nodename and self.nodename != values['euca_hostname']:

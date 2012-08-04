@@ -42,6 +42,9 @@ class Results:
             start_date = datetime.date(year + (new_month / 13), (new_month % 12) or 12, day)
 
         #EXCEPTION FOR ALL ENTRY
+        index_txt = self.indent + self.docs_path + "thismonth" + self.newline + index_txt
+
+        #EXCEPTION FOR ALL ENTRY
         index_txt = self.indent + self.docs_path + "realtime" + self.newline + index_txt
 
         #EXCEPTION FOR ALL ENTRY

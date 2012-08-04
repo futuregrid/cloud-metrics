@@ -4,6 +4,7 @@
 # FGHighcharts.py (python)
 # ------------------------
 import re
+from datetime import timedelta
 
 from futuregrid.cloud.metric.FGUtility import FGUtility
 
@@ -34,8 +35,12 @@ class FGHighcharts:
     t_year = 0
     t_month = 0
     t_day = 0
+    days = 0
 
-    t_month_before = 0
+    detail_date = None
+    detail_year = 0
+    detail_month = 0
+    detail_day = 0
 
     def __init__(self, chart_type=""):
         self.chart_type = chart_type
@@ -89,8 +94,17 @@ class FGHighcharts:
         self.to_date = date
         self.t_year = date.year
         self.t_month = date.month - 1
-        self.t_month_before = date.month - 2
         self.t_day = date.day
+
+    def set_detail_date(self):
+        self.days = (self.to_date - self.from_date).days
+        days_before = self.days / 3 or 1
+
+        self.detail_date = self.to_date - timedelta(days=days_before)
+        date = self.detail_date
+        self.detail_year = date.year
+        self.detail_month = date.month - 1
+        self.detail_day = date.day
 
     def set_data_name(self, data_name):
         self.data_name = data_name
@@ -283,7 +297,7 @@ class FGHighcharts:
                                 plotBands: [{
                                     id: 'mask-before',
                                     from: Date.UTC(%(f_year)s, %(f_month)s, %(f_day)s),
-                                    to: Date.UTC(%(t_year)s, %(t_month_before)s, %(t_day)s),
+                                    to: Date.UTC(%(detail_year)s, %(detail_month)s, %(detail_day)s),
                                     color: 'rgba(0, 0, 0, 0.2)'
                                 }],
                                 title: {
@@ -357,7 +371,7 @@ class FGHighcharts:
                 
                         // prepare the detail chart
                         var detailData = [],
-                            detailStart = Date.UTC(%(t_year)s, %(t_month_before)s, %(t_day)s);
+                            detailStart = Date.UTC(%(detail_year)s, %(detail_month)s, %(detail_day)s);
                 
                         jQuery.each(masterChart.series[0].data, function(i, point) {
                             if (point.x >= detailStart) {

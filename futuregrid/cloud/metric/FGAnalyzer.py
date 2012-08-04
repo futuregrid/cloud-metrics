@@ -420,6 +420,7 @@ class CmdLineAnalyzeEucaData(Cmd):
                 highchart.set_from_date(self.from_date)
                 highchart.set_to_date(self.to_date)
                 highchart.set_height(400)
+                highchart.set_detail_date()
             highchart.set_title(title)
             highchart.set_filename(chart_type + "highcharts.html")
             highchart.set_tooltip("")

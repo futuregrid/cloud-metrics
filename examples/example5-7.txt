@@ -283,7 +283,7 @@ sys_report -o 2012-06/sierra/eucalyptus/runtime --all
 clear all
 
 # A user can specify a data range
-set search_range 2012-07-01T00:00:00 2012-07-26T23:59:59
+set search_range 2012-07-01T00:00:00 2012-07-31T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
@@ -297,7 +297,7 @@ sys_report -o 2012-07/india/eucalyptus/count --all
 clear all
 
 # A user can specify a data range
-set search_range 2012-07-01T00:00:00 2012-07-26T23:59:59
+set search_range 2012-07-01T00:00:00 2012-07-31T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
@@ -311,7 +311,7 @@ sys_report -o 2012-07/india/eucalyptus/runtime --all
 clear all
 
 # A user can specify a data range
-set search_range 2012-07-01T00:00:00 2012-07-26T23:59:59
+set search_range 2012-07-01T00:00:00 2012-07-3T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename sierra
@@ -325,7 +325,7 @@ sys_report -o 2012-07/sierra/eucalyptus/count --all
 clear all
 
 # A user can specify a data range
-set search_range 2012-07-01T00:00:00 2012-07-26T23:59:59
+set search_range 2012-07-01T00:00:00 2012-07-31T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename sierra

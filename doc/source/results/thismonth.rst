@@ -70,7 +70,7 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 9. Total VMs count per node cluster for this month on india
 
-Results for openstack on india.futuregrid.org
+Results for openstack on india.futuregrid.org (TBD)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html

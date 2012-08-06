@@ -774,7 +774,8 @@ def read_log_files_and_store_to_db (instances, path, from_date, to_date, linetyp
         try:
             if f_date <= filename_todate(filename) and filename_todate(filename) <= t_date:
                 print "Processing file is: " + filename
-                parse_file(path + "/" + filename, instances.add, linetypes, debug=False, progress=True)
+                #parse_file(path + "/" + filename, instances.add, linetypes, debug=False, progress=True)
+                parse_file(path + "/" + filename, instances.update_traceinfo, linetypes, debug=False, progress=True)
         except (ValueError):
             continue
 

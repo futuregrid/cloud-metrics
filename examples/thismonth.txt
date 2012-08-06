@@ -15,7 +15,7 @@ analyze -M 08
 createreport -d thismonth/india/openstack/user/ -t Launched_instances_per_user_of_Openstack_in_India
 
 clear all
-set search_range 2012-08-01T00:00:00 2012-08-04T23:59:59
+set search_range 2012-08-01T00:00:00 2012-08-06T23:59:59
 set nodename india
 analyze -S count
 sys_report -o thismonth/india/eucalyptus/count --all
@@ -29,7 +29,7 @@ analyze -S ccvm_disk
 sys_report -o thismonth/india/eucalyptus/ccvm_disk --all
 
 clear all
-set search_range 2012-08-01T00:00:00 2012-08-04T23:59:59
+set search_range 2012-08-01T00:00:00 2012-08-06T23:59:59
 set nodename sierra
 analyze -S count
 sys_report -o thismonth/sierra/eucalyptus/count --all

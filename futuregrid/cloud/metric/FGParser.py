@@ -288,10 +288,11 @@ class Instances:
 
 	res = self.update_trace_datetime(key, row)
         # Update - this needs to be changed. 
-        res["state"] = row["state"]
-        res["date"] = row["date"] #max(res["date"], row["date"]) # we don't need date column
-        res["duration"] = max(res["duration"], row["duration"])
-        res["t_end"] = min(res["t_end"], row["t_end"])
+        if row["date"] > res["date"]:
+            res["state"] = row["state"]
+            res["date"] = row["date"] #max(res["date"], row["date"]) # we don't need date column
+            res["duration"] = row["duration"]#max(res["duration"], row["duration"])
+            res["t_end"] = row["t_end"]#min(res["t_end"], row["t_end"])
 	self.data[key] = res
 
         return res

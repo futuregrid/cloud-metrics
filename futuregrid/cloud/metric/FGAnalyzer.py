@@ -598,8 +598,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         for i in range(0, int(self.instances.count())):
             values = self.instances.getdata(i)
             # TEMPORARY
-            if values["date"] < datetime.date(2012, 7, 27):
+            print 1
+            if values["date"] < date(2012, 7, 27):
                 continue
+            print 1
             if values["state"] != "Extant":
                 continue
             if self.nodename and self.nodename != values['euca_hostname']:

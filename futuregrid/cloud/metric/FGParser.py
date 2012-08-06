@@ -580,8 +580,8 @@ def parse_file (filename, analyze, parse_types, debug=False, progress=True):
             if debug:
                 print "IGNORE> " + line
         else:
-            analyze(data)
-
+            if data["linetype"] == "print_ccInstance" and "print_ccInstance" in parse_types:
+                analyze(data)
 
         # For Debugging to make it faster terminate at 5
         if debug and (len(instance) > 5):

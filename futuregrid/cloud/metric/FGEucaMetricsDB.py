@@ -411,10 +411,15 @@ class FGEucaMetricsDB(object):
 
     def _write(self, tablename, entryObj):
 
-        keys = ", ".join(entryObj.keys())
-        values = "'" + "' ,'".join(str(x) for x in entryObj.values()) + "'"
-        wquery = "INSERT INTO " + tablename + " ( " + keys + " ) VALUES ( " + values + " )"
-        #print wquery
+        try:
+            keys = ", ".join(entryObj.keys())
+            values = "'" + "' ,'".join(str(x) for x in entryObj.values()) + "'"
+            wquery = "INSERT INTO " + tablename + " ( " + keys + " ) VALUES ( " + values + " )"
+            #print wquery
+        except AttributeError, e:
+            print "Error %d: %s" % (e.args[0], e.args[1])
+            pass
+
         try:
             self.cursor.execute(wquery)
 

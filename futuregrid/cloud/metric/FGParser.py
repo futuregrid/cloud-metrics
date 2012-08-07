@@ -215,6 +215,7 @@ class Instances:
             self.eucadb.write(self.data[key_current])
 
     def write_userinfo_to_db(self):
+        print self.userinfo_data
         for key_current in self.userinfo_data:
             self.eucadb.write_userinfo(key_current)
 
@@ -538,7 +539,13 @@ def terminate_instances_param_parser(rest,data):
 def print_counter (label,counter):
     print label + " = " + str(counter)
 
-def parse_file (filename, analyze, parse_types, debug=False, progress=True):
+def parse_file (filename, analyze, parse_types, gzip,  debug=False, progress=True):
+
+    if gzip :
+        import zlib
+        CHUNKSIZE=1024
+        gz = zlib.decompressobj(16+zlib.MAX_WBITS)
+
     print filename
     f = open(filename, 'r')
     lines_total = 0
@@ -553,6 +560,8 @@ def parse_file (filename, analyze, parse_types, debug=False, progress=True):
 
     progress_step = file_size / 100
     for line in f:
+        if gzip:
+            line = gz.decompress(line)
         ignore = False
         lines_total += 1
         read_bytes += len(line)
@@ -564,13 +573,17 @@ def parse_file (filename, analyze, parse_types, debug=False, progress=True):
             print "DEBUG " + str(lines_total) +"> " + line
         data = {}
         rest = parse_type_and_date (line, data)
+        '''
+        Temporarily prince_ccInstance is only available to parse
+
         if data["linetype"] == "TerminateInstances" and "TerminateInstances" in parse_types:
             count_terminate_instances += 1
             terminate_instances_param_parser(rest, data)
         elif data["linetype"] == "refresh_resources" and "refresh_resources" in parse_types:
             count_refresh_resource += 1
             refresh_resource_parser(rest, data)
-        elif data["linetype"] == "print_ccInstance" and "print_ccInstance" in parse_types:
+        el'''
+        if data["linetype"] == "print_ccInstance" and "print_ccInstance" in parse_types:
             count_ccInstance_parser += 1
 	    if not ccInstance_parser(rest, data):
 		    ignore = True
@@ -693,7 +706,8 @@ def test4():
 
 # Convert 2012-01-28-04-13-04-cc.log to datetime
 def filename_todate(str):
-    return datetime.strptime(str, '%Y-%m-%d-%H-%M-%S-cc.log')
+    filename = str.split(".")[0]
+    return datetime.strptime(filename, '%Y-%m-%d-%H-%M-%S-cc')
 
 def test_file_read(filename,progress=True, debug=False):
     parse_file (filename,instances.add,debug,progress)
@@ -749,23 +763,7 @@ def test_user_stats():
 
     return
 
-def read_all_log_files_and_store_to_db (path, args):
-    """
-    we assume thet the dir has only files of the form. All files have been gathere there from the fg-unix command
-    <name>.log
-    # hungruies job
-    """
-    listing = os.listdir(path)
-    count = 0
-    for filename in listing:
-        count =+ 1
-        print "Processing file is: " + filename
-        #parse_file (path + "/" + filename,instances.add,debug=False,progress=True)
-	parse_file(path + "/" + filename, instances.add, args.linetypes, debug=False, progress=True)
-    instances.calculate_delta ()
-    instances.write_to_db()
-
-def read_log_files_and_store_to_db (instances, path, from_date, to_date, linetypes):
+def read_log_files_and_store_to_db (instances, path, from_date, to_date, linetypes, gzip):
 
     listing = os.listdir(path)
     f_date = datetime.strptime(from_date + " 00:00:00", '%Y%m%d %H:%M:%S')
@@ -775,8 +773,8 @@ def read_log_files_and_store_to_db (instances, path, from_date, to_date, linetyp
         try:
             if f_date <= filename_todate(filename) and filename_todate(filename) <= t_date:
                 print "Processing file is: " + filename
-                #parse_file(path + "/" + filename, instances.add, linetypes, debug=False, progress=True)
-                parse_file(path + "/" + filename, instances.update_traceinfo, linetypes, debug=False, progress=True)
+                #parse_file(path + "/" + filename, instances.add, linetypes, gzip, debug=False, progress=True)
+                parse_file(path + "/" + filename, instances.update_traceinfo, linetypes, gzip, debug=False, progress=True)
         except (ValueError):
             continue
 
@@ -942,6 +940,8 @@ def main():
 		    help="This command without any parameter deletes the entire database. *Be careful with this")
     parser.add_argument("--parse", nargs="+", dest="linetypes", default=def_linetypes,
                     help="specify function names which you want to parse (types: print_ccInstance, refresh_resources)")
+    parser.add_argument("-z", "--gzip", action="store_true", default=False,
+                    help="gzip compressed files will be loaded")
     args = parser.parse_args()
     print args
     
@@ -982,7 +982,7 @@ def main():
     if args.input_dir == "-":
 	read_from_stdin_and_store_to_db(instances, args.linetypes)
     else:
-	read_log_files_and_store_to_db(instances, args.input_dir, args.s_date, args.e_date, args.linetypes)
+	read_log_files_and_store_to_db(instances, args.input_dir, args.s_date, args.e_date, args.linetypes, args.gzip)
     
 if __name__ == "__main__":
     main()

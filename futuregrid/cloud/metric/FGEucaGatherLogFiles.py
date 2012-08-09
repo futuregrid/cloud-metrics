@@ -139,7 +139,6 @@ E-mail: laszewski@gmail.com
 
 """
 
-
 import os, errno, glob
 import re
 import shutil
@@ -147,9 +146,6 @@ from datetime import datetime
 import fnmatch
 import argparse
 
-######################################################################
-# TAIL
-######################################################################
 def tail(f, window=20):
     """
     Returns the last `window` lines of file `f` as a list.
@@ -182,58 +178,6 @@ def tail(f, window=20):
         block -= 1
     return ''.join(data).splitlines()[-window:]
 
-
-"""
-#
-def sort_euca_log (input,output):
-    '''sorts the input file and writes it to the output file with given arguments'''
-    # TODO:
-    os.system ("sort -u -k5n -k2M -k3n -k4 " + input + " > " + output)
-    return
-
-def merge_euca_log (input1, input2, output):
-    '''merges the two input files and writes it to the output file with given arguments'''
-    os.system ("sort -m -k5n -k2M -k3n -k4 " + input + " > " + output)
-    return
-
-#def merge_euca_log_files_in_dir (dirpath, output):
-#    ''' merges all logfiles in the dir'''
-
-#    logfiles = glob.glob( os.path.join(dirpath, '*.log*') 
-     
-    # PSEUDO CODE
-    #current_log = logfiles.pop ()
-    #for file in logfiles
-    #   merge_euca_log (current_log, files, tmp)
-    #   os.remove (current_log)
-    #   os.move (tmp, current_log)
-    #os.move (current_log, output)
-    #return                     
-
-#def concat_euca_log_files (input1,input2,output):
-#    '''checks and concatenates to output files'''
-    # check if the last line of input1 <= input2, assumes asscending order 
-#    os.system ('cat ' + input1 + " " + input2 + " > " + output)
-#    return
-
-#def sort_accending_euca_log (input, output):
-#    '''this function will revert the eucalyptus log file'''
-    # maes sure that the input file is in acending order
-    # date_start = date from first line
-    # date_end = date from last line
-#    invert_needed = date_start > date_end
-#    if inverted_needed
-#       os.system("rev " + input + " > " + output)
-
-#
-# based on how euca creates logfiles, I guess we can just combine all logfiles with a .?+ at the end
-# we must make sure the order is ok to not effect the date ordering
-#
-"""
-
-######################################################################
-# HEAD
-######################################################################
 def head(file, n=1):
     """
     Returns the first n lines in a file.
@@ -243,11 +187,6 @@ def head(file, n=1):
     file.seek(0)                            #Rewind file
     return [file.next() for x in xrange(n)]
 
-
-
-######################################################################
-# getdate_from_euca_log_line
-######################################################################
 def getdate_from_euca_log_line(line):
     """
     Eucalyptus log files have a time stamp at the beginning of the
@@ -258,9 +197,6 @@ def getdate_from_euca_log_line(line):
     tmp = re.split ('\]', line.pop())
     return datetime.strptime(tmp[0][1:], '%a %b %d %H:%M:%S %Y')
 
-######################################################################
-# generate_filename 
-######################################################################
 def generate_filename (date_object, postfix):
     """
     This function is an internal helper function that converts a date
@@ -269,9 +205,6 @@ def generate_filename (date_object, postfix):
     name = str(date_object).replace(" ","-").replace(":","-")
     return name + postfix 
 
-######################################################################
-# rename_euca_log_file 
-######################################################################
 def rename_euca_log_file (path,name):
     """
     This function renames a given eucalyptus file located in
@@ -289,9 +222,6 @@ def rename_euca_log_file (path,name):
         os.remove(old_name)
     return
 
-######################################################################
-# generate_euca_log_filename 
-######################################################################
 def generate_euca_log_filename (path, name, suffix):
     """
     Given the location of a eucalyptus log file as "path/name", a new
@@ -308,11 +238,6 @@ def generate_euca_log_filename (path, name, suffix):
     new_name = os.path.join(path,new_name)
     return new_name
 
-
-
-######################################################################
-# ls
-######################################################################
 def ls(path):
     """
     simply does a unix ls on the path. It is used for debugging.
@@ -321,9 +246,6 @@ def ls(path):
     os.system ("ls " + path)
     print "----"
 
-######################################################################
-# all_euca_log_files 
-######################################################################
 def all_euca_log_files (path, name, recursive):
     """
     returns a list of all eucalyptus logfiles that are located in all
@@ -339,9 +261,6 @@ def all_euca_log_files (path, name, recursive):
 		break
     return all_files
 
-######################################################################
-# gather_all_euca_log_files 
-######################################################################
 def gather_all_euca_log_files (from_path, to_path, log_type, recursive):
     """
     this function gathers all eucalyptus log files that are located in
@@ -380,10 +299,8 @@ def gather_all_euca_log_files (from_path, to_path, log_type, recursive):
             print new_name + ", WARNING: file exists, copy ignored"
     return
 
-######################################################################
-# code for testing that works
-######################################################################
 def works():
+  ''' code for testing that works '''
   FILE = open("/tmp/cc.log.4", "r", 0) 
   print "---- head ----\n"
   print head(FILE,1)
@@ -400,15 +317,11 @@ def works():
   ls("/tmp")
   return
 
-#####################################################################
-# main
-#####################################################################
 def main():
 
    def_input_dir = "/tmp/uncompressed-euca-logbackup/"
    def_output_dir = "/var/log/eucalyptus/BACKUP"
    def_log_type = "cc.log"
-
 
    # Parse arguments
    # ---------------

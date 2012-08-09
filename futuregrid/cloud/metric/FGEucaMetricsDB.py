@@ -23,12 +23,11 @@ class FGEucaMetricsDB(object):
 
         #read config from file configfile
         config = ConfigParser.ConfigParser()
-        #cfgfile = os.path.dirname(os.path.abspath(__file__)) + "/" + configfile
         cfgfile = os.getenv("HOME") + "/.futuregrid/" + configfile
         config.read(cfgfile)
 
-        #db parameters
         try:
+            #db parameters
             dbhost = config.get('EucaLogDB', 'host')
             dbport = int(config.get('EucaLogDB', 'port'))
             dbuser = config.get('EucaLogDB', 'user')
@@ -111,21 +110,17 @@ class FGEucaMetricsDB(object):
             self.cursor.execute(create_userinfo_table)
         except MySQLdb.Error:
             pass
-        #print "initilized!"
 
-    # destructor
     def __del__(self):
+        ''' destructor '''
         try:
             self.cursor.close()
             self.conn.close()
         except:
             pass
 
-    # help function to format values to be inserted into mysql db
     def _fmtstr(self, astr):
-        #if(astr == ''):
-        #    ret = 'NULL'
-        #else:
+        ''' help function to format values to be inserted into mysql db '''
         ret = "'" + astr + "'"
         return ret
 
@@ -135,8 +130,8 @@ class FGEucaMetricsDB(object):
         else:
             return entry[key]
 
-    # read from the database.
     def read(self, querydict={}, optional=""):
+        ''' read from the database '''
         querystr = "";
         if querydict:
             for key in querydict:
@@ -173,8 +168,8 @@ class FGEucaMetricsDB(object):
             ret.append(rowret)
         return ret
 
-    # read from the database.
     def _read(self, tablename, querydict, optional=""):
+        ''' read from the database '''
         
         querystr = "";
         ret = []
@@ -249,8 +244,8 @@ class FGEucaMetricsDB(object):
         except MySQLdb.Error:
             pass
         
-    # help function to initialize(if necessary) and assign value to nested dict
     def _assignVal2Multi(self, themulti, keys, value=None):
+        ''' help function to initialize(if necessary) and assign value to nested dict '''
         tolevel = len(keys) - 1
         curlevel = 0
         nextlevel = curlevel + 1
@@ -270,9 +265,8 @@ class FGEucaMetricsDB(object):
     def value_todate(self,string):
         return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
 
-    # write instance object into db
     def write(self, entryObj):
-        #print entryObj
+        ''' write instance object into db '''
         uidcat = entryObj["instanceId"] + " - " + str(entryObj["ts"])
         m = hashlib.md5()
         m.update(uidcat)
@@ -405,8 +399,8 @@ class FGEucaMetricsDB(object):
             print "Error %d: %s" % (e.args[0], e.args[1])
             pass
 
-    # write userinfo object into db
     def write_userinfo(self, entryObj):
+        ''' write userinfo object into db '''
         self._write("userinfo", entryObj)
 
     def _write(self, tablename, entryObj):
@@ -427,12 +421,10 @@ class FGEucaMetricsDB(object):
             print "Error %d: %s" % (e.args[0], e.args[1])
             pass
 
-    # Change table 
     def change_table(self, table_name):
 	    self.instance_table = table_name
 	    return
 
-# testing
 def testing():
     tstobj = '{\
         "calltype": "refresh_instances",\
@@ -555,39 +547,17 @@ def testing():
         }'
     testobj = eval(tstobj)
     testobj2 = eval(tstobj2)
-    #print testobj
     eucadb = FGEucaMetricsDB("futuregrid.cfg.local")
     eucadb.write(testobj)
     eucadb.write(testobj2)
     keys = ["instanceId", "ownerId"]
     values = ["i-534109B9", "admin"]
-    #if len(keys) > 1:
     qdict = dict(zip(keys,values))
-    #else:
-    #    qdict = {keys[0]: values[0]}
-    #print qdict
     records = eucadb.read(qdict)
     print records
     print records[0]["instanceId"]
     print records[0]["trace"]["teardown"]["start"]
     print records[0]["trace"]["teardown"]["stop"]
-    #if len(records) > 0:
-    #    for record in records:
-    #        print record
-    #        #print "%s %s %s" % (record["instanceId"], record["ownerId"], record["ts"])
-    #else:
-    #    print "no records found"
-    #var = {}
-    #keys = ["l1", "l21", "l31"]
-    #eucadb._assignVal2Multi(var, keys)
-    #print var
-    #keys = ["l1", "l22", "l31"]
-    #eucadb._assignVal2Multi(var, keys)
-    #print var
-    #keys = ["l1", "l22", "l32"]
-    #print eucadb._assignVal2Multi(var, keys, "value")
-    #print var
-# main invokation
 
 def command_clean_database():
     """

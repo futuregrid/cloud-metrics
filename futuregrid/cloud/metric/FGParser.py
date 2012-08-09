@@ -10,6 +10,7 @@ import re
 import subprocess
 from datetime import * 
 from collections import deque
+import argparse
 
 import futuregrid.cloud.metric.FGEucaMetricsDB
 
@@ -619,7 +620,6 @@ def parse_test(f, line):
     print "INPUT>"
     print line
     data = {}
-    # parse_type_and_date(line,data,rest)
     rest = parse_type_and_date (line, data)
     print "REST>"
     print rest
@@ -641,9 +641,7 @@ def test1():
     return
 
 def test2():
-    #
-    # RESOURCE PARSER
-    #
+    ''' RESOURCE PARSER '''
 
     parse_test(refresh_resource_parser, 
                "[Wed Nov  9 22:52:10 2011][008128][EUCAERROR ] refresh_resources(): bad return from ncDescribeResource(i23) (1)")
@@ -657,9 +655,7 @@ def test2():
     return
 
 def test3():
-    #
-    # TerminateInstance Parser
-    #
+    ''' TerminateInstance Parser'''
     parse_test(terminate_instances_param_parser,
                "[Thu Nov 10 10:14:37 2011][021251][EUCADEBUG ] TerminateInstances(): params: userId=(null), instIdsLen=1, firstInstId=i-417B07B2")
 
@@ -669,36 +665,6 @@ def test3():
     parse_test(terminate_instances_param_parser,
                "[Thu Nov 10 13:04:16 2011][016168][EUCAINFO  ] TerminateInstances(): called")
     return
-
-def make_html (prefix,output_dir, title):
-    page_template = """
-        <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-        <html> <head>
-        <title> %(title)s TEST </title>
-        </head>
-        
-        <body>
-
-        <img src="fg-logo.png" alt="FutureGrid" /> Eucalyptus Monitor
-        
-        <h1> %(title)s </h1>
-        <p>
-        <img src="%(prefix)s.pie.png" alt="chart" /><img src="%(prefix)s.bar.png" alt="chart" />
-
-        <hr>
-        <address>Author Gregor von Laszewski, laszewski@gmail.com</address>
-        <!-- hhmts start -->Last modified: %(now)s <!-- hhmts end -->
-        </body> </html>
-    """
-    print "========"
-    now = datetime.now()
-    now = "%s-%s-%s %s:%s:%s" %  (now.year, now.month, now.day, now.hour, now.minute, now.second)
-    filename = output_dir+"/"+prefix+".html";
-    f = open(filename, "w")
-    f.write(page_template % vars())
-    #print>>f, page_template % vars()
-
-    f.close()
 
 def test4():
     parse_file ("/tmp/cc.log.4",jason_dump,debug=False)
@@ -711,57 +677,17 @@ def filename_todate(str):
 
 def test_file_read(filename,progress=True, debug=False):
     parse_file (filename,instances.add,debug,progress)
-    instances.calculate_delta ()
     instances.dump()
-
     return
 
 def test_sql_read():
     instances.read_from_db()
-    instances.calculate_delta ()
     instances.dump()
-
     return
 
 def test_sql_write(filename,progress=True, debug=False):
     parse_file (filename,instances.add,debug,progress)
-    instances.calculate_delta ()
     instances.write_to_db()
-
-def display(users, prefix, output_dir):
-    a = output_dir+"/"+prefix+".pie.png"
-    b = output_dir+"/"+prefix+".bar.png"
-    display_user_stats (users, filename=a)
-    display_user_stats (users, type="bar", filename=b)
-    make_html(prefix, output_dir, "VMs used by users")
-    #os.system ("open sample.html")
-
-def test_user_stats():
-    users = {}
-    instances.calculate_user_stats (users)
-    instances.write_to_db()
-    print pp.pprint(users)
-    display(users)
-    """
-    users = {}
-    instances.calculate_user_stats (users, "2011-11-06 00:13:15", "2011-11-08 14:13:15")
-    instances.write_to_db()
-    display(users)
-
-    print pp.pprint(users)
-
-    users = {}
-
-    a = datetime.strptime("2011-11-06 00:13:15",'%Y-%m-%d %H:%M:%S')
-    b = datetime.strptime("2011-11-08 14:13:15",'%Y-%m-%d %H:%M:%S')
-        
-    instances.calculate_user_stats (users, a, b)
-    instances.write_to_db()
-    print pp.pprint(users)
-    display(users)
-    """
-
-    return
 
 def read_log_files_and_store_to_db (instances, path, from_date, to_date, linetypes, gzip):
 
@@ -897,36 +823,13 @@ def main():
     instance = instances.data
     pp = pprint.PrettyPrinter(indent=4)
 
-    # test1()
-    # test2()
-    # test3()
-
-    #    test_file_read("/tmp/cc.log.4",progress=True)
-    #    test_file_read("/tmp/cc.log.prints_cc",progress=False, debug=False)
-
-    # ONLY FILE READ TEST
-
-    # test_file_read("/tmp/cc.log.prints_cc",progress=True, debug=True)
-    # test_user_stats()
-
-    # SQL TEST
-    
-    #test_sql_write("/tmp/cc.log.prints_cc",progress=True, debug=True)
-    #test_sql_read()
-    #test_user_stats()
-
-    # MONSTER TEST
-
-    #dir_path = os.getenv("HOME") + "/Desktop/BACKUP"
-    #    read_all_log_files_and_store_to_db (dir_path)
-   
     def_s_date = "19700101"
     def_e_date = "29991231"
     def_conf = "futuregrid.cfg"
     def_linetypes = ["TerminateInstances", "refresh_resources", "print_ccInstance"]
+
     ''' argument parser added '''
 
-    import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--from", dest="s_date", default=def_s_date,
 		    help="start date to begin parsing (type: YYYYMMDD)")
@@ -965,19 +868,14 @@ def main():
            => Only that file will be parsed
     '''
 
-    #    read_all_log_files_and_store_to_db (args.input_dir, args)
- 
-    #test_sql_read()
-    #test_user_stats()
-
     # change conf file by --conf filename
     if args.conf:
 	    instances.set_conf(args.conf)
 
     # Clean database if -cleandb is true
     if args.cleandb:
-	    import FGCleanupTable
-	    FGCleanupTable.main()
+	    #import FGCleanupTable
+	    #FGCleanupTable.main()
 
     if args.input_dir == "-":
 	read_from_stdin_and_store_to_db(instances, args.linetypes)

@@ -24,7 +24,6 @@ from futuregrid.cloud.metric.FGParser import Instances
 from futuregrid.cloud.metric.FGGoogleMotionChart import FGGoogleMotionChart
 from futuregrid.cloud.metric.FGPygooglechart import FGPyGoogleChart
 from futuregrid.cloud.metric.FGUtility import FGUtility
-from futuregrid.cloud.metric.FGTemplate import HtmlTemplate
 from futuregrid.cloud.metric.FGHighcharts import FGHighcharts
 from futuregrid.cloud.metric.FGNovaMetric import FGNovaMetric
 from futuregrid.cloud.metric.FGCharts import FGCharts

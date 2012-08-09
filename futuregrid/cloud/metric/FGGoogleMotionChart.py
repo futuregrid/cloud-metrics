@@ -32,7 +32,6 @@ class FGGoogleMotionChart:
 		title = "General%20Utilization%20of%20number%20of%20instances%20of%20eucalyptus%20in%20India"
 		gchart_pname = "motionchart"
 		gchart_cname = "google.visualization.MotionChart"
-		
 		cnt = 0
 	
 		# COLUMNS of REPORT
@@ -60,9 +59,6 @@ class FGGoogleMotionChart:
 			options['height'] = 480"""
 	
 		# HTML
-		#print metrics
-		#print lines
-		#print csv_lines
 		output = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 		<html xmlns="http://www.w3.org/1999/xhtml">
 		<head>
@@ -84,13 +80,10 @@ class FGGoogleMotionChart:
 			if i > 0:
 				output_add = output_add + ",\n"
 		
-			#output_add = output_add + "['" + ('\', \'' . join(map(str, row_line))) + "']"
 			output_add = output_add + "['" + row_line[0] + "', " + row_line[1] + ", " + row_line[2] +  "]"
 			i = i + 1
 		output_add = output_add + "]);"
-		
 		output = output + output_add
-		
 		output_add = """
 				      var options = %(gchart_options)s;
 				      var annotatedtimeline = new %(gchart_cname)s(
@@ -107,7 +100,5 @@ class FGGoogleMotionChart:
 		      </html>
 		""" 
 		output = output + output_add
-		
 		output = output % vars()
-		
 		return output

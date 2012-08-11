@@ -1,0 +1,1438 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:complexType name="header_type">
+		<xs:annotation>
+			<xs:documentation> Transaction header</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="from_site_name" type="xs:normalizedString"/>
+			<xs:element name="to_site_name" type="xs:normalizedString"/>
+			<xs:element name="originating_site_name" type="xs:normalizedString"/>
+			<xs:element name="transaction_id" type="xs:positiveInteger"/>
+			<xs:element name="packet_id" type="xs:positiveInteger"/>
+			<xs:element ref="expected_reply_list" minOccurs="0"/>
+			<xs:element name="date">
+				<xs:simpleType>
+					<xs:restriction base="xs:dateTime">
+						<xs:pattern value=".*Z"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="amie">
+		<xs:annotation>
+			<xs:documentation> Account Management Information Exchange</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="request_project_create">
+					<xs:annotation>
+						<xs:documentation>Request the creation of a new project at a remote site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="record_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="project_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="alloc_type" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="su_alloc" type="xs:float"/>
+										<xs:element name="pi">
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="personal_info" type="person_type"/>
+													<xs:element name="dn_list" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="remote_site_id" type="xs:normalizedString" minOccurs="0"/>
+													<xs:element name="remote_site_login" type="xs:normalizedString" minOccurs="0"/>
+													<xs:element name="requester_login" type="xs:normalizedString" minOccurs="0"/>
+													<xs:element name="req_login_list" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="req_login" type="xs:normalizedString" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										<xs:element ref="site_person_id_list" minOccurs="0"/>
+										<xs:element name="start_date" type="xs:date"/>
+										<xs:element name="end_date" type="xs:date" minOccurs="0"/>
+										<xs:element name="project_title" type="xs:normalizedString"/>
+										<xs:element name="pfos" type="field_of_science_type"/>
+										<xs:element name="sfos_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="sfos" type="field_of_science_type" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="alloc_resource" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="grant_num" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="grant_type" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="proposal_num" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="abstract" type="xs:string" minOccurs="0"/>
+										<xs:element name="sector" type="xs:string" minOccurs="0"/>
+										<xs:element name="qualifications" type="xs:string" minOccurs="0"/>
+										<xs:element name="methodologies" type="xs:string" minOccurs="0"/>
+										<xs:element name="support" type="xs:string" minOccurs="0"/>
+										<xs:element name="other_resources" type="xs:string" minOccurs="0"/>
+										<xs:element name="statement_work" type="xs:string" minOccurs="0"/>
+										<xs:element name="background" type="xs:string" minOccurs="0"/>
+										<xs:element name="justification" type="xs:string" minOccurs="0"/>
+										<xs:element name="deliverables" type="xs:string" minOccurs="0"/>
+										<xs:element name="milestones" type="xs:string" minOccurs="0"/>
+										<xs:element name="progress" type="xs:string" minOccurs="0"/>
+										<xs:element name="facilities" type="xs:string" minOccurs="0"/>
+										<xs:element name="languages" type="xs:string" minOccurs="0"/>
+										<xs:element name="applications" type="xs:string" minOccurs="0"/>
+										<xs:element name="diskspace" type="xs:string" minOccurs="0"/>
+										<xs:element name="memory" type="xs:string" minOccurs="0"/>
+										<xs:element name="processors" type="xs:string" minOccurs="0"/>
+										<xs:element name="nsf_status_code" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="role_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="role" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_project_create">
+					<xs:annotation>
+						<xs:documentation>Report that a new project has been created at notifier site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="record_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="project_gid" type="xs:positiveInteger" minOccurs="0"/>
+										<xs:element name="alloc_type" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="su_alloc" type="xs:float"/>
+										<xs:element name="pi">
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="personal_info" type="person_type"/>
+													<xs:element name="dn_list" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="notifier_login" type="xs:normalizedString" minOccurs="0"/>
+													<xs:element name="remote_site_login" type="xs:normalizedString" minOccurs="0"/>
+													<xs:element name="req_login_list" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="req_login" type="xs:normalizedString" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="start_date" type="xs:date"/>
+										<xs:element name="end_date" type="xs:date" minOccurs="0"/>
+										<xs:element name="project_title" type="xs:normalizedString"/>
+										<xs:element name="pfos" type="field_of_science_type"/>
+										<xs:element name="sfos_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="sfos" type="field_of_science_type" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="resource_login_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource_login" type="resource_login_type" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="grant_num" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="grant_type" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="proposal_num" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="abstract" type="xs:string" minOccurs="0"/>
+										<xs:element name="sector" type="xs:string" minOccurs="0"/>
+										<xs:element name="qualifications" type="xs:string" minOccurs="0"/>
+										<xs:element name="methodologies" type="xs:string" minOccurs="0"/>
+										<xs:element name="support" type="xs:string" minOccurs="0"/>
+										<xs:element name="other_resources" type="xs:string" minOccurs="0"/>
+										<xs:element name="statement_work" type="xs:string" minOccurs="0"/>
+										<xs:element name="background" type="xs:string" minOccurs="0"/>
+										<xs:element name="justification" type="xs:string" minOccurs="0"/>
+										<xs:element name="deliverables" type="xs:string" minOccurs="0"/>
+										<xs:element name="milestones" type="xs:string" minOccurs="0"/>
+										<xs:element name="progress" type="xs:string" minOccurs="0"/>
+										<xs:element name="facilities" type="xs:string" minOccurs="0"/>
+										<xs:element name="languages" type="xs:string" minOccurs="0"/>
+										<xs:element name="applications" type="xs:string" minOccurs="0"/>
+										<xs:element name="diskspace" type="xs:string" minOccurs="0"/>
+										<xs:element name="memory" type="xs:string" minOccurs="0"/>
+										<xs:element name="processors" type="xs:string" minOccurs="0"/>
+										<xs:element name="nsf_status_code" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="account_activity_time" type="xs:dateTime" minOccurs="0"/>
+										<xs:element name="board_type" type="xs:string" minOccurs="0"/>
+										<xs:element name="role_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="role" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="data_project_create">
+					<xs:annotation>
+						<xs:documentation>Data from a notify_project_create.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="dn_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="project_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="person_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_account_create">
+					<xs:annotation>
+						<xs:documentation>Request that new user account be created at remote site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="grant_num" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="alloc_resource" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="user">
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="personal_info" type="person_type"/>
+													<xs:element name="dn_list" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="password_access_enable" type="xs:boolean" minOccurs="0"/>
+													<xs:element name="remote_site_id" type="xs:normalizedString" minOccurs="0"/>
+													<xs:element name="remote_site_login" type="xs:normalizedString" minOccurs="0"/>
+													<xs:element name="requester_login" type="xs:normalizedString" minOccurs="0"/>
+													<xs:element name="req_login_list" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="req_login" type="xs:normalizedString" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="role" type="xs:normalizedString" minOccurs="0"/>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										<xs:element ref="site_person_id_list" minOccurs="0"/>
+										<xs:element name="nsf_status_code" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="role_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="role" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_account_create">
+					<xs:annotation>
+						<xs:documentation>Report that new account created at notifier site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="resource_login_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource_login" type="resource_login_type" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="user">
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="personal_info" type="person_type"/>
+													<xs:element name="password_access_enable" type="xs:boolean" minOccurs="0"/>
+													<xs:element name="dn_list" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="notifier_login" type="xs:normalizedString" minOccurs="0"/>
+													<xs:element name="remote_site_login" type="xs:normalizedString" minOccurs="0"/>
+													<xs:element name="req_login_list" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="req_login" type="xs:normalizedString" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="role" type="xs:normalizedString" minOccurs="0"/>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="nsf_status_code" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="start_date" type="xs:date" minOccurs="0"/>
+										<xs:element name="account_activity_time" type="xs:dateTime" minOccurs="0"/>
+										<xs:element name="role_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="role" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="data_account_create">
+					<xs:annotation>
+						<xs:documentation>Data from a notify_account_create.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="dn_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="project_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="person_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_project_resources">
+					<xs:annotation>
+						<xs:documentation>Request that some change be made to resources at remote site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="changed_field_option">
+											<xs:complexType>
+												<xs:choice>
+													<xs:element name="su_alloc_info">
+														<xs:complexType>
+															<xs:all>
+																<xs:element name="su_alloc" type="xs:float"/>
+																<xs:element name="alloc_change" type="allocation_change_type"/>
+																<xs:element name="effective_date" type="xs:date">
+																	<xs:annotation>
+																		<xs:documentation>Date on which this action should take place</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="end_date" type="xs:date"/>
+												</xs:choice>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_project_resources">
+					<xs:annotation>
+						<xs:documentation>Report that change made to resources at notifier site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="changed_field_option">
+											<xs:complexType>
+												<xs:choice>
+													<xs:element name="su_alloc_info">
+														<xs:complexType>
+															<xs:all>
+																<xs:element name="su_alloc" type="xs:float"/>
+																<xs:element name="alloc_change" type="allocation_change_type"/>
+																<xs:element name="effective_date" type="xs:date">
+																	<xs:annotation>
+																		<xs:documentation>Date on which this action should take place</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="end_date" type="xs:date"/>
+												</xs:choice>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_project_modify">
+					<xs:annotation>
+						<xs:documentation>Request a change of some sort to the static information stored by the remote site for a project. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="action_type" type="modify_action_type"/>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="project_title" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="pfos" type="field_of_science_type" minOccurs="0"/>
+										<xs:element name="sfos_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="sfos" type="field_of_science_type" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="abstract" type="xs:string" minOccurs="0"/>
+										<xs:element name="sector" type="xs:string" minOccurs="0"/>
+										<xs:element name="qualifications" type="xs:string" minOccurs="0"/>
+										<xs:element name="methodologies" type="xs:string" minOccurs="0"/>
+										<xs:element name="support" type="xs:string" minOccurs="0"/>
+										<xs:element name="other_resources" type="xs:string" minOccurs="0"/>
+										<xs:element name="statement_work" type="xs:string" minOccurs="0"/>
+										<xs:element name="background" type="xs:string" minOccurs="0"/>
+										<xs:element name="justification" type="xs:string" minOccurs="0"/>
+										<xs:element name="deliverables" type="xs:string" minOccurs="0"/>
+										<xs:element name="milestones" type="xs:string" minOccurs="0"/>
+										<xs:element name="progress" type="xs:string" minOccurs="0"/>
+										<xs:element name="facilities" type="xs:string" minOccurs="0"/>
+										<xs:element name="languages" type="xs:string" minOccurs="0"/>
+										<xs:element name="applications" type="xs:string" minOccurs="0"/>
+										<xs:element name="diskspace" type="xs:string" minOccurs="0"/>
+										<xs:element name="memory" type="xs:string" minOccurs="0"/>
+										<xs:element name="processors" type="xs:string" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="pi_person_id" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_project_modify">
+					<xs:annotation>
+						<xs:documentation>Report a change of some sort to the information stored at notifier site for a project.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="action_type" type="modify_action_type"/>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="project_title" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="pfos" type="field_of_science_type" minOccurs="0"/>
+										<xs:element name="sfos_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="sfos" type="field_of_science_type" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="abstract" type="xs:string" minOccurs="0"/>
+										<xs:element name="sector" type="xs:string" minOccurs="0"/>
+										<xs:element name="qualifications" type="xs:string" minOccurs="0"/>
+										<xs:element name="methodologies" type="xs:string" minOccurs="0"/>
+										<xs:element name="support" type="xs:string" minOccurs="0"/>
+										<xs:element name="other_resources" type="xs:string" minOccurs="0"/>
+										<xs:element name="statement_work" type="xs:string" minOccurs="0"/>
+										<xs:element name="background" type="xs:string" minOccurs="0"/>
+										<xs:element name="justification" type="xs:string" minOccurs="0"/>
+										<xs:element name="deliverables" type="xs:string" minOccurs="0"/>
+										<xs:element name="milestones" type="xs:string" minOccurs="0"/>
+										<xs:element name="progress" type="xs:string" minOccurs="0"/>
+										<xs:element name="facilities" type="xs:string" minOccurs="0"/>
+										<xs:element name="languages" type="xs:string" minOccurs="0"/>
+										<xs:element name="applications" type="xs:string" minOccurs="0"/>
+										<xs:element name="diskspace" type="xs:string" minOccurs="0"/>
+										<xs:element name="memory" type="xs:string" minOccurs="0"/>
+										<xs:element name="processors" type="xs:string" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="pi_person_id" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_user_modify">
+					<xs:annotation>
+						<xs:documentation>Request a change to the static information stored for a particular person at a remote site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="action_type" type="modify_action_type"/>
+										<xs:element name="person_id" type="xs:normalizedString"/>
+										<xs:element name="dn_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="new_dn" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="valid_cert" type="xs:boolean" default="false" minOccurs="0"/>
+										<xs:element name="first_name" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="middle_name" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="last_name" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="email" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="fax" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="title" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="organization" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="citizenship" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="country_access" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="org_code" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="emp_code" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="dept" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element ref="address" minOccurs="0"/>
+										<xs:element name="home_phone" type="phone_type" minOccurs="0"/>
+										<xs:element name="business_phone" type="phone_type" minOccurs="0"/>
+										<xs:element name="remote_site_login" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="requester_login" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="req_login_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="req_login" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="position" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="nsf_status_code" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_user_modify">
+					<xs:annotation>
+						<xs:documentation>Report a change to the static information on a specific user at a notifier site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="action_type" type="modify_action_type"/>
+										<xs:element name="person_id" type="xs:normalizedString"/>
+										<xs:element name="dn_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="new_dn" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="valid_cert" type="xs:boolean" default="false" minOccurs="0"/>
+										<xs:element name="first_name" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="middle_name" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="last_name" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="email" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="fax" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="title" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="organization" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="citizenship" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="country_access" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="org_code" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="emp_code" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="dept" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element ref="address" minOccurs="0"/>
+										<xs:element name="home_phone" type="phone_type" minOccurs="0"/>
+										<xs:element name="business_phone" type="phone_type" minOccurs="0"/>
+										<xs:element name="notifier_login" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="remote_site_login" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="req_login_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="req_login" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="position" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_project_inactivate">
+					<xs:annotation>
+						<xs:documentation>Request a project be inactivated at a remote site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="start_date" type="xs:date" minOccurs="0"/>
+										<xs:element name="end_date" type="xs:date" minOccurs="0"/>
+										<xs:element name="grant_num" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="alloc_resource" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="su_alloc" type="xs:float" minOccurs="0"/>
+										<xs:element name="su_remain" type="xs:float" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_project_inactivate">
+					<xs:annotation>
+						<xs:documentation>Report that a project has been inactivated at a notifier site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="account_activity_time" type="xs:dateTime" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_project_reactivate">
+					<xs:annotation>
+						<xs:documentation>Request a project be reactivated at a remote site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="person_id" type="xs:string" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="start_date" type="xs:date" minOccurs="0"/>
+										<xs:element name="end_date" type="xs:date" minOccurs="0"/>
+										<xs:element name="grant_num" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="alloc_resource" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="su_alloc" type="xs:float" minOccurs="0"/>
+										<xs:element name="su_remain" type="xs:float" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_project_reactivate">
+					<xs:annotation>
+						<xs:documentation>Report that a project has been reactivated at a notifier site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="account_activity_time" type="xs:dateTime" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_account_inactivate">
+					<xs:annotation>
+						<xs:documentation>Request an account be inactivated at a remote site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="person_id" type="xs:normalizedString"/>
+										<xs:element name="alloc_resource" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="account_activity_time" type="xs:dateTime" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_account_inactivate">
+					<xs:annotation>
+						<xs:documentation>Report that an account has been inactivated at a notifier site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="person_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="account_activity_time" type="xs:dateTime" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_account_reactivate">
+					<xs:annotation>
+						<xs:documentation>Request an account be reactivated at a remote site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="person_id" type="xs:normalizedString"/>
+										<xs:element name="alloc_resource" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="account_activity_time" type="xs:dateTime" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_account_reactivate">
+					<xs:annotation>
+						<xs:documentation>Report that an account has been reactivated at a notifier site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="person_id" type="xs:normalizedString"/>
+										<xs:element name="resource_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="account_activity_time" type="xs:dateTime" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_user_suspend">
+					<xs:annotation>
+						<xs:documentation>Request a user be suspended at a remote site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="dn_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element ref="reason" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="person_id" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_user_suspend">
+					<xs:annotation>
+						<xs:documentation>Report that a user has been suspended at a notifier site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="dn_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element ref="reason" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="person_id" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_user_reactivate">
+					<xs:annotation>
+						<xs:documentation>Request a user be reactivated at a remote site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="dn_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element ref="reason" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="person_id" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_user_reactivate">
+					<xs:annotation>
+						<xs:documentation>Report that an account has been reactivated at a notifier site.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="dn_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element ref="reason" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="person_id" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_project_usage">
+					<xs:annotation>
+						<xs:documentation>Report Usage</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body"> 
+								<xs:complexType>
+									<xs:all> 
+										<xs:element name="usage_type" type="xs:string"/>
+										<xs:element name="project_id" type="xs:normalizedString"/>
+										<xs:element name="machine_name" type="xs:normalizedString"/>
+										<xs:element name="record_identity"> 
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="record_id" type="xs:token"/>
+													<xs:element name="create_time" type="xs:dateTime" minOccurs="0"/>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="start_time" type="xs:dateTime" minOccurs="0"/> 
+										<xs:element name="end_time" type="xs:dateTime" minOccurs="0"/>
+										<xs:element name="job_identity" minOccurs="0">
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="local_job_id" type="xs:string"/>
+													<xs:element name="global_job_id" type="xs:string" minOccurs="0"/>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="user_login" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="job_name" type="xs:string" minOccurs="0"/>
+										<xs:element name="charge" type="xs:double" minOccurs="0"/>
+										<xs:element name="wall_duration" type="xs:duration" minOccurs="0"/>
+										<xs:element name="comment" type="xs:string" minOccurs="0"/>
+										<xs:element name="cpu_duration" minOccurs="0">
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="user" type="xs:duration" minOccurs="0"/>
+													<xs:element name="system" type="xs:duration" minOccurs="0"/>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="node_count" type="xs:positiveInteger" minOccurs="0"/>
+										<xs:element name="processors" type="xs:positiveInteger" minOccurs="0"/>
+										<xs:element name="submit_host" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="submit_time" type="xs:dateTime" minOccurs="0"/>
+										<xs:element name="queue" type="xs:token" minOccurs="0"/>
+										<xs:element name="exec_host_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="host_info" type="host_info_type" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="attribute_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="attribute" type="attribute_type" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									  <xs:element name="bytes_stored" type="xs:Integer" minOccurs="0"/>
+									  <xs:element name="bytes_read" type="xs:Integer" minOccurs="0"/>
+									  <xs:element name="bytes_written" type="xs:Integer" minOccurs="0"/>
+									  <xs:element name="number_of_files" type="xs:Integer" minOccurs="0"/>
+									  <xs:element name="files_read" type="xs:Integer" minOccurs="0"/>
+									  <xs:element name="files_written" type="xs:Integer" minOccurs="0"/>
+									  <xs:element name="user_copies" type="xs:Integer" minOccurs="0"/>
+									  <xs:element name="system_copies" type="xs:Integer" minOccurs="0"/>
+										<xs:element name="collection_time" type="xs:dateTime" minOccurs="0"/>
+										<xs:element name="collection_interval" type="xs:double" minOccurs="0"/>
+										<xs:element name="media_type" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="storage_software" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>            
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="request_user_create">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+										<xs:all>
+										<xs:element name="nsf_status_code" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element ref="site_person_id_list" minOccurs="0"/>
+										<xs:element name="user">
+											<xs:complexType>
+												<xs:all>
+												<xs:element name="personal_info" type="person_type"/>
+												<xs:element name="dn_list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notify_user_create">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+										<xs:all>
+										<xs:element name="nsf_status_code" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element ref="site_person_id_list" minOccurs="0"/>
+										<xs:element name="user">
+											<xs:complexType>
+											<xs:all>
+												<xs:element name="personal_info" type="person_type"/>
+												<xs:element name="dn_list" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="dn" type="xs:normalizedString" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:all>
+											</xs:complexType>
+										</xs:element>
+										</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="inform_transaction_complete">
+					<xs:annotation>
+						<xs:documentation>Sent to indicate a transaction is now complete (success or failure).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="message" type="xs:string"/>
+										<xs:element name="status_code" type="itc_status_code_type"/>
+										<xs:element name="detail_code" type="xs:positiveInteger"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="response">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="header" type="response_header_type"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="1.0"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="response_header_type">
+		<xs:annotation>
+			<xs:documentation> Transaction response header</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="from_site_name" type="xs:normalizedString"/>
+			<xs:element name="to_site_name" type="xs:normalizedString"/>
+			<xs:element name="originating_site_name" type="xs:normalizedString"/>
+			<xs:element name="transaction_id" type="xs:positiveInteger"/>
+			<xs:element name="packet_id" type="xs:positiveInteger"/>
+			<xs:element name="date">
+				<xs:simpleType>
+					<xs:restriction base="xs:dateTime">
+						<xs:pattern value=".*Z"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="status_code" type="response_status_code_type"/>
+			<xs:element name="detail_code" type="xs:positiveInteger"/>
+			<xs:element name="message" type="xs:string"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="expected_reply_list">
+		<xs:annotation>
+			<xs:documentation>List of packet types that can follow</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="expected_reply" type="expected_reply_type" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="expected_reply_type">
+		<xs:all>
+			<xs:element name="type" type="packet_type"/>
+			<xs:element name="timeout" type="xs:positiveInteger" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="address">
+		<xs:annotation>
+			<xs:documentation> Address</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="off_address" type="xs:normalizedString" minOccurs="0"/>
+				<xs:element name="str_address" type="xs:normalizedString" minOccurs="0"/>
+				<xs:element name="str_address2" type="xs:normalizedString" minOccurs="0"/>
+				<xs:element name="city" type="xs:normalizedString" minOccurs="0"/>
+				<xs:element name="state" type="xs:normalizedString" minOccurs="0"/>
+				<xs:element name="zip" type="xs:normalizedString" minOccurs="0"/>
+				<xs:element name="country" type="xs:normalizedString" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="reason">
+		<xs:annotation>
+			<xs:documentation> Reason to take relevant action</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="reason_code" type="xs:positiveInteger"/>
+				<xs:element name="description" type="xs:normalizedString"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="allocation_change_type">
+		<xs:annotation>
+			<xs:documentation> Allocation change type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="set"/>
+			<xs:enumeration value="increment"/>
+			<xs:enumeration value="decrement"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="packet_type">
+		<xs:annotation>
+			<xs:documentation> Different enumerated transaction types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString">
+			<xs:enumeration value="request_project_create"/>
+			<xs:enumeration value="notify_project_create"/>
+			<xs:enumeration value="data_project_create"/>
+			<xs:enumeration value="request_account_create"/>
+			<xs:enumeration value="notify_account_create"/>
+			<xs:enumeration value="data_account_create"/>
+			<xs:enumeration value="request_project_resources"/>
+			<xs:enumeration value="notify_project_resources"/>
+			<xs:enumeration value="request_project_modify"/>
+			<xs:enumeration value="notify_project_modify"/>
+			<xs:enumeration value="request_user_modify"/>
+			<xs:enumeration value="notify_user_modify"/>
+			<xs:enumeration value="request_project_inactivate"/>
+			<xs:enumeration value="notify_project_inactivate"/>
+			<xs:enumeration value="request_project_reactivate"/>
+			<xs:enumeration value="notify_project_reactivate"/>
+			<xs:enumeration value="request_account_inactivate"/>
+			<xs:enumeration value="notify_account_inactivate"/>
+			<xs:enumeration value="request_account_reactivate"/>
+			<xs:enumeration value="notify_account_reactivate"/>
+			<xs:enumeration value="request_user_suspend"/>
+			<xs:enumeration value="notify_user_suspend"/>
+			<xs:enumeration value="request_user_reactivate"/>
+			<xs:enumeration value="notify_user_reactivate"/>
+			<xs:enumeration value="inform_transaction_complete"/>
+			<xs:enumeration value="notify_project_usage"/>
+			<xs:enumeration value="request_user_create"/>
+			<xs:enumeration value="notify_user_create"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="response_status_code_type">
+		<xs:annotation>
+			<xs:documentation> Response status code types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString">
+			<xs:enumeration value="Received"/>
+			<xs:enumeration value="Failure"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="modify_action_type">
+		<xs:annotation>
+			<xs:documentation> Modification action types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString">
+			<xs:enumeration value="add"/>
+			<xs:enumeration value="delete"/>
+			<xs:enumeration value="replace"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="field_of_science_type">
+		<xs:annotation>
+			<xs:documentation> Field of science type</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="number" type="xs:normalizedString"/>
+			<xs:element name="abbr" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="description" type="xs:normalizedString" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="itc_status_code_type">
+		<xs:annotation>
+			<xs:documentation> ITC status code type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString">
+			<xs:enumeration value="Failure"/>
+			<xs:enumeration value="Success"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="person_type">
+		<xs:annotation>
+			<xs:documentation> Person's common fields</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="last_name" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="first_name" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="middle_name" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="email" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="title" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="organization" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="citizenship" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="country_access" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element ref="address" minOccurs="0"/>
+			<xs:element name="business_phone" type="phone_type" minOccurs="0"/>
+			<xs:element name="home_phone" type="phone_type" minOccurs="0"/>
+			<xs:element name="fax" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="org_code" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="emp_code" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="dept" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="position" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="person_id" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="uid" type="xs:positiveInteger" minOccurs="0"/>
+			<xs:element name="global_id" type="xs:normalizedString" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="phone_type">
+		<xs:annotation>
+			<xs:documentation> Phone type</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="number" type="xs:normalizedString"/>
+			<xs:element name="extension" type="xs:normalizedString" minOccurs="0"/>
+			<xs:element name="comment" type="xs:string" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="site_person_id_list">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="site_person_id" type="site_person_id_type" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="site_person_id_type">
+		<xs:all>
+			<xs:element name="site" type="xs:normalizedString"/>
+			<xs:element name="person_id" type="xs:normalizedString"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="host_info_type">
+		<xs:all>
+			<xs:element name="host" type="xs:normalizedString"/>
+			<xs:element name="mb_reserved_memory" type="xs:double" minOccurs="0"/>
+			<xs:element name="processors" type="xs:positiveInteger" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="attribute_type">
+		<xs:all>
+			<xs:element name="name" type="xs:normalizedString"/>
+			<xs:element name="value" type="xs:normalizedString"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="domain_name_type">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([a-zA-Z0-9][a-zA-Z0-9'\-']*[a-zA-Z0-9]\.)*([a-zA-Z0-9][a-zA-Z0-9'\-']*[a-zA-Z0-9])?"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="resource_login_type">
+		<xs:annotation>
+			<xs:documentation> Resource/Login type</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="resource" type="xs:normalizedString"/>
+			<xs:element name="login" type="xs:normalizedString"/>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>

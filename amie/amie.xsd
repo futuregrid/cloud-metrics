@@ -85,6 +85,7 @@
 											</xs:complexType>
 										</xs:element>
 										<xs:element name="alloc_resource" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="charge_num" type="xs:normalizedString" minOccurs="0"/>
 										<xs:element name="grant_num" type="xs:normalizedString" minOccurs="0"/>
 										<xs:element name="grant_type" type="xs:normalizedString" minOccurs="0"/>
 										<xs:element name="proposal_num" type="xs:normalizedString" minOccurs="0"/>
@@ -241,6 +242,7 @@
 										</xs:element>
 										<xs:element name="project_id" type="xs:normalizedString" minOccurs="0"/>
 										<xs:element name="person_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="global_id" type="xs:normalizedString" minOccurs="0"/>
 										<xs:element name="comment" type="xs:string" minOccurs="0"/>
 									</xs:all>
 								</xs:complexType>
@@ -396,6 +398,7 @@
 										</xs:element>
 										<xs:element name="project_id" type="xs:normalizedString" minOccurs="0"/>
 										<xs:element name="person_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="global_id" type="xs:normalizedString" minOccurs="0"/>
 										<xs:element name="comment" type="xs:string" minOccurs="0"/>
 									</xs:all>
 								</xs:complexType>
@@ -1078,6 +1081,7 @@
 										<xs:element name="wall_duration" type="xs:duration" minOccurs="0"/>
 										<xs:element name="comment" type="xs:string" minOccurs="0"/>
 										<xs:element name="cpu_duration" minOccurs="0">
+										<xs:element name="memory" type="xs:double" minOccurs="0"/>
 											<xs:complexType>
 												<xs:all>
 													<xs:element name="user" type="xs:duration" minOccurs="0"/>
@@ -1180,6 +1184,90 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				<xs:element name="notify_person_ids">
+					<xs:annotation>
+						<xs:documentation>Change person_ids, logins</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="person_id" type="xs:normalizedString"/>
+										<xs:element name="primary_person_id" type="xs:normalizedString"/>
+										<xs:element name="person_id_list">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="person_id" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="resource_login_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource_login" type="resource_login_type" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="remove_resource_list" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" type="xs:normalizedString" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="request_person_merge">
+					<xs:annotation>
+						<xs:documentation>request to merge two people into a single person</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="keep_global_id" type="xs:normalizedString"/>
+										<xs:element name="keep_person_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="keep_portal_login" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="delete_global_id" type="xs:normalizedString"/>
+										<xs:element name="delete_person_id" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="delete_portal_login" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="notify_person_duplicate">
+					<xs:annotation>
+						<xs:documentation>notify duplicate people</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header" type="header_type"/>
+							<xs:element name="body">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="person_id1" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="person_id2" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="global_id1" type="xs:normalizedString" minOccurs="0"/>
+										<xs:element name="global_id2" type="xs:normalizedString" minOccurs="0"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
 				<xs:element name="inform_transaction_complete">
 					<xs:annotation>
 						<xs:documentation>Sent to indicate a transaction is now complete (success or failure).</xs:documentation>
@@ -1318,6 +1406,9 @@
 			<xs:enumeration value="notify_project_usage"/>
 			<xs:enumeration value="request_user_create"/>
 			<xs:enumeration value="notify_user_create"/>
+			<xs:enumeration value="notify_person_ids"/>
+			<xs:enumeration value="request_person_merge"/>
+			<xs:enumeration value="notify_person_duplicate"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="response_status_code_type">
@@ -1433,6 +1524,7 @@
 		<xs:all>
 			<xs:element name="resource" type="xs:normalizedString"/>
 			<xs:element name="login" type="xs:normalizedString"/>
+			<xs:element name="uid" type="xs:positiveInteger" minOccurs="0"/>
 		</xs:all>
 	</xs:complexType>
 </xs:schema>

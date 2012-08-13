@@ -1,0 +1,292 @@
+    class GeneratedsSuper(object):
+class GDSParseError(Exception):
+class MixedContainer:
+    def __init__(self, category, content_type, name, value):
+class MemberSpec_(object):
+    def __init__(self, name='', data_type='', container=0):
+class header_type(GeneratedsSuper):
+    def __init__(self, from_site_name=None, to_site_name=None, originating_site_name=None, transaction_id=None, packet_id=None, expected_reply_list=None, date=None):
+class date(GeneratedsSuper):
+    def __init__(self):
+class amie(GeneratedsSuper):
+    def __init__(self, version=None, request_project_create=None, notify_project_create=None, data_project_create=None, request_account_create=None, notify_account_create=None, data_account_create=None, request_project_resources=None, notify_project_resources=None, request_project_modify=None, notify_project_modify=None, request_user_modify=None, notify_user_modify=None, request_project_inactivate=None, notify_project_inactivate=None, request_project_reactivate=None, notify_project_reactivate=None, request_account_inactivate=None, notify_account_inactivate=None, request_account_reactivate=None, notify_account_reactivate=None, request_user_suspend=None, notify_user_suspend=None, request_user_reactivate=None, notify_user_reactivate=None, notify_project_usage=None, request_user_create=None, notify_user_create=None, notify_person_ids=None, request_person_merge=None, notify_person_duplicate=None, inform_transaction_complete=None, response=None):
+class response_header_type(GeneratedsSuper):
+    def __init__(self, from_site_name=None, to_site_name=None, originating_site_name=None, transaction_id=None, packet_id=None, date=None, status_code=None, detail_code=None, message=None):
+class expected_reply_list(GeneratedsSuper):
+    def __init__(self, expected_reply=None):
+class expected_reply_type(GeneratedsSuper):
+    def __init__(self, type_=None, timeout=None):
+class address(GeneratedsSuper):
+    def __init__(self, off_address=None, str_address=None, str_address2=None, city=None, state=None, zip=None, country=None):
+class reason(GeneratedsSuper):
+    def __init__(self, reason_code=None, description=None):
+class field_of_science_type(GeneratedsSuper):
+    def __init__(self, number=None, abbr=None, description=None):
+class person_type(GeneratedsSuper):
+    def __init__(self, last_name=None, first_name=None, middle_name=None, email=None, title=None, organization=None, citizenship=None, country_access=None, address=None, business_phone=None, home_phone=None, fax=None, org_code=None, emp_code=None, dept=None, position=None, person_id=None, uid=None, global_id=None):
+class phone_type(GeneratedsSuper):
+    def __init__(self, number=None, extension=None, comment=None):
+class site_person_id_list(GeneratedsSuper):
+    def __init__(self, site_person_id=None):
+class site_person_id_type(GeneratedsSuper):
+    def __init__(self, site=None, person_id=None):
+class host_info_type(GeneratedsSuper):
+    def __init__(self, host=None, mb_reserved_memory=None, processors=None):
+class attribute_type(GeneratedsSuper):
+    def __init__(self, name=None, value=None):
+class resource_login_type(GeneratedsSuper):
+    def __init__(self, resource=None, login=None, uid=None):
+class request_project_createType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType(GeneratedsSuper):
+    def __init__(self, record_id=None, project_id=None, alloc_type=None, su_alloc=None, pi=None, site_person_id_list=None, start_date=None, end_date=None, project_title=None, pfos=None, sfos_list=None, resource_list=None, alloc_resource=None, charge_num=None, grant_num=None, grant_type=None, proposal_num=None, abstract=None, sector=None, qualifications=None, methodologies=None, support=None, other_resources=None, statement_work=None, background=None, justification=None, deliverables=None, milestones=None, progress=None, facilities=None, languages=None, applications=None, diskspace=None, memory=None, processors=None, nsf_status_code=None, comment=None, role_list=None):
+class piType(GeneratedsSuper):
+    def __init__(self, personal_info=None, dn_list=None, remote_site_id=None, remote_site_login=None, requester_login=None, req_login_list=None):
+class dn_listType(GeneratedsSuper):
+    def __init__(self, dn=None):
+class req_login_listType(GeneratedsSuper):
+    def __init__(self, req_login=None):
+class sfos_listType(GeneratedsSuper):
+    def __init__(self, sfos=None):
+class resource_listType(GeneratedsSuper):
+    def __init__(self, resource=None):
+class role_listType(GeneratedsSuper):
+    def __init__(self, role=None):
+class notify_project_createType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType1(GeneratedsSuper):
+    def __init__(self, record_id=None, project_id=None, project_gid=None, alloc_type=None, su_alloc=None, pi=None, start_date=None, end_date=None, project_title=None, pfos=None, sfos_list=None, resource_list=None, resource_login_list=None, grant_num=None, grant_type=None, proposal_num=None, abstract=None, sector=None, qualifications=None, methodologies=None, support=None, other_resources=None, statement_work=None, background=None, justification=None, deliverables=None, milestones=None, progress=None, facilities=None, languages=None, applications=None, diskspace=None, memory=None, processors=None, nsf_status_code=None, comment=None, account_activity_time=None, board_type=None, role_list=None):
+class piType1(GeneratedsSuper):
+    def __init__(self, personal_info=None, dn_list=None, notifier_login=None, remote_site_login=None, req_login_list=None):
+class dn_listType1(GeneratedsSuper):
+    def __init__(self, dn=None):
+class req_login_listType1(GeneratedsSuper):
+    def __init__(self, req_login=None):
+class sfos_listType1(GeneratedsSuper):
+    def __init__(self, sfos=None):
+class resource_listType1(GeneratedsSuper):
+    def __init__(self, resource=None):
+class resource_login_listType(GeneratedsSuper):
+    def __init__(self, resource_login=None):
+class role_listType1(GeneratedsSuper):
+    def __init__(self, role=None):
+class data_project_createType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType2(GeneratedsSuper):
+    def __init__(self, dn_list=None, project_id=None, person_id=None, global_id=None, comment=None):
+class dn_listType2(GeneratedsSuper):
+    def __init__(self, dn=None):
+class request_account_createType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType3(GeneratedsSuper):
+    def __init__(self, project_id=None, grant_num=None, alloc_resource=None, resource_list=None, user=None, site_person_id_list=None, nsf_status_code=None, comment=None, role_list=None):
+class resource_listType2(GeneratedsSuper):
+    def __init__(self, resource=None):
+class userType(GeneratedsSuper):
+    def __init__(self, personal_info=None, dn_list=None, password_access_enable=None, remote_site_id=None, remote_site_login=None, requester_login=None, req_login_list=None, role=None):
+class dn_listType3(GeneratedsSuper):
+    def __init__(self, dn=None):
+class req_login_listType2(GeneratedsSuper):
+    def __init__(self, req_login=None):
+class role_listType2(GeneratedsSuper):
+    def __init__(self, role=None):
+class notify_account_createType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType4(GeneratedsSuper):
+    def __init__(self, project_id=None, resource_list=None, resource_login_list=None, user=None, nsf_status_code=None, comment=None, start_date=None, account_activity_time=None, role_list=None):
+class resource_listType3(GeneratedsSuper):
+    def __init__(self, resource=None):
+class resource_login_listType1(GeneratedsSuper):
+    def __init__(self, resource_login=None):
+class userType1(GeneratedsSuper):
+    def __init__(self, personal_info=None, password_access_enable=None, dn_list=None, notifier_login=None, remote_site_login=None, req_login_list=None, role=None):
+class dn_listType4(GeneratedsSuper):
+    def __init__(self, dn=None):
+class req_login_listType3(GeneratedsSuper):
+    def __init__(self, req_login=None):
+class role_listType3(GeneratedsSuper):
+    def __init__(self, role=None):
+class data_account_createType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType5(GeneratedsSuper):
+    def __init__(self, dn_list=None, project_id=None, person_id=None, global_id=None, comment=None):
+class dn_listType5(GeneratedsSuper):
+    def __init__(self, dn=None):
+class request_project_resourcesType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType6(GeneratedsSuper):
+    def __init__(self, project_id=None, resource_list=None, changed_field_option=None, comment=None):
+class resource_listType4(GeneratedsSuper):
+    def __init__(self, resource=None):
+class changed_field_optionType(GeneratedsSuper):
+    def __init__(self, su_alloc_info=None, end_date=None):
+class su_alloc_infoType(GeneratedsSuper):
+    def __init__(self, su_alloc=None, alloc_change=None, effective_date=None):
+class notify_project_resourcesType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType7(GeneratedsSuper):
+    def __init__(self, project_id=None, resource_list=None, changed_field_option=None, comment=None):
+class resource_listType5(GeneratedsSuper):
+    def __init__(self, resource=None):
+class changed_field_optionType1(GeneratedsSuper):
+    def __init__(self, su_alloc_info=None, end_date=None):
+class su_alloc_infoType1(GeneratedsSuper):
+    def __init__(self, su_alloc=None, alloc_change=None, effective_date=None):
+class request_project_modifyType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType8(GeneratedsSuper):
+    def __init__(self, action_type=None, project_id=None, resource_list=None, project_title=None, pfos=None, sfos_list=None, abstract=None, sector=None, qualifications=None, methodologies=None, support=None, other_resources=None, statement_work=None, background=None, justification=None, deliverables=None, milestones=None, progress=None, facilities=None, languages=None, applications=None, diskspace=None, memory=None, processors=None, comment=None, pi_person_id=None):
+class resource_listType6(GeneratedsSuper):
+    def __init__(self, resource=None):
+class sfos_listType2(GeneratedsSuper):
+    def __init__(self, sfos=None):
+class notify_project_modifyType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType9(GeneratedsSuper):
+    def __init__(self, action_type=None, project_id=None, resource_list=None, project_title=None, pfos=None, sfos_list=None, abstract=None, sector=None, qualifications=None, methodologies=None, support=None, other_resources=None, statement_work=None, background=None, justification=None, deliverables=None, milestones=None, progress=None, facilities=None, languages=None, applications=None, diskspace=None, memory=None, processors=None, comment=None, pi_person_id=None):
+class resource_listType7(GeneratedsSuper):
+    def __init__(self, resource=None):
+class sfos_listType3(GeneratedsSuper):
+    def __init__(self, sfos=None):
+class request_user_modifyType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType10(GeneratedsSuper):
+    def __init__(self, action_type=None, person_id=None, dn_list=None, new_dn=None, valid_cert=False, first_name=None, middle_name=None, last_name=None, email=None, fax=None, title=None, organization=None, citizenship=None, country_access=None, org_code=None, emp_code=None, dept=None, address=None, home_phone=None, business_phone=None, remote_site_login=None, requester_login=None, req_login_list=None, comment=None, position=None, nsf_status_code=None):
+class dn_listType6(GeneratedsSuper):
+    def __init__(self, dn=None):
+class req_login_listType4(GeneratedsSuper):
+    def __init__(self, req_login=None):
+class notify_user_modifyType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType11(GeneratedsSuper):
+    def __init__(self, action_type=None, person_id=None, dn_list=None, new_dn=None, valid_cert=False, first_name=None, middle_name=None, last_name=None, email=None, fax=None, title=None, organization=None, citizenship=None, country_access=None, org_code=None, emp_code=None, dept=None, address=None, home_phone=None, business_phone=None, notifier_login=None, remote_site_login=None, req_login_list=None, comment=None, position=None):
+class dn_listType7(GeneratedsSuper):
+    def __init__(self, dn=None):
+class req_login_listType5(GeneratedsSuper):
+    def __init__(self, req_login=None):
+class request_project_inactivateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType12(GeneratedsSuper):
+    def __init__(self, project_id=None, resource_list=None, comment=None, start_date=None, end_date=None, grant_num=None, alloc_resource=None, su_alloc=None, su_remain=None):
+class resource_listType8(GeneratedsSuper):
+    def __init__(self, resource=None):
+class notify_project_inactivateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType13(GeneratedsSuper):
+    def __init__(self, project_id=None, resource_list=None, comment=None, account_activity_time=None):
+class resource_listType9(GeneratedsSuper):
+    def __init__(self, resource=None):
+class request_project_reactivateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType14(GeneratedsSuper):
+    def __init__(self, project_id=None, resource_list=None, person_id=None, comment=None, start_date=None, end_date=None, grant_num=None, alloc_resource=None, su_alloc=None, su_remain=None):
+class resource_listType10(GeneratedsSuper):
+    def __init__(self, resource=None):
+class notify_project_reactivateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType15(GeneratedsSuper):
+    def __init__(self, project_id=None, resource_list=None, comment=None, account_activity_time=None):
+class resource_listType11(GeneratedsSuper):
+    def __init__(self, resource=None):
+class request_account_inactivateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType16(GeneratedsSuper):
+    def __init__(self, project_id=None, person_id=None, alloc_resource=None, resource_list=None, comment=None, account_activity_time=None):
+class resource_listType12(GeneratedsSuper):
+    def __init__(self, resource=None):
+class notify_account_inactivateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType17(GeneratedsSuper):
+    def __init__(self, project_id=None, person_id=None, resource_list=None, comment=None, account_activity_time=None):
+class resource_listType13(GeneratedsSuper):
+    def __init__(self, resource=None):
+class request_account_reactivateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType18(GeneratedsSuper):
+    def __init__(self, project_id=None, person_id=None, alloc_resource=None, resource_list=None, comment=None, account_activity_time=None):
+class resource_listType14(GeneratedsSuper):
+    def __init__(self, resource=None):
+class notify_account_reactivateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType19(GeneratedsSuper):
+    def __init__(self, project_id=None, person_id=None, resource_list=None, comment=None, account_activity_time=None):
+class resource_listType15(GeneratedsSuper):
+    def __init__(self, resource=None):
+class request_user_suspendType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType20(GeneratedsSuper):
+    def __init__(self, project_id=None, dn_list=None, reason=None, comment=None, person_id=None):
+class dn_listType8(GeneratedsSuper):
+    def __init__(self, dn=None):
+class notify_user_suspendType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType21(GeneratedsSuper):
+    def __init__(self, project_id=None, dn_list=None, reason=None, comment=None, person_id=None):
+class dn_listType9(GeneratedsSuper):
+    def __init__(self, dn=None):
+class request_user_reactivateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType22(GeneratedsSuper):
+    def __init__(self, project_id=None, dn_list=None, reason=None, comment=None, person_id=None):
+class dn_listType10(GeneratedsSuper):
+    def __init__(self, dn=None):
+class notify_user_reactivateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType23(GeneratedsSuper):
+    def __init__(self, project_id=None, dn_list=None, reason=None, comment=None, person_id=None):
+class dn_listType11(GeneratedsSuper):
+    def __init__(self, dn=None):
+class notify_project_usageType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType24(GeneratedsSuper):
+    def __init__(self, usage_type=None, project_id=None, machine_name=None, record_identity=None, start_time=None, end_time=None, job_identity=None, user_login=None, job_name=None, charge=None, wall_duration=None, comment=None, cpu_duration=None, node_count=None, processors=None, submit_host=None, submit_time=None, queue=None, exec_host_list=None, attribute_list=None, bytes_stored=None, bytes_read=None, bytes_written=None, number_of_files=None, files_read=None, files_written=None, user_copies=None, system_copies=None, collection_time=None, collection_interval=None, media_type=None, storage_software=None):
+class record_identityType(GeneratedsSuper):
+    def __init__(self, record_id=None, create_time=None):
+class job_identityType(GeneratedsSuper):
+    def __init__(self, local_job_id=None, global_job_id=None):
+class cpu_durationType(GeneratedsSuper):
+    def __init__(self, user=None, system=None):
+class exec_host_listType(GeneratedsSuper):
+    def __init__(self, host_info=None):
+class attribute_listType(GeneratedsSuper):
+    def __init__(self, attribute=None):
+class request_user_createType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType25(GeneratedsSuper):
+    def __init__(self, nsf_status_code=None, site_person_id_list=None, user=None):
+class userType2(GeneratedsSuper):
+    def __init__(self, personal_info=None, dn_list=None):
+class dn_listType12(GeneratedsSuper):
+    def __init__(self, dn=None):
+class notify_user_createType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType26(GeneratedsSuper):
+    def __init__(self, nsf_status_code=None, site_person_id_list=None, user=None):
+class userType3(GeneratedsSuper):
+    def __init__(self, personal_info=None, dn_list=None):
+class dn_listType13(GeneratedsSuper):
+    def __init__(self, dn=None):
+class notify_person_idsType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType27(GeneratedsSuper):
+    def __init__(self, person_id=None, primary_person_id=None, person_id_list=None, resource_login_list=None, remove_resource_list=None):
+class person_id_listType(GeneratedsSuper):
+    def __init__(self, person_id=None):
+class resource_login_listType2(GeneratedsSuper):
+    def __init__(self, resource_login=None):
+class remove_resource_listType(GeneratedsSuper):
+    def __init__(self, resource=None):
+class request_person_mergeType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType28(GeneratedsSuper):
+    def __init__(self, keep_global_id=None, keep_person_id=None, keep_portal_login=None, delete_global_id=None, delete_person_id=None, delete_portal_login=None):
+class notify_person_duplicateType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType29(GeneratedsSuper):
+    def __init__(self, person_id1=None, person_id2=None, global_id1=None, global_id2=None):
+class inform_transaction_completeType(GeneratedsSuper):
+    def __init__(self, header=None, body=None):
+class bodyType30(GeneratedsSuper):
+    def __init__(self, message=None, status_code=None, detail_code=None):
+class responseType(GeneratedsSuper):
+    def __init__(self, header=None):

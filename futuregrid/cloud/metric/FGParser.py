@@ -873,7 +873,7 @@ def main():
 	    instances.set_conf(args.conf)
 
     # Clean database if -cleandb is true
-    if args.cleandb:
+    #if args.cleandb:
 	    #import FGCleanupTable
 	    #FGCleanupTable.main()
 

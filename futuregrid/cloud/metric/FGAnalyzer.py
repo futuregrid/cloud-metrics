@@ -62,6 +62,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     nova = None
 
     chart = None
+    output_format = None
 
     def calculate_stats (self, from_date="all", to_date="all"):
         """Calculate user-based statstics about VM instances per user: count, min time, max time, avg time, total time
@@ -429,6 +430,24 @@ class CmdLineAnalyzeEucaData(Cmd):
             print "highcharts is not created.", sys.exc_info()[0]
             pass
 
+    def create_csvfile(self, list_of_data, filepath):
+        import csv
+
+        try:
+            filename = "text.csv"
+            FGUtility.ensure_dir(filepath)
+            writer = csv.writer(open(filepath + "/" + filename, 'wb'), delimiter=",",
+                    quotechar="|", quoting=csv.QUOTE_MINIMAL)
+            for row in list_of_data:
+                writer.writerow(row)
+
+            msg = filename + " is created"
+        except:
+            msg = filename + " not is created"
+            pass
+
+        print msg
+
     def display_stats(self, metric="count", type="pie", filepath="chart.png"):
         """Create Python Google Chart
            This should be merged to _create_chart()
@@ -451,6 +470,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         max_v = 0
 
         list_for_highchart = []
+        list_for_csv = []
+        list_for_csv.append(["owner id", "user name", "value for metric"])
 
         if self.platform and (self.platform == "nova" or self.platform == "openstack"):
             user_list = self.nova.users
@@ -466,10 +487,14 @@ class CmdLineAnalyzeEucaData(Cmd):
             label = self.convert_ownerId_str(name) + ":" + str(number)
             label_values.append(label)
             list_for_highchart.append([label, number])
+            list_for_csv.append([name, self.convert_ownerId_str(name), number])
             max_v = max(max_v, number)
 
         #self.generate_pygooglechart(type, label_values, max_v, values, filepath)
-        self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", "bar")
+        if type == "highchart-column":
+            self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", "bar")
+        elif type == "csv":
+            self.create_csvfile(list_for_csv, filepath + "/" + metric + "/")
 
     def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200): 
         """Create Python Google Chart but this should be merged to _create_chart()"""
@@ -820,19 +845,26 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     @options([
         make_option('-d', '--directory', type="string", help="directory name which contains report graphs."),
-        make_option('-t', '--title', type="string", help="A report title in the index.html")
+#        make_option('-t', '--title', type="string", help="A report title in the index.html"),
+        make_option('-f', '--format', type="string", help="A report format. There are 'pie', 'bar' and 'highchart-column' chart types or 'csv' format")
         ])
     def do_createreport(self, arg, opts=None):
         """Create PNG graphs which display statistics"""
 
+        default_format = "highchart-column"
+        self._set_format(opts.format)
+        if not self.output_format:
+            output_format = default_format
+        else:
+            output_format = self.output_format
         #self.display_stats("count", "pie", opts.directory + "/pie.count.png")
         #self.display_stats("count", "bar", opts.directory + "/bar.count.png")
         #self.display_stats("sum", "pie", opts.directory + "/pie.sum.png")
         #self.display_stats("sum", "bar", opts.directory + "/bar.sum.png")
 
         self.make_google_motion_chart(opts.directory)
-        self.display_stats("count", "highchart-column", opts.directory)
-        self.display_stats("runtime", "highchart-column", opts.directory)
+        self.display_stats("count", output_format, opts.directory)
+        self.display_stats("runtime", output_format, opts.directory)
 
     @options([
         make_option('-f', '--start', type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
@@ -878,6 +910,21 @@ class CmdLineAnalyzeEucaData(Cmd):
         platform = param[0]
         print "Set a platform by to analyze: [" + platform + "]"
         self.platform = platform
+
+    def _set_format(self, param):
+        """Select output format (e.g. bar, pie, and highchart-column chart types or csv format)"""
+
+        if not param:
+            return
+
+        if type(param) == type(str()):
+            format = param
+        else:
+            format = param[0]
+
+        print "A output format is set by :[" + format + "]"
+
+        self.output_format = format
 
     def _set_chart(self, param):
         """Set chart options (e.g. type, name, etc)
@@ -1083,6 +1130,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             self._set_platform(param)
         elif cmd == "chart":
             self._set_chart(param)
+        elif cmd == "format":
+            self._set_format(param)
 
     def do_show(self, arg, opts=None):
         """ Display realtime usage data"""

@@ -5,6 +5,7 @@ createreport -d thismonth/india/eucalyptus/user -t Running_instances_per_user_of
 
 clear all
 set nodename sierra
+set platform eucalyptus
 analyze -M %(this_month)s
 createreport -d thismonth/sierra/eucalyptus/user/ -t Launched_instances_per_user_of_eucalyptus_in_Sierra
 
@@ -15,8 +16,14 @@ analyze -M %(this_month)s
 createreport -d thismonth/india/openstack/user/ -t Launched_instances_per_user_of_Openstack_in_India
 
 clear all
+set platform nimbus
+analyze -M %(this_month)s
+createreport -d thismonth/all/nimbus/user/ -t Launched_instances_per_user_of_Nimbus_in_all_FutureGrid_systems
+
+clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename india
+set platform eucalyptus
 analyze -S count
 sys_report -o thismonth/india/eucalyptus/count --all
 analyze -S runtime
@@ -31,6 +38,7 @@ sys_report -o thismonth/india/eucalyptus/ccvm_disk --all
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename sierra
+set platform eucalyptus
 analyze -S count
 sys_report -o thismonth/sierra/eucalyptus/count --all
 analyze -S runtime
@@ -43,11 +51,22 @@ analyze -S ccvm_disk
 sys_report -o thismonth/sierra/eucalyptus/ccvm_disk --all
 
 clear all
+set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
+set platform nimbus
+analyze -S count
+sys_report -o thismonth/all/nimbus/count --all
+analyze -S runtime
+sys_report -o thismonth/all/nimbus/runtime --all
+
+
+clear all
 set nodename india
+set platform eucalyptus
 analyze -S count_node -M %(this_month)s
 sys_report -o thismonth/india/eucalyptus/count_node
 
 clear all
 set nodename sierra
+set platform eucalyptus
 analyze -S count_node -M %(this_month)s
 sys_report -o thismonth/sierra/eucalyptus/count_node

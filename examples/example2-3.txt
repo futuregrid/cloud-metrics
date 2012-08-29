@@ -6,25 +6,21 @@
 # Analyze entire data and create report
 
 clear all
-
 clear users
-
 set nodename india
-
 set platform nova
-
 analyze -M 06 -Y 2012
-
 createreport -d 2012-06/india/openstack/user/ -t Launched_instances_per_user_of_Openstack_in_India
 
 clear all
+clear users
+set nodename india
+set platform nova
+analyze -M 07 -Y 2012
+createreport -d 2012-07/india/openstack/user/ -t Launched_instances_per_user_of_Openstack_in_India
 
 clear users
-
 set nodename india
-
 set platform nova
-
-analyze -M 07 -Y 2012
-
-createreport -d 2012-07/india/openstack/user/ -t Launched_instances_per_user_of_Openstack_in_India
+analyze -M 08 -Y 2012
+createreport -d 2012-08/india/openstack/user/ -t Launched_instances_per_user_of_Openstack_in_India

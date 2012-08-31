@@ -143,7 +143,7 @@ class FGConverter:
         self.confname = self.set_instance_conf(args.conf)
 
     def set_instance_conf(self, confname=""):
-        if len(confname) > 0:
+        if confname and len(confname) > 0:
             self.instances.set_conf(confname)
 
 def main():

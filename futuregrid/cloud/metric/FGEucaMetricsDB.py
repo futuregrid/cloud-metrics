@@ -365,8 +365,8 @@ class FGEucaMetricsDB(object):
                                     + self._fmtstr(self._fillempty(entryObj, "platform")) + "," \
                                     + self._fmtstr(self._fillempty(entryObj, "bundleTaskStateName")) + "," \
                                     + self._fmtstr(entryObj["reservationId"]) + "," \
-                                    + self._fmtstr(self.euca_hostname) + "," \
-                                    + self._fmtstr(self.euca_version) + ")"
+                                    + self._fmtstr(entryObj["euca_hostname"] or self.euca_hostname) + "," \
+                                    + self._fmtstr(entryObj["euca_version"] or self.euca_version) + ")"
 
 
         wquery += " on duplicate key update " \

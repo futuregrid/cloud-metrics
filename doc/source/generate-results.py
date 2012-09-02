@@ -279,6 +279,74 @@ class Results:
      
             content = content + (self.get_chart() % vars()) % vars()
 
+        number += 1
+        metric = "count"
+        platform = "nimbus"
+        nodename = "hotel"
+
+        main_title = content + self.get_content_sub_header(nodename, platform)
+ 
+        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        content = main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
+        metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count"
+        nodename = "alamo"
+
+        main_title = content + self.get_content_sub_header(nodename, platform)
+ 
+        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        content = main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
+        metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count"
+        nodename = "foxtrot"
+
+        main_title = content + self.get_content_sub_header(nodename, platform)
+ 
+        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        content = main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
+        metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count"
+        nodename = "sierra"
+
+        main_title = content + self.get_content_sub_header(nodename, platform)
+ 
+        src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        content = main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
+        metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+
+        content = content + (self.get_chart() % vars()) % vars()
 
         return content
 
@@ -366,6 +434,75 @@ class Results:
             title = "Figure %(number)s. Total VMs count per node cluster for %(start_date)s  ~ %(end_date)s on %(nodename)s"
      
             content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count"
+        platform = "nimbus"
+        nodename = "hotel"
+
+        main_title = self.get_content_sub_header(nodename, platform)
+ 
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        content = content + main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
+        metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count"
+        nodename = "alamo"
+
+        main_title = self.get_content_sub_header(nodename, platform)
+ 
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        content = content + main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
+        metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count"
+        nodename = "foxtrot"
+
+        main_title = self.get_content_sub_header(nodename, platform)
+ 
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        content = content + main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
+        metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count"
+        nodename = "sierra"
+
+        main_title = self.get_content_sub_header(nodename, platform)
+ 
+        src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        content = content + main_title + self.get_chart() % vars()
+        content = content % vars()
+
+        number += 1
+        metric = "runtime"
+        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+
+        content = content + (self.get_chart() % vars()) % vars()
 
         return content
 

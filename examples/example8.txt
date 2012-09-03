@@ -8,6 +8,7 @@ set search_range 2011-11-01T00:00:00 2012-07-31T23:59:59
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
 
+set platform eucalyptus
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S count
 
@@ -17,17 +18,20 @@ sys_report -o all/india/eucalyptus/count --all
 clear all
 set search_range 2011-11-01T00:00:00 2012-07-31T23:59:59
 set nodename india
+set platform eucalyptus
 analyze -S runtime
 sys_report -o all/india/eucalyptus/runtime --all
 
 clear all
 set search_range 2012-05-01T00:00:00 2012-07-31T23:59:59
 set nodename sierra
+set platform eucalyptus
 analyze -S count
 sys_report -o all/sierra/eucalyptus/count --all
 
 clear all
 set search_range 2012-05-01T00:00:00 2012-07-31T23:59:59
 set nodename sierra
+set platform eucalyptus
 analyze -S runtime 
 sys_report -o all/sierra/eucalyptus/runtime --all

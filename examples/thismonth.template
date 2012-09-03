@@ -1,24 +1,25 @@
 clear users
 set nodename india
+set platform eucalyptus
 analyze -M %(this_month)s
-createreport -d thismonth/india/eucalyptus/user -t Running_instances_per_user_of_eucalyptus_in_India
+createreport -d thismonth/india/eucalyptus/user
 
 clear all
 set nodename sierra
 set platform eucalyptus
 analyze -M %(this_month)s
-createreport -d thismonth/sierra/eucalyptus/user/ -t Launched_instances_per_user_of_eucalyptus_in_Sierra
+createreport -d thismonth/sierra/eucalyptus/user/
 
 clear all
 set nodename india
 set platform nova
 analyze -M %(this_month)s
-createreport -d thismonth/india/openstack/user/ -t Launched_instances_per_user_of_Openstack_in_India
+createreport -d thismonth/india/openstack/user/
 
 clear all
 set platform nimbus
 analyze -M %(this_month)s
-createreport -d thismonth/all/nimbus/user/ -t Launched_instances_per_user_of_Nimbus_in_all_FutureGrid_systems
+createreport -d thismonth/all/nimbus/user/
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59

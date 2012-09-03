@@ -9,6 +9,7 @@ set search_range 2012-05-15T00:00:00 2012-07-23T23:59:59
 # 1. Node 
 #    It is grouped by a node such as India and Sierra.
 set nodename india
+set platform eucalyptus
 
 # 1.1. Minutes Used by Week
 analyze -S runtime -P weekly
@@ -29,12 +30,14 @@ sys_report -o 2012-07-23/india/eucalyptus/count_node/
 # 1.4. Requests Made by User
 clear all
 set nodename india
+set platform eucalyptus
 analyze -f 2012-07-17T00:00:00 -t 2012-07-23T23:59:59
 createreport -d 2012-07-23/india/eucalyptus/user/
 
 clear all
 
 set nodename sierra
+set platform eucalyptus
 
 set search_range 2012-05-15T00:00:00 2012-07-23T23:59:59
 
@@ -57,6 +60,7 @@ sys_report -o 2012-07-23/sierra/eucalyptus/count_node/
 # 1.4. Requests Made by User
 clear all
 set nodename sierra
+set platform eucalyptus
 analyze -f 2012-07-17T00:00:00 -t 2012-07-23T23:59:59
 createreport -d 2012-07-23/sierra/eucalyptus/user/
 

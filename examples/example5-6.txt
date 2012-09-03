@@ -8,6 +8,8 @@ set search_range 2011-11-01T00:00:00 2011-11-30T23:59:59
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
 
+set platform eucalyptus
+
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
 
@@ -29,6 +31,8 @@ set search_range 2011-12-01T00:00:00 2011-12-31T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
+
+set platform eucalyptus
 
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
@@ -52,6 +56,8 @@ set search_range 2012-01-01T00:00:00 2012-01-31T23:59:59
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
 
+set platform eucalyptus
+
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
 
@@ -73,6 +79,8 @@ set search_range 2012-02-01T00:00:00 2012-02-28T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
+
+set platform eucalyptus
 
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
@@ -96,6 +104,8 @@ set search_range 2012-03-01T00:00:00 2012-03-31T23:59:59
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
 
+set platform eucalyptus
+
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
 
@@ -117,6 +127,8 @@ set search_range 2012-04-01T00:00:00 2012-04-30T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
+
+set platform eucalyptus
 
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
@@ -140,6 +152,8 @@ set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
 
+set platform eucalyptus
+
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
 
@@ -161,6 +175,8 @@ set search_range 2012-05-01T00:00:00 2012-05-31T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename sierra
+
+set platform eucalyptus
 
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
@@ -184,6 +200,8 @@ set search_range 2012-06-01T00:00:00 2012-06-30T23:59:59
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
 
+set platform eucalyptus
+
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
 
@@ -205,6 +223,8 @@ set search_range 2012-06-01T00:00:00 2012-06-30T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename sierra
+
+set platform eucalyptus
 
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
@@ -228,6 +248,8 @@ set search_range 2012-07-01T00:00:00 2012-07-31T23:59:59
 # A user can specify a node name (e.g. india, sierra)
 set nodename india
 
+set platform eucalyptus
+
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores
 
@@ -249,6 +271,8 @@ set search_range 2012-07-01T00:00:00 2012-07-31T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename sierra
+
+set platform eucalyptus
 
 # It requires a metric which can be specified with -S, --stat option with analyze command.
 analyze -S ccvm_cores

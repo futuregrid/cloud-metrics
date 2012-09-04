@@ -97,12 +97,17 @@ class CmdLineAnalyzeEucaData(Cmd):
             process_entry = process_all
             
             if not process_all:
-                process_entry = (values['ts'] >= date_from) and (values['ts'] < date_to)
+                #process_entry = (values['ts'] >= date_from) and (values['ts'] < date_to)
+                process_entry = (values['t_end'] >= date_from) and (values['t_start'] <= date_to)
 
             if process_entry:
 
                 # If a nodename is set, stats is only for the compute cluster node specified
-                if self.nodename and self.nodename != values['euca_hostname']:
+                #if self.nodename and self.nodename != values['euca_hostname']:
+                if self.nodename and self.nodename != values['hostname']:
+                    continue
+
+                if self.platform and self.platform != values["cloudplatform.platform"]:
                     continue
 
                 name = values["ownerId"]

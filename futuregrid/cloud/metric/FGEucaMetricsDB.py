@@ -18,6 +18,8 @@ class FGEucaMetricsDB(object):
     instance_table = "instance"
     userinfo_table = "userinfo"
     cloudplatform_table = "cloudplatform"
+    column_cp_ins = "cloudPlatform"
+    column_cp_cp = "cloudPlatformId"
 
     # Initialize
     def __init__(self, configfile="futuregrid.cfg"):
@@ -141,6 +143,8 @@ class FGEucaMetricsDB(object):
 
     def read(self, querydict={}, optional=""):
         ''' read from the database '''
+        
+        foreign_key_for_cloudplatform = self.instance_table + "." + self.column_cp_ins + "=" + self.cloudplatform_table + "." + self.column_cp_cp
         querystr = "";
         if querydict:
             for key in querydict:
@@ -150,10 +154,10 @@ class FGEucaMetricsDB(object):
                     querystr += " and "
                 querystr += astr            
                 print "qstr:->" + querystr + "<---"
-                rquery = "SELECT * FROM " + self.instance_table + " where " + querystr + optional
+                rquery = "SELECT * FROM " + self.instance_table + "," + self.cloudplatform_table + " where " + foreign_key_for_cloudplatform + " and " + querystr + optional
+                #rquery = "select * from instance, cloudplatform  where instance.cloudPlatform=cloudplatform.cloudPlatformId limit 5";    
         else:
-            rquery = "SELECT * from " + self.instance_table + optional
-            
+            rquery = "SELECT * from " + self.instance_table + "," + self.cloudplatform_table + " where " + foreign_key_for_cloudplatform + " " + optional
         self.cursor.execute(rquery)
         rows = self.cursor.fetchall()
         multikeys = ["trace", "ccvm", "ccnet"]

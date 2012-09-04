@@ -17,6 +17,7 @@ class FGEucaMetricsDB(object):
     euca_hostname = None
     instance_table = "instance"
     userinfo_table = "userinfo"
+    cloudplatform_table = "cloudplatform"
 
     # Initialize
     def __init__(self, configfile="futuregrid.cfg"):
@@ -105,9 +106,17 @@ class FGEucaMetricsDB(object):
                 username varchar(32), \
                 project varchar(16), \
                 hostname varchar(16))"
+
+        create_cloudplatform_table = "create table if not exists " + self.cloudplatform_table + " (\
+                cloudPlatformId tinyint primary key auto_increment not null, \
+                hostname varchar(32), \
+                version varchar(8), \
+                platform varchar(16))"
+
         try:
             self.cursor.execute(create_instance_table)
             self.cursor.execute(create_userinfo_table)
+            self.cursor.execute(create_cloudplatform_table)
         except MySQLdb.Error:
             pass
 

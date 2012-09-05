@@ -185,8 +185,12 @@ class CmdLineAnalyzeEucaData(Cmd):
             instance = self.instances.getdata(i)
             if username and username != instance["ownerId"] :
                 continue
-            if self.nodename and self.nodename != instance["euca_hostname"] :
+            #if self.nodename and self.nodename != instance["euca_hostname"] :
+            if self.nodename and self.nodename != instance['hostname']:
                 continue
+            if self.platform and self.platform != instance["cloudplatform.platform"]:
+                continue
+
             self._count_node(instance)
             merged_res = self._daily_stats(instance, metric, merged_res, "sum") # or "avg"
 
@@ -631,8 +635,12 @@ class CmdLineAnalyzeEucaData(Cmd):
                 continue
             if values["state"] != "Extant":
                 continue
-            if self.nodename and self.nodename != values['euca_hostname']:
+            #if self.nodename and self.nodename != values['euca_hostname']:
+            if self.nodename and self.nodename != values['hostname']:
                 continue
+            if self.platform and self.platform != values["cloudplatform.platform"]:
+                continue
+
             ownerId = values["ownerId"]
             if ownerId in users:
                 metric_val = users[ownerId][metric] + 1

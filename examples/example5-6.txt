@@ -287,3 +287,51 @@ sys_report -o 2012-07/sierra/eucalyptus/ccvm_mem --all
 analyze -S ccvm_disk
 
 sys_report -o 2012-07/sierra/eucalyptus/ccvm_disk --all
+
+clear all
+
+# A user can specify a data range
+set search_range 2012-08-01T00:00:00 2012-08-31T23:59:59
+
+# A user can specify a node name (e.g. india, sierra)
+set nodename india
+
+set platform eucalyptus
+
+# It requires a metric which can be specified with -S, --stat option with analyze command.
+analyze -S ccvm_cores
+
+# Finally, it can create a graph for the analyzed data
+sys_report -o 2012-08/india/eucalyptus/ccvm_cores/ --all
+
+analyze -S ccvm_mem
+
+sys_report -o 2012-08/india/eucalyptus/ccvm_mem --all
+
+analyze -S ccvm_disk
+
+sys_report -o 2012-08/india/eucalyptus/ccvm_disk --all
+
+clear all
+
+# A user can specify a data range
+set search_range 2012-08-01T00:00:00 2012-08-31T23:59:59
+
+# A user can specify a node name (e.g. india, sierra)
+set nodename sierra
+
+set platform eucalyptus
+
+# It requires a metric which can be specified with -S, --stat option with analyze command.
+analyze -S ccvm_cores
+
+# Finally, it can create a graph for the analyzed data
+sys_report -o 2012-08/sierra/eucalyptus/ccvm_cores/ --all
+
+analyze -S ccvm_mem
+
+sys_report -o 2012-08/sierra/eucalyptus/ccvm_mem --all
+
+analyze -S ccvm_disk
+
+sys_report -o 2012-08/sierra/eucalyptus/ccvm_disk --all

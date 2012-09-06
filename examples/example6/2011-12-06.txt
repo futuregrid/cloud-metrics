@@ -95,3 +95,126 @@ set platform nova
 clear users
 analyze -f 2011-12-06T00:00:00 -t 2011-12-12T23:59:59
 createreport -d 2011-12-12/india/openstack/user/
+
+## NIMBUS ##
+clear all
+
+set nodename hotel
+set platform nimbus 
+
+set search_range 2011-11-01T00:00:00 2011-12-12T23:59:59
+
+# 1.1. Minutes Used by Week
+analyze -S runtime -P weekly
+
+sys_report -o 2011-12-12/hotel/nimbus/runtime/
+
+# 1.2. Requests Made by Week
+analyze -S count -P weekly
+
+sys_report -o 2011-12-12/hotel/nimbus/count/
+
+# 1.2.1. Total VMs count per a node cluster
+#analyze -S count_node
+
+#sys_report -o 2011-12-12/hotel/nimbus/count_node/
+
+# 1.3. Minutes Used by User
+# 1.4. Requests Made by User
+clear all
+set nodename hotel
+set platform nimbus
+analyze -f 2011-12-06T00:00:00 -t 2011-12-12T23:59:59
+createreport -d 2011-12-12/hotel/nimbus/user/
+
+clear all
+
+set nodename alamo
+set platform nimbus 
+
+set search_range 2011-11-01T00:00:00 2011-12-12T23:59:59
+
+# 1.1. Minutes Used by Week
+analyze -S runtime -P weekly
+
+sys_report -o 2011-12-12/alamo/nimbus/runtime/
+
+# 1.2. Requests Made by Week
+analyze -S count -P weekly
+
+sys_report -o 2011-12-12/alamo/nimbus/count/
+
+# 1.2.1. Total VMs count per a node cluster
+#analyze -S count_node
+
+#sys_report -o 2011-12-12/alamo/nimbus/count_node/
+
+# 1.3. Minutes Used by User
+# 1.4. Requests Made by User
+clear all
+set nodename alamo
+set platform nimbus
+analyze -f 2011-12-06T00:00:00 -t 2011-12-12T23:59:59
+createreport -d 2011-12-12/alamo/nimbus/user/
+
+clear all
+
+set nodename foxtrot
+set platform nimbus 
+
+set search_range 2011-11-01T00:00:00 2011-12-12T23:59:59
+
+# 1.1. Minutes Used by Week
+analyze -S runtime -P weekly
+
+sys_report -o 2011-12-12/foxtrot/nimbus/runtime/
+
+# 1.2. Requests Made by Week
+analyze -S count -P weekly
+
+sys_report -o 2011-12-12/foxtrot/nimbus/count/
+
+# 1.2.1. Total VMs count per a node cluster
+#analyze -S count_node
+
+#sys_report -o 2011-12-12/foxtrot/nimbus/count_node/
+
+# 1.3. Minutes Used by User
+# 1.4. Requests Made by User
+clear all
+set nodename foxtrot
+set platform nimbus
+analyze -f 2011-12-06T00:00:00 -t 2011-12-12T23:59:59
+createreport -d 2011-12-12/foxtrot/nimbus/user/
+
+clear all
+
+set nodename sierra
+set platform nimbus 
+
+set search_range 2011-11-01T00:00:00 2011-12-12T23:59:59
+
+# 1.1. Minutes Used by Week
+analyze -S runtime -P weekly
+
+sys_report -o 2011-12-12/sierra/nimbus/runtime/
+
+# 1.2. Requests Made by Week
+analyze -S count -P weekly
+
+sys_report -o 2011-12-12/sierra/nimbus/count/
+
+# 1.2.1. Total VMs count per a node cluster
+#analyze -S count_node
+
+#sys_report -o 2011-12-12/sierra/nimbus/count_node/
+
+# 1.3. Minutes Used by User
+# 1.4. Requests Made by User
+clear all
+set nodename sierra
+set platform nimbus
+analyze -f 2011-12-06T00:00:00 -t 2011-12-12T23:59:59
+createreport -d 2011-12-12/sierra/nimbus/user/
+
+

@@ -4,7 +4,7 @@
 #
 clear all
 
-set search_range 2012-03-20T00:00:00 2012-05-28T23:59:59
+set search_range 2012-07-03T00:00:00 2012-09-10T23:59:59
 
 # 1. Node 
 #    It is grouped by a node such as India and Sierra.
@@ -14,60 +14,60 @@ set platform eucalyptus
 # 1.1. Minutes Used by Week
 analyze -S runtime -P weekly
 
-sys_report -o 2012-05-28/india/eucalyptus/runtime/
+sys_report -o 2012-09-10/india/eucalyptus/runtime/
 
 # 1.2. Requests Made by Week
 analyze -S count -P weekly
 
-sys_report -o 2012-05-28/india/eucalyptus/count/
+sys_report -o 2012-09-10/india/eucalyptus/count/
 
 # 1.2.1. Total VMs count per a node cluster
 analyze -S count_node
 
-sys_report -o 2012-05-28/india/eucalyptus/count_node/
+sys_report -o 2012-09-10/india/eucalyptus/count_node/
 
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User
 clear all
 set nodename india
 set platform eucalyptus
-analyze -f 2012-05-22T00:00:00 -t 2012-05-28T23:59:59
-createreport -d 2012-05-28/india/eucalyptus/user/
+analyze -f 2012-09-04T00:00:00 -t 2012-09-10T23:59:59
+createreport -d 2012-09-10/india/eucalyptus/user/
 
 clear all
 
 set nodename sierra
 set platform eucalyptus
 
-set search_range 2012-03-20T00:00:00 2012-05-28T23:59:59
+set search_range 2012-07-03T00:00:00 2012-09-10T23:59:59
 
 # 1.1. Minutes Used by Week
 analyze -S runtime -P weekly
 
-sys_report -o 2012-05-28/sierra/eucalyptus/runtime/
+sys_report -o 2012-09-10/sierra/eucalyptus/runtime/
 
 # 1.2. Requests Made by Week
 analyze -S count -P weekly
 
-sys_report -o 2012-05-28/sierra/eucalyptus/count/
+sys_report -o 2012-09-10/sierra/eucalyptus/count/
 
 # 1.2.1. Total VMs count per a node cluster
 analyze -S count_node
 
-sys_report -o 2012-05-28/sierra/eucalyptus/count_node/
+sys_report -o 2012-09-10/sierra/eucalyptus/count_node/
 
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User
 clear all
 set nodename sierra
 set platform eucalyptus
-analyze -f 2012-05-22T00:00:00 -t 2012-05-28T23:59:59
-createreport -d 2012-05-28/sierra/eucalyptus/user/
+analyze -f 2012-09-04T00:00:00 -t 2012-09-10T23:59:59
+createreport -d 2012-09-10/sierra/eucalyptus/user/
 
 ## NOVA ##
 clear all
 
-set search_range 2012-03-20T00:00:00 2012-05-28T23:59:59
+set search_range 2012-07-03T00:00:00 2012-09-10T23:59:59
 
 # 1. Node 
 #    It is grouped by a node such as India and Sierra.
@@ -78,23 +78,23 @@ set platform nova
 # 1.1. Minutes Used by Week
 #analyze -S runtime -P weekly
 
-#sys_report -o 2012-05-28/india/eucalyptus/runtime/
+#sys_report -o 2012-09-10/india/eucalyptus/runtime/
 
 # 1.2. Requests Made by Week
 #analyze -S count -P weekly
 
-#sys_report -o 2012-05-28/india/eucalyptus/count/
+#sys_report -o 2012-09-10/india/eucalyptus/count/
 
 # 1.2.1. Total VMs count per a node cluster
 #analyze -S count_node
 
-#sys_report -o 2012-05-28/india/eucalyptus/count_node/
+#sys_report -o 2012-09-10/india/eucalyptus/count_node/
 
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User
 clear users
-analyze -f 2012-05-22T00:00:00 -t 2012-05-28T23:59:59
-createreport -d 2012-05-28/india/openstack/user/
+analyze -f 2012-09-04T00:00:00 -t 2012-09-10T23:59:59
+createreport -d 2012-09-10/india/openstack/user/
 
 ## NIMBUS ##
 clear all
@@ -102,119 +102,119 @@ clear all
 set nodename hotel
 set platform nimbus 
 
-set search_range 2012-03-20T00:00:00 2012-05-28T23:59:59
+set search_range 2012-07-03T00:00:00 2012-09-10T23:59:59
 
 # 1.1. Minutes Used by Week
 analyze -S runtime -P weekly
 
-sys_report -o 2012-05-28/hotel/nimbus/runtime/
+sys_report -o 2012-09-10/hotel/nimbus/runtime/
 
 # 1.2. Requests Made by Week
 analyze -S count -P weekly
 
-sys_report -o 2012-05-28/hotel/nimbus/count/
+sys_report -o 2012-09-10/hotel/nimbus/count/
 
 # 1.2.1. Total VMs count per a node cluster
 #analyze -S count_node
 
-#sys_report -o 2012-05-28/hotel/nimbus/count_node/
+#sys_report -o 2012-09-10/hotel/nimbus/count_node/
 
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User
 clear all
 set nodename hotel
 set platform nimbus
-analyze -f 2012-05-22T00:00:00 -t 2012-05-28T23:59:59
-createreport -d 2012-05-28/hotel/nimbus/user/
+analyze -f 2012-09-04T00:00:00 -t 2012-09-10T23:59:59
+createreport -d 2012-09-10/hotel/nimbus/user/
 
 clear all
 
 set nodename alamo
 set platform nimbus 
 
-set search_range 2012-03-20T00:00:00 2012-05-28T23:59:59
+set search_range 2012-07-03T00:00:00 2012-09-10T23:59:59
 
 # 1.1. Minutes Used by Week
 analyze -S runtime -P weekly
 
-sys_report -o 2012-05-28/alamo/nimbus/runtime/
+sys_report -o 2012-09-10/alamo/nimbus/runtime/
 
 # 1.2. Requests Made by Week
 analyze -S count -P weekly
 
-sys_report -o 2012-05-28/alamo/nimbus/count/
+sys_report -o 2012-09-10/alamo/nimbus/count/
 
 # 1.2.1. Total VMs count per a node cluster
 #analyze -S count_node
 
-#sys_report -o 2012-05-28/alamo/nimbus/count_node/
+#sys_report -o 2012-09-10/alamo/nimbus/count_node/
 
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User
 clear all
 set nodename alamo
 set platform nimbus
-analyze -f 2012-05-22T00:00:00 -t 2012-05-28T23:59:59
-createreport -d 2012-05-28/alamo/nimbus/user/
+analyze -f 2012-09-04T00:00:00 -t 2012-09-10T23:59:59
+createreport -d 2012-09-10/alamo/nimbus/user/
 
 clear all
 
 set nodename foxtrot
 set platform nimbus 
 
-set search_range 2012-03-20T00:00:00 2012-05-28T23:59:59
+set search_range 2012-07-03T00:00:00 2012-09-10T23:59:59
 
 # 1.1. Minutes Used by Week
 analyze -S runtime -P weekly
 
-sys_report -o 2012-05-28/foxtrot/nimbus/runtime/
+sys_report -o 2012-09-10/foxtrot/nimbus/runtime/
 
 # 1.2. Requests Made by Week
 analyze -S count -P weekly
 
-sys_report -o 2012-05-28/foxtrot/nimbus/count/
+sys_report -o 2012-09-10/foxtrot/nimbus/count/
 
 # 1.2.1. Total VMs count per a node cluster
 #analyze -S count_node
 
-#sys_report -o 2012-05-28/foxtrot/nimbus/count_node/
+#sys_report -o 2012-09-10/foxtrot/nimbus/count_node/
 
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User
 clear all
 set nodename foxtrot
 set platform nimbus
-analyze -f 2012-05-22T00:00:00 -t 2012-05-28T23:59:59
-createreport -d 2012-05-28/foxtrot/nimbus/user/
+analyze -f 2012-09-04T00:00:00 -t 2012-09-10T23:59:59
+createreport -d 2012-09-10/foxtrot/nimbus/user/
 
 clear all
 
 set nodename sierra
 set platform nimbus 
 
-set search_range 2012-03-20T00:00:00 2012-05-28T23:59:59
+set search_range 2012-07-03T00:00:00 2012-09-10T23:59:59
 
 # 1.1. Minutes Used by Week
 analyze -S runtime -P weekly
 
-sys_report -o 2012-05-28/sierra/nimbus/runtime/
+sys_report -o 2012-09-10/sierra/nimbus/runtime/
 
 # 1.2. Requests Made by Week
 analyze -S count -P weekly
 
-sys_report -o 2012-05-28/sierra/nimbus/count/
+sys_report -o 2012-09-10/sierra/nimbus/count/
 
 # 1.2.1. Total VMs count per a node cluster
 #analyze -S count_node
 
-#sys_report -o 2012-05-28/sierra/nimbus/count_node/
+#sys_report -o 2012-09-10/sierra/nimbus/count_node/
 
 # 1.3. Minutes Used by User
 # 1.4. Requests Made by User
 clear all
 set nodename sierra
 set platform nimbus
-analyze -f 2012-05-22T00:00:00 -t 2012-05-28T23:59:59
-createreport -d 2012-05-28/sierra/nimbus/user/
+analyze -f 2012-09-04T00:00:00 -t 2012-09-10T23:59:59
+createreport -d 2012-09-10/sierra/nimbus/user/
 
 

@@ -61,13 +61,15 @@ sys_report -o thismonth/all/nimbus/runtime --all
 
 
 clear all
+set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename india
 set platform eucalyptus
-analyze -S count_node -M %(this_month)s
+analyze -S count_node
 sys_report -o thismonth/india/eucalyptus/count_node
 
 clear all
+set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename sierra
 set platform eucalyptus
-analyze -S count_node -M %(this_month)s
+analyze -S count_node
 sys_report -o thismonth/sierra/eucalyptus/count_node

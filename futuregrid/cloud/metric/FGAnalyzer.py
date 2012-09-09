@@ -1158,28 +1158,34 @@ class CmdLineAnalyzeEucaData(Cmd):
 #########################################################
 # UNDER DEVELOPING
 #########################################################
-'''
-    def do_get(self, args, opts=None):
+    def do_get(self, arg, opts=None):
         """Perform an action to obtain possession of"""
 
-        args = arg.split()
-        cmd = args[0]
-        param = args[1:]
+        try:
+            args = arg.split()
+            param = args[0]
+            #param = args[1:]
+        except:
+            param = ""
+            pass
 
-        if cmd == "stats":
-            # get stats
-            self.get_stats()
+        self.get_stats(param)
 
-    def get_stats(self):
+    def get_stats(self, param):
         """Provide statistics"""
 
         # check required fields
-        self.is_exist(self.metric)
-        self.is_exist(self.groupby)
-        self.is_exist(self.search_length_of_time)
-        self.is_exist(self.search_interval)
+        if (not param) or (param == "metric"):
+            print self.metric #is_exist(self.metric)
+        print self.nodename
+        print self.platform
+        print self.from_date
+        print self.to_date
+        #is_exist(self.groupby)
+        #is_exist(self.search_length_of_time)
+        #is_exist(self.search_interval)
 
-        self.select_data_source("instance")
+        #self.select_data_source("instance")
 
     def a(self):
 
@@ -1191,7 +1197,6 @@ class CmdLineAnalyzeEucaData(Cmd):
         for i in range(len(data)):
             row = {first_column:first_value, second_column:second_value, third_column:third_value}
             result.append()
-'''
 
 #####################################################################
 # main

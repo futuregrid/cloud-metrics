@@ -64,6 +64,8 @@ class CmdLineAnalyzeEucaData(Cmd):
     chart = None
     output_format = None
 
+    groupby = None
+
     def calculate_stats (self, from_date="all", to_date="all"):
         """Calculate user-based statstics about VM instances per user: count, min time, max time, avg time, total time
         
@@ -813,9 +815,63 @@ class CmdLineAnalyzeEucaData(Cmd):
         # get_sys_stats return a list of daily values not specified by a user name
         # It can display daily/weekly/monthly graphs for system utilization
         self.sys_stats = self.get_sys_stats(opts.metric, opts.period)
-        #print self.sys_stats
+        print self.sys_stats
 
         self.nova.calculate_stats(self.from_date, self.to_date)
+
+    def do_oneclick(self, arg):
+       
+        # from database
+        #self.get_whole_data()
+
+        #self.get_filter()
+        self.display_filter_setting()
+        
+        # from user's inputs
+        #self.set_filter() 
+
+        self.get_measure()
+
+        #self.create_charts()
+
+    def display_filter_setting(self):
+        pprint.pprint( vars(self.instances.search))
+
+    def get_measure(self):
+
+        for i in range(0, len(self.instances)):
+            instance = self.instances.getdata(i)
+            if not self._is_in_date(instance):
+                continue;
+            if not self._is_filtered(instance):
+                continue;
+
+        '''
+        I am where to create a dict/list for data of charts.
+        what I need to do is
+        1) choose which column that I need to collect. This should be done by the 'metric' filter
+        2) get value from the instance
+        3) create data structure for the result
+        4) if it has a groupby(s), create multi-dimentional dict/list to save the value in a depth
+           e.g. res[groupby1][groupby2] = 
+           e.g. res = { groupby1 : { groupby2: val1, ... } }
+
+        5) fill missing date? for chart format? this should be done by in a chart module
+        6) convert the result data structure to chart formatted data
+        '''
+           
+    def _is_in_date(self, instance):
+        if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date:
+            return False
+
+    def _is_filtered(self, instance):
+        if self.search.username and self.search.username != instance["ownerId"]:
+            return False
+        if self.search.nodename and self.search.nodename != instance["hostname"]:
+            return False
+        if self.search.platform and self.search.platform != instance["platform"]:
+            return False
+        return True
 
     def do_getdaterange(self, arg): 
         """Get Date range of the instances table in mysql db"""
@@ -952,6 +1008,17 @@ class CmdLineAnalyzeEucaData(Cmd):
 
             print "Set a chart option (" + function + ") to : " + value
         except:
+            pass
+
+    def _set_groupby(self, param):
+        """Set grouping sets of values to get aggregate values divided by the group.
+        """
+
+        try:
+            self.groupby = param[0]
+            print "groupby is set by (" + self.groupby + ")"
+        except:
+            print "groupby isn't set due to an error (" + sys.exc_info()[0] + ")"
             pass
 
     @options([
@@ -1145,6 +1212,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             self._set_chart(param)
         elif cmd == "format":
             self._set_format(param)
+        elif cmd == "groupby":
+            self._set_groupby(param)
 
     def do_show(self, arg, opts=None):
         """ Display realtime usage data"""
@@ -1169,9 +1238,9 @@ class CmdLineAnalyzeEucaData(Cmd):
             param = ""
             pass
 
-        self.get_stats(param)
+        self.get_env(param)
 
-    def get_stats(self, param):
+    def get_env(self, param):
         """Provide statistics"""
 
         # check required fields

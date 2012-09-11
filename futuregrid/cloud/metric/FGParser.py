@@ -107,6 +107,8 @@ class Instances:
         self.first_date  = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.last_date = datetime.strptime("1981-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
 
+        self.search = FGSearch()
+
     def clear(self):
         '''clear the data'''
         self.data = {}
@@ -377,6 +379,14 @@ class Instances:
     def add_userinfo(self, new_userinfo):
         if self.userinfo_data.count(new_userinfo) == 0:
             self.userinfo_data.append(new_userinfo)
+
+class FGSearch:
+    from_date = None
+    to_date = None
+    nodename = None
+    platform = None
+    username = None
+    groupby = None
 
 def retrieve_userinfo_ldap(ownerid):
 

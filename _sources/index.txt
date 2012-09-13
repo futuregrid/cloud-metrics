@@ -30,9 +30,9 @@ Teefaa
 Cloud Metric
   * A project to measure and display metric information about usage and utilization of your cloud 
   * Documentation: https://portal.futuregrid.org/doc/metric/index.html
-  * Source: https://github.com/futuregrid/futuregrid-cloud-metrics
-  * Issues: https://github.com/futuregrid/futuregrid-cloud-metrics/issues
-..  Documentation: https://futuregrid.github.com/futuregrid-cloud-metrics
+  * Source: https://github.com/futuregrid/cloud-metrics
+  * Issues: https://github.com/futuregrid/cloud-metrics/issues
+  * No Result  Documentation: https://futuregrid.github.com/cloud-metrics
 
 Virtual Cluster
   * A project to create a SLURM based cluster in your cloud and run MPI jobs on it

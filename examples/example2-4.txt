@@ -1,0 +1,3 @@
+set nodename india
+analyze -f 2011-11-01T00:00:00 -t 2012-07-31T23:59:59
+createreport -d all/india/eucalyptus/user --format csv

@@ -1,0 +1,262 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fg-cleanup-table &mdash; Cloud Metrics 2.1.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Cloud Metrics 2.1.3 documentation" href="../index.html" />
+ 
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11111']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </head>
+  <body>
+
+<div style="background-image:url('_static/header_bg.png');background-color: black; text-align: left; padding: 10px 10px 15px 35px">
+<table>
+  <tr>
+    <td>
+      <a href="../index.html"><img src="../_static/fg-logo-gri-glow.png" border="0" alt="FutureGrid Cloud Metric"/></a>
+    </td>
+    <td>
+      <font size="5" color="white"><b><i>FutureGrid</i></b></font><br><br>
+      <font size="10" color="white" face="Comic Sans MS"><b><i>Cloud Metric</i></b></font>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+	<li><a href="../index.html">Results</a>|&nbsp;</li>
+        <li><a href="../overview.html">Overview</a>|&nbsp;</li>
+        <li><a href="../about.html">About</a>|&nbsp;</li>
+        <li><a href="../installation.html">Installation</a>|&nbsp;</li>
+        <li><a href="../quickstart.html">Quick Start</a>|&nbsp;</li>
+        <li><a href="../details.html">Details</a>|&nbsp;</li>
+        <li><a href="../metrics.html">Metrics</a>|&nbsp;</li>
+        <li><a href="index.html">Commands</a>|&nbsp;</li>
+        <li><a href="../download.html">Download</a>|&nbsp;</li>
+        <li><a href="../support.html">Support</a>|&nbsp;</li>
+	<li><a href="../ubmod.html">Results for HPC (UBMoD)</a>|&nbsp;</li>
+        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">fg-cleanup-table</a><ul>
+<li><a class="reference internal" href="#name">NAME</a></li>
+<li><a class="reference internal" href="#synopsis">SYNOPSIS</a></li>
+<li><a class="reference internal" href="#description">DESCRIPTION</a></li>
+<li><a class="reference internal" href="#examples">EXAMPLES</a></li>
+<li><a class="reference internal" href="#author">AUTHOR</a></li>
+<li><a class="reference internal" href="#reporting-bugs">REPORTING BUGS</a></li>
+<li><a class="reference internal" href="#see-also">SEE ALSO</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/man/fg-cleanup-db.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+<body style="background-image:url('_static/header_bg.png');background-color: grey;">
+</body>
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="fg-cleanup-table">
+<h1>fg-cleanup-table<a class="headerlink" href="#fg-cleanup-table" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="name">
+<h2>NAME<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><strong>fg-cleanup-table</strong> - delete database records of MySQL</div></blockquote>
+</div>
+<div class="section" id="synopsis">
+<h2>SYNOPSIS<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><strong>fg-cleanup-table</strong> [OPTION]...</div></blockquote>
+</div>
+<div class="section" id="description">
+<h2>DESCRIPTION<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Delete table records in which -t table name and -d database name are
+specified. Default table name is &#8216;instance&#8217; and database name is
+&#8216;euca&#8217;. My SQL user and password information are from the
+configuration file. Condi tions can be specified by -w
+where_condition option.</p>
+<blockquote>
+<div><table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-t <var>tbl_name</var></span></kbd></td>
+<td>deletes rows from tbl_name</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-d <var>db_name</var></span></kbd></td>
+<td>a database name of a table specified by -t tbl_name</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-w <var>where_condition</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>(optional) specifies the conditions that identify which
+rows to delete</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-C</span>, <span class="option">--conf <var>filename</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td><p class="first">configuraton file of the database to be used. The
+configuration file has the following format:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">EucaLogDB</span><span class="p">]</span>
+<span class="n">host</span><span class="o">=</span><span class="n">HOST</span>
+<span class="n">port</span><span class="o">=</span><span class="n">PORT</span>
+<span class="n">user</span><span class="o">=</span><span class="n">USER</span>
+<span class="n">passwd</span><span class="o">=</span><span class="n">PASS</span>
+<span class="n">db</span><span class="o">=</span><span class="n">DB</span>
+</pre></div>
+</div>
+<p>if this parameter is not specified and a database is
+used the default location for this file is in:</p>
+<div class="last highlight-python"><pre>~/.futuregrid/futuregrid.cfg</pre>
+</div>
+</td></tr>
+</tbody>
+</table>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="examples">
+<h2>EXAMPLES<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Delete all records in a default table and database with default
+configuration file:</p>
+<div class="highlight-python"><pre>$ fg-cleanup-table</pre>
+</div>
+<p>Delete all records in a specific table:</p>
+<div class="highlight-python"><pre>$ fg-cleanup-table -t table_name</pre>
+</div>
+<p>Delete all records in a specific table and a specific database:</p>
+<div class="highlight-python"><pre>$ fg-cleanup-table -t table_name -d db_name</pre>
+</div>
+<p>Delete records with a different configuration file (~/futuregrid.cfg):</p>
+<div class="highlight-python"><pre>$ fg-cleanup-table --conf ~/futuregrid.cfg</pre>
+</div>
+<p>Delete records with where clause:</p>
+<div class="highlight-python"><pre>$ fg-cleanup-table -w "instanceId = i-534109B6"</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="author">
+<h2>AUTHOR<a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Written by H. Lee, Fugang Wang and Gregor von Laszewski.</div></blockquote>
+</div>
+<div class="section" id="reporting-bugs">
+<h2>REPORTING BUGS<a class="headerlink" href="#reporting-bugs" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Report fg-cleanup-table bugs to <a class="reference external" href="mailto:laszewski&#37;&#52;&#48;gmail&#46;com">laszewski<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+<p>Github home page: &lt;<a class="reference external" href="https://github.com/futuregrid/futuregrid-cloud-metrics">https://github.com/futuregrid/futuregrid-cloud-metrics</a>&gt;</p>
+</div></blockquote>
+</div>
+<div class="section" id="see-also">
+<h2>SEE ALSO<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+	<li><a href="../index.html">Results</a>|&nbsp;</li>
+        <li><a href="../overview.html">Overview</a>|&nbsp;</li>
+        <li><a href="../about.html">About</a>|&nbsp;</li>
+        <li><a href="../installation.html">Installation</a>|&nbsp;</li>
+        <li><a href="../quickstart.html">Quick Start</a>|&nbsp;</li>
+        <li><a href="../details.html">Details</a>|&nbsp;</li>
+        <li><a href="../metrics.html">Metrics</a>|&nbsp;</li>
+        <li><a href="index.html">Commands</a>|&nbsp;</li>
+        <li><a href="../download.html">Download</a>|&nbsp;</li>
+        <li><a href="../support.html">Support</a>|&nbsp;</li>
+	<li><a href="../ubmod.html">Results for HPC (UBMoD)</a>|&nbsp;</li>
+        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier Diaz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

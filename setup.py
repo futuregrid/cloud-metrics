@@ -10,7 +10,7 @@ import sys, os
 
 #execfile ('VERSION.py')
 # hack as VERSION does not get included in packaged tar file for some reason
-version = '2.1.5'
+version = '3.1.0'
 
 classifiers = """\
 Intended Audience :: Developers
@@ -42,7 +42,7 @@ doclines = __doc__.split("\n")
 #DISTUTILS_DEBUG=1
 
 setup(
-    name='futuregrid.cloud.metric',
+    name='fgmetric',
     version=version,
     description=doclines[0],
     long_description = "\n".join(doclines[2:]),
@@ -65,10 +65,10 @@ setup(
     entry_points={
         'console_scripts':
             [
-             'fg-cleanup-db = futuregrid.cloud.metric.FGEucaMetricsDB:command_clean_database',
-             'fg-euca-gather-log-files = futuregrid.cloud.metric.FGEucaGatherLogFiles:main',
-             'fg-parser = futuregrid.cloud.metric.FGParser:main',
-             'fg-metric = futuregrid.cloud.metric.FGAnalyzer:main'
+             'fg-cleanup-db = fgmetric.FGEucaMetricsDB:command_clean_database',
+             'fg-euca-gather-log-files = fgmetric.FGEucaGatherLogFiles:main',
+             'fg-parser = fgmetric.FGParser:main',
+             'fg-metric = fgmetric.FGAnalyzer:main'
              ]},
     
     # install_requires = [

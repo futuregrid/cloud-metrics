@@ -818,7 +818,6 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         self.nova.calculate_stats(self.from_date, self.to_date)
 
-    def do_oneclick(self, arg):
     def do_getdaterange(self, arg): 
         """Get Date range of the instances table in mysql db"""
 

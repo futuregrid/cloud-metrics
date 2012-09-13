@@ -2,7 +2,7 @@ all:
 	cd /tmp
 	rm -rf /tmp/vc
 	mkdir -p /tmp/vc
-	cd /tmp/vc; git clone git://github.com/futuregrid/cloudmetrics.git
+	cd /tmp/vc; git clone git://github.com/futuregrid/cloud-metrics.git
 	cd /tmp/vc/cloud-metrics/doc; ls; make html
 	cp -r /tmp/vc/cloudmetrics/doc/build/html/* .
 	git add .

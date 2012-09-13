@@ -1,23 +1,23 @@
 Modules
 =======
 
-.. automodule:: futuregrid.cloud.metric.FGAnalyzer
+.. automodule:: fgmetric.FGAnalyzer
     :members:
 
-.. automodule:: futuregrid.cloud.metric.FGEucaGatherLogFiles
+.. automodule:: fgmetric.FGEucaGatherLogFiles
     :members:
 
-.. automodule:: futuregrid.cloud.metric.FGEucaMetricsDB
+.. automodule:: fgmetric.FGEucaMetricsDB
     :members:
 
-.. automodule:: futuregrid.cloud.metric.FGGoogleMotionChart
+.. automodule:: fgmetric.FGGoogleMotionChart
     :members:
 
-.. automodule:: futuregrid.cloud.metric.FGParser
+.. automodule:: fgmetric.FGParser
     :members:
 
-.. automodule:: futuregrid.cloud.metric.FGTemplate
+.. automodule:: fgmetric.FGTemplate
     :members:
 
-.. automodule:: futuregrid.cloud.metric.FGUtility
+.. automodule:: fgmetric.FGUtility
     :members:

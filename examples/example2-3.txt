@@ -1,0 +1,26 @@
+# This is an example of fg-metric cmd tool
+# You can test like below
+# $ cat example2.txt | fg-metric
+# Or you can type the commands below manually once you enter fg-metric
+#
+# Analyze entire data and create report
+
+clear all
+clear users
+set nodename india
+set platform nova
+analyze -M 06 -Y 2012
+createreport -d 2012-06/india/openstack/user/
+
+clear all
+clear users
+set nodename india
+set platform nova
+analyze -M 07 -Y 2012
+createreport -d 2012-07/india/openstack/user/
+
+clear users
+set nodename india
+set platform nova
+analyze -M 08 -Y 2012
+createreport -d 2012-08/india/openstack/user/

@@ -1,0 +1,265 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>About &mdash; Cloud Metrics 2.1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/issuetracker.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="top" title="Cloud Metrics 2.1.3 documentation" href="index.html" />
+ 
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11111']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </head>
+  <body>
+
+<div style="background-image:url('_static/header_bg.png');background-color: black; text-align: left; padding: 10px 10px 15px 35px">
+<table>
+  <tr>
+    <td>
+      <a href="index.html"><img src="http://futuregrid.github.com/doc/_static/fg-logo-grid-glow.png" border="0" alt="FutureGrid Cloud Metric"/></a>
+    </td>
+    <td>
+      <font size="5" color="white"><b><i>FutureGrid</i></b></font><br><br>
+      <font size="10" color="white" face="Comic Sans MS"><b><i>Cloud Metric</i></b></font>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+	<li><a href="index.html">Results</a>|&nbsp;</li>
+        <li><a href="overview.html">Overview</a>|&nbsp;</li>
+        <li><a href="#">About</a>|&nbsp;</li>
+        <li><a href="installation.html">Installation</a>|&nbsp;</li>
+        <li><a href="quickstart.html">Quick Start</a>|&nbsp;</li>
+        <li><a href="details.html">Details</a>|&nbsp;</li>
+        <li><a href="metrics.html">Metrics</a>|&nbsp;</li>
+        <li><a href="man/index.html">Commands</a>|&nbsp;</li>
+        <li><a href="download.html">Download</a>|&nbsp;</li>
+        <li><a href="support.html">Support</a>|&nbsp;</li>
+	<li><a href="ubmod.html">Results for HPC (UBMoD)</a>|&nbsp;</li>
+        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">About</a><ul>
+<li><a class="reference internal" href="#goals">Goals</a></li>
+<li><a class="reference internal" href="#contributors">Contributors</a></li>
+<li><a class="reference internal" href="#joining-the-development-team">Joining the Development Team</a></li>
+<li><a class="reference internal" href="#related-activities">Related Activities</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/about.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+<body style="background-image:url('_static/header_bg.png');background-color: grey;">
+</body>
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="about">
+<h1>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>We are developing an open source code that allows to analyze the log
+files for various cloud infrastructure tools.</p>
+<p>At this time, we are focusing on the development of a tool to analyze
+eucalyptus log data. It will include</p>
+<ul class="simple">
+<li>a framework to explore the data via a shell</li>
+<li>a framework to display the data</li>
+<li>a mechanism to replace the charting library</li>
+<li>a web framework (currently based on php)</li>
+</ul>
+<p>[Note: we may abandon the development of the php framework as it has
+cost too much time to develop.  We provide a simple php framework that
+displays the information in some web pages.]</p>
+</div></blockquote>
+<div class="section" id="goals">
+<h2>Goals<a class="headerlink" href="#goals" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Our gols include to enable the following capabilities</p>
+<ul class="simple">
+<li>integration of multiple centers</li>
+<li>integration of multiple cloud deployments within each center</li>
+<li>integraton of OpenStack</li>
+<li>Integration of HPC services</li>
+<li>integration of Nimbus</li>
+<li>integration of OpenNebula</li>
+</ul>
+<p>We are also collaborating with the TAS project that developd
+XDMod. ONce this project has open sourced their code we intend to
+leverage from their user interface. However, at this time the metics
+we collect are not yet integrated. Hence we can not yet use XDMod. We
+anticipate that modifications to XDMod will be conducted over the
+next year to accomplish this goal.</p>
+</div></blockquote>
+</div>
+<div class="section" id="contributors">
+<h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Lee, Hyungro (<a class="reference external" href="mailto:lee212&#37;&#52;&#48;indiana&#46;edu">lee212<span>&#64;</span>indiana<span>&#46;</span>edu</a>)</li>
+<li>von Laszewski, Gregor (<a class="reference external" href="mailto:laszewski&#37;&#52;&#48;gmail&#46;com">laszewski<span>&#64;</span>gmail<span>&#46;</span>com</a>)</li>
+<li>Wang, Fugang (<a class="reference external" href="mailto:kevinwangfg&#37;&#52;&#48;gmail&#46;com">kevinwangfg<span>&#64;</span>gmail<span>&#46;</span>com</a>)</li>
+</ul>
+<p>Please contact <a class="reference external" href="mailto:laszewski&#37;&#52;&#48;gmail&#46;com">laszewski<span>&#64;</span>gmail<span>&#46;</span>com</a> for mor information. Please insert
+the prefix: &#8220;METRICS: &#8221; in the subject of email messages.</p>
+<p>The contribution impact is recorded at</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/futuregrid/futuregrid-cloud-metrics/graphs/impact">https://github.com/futuregrid/futuregrid-cloud-metrics/graphs/impact</a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="joining-the-development-team">
+<h2>Joining the Development Team<a class="headerlink" href="#joining-the-development-team" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>If you like to join the development efforts, please e-mail us. We can
+than discuss how best you can contribute. You may have enhanced our
+code already or used it in your system. If so, please let us know.</div></blockquote>
+</div>
+<div class="section" id="related-activities">
+<h2>Related Activities<a class="headerlink" href="#related-activities" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Inca</p>
+<blockquote>
+<div><ul class="simple">
+<li>Inca does monitoring at specific time intervals. The information
+about clouds on FG is available at
+<a class="reference external" href="https://portal.futuregrid.org/monitoring/cloud">https://portal.futuregrid.org/monitoring/cloud</a></li>
+</ul>
+</div></blockquote>
+<p>Nimbus</p>
+<blockquote>
+<div><ul class="simple">
+<li>Nimbus provides their own metric framework. For FG you can see it
+at <a class="reference external" href="http://inca.futuregrid.org/nimbus-stats/">http://inca.futuregrid.org/nimbus-stats/</a>.
+This front page is not very pretty, but lists in its pu data the
+following metrics for each machine:</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>requests made by user</li>
+<li>minutes used by user</li>
+<li>requests made by week</li>
+<li>minutes used by user</li>
+</ul>
+<p>In the ussgae data we find for the week of the year the following
+information for each machine</p>
+<ul class="simple">
+<li>minutes used by week</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+	<li><a href="index.html">Results</a>|&nbsp;</li>
+        <li><a href="overview.html">Overview</a>|&nbsp;</li>
+        <li><a href="#">About</a>|&nbsp;</li>
+        <li><a href="installation.html">Installation</a>|&nbsp;</li>
+        <li><a href="quickstart.html">Quick Start</a>|&nbsp;</li>
+        <li><a href="details.html">Details</a>|&nbsp;</li>
+        <li><a href="metrics.html">Metrics</a>|&nbsp;</li>
+        <li><a href="man/index.html">Commands</a>|&nbsp;</li>
+        <li><a href="download.html">Download</a>|&nbsp;</li>
+        <li><a href="support.html">Support</a>|&nbsp;</li>
+	<li><a href="ubmod.html">Results for HPC (UBMoD)</a>|&nbsp;</li>
+        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier Diaz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

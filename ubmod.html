@@ -1,0 +1,175 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>UBMoD &mdash; Cloud Metrics 2.1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/issuetracker.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="Cloud Metrics 2.1.3 documentation" href="index.html" />
+ 
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11111']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </head>
+  <body>
+
+<div style="background-image:url('_static/header_bg.png');background-color: black; text-align: left; padding: 10px 10px 15px 35px">
+<table>
+  <tr>
+    <td>
+      <a href="index.html"><img src="http://futuregrid.github.com/doc/_static/fg-logo-grid-glow.png" border="0" alt="FutureGrid Cloud Metric"/></a>
+    </td>
+    <td>
+      <font size="5" color="white"><b><i>FutureGrid</i></b></font><br><br>
+      <font size="10" color="white" face="Comic Sans MS"><b><i>Cloud Metric</i></b></font>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+	<li><a href="index.html">Results</a>|&nbsp;</li>
+        <li><a href="overview.html">Overview</a>|&nbsp;</li>
+        <li><a href="about.html">About</a>|&nbsp;</li>
+        <li><a href="installation.html">Installation</a>|&nbsp;</li>
+        <li><a href="quickstart.html">Quick Start</a>|&nbsp;</li>
+        <li><a href="details.html">Details</a>|&nbsp;</li>
+        <li><a href="metrics.html">Metrics</a>|&nbsp;</li>
+        <li><a href="man/index.html">Commands</a>|&nbsp;</li>
+        <li><a href="download.html">Download</a>|&nbsp;</li>
+        <li><a href="support.html">Support</a>|&nbsp;</li>
+	<li><a href="#">Results for HPC (UBMoD)</a>|&nbsp;</li>
+        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">UBMoD</a></li>
+<li><a class="reference internal" href="#ubmod-for-futuregrid-hpc">UBMoD for FutureGrid HPC*</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/ubmod.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+<body style="background-image:url('_static/header_bg.png');background-color: grey;">
+</body>
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ubmod">
+<h1>UBMoD<a class="headerlink" href="#ubmod" title="Permalink to this headline">¶</a></h1>
+<p>UBMoD (UB Metrics on Demand) is an open source tool for collecting and mining statistical data from cluster resource managers (such as TORQUE, OpenPBS, and SGE) commonly found in high-performance computing environments. Apart from FutureGrid Cloud Metric, UBMoD has been installed to measure resource utilization of FutureGrid HPC clusters managed by Indiana University, Bloomington. The available link is here <a class="reference external" href="http://ubmod.futuregrid.org/">http://ubmod.futuregrid.org/</a> . UBMoD has been developed by the Center for Computational Research at the University at Buffalo, SUNY and presents resource utilization including CPU cycles consumed, total jobs, average wait time, etc. for individual users, research groups, departments, and decanal units. The web-based user interface provides a dashboard for displaying resource consumption along with fine-grained control over the time period and resources displayed. The data warehouse can easily be customized to support new resource managers. The information presented in easy-to-understand charts and tables and provides system administrators, users, and directors of HPC centers with a rich set of metrics to better understand how their resources are being utilized. The current release, which was completely re-written in PHP, adds the ability to apply custom tags to users and jobs and to then filter all reports using those tags. This provides complete flexibility for organizing users into departments, projects, and groups. For example, users can be tagged as members of one or more projects and reports can be dynamically generated for those projects.</p>
+</div>
+<div class="section" id="ubmod-for-futuregrid-hpc">
+<h1>UBMoD for FutureGrid HPC*<a class="headerlink" href="#ubmod-for-futuregrid-hpc" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://ubmod.futuregrid.org/">http://ubmod.futuregrid.org/</a></p>
+<ul class="simple">
+<li>only for resources managed by IU</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+	<li><a href="index.html">Results</a>|&nbsp;</li>
+        <li><a href="overview.html">Overview</a>|&nbsp;</li>
+        <li><a href="about.html">About</a>|&nbsp;</li>
+        <li><a href="installation.html">Installation</a>|&nbsp;</li>
+        <li><a href="quickstart.html">Quick Start</a>|&nbsp;</li>
+        <li><a href="details.html">Details</a>|&nbsp;</li>
+        <li><a href="metrics.html">Metrics</a>|&nbsp;</li>
+        <li><a href="man/index.html">Commands</a>|&nbsp;</li>
+        <li><a href="download.html">Download</a>|&nbsp;</li>
+        <li><a href="support.html">Support</a>|&nbsp;</li>
+	<li><a href="#">Results for HPC (UBMoD)</a>|&nbsp;</li>
+        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier Diaz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

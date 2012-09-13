@@ -1,0 +1,502 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fgmetric.FGEucaGatherLogFiles &mdash; Cloud Metrics 2.1.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/issuetracker.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="Cloud Metrics 2.1.3 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+ 
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11111']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </head>
+  <body>
+
+<div style="background-image:url('_static/header_bg.png');background-color: black; text-align: left; padding: 10px 10px 15px 35px">
+<table>
+  <tr>
+    <td>
+      <a href="../../index.html"><img src="http://futuregrid.github.com/doc/_static/fg-logo-grid-glow.png" border="0" alt="FutureGrid Cloud Metric"/></a>
+    </td>
+    <td>
+      <font size="5" color="white"><b><i>FutureGrid</i></b></font><br><br>
+      <font size="10" color="white" face="Comic Sans MS"><b><i>Cloud Metric</i></b></font>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+	<li><a href="../../index.html">Results</a>|&nbsp;</li>
+        <li><a href="../../overview.html">Overview</a>|&nbsp;</li>
+        <li><a href="../../about.html">About</a>|&nbsp;</li>
+        <li><a href="../../installation.html">Installation</a>|&nbsp;</li>
+        <li><a href="../../quickstart.html">Quick Start</a>|&nbsp;</li>
+        <li><a href="../../details.html">Details</a>|&nbsp;</li>
+        <li><a href="../../metrics.html">Metrics</a>|&nbsp;</li>
+        <li><a href="../../man/index.html">Commands</a>|&nbsp;</li>
+        <li><a href="../../download.html">Download</a>|&nbsp;</li>
+        <li><a href="../../support.html">Support</a>|&nbsp;</li>
+	<li><a href="../../ubmod.html">Results for HPC (UBMoD)</a>|&nbsp;</li>
+        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
+
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+<body style="background-image:url('_static/header_bg.png');background-color: grey;">
+</body>
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fgmetric.FGEucaGatherLogFiles</h1><div class="highlight"><pre>
+<span class="c">#! /usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Manual Page</span>
+
+<span class="sd">NAME - fg-euca-gather-log-files</span>
+
+<span class="sd">DESCRIPTION</span>
+<span class="sd">===========</span>
+
+<span class="sd">Eucalyptus 2.0 provides a number of log files that are written into a</span>
+<span class="sd">directory. The log files are maintained with the rrd tool, thus they</span>
+<span class="sd">will be overwritten after a particular time period. This tool copies</span>
+<span class="sd">the log files that end with .log.?  and copies them into a backup</span>
+<span class="sd">directory. A log file will only be copied into backup if it is not</span>
+<span class="sd">already there. This avoids unnecessary operations and allows the</span>
+<span class="sd">integration of this script into cron.</span>
+
+<span class="sd">USAGE</span>
+<span class="sd">=====</span>
+
+<span class="sd">fg-euca-gather-log-files -i &lt;from_dir&gt; -o &lt;backup_dir&gt;</span>
+
+<span class="sd">The program has a number of parameters by default it takes two</span>
+<span class="sd">directories. The first directory is the directory from which all</span>
+<span class="sd">log files are copied. The second is the directory to which the</span>
+<span class="sd">files are to be copied (e.g our Backup directory). If the backup</span>
+<span class="sd">directory does not exists it is being utomatically created.</span>
+
+<span class="sd">One thing is important to not that the current script looks</span>
+<span class="sd">recuresively through all subdirectories starting from the from dir.</span>
+<span class="sd">This is due to the fact that our initial script backed up all files</span>
+<span class="sd">into various subdirectories. All files will be renamed to</span>
+
+<span class="sd">   YYYY-MM-DD-HH-mm-ss-cc.log</span>
+
+<span class="sd">Specific arguments can be controlled as follows</span>
+
+<span class="sd">  -r, -R, --recursive</span>
+<span class="sd">      search directories and their contents recursively</span>
+
+<span class="sd">  -o, --backup &lt;dir&gt;</span>
+<span class="sd">      specify the backup directory (renamed log files will be saved here)</span>
+
+<span class="sd">  -i, --source &lt;dir&gt;</span>
+<span class="sd">      specify the source directory of eucalyptus logs (default: /var/log/eucalyptus)</span>
+
+<span class="sd">  -t, --log-type &lt;filename&gt;</span>
+<span class="sd">      specify a log type to be gathered (default: cc.log)</span>
+<span class="sd">      </span>
+
+<span class="sd">If any of the parameters are used the specification of any</span>
+<span class="sd">parameters without named parameters is not allowed. Calling</span>
+
+<span class="sd">fg-euca-gather-log-files --source &lt;from_dir&gt; --backup &lt;backup_dir&gt;</span>
+
+<span class="sd">is equicvalent to</span>
+
+<span class="sd">fg-euca-gather-log-files -i &lt;from_dir&gt; -o &lt;backup_dir&gt;</span>
+
+
+<span class="sd">In a production environment we recommend using explicit parameter naming</span>
+<span class="sd">in order to be more transparent.</span>
+
+<span class="sd">TODO: decide if we should eliminate arguments without parameters alltogether.</span>
+<span class="sd">Hyungro can decide, may be easier to implement and thus saves time.</span>
+<span class="sd">=&gt; I prefer to specify arguments. (H.Lee)</span>
+
+<span class="sd">INSTALLATION</span>
+<span class="sd">============</span>
+
+<span class="sd">Download</span>
+<span class="sd">--------</span>
+<span class="sd">Download the code from Git</span>
+
+<span class="sd">git@github.com:futuregrid/eucalyptus-cloud-metrics.git</span>
+
+<span class="sd">describe here.</span>
+
+<span class="sd">Deploy</span>
+<span class="sd">------</span>
+
+<span class="sd">After download, please go into the directory xyz and say</span>
+
+<span class="sd">pip install setup</span>
+
+<span class="sd">This will install the program(s) into</span>
+
+<span class="sd">/usr/loal/bin</span>
+
+<span class="sd">There you will find the program</span>
+
+<span class="sd">fg-euca-gather-log-files</span>
+
+
+<span class="sd">Cron Setup</span>
+<span class="sd">----------</span>
+<span class="sd">The following line causes the fg-euca-gather-log-files to be run once an hour.</span>
+<span class="sd">0       *       *       *       * /usr/local/bin/fg-euca-gather-log-files --source &lt;from_dir&gt; --backup &lt;backup_dir&gt;</span>
+
+<span class="sd">Update</span>
+<span class="sd">------</span>
+
+<span class="sd">At times there may be updates made to this program. In order to update</span>
+<span class="sd">the already deployed script, the following steps are recommended:</span>
+
+<span class="sd">(probably just like the first time, but we must make sure taht we just document</span>
+<span class="sd"> it here or refer to the instalation instructions.</span>
+
+<span class="sd">e.g. you could decide if a git pull should be called followed by a new pip install setup</span>
+
+<span class="sd">Easy install/Pip</span>
+<span class="sd">----------------</span>
+
+<span class="sd">In future we intent to host this program in pypi and the administrator will be able to call</span>
+
+<span class="sd">  pip install fg-metrics</span>
+
+<span class="sd">or</span>
+
+<span class="sd">   easyinstall install fg-metrics</span>
+
+<span class="sd">without needing to get the code from github</span>
+
+<span class="sd">Contribution</span>
+<span class="sd">------------</span>
+
+<span class="sd">If you like to contribute to the code, please contact Gregor von Laszewski</span>
+<span class="sd">at laszewski@gmail.com. The code is located on github at</span>
+
+<span class="sd"> https://github.com/futuregrid/eucalyptus-cloud-metrics</span>
+
+<span class="sd">in the directory cloud-metrics</span>
+
+<span class="sd">License</span>
+<span class="sd">The code is distributed under Apache 2.0 License</span>
+<span class="sd">Authors: Gregor von Laszewski, H. Lee</span>
+<span class="sd">E-mail: laszewski@gmail.com</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">errno</span><span class="o">,</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">fnmatch</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<div class="viewcode-block" id="tail"><a class="viewcode-back" href="../../modules.html#fgmetric.FGEucaGatherLogFiles.tail">[docs]</a><span class="k">def</span> <span class="nf">tail</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the last `window` lines of file `f` as a list.</span>
+<span class="sd">    f - is the file descriptor </span>
+<span class="sd">    window - is the number of lines that will be returned from the end</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># from </span>
+    <span class="c"># http://stackoverflow.com/questions/136168/get-last-n-lines-of-a-file-with-python-similar-to-tail</span>
+
+    <span class="n">BUFSIZ</span> <span class="o">=</span> <span class="mi">1024</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="nb">bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">window</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">bytes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">bytes</span> <span class="o">-</span> <span class="n">BUFSIZ</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c"># Seek back one whole BUFSIZ</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">block</span> <span class="o">*</span> <span class="n">BUFSIZ</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="c"># read BUFFER</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">BUFSIZ</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># file too small, start from begining</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+            <span class="c"># only read what was not read</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">bytes</span><span class="p">))</span>
+        <span class="n">linesFound</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">size</span> <span class="o">-=</span> <span class="n">linesFound</span>
+        <span class="nb">bytes</span> <span class="o">-=</span> <span class="n">BUFSIZ</span>
+        <span class="n">block</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="o">-</span><span class="n">window</span><span class="p">:]</span>
+</div>
+<div class="viewcode-block" id="head"><a class="viewcode-back" href="../../modules.html#fgmetric.FGEucaGatherLogFiles.head">[docs]</a><span class="k">def</span> <span class="nf">head</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the first n lines in a file.</span>
+<span class="sd">    file - is the file descriptor</span>
+<span class="sd">    n - number of lines to be returned from the begining of the file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                            <span class="c">#Rewind file</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">file</span><span class="o">.</span><span class="n">next</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+</div>
+<div class="viewcode-block" id="getdate_from_euca_log_line"><a class="viewcode-back" href="../../modules.html#fgmetric.FGEucaGatherLogFiles.getdate_from_euca_log_line">[docs]</a><span class="k">def</span> <span class="nf">getdate_from_euca_log_line</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Eucalyptus log files have a time stamp at the beginning of the</span>
+<span class="sd">    file. This function returns the date from that line as a datetime</span>
+<span class="sd">    object.</span>
+<span class="sd">    return - datetime object of the timestamp in the line</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span> <span class="p">(</span><span class="s">&#39;\]&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:],</span> <span class="s">&#39;%a %b </span><span class="si">%d</span><span class="s"> %H:%M:%S %Y&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="generate_filename"><a class="viewcode-back" href="../../modules.html#fgmetric.FGEucaGatherLogFiles.generate_filename">[docs]</a><span class="k">def</span> <span class="nf">generate_filename</span> <span class="p">(</span><span class="n">date_object</span><span class="p">,</span> <span class="n">postfix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is an internal helper function that converts a date</span>
+<span class="sd">    object to a string in which all : and &quot; &quot; are replaced with &quot;-&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">date_object</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="s">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">,</span><span class="s">&quot;-&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="n">postfix</span> 
+</div>
+<div class="viewcode-block" id="rename_euca_log_file"><a class="viewcode-back" href="../../modules.html#fgmetric.FGEucaGatherLogFiles.rename_euca_log_file">[docs]</a><span class="k">def</span> <span class="nf">rename_euca_log_file</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function renames a given eucalyptus file located in</span>
+<span class="sd">    &quot;path/name&quot; based on the timestamp that can be found in the last</span>
+<span class="sd">    line of the file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">old_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot; renaming &quot;</span>  <span class="o">+</span> <span class="n">old_name</span>
+    <span class="n">new_name</span> <span class="o">=</span> <span class="n">generate_euca_log_filename</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">new_name</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">new_name</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">rename</span> <span class="p">(</span><span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;file existed already: &quot;</span> <span class="o">+</span> <span class="n">new_name</span><span class="p">,</span> <span class="s">&quot;, deleting: &quot;</span> <span class="o">+</span> <span class="n">old_name</span>   
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">old_name</span><span class="p">)</span>
+    <span class="k">return</span>
+</div>
+<div class="viewcode-block" id="generate_euca_log_filename"><a class="viewcode-back" href="../../modules.html#fgmetric.FGEucaGatherLogFiles.generate_euca_log_filename">[docs]</a><span class="k">def</span> <span class="nf">generate_euca_log_filename</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">suffix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given the location of a eucalyptus log file as &quot;path/name&quot;, a new</span>
+<span class="sd">    name is generated and returned based on the time stamp in the last</span>
+<span class="sd">    line of the logfile. The name will be date-time.cc.log where all</span>
+<span class="sd">    items are separated with &quot;-&quot;. The file will not be renamed with</span>
+<span class="sd">    that function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">old_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">FILE</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">old_name</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> 
+    <span class="n">line</span> <span class="o">=</span> <span class="n">tail</span><span class="p">(</span><span class="n">FILE</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">date_object</span> <span class="o">=</span> <span class="n">getdate_from_euca_log_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">new_name</span> <span class="o">=</span> <span class="n">generate_filename</span> <span class="p">(</span><span class="n">date_object</span><span class="p">,</span><span class="s">&#39;-&#39;</span><span class="o">+</span><span class="n">suffix</span><span class="p">)</span>
+    <span class="n">new_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">new_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_name</span>
+</div>
+<div class="viewcode-block" id="ls"><a class="viewcode-back" href="../../modules.html#fgmetric.FGEucaGatherLogFiles.ls">[docs]</a><span class="k">def</span> <span class="nf">ls</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    simply does a unix ls on the path. It is used for debugging.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&quot;----&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span> <span class="p">(</span><span class="s">&quot;ls &quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;----&quot;</span>
+</div>
+<div class="viewcode-block" id="all_euca_log_files"><a class="viewcode-back" href="../../modules.html#fgmetric.FGEucaGatherLogFiles.all_euca_log_files">[docs]</a><span class="k">def</span> <span class="nf">all_euca_log_files</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">recursive</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    returns a list of all eucalyptus logfiles that are located in all</span>
+<span class="sd">    subdirectories starting from &quot;path&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">all_files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fnmatch</span><span class="o">.</span><span class="n">fnmatch</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;*&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#39;.*&#39;</span><span class="p">):</span>
+                <span class="n">all_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="n">recursive</span><span class="p">:</span> <span class="c"># if recursive is false, this iteration works like os.listdir()</span>
+			  <span class="c"># Return filenames in the directory given by path except sub directories</span>
+		<span class="k">break</span>
+    <span class="k">return</span> <span class="n">all_files</span>
+</div>
+<div class="viewcode-block" id="gather_all_euca_log_files"><a class="viewcode-back" href="../../modules.html#fgmetric.FGEucaGatherLogFiles.gather_all_euca_log_files">[docs]</a><span class="k">def</span> <span class="nf">gather_all_euca_log_files</span> <span class="p">(</span><span class="n">from_path</span><span class="p">,</span> <span class="n">to_path</span><span class="p">,</span> <span class="n">log_type</span><span class="p">,</span> <span class="n">recursive</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this function gathers all eucalyptus log files that are located in</span>
+<span class="sd">    all subdirectories starting from &quot;from_path&quot; and copies them into</span>
+<span class="sd">    the specified backup directory. In addition all log file will be</span>
+<span class="sd">    renamed based on the timestap in the last line of the log</span>
+<span class="sd">    file. The fileame is date-time.cc.log where all items are</span>
+<span class="sd">    separated with a &quot;-&quot;. E.g. YYYY-MM-DD-HH-mm-ss-cc.log. If a</span>
+<span class="sd">    logfile already exists with that name it will not be overwritten</span>
+<span class="sd">    and the next file in the subdirectory will be attempted to be</span>
+<span class="sd">    copied to backup.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span> <span class="p">(</span><span class="n">to_path</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span> <span class="p">(</span><span class="n">to_path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
+                <span class="k">print</span> <span class="n">e</span>
+                <span class="k">print</span> <span class="s">&quot;to_path &#39;&quot;</span> <span class="o">+</span> <span class="n">to_path</span> <span class="o">+</span> <span class="s">&quot;&#39; is not accessible&quot;</span>
+                <span class="k">return</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span> <span class="p">(</span><span class="n">from_path</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;from_path &#39;&quot;</span> <span class="o">+</span> <span class="n">from_path</span> <span class="o">+</span> <span class="s">&quot;&#39; doesn&#39;t exist&quot;</span>
+	<span class="k">return</span><span class="p">;</span>
+
+    <span class="k">print</span> <span class="n">from_path</span>
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">all_euca_log_files</span><span class="p">(</span><span class="n">from_path</span><span class="p">,</span> <span class="n">log_type</span><span class="p">,</span> <span class="n">recursive</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+        <span class="n">new_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">generate_euca_log_filename</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">log_type</span><span class="p">))</span>
+        <span class="n">new_location</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">to_path</span><span class="p">,</span><span class="n">new_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">new_location</span><span class="p">):</span>
+            <span class="k">print</span> <span class="n">new_name</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span> <span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">new_location</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">new_name</span> <span class="o">+</span> <span class="s">&quot;, WARNING: file exists, copy ignored&quot;</span>
+    <span class="k">return</span>
+</div>
+<div class="viewcode-block" id="works"><a class="viewcode-back" href="../../modules.html#fgmetric.FGEucaGatherLogFiles.works">[docs]</a><span class="k">def</span> <span class="nf">works</span><span class="p">():</span>
+  <span class="sd">&#39;&#39;&#39; code for testing that works &#39;&#39;&#39;</span>
+  <span class="n">FILE</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;/tmp/cc.log.4&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> 
+  <span class="k">print</span> <span class="s">&quot;---- head ----</span><span class="se">\n</span><span class="s">&quot;</span>
+  <span class="k">print</span> <span class="n">head</span><span class="p">(</span><span class="n">FILE</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+  <span class="k">print</span> <span class="s">&quot;---- tail ----</span><span class="se">\n</span><span class="s">&quot;</span>
+  <span class="n">line</span> <span class="o">=</span> <span class="n">tail</span><span class="p">(</span><span class="n">FILE</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+  <span class="k">print</span> <span class="n">line</span>
+  <span class="n">date_object</span> <span class="o">=</span> <span class="n">getdate_from_euca_log_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+  <span class="k">print</span> <span class="n">date_object</span>
+  <span class="k">print</span> <span class="n">generate_filename</span> <span class="p">(</span><span class="n">date_object</span><span class="p">,</span><span class="s">&#39;-cc.log&#39;</span><span class="p">)</span>
+
+  <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="s">&#39;/tmp/cc.log.4&#39;</span><span class="p">,</span> <span class="s">&#39;/tmp/cc.log.5&#39;</span><span class="p">)</span>
+  <span class="n">ls</span><span class="p">(</span><span class="s">&quot;/tmp&quot;</span><span class="p">)</span>
+  <span class="n">rename_euca_log_file</span><span class="p">(</span><span class="s">&quot;/tmp&quot;</span><span class="p">,</span> <span class="s">&quot;cc.log.5&quot;</span><span class="p">)</span>
+  <span class="n">ls</span><span class="p">(</span><span class="s">&quot;/tmp&quot;</span><span class="p">)</span>
+  <span class="k">return</span>
+</div>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+   <span class="n">def_input_dir</span> <span class="o">=</span> <span class="s">&quot;/tmp/uncompressed-euca-logbackup/&quot;</span>
+   <span class="n">def_output_dir</span> <span class="o">=</span> <span class="s">&quot;/var/log/eucalyptus/BACKUP&quot;</span>
+   <span class="n">def_log_type</span> <span class="o">=</span> <span class="s">&quot;cc.log&quot;</span>
+
+   <span class="c"># Parse arguments</span>
+   <span class="c"># ---------------</span>
+   <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+   <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-i&quot;</span><span class="p">,</span> <span class="s">&quot;--source&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;input_dir&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">def_input_dir</span><span class="p">,</span>
+		   <span class="n">help</span><span class="o">=</span><span class="s">&quot;specify the source directory of eucalyptus logs (default: /var/log/eucalyptus)&quot;</span><span class="p">)</span>
+   <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-o&quot;</span><span class="p">,</span> <span class="s">&quot;--backup&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;output_dir&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">def_output_dir</span><span class="p">,</span>
+		   <span class="n">help</span><span class="o">=</span><span class="s">&quot;specify the backup directory (renamed log files will be saved here)&quot;</span><span class="p">)</span>
+   <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-r&quot;</span><span class="p">,</span> <span class="s">&quot;--recursive&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;recursive&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+		   <span class="n">help</span><span class="o">=</span><span class="s">&quot;search directories and their contents recursively&quot;</span><span class="p">)</span>
+   <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-t&quot;</span><span class="p">,</span> <span class="s">&quot;--log-type&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;log_type&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">def_log_type</span><span class="p">,</span>
+		   <span class="n">help</span><span class="o">=</span><span class="s">&quot;specify a log type to be gathered (default: cc.log)&quot;</span><span class="p">)</span>
+   <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+   <span class="c">#print args.input_dir, args.output_dir, args.recursive</span>
+
+   <span class="n">gather_all_euca_log_files</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">log_type</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">recursive</span><span class="p">)</span>
+
+   <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+	<span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+	<li><a href="../../index.html">Results</a>|&nbsp;</li>
+        <li><a href="../../overview.html">Overview</a>|&nbsp;</li>
+        <li><a href="../../about.html">About</a>|&nbsp;</li>
+        <li><a href="../../installation.html">Installation</a>|&nbsp;</li>
+        <li><a href="../../quickstart.html">Quick Start</a>|&nbsp;</li>
+        <li><a href="../../details.html">Details</a>|&nbsp;</li>
+        <li><a href="../../metrics.html">Metrics</a>|&nbsp;</li>
+        <li><a href="../../man/index.html">Commands</a>|&nbsp;</li>
+        <li><a href="../../download.html">Download</a>|&nbsp;</li>
+        <li><a href="../../support.html">Support</a>|&nbsp;</li>
+	<li><a href="../../ubmod.html">Results for HPC (UBMoD)</a>|&nbsp;</li>
+        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
+
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier Diaz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

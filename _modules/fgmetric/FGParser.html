@@ -1,0 +1,1044 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fgmetric.FGParser &mdash; Cloud Metrics 2.1.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/issuetracker.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="Cloud Metrics 2.1.3 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+ 
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11111']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </head>
+  <body>
+
+<div style="background-image:url('_static/header_bg.png');background-color: black; text-align: left; padding: 10px 10px 15px 35px">
+<table>
+  <tr>
+    <td>
+      <a href="../../index.html"><img src="http://futuregrid.github.com/doc/_static/fg-logo-grid-glow.png" border="0" alt="FutureGrid Cloud Metric"/></a>
+    </td>
+    <td>
+      <font size="5" color="white"><b><i>FutureGrid</i></b></font><br><br>
+      <font size="10" color="white" face="Comic Sans MS"><b><i>Cloud Metric</i></b></font>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+	<li><a href="../../index.html">Results</a>|&nbsp;</li>
+        <li><a href="../../overview.html">Overview</a>|&nbsp;</li>
+        <li><a href="../../about.html">About</a>|&nbsp;</li>
+        <li><a href="../../installation.html">Installation</a>|&nbsp;</li>
+        <li><a href="../../quickstart.html">Quick Start</a>|&nbsp;</li>
+        <li><a href="../../details.html">Details</a>|&nbsp;</li>
+        <li><a href="../../metrics.html">Metrics</a>|&nbsp;</li>
+        <li><a href="../../man/index.html">Commands</a>|&nbsp;</li>
+        <li><a href="../../download.html">Download</a>|&nbsp;</li>
+        <li><a href="../../support.html">Support</a>|&nbsp;</li>
+	<li><a href="../../ubmod.html">Results for HPC (UBMoD)</a>|&nbsp;</li>
+        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
+
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+<body style="background-image:url('_static/header_bg.png');background-color: grey;">
+</body>
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fgmetric.FGParser</h1><div class="highlight"><pre>
+<span class="c">#! /usr/bin/env python</span>
+<span class="sd">&#39;&#39;&#39;FGParser&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="o">*</span> 
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="kn">import</span> <span class="nn">fgmetric.FGEucaMetricsDB</span>
+
+<span class="n">manual</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">MANUAL PAGE DRAFT</span>
+
+<span class="s">NAME - fg-euca-log-parser</span>
+
+<span class="s">DESCRIPTION</span>
+
+<span class="s">usage</span>
+
+<span class="s">&lt;TBD&gt;   cat filename.log | fg-euca-log-parser &lt;parameters&gt;</span>
+
+
+<span class="s">All log entries are included through a pipe into the program</span>
+
+<span class="s">fg-euca-log-parser</span>
+
+<span class="s">&lt;TBD&gt;  --nodb</span>
+<span class="s">      does not use the internal database, but just files</span>
+
+<span class="s">  --conf filename</span>
+
+<span class="s">      configuraton file of the database to be used. The configuration file has the following format</span>
+
+<span class="s">      [EucaLogDB]</span>
+<span class="s">      host=HOST</span>
+<span class="s">      port=PORT</span>
+<span class="s">      user=USER</span>
+<span class="s">      passwd=PASS</span>
+<span class="s">      db=DB</span>
+
+<span class="s">  if this parameter is not specified and a database is used the default location for this file is in</span>
+
+<span class="s">      ~/.futuregrid/futuregrid.cfg</span>
+<span class="s">      </span>
+<span class="s">  --cleardb</span>
+
+<span class="s">     This command without any parameter deletes the entire database.</span>
+<span class="s">     Be careful with this</span>
+
+<span class="s">&lt;TBD&gt;  --backup filename</span>
+
+<span class="s">     backups the database into a named file</span>
+
+<span class="s">&lt;TBD&gt;  --restore filename</span>
+
+<span class="s">      restores the database from the named file</span>
+
+<span class="s">  --parse type1 type2 ...</span>
+
+<span class="s">       if one of more types separated with space ar used, those types are</span>
+<span class="s">       parsed and included into the database, this parameter is optional and</span>
+<span class="s">       by default all types of interest are parsed. they are case insensitive</span>
+
+<span class="s">       types are print_ccInstance, refresh_resources</span>
+
+<span class="s">       BUG: Note the code does not yet analyse or store data</span>
+<span class="s">            from refresh resources. This was not our highest priority</span>
+<span class="s">       </span>
+<span class="s">       types we have not yet included include</span>
+<span class="s">          terminate_instances</span>
+<span class="s">          ....</span>
+<span class="s">          put all the other once we ignore here</span>
+
+<span class="s">  --from date_from --to date_to</span>
+
+<span class="s">     If a from and to date are specified in the following format: 2011-11-06 00:13:15</span>
+<span class="s">     all entries outside of these dates are ignored as part of the parsing step</span>
+<span class="s">     If no from and to are specified, all data is parsed</span>
+
+<span class="s">  </span>
+<span class="s">Usage tip:</span>
+
+<span class="s">using fgrep to search for the types before piping it into this program could</span>
+<span class="s">speed up processing. multiple files, can be concatenated simply with cat.</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Instances"><a class="viewcode-back" href="../../modules.html#fgmetric.FGParser.Instances">[docs]</a><span class="k">class</span> <span class="nc">Instances</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39; The instance&#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">userinfo_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_the_future</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s">&quot;3000-01-01 00:00:00&quot;</span><span class="p">,</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_the_past</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s">&quot;1970-01-01 00:00:00&quot;</span><span class="p">,</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pp</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eucadb</span> <span class="o">=</span> <span class="n">fgmetric</span><span class="o">.</span><span class="n">FGEucaMetricsDB</span><span class="o">.</span><span class="n">FGEucaMetricsDB</span><span class="p">(</span><span class="s">&quot;futuregrid.cfg&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">withSQL</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_date</span>  <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s">&quot;3000-01-01 00:00:00&quot;</span><span class="p">,</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s">&quot;1981-01-01 00:00:00&quot;</span><span class="p">,</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Instances.clear"><a class="viewcode-back" href="../../modules.html#fgmetric.FGParser.Instances.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;clear the data&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">return</span>
+</div>
+    <span class="k">def</span> <span class="nf">set_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">eucadb</span> <span class="o">=</span> <span class="n">fgmetric</span><span class="o">.</span><span class="n">FGEucaMetricsDB</span><span class="o">.</span><span class="n">FGEucaMetricsDB</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+	<span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">getdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">print_total</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;total instances = &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">todatetime</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">instance</span><span class="p">):</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;teardown&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_todate</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;teardown&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;teardown&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_todate</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;teardown&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;extant&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_todate</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;extant&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;extant&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_todate</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;extant&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;pending&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_todate</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;pending&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;pending&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_todate</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;pending&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;t_start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_todate</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;t_start&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_todate</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_todate</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_todate</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">tostr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">instance</span><span class="p">):</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;teardown&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;teardown&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;teardown&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;teardown&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;extant&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;extant&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;extant&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;extant&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;pending&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;pending&quot;</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;pending&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="s">&quot;pending&quot;</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;t_start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;t_start&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">])</span>
+        <span class="n">instance</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">value_todate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">string</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">index</span> <span class="o">=</span> <span class="s">&quot;all&quot;</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span> <span class="ow">or</span> <span class="p">(</span><span class="n">index</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;------------------------&quot;</span>
+                <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+            <span class="k">print</span> <span class="s">&quot;------------------------&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">print_total</span><span class="p">()</span>
+            <span class="k">print</span> <span class="s">&quot;------------------------&quot;</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)):</span>
+            <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;ERROR printing of index &quot;</span> <span class="o">+</span> <span class="n">index</span>
+
+    <span class="k">def</span> <span class="nf">print_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">index</span> <span class="o">=</span> <span class="s">&quot;all&quot;</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">index</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s">&quot;instanceId&quot;</span><span class="p">])</span>
+            <span class="k">print</span> <span class="s">&quot;------------------------&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">print_total</span><span class="p">()</span>
+            <span class="k">print</span> <span class="s">&quot;------------------------&quot;</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)):</span>
+            <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="s">&quot;instanceId&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;ERROR printing of index &quot;</span> <span class="o">+</span> <span class="n">index</span>
+
+    <span class="k">def</span> <span class="nf">json_dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="n">string</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">all</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tostr</span> <span class="p">(</span><span class="nb">all</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+         <span class="n">string</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">all</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">all</span><span class="p">:</span>
+             <span class="k">print</span> <span class="nb">all</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">todatetime</span> <span class="p">(</span><span class="nb">all</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+         <span class="k">return</span> <span class="n">string</span> 
+
+<span class="c">######################################################################</span>
+<span class="c"># SQL</span>
+<span class="c">######################################################################</span>
+
+    <span class="k">def</span> <span class="nf">read_from_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="n">instance_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eucadb</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">instance_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span>
+            <span class="n">key</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">read_userinfo_from_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">userinfo_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eucadb</span><span class="o">.</span><span class="n">read_userinfo</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">userinfo_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">userinfo_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">write_to_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key_current</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eucadb</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key_current</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">write_userinfo_to_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">userinfo_data</span>
+        <span class="k">for</span> <span class="n">key_current</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">userinfo_data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eucadb</span><span class="o">.</span><span class="n">write_userinfo</span><span class="p">(</span><span class="n">key_current</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Instances.add"><a class="viewcode-back" href="../../modules.html#fgmetric.FGParser.Instances.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">datarecord</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;prints the information for each instance&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">datarecord</span><span class="p">[</span><span class="s">&quot;linetype&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;print_ccInstance&quot;</span><span class="p">:</span>
+            <span class="n">instanceId</span> <span class="o">=</span> <span class="n">datarecord</span><span class="p">[</span><span class="s">&quot;instanceId&quot;</span><span class="p">]</span> 
+            <span class="n">ownerId</span> <span class="o">=</span> <span class="n">datarecord</span><span class="p">[</span><span class="s">&quot;ownerId&quot;</span><span class="p">]</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datarecord</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">]</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">datarecord</span><span class="p">[</span><span class="s">&quot;state&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">datarecord</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span>
+
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">instanceId</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">ownerId</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+
+            <span class="n">instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">instance</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+                <span class="c"># if were wereto do a data base this line needs to be replaced</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">datarecord</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="s">&quot;t_end&quot;</span> <span class="ow">in</span> <span class="n">current</span><span class="p">):</span>
+            <span class="c">#time in the future</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_the_future</span>
+
+                <span class="n">current</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s">&quot;pending&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s">&quot;start&quot;</span> <span class="p">:</span> <span class="n">f</span><span class="p">,</span> <span class="s">&quot;stop&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">},</span>
+                    <span class="s">&quot;teardown&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s">&quot;start&quot;</span> <span class="p">:</span> <span class="n">f</span><span class="p">,</span> <span class="s">&quot;stop&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">},</span>
+                    <span class="s">&quot;extant&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s">&quot;start&quot;</span> <span class="p">:</span> <span class="n">f</span><span class="p">,</span> <span class="s">&quot;stop&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="n">current</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span>
+                <span class="n">current</span><span class="p">[</span><span class="s">&quot;t_start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">]</span> <span class="c"># for naming consitency</span>
+                <span class="n">current</span><span class="p">[</span><span class="s">&quot;duration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="n">current</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">current</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">],</span> <span class="n">t</span><span class="p">)</span>
+            <span class="n">current</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="n">status</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">current</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="n">status</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">],</span><span class="n">t</span><span class="p">)</span>
+            <span class="n">current</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="n">status</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">current</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="n">status</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">],</span><span class="n">t</span><span class="p">)</span>
+
+            <span class="n">instance</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span>
+</div>
+<div class="viewcode-block" id="Instances.update_traceinfo"><a class="viewcode-back" href="../../modules.html#fgmetric.FGParser.Instances.update_traceinfo">[docs]</a>    <span class="k">def</span> <span class="nf">update_traceinfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39; New version of add function  &#39;&#39;&#39;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_datetime</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+	<span class="n">updated_res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_to_list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">updated_res</span>
+</div>
+    <span class="k">def</span> <span class="nf">set_datetime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+
+        <span class="n">future</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_the_future</span>
+        <span class="n">past</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_the_past</span>
+	<span class="c"># Set datetime</span>
+	<span class="n">row</span><span class="p">[</span><span class="s">&quot;t_start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">]</span>
+	<span class="n">row</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_t_end</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+	<span class="n">row</span><span class="p">[</span><span class="s">&quot;duration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_t_delta</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="n">row</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&quot;pending&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;start&quot;</span> <span class="p">:</span> <span class="n">future</span><span class="p">,</span> <span class="s">&quot;stop&quot;</span> <span class="p">:</span> <span class="n">past</span><span class="p">,</span> <span class="s">&quot;queue&quot;</span> <span class="p">:</span> <span class="n">deque</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="mi">10</span><span class="p">)},</span>
+                <span class="s">&quot;extant&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;start&quot;</span> <span class="p">:</span> <span class="n">future</span><span class="p">,</span> <span class="s">&quot;stop&quot;</span> <span class="p">:</span> <span class="n">past</span><span class="p">,</span> <span class="s">&quot;queue&quot;</span> <span class="p">:</span> <span class="n">deque</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="mi">10</span><span class="p">)},</span>
+                <span class="s">&quot;teardown&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;start&quot;</span> <span class="p">:</span> <span class="n">future</span><span class="p">,</span> <span class="s">&quot;stop&quot;</span> <span class="p">:</span> <span class="n">past</span><span class="p">,</span> <span class="s">&quot;queue&quot;</span> <span class="p">:</span> <span class="n">deque</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="mi">10</span><span class="p">)}</span>
+                <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">row</span>
+
+<div class="viewcode-block" id="Instances.update_to_list"><a class="viewcode-back" href="../../modules.html#fgmetric.FGParser.Instances.update_to_list">[docs]</a>    <span class="k">def</span> <span class="nf">update_to_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39; Reflect to the current list &#39;&#39;&#39;</span>
+
+	<span class="n">instanceId</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;instanceId&quot;</span><span class="p">]</span>
+	<span class="n">ownerId</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;ownerId&quot;</span><span class="p">]</span>
+	<span class="n">ts</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">]</span>
+	<span class="n">key</span> <span class="o">=</span> <span class="n">instanceId</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">ownerId</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+
+	<span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_trace_datetime</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span>
+        <span class="c"># Update - this needs to be changed. </span>
+        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">res</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]:</span>
+            <span class="n">res</span><span class="p">[</span><span class="s">&quot;state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;state&quot;</span><span class="p">]</span>
+            <span class="n">res</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span> <span class="c">#max(res[&quot;date&quot;], row[&quot;date&quot;]) # we don&#39;t need date column</span>
+            <span class="n">res</span><span class="p">[</span><span class="s">&quot;duration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;duration&quot;</span><span class="p">]</span><span class="c">#max(res[&quot;duration&quot;], row[&quot;duration&quot;])</span>
+            <span class="n">res</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]</span><span class="c">#min(res[&quot;t_end&quot;], row[&quot;t_end&quot;])</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+</div>
+    <span class="k">def</span> <span class="nf">update_trace_datetime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">old</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">old</span> <span class="o">=</span> <span class="n">new</span>
+
+        <span class="n">state</span> <span class="o">=</span> <span class="n">new</span><span class="p">[</span><span class="s">&quot;state&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">old</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="n">state</span><span class="p">][</span><span class="s">&quot;queue&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">])</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="n">old</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="n">state</span><span class="p">][</span><span class="s">&quot;queue&quot;</span><span class="p">]</span>
+        <span class="n">old</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="n">state</span><span class="p">][</span><span class="s">&quot;start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="c">#min(old[&quot;trace&quot;][state][&quot;start&quot;], new[&quot;date&quot;])</span>
+        <span class="n">old</span><span class="p">[</span><span class="s">&quot;trace&quot;</span><span class="p">][</span><span class="n">state</span><span class="p">][</span><span class="s">&quot;stop&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="c">#max(old[&quot;trace&quot;][state][&quot;stop&quot;], new[&quot;date&quot;])</span>
+
+        <span class="k">return</span> <span class="n">old</span>
+
+    <span class="k">def</span> <span class="nf">get_previous_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+	<span class="n">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="s">&quot;pending&quot;</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">state</span>
+	<span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s">&quot;extant&quot;</span><span class="p">:</span>
+		<span class="k">return</span> <span class="s">&quot;pending&quot;</span>
+	<span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s">&quot;teardown&quot;</span><span class="p">:</span>
+		<span class="k">return</span> <span class="s">&quot;extant&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_t_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;state&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;Teardown&quot;</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_the_future</span>
+
+    <span class="k">def</span> <span class="nf">get_t_delta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+
+	<span class="n">start</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;t_start&quot;</span><span class="p">]</span>
+	<span class="n">last</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span>
+
+	<span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;state&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;Teardown&quot;</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]:</span>
+			<span class="n">last</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">])</span>
+
+	<span class="n">t_delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">last</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">t_delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="n">t_delta</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+	<span class="k">return</span> <span class="n">t_delta</span>
+
+<div class="viewcode-block" id="Instances.refresh"><a class="viewcode-back" href="../../modules.html#fgmetric.FGParser.Instances.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;calculates how long each instance runs in seconds&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;state&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;Teardown&quot;</span><span class="p">:</span>
+                <span class="n">t_delta</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">t_delta</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">t_delta</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">t_delta</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;t_end&quot;</span><span class="p">]</span>
+            <span class="n">values</span><span class="p">[</span><span class="s">&quot;duration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">t_delta</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+</div>
+    <span class="k">def</span> <span class="nf">getDateRange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_date</span> <span class="o">&gt;</span> <span class="n">element</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">first_date</span> <span class="o">=</span> <span class="n">element</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_date</span> <span class="o">&lt;</span> <span class="n">element</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_date</span> <span class="o">=</span> <span class="n">element</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">first_date</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_date</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">set_userinfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">ownerid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&quot;ownerId&quot;</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">new_userinfo</span> <span class="o">=</span> <span class="n">retrieve_userinfo_ldap</span><span class="p">(</span><span class="n">ownerid</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_userinfo</span><span class="p">(</span><span class="n">new_userinfo</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+    <span class="k">def</span> <span class="nf">add_userinfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_userinfo</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">userinfo_data</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">new_userinfo</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">userinfo_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_userinfo</span><span class="p">)</span>
+</div>
+<span class="k">def</span> <span class="nf">retrieve_userinfo_ldap</span><span class="p">(</span><span class="n">ownerid</span><span class="p">):</span>
+
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;python&#39;</span><span class="p">,</span> <span class="s">&#39;fg-user-project-info.py&#39;</span><span class="p">,</span> <span class="s">&#39;-u&#39;</span><span class="p">,</span> <span class="n">ownerid</span><span class="p">,</span> <span class="s">&#39;-n&#39;</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+        <span class="n">firstname</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">lastname</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;ownerid&#39;</span><span class="p">:</span> <span class="n">ownerid</span><span class="p">,</span> <span class="s">&#39;first_name&#39;</span><span class="p">:</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;last_name&#39;</span> <span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&#39;uid&#39;</span> <span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">}</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">convert_data_to_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">attribute</span><span class="p">):</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="s">&quot;&#39; , &#39;&quot;</span><span class="p">,</span> <span class="n">rest</span><span class="p">)</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="s">&quot;[&#39;&quot;</span> <span class="o">+</span> <span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;&#39;]&quot;</span>
+    <span class="n">restdata</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span> <span class="o">=</span> <span class="n">restdata</span>
+
+<span class="k">def</span> <span class="nf">convert_data_to_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">attribute</span><span class="p">):</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="n">convert_str_to_dict_str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">restdata</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span> <span class="o">=</span> <span class="n">restdata</span>
+
+<span class="k">def</span> <span class="nf">convert_str_to_dict_str</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39; +&#39;</span><span class="p">,</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="s">&#39;%2C&#39;</span><span class="p">,</span><span class="n">line</span><span class="p">)</span> <span class="c"># , value converts &#39;%2C&#39;</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="n">line</span><span class="p">)</span>
+
+    <span class="c"># more regular dict</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">=</span><span class="se">\&#39;</span><span class="s">&#39;</span><span class="p">,</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">,</span><span class="se">\&#39;</span><span class="s">&#39;</span><span class="p">,</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">,</span><span class="s">&#39; : &#39;</span><span class="p">,</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;%2C&#39;</span><span class="p">,</span> <span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="c"># Back to , value</span>
+    <span class="k">return</span> <span class="s">&#39;{</span><span class="se">\&#39;</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">line</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">}&#39;</span>
+
+<span class="k">def</span> <span class="nf">parse_type_and_date</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+    <span class="c"># split line after the third ] to (find date, id, msgtype)</span>
+    <span class="c"># put the rest in the string &quot;rest&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+	    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span> <span class="s">r&#39;\[(.*)\]\[(.*)\]\[(.*)\](.*)&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">M</span><span class="o">|</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+	    <span class="n">data</span><span class="p">[</span><span class="s">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s">&#39;%a %b </span><span class="si">%d</span><span class="s"> %H:%M:%S %Y&#39;</span><span class="p">)</span>
+	    <span class="n">data</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+	    <span class="n">data</span><span class="p">[</span><span class="s">&#39;msgtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+	    <span class="n">rest</span> <span class="o">=</span>  <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+	    <span class="n">rest</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39; +}&#39;</span><span class="p">,</span><span class="s">&#39;}&#39;</span><span class="p">,</span><span class="n">rest</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+	    <span class="k">if</span> <span class="n">rest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;running&quot;</span><span class="p">):</span>
+		    <span class="n">data</span><span class="p">[</span><span class="s">&#39;linetype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;running&quot;</span>
+		    <span class="k">return</span> <span class="n">rest</span> 
+	    <span class="k">elif</span> <span class="n">rest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;calling&quot;</span><span class="p">):</span>
+		    <span class="n">data</span><span class="p">[</span><span class="s">&#39;linetype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;calling&quot;</span>
+		    <span class="k">return</span> <span class="n">rest</span> 
+	    <span class="k">else</span><span class="p">:</span>
+		    <span class="n">location</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span>
+		    <span class="n">linetype</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">location</span><span class="p">]</span>
+		    <span class="n">data</span><span class="p">[</span><span class="s">&#39;linetype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;\(\)&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">,</span><span class="n">linetype</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+		    <span class="n">rest</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="n">location</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+		    <span class="k">return</span> <span class="n">rest</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+	    <span class="n">data</span><span class="p">[</span><span class="s">&#39;linetype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;IGNORE&quot;</span>
+	    <span class="k">return</span>
+    <span class="k">except</span><span class="p">:</span>
+	    <span class="n">data</span><span class="p">[</span><span class="s">&#39;linetype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;IGNORE&quot;</span>
+	    <span class="k">return</span>
+
+<div class="viewcode-block" id="ccInstance_parser"><a class="viewcode-back" href="../../modules.html#fgmetric.FGParser.ccInstance_parser">[docs]</a><span class="k">def</span> <span class="nf">ccInstance_parser</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;parses the line and returns a dict&quot;&quot;&quot;</span>
+
+    <span class="c"># replace print_ccInstance(): with linetype=print_ccInstance</span>
+    <span class="c">#rest = rest.replace(&quot;print_ccInstance():&quot;,&quot;linetype=print_ccInstance&quot;)</span>
+    <span class="c"># replace refreshinstances(): with calltype=refresh_instances</span>
+
+    <span class="c">#RunInstances():</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;RunInstances():&quot;</span><span class="p">,</span><span class="s">&quot;calltype=run_instances&quot;</span><span class="p">)</span>   <span class="c"># removing multiple spaces</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;refresh_instances():&quot;</span><span class="p">,</span><span class="s">&quot;calltype=refresh_instances&quot;</span><span class="p">)</span>   <span class="c"># removing multiple spaces</span>
+
+    <span class="c">#separate easy assignments from those that would contain groups, for now simply put groups as a string</span>
+    <span class="c"># all others are merged into a string with *=* into rest</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span> <span class="s">r&#39;(.*)keyName=(.*)ccnet=(.*)ccvm=(.*)ncHostIdx=(.*)volumes=(.*)groupNames=(.*)&#39;</span><span class="p">,</span> <span class="n">rest</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">M</span><span class="o">|</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+
+    <span class="c"># Version 3.0.2</span>
+    <span class="c"># Deleted: emiId, kernelId, ramdiskId, emiURL, kernelURL and ramdiskURL</span>
+    <span class="c"># Added: accountId, platform, and bundleTaskStateName</span>
+    <span class="c"># Changed: value of ownerId is changed</span>
+
+    <span class="k">try</span><span class="p">:</span>
+	    <span class="n">data</span><span class="p">[</span><span class="s">&#39;keyName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+	    <span class="n">data</span><span class="p">[</span><span class="s">&quot;ccnet&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+	    <span class="n">data</span><span class="p">[</span><span class="s">&quot;ccvm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+	    <span class="n">data</span><span class="p">[</span><span class="s">&quot;volumes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+	    <span class="n">data</span><span class="p">[</span><span class="s">&quot;groupNames&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+	    <span class="c"># assemble the rest string</span>
+	    <span class="n">rest</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;ncHostIdx=&quot;</span> <span class="o">+</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+	    <span class="k">return</span>
+
+    <span class="c"># GATHER ALL SIMPLE *=* assignments into a single rest line and add each entry to dict via eval</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="n">convert_str_to_dict_str</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">restdata</span> <span class="o">=</span> <span class="nb">eval</span> <span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;eval failed:(&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&quot;), (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+        <span class="k">return</span>
+
+    <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">restdata</span><span class="p">)</span>
+
+    <span class="c"># convert ccvm and ccnet to dict</span>
+    <span class="n">convert_data_to_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">&quot;ccvm&quot;</span><span class="p">)</span>
+    <span class="n">convert_data_to_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">&quot;ccnet&quot;</span><span class="p">)</span>
+
+    <span class="c"># converts volumes and groupNAmes to list</span>
+    <span class="n">convert_data_to_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">&quot;groupNames&quot;</span><span class="p">)</span>
+    <span class="n">convert_data_to_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">&quot;volumes&quot;</span><span class="p">)</span>
+
+    <span class="c"># convert the timestamp</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;ts&quot;</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">data</span>
+</div>
+<span class="k">def</span> <span class="nf">refresh_resource_parser</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+    <span class="c">#[Wed Nov  9 19:50:08 2011][008128][EUCADEBUG ] refresh_resources(): received data from node=i2 mem=24276/22740 disk=306400/305364 cores=8/6</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rest</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;received&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">rest</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;received data from&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">rest</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="c"># node=i2 mem=24276/22740 disk=306400/305364 cores=8/6</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span> <span class="s">r&#39;node=(.*) mem=(.*)[/](.*) disk=(.*)/(.*) cores=(.*)/(.*)&#39;</span><span class="p">,</span> <span class="n">rest</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">M</span><span class="o">|</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;node&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;mem&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;mem_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;disk&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;disk_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;cores&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;cores_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;calltype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;ignore&quot;</span> 
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">def</span> <span class="nf">terminate_instances_param_parser</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+
+    <span class="n">rest</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">rest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;params&quot;</span><span class="p">):</span>
+	<span class="c">#params: userId=(null), instIdsLen=1, firstInstId=i-417B07B2</span>
+        <span class="n">rest</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;params:&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">rest</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    	<span class="c"># node=i2 mem=24276/22740 disk=306400/305364 cores=8/6</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span> <span class="s">r&#39;userId=(.*) instIdsLen=(.*) firstInstId=(.*)&#39;</span><span class="p">,</span> <span class="n">rest</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">M</span><span class="o">|</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+        <span class="n">userid</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">userid</span> <span class="o">==</span> <span class="s">&quot;(null),&quot;</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&quot;userId&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;null&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&quot;userId&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;instIdsLen&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;firstInstId&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;calltype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;ignore&quot;</span> 
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">def</span> <span class="nf">print_counter</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span><span class="n">counter</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">label</span> <span class="o">+</span> <span class="s">&quot; = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">parse_file</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">analyze</span><span class="p">,</span> <span class="n">parse_types</span><span class="p">,</span> <span class="n">gzip</span><span class="p">,</span>  <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">gzip</span> <span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">zlib</span>
+        <span class="n">CHUNKSIZE</span><span class="o">=</span><span class="mi">1024</span>
+        <span class="n">gz</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">decompressobj</span><span class="p">(</span><span class="mi">16</span><span class="o">+</span><span class="n">zlib</span><span class="o">.</span><span class="n">MAX_WBITS</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="n">filename</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">lines_total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">lines_ignored</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">count_terminate_instances</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">count_refresh_resource</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">count_ccInstance_parser</span> <span class="o">=</span> <span class="mi">0</span> 
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">file_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;SIZE&gt;:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">file_size</span><span class="p">)</span>
+
+    <span class="n">progress_step</span> <span class="o">=</span> <span class="n">file_size</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">gzip</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">gz</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">ignore</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">lines_total</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">read_bytes</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">debug</span> <span class="ow">or</span> <span class="n">progress</span><span class="p">)</span> <span class="ow">and</span> <span class="p">((</span><span class="n">lines_total</span> <span class="o">%</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">percent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">read_bytes</span> <span class="o">/</span> <span class="n">file_size</span> <span class="p">)</span> 
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\r</span><span class="si">%2d%%</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">percent</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;DEBUG &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">lines_total</span><span class="p">)</span> <span class="o">+</span><span class="s">&quot;&gt; &quot;</span> <span class="o">+</span> <span class="n">line</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">rest</span> <span class="o">=</span> <span class="n">parse_type_and_date</span> <span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Temporarily prince_ccInstance is only available to parse</span>
+
+<span class="sd">        if data[&quot;linetype&quot;] == &quot;TerminateInstances&quot; and &quot;TerminateInstances&quot; in parse_types:</span>
+<span class="sd">            count_terminate_instances += 1</span>
+<span class="sd">            terminate_instances_param_parser(rest, data)</span>
+<span class="sd">        elif data[&quot;linetype&quot;] == &quot;refresh_resources&quot; and &quot;refresh_resources&quot; in parse_types:</span>
+<span class="sd">            count_refresh_resource += 1</span>
+<span class="sd">            refresh_resource_parser(rest, data)</span>
+<span class="sd">        el&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;linetype&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;print_ccInstance&quot;</span> <span class="ow">and</span> <span class="s">&quot;print_ccInstance&quot;</span> <span class="ow">in</span> <span class="n">parse_types</span><span class="p">:</span>
+            <span class="n">count_ccInstance_parser</span> <span class="o">+=</span> <span class="mi">1</span>
+	    <span class="k">if</span> <span class="ow">not</span> <span class="n">ccInstance_parser</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		    <span class="n">ignore</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ignore</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="n">ignore</span><span class="p">:</span>
+            <span class="n">lines_ignored</span> <span class="o">+=</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;IGNORE&gt; &quot;</span> <span class="o">+</span> <span class="n">line</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;linetype&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;print_ccInstance&quot;</span> <span class="ow">and</span> <span class="s">&quot;print_ccInstance&quot;</span> <span class="ow">in</span> <span class="n">parse_types</span><span class="p">:</span>
+                <span class="n">analyze</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="c"># For Debugging to make it faster terminate at 5</span>
+        <span class="k">if</span> <span class="n">debug</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">):</span>
+            <span class="k">break</span>
+
+    <span class="n">print_counter</span><span class="p">(</span><span class="s">&quot;lines total&quot;</span><span class="p">,</span><span class="n">lines_total</span><span class="p">)</span>
+    <span class="n">print_counter</span> <span class="p">(</span><span class="s">&quot;lines ignored = &quot;</span><span class="p">,</span> <span class="n">lines_ignored</span><span class="p">)</span>
+    <span class="n">print_counter</span><span class="p">(</span><span class="s">&quot;count_terminate_instances&quot;</span><span class="p">,</span><span class="n">count_terminate_instances</span><span class="p">)</span>
+    <span class="n">print_counter</span><span class="p">(</span><span class="s">&quot;count_refresh_resource&quot;</span><span class="p">,</span><span class="n">count_refresh_resource</span><span class="p">)</span>
+    <span class="n">print_counter</span><span class="p">(</span><span class="s">&quot;count_ccInstance_parser &quot;</span><span class="p">,</span><span class="n">count_ccInstance_parser</span> <span class="p">)</span>
+           
+    <span class="k">return</span>
+
+<span class="c">#####################################################################</span>
+<span class="c"># MAIN</span>
+<span class="c">#####################################################################</span>
+<span class="k">def</span> <span class="nf">parse_test</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;------------------------------------------------------------&quot;</span>
+    <span class="k">print</span> <span class="s">&quot;- parsetest: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;------------------------------------------------------------&quot;</span>
+    <span class="k">print</span> <span class="s">&quot;INPUT&gt;&quot;</span>
+    <span class="k">print</span> <span class="n">line</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="n">parse_type_and_date</span> <span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;REST&gt;&quot;</span>
+    <span class="k">print</span> <span class="n">rest</span>
+    <span class="n">f</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;OUTPUT&gt;&quot;</span>
+    <span class="k">print</span> <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">test1</span><span class="p">():</span>
+    <span class="n">parse_test</span><span class="p">(</span><span class="n">ccInstance_parser</span><span class="p">,</span> 
+               <span class="s">&quot;[Wed Nov  9 19:58:12 2011][008128][EUCADEBUG ] print_ccInstance(): refresh_instances():  instanceId=i-42BA06B1 reservationId=r-3D3306BC emiId=emi-0B951139 kernelId=eki-78EF12D2 ramdiskId=eri-5BB61255 emiURL=http://149.165.146.135:8773/services/Walrus/centos53/centos.5-3.x86-64.img.manifest.xml kernelURL=http://149.165.146.135:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml ramdiskURL=http://149.165.146.135:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml state=Extant ts=1320693195 ownerId=sharif keyName=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCp13CbKJLtKG5prGiet/VHct36CXzcpBKVgYsh/lxIXWKuositayvvuKux+I5GZ9bFWzMF71xAjmFinmAT3FXFKMd54FebPKZ2kBPCRqtmxz2jT1SG4hy1g1eDPzVX+qt5w8metAs7W//BCaBvWpU5IBuKSNqxO5OUIjIKkw3xkSswRpqSzrUBAmQP7e4dzQvmhqIxq4ZWqcEIWsAik0fSODTipa+Z6DvVKe02f5OtdUsXzz7pIivZ3qRGQveI5SOTdgFPqG+VglMsPURLbFFVWW1l51gCmRUwTf9ClySshSpkpAtaOx/OApQoII/vJxgr/EdYPOu1QLkubS4XH6+Z sharif@eucalyptus ccnet={privateIp=10.0.4.4 publicIp=149.165.159.130 privateMac=D0:0D:42:BA:06:B1 vlan=10 networkIndex=4} ccvm={cores=1 mem=512 disk=5} ncHostIdx=24 serviceTag=http://i1:8775/axis2/services/EucalyptusNC userData= launchIndex=0 volumesSize=0 volumes={} groupNames={sharifnew }&quot;</span><span class="p">)</span>
+
+    <span class="c"># Version 3.0.2</span>
+    <span class="c"># [Wed May 16 11:59:25 2012][032119][EUCADEBUG ] print_ccInstance(): refresh_instances():  instanceId=i-5CDD447C reservationId=r-A8053C5D state=Extant accountId=514855794567 ownerId=EJMBZFNPMDQ73AUDPOUS3 ts=1337194539 keyName=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCMm5cR9ukIHyy7w3V3FJ45LkdHjafTrfuGU6aonaJ10SJb8oLlqRiT+fPlGcLaZWrHSMbK+TODUa7hgu297BIAN0gUm68ZNKpkLoSXw+IeK0W3u42BYs1+imBMmyXFa8qWjVqt+Xrw2RPImnH+zqqGUvB8DOwLfzXBfJ09o/GuwapZahUm5FjaVCSTp2JptAR7F2nTrKXVTn7S81yzhUF/oM+ublfcav87MDetKVtB591rspjUhtDVnDS+tkvSZfWYpkpKR/4VB3ZXqhzWM5HXw/RFS6J5ywY3a1/FbsOFUFj5y94EAqQkWzSBcJ4cig1e+DQ2SkMAnHraWHL8hQpB 514855794567@eucalyptus.euca3-test ccnet={privateIp=10.135.86.238 publicIp=198.202.120.202 privateMac=D0:0D:5C:DD:44:7C vlan=3759 networkIndex=110} ccvm={cores=1 mem=256 disk=4} ncHostIdx=0 serviceTag=http://s61:8775/axis2/services/EucalyptusNC userData= launchIndex=21 platform=linux bundleTaskStateName=none, volumesSize=0 volumes={} groupNames={514855794567-fd6a9f37-b775-43ec-918c-cc9584f74043 }</span>
+
+    <span class="c"># Deleted: emiId, kernelId, ramdiskId, emiURL, kernelURL and ramdiskURL</span>
+    <span class="c"># Added: accountId, platform, and bundleTaskStateName</span>
+    <span class="c"># Changed: Value of ownerId is changed</span>
+
+    <span class="k">return</span>
+
+<div class="viewcode-block" id="test2"><a class="viewcode-back" href="../../modules.html#fgmetric.FGParser.test2">[docs]</a><span class="k">def</span> <span class="nf">test2</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39; RESOURCE PARSER &#39;&#39;&#39;</span>
+
+    <span class="n">parse_test</span><span class="p">(</span><span class="n">refresh_resource_parser</span><span class="p">,</span> 
+               <span class="s">&quot;[Wed Nov  9 22:52:10 2011][008128][EUCAERROR ] refresh_resources(): bad return from ncDescribeResource(i23) (1)&quot;</span><span class="p">)</span>
+    <span class="n">parse_test</span><span class="p">(</span><span class="n">refresh_resource_parser</span><span class="p">,</span> 
+               <span class="s">&quot;[Wed Nov  9 22:52:11 2011][008128][EUCADEBUG ] refresh_resources(): done&quot;</span><span class="p">)</span>
+    <span class="n">parse_test</span><span class="p">(</span><span class="n">refresh_resource_parser</span><span class="p">,</span> 
+               <span class="s">&quot;[Wed Nov  9 22:52:19 2011][008128][EUCAINFO  ] refresh_resources(): called&quot;</span><span class="p">)</span>
+    <span class="n">parse_test</span><span class="p">(</span><span class="n">refresh_resource_parser</span><span class="p">,</span> 
+               <span class="s">&quot;[Wed Nov  9 19:50:08 2011][008128][EUCADEBUG ] refresh_resources(): received data from node=i2 mem=24276/22740 disk=306400/305364 cores=8/6&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span>
+</div>
+<div class="viewcode-block" id="test3"><a class="viewcode-back" href="../../modules.html#fgmetric.FGParser.test3">[docs]</a><span class="k">def</span> <span class="nf">test3</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39; TerminateInstance Parser&#39;&#39;&#39;</span>
+    <span class="n">parse_test</span><span class="p">(</span><span class="n">terminate_instances_param_parser</span><span class="p">,</span>
+               <span class="s">&quot;[Thu Nov 10 10:14:37 2011][021251][EUCADEBUG ] TerminateInstances(): params: userId=(null), instIdsLen=1, firstInstId=i-417B07B2&quot;</span><span class="p">)</span>
+
+    <span class="n">parse_test</span><span class="p">(</span><span class="n">terminate_instances_param_parser</span><span class="p">,</span>
+               <span class="s">&quot;[Thu Nov 10 13:04:16 2011][016124][EUCADEBUG ] TerminateInstances(): done.&quot;</span><span class="p">)</span>
+
+    <span class="n">parse_test</span><span class="p">(</span><span class="n">terminate_instances_param_parser</span><span class="p">,</span>
+               <span class="s">&quot;[Thu Nov 10 13:04:16 2011][016168][EUCAINFO  ] TerminateInstances(): called&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+</div>
+<span class="k">def</span> <span class="nf">test4</span><span class="p">():</span>
+    <span class="n">parse_file</span> <span class="p">(</span><span class="s">&quot;/tmp/cc.log.4&quot;</span><span class="p">,</span><span class="n">jason_dump</span><span class="p">,</span><span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">return</span>
+
+<span class="c"># Convert 2012-01-28-04-13-04-cc.log to datetime</span>
+<span class="k">def</span> <span class="nf">filename_todate</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">-%H-%M-%S-cc&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">test_file_read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">progress</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">parse_file</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">instances</span><span class="o">.</span><span class="n">add</span><span class="p">,</span><span class="n">debug</span><span class="p">,</span><span class="n">progress</span><span class="p">)</span>
+    <span class="n">instances</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">test_sql_read</span><span class="p">():</span>
+    <span class="n">instances</span><span class="o">.</span><span class="n">read_from_db</span><span class="p">()</span>
+    <span class="n">instances</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">test_sql_write</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">progress</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">parse_file</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">instances</span><span class="o">.</span><span class="n">add</span><span class="p">,</span><span class="n">debug</span><span class="p">,</span><span class="n">progress</span><span class="p">)</span>
+    <span class="n">instances</span><span class="o">.</span><span class="n">write_to_db</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">read_log_files_and_store_to_db</span> <span class="p">(</span><span class="n">instances</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">from_date</span><span class="p">,</span> <span class="n">to_date</span><span class="p">,</span> <span class="n">linetypes</span><span class="p">,</span> <span class="n">gzip</span><span class="p">):</span>
+
+    <span class="n">listing</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">f_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">from_date</span> <span class="o">+</span> <span class="s">&quot; 00:00:00&quot;</span><span class="p">,</span> <span class="s">&#39;%Y%m</span><span class="si">%d</span><span class="s"> %H:%M:%S&#39;</span><span class="p">)</span>
+    <span class="n">t_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">to_date</span> <span class="o">+</span> <span class="s">&quot; 23:59:59&quot;</span><span class="p">,</span> <span class="s">&#39;%Y%m</span><span class="si">%d</span><span class="s"> %H:%M:%S&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">listing</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">f_date</span> <span class="o">&lt;=</span> <span class="n">filename_todate</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="n">filename_todate</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">t_date</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;Processing file is: &quot;</span> <span class="o">+</span> <span class="n">filename</span>
+                <span class="c">#parse_file(path + &quot;/&quot; + filename, instances.add, linetypes, gzip, debug=False, progress=True)</span>
+                <span class="n">parse_file</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="n">instances</span><span class="o">.</span><span class="n">update_traceinfo</span><span class="p">,</span> <span class="n">linetypes</span><span class="p">,</span> <span class="n">gzip</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="k">continue</span>
+
+    <span class="n">instances</span><span class="o">.</span><span class="n">write_to_db</span><span class="p">()</span>
+
+    <span class="c"># set userinfo</span>
+    <span class="n">instances</span><span class="o">.</span><span class="n">set_userinfo</span><span class="p">()</span>
+    <span class="n">instances</span><span class="o">.</span><span class="n">write_userinfo_to_db</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">read_from_stdin_and_store_to_db</span><span class="p">(</span><span class="n">instances</span><span class="p">,</span> <span class="n">linetypes</span><span class="p">):</span>
+
+    <span class="n">lines_total</span> <span class="o">=</span> <span class="mi">0</span> 
+    <span class="n">lines_ignored</span> <span class="o">=</span> <span class="mi">0</span> 
+    <span class="n">count_ccInstance_parser</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+	<span class="k">try</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+
+            <span class="n">lines_total</span> <span class="o">+=</span> <span class="mi">1</span>
+		
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">rest</span> <span class="o">=</span> <span class="n">parse_type_and_date</span> <span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;linetype&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;print_ccInstance&quot;</span> <span class="ow">and</span> <span class="s">&quot;print_ccInstance&quot;</span> <span class="ow">in</span> <span class="n">linetypes</span><span class="p">:</span>
+
+                <span class="n">count_ccInstance_parser</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">ccInstance_parser</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+                    <span class="n">lines_ignored</span> <span class="o">+=</span> <span class="mi">1</span> 
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">single_data</span> <span class="o">=</span> <span class="n">instances</span><span class="o">.</span><span class="n">update_traceinfo</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                    <span class="n">instances</span><span class="o">.</span><span class="n">eucadb</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">single_data</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="n">print_counter</span><span class="p">(</span><span class="s">&quot;lines total&quot;</span><span class="p">,</span><span class="n">lines_total</span><span class="p">)</span>
+    <span class="n">print_counter</span><span class="p">(</span><span class="s">&quot;lines ignored&quot;</span><span class="p">,</span> <span class="n">lines_ignored</span><span class="p">)</span>
+    <span class="n">print_counter</span><span class="p">(</span><span class="s">&quot;count_ccInstance_parser&quot;</span><span class="p">,</span><span class="n">count_ccInstance_parser</span> <span class="p">)</span>
+
+    <span class="k">return</span>
+
+
+<div class="viewcode-block" id="utility_insert_userinfo_from_file_or_std"><a class="viewcode-back" href="../../modules.html#fgmetric.FGParser.utility_insert_userinfo_from_file_or_std">[docs]</a><span class="k">def</span> <span class="nf">utility_insert_userinfo_from_file_or_std</span><span class="p">():</span>
+
+    <span class="sd">&#39;&#39;&#39;Store userinfo into database by reading a userid(s) from a text file or a standard input</span>
+<span class="sd">    This command will read a userid(s) and do ldapsearch to find userinfo. And then it will</span>
+<span class="sd">    store the userinfo into mysql database.</span>
+
+<span class="sd">    Usage: $ fg-metrics-utility insert_userinfo -i filename [hostname]</span>
+<span class="sd">           or</span>
+<span class="sd">           $ fg-metrics-utility insert_userinfo userid [hostname]</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="n">Instances</span><span class="p">()</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">userid</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">ownerid</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;insert_userinfo&quot;</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;usage: ./$ fg-metrics-utility insert_userinfo -i filename [hostname] </span><span class="se">\n\</span>
+<span class="s">               or </span><span class="se">\n\</span>
+<span class="s">               $ fg-metrics-utility insert_userinfo userid [hostname]&quot;</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;-i&quot;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">hostname</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">userid</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">hostname</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span>
+        <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="n">ownerid</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+            <span class="c"># For comma seperated lines</span>
+            <span class="c"># E.g. 5TQVNLFFHPWOH22QHXERX,hyunjoo,fg45</span>
+            <span class="c"># Ownerid, username, projectid</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">r&#39;(.*),(.*),(.*)&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">userid</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">username</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                    <span class="n">project</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">m</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="k">pass</span>
+
+                <span class="c"># In euca3.0+, username is an ownerid of past version of euca</span>
+                <span class="k">if</span> <span class="n">username</span><span class="p">:</span>
+                    <span class="n">ownerid</span> <span class="o">=</span> <span class="n">username</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">retrieve_userinfo_ldap</span><span class="p">(</span><span class="n">ownerid</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+                    <span class="c"># if m exists, res (dict) should be merged with the comma separated values in order to store the info into db</span>
+                    <span class="n">res</span><span class="p">[</span><span class="s">&quot;ownerid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">userid</span>
+                    <span class="n">res</span><span class="p">[</span><span class="s">&quot;username&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">username</span>
+                    <span class="n">res</span><span class="p">[</span><span class="s">&quot;project&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">project</span>
+                    <span class="k">if</span> <span class="n">hostname</span><span class="p">:</span>
+                        <span class="n">res</span><span class="p">[</span><span class="s">&quot;hostname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hostname</span>
+                <span class="k">print</span> <span class="n">res</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">userinfo_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">retrieve_userinfo_ldap</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">userinfo_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+    <span class="n">i</span><span class="o">.</span><span class="n">write_userinfo_to_db</span><span class="p">()</span>
+</div>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">users</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">instances</span> <span class="o">=</span> <span class="n">Instances</span><span class="p">()</span>
+    <span class="n">instance</span> <span class="o">=</span> <span class="n">instances</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">pp</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">def_s_date</span> <span class="o">=</span> <span class="s">&quot;19700101&quot;</span>
+    <span class="n">def_e_date</span> <span class="o">=</span> <span class="s">&quot;29991231&quot;</span>
+    <span class="n">def_conf</span> <span class="o">=</span> <span class="s">&quot;futuregrid.cfg&quot;</span>
+    <span class="n">def_linetypes</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;TerminateInstances&quot;</span><span class="p">,</span> <span class="s">&quot;refresh_resources&quot;</span><span class="p">,</span> <span class="s">&quot;print_ccInstance&quot;</span><span class="p">]</span>
+
+    <span class="sd">&#39;&#39;&#39; argument parser added &#39;&#39;&#39;</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-s&quot;</span><span class="p">,</span> <span class="s">&quot;--from&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;s_date&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">def_s_date</span><span class="p">,</span>
+		    <span class="n">help</span><span class="o">=</span><span class="s">&quot;start date to begin parsing (type: YYYYMMDD)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-e&quot;</span><span class="p">,</span> <span class="s">&quot;--to&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;e_date&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">def_e_date</span><span class="p">,</span>
+		    <span class="n">help</span><span class="o">=</span><span class="s">&quot;end date to finish parsing (type: YYYYMMDD)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-i&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;input_dir&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+		    <span class="n">help</span><span class="o">=</span><span class="s">&quot;Absolute path where the files (e.g. 2012-02-16-00-21-17-cc.log generated by fg-unix) exist&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--conf&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;conf&quot;</span><span class="p">,</span>
+		    <span class="n">help</span><span class="o">=</span><span class="s">&quot;configuraton file of the database to be used&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--cleandb&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;cleandb&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+		    <span class="n">help</span><span class="o">=</span><span class="s">&quot;This command without any parameter deletes the entire database. *Be careful with this&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--parse&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;linetypes&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">def_linetypes</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s">&quot;specify function names which you want to parse (types: print_ccInstance, refresh_resources)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-z&quot;</span><span class="p">,</span> <span class="s">&quot;--gzip&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s">&quot;gzip compressed files will be loaded&quot;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">args</span>
+    
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dest=variable name</span>
+<span class="sd">    - &#39;dest&#39; in parser.add_argument sets a variable name where the input to be allocated</span>
+<span class="sd">    required=True</span>
+<span class="sd">    - To set an argument is mandatory (required=False is default)</span>
+<span class="sd">    help=text</span>
+<span class="sd">    - Description for the argument</span>
+
+<span class="sd">    How we can use argparse in this file?</span>
+<span class="sd">    -------------------------------------</span>
+<span class="sd">    1) fg-parser.py -s start date -e end date; will parse logs between the period that specified by -s and -e options</span>
+<span class="sd">       ex) fg-parser.py -s 20120216 -e 20120216</span>
+<span class="sd">           =&gt; 2012-02-16-00-21-17-cc.log ~ 2012-02-16-23-47-16-cc.log will be parsed</span>
+<span class="sd">    2) fg-parser.py -f filename; Only parse the file that specified by -f option</span>
+<span class="sd">       ex) fg-parser.py -f 2012-02-16-00-21-17-cc.log</span>
+<span class="sd">           =&gt; Only that file will be parsed</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c"># change conf file by --conf filename</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span>
+	    <span class="n">instances</span><span class="o">.</span><span class="n">set_conf</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">conf</span><span class="p">)</span>
+
+    <span class="c"># Clean database if -cleandb is true</span>
+    <span class="c">#if args.cleandb:</span>
+	    <span class="c">#import FGCleanupTable</span>
+	    <span class="c">#FGCleanupTable.main()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">input_dir</span> <span class="o">==</span> <span class="s">&quot;-&quot;</span><span class="p">:</span>
+	<span class="n">read_from_stdin_and_store_to_db</span><span class="p">(</span><span class="n">instances</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">linetypes</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+	<span class="n">read_log_files_and_store_to_db</span><span class="p">(</span><span class="n">instances</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">s_date</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">e_date</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">linetypes</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">gzip</span><span class="p">)</span>
+    
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+	<li><a href="../../index.html">Results</a>|&nbsp;</li>
+        <li><a href="../../overview.html">Overview</a>|&nbsp;</li>
+        <li><a href="../../about.html">About</a>|&nbsp;</li>
+        <li><a href="../../installation.html">Installation</a>|&nbsp;</li>
+        <li><a href="../../quickstart.html">Quick Start</a>|&nbsp;</li>
+        <li><a href="../../details.html">Details</a>|&nbsp;</li>
+        <li><a href="../../metrics.html">Metrics</a>|&nbsp;</li>
+        <li><a href="../../man/index.html">Commands</a>|&nbsp;</li>
+        <li><a href="../../download.html">Download</a>|&nbsp;</li>
+        <li><a href="../../support.html">Support</a>|&nbsp;</li>
+	<li><a href="../../ubmod.html">Results for HPC (UBMoD)</a>|&nbsp;</li>
+        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
+
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier Diaz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

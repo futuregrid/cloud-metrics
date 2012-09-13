@@ -27,7 +27,6 @@ from futuregrid.cloud.metric.FGUtility import FGUtility
 from futuregrid.cloud.metric.FGHighcharts import FGHighcharts
 from futuregrid.cloud.metric.FGNovaMetric import FGNovaMetric
 from futuregrid.cloud.metric.FGCharts import FGCharts
-from futuregrid.cloud.metric.FGStats import FGStats
 
 class CmdLineAnalyzeEucaData(Cmd):
     '''This class analyzes utilization data to make a report
@@ -661,7 +660,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.sys_stat_new = {'total' : ""}
         self.sys_stat_new['total'] = { 'count_node' : {}}
 
-        self.stats = FGStats()
+        #self.stats = FGStats()
         self.chart = FGCharts()
 
     def postloop(self):
@@ -803,9 +802,9 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         print "analyze [" + from_date + ", " + to_date + "]" 
         self.set_date(from_date, to_date)
-        self.stats.set_search_date(from_date, to_date)
-        self.stats.set_metric(opts.metric)
-        self.stats.set_period(opts.period)
+        #self.stats.set_search_date(from_date, to_date)
+        #self.stats.set_metric(opts.metric)
+        #self.stats.set_period(opts.period)
 
         self.instances.refresh()
         print "now calculating"
@@ -820,59 +819,6 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.nova.calculate_stats(self.from_date, self.to_date)
 
     def do_oneclick(self, arg):
-       
-        # from database
-        #self.get_whole_data()
-
-        #self.get_filter()
-        self.display_filter_setting()
-        
-        # from user's inputs
-        #self.set_filter() 
-
-        self.get_measure()
-
-        #self.create_charts()
-
-    def display_filter_setting(self):
-        pprint.pprint( vars(self.instances.search))
-
-    def get_measure(self):
-
-        for i in range(0, len(self.instances)):
-            instance = self.instances.getdata(i)
-            if not self._is_in_date(instance):
-                continue;
-            if not self._is_filtered(instance):
-                continue;
-
-        '''
-        I am where to create a dict/list for data of charts.
-        what I need to do is
-        1) choose which column that I need to collect. This should be done by the 'metric' filter
-        2) get value from the instance
-        3) create data structure for the result
-        4) if it has a groupby(s), create multi-dimentional dict/list to save the value in a depth
-           e.g. res[groupby1][groupby2] = 
-           e.g. res = { groupby1 : { groupby2: val1, ... } }
-
-        5) fill missing date? for chart format? this should be done by in a chart module
-        6) convert the result data structure to chart formatted data
-        '''
-           
-    def _is_in_date(self, instance):
-        if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date:
-            return False
-
-    def _is_filtered(self, instance):
-        if self.search.username and self.search.username != instance["ownerId"]:
-            return False
-        if self.search.nodename and self.search.nodename != instance["hostname"]:
-            return False
-        if self.search.platform and self.search.platform != instance["platform"]:
-            return False
-        return True
-
     def do_getdaterange(self, arg): 
         """Get Date range of the instances table in mysql db"""
 
@@ -963,6 +909,9 @@ class CmdLineAnalyzeEucaData(Cmd):
         to_date = param[1]
         print "Set a date range to analyze: [" + from_date + ", " + to_date + "]" 
         self.set_date(from_date, to_date)
+
+    def _set_search_range(self, param):
+        self._search_range(param)
 
     def _set_nodename(self, param):
         """Set node name
@@ -1201,20 +1150,17 @@ class CmdLineAnalyzeEucaData(Cmd):
         args = arg.split()
         cmd = args[0]
         param = args[1:]
+        function = "_set_" + cmd
 
-        if cmd == "search_range":
-            self._search_range(param)
-        elif cmd == "nodename":
-            self._set_nodename(param)
-        elif cmd == "platform":
-            self._set_platform(param)
-        elif cmd == "chart":
-            self._set_chart(param)
-        elif cmd == "format":
-            self._set_format(param)
-        elif cmd == "groupby":
-            self._set_groupby(param)
+        try:
+            func = getattr(self, function)
+            func(param)
 
+            print ",".join(param) + " is set for (" + cmd + ")"
+        except:
+            print ",".join(param) + " isn't set for (" + cmd + ")"
+            pass
+        
     def do_show(self, arg, opts=None):
         """ Display realtime usage data"""
 

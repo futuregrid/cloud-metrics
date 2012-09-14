@@ -71,7 +71,7 @@ clean:
 	find . -name "*~" -exec rm {} \;  
 	find . -name "*.pyc" -exec rm {} \;  
 	rm -rf build dist *.egg-info *~ #*
-	cd doc; make clean
+	cd git-pages; make clean
 
 ######################################################################
 # pypi
@@ -89,9 +89,9 @@ upload:
 ###############################################################################
 
 sphinx:
-	cd doc; make examples
-	cd doc; make html
-	cd doc; make epub
+	cd git-pages; make examples
+	cd git-pages; make html
+	cd git-pages; make epub
 
 #############################################################################
 # PUBLISH GIT HUB PAGES

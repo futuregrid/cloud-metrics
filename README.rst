@@ -6,7 +6,7 @@ FutureGrid Cloud Metrics
 Installation guide
 ------------------------------------
 
-FutureGrid Cloud Metrics is a Cloud Accounting software written by Python. It supports parsing various log files, and datatabases to collect resource information,
+FutureGrid Cloud Metrics is a Cloud Accounting software written by Python. It supports parsing various log files, and databases to collect resource information,
 especially for VM instances. Once the usage data collected, the FG Metrics supports python command line tools to provide user interactions for measuring statistics.
 The statistics can be displayed in a graphical form such a javascript chart or a png image graph.
 

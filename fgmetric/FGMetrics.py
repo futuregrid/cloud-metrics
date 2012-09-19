@@ -62,18 +62,20 @@ class FGMetrics(Cmd):
 
     def get_measure(self):
 
-        total_count = self.instances.count()
+        total_counts = self.instances.count()
 
-        print "Calculating metrics in " + int(total_count) + " records...\n"
+        print "Calculating metrics in " + str(total_counts) + " records...\n"
 
         for i in range(0, total_counts):
-            instance = self.instances.getdata(i)
+            instance = self.instances.get_data(i)
             if not self.search._is_in_date(instance):
                 continue;
             if not self.search._is_filtered(instance):
                 continue;
 
-            res = self.search.retrieve(instance)
+            res = self.search.collect(instance)
+
+        self.search.get_metric()
 
         '''
         I am where to create a dict/list for data of charts.
@@ -98,21 +100,24 @@ class FGMetrics(Cmd):
         self.get_measure()
         #self.create_charts()
 
-    def do_set (self, args, opts=None):
+    def do_set (self, line, opts=None):
         """Set a function with parameter(s)"""
 
-        arg = args.split()
-        cmd = arg[0]
-        param = arg[1:]
+        args = line.split()
+        cmd = args[0]
+        params = args[1:]
         function = "set_" + cmd
+
+        if len(args) == 2:
+            params = args[1]
 
         try:
             func = getattr(self.search, function)
-            func(param)
+            func(params)
 
-            print "Search option for '" + cmd + "' is set as : " + "" . join(param)
+            print "Search option for '" + cmd + "' is set as : " + "" . join(params)
         except:
-            print "Search option for '" + cmd + "' isn't set as : " + "" . join(param)
+            print "Search option for '" + cmd + "' isn't set as : " + "" . join(params)
             pass
 
     def do_show (self, args):

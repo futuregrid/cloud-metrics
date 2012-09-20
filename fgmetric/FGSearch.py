@@ -2,6 +2,7 @@ from datetime import *
 
 class FGSearch:
 
+    '''
     name = None
     from_date = None
     to_date = None
@@ -10,7 +11,7 @@ class FGSearch:
     selected = []
     metric = {}
     groupby = None
-    groupby2 = None
+    sub_groupby = None
     #groupby3 ...
 
     project = None
@@ -21,16 +22,45 @@ class FGSearch:
 
     calc = None # count, avg, min, max, sum
     column = None
-
-    result = None
+    sub_column = None
+    '''
 
     def __init__(self):
+        self.init_options()
+        self.init_suboptions()
+        self.init_stats()
+        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform'} #_mem', 'ccvm_cores', 'ccvm_disk' }
+
+    def init_options(self):
+        self.from_date = None
+        self.from_date = None
+        self.day_count = None
+        self.project = None
+        self.nodename = None
+        self.platform = None
+        self.userid = None
+        self.username = None
+
+    def init_suboptions(self):
+        self.calc = None
+        self.groupby = None
+        self.sub_groupby = None
+        self.column = None
+        self.sub_column = None
+
+        self.groups = None
+ 
+    def init_stats(self):
         self.name = None
-        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm_mem', 'ccvm_cores', 'ccvm_disk' }
+        self.selected = []
+        self.metric = {}
+        self.metrics = {}
 
     def set_metric(self, name):
+        self.init_stats()
         self.name = name
-        self.set_default_options()
+        self.init_suboptions()
+        self.set_default_suboptions()
 
     def set_period(self, name):
         self.period = name
@@ -46,6 +76,12 @@ class FGSearch:
 
     def set_groupby(self, name):
         self.groupby = name
+
+    def set_subgroupby(self, name):
+        self.sub_groupby = name
+
+    def set_groups(self, glist):
+        self.groups = glist
 
     def set_date(self, dates):
         """Set search/analyze period
@@ -103,38 +139,55 @@ class FGSearch:
         return self.get(instance, self.keys_to_select)
 
     def get(self, instance, keys):
-        self.result = dict((key, instance[key]) for key in keys)
-        return self.result
+        return dict((key, instance[key]) for key in keys)
+
+    def get_val(self, _dict, keys):
+        return list(_dict[key] for key in keys)
 
     def get_metric(self):
         return self.metric
 
     def collect(self, instance):
         metric = self.name
-        res = self.select(instance)
-        #index = res['uidentifier']
+        selected = self.select(instance)
+        self.selected.append(selected)
+        #self.update_metric(selected)
+        #return selected
+        glist = self.get_val(selected, self.groups)
+        value = self.get_column(selected)
+        self.update_metrics(glist, self.metric, self.name, value)
+        return True
 
-        #if not index in self.selected:
-        self.selected.append(res)
-        self.update_metric(res)
+    def update_metrics(self, glist, mdict, key, value):
+        if len(glist) == 0:
+            new = value
+            old = None
+            if key in mdict:
+                old = mdict[key]
+            mdict[key] = self.calculate(old, new)
+            return mdict[key]
+
+        group = glist.pop(0)
+        if not group in mdict:
+            mdict[group] = {}
+        return self.update_metrics(glist, mdict[group], key, value)
 
     def update_metric(self, selected):
         metric = self.name
         index = selected[self.groupby]
         new = self.get_column(selected)
+        old = None
 
-        if not index in self.metric:
-            self.metric[index] = { metric: new }
-        else:
+        if index in self.metric:
             old = self.metric[index][metric]
-            self.metric[index][metric] = self.calculate(old, new)
+        self.metric[index][metric] = self.calculate(old, new)
 
         ''' two issues still I have
         1) how to handle 2 groupby s, one nested dict needed
         2) get_column will get an error due to missing groupby columns. should I change it back to use instance?
         '''
 
-    def set_default_options(self):
+    def set_default_suboptions(self):
         metric = self.name
         if not metric: 
             return
@@ -142,27 +195,30 @@ class FGSearch:
         if metric == "count":
             self.calc = "count"
             self.groupby = "ownerId"
-        else if metric == "runtime":
+        elif metric == "runtime":
             self.calc = "sum"
             self.column = "duration"
             self.groupby = "ownerId"
-        else if metric == "ccvm_cores" or metric == "cpu":
+        elif metric == "ccvm_cores" or metric == "cpu":
             self.calc = "sum"
-            self.column = "ccvm_cores"
+            self.column = "ccvm"
+            self.column2 = "cores"
             self.groupby = "instance.cloudplatform"
-            self.groupby2 = "date"
-        else if metric == "ccvm_mem" or metric == "mem":
+            self.sub_groupby = "date"
+        elif metric == "ccvm_mem" or metric == "mem":
             self.calc = "sum"
-            self.column = "ccvm_mem"
+            self.column = "ccvm"
+            self.column2 = "mem"
             self.groupby = "instance.cloudplatform"
-            self.groupby2 = "date"
-        else if metric == "ccvm_disks" or metric == "disk":
+            self.sub_groupby = "date"
+        elif metric == "ccvm_disks" or metric == "disk":
             self.calc = "sum"
-            self.column = "ccvm_mem"
+            self.column = "ccvm"
+            self.column2 = "disk"
             self.groupby = "instance.cloudplatform"
-            self.groupby2 = "date"
+            self.sub_groupby = "date"
 
-    def get_cloumn(self, selected):
+    def get_column(self, selected):
         if self.column in selected:
             return selected[self.column]
         else:
@@ -170,12 +226,15 @@ class FGSearch:
 
     def calculate(self, old, new):
         if self.calc == "count":
-            return int(old) + 1
-        else if self.calc == "sum":
-            return old + new
-        else if self.calc == "avg":
-            return old + new / 2
-        else if self.calc == "min":
-            return min(old, new)
-        else if self.calc == "max":
-            return max(old, new)
+            return (old or 0) + 1
+        elif self.calc == "sum":
+            return (old or 0) + new
+        elif self.calc == "avg":
+            return (old or 0) + new / 2
+        elif self.calc == "min":
+            return min(old or new, new)
+        elif self.calc == "max":
+            return max(old or new, new)
+
+    def clear(self):
+        self.__init__()

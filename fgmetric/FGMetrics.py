@@ -10,7 +10,6 @@ class FGMetrics(Cmd):
     ''' This is a development version '''
 
     instances = None
-    users = None
     nova = None
     search = None
 
@@ -18,37 +17,22 @@ class FGMetrics(Cmd):
         Cmd.__init__(self)
         self.prompt = "fg-metric] "
         self.intro = "Welcome to FutureGrid Cloud Metrics!"
-        self.search = FGSearch()
+        self.init_objects()
 
     def initialize(self, arg="all"):
         """Clear all instance data and user data on the memory"""
-        if arg == "users":
-            self.users = {}
-        elif arg == "instances":
-            self.instances = {}
-        elif arg == "all":
-            self.users = {}
-            self.from_date = ""
-            self.to_date = ""
-            self.day_count = 0
-            self.userid = None
-            self.user_stats = None
-            self.sys_stats = None
-            self.sys_stat_new = {'total' : ""}
-            self.sys_stat_new['total'] = { 'count_node' : {}}
-            self.metric = None
-            self.nodename = None
-            self.platform = None
+        self.nova.clear_stats()
 
-            self.nova.clear_stats()
+    def init_objects(self):
+        self.search = FGSearch()
+        self.instances = FGInstances()
+        self.nova = FGNovaMetric()
 
     def load_db(self):
         """Read the statistical data from database (MySQL, etc)"""
-        
+       
+        self.init_objects()
         print "\r... loading database"
-        self.users = {}
-        self.instances = FGInstances()
-        self.nova = FGNovaMetric()
         # Get data from the database
         self.instances.read_from_db()
         # Get also userinfo data from the database
@@ -75,7 +59,7 @@ class FGMetrics(Cmd):
 
             res = self.search.collect(instance)
 
-        self.search.get_metric()
+        print self.search.get_metric()
 
         '''
         I am where to create a dict/list for data of charts.
@@ -91,10 +75,10 @@ class FGMetrics(Cmd):
         6) convert the result data structure to chart formatted data
         '''
 
-    def do_load_db(self, args):
+    def do_load_db(self, line):
         self.load_db()
 
-    def do_analyze(self, args):
+    def do_analyze(self, line):
        
         self.display_filter_setting()
         self.get_measure()
@@ -120,9 +104,12 @@ class FGMetrics(Cmd):
             print "Search option for '" + cmd + "' isn't set as : " + "" . join(params)
             pass
 
-    def do_show (self, args):
+    def do_show (self, line):
         '''show search options set by a user'''
         self.display_filter_setting()
+
+    def do_clear(self, line):
+        self.init_objects()
 
     def preloop(self):
         self.load_db()

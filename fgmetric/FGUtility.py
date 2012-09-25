@@ -30,3 +30,9 @@ class FGUtility:
         except:
             return None
 
+class dotdict(dict):
+    ''' dot notation dictionary from http://parand.com/say/index.php/2008/10/24/python-dot-notation-dictionary-access/ '''
+    def __getattr__(self, attr):
+        return self.get(attr, None)
+    __setattr__= dict.__setitem__
+    __delattr__= dict.__delitem__

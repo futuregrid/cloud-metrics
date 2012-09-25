@@ -1,9 +1,11 @@
 from datetime import *
+from fgmetric.FGUtility import dotdict
+from math import ceil
 
 class FGSearch:
 
     '''
-    name = None
+    metric = None
     from_date = None
     to_date = None
     day_count = None
@@ -30,10 +32,11 @@ class FGSearch:
         self.init_suboptions()
         self.init_stats()
         self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform'} #_mem', 'ccvm_cores', 'ccvm_disk' }
+        self.init_names()
 
     def init_options(self):
         self.from_date = None
-        self.from_date = None
+        self.to_date = None
         self.day_count = None
         self.project = None
         self.nodename = None
@@ -47,18 +50,32 @@ class FGSearch:
         self.sub_groupby = None
         self.column = None
         self.sub_column = None
+        self.period = None
 
         self.groups = None
  
     def init_stats(self):
-        self.name = None
+        self.metric = None
         self.selected = []
-        self.metric = {}
-        self.metrics = {}
+        self.selected_idx = 0
+        self.stats = {}
+
+    def init_names(self):
+        self.names = dotdict({"metric": dotdict({"count":"count", 
+                                                "runtime":"runtime", 
+                                                "cores":["cpu", "ccvm_cores", "core", "cores"], 
+                                                "memories":["mem", "ccvm_mem", "memory", "memories"], 
+                                                "disks":["disk", "ccvm_disk", "disks"]}),
+                            "calc":dotdict({"count":"count", 
+                                            "summation":"sum", 
+                                            "average":"avg", 
+                                            "minimum":"min", 
+                                            "maximum":"max" })
+            })
 
     def set_metric(self, name):
         self.init_stats()
-        self.name = name
+        self.metric = name
         self.init_suboptions()
         self.set_default_suboptions()
 
@@ -81,6 +98,11 @@ class FGSearch:
         self.sub_groupby = name
 
     def set_groups(self, glist):
+        try:
+            glist = glist.split()
+        except:
+            pass
+
         self.groups = glist
 
     def set_date(self, dates):
@@ -104,7 +126,7 @@ class FGSearch:
         try:
             self.from_date = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
             self.to_date = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
-            self.day_count = (self.to_date - self.from_date).days + 1
+            self.day_count = (self.to_date - self.from_date).days
         except:
             print "from and to are not specified."
             pass
@@ -144,18 +166,26 @@ class FGSearch:
     def get_val(self, _dict, keys):
         return list(_dict[key] for key in keys)
 
+    def get_vals(self, _dict, keys):
+        ''' Same as get_val but handles non-exist keys '''
+        lis = []
+        for key in keys:
+            if key in _dict:
+                lis.append(_dict[key])
+            else:
+                lis.append(key)
+        return lis
+
     def get_metric(self):
-        return self.metric
+        return self.stats
 
     def collect(self, instance):
-        metric = self.name
+        metric = self.metric
         selected = self.select(instance)
-        self.selected.append(selected)
-        #self.update_metric(selected)
-        #return selected
-        glist = self.get_val(selected, self.groups)
+        self.appendi(selected)
+        glist = self.get_vals(selected, self.groups)
         value = self.get_column(selected)
-        self.update_metrics(glist, self.metric, self.name, value)
+        self.update_metrics(glist, self.stats, self.metric, value)
         return True
 
     def update_metrics(self, glist, mdict, key, value):
@@ -165,6 +195,10 @@ class FGSearch:
             if key in mdict:
                 old = mdict[key]
             mdict[key] = self.calculate(old, new)
+            # Add daily dict temporarily
+            period_func = getattr(self, "divide_into_" + str(self.period))
+            period_func(mdict)
+
             return mdict[key]
 
         group = glist.pop(0)
@@ -173,50 +207,143 @@ class FGSearch:
         return self.update_metrics(glist, mdict[group], key, value)
 
     def update_metric(self, selected):
-        metric = self.name
+        metric = self.metric
         index = selected[self.groupby]
         new = self.get_column(selected)
         old = None
 
-        if index in self.metric:
-            old = self.metric[index][metric]
-        self.metric[index][metric] = self.calculate(old, new)
+        if index in self.stats:
+            old = self.stats[index][metric]
+        self.stats[index][metric] = self.calculate(old, new)
 
         ''' two issues still I have
         1) how to handle 2 groupby s, one nested dict needed
         2) get_column will get an error due to missing groupby columns. should I change it back to use instance?
         '''
 
+    def divide_into_None(self, mdict):
+        return
+
+    def divide_into_daily(self, mdict):
+        selected = self.get_recentlyselected()
+        t_start = selected['t_start']
+        t_end = selected['t_end']
+        #self.start_date
+        #self.to_date
+        #self.stats
+        val = mdict[self.metric]
+
+        if not self.period in mdict:
+            mdict[self.period] = {}
+
+        for single_date in (self.from_date + timedelta(n) for n in range(self.day_count)):
+            print single_date
+            res = self.calculate_daily(t_start, t_end, single_date, val)
+            if single_date in mdict[self.period]:
+                mdict[self.period][single_date] += res
+            else:
+                mdict[self.period][single_date] = res
+
+            ''' this is where I need to put calculation of daily basis metrics.
+            what I need to do is following:
+            1) create [date] = value
+            ...
+            how?
+            1.1) t_start is older than single date?
+            
+            Search period        |----------------------|
+            possible instance
+            a.        |----|
+            b.        |--------------|
+            c.        |---------------------------------|
+            d.        |------------------------------------------|
+            e.                   |-----------|
+            f.                   |----------------------|
+            g.                   |-------------------------------|
+            h.                               |-----|
+            i.                               |----------|
+            j.                               |-------------------|
+            k.                                             |-----|
+            9 possible ways to count
+            But a. and k. are not the cases because this function is supposed to be executed after checking is_in_date function,
+            which means we assume the instance is in the search date.
+
+            2) Then calculate (old, new) ? for sum,avg, etc?
+
+            3)
+
+            ***
+            next is display
+            and code quality using pep8? gregor?
+
+            who do I need to satisfy?
+            1) gregor
+            2) geoffrey
+            3) swany
+            4) newton
+            5) friedman
+
+            '''
+        print mdict
+        return
+
+    def calculate_daily(self, t_start, t_end, single_date, value):
+        metric = self.metric
+        if metric == self.names.metric.runtime:
+            if t_start < single_date:
+                start_date =  single_date
+            else:
+                start_date = t_start
+            if t_end > single_date:
+                end_date = single_date
+            else:
+                end_date = t_end
+
+            td = end_date - start_date
+            res = td.seconds#int(ceil(float(td.seconds) / 60 / 60))
+            return res
+        elif metric == self.names.metric.count:
+            return 1
+        elif metric in self.names.metric.cores or self.names.metric.memories or self.names.metric.disks:
+            return value
+
     def set_default_suboptions(self):
-        metric = self.name
+        metric = self.metric
         if not metric: 
             return
 
-        if metric == "count":
+        if metric == self.names.metric.count:
             self.calc = "count"
             self.groupby = "ownerId"
-        elif metric == "runtime":
+        elif metric == self.names.metric.runtime:
             self.calc = "sum"
             self.column = "duration"
             self.groupby = "ownerId"
-        elif metric == "ccvm_cores" or metric == "cpu":
+            self.groups = ["ownerId"]
+        elif metric in self.names.metric.cores:
             self.calc = "sum"
             self.column = "ccvm"
             self.column2 = "cores"
             self.groupby = "instance.cloudplatform"
             self.sub_groupby = "date"
-        elif metric == "ccvm_mem" or metric == "mem":
+            self.groups = ["instance.cloudplatform"]
+            self.period = "daily"
+        elif metric in self.names.metric.memories:
             self.calc = "sum"
             self.column = "ccvm"
             self.column2 = "mem"
             self.groupby = "instance.cloudplatform"
             self.sub_groupby = "date"
-        elif metric == "ccvm_disks" or metric == "disk":
+            self.groups = ["instance.cloudplatform"]
+            self.period = "daily"
+        elif metric in self.names.metric.disks:
             self.calc = "sum"
             self.column = "ccvm"
             self.column2 = "disk"
             self.groupby = "instance.cloudplatform"
             self.sub_groupby = "date"
+            self.groups = ["instance.cloudplatform"]
+            self.period = "daily"
 
     def get_column(self, selected):
         if self.column in selected:
@@ -225,16 +352,25 @@ class FGSearch:
             return 1
 
     def calculate(self, old, new):
-        if self.calc == "count":
+        if self.calc == self.names.calc.count:
             return (old or 0) + 1
-        elif self.calc == "sum":
+        elif self.calc == self.names.calc.summation:
             return (old or 0) + new
-        elif self.calc == "avg":
+        elif self.calc == self.names.calc.average:
             return (old or 0) + new / 2
-        elif self.calc == "min":
+        elif self.calc == self.names.calc.minimum:
             return min(old or new, new)
-        elif self.calc == "max":
+        elif self.calc == self.names.calc.maximum:
             return max(old or new, new)
+
+    def appendi(self, selected):
+        self.selected.append(selected)
+        self.selected_idx = len(self.selected)
+
+    def get_recentlyselected(self):
+        if self.selected_idx == 0:
+            return
+        return self.selected[self.selected_idx - 1]
 
     def clear(self):
         self.__init__()

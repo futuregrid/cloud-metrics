@@ -12,8 +12,6 @@ class FGSearch:
     period = None
     selected = []
     metric = {}
-    groupby = None
-    sub_groupby = None
     #groupby3 ...
 
     project = None
@@ -23,8 +21,6 @@ class FGSearch:
     username = None
 
     calc = None # count, avg, min, max, sum
-    column = None
-    sub_column = None
     '''
 
     def __init__(self):
@@ -46,10 +42,7 @@ class FGSearch:
 
     def init_suboptions(self):
         self.calc = None
-        self.groupby = None
-        self.sub_groupby = None
-        self.column = None
-        self.sub_column = None
+        self.columns = None
         self.period = None
 
         self.groups = None
@@ -93,9 +86,6 @@ class FGSearch:
 
     def set_groupby(self, name):
         self.groupby = name
-
-    def set_subgroupby(self, name):
-        self.sub_groupby = name
 
     def set_groups(self, glist):
         try:
@@ -184,7 +174,7 @@ class FGSearch:
         selected = self.select(instance)
         self.appendi(selected)
         glist = self.get_vals(selected, self.groups)
-        value = self.get_column(selected)
+        value = self.get_metricfactor(self.columns, selected)
         self.update_metrics(glist, self.stats, self.metric, value)
         return True
 
@@ -195,10 +185,14 @@ class FGSearch:
             if key in mdict:
                 old = mdict[key]
             mdict[key] = self.calculate(old, new)
+            ############################
             # Add daily dict temporarily
-            period_func = getattr(self, "divide_into_" + str(self.period))
-            period_func(mdict)
-
+            try:
+                period_func = getattr(self, "divide_into_" + str(self.period))
+                period_func(mdict, value)
+            except:
+                pass
+            # ##########################
             return mdict[key]
 
         group = glist.pop(0)
@@ -209,7 +203,7 @@ class FGSearch:
     def update_metric(self, selected):
         metric = self.metric
         index = selected[self.groupby]
-        new = self.get_column(selected)
+        new = self.get_metricfactor(self.columns, selected)
         old = None
 
         if index in self.stats:
@@ -218,26 +212,25 @@ class FGSearch:
 
         ''' two issues still I have
         1) how to handle 2 groupby s, one nested dict needed
-        2) get_column will get an error due to missing groupby columns. should I change it back to use instance?
+        2) get_metricfactor will get an error due to missing groupby columns. should I change it back to use instance?
         '''
 
-    def divide_into_None(self, mdict):
+    def divide_into_None(self, mdict, value):
         return
 
-    def divide_into_daily(self, mdict):
+    def divide_into_daily(self, mdict, val):
         selected = self.get_recentlyselected()
         t_start = selected['t_start']
         t_end = selected['t_end']
         #self.start_date
         #self.to_date
         #self.stats
-        val = mdict[self.metric]
+        #val = mdict[self.metric]
 
         if not self.period in mdict:
             mdict[self.period] = {}
 
         for single_date in (self.from_date + timedelta(n) for n in range(self.day_count)):
-            print single_date
             res = self.calculate_daily(t_start, t_end, single_date, val)
             if single_date in mdict[self.period]:
                 mdict[self.period][single_date] += res
@@ -284,22 +277,34 @@ class FGSearch:
             5) friedman
 
             '''
-        print mdict
         return
 
     def calculate_daily(self, t_start, t_end, single_date, value):
         metric = self.metric
-        if metric == self.names.metric.runtime:
-            if t_start < single_date:
-                start_date =  single_date
-            else:
-                start_date = t_start
-            if t_end > single_date:
-                end_date = single_date
-            else:
-                end_date = t_end
 
-            td = end_date - start_date
+        single_start = single_date
+        if single_start != self.from_date:
+            single_start = datetime.combine(single_date.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
+
+        single_end = datetime.combine(single_start + timedelta(days=1), datetime.strptime("00:00:00", "%H:%M:%S").time())
+        if single_end > self.to_date:
+            single_end = self.to_date
+
+        if t_start > single_end or t_end < single_start:
+            return 0
+
+        if metric == self.names.metric.runtime:
+            if t_start < single_start:
+                start_time =  single_start
+            else:
+                start_time = t_start
+
+            if t_end > single_end:
+                end_time = single_end
+            else:
+                end_time = t_end
+
+            td = end_time - start_time
             res = td.seconds#int(ceil(float(td.seconds) / 60 / 60))
             return res
         elif metric == self.names.metric.count:
@@ -314,42 +319,32 @@ class FGSearch:
 
         if metric == self.names.metric.count:
             self.calc = "count"
-            self.groupby = "ownerId"
         elif metric == self.names.metric.runtime:
             self.calc = "sum"
-            self.column = "duration"
-            self.groupby = "ownerId"
+            self.columns = ["duration"]
             self.groups = ["ownerId"]
         elif metric in self.names.metric.cores:
             self.calc = "sum"
-            self.column = "ccvm"
-            self.column2 = "cores"
-            self.groupby = "instance.cloudplatform"
-            self.sub_groupby = "date"
+            self.columns = ["ccvm", "cores"]
             self.groups = ["instance.cloudplatform"]
             self.period = "daily"
         elif metric in self.names.metric.memories:
             self.calc = "sum"
-            self.column = "ccvm"
-            self.column2 = "mem"
-            self.groupby = "instance.cloudplatform"
-            self.sub_groupby = "date"
+            self.columns = ["ccvm", "mem"]
             self.groups = ["instance.cloudplatform"]
             self.period = "daily"
         elif metric in self.names.metric.disks:
             self.calc = "sum"
-            self.column = "ccvm"
-            self.column2 = "disk"
-            self.groupby = "instance.cloudplatform"
-            self.sub_groupby = "date"
+            self.columns = ["ccvm", "disk"]
             self.groups = ["instance.cloudplatform"]
             self.period = "daily"
 
-    def get_column(self, selected):
-        if self.column in selected:
-            return selected[self.column]
-        else:
+    def get_metricfactor(self, columns, selected):
+        if columns is None:
             return 1
+        if len(columns) == 0:
+            return selected
+        return self.get_metricfactor(columns[1:], selected[columns[0]])
 
     def calculate(self, old, new):
         if self.calc == self.names.calc.count:

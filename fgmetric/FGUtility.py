@@ -25,7 +25,7 @@ class FGUtility:
             firstname = res[0]
             lastname = res[1]
             uid = res[2]
-            result = { 'ownerid': ownerid, 'first_name':res[0], 'last_name' : res[1], 'uid' : res[2] }
+            result = { 'ownerid': ownerid, 'first_name':res[0], 'last_name' : res[1], 'uid' : res[2], 'email' : res[3] }
             return result
         except:
             return None

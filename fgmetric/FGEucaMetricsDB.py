@@ -107,7 +107,8 @@ class FGEucaMetricsDB(object):
                 uid INT, \
                 username varchar(32), \
                 project varchar(16), \
-                hostname varchar(16))"
+                hostname varchar(16), \
+                email varchar(255))"
 
         create_cloudplatform_table = "create table if not exists " + self.cloudplatform_table + " (\
                 cloudPlatformId tinyint primary key auto_increment not null, \

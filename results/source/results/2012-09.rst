@@ -1,0 +1,758 @@
+September 2012
+========================================
+Monthly report (09/2012)
+----------------------------------------
+
+Results for eucalyptus on india.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 1. Total count of VMs submitted per user for September 2012 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/eucalyptus/user/FGGoogleMotionChart.html" frameborder="0"></iframe>
+	</div>
+	Figure 2. Total count of VMs submitted per user for September 2012 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 3. Total runtime (hour) of VMs submitted per user for September 2012 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/eucalyptus/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 4. Total count of VMs submitted on india in September 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/eucalyptus/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 5. Total runtime of VMs submitted on india in September 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/eucalyptus/ccvm_cores/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 6. Total ccvm_cores of VMs submitted on india in September 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/eucalyptus/ccvm_mem/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 7. Total ccvm_mem of VMs submitted on india in September 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/eucalyptus/ccvm_disk/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 8. Total ccvm_disk of VMs submitted on india in September 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 9. Total VMs count per node cluster for September 2012 on india
+
+Results for openstack on india.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/openstack/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 10. Total count of VMs submitted per user for September 2012 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/india/openstack/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 11. Total runtime (hour) of VMs submitted per user for September 2012 on india
+
+Results for eucalyptus on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 12. Total count of VMs submitted per user for September 2012 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 13. Total runtime (hour) of VMs submitted per user for September 2012 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/sierra/eucalyptus/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 14. Total count of VMs submitted on sierra in September 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/sierra/eucalyptus/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 15. Total runtime of VMs submitted on sierra in September 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/sierra/eucalyptus/ccvm_cores/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 16. Total ccvm_cores of VMs submitted on sierra in September 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/sierra/eucalyptus/ccvm_mem/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 17. Total ccvm_mem of VMs submitted on sierra in September 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/sierra/eucalyptus/ccvm_disk/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 18. Total ccvm_disk of VMs submitted on sierra in September 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 19. Total VMs count per node cluster for September 2012 on sierra
+
+Results for nimbus on hotel.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/hotel/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 20. Total count of VMs submitted per user for September 2012 on hotel
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/hotel/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 21. Total runtime (hour) of VMs submitted per user for September 2012 on hotel
+
+Results for nimbus on alamo.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/alamo/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 22. Total count of VMs submitted per user for September 2012 on alamo
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/alamo/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 23. Total runtime (hour) of VMs submitted per user for September 2012 on alamo
+
+Results for nimbus on foxtrot.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/foxtrot/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 24. Total count of VMs submitted per user for September 2012 on foxtrot
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/foxtrot/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 25. Total runtime (hour) of VMs submitted per user for September 2012 on foxtrot
+
+Results for nimbus on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/sierra/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 26. Total count of VMs submitted per user for September 2012 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09/sierra/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 27. Total runtime (hour) of VMs submitted per user for September 2012 on sierra
+
+09/04/2012 - 09/10/2012
+------------------------------------------------------------
+
+Results for eucalyptus on india.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 1. Total count of VMs submitted per user for 2012-09-04  ~ 2012-09-10 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-09-04  ~ 2012-09-10 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 3. Total VMs count per node cluster for 2012-09-04  ~ 2012-09-10 on india
+
+Results for openstack on india.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/india/openstack/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 4. Total count of VMs submitted per user for 2012-09-04 ~ 2012-09-10 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/india/openstack/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 5. Total runtime (hour) of VMs submitted per user for 2012-09-04 ~ 2012-09-10 on india
+
+Results for eucalyptus on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 6. Total count of VMs submitted per user for 2012-09-04  ~ 2012-09-10 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 7. Total runtime hour of VMs submitted per user for 2012-09-04  ~ 2012-09-10 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 8. Total VMs count per node cluster for 2012-09-04  ~ 2012-09-10 on sierra
+
+Results for nimbus on hotel.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/hotel/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 9. Total count of VMs submitted per user for 2012-09-04 ~ 2012-09-10 on hotel
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/hotel/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 10. Total runtime (hour) of VMs submitted per user for 2012-09-04 ~ 2012-09-10 on hotel
+
+Results for nimbus on alamo.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/alamo/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 11. Total count of VMs submitted per user for 2012-09-04 ~ 2012-09-10 on alamo
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/alamo/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 12. Total runtime (hour) of VMs submitted per user for 2012-09-04 ~ 2012-09-10 on alamo
+
+Results for nimbus on foxtrot.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/foxtrot/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 13. Total count of VMs submitted per user for 2012-09-04 ~ 2012-09-10 on foxtrot
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/foxtrot/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 14. Total runtime (hour) of VMs submitted per user for 2012-09-04 ~ 2012-09-10 on foxtrot
+
+Results for nimbus on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/sierra/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 15. Total count of VMs submitted per user for 2012-09-04 ~ 2012-09-10 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-10/sierra/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 16. Total runtime (hour) of VMs submitted per user for 2012-09-04 ~ 2012-09-10 on sierra
+
+09/11/2012 - 09/17/2012
+------------------------------------------------------------
+
+Results for eucalyptus on india.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 1. Total count of VMs submitted per user for 2012-09-11  ~ 2012-09-17 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-09-11  ~ 2012-09-17 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 3. Total VMs count per node cluster for 2012-09-11  ~ 2012-09-17 on india
+
+Results for openstack on india.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/india/openstack/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 4. Total count of VMs submitted per user for 2012-09-11 ~ 2012-09-17 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/india/openstack/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 5. Total runtime (hour) of VMs submitted per user for 2012-09-11 ~ 2012-09-17 on india
+
+Results for eucalyptus on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 6. Total count of VMs submitted per user for 2012-09-11  ~ 2012-09-17 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 7. Total runtime hour of VMs submitted per user for 2012-09-11  ~ 2012-09-17 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 8. Total VMs count per node cluster for 2012-09-11  ~ 2012-09-17 on sierra
+
+Results for nimbus on hotel.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/hotel/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 9. Total count of VMs submitted per user for 2012-09-11 ~ 2012-09-17 on hotel
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/hotel/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 10. Total runtime (hour) of VMs submitted per user for 2012-09-11 ~ 2012-09-17 on hotel
+
+Results for nimbus on alamo.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/alamo/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 11. Total count of VMs submitted per user for 2012-09-11 ~ 2012-09-17 on alamo
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/alamo/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 12. Total runtime (hour) of VMs submitted per user for 2012-09-11 ~ 2012-09-17 on alamo
+
+Results for nimbus on foxtrot.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/foxtrot/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 13. Total count of VMs submitted per user for 2012-09-11 ~ 2012-09-17 on foxtrot
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/foxtrot/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 14. Total runtime (hour) of VMs submitted per user for 2012-09-11 ~ 2012-09-17 on foxtrot
+
+Results for nimbus on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/sierra/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 15. Total count of VMs submitted per user for 2012-09-11 ~ 2012-09-17 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-17/sierra/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 16. Total runtime (hour) of VMs submitted per user for 2012-09-11 ~ 2012-09-17 on sierra
+
+09/18/2012 - 09/24/2012
+------------------------------------------------------------
+
+Results for eucalyptus on india.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 1. Total count of VMs submitted per user for 2012-09-18  ~ 2012-09-24 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-09-18  ~ 2012-09-24 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 3. Total VMs count per node cluster for 2012-09-18  ~ 2012-09-24 on india
+
+Results for openstack on india.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/india/openstack/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 4. Total count of VMs submitted per user for 2012-09-18 ~ 2012-09-24 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/india/openstack/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 5. Total runtime (hour) of VMs submitted per user for 2012-09-18 ~ 2012-09-24 on india
+
+Results for eucalyptus on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 6. Total count of VMs submitted per user for 2012-09-18  ~ 2012-09-24 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 7. Total runtime hour of VMs submitted per user for 2012-09-18  ~ 2012-09-24 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 8. Total VMs count per node cluster for 2012-09-18  ~ 2012-09-24 on sierra
+
+Results for nimbus on hotel.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/hotel/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 9. Total count of VMs submitted per user for 2012-09-18 ~ 2012-09-24 on hotel
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/hotel/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 10. Total runtime (hour) of VMs submitted per user for 2012-09-18 ~ 2012-09-24 on hotel
+
+Results for nimbus on alamo.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/alamo/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 11. Total count of VMs submitted per user for 2012-09-18 ~ 2012-09-24 on alamo
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/alamo/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 12. Total runtime (hour) of VMs submitted per user for 2012-09-18 ~ 2012-09-24 on alamo
+
+Results for nimbus on foxtrot.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/foxtrot/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 13. Total count of VMs submitted per user for 2012-09-18 ~ 2012-09-24 on foxtrot
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/foxtrot/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 14. Total runtime (hour) of VMs submitted per user for 2012-09-18 ~ 2012-09-24 on foxtrot
+
+Results for nimbus on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/sierra/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 15. Total count of VMs submitted per user for 2012-09-18 ~ 2012-09-24 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-09-24/sierra/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 16. Total runtime (hour) of VMs submitted per user for 2012-09-18 ~ 2012-09-24 on sierra
+
+09/25/2012 - 10/01/2012
+------------------------------------------------------------
+
+Results for eucalyptus on india.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 1. Total count of VMs submitted per user for 2012-09-25  ~ 2012-10-01 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-09-25  ~ 2012-10-01 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 3. Total VMs count per node cluster for 2012-09-25  ~ 2012-10-01 on india
+
+Results for openstack on india.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/india/openstack/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 4. Total count of VMs submitted per user for 2012-09-25 ~ 2012-10-01 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/india/openstack/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 5. Total runtime (hour) of VMs submitted per user for 2012-09-25 ~ 2012-10-01 on india
+
+Results for eucalyptus on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 6. Total count of VMs submitted per user for 2012-09-25  ~ 2012-10-01 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 7. Total runtime hour of VMs submitted per user for 2012-09-25  ~ 2012-10-01 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 8. Total VMs count per node cluster for 2012-09-25  ~ 2012-10-01 on sierra
+
+Results for nimbus on hotel.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/hotel/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 9. Total count of VMs submitted per user for 2012-09-25 ~ 2012-10-01 on hotel
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/hotel/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 10. Total runtime (hour) of VMs submitted per user for 2012-09-25 ~ 2012-10-01 on hotel
+
+Results for nimbus on alamo.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/alamo/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 11. Total count of VMs submitted per user for 2012-09-25 ~ 2012-10-01 on alamo
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/alamo/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 12. Total runtime (hour) of VMs submitted per user for 2012-09-25 ~ 2012-10-01 on alamo
+
+Results for nimbus on foxtrot.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/foxtrot/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 13. Total count of VMs submitted per user for 2012-09-25 ~ 2012-10-01 on foxtrot
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/foxtrot/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 14. Total runtime (hour) of VMs submitted per user for 2012-09-25 ~ 2012-10-01 on foxtrot
+
+Results for nimbus on sierra.futuregrid.org
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/sierra/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 15. Total count of VMs submitted per user for 2012-09-25 ~ 2012-10-01 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="800" height="600" src="data/2012-10-01/sierra/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 16. Total runtime (hour) of VMs submitted per user for 2012-09-25 ~ 2012-10-01 on sierra

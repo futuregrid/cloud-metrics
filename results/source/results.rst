@@ -1,3 +1,10 @@
+Welcome to FutureGrid Cloud Metrics
+===================================
+
+- Documentation: http://futuregrid.github.com/cloud-metrics
+- Source: http://github.com/futuregrid/cloud-metrics
+- Issues: http://github.com/futuregrid/cloud-metrics/issues 
+
 Cloud Metric Results
 ====================
 We have collected cloud utilization data from Eucalyptus on FutureGrid such as India and Sierra resources and provide weekly and monthly reports to show usage of system resources measured by FG Cloud Metric.

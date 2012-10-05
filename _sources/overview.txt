@@ -17,7 +17,6 @@ Contents:
    lighttpd
    download
    support
-   results
    metrics
 
 

@@ -1,23 +1,29 @@
-Cloud Metric Results
-====================
-We have collected cloud utilization data from Eucalyptus on FutureGrid such as India and Sierra resources and provide weekly and monthly reports to show usage of system resources measured by FG Cloud Metric.
+.. Cloud Metrics documentation master file, created by
+   sphinx-quickstart on Tue Apr 10 10:11:26 2012.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to Cloud Metrics's documentation!
+=========================================
 
 Contents:
 
 .. toctree::
-	:maxdepth: 2
+   :maxdepth: 3
 
-	results/all
-	results/realtime
-	results/thismonth
-	results/2012-09
-	results/2012-08
-	results/2012-07
-	results/2012-06
-	results/2012-05
-	results/2012-04
-	results/2012-03
-	results/2012-02
-	results/2012-01
-	results/2011-12
-	results/2011-11
+   about
+   quickstart
+   details
+   lighttpd
+   download
+   support
+   metrics
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

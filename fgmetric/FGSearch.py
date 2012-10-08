@@ -269,13 +269,6 @@ class FGSearch:
             next is display
             and code quality using pep8? gregor?
 
-            who do I need to satisfy?
-            1) gregor
-            2) geoffrey
-            3) swany
-            4) newton
-            5) friedman
-
             '''
         return
 

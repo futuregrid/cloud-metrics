@@ -265,10 +265,6 @@ class FGSearch:
 
             3)
 
-            ***
-            next is display
-            and code quality using pep8? gregor?
-
             '''
         return
 

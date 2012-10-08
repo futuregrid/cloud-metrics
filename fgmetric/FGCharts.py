@@ -1,24 +1,25 @@
 from fgmetric.FGPygooglechart import FGPyGoogleChart
 from fgmetric.FGHighcharts import FGHighcharts
+from fgmetric.FGUtility import FGUtility
 
 class FGCharts:
 
     def __init__(self):
         self.chart = None
-        self.chart_name = None
+        self.chart_api = None
         self.type = None
         self.data = None
         self.data_name = "all"
         self.xaxis = None
         self.yaxis = None
-        self.output_path = None
+        self.output_path = "./"#None
         self.output_type = "html"
-        self.title = None
-        self.subtitle = None
-        self.filename = None
+        self.title = "FG Charts"#None
+        self.subtitle = ""#None
+        self.filename = FGUtility.timeStamped("chart") + "." + self.output_type#None
 
-    def set_chart(self, name="highcharts"):
-        self.chart_name = name
+    def set_chart_api(self, name="highcharts"):
+        self.chart_api = name
 
     def set_type(self, name):
         self.type = name
@@ -43,13 +44,50 @@ class FGCharts:
         self.yaxis = None
         self.data = None
 
-    # How to create heritage of variables to a child object?
+    def set_datafromdict(self, data, keyname):
+        '''
+         Example of data: {'nimbus': {'count': 77}, 'eucalyptus': {'count': 119}}
+         The template is like: group1: {name of y axis: value, ...}, ...
+         possible ways that I can think of are ...
+         1. { metric: value }
+         2. { group1: { metric: value}, ...
+         3. { group1: { metric1: value, ... }, ...
+        ''' 
+        xaxis = []
+        yaxis = []
+        series = {}
+        try:
+            if type(data) == type({}):
+                xaxis = data.keys()
+                print xaxis
+                records = data.values()
+                print records
+                yaxis = records[0].keys()
+                print yaxis
+                for name in yaxis: # count
+                    print name
+                    for record in records: # {'count': 77}, {'count':119}
+                        print record
+                        if not name in series:
+                            series[name] = []
+                        series[name].append(record[name])
+
+                self.set_xaxis(xaxis)
+                #self.chart.set_series(seriese
+                #self.chart.set_data_name(series.keys())
+                self.set_data(",".join(str(x) for x in series.values()))
+
+            else:
+                print 1
+        except:
+            pass
 
     def _create_chart(self):
         try:
-            if self.chart_name == "highcharts":
+            # inherit object variables?
+            if self.chart_api == "highcharts":
                 self.chart = FGHighcharts()
-            elif self.chart_name == "googlechart":
+            elif self.chart_api == "googlechart":
                 self.chart = FGPyGoogleChart()
             self.chart.set_type(self.type)
             self.chart.set_data(self.data)
@@ -68,5 +106,4 @@ class FGCharts:
     def display(self):
 
         self._create_chart() # default
-
         self.chart.display()

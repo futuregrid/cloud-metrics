@@ -1,4 +1,5 @@
 import os
+import datetime
 
 class FGUtility:
 
@@ -15,6 +16,9 @@ class FGUtility:
             if not os.path.exists(d):
                 os.makedirs(d)
 
+    @staticmethod
+    def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
+            return datetime.datetime.now().strftime(fmt).format(fname=fname)
 
     def retrieve_userinfo_ldap(ownerid):
 

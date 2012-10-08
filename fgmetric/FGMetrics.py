@@ -3,11 +3,9 @@ import pprint
 from fgmetric.FGSearch import FGSearch
 from fgmetric.FGInstances import FGInstances
 from fgmetric.FGNovaMetric import FGNovaMetric
+from fgmetric.FGCharts import FGCharts
 
 class FGMetrics(Cmd):
-    ''' This class name should be back to FGAnalyzer '''
-
-    ''' This is a development version '''
 
     instances = None
     nova = None
@@ -27,6 +25,7 @@ class FGMetrics(Cmd):
         self.search = FGSearch()
         self.instances = FGInstances()
         self.nova = FGNovaMetric()
+        self.chart = FGCharts()
 
     def load_db(self):
         """Read the statistical data from database (MySQL, etc)"""
@@ -75,6 +74,13 @@ class FGMetrics(Cmd):
         6) convert the result data structure to chart formatted data
         '''
 
+    def create_charts(self):
+        ''' set for test '''
+        self.chart.set_chart_api("highcharts")
+        self.chart.set_type("bar")
+        self.chart.set_datafromdict(self.search.get_metric(), self.search.metric)
+        self.chart.display()
+
     def do_load_db(self, line):
         self.load_db()
 
@@ -82,7 +88,7 @@ class FGMetrics(Cmd):
        
         self.display_filter_setting()
         self.get_measure()
-        #self.create_charts()
+        self.create_charts()
 
     def do_set (self, line, opts=None):
         """Set a function with parameter(s)"""

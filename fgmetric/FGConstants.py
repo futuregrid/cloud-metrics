@@ -1,0 +1,4 @@
+
+class FGConst:
+    DEFAULT_NIMBUS_VERSION = "2.9"
+    DEFAULT_OPENSTACK_VERSION = "essex"

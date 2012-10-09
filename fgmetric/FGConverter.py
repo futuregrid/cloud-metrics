@@ -1,16 +1,17 @@
-import argparse, os
+import argparse, os, sys
 import sqlite3 as lite
 import MySQLdb
 from collections import deque
 from datetime import datetime
-import fgmetric.FGParser as FGParser
+from fgmetric.FGEucaMetricsDB import FGEucaMetricsDB
+from fgmetric.FGConstants import FGConst
 
 class FGConverter:
 
-    instances = FGParser.Instances()
+    eucadb = FGEucaMetricsDB()
 
-    future = instances.in_the_future
-    past = instances.in_the_past
+    #future = instances.in_the_future
+    #past = instances.in_the_past
 
     s_date = None
     e_date = None
@@ -22,7 +23,7 @@ class FGConverter:
     platform_version = None
     hostname = None
     confname = None
-    read_database = None
+    database = None
     dbname = None
     dbname_nova = None
     dbname_keystone = None
@@ -34,33 +35,40 @@ class FGConverter:
     rows = None     #from database
     records = None  #for fg database
 
+    userinfo = None
+    cloudplatform = None
+
     def convert_to_fg(self):
-        if not self.check_platform():
-            return
+        self.check_platform()
         self.read_database()
         self.map_to_fg()
         self.write_db()
 
     def check_platform(self):
-        if self.platform == "nimbus":
-            if not self.filename or not self.filepath:
-                print "sqlite3 file is missing"
-                return False
-            default_version = "2.9"
-            read_database = getattr(self, "read_" + "sqlite3")
-        elif self.platform == "openstack":
-            if not self.dbname_nova or not self.dbname_keystone or not self.dbhost or not self.dbuser or not self.dbpass:
-                print "db info is missing"
-                return False
-            default_version = "essex"
-            read_database = getattr(self, "read_" + "nova_and_keystone")
-        
-        self.read_database = read_database
+        _check = getattr(self, "check_platform_" + self.platform)
+        _check()
 
-        if not self.platform_version or len(self.platform_version) == 0:
-            self.platform_version = default_version
+    def check_platform_nimbus(self):
 
-        return True
+        if not self.filename or not self.filepath:
+            msg = "sqlite3 file is missing"
+            print msg
+            raise ValueError(msg)
+
+        self.platform_version = self.platform_version or FGConst.DEFAULT_NIMBUS_VERSION
+
+    def check_platform_openstack(self):
+
+        if not self.dbname_nova or not self.dbname_keystone or not self.dbhost or not self.dbuser or not self.dbpass:
+            msg = "db info is missing"
+            print msg
+            raise ValueError(msg)
+
+        self.platform_version = self.platform_version or FGConst.DEFAULT_OPENSTACK_VERSION
+
+    def read_database(self):
+        read_database = getattr(self, "read_" + self.database)
+        read_database()
 
     def read_sqlite3(self):
 
@@ -93,7 +101,7 @@ class FGConverter:
             if con:
                 con.close()
 
-    def read_nova_and_keystone(self):
+    def read_mysql(self):
 
         conn = None
         try:
@@ -117,8 +125,8 @@ class FGConverter:
                     vcpus as ccvm_cores, \
                     host as serviceTag, \
                     reservation_id as reservationId,\
-                    launched_at as t_start, \
-                    terminated_at as t_end, \
+                    COALESCE(launched_at, created_at, scheduled_at) as t_start, \
+                    COALESCE(terminated_at, deleted_at) as t_end, \
                     uuid as instanceId, \
                     access_ip_v4 as ccnet_publicIp,\
                     ephemeral_gb as ccvm_disk \
@@ -136,13 +144,17 @@ class FGConverter:
                 conn.close()
 
     def read_userinfo(self):
-        print 1
+        self.userinfo = self.eucadb.read_userinfo()
+
     def read_cloudplatform(self):
-        print 1
+        self.cloudplatform = self.eucadb.read_cloudplatform()
 
     def map_to_fg(self):
         rows = self.rows
         records = []
+
+        self.read_cloudplatform()
+        cloudplatformid = self.cloudplatform[self.platform][self.hostname]['cloudPlatformId']
 
         for row in rows:
             record = row
@@ -218,24 +230,26 @@ class FGConverter:
         return state
 
     def write_db(self):
-
         for record in self.records:
-            self.instances.eucadb._write(record)
-                                        
+            self.eucadb._write(record)
+
+    def set_instance_conf(self, confname=""):
+        if confname and len(confname) > 0:
+            self.eucadb.__init__(confname)
+
     def set_parser(self):
         def_s_date = "19700101"
         def_e_date = "29991231"
         def_conf = "futuregrid.cfg"
+        def_nova = "nova"
+        def_keystone = "keystone"
+        def_db = "mysql"
 
         parser = argparse.ArgumentParser()
         parser.add_argument("-s", "--from", dest="s_date", default=def_s_date,
                 help="Start date to begin parsing (type: YYYYMMDD)")
         parser.add_argument("-e", "--to", dest="e_date", default=def_e_date,
                 help="End date to finish parsing (type: YYYYMMDD)")
-
-        # sqlite3 for nimbus
-        parser.add_argument("-i", "--file", dest="input_file",
-                help="the sqlite3 filename with path (e.g. /home/metric/nimbus/alamo/alamo)")
 
         parser.add_argument("-p", "--platform", required=True,
                 help="Cloud platform name, required. (e.g. nimbus, openstack, eucalyptus, etc)")
@@ -244,12 +258,19 @@ class FGConverter:
         parser.add_argument("-n", "--hostname", required=True,
                 help="Hostname of the cloud platform, required. (e.g., hotel, sierra, india, alamo, foxtrot)")
         parser.add_argument("--conf", dest="conf",
-                help="The configuraton file of the FG Cloud Metrics (e.g. $HOME/.futuregrid/futuregrid.cfg)")
+                help="futuregrid.cfg filepath (e.g. $HOME/.futuregrid/futuregrid.cfg)")
+
+        parser.add_argument("-db", "--database", default=def_db,
+                help="database type to load (e.g. mysql or sqlite3)")
+
+        # sqlite3 for nimbus
+        parser.add_argument("-i", "--file", dest="input_file",
+                help="the sqlite3 filename with path (e.g. /home/metric/nimbus/alamo/alamo)")
 
         # mysql for openstack
-        parser.add_argument("-dbn", "--dbname_nova",
+        parser.add_argument("-dbn", "--dbname_nova", default=def_nova,
                 help="Database of nova to use")
-        parser.add_argument("-dbk", "--dbname_keystone",
+        parser.add_argument("-dbk", "--dbname_keystone", default=def_keystone,
                 help="Database of keystone to use")
         parser.add_argument("-dh", "--dbhost",
                 help="Connect to database host")
@@ -260,15 +281,19 @@ class FGConverter:
         parser.add_argument("-dP", "--dbport", default=3306,
                 help="Port number to use for connection or 3306 for default")
 
-        self.parser = parser
         args = parser.parse_args()
         print args
 
-        self.s_date = datetime.strptime(args.s_date, "%Y%m%d")
-        self.e_date = datetime.strptime(args.e_date, "%Y%m%d")
-        self.platform = args.platform
         try:
-           
+ 
+            self.s_date = datetime.strptime(args.s_date, "%Y%m%d")
+            self.e_date = datetime.strptime(args.e_date, "%Y%m%d")
+            self.platform = args.platform
+            self.platform_version = args.platform_version
+            self.hostname = args.hostname
+            self.confname = self.set_instance_conf(args.conf)
+   
+            self.database = args.database
             self.dbname_nova = args.dbname_nova
             self.dbname_keystone = args.dbname_keystone
             self.dbhost = args.dbhost
@@ -281,18 +306,11 @@ class FGConverter:
             filepath = os.path.dirname(abspath)
             self.filename = filename
             self.filepath = filepath
- 
+
         except:
-            if not self.check_platform():
-                raise ValueError("missing args for (" + self.platform + ")")
+            pass#print sys.exc_info()[0]
 
-        self.platform_version = args.platform_version
-        self.hostname = args.hostname
-        self.confname = self.set_instance_conf(args.conf)
-
-    def set_instance_conf(self, confname=""):
-        if confname and len(confname) > 0:
-            self.instances.set_conf(confname)
+        self.parser = parser
 
 def main():
     converter = FGConverter()

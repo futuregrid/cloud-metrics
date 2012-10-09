@@ -214,6 +214,9 @@ class FGEucaMetricsDB(object):
     def read_userinfo(self, querydict={}):
         return self._read(self.userinfo_table, querydict)
 
+    def read_cloudplatform(self, querydict={}):
+        return self._read(self.cloudplatform_table, querydict)
+
     def delete(self, querydict={}):
         querystr = "";
         if querydict:

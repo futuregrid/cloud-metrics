@@ -32,6 +32,7 @@ class FGConverter:
     dbpass = None
     dbport = None
 
+    query = None
     rows = None     #from database
     records = None  #for fg database
 
@@ -56,6 +57,19 @@ class FGConverter:
             raise ValueError(msg)
 
         self.platform_version = self.platform_version or FGConst.DEFAULT_NIMBUS_VERSION
+        self.database = FGConst.DEFAULT_NIMBUS_DB
+
+        # this query is for sqlite3 because [timestamp] is only used on sqlite3?
+        self.query = 'select t1.time as "t_start [timestamp]",\
+                    t3.time as "t_end [timestamp]",\
+                    t1.uuid as instanceId,\
+                    t2.dn,\
+                    t1.cpu_count as ccvm_cores,\
+                    t1.memory as ccvm_mem,\
+                    t1.vmm as serviceTag \
+                    from create_events t1, user t2, remove_events t3 \
+                    on t1.user_id=t2.id and t1.uuid=t3.uuid \
+                    where t1.time >= \'' + str(self.s_date) + '\' and t3.time <= \'' + str(self.e_date) + '\''
 
     def check_platform_openstack(self):
 
@@ -66,53 +80,7 @@ class FGConverter:
 
         self.platform_version = self.platform_version or FGConst.DEFAULT_OPENSTACK_VERSION
 
-    def read_database(self):
-        read_database = getattr(self, "read_" + self.database)
-        read_database()
-
-    def read_sqlite3(self):
-
-        try: 
-            con = lite.connect(self.filepath + "/" + self.filename, detect_types = lite.PARSE_COLNAMES)
-            def dict_factory(cursor, row):
-                d = {}
-                for idx, col in enumerate(cursor.description):
-                    d[col[0]] = row[idx]
-                return d
-            con.row_factory = dict_factory#lite.Row
-            con.text_factory = str
-            cur = con.cursor()
-            cur.execute('select t1.time as "t_start [timestamp]",\
-                    t3.time as "t_end [timestamp]",\
-                    t1.uuid as instanceId,\
-                    t2.dn,\
-                    t1.cpu_count as ccvm_cores,\
-                    t1.memory as ccvm_mem,\
-                    t1.vmm as serviceTag \
-                    from create_events t1, user t2, remove_events t3 \
-                    on t1.user_id=t2.id and t1.uuid=t3.uuid \
-                    where t1.time >= \'' + str(self.s_date) + '\' and t3.time <= \'' + str(self.e_date) + '\'')
-            rows = cur.fetchall()
-            self.rows = rows
-        except lite.Error, e:
-            print "Error %s:" % e.args[0]
-            pass
-        finally:
-            if con:
-                con.close()
-
-    def read_mysql(self):
-
-        conn = None
-        try:
-            #connect to db
-            conn = MySQLdb.connect (self.dbhost, self.dbuser, self.dbpass, self.dbname_nova, self.dbport)#dbhost, dbuser, dbpasswd, dbname, dbport)
-            cursor = conn.cursor (MySQLdb.cursors.DictCursor)
-            # 1. draw mapping table between openstack 'instances' and fg 'instance' table.
-            # 2. define each column to know what exactly it means
-            # 3. leave comments for missing and skipped columns
-            # 4. check search options to see it is validate
-            rquery = 'SELECT created_at as trace_extant_start,\
+        self.query = 'SELECT created_at as trace_extant_start,\
                     id,\
                     user_id as ownerId,\
                     project_id as accountId,\
@@ -132,29 +100,92 @@ class FGConverter:
                     ephemeral_gb as ccvm_disk \
                     from instances \
                     where updated_at >= \'' + str(self.s_date) + '\' and updated_at <= \'' + str(self.e_date) + '\''
-            cursor.execute(rquery)
-            rows = cursor.fetchall()
-            self.rows = rows
+
+    def read_database(self):
+        conn_database = getattr(self, "connect_" + self.database)
+        conn = conn_database()
+        self.query_db(conn)
+        self.close_db(conn)
+
+    def oonnect_sqlite3(self):
+
+        try: 
+            con = lite.connect(self.filepath + "/" + self.filename, detect_types = lite.PARSE_COLNAMES)
+            def dict_factory(cursor, row):
+                d = {}
+                for idx, col in enumerate(cursor.description):
+                    d[col[0]] = row[idx]
+                return d
+            con.row_factory = dict_factory#lite.Row
+            con.text_factory = str
+            return con
+        except lite.Error, e:
+            print "Error %s:" % e.args[0]
+            if con:
+                con.close()
+            return None
+
+    def connect_mysql(self):
+
+        conn = None
+        try:
+            conn = MySQLdb.connect (self.dbhost, self.dbuser, self.dbpass, self.dbname_nova, self.dbport, cursorclass=MySQLdb.cursors.DictCursor)
+            cursor = conn.cursor ()#MySQLdb.cursors.DictCursor)
+            # 1. draw mapping table between openstack 'instances' and fg 'instance' table.
+            # 2. define each column to know what exactly it means
+            # 3. leave comments for missing and skipped columns
+            # 4. check search options to see it is validate
+            return conn
         except MySQLdb.Error, e:
             print "Error %s:" % e.args[0]
-            pass
-        finally:
             if conn:
                 cursor.close()
                 conn.close()
+            return None
+
+    def query_db(self, conn):
+        try:
+            cursor = conn.cursor()
+            cursor.execute(self.query)
+            self.rows = cursor.fetchall()
+        except (lite.Error, MySQLdb.Error) as e:
+            print "Error %s:" % e.args[0]
+            if conn:
+                cursor.close()
+                conn.close()
+
+    def close_db(self, conn):
+        if conn:
+            #conn.cursor.close()
+            conn.close()
 
     def read_userinfo(self):
         self.userinfo = self.eucadb.read_userinfo()
 
     def read_cloudplatform(self):
+        if self.cloudplatform:
+            return
         self.cloudplatform = self.eucadb.read_cloudplatform()
+
+    def get_cloudplatform_id(self, querydict={}):
+        class ContinueOutOfALoop(Exception): pass
+        self.read_cloudplatform()
+        for row in self.cloudplatform:
+            try:
+                for key in querydict:
+                    if row[key] != querydict[key]:
+                        raise ContinueOutOfALoop
+                return row["cloudPlatformId"]
+            except ContinueOutOfALoop:
+                continue
+        return None
 
     def map_to_fg(self):
         rows = self.rows
         records = []
 
-        self.read_cloudplatform()
-        cloudplatformid = self.cloudplatform[self.platform][self.hostname]['cloudPlatformId']
+        whereclause = { "platform": self.platform, "hostname": self.hostname, "version": self.platform_version }
+        cloudplatformid = self.get_cloudplatform_id(whereclause)
 
         for row in rows:
             record = row
@@ -211,6 +242,7 @@ class FGConverter:
             if not "state" in record:
                 record["state"] = "Teardown"
             record["state"] = self.convert_state(record["state"])
+            record["cloudplatformid"] = cloudplatformid
             print record
             break
             records.append(record)
@@ -231,6 +263,7 @@ class FGConverter:
 
     def write_db(self):
         for record in self.records:
+            print record
             self.eucadb._write(record)
 
     def set_instance_conf(self, confname=""):

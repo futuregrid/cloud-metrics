@@ -60,7 +60,7 @@ class FGConverter:
         self.database = FGConst.DEFAULT_NIMBUS_DB
 
         # this query is for sqlite3 because [timestamp] is only used on sqlite3?
-        self.query = 'select t1.time as "t_start [timestamp]",\
+        self.query = 'SELECT t1.time as "t_start [timestamp]",\
                     t3.time as "t_end [timestamp]",\
                     t1.uuid as instanceId,\
                     t2.dn,\
@@ -156,11 +156,19 @@ class FGConverter:
 
     def close_db(self, conn):
         if conn:
-            #conn.cursor.close()
-            conn.close()
+           #conn.cursor.close()
+           conn.close()
 
-    def read_userinfo(self):
-        self.userinfo = self.eucadb.read_userinfo()
+    def convert_userinfo_of_nova(self):
+        res = read_userinfo_of_nova_with_project_info()
+        for row in res:
+            ret = retrieve_ldap(row["name"])
+            ret["ownerid"] = row["id"]
+            ret["username"] = row["name"]
+            ret["project"] = row["project_id"]
+            ret["hostname"] = self.hostname
+            rets.append(ret)
+        write_userinfo(rets)
 
     def read_cloudplatform(self):
         if self.cloudplatform:

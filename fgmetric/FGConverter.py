@@ -5,10 +5,12 @@ from collections import deque
 from datetime import datetime
 from fgmetric.FGEucaMetricsDB import FGEucaMetricsDB
 from fgmetric.FGConstants import FGConst
+from fgmetric.FGDatabase import FGDatabase
 
 class FGConverter:
 
-    eucadb = FGEucaMetricsDB()
+    db = FGDatabase()
+    db_dest = FGDatabase()
 
     #future = instances.in_the_future
     #past = instances.in_the_past
@@ -16,21 +18,12 @@ class FGConverter:
     s_date = None
     e_date = None
 
-    filename = None
-    filepath = None
-
     platform = None
     platform_version = None
     hostname = None
     confname = None
-    database = None
-    dbname = None
     dbname_nova = None
     dbname_keystone = None
-    dbhost = None
-    dbuser = None
-    dbpass = None
-    dbport = None
 
     query = None
     rows = None     #from database
@@ -41,9 +34,15 @@ class FGConverter:
 
     def convert_to_fg(self):
         self.check_platform()
-        self.read_database()
+        self.read_from_source()
         self.map_to_fg()
-        self.write_db()
+        self.write_to_dest()
+
+    def write_to_dest(self):
+        self.db_dest.conf()
+        self.db_dest.connect()
+        self.db_dest.write_instance(self.records)
+        self.db_dest.close()
 
     def check_platform(self):
         _check = getattr(self, "check_platform_" + self.platform)
@@ -51,13 +50,8 @@ class FGConverter:
 
     def check_platform_nimbus(self):
 
-        if not self.filename or not self.filepath:
-            msg = "sqlite3 file is missing"
-            print msg
-            raise ValueError(msg)
-
         self.platform_version = self.platform_version or FGConst.DEFAULT_NIMBUS_VERSION
-        self.database = FGConst.DEFAULT_NIMBUS_DB
+        self.db.db_type = self.db.db_type or FGConst.DEFAULT_NIMBUS_DB
 
         # this query is for sqlite3 because [timestamp] is only used on sqlite3?
         self.query = 'SELECT t1.time as "t_start [timestamp]",\
@@ -73,12 +67,13 @@ class FGConverter:
 
     def check_platform_openstack(self):
 
-        if not self.dbname_nova or not self.dbname_keystone or not self.dbhost or not self.dbuser or not self.dbpass:
+        if not self.dbname_nova or not self.dbname_keystone or not self.db.dbhost or not self.db.dbuser or not self.db.dbpass:
             msg = "db info is missing"
             print msg
             raise ValueError(msg)
 
         self.platform_version = self.platform_version or FGConst.DEFAULT_OPENSTACK_VERSION
+        self.db.db_type = self.db.db_type or FGConst.DEFAULT_OPENSTACK_DB
 
         self.query = 'SELECT created_at as trace_extant_start,\
                     id,\
@@ -101,63 +96,10 @@ class FGConverter:
                     from instances \
                     where updated_at >= \'' + str(self.s_date) + '\' and updated_at <= \'' + str(self.e_date) + '\''
 
-    def read_database(self):
-        conn_database = getattr(self, "connect_" + self.database)
-        conn = conn_database()
-        self.query_db(conn)
-        self.close_db(conn)
-
-    def oonnect_sqlite3(self):
-
-        try: 
-            con = lite.connect(self.filepath + "/" + self.filename, detect_types = lite.PARSE_COLNAMES)
-            def dict_factory(cursor, row):
-                d = {}
-                for idx, col in enumerate(cursor.description):
-                    d[col[0]] = row[idx]
-                return d
-            con.row_factory = dict_factory#lite.Row
-            con.text_factory = str
-            return con
-        except lite.Error, e:
-            print "Error %s:" % e.args[0]
-            if con:
-                con.close()
-            return None
-
-    def connect_mysql(self):
-
-        conn = None
-        try:
-            conn = MySQLdb.connect (self.dbhost, self.dbuser, self.dbpass, self.dbname_nova, self.dbport, cursorclass=MySQLdb.cursors.DictCursor)
-            cursor = conn.cursor ()#MySQLdb.cursors.DictCursor)
-            # 1. draw mapping table between openstack 'instances' and fg 'instance' table.
-            # 2. define each column to know what exactly it means
-            # 3. leave comments for missing and skipped columns
-            # 4. check search options to see it is validate
-            return conn
-        except MySQLdb.Error, e:
-            print "Error %s:" % e.args[0]
-            if conn:
-                cursor.close()
-                conn.close()
-            return None
-
-    def query_db(self, conn):
-        try:
-            cursor = conn.cursor()
-            cursor.execute(self.query)
-            self.rows = cursor.fetchall()
-        except (lite.Error, MySQLdb.Error) as e:
-            print "Error %s:" % e.args[0]
-            if conn:
-                cursor.close()
-                conn.close()
-
-    def close_db(self, conn):
-        if conn:
-           #conn.cursor.close()
-           conn.close()
+    def read_from_source(self):
+        self.db.connect()
+        self.db.query(self.query)
+        self.db.close()
 
     def convert_userinfo_of_nova(self):
         res = read_userinfo_of_nova_with_project_info()
@@ -173,7 +115,7 @@ class FGConverter:
     def read_cloudplatform(self):
         if self.cloudplatform:
             return
-        self.cloudplatform = self.eucadb.read_cloudplatform()
+        self.cloudplatform = self.db.read_cloudplatform()
 
     def get_cloudplatform_id(self, querydict={}):
         class ContinueOutOfALoop(Exception): pass
@@ -194,6 +136,11 @@ class FGConverter:
 
         whereclause = { "platform": self.platform, "hostname": self.hostname, "version": self.platform_version }
         cloudplatformid = self.get_cloudplatform_id(whereclause)
+
+            # 1. draw mapping table between openstack 'instances' and fg 'instance' table.
+            # 2. define each column to know what exactly it means
+            # 3. leave comments for missing and skipped columns
+            # 4. check search options to see it is validate
 
         for row in rows:
             record = row
@@ -269,14 +216,10 @@ class FGConverter:
                 return state
         return state
 
-    def write_db(self):
-        for record in self.records:
-            print record
-            self.eucadb._write(record)
-
     def set_instance_conf(self, confname=""):
         if confname and len(confname) > 0:
-            self.eucadb.__init__(confname)
+            self.db_dest.set_conf(confname)
+            self.db_dest.update_conf()
 
     def set_parser(self):
         def_s_date = "19700101"
@@ -334,19 +277,15 @@ class FGConverter:
             self.hostname = args.hostname
             self.confname = self.set_instance_conf(args.conf)
    
-            self.database = args.database
+            self.db.db_type = args.database
             self.dbname_nova = args.dbname_nova
             self.dbname_keystone = args.dbname_keystone
-            self.dbhost = args.dbhost
-            self.dbuser = args.dbuser
-            self.dbpass = args.dbpass
-            self.dbport = args.dbport
+            self.db.dbhost = args.dbhost
+            self.db.dbuser = args.dbuser
+            self.db.dbpass = args.dbpass
+            self.db.dbport = args.dbport
 
-            abspath = os.path.abspath(args.input_file)
-            filename = os.path.basename(abspath)
-            filepath = os.path.dirname(abspath)
-            self.filename = filename
-            self.filepath = filepath
+            self.db.set_sqlite3_file(args.input_file)
 
         except:
             pass#print sys.exc_info()[0]

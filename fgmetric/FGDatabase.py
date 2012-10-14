@@ -12,10 +12,11 @@ class FGDatabase:
     column_cp_ins = "cloudPlatform"
     column_cp_cp = "cloudPlatformId"
 
+    query = None
+
     def __init__(self):
         self.config_filename = FGConst.DEFAULT_CONFIG_FILENAME
         self.config_filepath = FGConst.DEFAULT_CONFIG_FILEPATH
-        self.config = self.config_filepath + "/" + self.config_filename
         self.db_type = "mysql"
 
     def __del__(self):
@@ -23,16 +24,16 @@ class FGDatabase:
 
     def conf(self):
         config = ConfigParser.ConfigParser()
-        config.read(self.config)
+        config.read(self.get_config_file())
 
         try:
-            dbhost = config.get('EucaLogDB', 'host')
-            dbport = int(config.get('EucaLogDB', 'port'))
-            dbuser = config.get('EucaLogDB', 'user')
-            dbpasswd = config.get('EucaLogDB', 'passwd')
-            dbname = config.get('EucaLogDB', 'db')
-            euca_hostname = config.get('EucaLogDB', 'euca_hostname')
-            euca_version = config.get('EucaLogDB', 'euca_version')
+            self.dbhost = config.get('EucaLogDB', 'host')
+            self.dbport = int(config.get('EucaLogDB', 'port'))
+            self.dbuser = config.get('EucaLogDB', 'user')
+            self.dbpasswd = config.get('EucaLogDB', 'passwd')
+            self.dbname = config.get('EucaLogDB', 'db')
+            self.euca_hostname = config.get('EucaLogDB', 'euca_hostname')
+            self.euca_version = config.get('EucaLogDB', 'euca_version')
         except ConfigParser.NoSectionError:
             raise
 
@@ -46,17 +47,33 @@ class FGDatabase:
             print "Unexpected error:", sys.exc_info()[0]
             raise
 
-    def get_userinfo(self):
-    def get_instance(self):
+    def update_conf(self):
+        self.conf()
+
+    def get_config_file(self):
+        return self.config_filepath + "/" + self.config_filename
+
+    def set_sqlite3_file(self, input_file):
+        try:
+            abspath = os.path.abspath(input_file)
+            self.sqlite3_filename = os.path.basename(abspath)
+            self.sqlite3_filepath = os.path.dirname(abspath)
+        except:
+            pass
+
+    def get_sqlite3_file(self):
+        return self.sqlite3_filepath + "/" + self.sqlite3_filename
 
     def connect(self):
         conn_database = getattr(self, "connect_" + self.db_type)
-        conn = conn_database()
+        conn_database()
 
     def connect_mysql(self):
         try:
             self.conn = MySQLdb.connect (self.dbhost, self.dbuser, self.dbpasswd, self.dbname, self.dbport, cursorclass=MySQLdb.cursors.DictCursor)
-            #self.cursor = self.conn.cursor()
+            self.cursor = self.conn.cursor()
+        except MySQLdb.error as e:
+            print "Error %s:" % e.args[0]
         except:
             print "Unexpected error:", sys.exc_info()[0]
             raise
@@ -70,10 +87,11 @@ class FGDatabase:
             return d
 
         try:
-            conn = sqlite3.connect(self.sqlite3_file, detect_types = sqlite3.PARSE_COLNAMES)
+            conn = sqlite3.connect(self.get_sqlite3_file(), detect_types = sqlite3.PARSE_COLNAMES)
             conn.row_factory = dict_factory#lite.Row
             conn.text_factory = str
             self.conn = conn
+            self.cursor = self.conn.cursor()
         except lite.Error, e:
             print "Error %s:" % e.args[0]
 
@@ -178,11 +196,23 @@ class FGDatabase:
             ret.append(arow)
         return ret
 
+    def get_instance(self, querydict={}):
+        return self.read_instance(querydict)
+
     def read_instance(self, querydict={}):
         return self._read(self.cursor, self.instance_table, querydict)
 
+    def get_userinfo(self, querydict={}):
+        return self.read_userinfo(querydict)
+
     def read_userinfo(self, querydict={}):
         return self._read(self.cursor, self.userinfo_table, querydict)
+
+    def get_cloudplatform(self, querydict={}):
+        return self.read_cloudplatform(querydict)
+
+    def read_cloudplatform(self, querydict={}):
+        return self._read(self.cursor, self.cloudplatform_table, querydict)
 
     def _delete(self, tablename, querydict):
 
@@ -350,6 +380,14 @@ class FGDatabase:
             print "Unexpected error:", sys.exc_info()[0]
             raise
 
+    def write_instance(self, entryObj):
+        if type(entryObj) is list:
+            for entry in entryObj:
+                self._write("instance", entry)
+        else:
+            self._write("instance", entryObj)
+
+
     def write_userinfo(self, entryObj):
         ''' write userinfo object into db '''
         self._write("userinfo", entryObj)
@@ -372,6 +410,15 @@ class FGDatabase:
         except:
             print "Unexpected error:", sys.exc_info()[0]
             raise
+
+    def query(self, query=None):
+        try:
+            query = query or self.query
+            self.cursor.execute(query)
+            self.rows = self.cursor.fetchall()
+        except (lite.Error, MySQLdb.Error) as e:
+            print "Error %s:" % e.args[0]
+            pass
 
     def change_table(self, table_name):
 	self.instance_table = table_name

@@ -6,6 +6,7 @@ from datetime import datetime
 from fgmetric.FGEucaMetricsDB import FGEucaMetricsDB
 from fgmetric.FGConstants import FGConst
 from fgmetric.FGDatabase import FGDatabase
+from fgmetric.FGUtility import FGUtility
 
 class FGConverter:
 
@@ -34,15 +35,12 @@ class FGConverter:
 
     def convert_to_fg(self):
         self.check_platform()
+        #data of instances
         self.read_from_source()
         self.map_to_fg()
         self.write_to_dest()
-
-    def write_to_dest(self):
-        self.db_dest.conf()
-        self.db_dest.connect()
-        self.db_dest.write_instance(self.records)
-        self.db_dest.close()
+        #data of users
+        self.convert_userinfo_of_nova()
 
     def check_platform(self):
         _check = getattr(self, "check_platform_" + self.platform)
@@ -67,13 +65,14 @@ class FGConverter:
 
     def check_platform_openstack(self):
 
-        if not self.dbname_nova or not self.dbname_keystone or not self.db.dbhost or not self.db.dbuser or not self.db.dbpass:
+        if not self.dbname_nova or not self.dbname_keystone or not self.db.dbhost or not self.db.dbuser or not self.db.dbpasswd:
             msg = "db info is missing"
             print msg
             raise ValueError(msg)
 
         self.platform_version = self.platform_version or FGConst.DEFAULT_OPENSTACK_VERSION
         self.db.db_type = self.db.db_type or FGConst.DEFAULT_OPENSTACK_DB
+        self.db.dbname = self.dbname_nova
 
         self.query = 'SELECT created_at as trace_extant_start,\
                     id,\
@@ -98,19 +97,43 @@ class FGConverter:
 
     def read_from_source(self):
         self.db.connect()
-        self.db.query(self.query)
+        self.rows = self.db.query(self.query)
         self.db.close()
 
+    def write_to_dest(self):
+        self.db_dest.conf()
+        self.db_dest.connect()
+        self.db_dest.write_instance(self.records)
+        self.db_dest.close()
+
     def convert_userinfo_of_nova(self):
-        res = read_userinfo_of_nova_with_project_info()
-        for row in res:
-            ret = retrieve_ldap(row["name"])
-            ret["ownerid"] = row["id"]
-            ret["username"] = row["name"]
-            ret["project"] = row["project_id"]
-            ret["hostname"] = self.hostname
-            rets.append(ret)
-        write_userinfo(rets)
+        res = self.read_userinfo_of_nova_with_project_info()
+        print res
+        #self.db.write_userinfo(res)
+
+    def read_userinfo_of_nova_with_project_info(self):
+        keystone = self.db
+        keystone.dbname = self.dbname_keystone
+        keystone.connect()
+        userinfo = keystone.query("select user_id, tenant_id, user.name as user_name, tenant.name as tenant_name \
+                from user_tenant_membership, tenant, user \
+                where user.id=user_tenant_membership.user_id \
+                and tenant.id=user_tenant_membership.tenant_id")#select id, name from user")
+        records = []
+        for row in userinfo:
+            try:
+                res = FGUtility.retrieve_userinfo_ldap(row["user_name"])
+                if not res:
+                    res = {}
+                res["ownerid"] = row["user_id"]
+                res["username"] = row["user_name"]
+                res["project"] = row["tenant_name"]
+                res["hostname"] = self.hostname
+                records.append(res)
+            except:
+                print sys.exc_info()
+                raise
+        return records
 
     def read_cloudplatform(self):
         if self.cloudplatform:
@@ -282,7 +305,7 @@ class FGConverter:
             self.dbname_keystone = args.dbname_keystone
             self.db.dbhost = args.dbhost
             self.db.dbuser = args.dbuser
-            self.db.dbpass = args.dbpass
+            self.db.dbpasswd = args.dbpass
             self.db.dbport = args.dbport
 
             self.db.set_sqlite3_file(args.input_file)

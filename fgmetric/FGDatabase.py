@@ -3,6 +3,7 @@ import sys
 import ConfigParser
 import MySQLdb
 import sqlite3
+from fgmetric.FGConstants import FGConst
 
 class FGDatabase:
 
@@ -11,6 +12,9 @@ class FGDatabase:
     cloudplatform_table = "cloudplatform"
     column_cp_ins = "cloudPlatform"
     column_cp_cp = "cloudPlatformId"
+
+    conn = None
+    cursor = None
 
     query = None
 
@@ -70,9 +74,9 @@ class FGDatabase:
 
     def connect_mysql(self):
         try:
-            self.conn = MySQLdb.connect (self.dbhost, self.dbuser, self.dbpasswd, self.dbname, self.dbport, cursorclass=MySQLdb.cursors.DictCursor)
-            self.cursor = self.conn.cursor()
-        except MySQLdb.error as e:
+            self.conn = MySQLdb.connect (self.dbhost, self.dbuser, self.dbpasswd, self.dbname, self.dbport)#, cursorclass=MySQLdb.cursors.DictCursor)
+            self.cursor = self.conn.cursor(cursorclass=MySQLdb.cursors.DictCursor)
+        except MySQLdb.Error as e:
             print "Error %s:" % e.args[0]
         except:
             print "Unexpected error:", sys.exc_info()[0]
@@ -184,7 +188,7 @@ class FGDatabase:
            
         try:
             cursor.execute(rquery)
-        except (MYSQLdb.Error, sqlite3.Error) as e:
+        except (MySQLdb.Error, sqlite3.Error) as e:
             print str(e)
             pass
         except:
@@ -390,7 +394,11 @@ class FGDatabase:
 
     def write_userinfo(self, entryObj):
         ''' write userinfo object into db '''
-        self._write("userinfo", entryObj)
+        if type(entryObj) is list:
+            for entry in entryObj:
+                self._write("userinfo", entry)
+        else:
+            self._write("userinfo", entryObj)
 
     def _write(self, tablename, entryObj):
 
@@ -415,7 +423,8 @@ class FGDatabase:
         try:
             query = query or self.query
             self.cursor.execute(query)
-            self.rows = self.cursor.fetchall()
+            rows = self.cursor.fetchall()
+            return rows
         except (lite.Error, MySQLdb.Error) as e:
             print "Error %s:" % e.args[0]
             pass

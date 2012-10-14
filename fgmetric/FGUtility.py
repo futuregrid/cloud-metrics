@@ -1,4 +1,5 @@
-import os
+import os, sys, re
+import subprocess
 import datetime
 
 class FGUtility:
@@ -20,15 +21,14 @@ class FGUtility:
     def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
             return datetime.datetime.now().strftime(fmt).format(fname=fname)
 
+    @staticmethod
     def retrieve_userinfo_ldap(ownerid):
 
-        cmd = ['python', 'fg-user-project-info.py', '-u', ownerid, '-n']
+        #cmd = ['python', 'fg-user-project-info.py', '-u', ownerid, '-n']
+        cmd = ['fg-user-project-info.py', '-u', ownerid, '-n']
         try:
             output = subprocess.check_output(cmd)
             res = re.split(',', output.rstrip())
-            firstname = res[0]
-            lastname = res[1]
-            uid = res[2]
             result = { 'ownerid': ownerid, 'first_name':res[0], 'last_name' : res[1], 'uid' : res[2], 'email' : res[3] }
             return result
         except:

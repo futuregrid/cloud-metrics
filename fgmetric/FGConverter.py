@@ -10,9 +10,6 @@ from fgmetric.FGUtility import FGUtility
 
 class FGConverter:
 
-    db = FGDatabase()
-    db_dest = FGDatabase()
-
     #future = instances.in_the_future
     #past = instances.in_the_past
 
@@ -33,20 +30,25 @@ class FGConverter:
     userinfo = None
     cloudplatform = None
 
+    def __init__(self):
+        self.db = FGDatabase()
+        self.db_dest = FGDatabase()
+
+    def __del__(self):
+        self.db_close()
+
     def convert_to_fg(self):
         self.check_platform()
-        #data of instances
-        self.read_from_source()
-        self.map_to_fg()
-        self.write_to_dest()
-        #data of users
-        self.convert_userinfo_of_nova()
+        self.db_connect()
+        self.convert_instance()
+        self.convert_userinfo()
+        self.db_close()
 
     def check_platform(self):
-        _check = getattr(self, "check_platform_" + self.platform)
+        _check = getattr(self, "_check_platform_" + self.platform)
         _check()
 
-    def check_platform_nimbus(self):
+    def _check_platform_nimbus(self):
 
         self.platform_version = self.platform_version or FGConst.DEFAULT_NIMBUS_VERSION
         self.db.db_type = self.db.db_type or FGConst.DEFAULT_NIMBUS_DB
@@ -63,7 +65,7 @@ class FGConverter:
                     on t1.user_id=t2.id and t1.uuid=t3.uuid \
                     where t1.time >= \'' + str(self.s_date) + '\' and t3.time <= \'' + str(self.e_date) + '\''
 
-    def check_platform_openstack(self):
+    def _check_platform_openstack(self):
 
         if not self.dbname_nova or not self.dbname_keystone or not self.db.dbhost or not self.db.dbuser or not self.db.dbpasswd:
             msg = "db info is missing"
@@ -74,7 +76,10 @@ class FGConverter:
         self.db.db_type = self.db.db_type or FGConst.DEFAULT_OPENSTACK_DB
         self.db.dbname = self.dbname_nova
 
-        self.query = 'SELECT created_at as trace_extant_start,\
+        self.query = 'SELECT created_at as trace_pending_start, \
+                    launched_at as trace_extant_start,\
+                    terminated_at as trace_teardown_start, \
+                    deleted_at as trace_teardown_stop, \
                     id,\
                     user_id as ownerId,\
                     project_id as accountId,\
@@ -95,23 +100,38 @@ class FGConverter:
                     from instances \
                     where updated_at >= \'' + str(self.s_date) + '\' and updated_at <= \'' + str(self.e_date) + '\''
 
-    def read_from_source(self):
+    def db_connect(self):
         self.db.connect()
-        self.rows = self.db.query(self.query)
-        self.db.close()
-
-    def write_to_dest(self):
         self.db_dest.conf()
         self.db_dest.connect()
-        self.db_dest.write_instance(self.records)
+
+    def db_close(self):
+        self.db.close()
         self.db_dest.close()
 
-    def convert_userinfo_of_nova(self):
-        res = self.read_userinfo_of_nova_with_project_info()
-        print res
-        #self.db.write_userinfo(res)
+    def read_from_source(self):
+        self.rows = self.db.query(self.query)
 
-    def read_userinfo_of_nova_with_project_info(self):
+    def write_to_dest(self):
+        self.db_dest.write_instance(self.records)
+
+    def convert_instance(self):
+        self.read_from_source()
+        self.map_to_fg()
+        self.write_to_dest()
+
+    def convert_userinfo(self):
+        _convert = getattr(self, "_convert_userinfo_of_" + self.platform)
+        _convert()
+
+    def _convert_userinfo_of_nimbus(self):
+        return
+
+    def _convert_userinfo_of_openstack(self):
+        res = self._read_userinfo_of_nova_with_project_info()
+        self.db_dest.write_userinfo(res)
+
+    def _read_userinfo_of_nova_with_project_info(self):
         keystone = self.db
         keystone.dbname = self.dbname_keystone
         keystone.connect()
@@ -119,6 +139,7 @@ class FGConverter:
                 from user_tenant_membership, tenant, user \
                 where user.id=user_tenant_membership.user_id \
                 and tenant.id=user_tenant_membership.tenant_id")#select id, name from user")
+        keystone.close()
         records = []
         for row in userinfo:
             try:
@@ -129,6 +150,7 @@ class FGConverter:
                 res["username"] = row["user_name"]
                 res["project"] = row["tenant_name"]
                 res["hostname"] = self.hostname
+                print res
                 records.append(res)
             except:
                 print sys.exc_info()
@@ -138,7 +160,7 @@ class FGConverter:
     def read_cloudplatform(self):
         if self.cloudplatform:
             return
-        self.cloudplatform = self.db.read_cloudplatform()
+        self.cloudplatform = self.db_dest.read_cloudplatform()
 
     def get_cloudplatform_id(self, querydict={}):
         class ContinueOutOfALoop(Exception): pass
@@ -168,62 +190,66 @@ class FGConverter:
         for row in rows:
             record = row
 
-            record["instanceId"] = record["instanceId"][:15]
-            record["ts"] = record["t_start"]
-            #record["calltype"] = ""
-            #record["userData"] = ""
-            #record["kernelId"] = ""
-            #record["emiURL"] = ""
-            #record["t_start"] = row["t_start"]
-            #record["t_end"] = row["t_end"]
-            record["duration"] = (record["t_end"] - record["t_start"]).total_seconds()
-            #record["trace"] = {
-            #    "pending" : { "start" : self.future, "stop" : self.past, "queue" : deque("",10)},
-            #    "extant" : { "start" : self.future, "stop" : self.past, "queue" : deque("",10)},
-            #    "teardown" : { "start" : self.future, "stop" : self.past, "queue" : deque("",10)}
-            #    }
-            #record["serviceTag"] = row["serviceTag"] or ""
-            #record["groupNames"] = ""
-            #record["keyName"] = ""
-            #record["msgtype"] = ""
-            #record["volumesSize"] = 0.0
-            #record["linetype"] = ""
-            if "dn" in record and not "ownerId" in record:
-                if len(record["dn"].split("CN=")) > 1:
-                    record["ownerId"] = record["dn"].split("CN=")[1]
-                else:
-                    record["ownerId"] = record["dn"]
-            record["date"] = record["t_start"]
-            #record["id"] = 0
-            #record["ncHostIdx"] = 0
-            #record["ccvm"] = { "mem" : record["ccvm_mem"], "cores" : record["ccvm_cores"], "disk" : record[0 }
-            #if "ccvm_disk" in row:
-            #    record["ccvm"]["disk"] = row["ccvm_disk"]
-            #if "emiId" in row:
-            #    record["emiId"] = row["emiId"]
-            #else:
-            #    record["emiId"] = ""
-            #record["ccnet"] = { "publicIp" : "", "privateMac" : "", "networkIndex" : "", "vlan" : "", "privateIp" : "" }
+            try:
+                record["instanceId"] = record["instanceId"][:15]
+                record["ts"] = record["t_start"]
+                #record["calltype"] = ""
+                #record["userData"] = ""
+                #record["kernelId"] = ""
+                #record["emiURL"] = ""
+                #record["t_start"] = row["t_start"]
+                #record["t_end"] = row["t_end"]
+                if record["t_end"] and record["t_start"]:
+                    record["duration"] = (record["t_end"] - record["t_start"]).total_seconds()
+                #record["trace"] = {
+                #    "pending" : { "start" : self.future, "stop" : self.past, "queue" : deque("",10)},
+                #    "extant" : { "start" : self.future, "stop" : self.past, "queue" : deque("",10)},
+                #    "teardown" : { "start" : self.future, "stop" : self.past, "queue" : deque("",10)}
+                #    }
+                #record["serviceTag"] = row["serviceTag"] or ""
+                #record["groupNames"] = ""
+                #record["keyName"] = ""
+                #record["msgtype"] = ""
+                #record["volumesSize"] = 0.0
+                #record["linetype"] = ""
+                if "dn" in record and not "ownerId" in record:
+                    if len(record["dn"].split("CN=")) > 1:
+                        record["ownerId"] = record["dn"].split("CN=")[1]
+                    else:
+                        record["ownerId"] = record["dn"]
+                record["date"] = record["t_start"]
+                #record["id"] = 0
+                #record["ncHostIdx"] = 0
+                #record["ccvm"] = { "mem" : record["ccvm_mem"], "cores" : record["ccvm_cores"], "disk" : record[0 }
+                #if "ccvm_disk" in row:
+                #    record["ccvm"]["disk"] = row["ccvm_disk"]
+                #if "emiId" in row:
+                #    record["emiId"] = row["emiId"]
+                #else:
+                #    record["emiId"] = ""
+                #record["ccnet"] = { "publicIp" : "", "privateMac" : "", "networkIndex" : "", "vlan" : "", "privateIp" : "" }
 
-            #record["ramdiskURL"] = ""
-            #record["accountId"] = ""
-            #record["kernelURL"] = ""
-            #record["ramdiskId"] = ""
-            #record["volumes"] = ""
-            #record["launchIndex"] = 0
-            #record["bundleTaskStateName"] = ""
-            #record["reservationId"] = ""
-            record["platform"] = self.platform
-            record["euca_hostname"] = self.hostname
-            record["euca_version"] = self.platform_version
-            #record["state"] = "Teardown" # need to be changed
-            if not "state" in record:
-                record["state"] = "Teardown"
-            record["state"] = self.convert_state(record["state"])
-            record["cloudplatformid"] = cloudplatformid
-            print record
-            break
-            records.append(record)
+                #record["ramdiskURL"] = ""
+                #record["accountId"] = ""
+                #record["kernelURL"] = ""
+                #record["ramdiskId"] = ""
+                #record["volumes"] = ""
+                #record["launchIndex"] = 0
+                #record["bundleTaskStateName"] = ""
+                #record["reservationId"] = ""
+                record["platform"] = self.platform
+                record["euca_hostname"] = self.hostname
+                record["euca_version"] = self.platform_version
+                #record["state"] = "Teardown" # need to be changed
+                if not "state" in record:
+                    record["state"] = "Teardown"
+                record["state"] = self.convert_state(record["state"])
+                record["cloudPlatform"] = cloudplatformid
+                records.append(record)
+            except:
+                print sys.exc_info()
+                print record
+                pass
 
         self.records = records
 

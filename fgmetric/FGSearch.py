@@ -188,7 +188,7 @@ class FGSearch:
             ############################
             # Add daily dict temporarily
             try:
-                period_func = getattr(self, "divide_into_" + str(self.period))
+                period_func = getattr(self, "_divide_into_" + str(self.period))
                 period_func(mdict, value)
             except:
                 pass
@@ -215,10 +215,10 @@ class FGSearch:
         2) get_metricfactor will get an error due to missing groupby columns. should I change it back to use instance?
         '''
 
-    def divide_into_None(self, mdict, value):
+    def _divide_into_None(self, mdict, value):
         return
 
-    def divide_into_daily(self, mdict, val):
+    def _divide_into_daily(self, mdict, val):
         selected = self.get_recentlyselected()
         t_start = selected['t_start']
         t_end = selected['t_end']

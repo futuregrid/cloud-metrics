@@ -1,6 +1,7 @@
 import os
 import sys
 import ConfigParser
+import hashlib
 import MySQLdb
 import sqlite3
 from fgmetric.FGConstants import FGConst
@@ -69,10 +70,10 @@ class FGDatabase:
         return self.sqlite3_filepath + "/" + self.sqlite3_filename
 
     def connect(self):
-        conn_database = getattr(self, "connect_" + self.db_type)
+        conn_database = getattr(self, "_connect_" + self.db_type)
         conn_database()
 
-    def connect_mysql(self):
+    def _connect_mysql(self):
         try:
             self.conn = MySQLdb.connect (self.dbhost, self.dbuser, self.dbpasswd, self.dbname, self.dbport)#, cursorclass=MySQLdb.cursors.DictCursor)
             self.cursor = self.conn.cursor(cursorclass=MySQLdb.cursors.DictCursor)
@@ -82,7 +83,7 @@ class FGDatabase:
             print "Unexpected error:", sys.exc_info()[0]
             raise
 
-    def connect_sqlite3(self):
+    def _connect_sqlite3(self):
 
         def dict_factory(cursor, row):
             d = {}
@@ -102,7 +103,7 @@ class FGDatabase:
     def close(self):
         #if self.cursor:
         #    self.cursor.close()
-        if self.conn:
+        if self.conn.open:
             self.conn.close()
 
     '''
@@ -190,6 +191,7 @@ class FGDatabase:
             cursor.execute(rquery)
         except (MySQLdb.Error, sqlite3.Error) as e:
             print str(e)
+            print sys.exc_info()
             pass
         except:
             print "Unexpected error:", sys.exc_info()[0]
@@ -249,10 +251,7 @@ class FGDatabase:
 
     def write(self, entryObj):
         ''' write instance object into db '''
-        uidcat = entryObj["instanceId"] + " - " + str(entryObj["ts"])
-        m = hashlib.md5()
-        m.update(uidcat)
-        uid = m.hexdigest()
+        uid = self._get_hash(entryObj["instanceId"] + " - " + str(entryObj["ts"]))
         pp.pprint(entryObj)
         wquery = "INSERT INTO " + self.instance_table + " ( uidentifier, \
                                     instanceId, \
@@ -384,13 +383,28 @@ class FGDatabase:
             print "Unexpected error:", sys.exc_info()[0]
             raise
 
+    def _get_hash(self, name):
+        m = hashlib.md5()
+        m.update(name)
+        uid = m.hexdigest()
+        return uid
+
     def write_instance(self, entryObj):
         if type(entryObj) is list:
             for entry in entryObj:
-                self._write("instance", entry)
+                try:
+                    entry["uidentifier"] = self._get_hash(entry["instanceId"] + " - " + str(entry["ts"]))
+                    self._write("instance", entry)
+                except:
+                    print sys.exc_info()
+                    pass
         else:
-            self._write("instance", entryObj)
-
+            try:
+                entryObj["uidentifier"] = self._get_hash(entryObj["instanceId"] + " - " + str(entryObj["ts"]))
+                self._write("instance", entryObj)
+            except:
+                print sys.exc_info()
+                pass
 
     def write_userinfo(self, entryObj):
         ''' write userinfo object into db '''
@@ -406,7 +420,7 @@ class FGDatabase:
             keys = ", ".join(entryObj.keys())
             values = "'" + "' ,'".join(str(x) for x in entryObj.values()) + "'"
             wquery = "INSERT INTO " + tablename + " ( " + keys + " ) VALUES ( " + values + " )"
-            #print wquery
+            print wquery
             self.cursor.execute(wquery)
 
         except (MySQLdb.Error, sqlite3.Error) as e:

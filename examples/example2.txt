@@ -64,6 +64,18 @@ set platform eucalyptus
 analyze -M 08
 createreport -d 2012-08/india/eucalyptus/user
 
+clear users
+set nodename india
+set platform eucalyptus
+analyze -M 09
+createreport -d 2012-09/india/eucalyptus/user
+
+clear users
+set nodename india
+set platform eucalyptus
+analyze -M 10
+createreport -d 2012-10/india/eucalyptus/user
+
 # Create index.html for the reports above
 #createreports 2011-11 2011-12 2012-01 2012-02 2012-03 2012-04 2012-05
 

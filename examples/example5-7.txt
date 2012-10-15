@@ -353,7 +353,7 @@ sys_report -o 2012-07/india/eucalyptus/runtime --all
 clear all
 
 # A user can specify a data range
-set search_range 2012-07-01T00:00:00 2012-07-3T23:59:59
+set search_range 2012-07-01T00:00:00 2012-07-31T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename sierra
@@ -417,7 +417,7 @@ sys_report -o 2012-08/india/eucalyptus/runtime --all
 clear all
 
 # A user can specify a data range
-set search_range 2012-08-01T00:00:00 2012-08-3T23:59:59
+set search_range 2012-08-01T00:00:00 2012-08-31T23:59:59
 
 # A user can specify a node name (e.g. india, sierra)
 set nodename sierra
@@ -445,3 +445,59 @@ analyze -S runtime
 
 # Finally, it can create a graph for the analyzed data
 sys_report -o 2012-08/sierra/eucalyptus/runtime --all
+
+clear all
+set search_range 2012-09-01T00:00:00 2012-09-30T23:59:59
+set nodename india
+set platform eucalyptus
+analyze -S count
+sys_report -o 2012-09/india/eucalyptus/count --all
+
+clear all
+set search_range 2012-09-01T00:00:00 2012-09-30T23:59:59
+set nodename india
+set platform eucalyptus
+analyze -S runtime
+sys_report -o 2012-09/india/eucalyptus/runtime --all
+
+clear all
+set search_range 2012-09-01T00:00:00 2012-09-30T23:59:59
+set nodename sierra
+set platform eucalyptus
+analyze -S count
+sys_report -o 2012-09/sierra/eucalyptus/count --all
+
+clear all
+set search_range 2012-09-01T00:00:00 2012-09-30T23:59:59
+set nodename sierra
+set platform eucalyptus
+analyze -S runtime
+sys_report -o 2012-09/sierra/eucalyptus/runtime --all
+
+clear all
+set search_range 2012-10-01T00:00:00 2012-10-31T23:59:59
+set nodename india
+set platform eucalyptus
+analyze -S count
+sys_report -o 2012-10/india/eucalyptus/count --all
+
+clear all
+set search_range 2012-10-01T00:00:00 2012-10-31T23:59:59
+set nodename india
+set platform eucalyptus
+analyze -S runtime
+sys_report -o 2012-10/india/eucalyptus/runtime --all
+
+clear all
+set search_range 2012-10-01T00:00:00 2012-10-31T23:59:59
+set nodename sierra
+set platform eucalyptus
+analyze -S count
+sys_report -o 2012-10/sierra/eucalyptus/count --all
+
+clear all
+set search_range 2012-10-01T00:00:00 2012-10-31T23:59:59
+set nodename sierra
+set platform eucalyptus
+analyze -S runtime
+sys_report -o 2012-10/sierra/eucalyptus/runtime --all

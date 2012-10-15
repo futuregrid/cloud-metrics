@@ -549,11 +549,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         filepath = directory + "/" + filename
         FGUtility.ensure_dir(filepath)
         test = FGGoogleMotionChart()
-        print 1
         self.set_fullname()
-        print 2
         output = test.display(self.users, str(self.from_date))
-        print 3
         f = open(filepath, "w")
         f.write(output)
         f.close()
@@ -821,12 +818,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.instances.refresh()
         print "now calculating"
         self.calculate_stats (from_date, to_date)
-        print self.users
         # new way to calculate metrics
         # get_sys_stats return a list of daily values not specified by a user name
         # It can display daily/weekly/monthly graphs for system utilization
         self.sys_stats = self.get_sys_stats(opts.metric, opts.period)
-        print self.sys_stats
 
         self.nova.calculate_stats(self.from_date, self.to_date)
 

@@ -96,7 +96,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         for i in range(0, int(self.instances.count())):
             values = self.instances.getdata(i)
             process_entry = process_all
-            
+    
+            if not values["t_end"]:
+                values["t_end"] = self.instances.in_the_future
+
             if not process_all:
                 #process_entry = (values['ts'] >= date_from) and (values['ts'] < date_to)
                 process_entry = (values['t_end'] >= date_from) and (values['t_start'] <= date_to)

@@ -347,14 +347,19 @@ class Instances:
         """calculates how long each instance runs in seconds"""
         for i in self.data:
             values = self.data[i]
-            if values["state"] == "Teardown":
-                t_delta = values["t_end"] - values["ts"]
-            else:
-                t_delta = values["date"] - values["ts"]
+            try:
+                if values["state"] == "Teardown":
+                    t_delta = values["t_end"] - values["ts"]
+                else:
+                    t_delta = values["date"] - values["ts"]
 
-            if t_delta.total_seconds() < 0:
-                t_delta = values["t_end"] - values["t_end"]
-            values["duration"] = str(t_delta.total_seconds())
+                if t_delta.total_seconds() < 0:
+                    t_delta = values["ts"] - values["ts"]
+                values["duration"] = str(t_delta.total_seconds())
+            except:
+                print sys.exc_info()
+                print values
+                values["duration"] = 0
 
     def getDateRange(self):
 	for i in self.data:

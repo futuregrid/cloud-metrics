@@ -549,8 +549,11 @@ class CmdLineAnalyzeEucaData(Cmd):
         filepath = directory + "/" + filename
         FGUtility.ensure_dir(filepath)
         test = FGGoogleMotionChart()
+        print 1
         self.set_fullname()
+        print 2
         output = test.display(self.users, str(self.from_date))
+        print 3
         f = open(filepath, "w")
         f.write(output)
         f.close()
@@ -568,12 +571,18 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         for element in self.instances.userinfo_data:
             if element['ownerid'] == id:
-                return element['first_name'] + " " + element['last_name']
+                try:
+                    return element['first_name'] + " " + element['last_name']
+                except:
+                    return id
 
         # Second try if it does not exist
         for element in self.instances.userinfo_data:
             if element['username'] == id:
-                return element['first_name'] + " " + element['last_name']
+                try:
+                    return element['first_name'] + " " + element['last_name']
+                except:
+                    return id
 
         if id == "EJMBZFNPMDQ73AUDPOUS3":
             return "eucalyptus-admin"
@@ -812,7 +821,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         self.instances.refresh()
         print "now calculating"
         self.calculate_stats (from_date, to_date)
-
+        print self.users
         # new way to calculate metrics
         # get_sys_stats return a list of daily values not specified by a user name
         # It can display daily/weekly/monthly graphs for system utilization

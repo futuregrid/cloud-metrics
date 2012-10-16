@@ -358,7 +358,7 @@ class Instances:
                 values["duration"] = str(t_delta.total_seconds())
             except:
                 print sys.exc_info()
-                print values
+                #print values
                 values["duration"] = 0
 
     def getDateRange(self):

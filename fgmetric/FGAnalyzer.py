@@ -187,6 +187,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         # instance based data
         for i in range(0, int(self.instances.count())):
             instance = self.instances.getdata(i)
+
+            if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date :
+                continue
+
             if username and username != instance["ownerId"] :
                 continue
             #if self.nodename and self.nodename != instance["euca_hostname"] :
@@ -194,7 +198,6 @@ class CmdLineAnalyzeEucaData(Cmd):
                 continue
             if self.platform and self.platform != instance["cloudplatform.platform"]:
                 continue
-
             self._count_node(instance)
             merged_res = self._daily_stats(instance, metric, merged_res, "sum") # or "avg"
 
@@ -220,8 +223,6 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         #sys_stat = self.stats.get('count_node')
         sys_stat = self.sys_stat_new['total']['count_node']
-        if instance["t_start"] < self.from_date or instance["t_start"] > self.to_date:
-            return
         try:
             m = re.search(r'http://(.*):8775/axis2/services/EucalyptusNC', str(instance["serviceTag"]), re.M|re.I)
             nodename = str(m.group(1))
@@ -291,8 +292,6 @@ class CmdLineAnalyzeEucaData(Cmd):
         """
 
         month = [ 0 for n in range(self.day_count) ]
-        if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date :
-            return month
         if instance["t_start"] > self.from_date:
             offset = (instance["t_start"] - self.from_date).days
             ins_start = instance["t_start"]

@@ -262,7 +262,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             new_stats = self._daily_stat(instance, metric)
         except:
             print "Unexpected error:", sys.exc_info()[0]
-            raise
+            return current_stats
         res = self._merge_daily_stat(new_stats, current_stats, type)
         return res
     

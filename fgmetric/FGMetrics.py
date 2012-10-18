@@ -2,13 +2,12 @@ from cmd2 import Cmd
 import pprint
 from fgmetric.FGSearch import FGSearch
 from fgmetric.FGInstances import FGInstances
-from fgmetric.FGNovaMetric import FGNovaMetric
 from fgmetric.FGCharts import FGCharts
+from fgmetric.FGDatabase import FGDatabase
 
 class FGMetrics(Cmd):
 
     instances = None
-    nova = None
     search = None
 
     def __init__(self):
@@ -19,25 +18,21 @@ class FGMetrics(Cmd):
 
     def initialize(self, arg="all"):
         """Clear all instance data and user data on the memory"""
-        self.nova.clear_stats()
+        print "initializing..."
 
     def init_objects(self):
         self.search = FGSearch()
         self.instances = FGInstances()
-        self.nova = FGNovaMetric()
         self.chart = FGCharts()
 
-    def load_db(self):
+    def get_db(self):
         """Read the statistical data from database (MySQL, etc)"""
        
-        self.init_objects()
         print "\r... loading database"
         # Get data from the database
         self.instances.read_from_db()
         # Get also userinfo data from the database
         self.instances.read_userinfo_from_db()
-        # Get also nova data from the database
-        self.nova.read_from_db()
         print "\r... database loaded"
 
     def display_filter_setting(self):
@@ -81,14 +76,27 @@ class FGMetrics(Cmd):
         self.chart.set_datafromdict(self.search.get_metric(), self.search.metric)
         self.chart.display()
 
-    def do_load_db(self, line):
-        self.load_db()
-
     def do_analyze(self, line):
        
         self.display_filter_setting()
         self.get_measure()
         self.create_charts()
+
+    def do_load(self, line, opts=None):
+        self.do_get(line, opts)
+
+    def do_get(self, line, opts=None):
+        args = line.split()
+        cmd = args[0]
+        params = args[1:]
+        function = "get_" + cmd
+
+        try:
+            func = getattr(self, function)
+            func(params)
+            print function + " loaded"
+        except:
+            print sys.exc_info()
 
     def do_set (self, line, opts=None):
         """Set a function with parameter(s)"""
@@ -118,7 +126,7 @@ class FGMetrics(Cmd):
         self.init_objects()
 
     def preloop(self):
-        self.load_db()
+        self.get_db()
         self.initialize()
 
     def postloop(self):

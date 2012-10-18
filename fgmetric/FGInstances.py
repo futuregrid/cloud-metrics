@@ -1,6 +1,3 @@
-#! /usr/bin/env python
-'''FGInstances'''
-
 import re
 import json
 import pprint
@@ -12,7 +9,7 @@ from datetime import *
 from collections import deque
 import argparse
 
-import futuregrid.cloud.metric.FGEucaMetricsDB
+from fgmetric.FGDatabase import FGDatabase
 
 manual="""
 MANUAL PAGE DRAFT
@@ -27,12 +24,11 @@ This class should be used when VM instance information is collected by the log p
 """
 
 class FGInstances:
-    ''' VM instances '''
  
     data = {}
     userinfo_data = []
     pp = None
-    eucadb = None
+    db = None
     in_the_future = None
     in_the_past = None
     first_date = None
@@ -40,7 +36,7 @@ class FGInstances:
     
     def __init__(self):
 
-        self.eucadb = futuregrid.cloud.metric.FGEucaMetricsDB.FGEucaMetricsDB("futuregrid.cfg")
+        self.db = FGDatabase()
         self.in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.in_the_past = datetime.strptime("1970-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.pp = pprint.PrettyPrinter(indent=0)
@@ -48,13 +44,7 @@ class FGInstances:
         self.last_date = datetime.strptime("1981-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
 
     def clear(self):
-        '''clear the data'''
         self.data = {}
-        return
-
-    def set_conf(self, filename):
-	self.eucadb = futuregrid.cloud.metric.FGEucaMetricsDB.FGEucaMetricsDB(filename)
-	return
 
     def get_data(self, index=None):
         if isinstance(index, (int, long)):
@@ -65,73 +55,9 @@ class FGInstances:
     def count(self):
         return len(self.data)
 
-    def todatetime (self,instance):
-        instance["trace"]["teardown"]["start"] = value_todate(instance["trace"]["teardown"]["start"])
-        instance["trace"]["teardown"]["stop"] = value_todate(instance["trace"]["teardown"]["stop"])
-        instance["trace"]["extant"]["start"] = value_todate(instance["trace"]["extant"]["start"])
-        instance["trace"]["extant"]["stop"] = value_todate(instance["trace"]["extant"]["stop"])
-        instance["trace"]["pending"]["start"] = value_todate(instance["trace"]["pending"]["start"])
-        instance["trace"]["pending"]["stop"] = value_todate(instance["trace"]["pending"]["stop"])
-        instance["t_start"] = value_todate(instance["t_start"])
-        instance["date"] = value_todate(instance["date"])
-        instance["t_end"] = value_todate(instance["t_end"])
-        instance["ts"] = value_todate(instance["ts"])
-
-    def tostr(self,instance):
-        instance["trace"]["teardown"]["start"] = str(instance["trace"]["teardown"]["start"])
-        instance["trace"]["teardown"]["stop"] = str(instance["trace"]["teardown"]["stop"])
-        instance["trace"]["extant"]["start"] = str(instance["trace"]["extant"]["start"])
-        instance["trace"]["extant"]["stop"] = str(instance["trace"]["extant"]["stop"])
-        instance["trace"]["pending"]["start"] = str(instance["trace"]["pending"]["start"])
-        instance["trace"]["pending"]["stop"] = str(instance["trace"]["pending"]["stop"])
-        instance["ts"] = str(instance["ts"])
-        instance["t_start"] = str(instance["t_start"])
-        instance["date"] = str(instance["date"])
-        instance["t_end"] = str(instance["t_end"])
-
-    def value_todate(self,string):
-        return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
-
-    def dump(self,index = "all"):
-
-        if index == "all" or (index == "") :
-            for key in self.data:
-                print "------------------------"
-                pp.pprint(self.data[key])
-            print "------------------------"
-            self.print_total()
-            print "------------------------"
-        elif (index >= 0) and (index < len(str)):
-            pp.pprint(self.data[index])
-        else:
-            print "ERROR printing of index " + index
-
-    def print_list(self,index = "all"):
-
-        if (index == "all") or (index == "") :
-            for key in self.data:
-                print(self.data[key]["instanceId"])
-            print "------------------------"
-            self.print_total()
-            print "------------------------"
-        elif (index >= 0) and (index < len(str)):
-            print(self.data[index]["instanceId"])
-        else:
-            print "ERROR printing of index " + index
-
-    def json_dump(self):
-         string = ""
-         for key in all:
-            self.tostr (all[key])
-         string = json.dumps(all, sort_keys=False, indent=4)
-         for key in all:
-             print all[key]
-         self.todatetime (all[key])
-         return string 
-
     def read_from_db(self):
         key = 0 
-        instance_list = self.eucadb.read()
+        instance_list = self.db.read()
 
         for element in instance_list:
             self.data[key] = element
@@ -139,18 +65,18 @@ class FGInstances:
 
     def read_userinfo_from_db(self):
 
-        userinfo_list = self.eucadb.read_userinfo()
+        userinfo_list = self.db.read_userinfo()
 
         for element in userinfo_list:
             self.userinfo_data.append(element)
         
     def write_to_db(self):
         for key_current in self.data:
-            self.eucadb.write(self.data[key_current])
+            self.db.write(self.data[key_current])
 
     def write_userinfo_to_db(self):
         for key_current in self.userinfo_data:
-            self.eucadb.write_userinfo(key_current)
+            self.db.write_userinfo(key_current)
 
     def add (self,datarecord):
         """prints the information for each instance"""
@@ -288,15 +214,6 @@ class FGInstances:
                 t_delta = values["t_end"] - values["t_end"]
             values["duration"] = str(t_delta.total_seconds())
 
-    def getDateRange(self):
-	for i in self.data:
-            element = self.data[i]
-            if self.first_date > element["date"]:
-                self.first_date = element["date"]
-            if self.last_date < element["date"]:
-                self.last_date = element["date"]
-        return (str(self.first_date), str(self.last_date))
-
     def set_userinfo(self):
         for i in self.data:
             ownerid = self.data[i]["ownerId"]
@@ -309,3 +226,81 @@ class FGInstances:
     def add_userinfo(self, new_userinfo):
         if self.userinfo_data.count(new_userinfo) == 0:
             self.userinfo_data.append(new_userinfo)
+
+    '''
+    need to be redefined...
+
+    def todatetime (self,instance):
+        instance["trace"]["teardown"]["start"] = value_todate(instance["trace"]["teardown"]["start"])
+        instance["trace"]["teardown"]["stop"] = value_todate(instance["trace"]["teardown"]["stop"])
+        instance["trace"]["extant"]["start"] = value_todate(instance["trace"]["extant"]["start"])
+        instance["trace"]["extant"]["stop"] = value_todate(instance["trace"]["extant"]["stop"])
+        instance["trace"]["pending"]["start"] = value_todate(instance["trace"]["pending"]["start"])
+        instance["trace"]["pending"]["stop"] = value_todate(instance["trace"]["pending"]["stop"])
+        instance["t_start"] = value_todate(instance["t_start"])
+        instance["date"] = value_todate(instance["date"])
+        instance["t_end"] = value_todate(instance["t_end"])
+        instance["ts"] = value_todate(instance["ts"])
+
+    def tostr(self,instance):
+        instance["trace"]["teardown"]["start"] = str(instance["trace"]["teardown"]["start"])
+        instance["trace"]["teardown"]["stop"] = str(instance["trace"]["teardown"]["stop"])
+        instance["trace"]["extant"]["start"] = str(instance["trace"]["extant"]["start"])
+        instance["trace"]["extant"]["stop"] = str(instance["trace"]["extant"]["stop"])
+        instance["trace"]["pending"]["start"] = str(instance["trace"]["pending"]["start"])
+        instance["trace"]["pending"]["stop"] = str(instance["trace"]["pending"]["stop"])
+        instance["ts"] = str(instance["ts"])
+        instance["t_start"] = str(instance["t_start"])
+        instance["date"] = str(instance["date"])
+        instance["t_end"] = str(instance["t_end"])
+
+    def value_todate(self,string):
+        return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
+
+    def dump(self,index = "all"):
+
+        if index == "all" or (index == "") :
+            for key in self.data:
+                print "------------------------"
+                pp.pprint(self.data[key])
+            print "------------------------"
+            self.print_total()
+            print "------------------------"
+        elif (index >= 0) and (index < len(str)):
+            pp.pprint(self.data[index])
+        else:
+            print "ERROR printing of index " + index
+
+    def print_list(self,index = "all"):
+
+        if (index == "all") or (index == "") :
+            for key in self.data:
+                print(self.data[key]["instanceId"])
+            print "------------------------"
+            self.print_total()
+            print "------------------------"
+        elif (index >= 0) and (index < len(str)):
+            print(self.data[index]["instanceId"])
+        else:
+            print "ERROR printing of index " + index
+
+    def json_dump(self):
+         string = ""
+         for key in all:
+            self.tostr (all[key])
+         string = json.dumps(all, sort_keys=False, indent=4)
+         for key in all:
+             print all[key]
+         self.todatetime (all[key])
+         return string 
+
+    def getDateRange(self):
+	for i in self.data:
+            element = self.data[i]
+            if self.first_date > element["date"]:
+                self.first_date = element["date"]
+            if self.last_date < element["date"]:
+                self.last_date = element["date"]
+        return (str(self.first_date), str(self.last_date))
+
+    '''

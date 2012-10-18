@@ -3,7 +3,6 @@ import sqlite3 as lite
 import MySQLdb
 from collections import deque
 from datetime import datetime
-from fgmetric.FGEucaMetricsDB import FGEucaMetricsDB
 from fgmetric.FGConstants import FGConst
 from fgmetric.FGDatabase import FGDatabase
 from fgmetric.FGUtility import FGUtility

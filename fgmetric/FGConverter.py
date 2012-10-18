@@ -29,6 +29,8 @@ class FGConverter:
     userinfo = None
     cloudplatform = None
 
+    argparser = None
+
     def __init__(self):
         self.db = FGDatabase()
         self.db_dest = FGDatabase()
@@ -338,7 +340,7 @@ class FGConverter:
         except:
             pass#print sys.exc_info()[0]
 
-        self.parser = parser
+        self.argparser = parser
 
 def main():
     converter = FGConverter()

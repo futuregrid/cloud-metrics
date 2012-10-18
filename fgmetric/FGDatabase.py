@@ -4,6 +4,7 @@ import ConfigParser
 import hashlib
 import MySQLdb
 import sqlite3
+import pprint
 from fgmetric.FGConstants import FGConst
 
 class FGDatabase:
@@ -11,13 +12,15 @@ class FGDatabase:
     instance_table = "instance"
     userinfo_table = "userinfo"
     cloudplatform_table = "cloudplatform"
-    column_cp_ins = "cloudPlatform"
+    column_cp_ins = "cloudPlatformRef"
     column_cp_cp = "cloudPlatformId"
 
     conn = None
     cursor = None
 
     query = None
+
+    pp = pprint.PrettyPrinter(indent=0) 
 
     def __init__(self):
         self.config_filename = FGConst.DEFAULT_CONFIG_FILENAME
@@ -37,17 +40,19 @@ class FGDatabase:
             self.dbuser = config.get('EucaLogDB', 'user')
             self.dbpasswd = config.get('EucaLogDB', 'passwd')
             self.dbname = config.get('EucaLogDB', 'db')
-            self.euca_hostname = config.get('EucaLogDB', 'euca_hostname')
-            self.euca_version = config.get('EucaLogDB', 'euca_version')
         except ConfigParser.NoSectionError:
             raise
 
     def set_conf(self, input_file):
 
         try:
-            abspath = os.path.abspath(input_file)
-            self.config_filename = os.path.basename(abspath)
-            self.config_filepath = os.path.dirname(abspath)
+            if os.path.dirname(input_file):
+                print input_file
+                abspath = os.path.abspath(input_file)
+                print abspath
+                self.config_filepath = os.path.dirname(abspath)
+                print self.config_filepath
+            self.config_filename = os.path.basename(input_file)
         except:
             print "Unexpected error:", sys.exc_info()[0]
             raise
@@ -103,7 +108,7 @@ class FGDatabase:
     def close(self):
         #if self.cursor:
         #    self.cursor.close()
-        if self.conn.open:
+        if self.conn and self.conn.open:
             self.conn.close()
 
     '''
@@ -252,7 +257,7 @@ class FGDatabase:
     def write(self, entryObj):
         ''' write instance object into db '''
         uid = self._get_hash(entryObj["instanceId"] + " - " + str(entryObj["ts"]))
-        pp.pprint(entryObj)
+        #self.pp.pprint(entryObj)
         wquery = "INSERT INTO " + self.instance_table + " ( uidentifier, \
                                     instanceId, \
                                     ts, \
@@ -297,9 +302,7 @@ class FGDatabase:
                                     launchIndex, \
                                     platform, \
                                     bundleTaskStateName, \
-                                    reservationId, \
-                                    euca_hostname, \
-                                    euca_version ) \
+                                    reservationId ) \
                             VALUES (" \
                                     + self._fmtstr(uid) + "," \
                                     + self._fmtstr(entryObj["instanceId"]) + "," \
@@ -345,10 +348,7 @@ class FGDatabase:
                                     + str(entryObj["launchIndex"]) + "," \
                                     + self._fmtstr(self._fillempty(entryObj, "platform")) + "," \
                                     + self._fmtstr(self._fillempty(entryObj, "bundleTaskStateName")) + "," \
-                                    + self._fmtstr(entryObj["reservationId"]) + "," \
-                                    + self._fmtstr(entryObj["euca_hostname"] or self.euca_hostname) + "," \
-                                    + self._fmtstr(entryObj["euca_version"] or self.euca_version) + ")"
-
+                                    + self._fmtstr(entryObj["reservationId"]) + ")"
 
         wquery += " on duplicate key update " \
                 + "t_end=" \
@@ -446,3 +446,19 @@ class FGDatabase:
     def change_table(self, table_name):
 	self.instance_table = table_name
         return
+
+    def _fmtstr(self, astr):
+         ret = "'" + astr + "'"
+         return ret
+
+    def _fillempty(self, entry, key):
+        if not key in entry:
+            return ""
+        else:
+            return entry[key]
+
+    def convert_nested2list(self, nested, newkey):
+        if type(nested) != type({}):
+            return {newkey[1:]:nested}
+        for key in nested:
+            return self.convert_nested2list(nested[key], newkey + "_" + key)

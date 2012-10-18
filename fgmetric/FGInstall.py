@@ -21,14 +21,13 @@ class FGInstall(object):
     def __init__(self, configfile="futuregrid.cfg"):
         if not configfile:
             configfile="futuregrid.cfg"
-        print configfile
 
         #read config from file configfile
         config = ConfigParser.ConfigParser()
         cfgfile = os.getenv("HOME") + "/.futuregrid/" + configfile
         config.read(cfgfile)
 
-        print cfgfile + " has been loaded."
+        print cfgfile + " has been loaded.\n"
 
         try:
             #db parameters
@@ -93,13 +92,12 @@ class FGInstall(object):
                 accountId VARCHAR(32), \
                 kernelURL VARCHAR(128), \
                 ramdiskId VARCHAR(32), \
-                volumes VARCHAR(32), \
+                volumes VARCHAR(512), \
                 launchIndex INT, \
                 platform VARCHAR(16), \
                 bundleTaskStateName VARCHAR(16), \
                 reservationId VARCHAR(32), \
-                euca_hostname VARCHAR(32), \
-                euca_version VARCHAR(32))"
+                cloudPlatformRef tinyint)"
 
         create_userinfo_table = "create table if not exists " + self.userinfo_table + " (\
                 ownerid varchar(32) primary key not null, \
@@ -119,11 +117,11 @@ class FGInstall(object):
 
         try:
             self.cursor.execute(create_instance_table)
-            print self.instance_table + " created"
+            print self.instance_table + " created if not exists"
             self.cursor.execute(create_userinfo_table)
-            print self.userinfo_table + " created"
+            print self.userinfo_table + " created if not exists"
             self.cursor.execute(create_cloudplatform_table)
-            print self.cloudplatform_table + " created"
+            print self.cloudplatform_table + " created if not exists"
         except MySQLdb.Error:
             pass
 

@@ -1,6 +1,7 @@
 from datetime import *
 from fgmetric.FGUtility import dotdict
 from math import ceil
+from pprint import pprint
 
 class FGSearch:
 
@@ -355,6 +356,12 @@ class FGSearch:
         if self.selected_idx == 0:
             return
         return self.selected[self.selected_idx - 1]
+
+    def show_None(self):
+        self.show_filter()
+
+    def show_filter(self):
+        pprint(vars(self.get_filter()))
 
     def clear(self):
         self.__init__()

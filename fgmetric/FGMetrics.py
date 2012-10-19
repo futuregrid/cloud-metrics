@@ -1,6 +1,6 @@
 from cmd2 import Cmd
 import sys
-import pprint
+from pprint import pprint
 import optparse
 from fgmetric.FGSearch import FGSearch
 from fgmetric.FGInstances import FGInstances
@@ -29,21 +29,21 @@ class FGMetrics(Cmd):
         self.instances = FGInstances()
         self.chart = FGCharts()
 
-    def get_db(self, option=None):
+    def load_db(self, option=None):
         """Read the statistical data from database (MySQL, etc)"""
        
-        print "\r... loading database"
+        print "\rloading database ..."
         # Get data from the database
         self.instances.read_from_db()
         # Get also userinfo data from the database
         self.instances.read_userinfo_from_db()
         print "\r... database loaded"
 
-    def get_dbinfo(self):
-        pprint(self.instances.db, indent=2)
+    def show_dbinfo(self, param=None):
+        pprint(vars(self.instances.db), indent=2)
 
-    def display_filter_setting(self):
-        pprint.pprint(vars(self.search.get_filter()))
+    def show_filter_setting(self, param=None):
+        pprint(vars(self.search.get_filter()))
 
     def get_measure(self):
 
@@ -92,78 +92,59 @@ class FGMetrics(Cmd):
 
     def do_analyze(self, line):
        
-        self.display_filter_setting()
+        self.show_filter_setting()
         self.get_measure()
         self.create_charts()
 
     def do_refresh(self, line, opts=None):
-        self.do_get(line, opts)
+        self.do_load(line, opts)
 
     def do_load(self, line, opts=None):
-        self.do_get(line, opts)
+        self.call_attr(line, "load_")
+
+    def do_showconf(self, line, opts=None):
+        self.call_attr(line, "show_")
+
+    def do_show (self, line, opts=None):
+        '''show search options set by a user'''
+        self.call_attr(line, "show_", "self.search")
 
     def do_get(self, line, opts=None):
+        self.call_attr(line, "get_", "self.search")
+
+    def do_setconf(self, line, opts=None):
+        self.call_attr(line, "set_")
+
+    def do_set(self, line, opts=None):
+        """Set a function with parameter(s)"""
+        self.call_attr(line, "set_", "self.search")
+
+    def call_attr(self, line, prefix="_", obj_name="self"):
+
         args = line.split()
         cmd = args[0]
-        params = args[1:]
-        function = "get_" + cmd
+        function = prefix + cmd
+
+        if len(args) == 2:
+            params = args[1]
+        else:
+            params = args[1:]
 
         try:
-            func = getattr(self, function)
-            func(params)
-            print function + " loaded"
+            func = getattr(eval(obj_name), function)
+            if callable(func):
+                func(params)
+                print function + " is called .(" + "".join(params) + ")"
         except:
             print sys.exc_info()
-
-    def do_conf(self, line, opts=None):
-
-        args = line.split()
-        cmd = args[0]
-        params = args[1:]
-        function = "set_" + cmd
-
-        if len(args) == 2:
-            params = args[1]
-
-        try:
-            func = getattr(self, function)
-            func(params)
-
-            print "cmd option for '" + cmd + "' is set as : " + "" . join(params)
-        except:
-            print "cmd option for '" + cmd + "' isn't set as : " + "" . join(params)
             pass
-
-    def do_set (self, line, opts=None):
-        """Set a function with parameter(s)"""
-
-        args = line.split()
-        cmd = args[0]
-        params = args[1:]
-        function = "set_" + cmd
-
-        if len(args) == 2:
-            params = args[1]
-
-        try:
-            func = getattr(self.search, function)
-            func(params)
-
-            print "Search option for '" + cmd + "' is set as : " + "" . join(params)
-        except:
-            print "Search option for '" + cmd + "' isn't set as : " + "" . join(params)
-            pass
-
-    def do_show (self, line):
-        '''show search options set by a user'''
-        self.display_filter_setting()
 
     def do_clear(self, line):
         self.init_objects()
 
     def preloop(self):
         self.initialize()
-        self.get_db()
+        self.load_db()
 
     def postloop(self):
         print "Bye ..."

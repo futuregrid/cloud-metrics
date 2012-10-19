@@ -46,6 +46,7 @@ class FGInstances:
 
     def clear(self):
         self.data = {}
+        self.userinfo_data = {}
 
     def get_data(self, index=None):
         if isinstance(index, (int, long)):
@@ -58,6 +59,7 @@ class FGInstances:
 
     def read_from_db(self):
         key = 0 
+        self.clear()
         instance_list = self.db.read()
 
         for element in instance_list:
@@ -66,6 +68,7 @@ class FGInstances:
 
     def read_userinfo_from_db(self):
 
+        self.clear()
         userinfo_list = self.db.read_userinfo()
 
         for element in userinfo_list:

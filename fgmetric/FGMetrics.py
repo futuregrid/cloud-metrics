@@ -19,6 +19,8 @@ class FGMetrics(Cmd):
     def initialize(self, arg="all"):
         """Clear all instance data and user data on the memory"""
         print "initializing..."
+        self.instances.db.conf()
+        self.instances.db.connect()
 
     def init_objects(self):
         self.search = FGSearch()
@@ -34,6 +36,9 @@ class FGMetrics(Cmd):
         # Get also userinfo data from the database
         self.instances.read_userinfo_from_db()
         print "\r... database loaded"
+
+    def get_dbinfo(self):
+        pprint(self.instances.db, indent=2)
 
     def display_filter_setting(self):
         pprint.pprint(vars(self.search.get_filter()))
@@ -76,11 +81,21 @@ class FGMetrics(Cmd):
         self.chart.set_datafromdict(self.search.get_metric(), self.search.metric)
         self.chart.display()
 
+    def set_configfile(self, filename):
+        self.instances.db.set_conf(filename)
+        self.instances.db.update_conf()
+
+        print filename + " loaded."
+        print "refresh db needed."
+
     def do_analyze(self, line):
        
         self.display_filter_setting()
         self.get_measure()
         self.create_charts()
+
+    def do_refresh(self, line, opts=None):
+        self.do_get(line, opts)
 
     def do_load(self, line, opts=None):
         self.do_get(line, opts)
@@ -97,6 +112,25 @@ class FGMetrics(Cmd):
             print function + " loaded"
         except:
             print sys.exc_info()
+
+    def do_conf(self, line, opts=None):
+
+        args = line.split()
+        cmd = args[0]
+        params = args[1:]
+        function = "set_" + cmd
+
+        if len(args) == 2:
+            params = args[1]
+
+        try:
+            func = getattr(self, function)
+            func(params)
+
+            print "cmd option for '" + cmd + "' is set as : " + "" . join(params)
+        except:
+            print "cmd option for '" + cmd + "' isn't set as : " + "" . join(params)
+            pass
 
     def do_set (self, line, opts=None):
         """Set a function with parameter(s)"""
@@ -126,8 +160,8 @@ class FGMetrics(Cmd):
         self.init_objects()
 
     def preloop(self):
-        self.get_db()
         self.initialize()
+        self.get_db()
 
     def postloop(self):
         print "Bye ..."

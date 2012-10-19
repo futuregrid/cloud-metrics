@@ -259,7 +259,7 @@ class FGLogParser:
         def_conf = "futuregrid.cfg"
         def_linetypes = ["TerminateInstances", "refresh_resources", "print_ccInstance"]
         def_platform = "eucalyptus"
-        def_platform_version = "3.1.2"
+        def_platform_version = "3.0.2"
 
         parser = argparse.ArgumentParser()
         parser.add_argument("-s", "--from", dest="from_date", default=def_s_date,
@@ -276,7 +276,7 @@ class FGLogParser:
                         help="gzip compressed files will be loaded")
         parser.add_argument("-d", "--debug", action="store_true", default=False,
                         help="debug on|off")
-        parser.add_argument("-p", "--platform", required=True, default=def_platform,
+        parser.add_argument("-p", "--platform", default=def_platform,
                 help="Cloud platform name, required. (e.g. nimbus, openstack, eucalyptus, etc)")
         parser.add_argument("-pv", "--platform_version", default=def_platform_version,
                 help="Cloud platform version. (e.g. 2.9 for nimbus, essex for openstack, and  2.0 or 3.1 for eucalyptus)")
@@ -382,6 +382,7 @@ class FGLogParser:
                 sys.stdout.flush()
             self.debug_output("DEBUG " + str(lines_total) +"> " + line)
             rest = self.parse_type_and_date(line, data)
+
             '''
             Temporarily prince_ccInstance is only available to parse
 
@@ -397,20 +398,20 @@ class FGLogParser:
                 if not self.ccInstance_parser(rest, data):
                     ignore = True
                 else:
+                    #cloudplatformid
+                    data["cloudPlatformIdRef"] = self.cloudplatform_id
+
                     analyze(data)
             else:
                 ignore = True
 
             if ignore:
                 lines_ignored +=1
-                self.debug_output("IGNORE> " + line)
-
-            #cloudplatformid
-            data["cloudplatformIdRef"] = self.cloudplatform_id
+                self.debug_output("IGNORED LAST LINE> ")
 
             # For Debugging to make it faster terminate at 5
-            if self.debug and (len(self.instances.data) > 5):
-                break
+            #if self.debug and (len(self.instances.data) > 5):
+            #    break
 
         fileinput.close()
 
@@ -429,7 +430,7 @@ class FGLogParser:
     def get_cloudplatform_info(self):
         self.instances.db.connect()
         whereclause = { "platform": self.args.platform, "hostname": self.args.nodename, "version": self.args.platform_version }
-        self.cloudplatform_id = self.instances.db.get_cloudplatform_id(wherecluse)
+        self.cloudplatform_id = self.instances.get_cloudplatform_id(whereclause)
 
     def debug_output(self, msg):
         if not self.debug:

@@ -33,6 +33,7 @@ class FGInstances:
     in_the_past = None
     first_date = None
     last_date = None
+    cloudplatform = None
     
     def __init__(self):
 

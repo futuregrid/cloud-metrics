@@ -99,7 +99,7 @@ class FGDatabase:
             conn.text_factory = str
             self.conn = conn
             self.cursor = self.conn.cursor()
-        except lite.Error, e:
+        except sqlite3.Error, e:
             print "Error %s:" % e.args[0]
 
     def close(self):
@@ -299,7 +299,8 @@ class FGDatabase:
                                     launchIndex, \
                                     platform, \
                                     bundleTaskStateName, \
-                                    reservationId ) \
+                                    reservationId, \
+                                    cloudPlatformIdRef ) \
                             VALUES (" \
                                     + self._fmtstr(uid) + "," \
                                     + self._fmtstr(entryObj["instanceId"]) + "," \
@@ -345,7 +346,8 @@ class FGDatabase:
                                     + str(entryObj["launchIndex"]) + "," \
                                     + self._fmtstr(self._fillempty(entryObj, "platform")) + "," \
                                     + self._fmtstr(self._fillempty(entryObj, "bundleTaskStateName")) + "," \
-                                    + self._fmtstr(entryObj["reservationId"]) + ")"
+                                    + self._fmtstr(entryObj["reservationId"]) + "," \
+                                    + self._fmtstr(str(entryObj["cloudPlatformIdRef"])) + ")"
 
         wquery += " on duplicate key update " \
                 + "t_end=" \
@@ -417,7 +419,7 @@ class FGDatabase:
             keys = ", ".join(entryObj.keys())
             values = "'" + "' ,'".join(str(x) for x in entryObj.values()) + "'"
             wquery = "INSERT INTO " + tablename + " ( " + keys + " ) VALUES ( " + values + " )"
-            print wquery
+            #print wquery
             self.cursor.execute(wquery)
 
         except (MySQLdb.Error, sqlite3.Error) as e:
@@ -436,7 +438,7 @@ class FGDatabase:
             self.cursor.execute(query)
             rows = self.cursor.fetchall()
             return rows
-        except (lite.Error, MySQLdb.Error) as e:
+        except (sqlite3.Error, MySQLdb.Error) as e:
             print "Error %s:" % e.args[0]
             pass
 

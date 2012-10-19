@@ -37,7 +37,7 @@ class Results:
             index_txt = each_month + index_txt 
             year, month, day = start_date.timetuple()[:3]
             if month % 3 == 0:
-                quarter = self.indent + self.docs_path + "Q" + str(self.get_quarter(month)) + self.newline
+                quarter = self.indent + self.docs_path + str(year) + "-Q" + str(self.get_quarter(month)) + self.newline
                 index_txt = quarter + index_txt
             new_month = month + 1
             start_date = datetime.date(year + (new_month / 13), (new_month % 12) or 12, day)

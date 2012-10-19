@@ -90,7 +90,7 @@ class FGInstall(object):
                 accountId VARCHAR(32), \
                 kernelURL VARCHAR(128), \
                 ramdiskId VARCHAR(32), \
-                volumes VARCHAR(512), \
+                volumes VARCHAR(1024), \
                 launchIndex INT, \
                 platform VARCHAR(16), \
                 bundleTaskStateName VARCHAR(16), \

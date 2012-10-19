@@ -347,6 +347,7 @@ class FGLogParser:
                 continue
             except:
                 print "error occured parsing for: " + filename
+                print sys.exc_info()
                 self.debug_output(sys.exc_info())
                 continue
 
@@ -365,7 +366,7 @@ class FGLogParser:
 
         print filename
 
-        if self.debug and filename:
+        if filename:
             file_size = os.path.getsize(filename)
             self.debug_output("SIZE>:" + str(file_size))
 
@@ -380,7 +381,7 @@ class FGLogParser:
                 percent = int(100 * read_bytes / file_size) 
                 sys.stdout.write("\r%2d%%" % percent)
                 sys.stdout.flush()
-            self.debug_output("DEBUG " + str(lines_total) +"> " + line)
+            #self.debug_output("DEBUG " + str(lines_total) +"> " + line)
             rest = self.parse_type_and_date(line, data)
 
             '''
@@ -407,7 +408,7 @@ class FGLogParser:
 
             if ignore:
                 lines_ignored +=1
-                self.debug_output("IGNORED LAST LINE> ")
+                #self.debug_output("IGNORED LAST LINE> ")
 
             # For Debugging to make it faster terminate at 5
             #if self.debug and (len(self.instances.data) > 5):
@@ -426,6 +427,10 @@ class FGLogParser:
         self.instances.write_to_db()
         self.instances.set_userinfo()
         self.instances.write_userinfo_to_db()
+
+        self.print_counter("======================", "")
+        self.print_counter("instance stored total", len(self.instances.data))
+        self.print_counter("userinfo stored total", len(self.instances.userinfo_data))
 
     def get_cloudplatform_info(self):
         self.instances.db.connect()

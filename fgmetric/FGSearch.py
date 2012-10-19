@@ -315,17 +315,17 @@ class FGSearch:
         elif metric in self.names.metric.cores:
             self.calc = "sum"
             self.columns = ["ccvm", "cores"]
-            self.groups = ["instance.cloudplatform"]
+            self.groups = ["instance.cloudPlatformIdRef"]
             self.period = "daily"
         elif metric in self.names.metric.memories:
             self.calc = "sum"
             self.columns = ["ccvm", "mem"]
-            self.groups = ["instance.cloudplatform"]
+            self.groups = ["instance.cloudPlatformIdRef"]
             self.period = "daily"
         elif metric in self.names.metric.disks:
             self.calc = "sum"
             self.columns = ["ccvm", "disk"]
-            self.groups = ["instance.cloudplatform"]
+            self.groups = ["instance.cloudPlatformIdRef"]
             self.period = "daily"
 
     def get_metricfactor(self, columns, selected):

@@ -245,7 +245,7 @@ class FGConverter:
                 if not "state" in record:
                     record["state"] = "Teardown"
                 record["state"] = self.convert_state(record["state"])
-                record["cloudPlatform"] = cloudplatformid
+                record["cloudPlatformIdRef"] = cloudplatformid
                 records.append(record)
             except:
                 print sys.exc_info()

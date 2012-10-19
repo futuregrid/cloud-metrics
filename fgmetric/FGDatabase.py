@@ -12,7 +12,7 @@ class FGDatabase:
     instance_table = "instance"
     userinfo_table = "userinfo"
     cloudplatform_table = "cloudplatform"
-    column_cp_ins = "cloudPlatformRef"
+    column_cp_ins = "cloudPlatformIdRef"
     column_cp_cp = "cloudPlatformId"
 
     conn = None
@@ -47,11 +47,8 @@ class FGDatabase:
 
         try:
             if os.path.dirname(input_file):
-                print input_file
                 abspath = os.path.abspath(input_file)
-                print abspath
                 self.config_filepath = os.path.dirname(abspath)
-                print self.config_filepath
             self.config_filename = os.path.basename(input_file)
         except:
             print "Unexpected error:", sys.exc_info()[0]

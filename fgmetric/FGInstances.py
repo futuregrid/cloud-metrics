@@ -69,7 +69,24 @@ class FGInstances:
 
         for element in userinfo_list:
             self.userinfo_data.append(element)
-        
+
+    def read_cloudplatform(self, refresh=False):
+        if not self.cloudplatform or refresh:
+            self.cloudplatform = self.db.read_cloudplatform()
+        return self.cloudplatform
+
+    def get_cloudplatform_id(self, querydict={}):
+        class ContinueOutOfALoop(Exception): pass
+        for row in self.read_cloudplatform():
+            try:
+                for key in querydict:
+                    if row[key] != querydict[key]:
+                        raise ContinueOutOfALoop
+                return row["cloudPlatformId"]
+            except ContinueOutOfALoop:
+                continue
+        return None
+
     def write_to_db(self):
         for key_current in self.data:
             self.db.write(self.data[key_current])

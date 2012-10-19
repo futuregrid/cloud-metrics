@@ -14,8 +14,6 @@ class FGInstall(object):
     instance_table = "instance"
     userinfo_table = "userinfo"
     cloudplatform_table = "cloudplatform"
-    column_cp_ins = "cloudPlatform"
-    column_cp_cp = "cloudPlatformId"
 
     # Initialize
     def __init__(self, configfile="futuregrid.cfg"):
@@ -97,7 +95,7 @@ class FGInstall(object):
                 platform VARCHAR(16), \
                 bundleTaskStateName VARCHAR(16), \
                 reservationId VARCHAR(32), \
-                cloudPlatformRef tinyint)"
+                cloudPlatformIdRef tinyint)"
 
         create_userinfo_table = "create table if not exists " + self.userinfo_table + " (\
                 ownerid varchar(32) primary key not null, \

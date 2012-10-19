@@ -1,5 +1,7 @@
 from cmd2 import Cmd
+import sys
 import pprint
+import optparse
 from fgmetric.FGSearch import FGSearch
 from fgmetric.FGInstances import FGInstances
 from fgmetric.FGCharts import FGCharts
@@ -27,7 +29,7 @@ class FGMetrics(Cmd):
         self.instances = FGInstances()
         self.chart = FGCharts()
 
-    def get_db(self):
+    def get_db(self, option=None):
         """Read the statistical data from database (MySQL, etc)"""
        
         print "\r... loading database"
@@ -86,7 +88,7 @@ class FGMetrics(Cmd):
         self.instances.db.update_conf()
 
         print filename + " loaded."
-        print "refresh db needed."
+        print "refresh db may required."
 
     def do_analyze(self, line):
        
@@ -167,7 +169,16 @@ class FGMetrics(Cmd):
         print "Bye ..."
 
 def main():
+
     app = FGMetrics()
+
+    parser = optparse.OptionParser()
+    parser.add_option('--conf', help='Run unit test suite')
+    (callopts, callargs) = parser.parse_args()
+    if callopts.conf:
+        app.set_configfile(callopts.conf)
+        sys.argv = [sys.argv[0]]
+
     app.cmdloop()
 
 if __name__ == "__main__":

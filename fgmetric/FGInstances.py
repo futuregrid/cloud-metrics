@@ -46,7 +46,7 @@ class FGInstances:
 
     def clear(self):
         self.data = {}
-        self.userinfo_data = {}
+        self.userinfo_data = []
 
     def get_data(self, index=None):
         if isinstance(index, (int, long)):

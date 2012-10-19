@@ -33,6 +33,34 @@ createreport -d 2012-Q3/all/nimbus/user/
 
 clear all
 set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
+set nodename sierra
+set platform nimbus
+analyze
+createreport -d 2012-Q3/sierra/nimbus/user/
+
+clear all
+set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
+set nodename hotel
+set platform nimbus
+analyze
+createreport -d 2012-Q3/hotel/nimbus/user/
+
+clear all
+set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
+set nodename foxtrot
+set platform nimbus
+analyze
+createreport -d 2012-Q3/foxtrot/nimbus/user/
+
+clear all
+set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
+set nodename alamo
+set platform nimbus
+analyze
+createreport -d 2012-Q3/alamo/nimbus/user/
+
+clear all
+set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
 set nodename india
 set platform eucalyptus
 analyze -S count
@@ -68,6 +96,42 @@ analyze -S count
 sys_report -o 2012-Q3/all/nimbus/count --all
 analyze -S runtime
 sys_report -o 2012-Q3/all/nimbus/runtime --all
+
+clear all
+set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
+set nodename hotel
+set platform nimbus
+analyze -S count
+sys_report -o 2012-Q3/hotel/nimbus/count --all
+analyze -S runtime
+sys_report -o 2012-Q3/hotel/nimbus/runtime --all
+
+clear all
+set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
+set nodename alamo
+set platform nimbus
+analyze -S count
+sys_report -o 2012-Q3/alamo/nimbus/count --all
+analyze -S runtime
+sys_report -o 2012-Q3/alamo/nimbus/runtime --all
+
+clear all
+set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
+set nodename foxtrot
+set platform nimbus
+analyze -S count
+sys_report -o 2012-Q3/foxtrot/nimbus/count --all
+analyze -S runtime
+sys_report -o 2012-Q3/foxtrot/nimbus/runtime --all
+
+clear all
+set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
+set nodename sierra
+set platform nimbus
+analyze -S count
+sys_report -o 2012-Q3/sierra/nimbus/count --all
+analyze -S runtime
+sys_report -o 2012-Q3/sierra/nimbus/runtime --all
 
 clear all
 set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59

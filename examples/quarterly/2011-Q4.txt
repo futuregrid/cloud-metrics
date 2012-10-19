@@ -33,6 +33,34 @@ createreport -d 2011-Q4/all/nimbus/user/
 
 clear all
 set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59
+set nodename sierra
+set platform nimbus
+analyze
+createreport -d 2011-Q4/sierra/nimbus/user/
+
+clear all
+set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59
+set nodename hotel
+set platform nimbus
+analyze
+createreport -d 2011-Q4/hotel/nimbus/user/
+
+clear all
+set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59
+set nodename foxtrot
+set platform nimbus
+analyze
+createreport -d 2011-Q4/foxtrot/nimbus/user/
+
+clear all
+set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59
+set nodename alamo
+set platform nimbus
+analyze
+createreport -d 2011-Q4/alamo/nimbus/user/
+
+clear all
+set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59
 set nodename india
 set platform eucalyptus
 analyze -S count
@@ -68,6 +96,42 @@ analyze -S count
 sys_report -o 2011-Q4/all/nimbus/count --all
 analyze -S runtime
 sys_report -o 2011-Q4/all/nimbus/runtime --all
+
+clear all
+set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59
+set nodename hotel
+set platform nimbus
+analyze -S count
+sys_report -o 2011-Q4/hotel/nimbus/count --all
+analyze -S runtime
+sys_report -o 2011-Q4/hotel/nimbus/runtime --all
+
+clear all
+set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59
+set nodename alamo
+set platform nimbus
+analyze -S count
+sys_report -o 2011-Q4/alamo/nimbus/count --all
+analyze -S runtime
+sys_report -o 2011-Q4/alamo/nimbus/runtime --all
+
+clear all
+set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59
+set nodename foxtrot
+set platform nimbus
+analyze -S count
+sys_report -o 2011-Q4/foxtrot/nimbus/count --all
+analyze -S runtime
+sys_report -o 2011-Q4/foxtrot/nimbus/runtime --all
+
+clear all
+set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59
+set nodename sierra
+set platform nimbus
+analyze -S count
+sys_report -o 2011-Q4/sierra/nimbus/count --all
+analyze -S runtime
+sys_report -o 2011-Q4/sierra/nimbus/runtime --all
 
 clear all
 set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59

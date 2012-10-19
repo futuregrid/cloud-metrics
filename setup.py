@@ -69,6 +69,7 @@ setup(
              'fg-euca-gather-log-files = fgmetric.FGEucaGatherLogFiles:main',
              'fg-parser = fgmetric.FGParser:main',
              'fg-logparser = fgmetric.FGLogParser:main',
+             'fg-metric-converter = fgmetric.FGConverter:main',
              'fg-metric = fgmetric.FGAnalyzer:main',
              'fg-metric2 = fgmetric.FGMetrics:main'
              ]},

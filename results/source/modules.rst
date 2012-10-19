@@ -16,8 +16,5 @@ Modules
 .. automodule:: fgmetric.FGParser
     :members:
 
-.. automodule:: fgmetric.FGTemplate
-    :members:
-
 .. automodule:: fgmetric.FGUtility
     :members:

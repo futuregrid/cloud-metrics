@@ -240,8 +240,8 @@ class FGConverter:
                 #record["bundleTaskStateName"] = ""
                 #record["reservationId"] = ""
                 record["platform"] = self.platform
-                record["euca_hostname"] = self.hostname
-                record["euca_version"] = self.platform_version
+                #record["euca_hostname"] = self.hostname
+                #record["euca_version"] = self.platform_version
                 #record["state"] = "Teardown" # need to be changed
                 if not "state" in record:
                     record["state"] = "Teardown"

@@ -18,7 +18,7 @@ class FGEucaMetricsDB(object):
     instance_table = "instance"
     userinfo_table = "userinfo"
     cloudplatform_table = "cloudplatform"
-    column_cp_ins = "cloudPlatform"
+    column_cp_ins = "cloudPlatformIdRef"
     column_cp_cp = "cloudPlatformId"
 
     # Initialize
@@ -98,7 +98,8 @@ class FGEucaMetricsDB(object):
                 bundleTaskStateName VARCHAR(16), \
                 reservationId VARCHAR(32), \
                 euca_hostname VARCHAR(32), \
-                euca_version VARCHAR(32))"
+                euca_version VARCHAR(32), \
+                cloudPlatformIdRef tinyint)"
 
         create_userinfo_table = "create table if not exists " + self.userinfo_table + " (\
                 ownerid varchar(32) primary key not null, \

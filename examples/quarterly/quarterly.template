@@ -1,62 +1,62 @@
 clear users
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set platform eucalyptus
-analyze
+analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/all/eucalyptus/user
 
 clear users
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename india
 set platform eucalyptus
-analyze
+analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/india/eucalyptus/user
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename sierra
 set platform eucalyptus
-analyze
+analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/sierra/eucalyptus/user/
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename india
 set platform nova
-analyze
+analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/india/openstack/user/
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set platform nimbus
-analyze
+analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/all/nimbus/user/
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename sierra
 set platform nimbus
-analyze
+analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/sierra/nimbus/user/
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename hotel
 set platform nimbus
-analyze
+analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/hotel/nimbus/user/
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename foxtrot
 set platform nimbus
-analyze
+analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/foxtrot/nimbus/user/
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename alamo
 set platform nimbus
-analyze
+analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/alamo/nimbus/user/
 
 clear all

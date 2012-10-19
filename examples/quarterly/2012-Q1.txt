@@ -1,62 +1,62 @@
 clear users
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set platform eucalyptus
-analyze
+analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
 createreport -d 2012-Q1/all/eucalyptus/user
 
 clear users
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename india
 set platform eucalyptus
-analyze
+analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
 createreport -d 2012-Q1/india/eucalyptus/user
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename sierra
 set platform eucalyptus
-analyze
+analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
 createreport -d 2012-Q1/sierra/eucalyptus/user/
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename india
 set platform nova
-analyze
+analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
 createreport -d 2012-Q1/india/openstack/user/
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set platform nimbus
-analyze
+analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
 createreport -d 2012-Q1/all/nimbus/user/
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename sierra
 set platform nimbus
-analyze
+analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
 createreport -d 2012-Q1/sierra/nimbus/user/
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename hotel
 set platform nimbus
-analyze
+analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
 createreport -d 2012-Q1/hotel/nimbus/user/
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename foxtrot
 set platform nimbus
-analyze
+analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
 createreport -d 2012-Q1/foxtrot/nimbus/user/
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename alamo
 set platform nimbus
-analyze
+analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
 createreport -d 2012-Q1/alamo/nimbus/user/
 
 clear all

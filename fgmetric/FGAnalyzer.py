@@ -462,8 +462,8 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def display_stats(self, metric="count", type="pie", filepath="chart.png"):
         """Create Python Google Chart
-           This should be merged to _create_chart()
-        
+            This should be merged to _create_chart()
+
             It displays the number of VMs per user
 
             Args:

@@ -140,7 +140,12 @@ class FGHighcharts:
     def set_height(self, height):
         self.height = height
 
+    def calc_height(self):
+        self.height = len(self.data) * 11
+
     def display(self):
+
+        self.calc_height()
         
         self.html_txt = self.get_html_header() + self.get_html_script() + self.get_html_footer()
         self.html_txt = self.html_txt % vars(self)
@@ -475,7 +480,7 @@ class FGHighcharts:
         <body>
         <script src="../../../../../../_static/js/highcharts.js"></script>
         <script src="../../../../../../_static/js/modules/exporting.js"></script>
-        <div id="container" style="min-width: %(width)spx; height: %(height)spx; margin: 0 auto"></div>
+        <div id="container" style="width: 100%; height: %(height)spx; margin: 0 auto"></div>
         </body>
         </html>
         ''' 

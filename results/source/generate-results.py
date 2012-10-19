@@ -137,7 +137,7 @@ class Results:
         f.close
 
     def get_content_quarter(self):
-        width = 800
+        width = "100%"
         height = 600
         start_date = str(self.start_date)
         end_date = str(self.end_date)

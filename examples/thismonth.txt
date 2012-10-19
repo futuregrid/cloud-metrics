@@ -22,7 +22,7 @@ analyze -M 10
 createreport -d thismonth/all/nimbus/user/
 
 clear all
-set search_range 2012-10-01T00:00:00 2012-10-15T23:59:59
+set search_range 2012-10-01T00:00:00 2012-10-18T23:59:59
 set nodename india
 set platform eucalyptus
 analyze -S count
@@ -37,7 +37,7 @@ analyze -S ccvm_disk
 sys_report -o thismonth/india/eucalyptus/ccvm_disk --all
 
 clear all
-set search_range 2012-10-01T00:00:00 2012-10-15T23:59:59
+set search_range 2012-10-01T00:00:00 2012-10-18T23:59:59
 set nodename sierra
 set platform eucalyptus
 analyze -S count
@@ -52,7 +52,7 @@ analyze -S ccvm_disk
 sys_report -o thismonth/sierra/eucalyptus/ccvm_disk --all
 
 clear all
-set search_range 2012-10-01T00:00:00 2012-10-15T23:59:59
+set search_range 2012-10-01T00:00:00 2012-10-18T23:59:59
 set platform nimbus
 analyze -S count
 sys_report -o thismonth/all/nimbus/count --all
@@ -61,14 +61,14 @@ sys_report -o thismonth/all/nimbus/runtime --all
 
 
 clear all
-set search_range 2012-10-01T00:00:00 2012-10-15T23:59:59
+set search_range 2012-10-01T00:00:00 2012-10-18T23:59:59
 set nodename india
 set platform eucalyptus
 analyze -S count_node
 sys_report -o thismonth/india/eucalyptus/count_node
 
 clear all
-set search_range 2012-10-01T00:00:00 2012-10-15T23:59:59
+set search_range 2012-10-01T00:00:00 2012-10-18T23:59:59
 set nodename sierra
 set platform eucalyptus
 analyze -S count_node

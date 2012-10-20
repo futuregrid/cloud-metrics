@@ -41,6 +41,9 @@ class CmdLineAnalyzeEucaData(Cmd):
     
     instances = {}
     users = {}
+    groups = {}
+    institutions = {}
+    projectleads = {}
     pp = pprint.PrettyPrinter(indent=0)
     charttype = "pie"
     from_date = ""
@@ -96,6 +99,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         for i in range(0, int(self.instances.count())):
             values = self.instances.getdata(i)
             process_entry = process_all
+ 
+            institution = ""
+            projectlead = ""
+            group = ""
     
             if not values["t_end"]:
                 values["t_end"] = self.instances.in_the_future
@@ -127,6 +134,43 @@ class CmdLineAnalyzeEucaData(Cmd):
                                         'max' : t_delta,
                                         'avg' : 0.0
                                         }
+   
+                try:
+                    group = self.instances.userinfo_data2[name]["project"]
+                    if not group:
+                        raise
+                    if group in self.instances.projectinfo_data:
+                        institution = self.instances.projectinfo_data[group]["Institution"]
+                    if group in self.instances.projectinfo_data:
+                        projectlead = self.instances.projectinfo_data[group]["ProjectLead"]
+                except:
+                    group = ""
+                    institution = ""
+                    projectlead = ""
+
+                try:
+                    if group:
+                        self.groups[group]["count"] += 1
+                    if institution:
+                        self.institutions[institution]["count"] += 1
+                    if projectlead:
+                        self.projectleads[projectlead]["count"] += 1
+                except:
+                    init = { "count" : 1, "runtime" : 0 }
+                    if group:
+                        self.groups[group] = init
+                    if institution:
+                        self.institutions[institution] = init
+                    if projectlead:
+                        self.projectleads[projectlead] = init
+
+
+                if group:
+                    self.groups[group]['runtime'] += t_delta
+                if institution:
+                    self.institutions[institution]['runtime'] += t_delta
+                if projectlead:
+                    self.projectleads[projectlead]['runtime'] += t_delta
 
                 self.users[name]['runtime'] += t_delta  # sum of time 
                 self.users[name]['min'] = min (t_delta, self.users[name]['min'])
@@ -502,9 +546,37 @@ class CmdLineAnalyzeEucaData(Cmd):
             list_for_csv.append([name, self.convert_ownerId_str(name), number])
             max_v = max(max_v, number)
 
+        gl_chart = []
+        for prj in self.groups:
+            gv = self.groups[prj][metric]
+            if metric == "runtime":
+                gv = int(math.ceil(gv / 60 / 60))
+            glabel = str(prj) + ":" + str(gv)
+            gl_chart.append([glabel, gv])
+
+        il_chart = []
+        for ins in self.institutions:
+            iv = self.institutions[ins][metric]
+            if metric == "runtime":
+                iv = int(math.ceil(iv / 60 / 60))
+            ilabel = str(ins) + ":" + str(iv)
+            il_chart.append([ilabel, iv])
+
+        pl_chart = []
+        for pl in self.projectleads:
+            pv = self.projectleads[pl][metric]
+            if metric == "runtime":
+                pv = int(math.ceil(pv / 60 / 60))
+            plabel = str(pl) + ":" + str(pv)
+            pl_chart.append([plabel, pv])
+
         #self.generate_pygooglechart(type, label_values, max_v, values, filepath)
         if type == "highchart-column":
             self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", "bar")
+            self.create_highcharts(gl_chart, filepath.replace("user", "group") + "/" + metric + "/", "bar")
+            self.create_highcharts(il_chart, filepath.replace("user", "instituion") + "/" + metric + "/", "bar")
+            self.create_highcharts(pl_chart, filepath.replace("user", "projectlead") + "/" + metric + "/", "bar")
+
         elif type == "csv":
             self.create_csvfile(list_for_csv, filepath + "/" + metric + "/")
 
@@ -722,6 +794,8 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         # Gets also userinfo data from the database
         self.instances.read_userinfo_from_db()
+
+        self.instances.read_projectinfo_from_db()
 
         print "\r... data loaded"
 

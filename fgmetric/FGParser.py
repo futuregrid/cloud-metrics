@@ -97,6 +97,9 @@ class Instances:
         self.clear()
         self.data
         self.userinfo_data = []
+        self.userinfo_data2 = {}
+
+        self.projectinfo_data = {}
 
         self.in_the_future = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.in_the_past = datetime.strptime("1970-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
@@ -204,19 +207,25 @@ class Instances:
             self.data[key] = element
             key += 1
 
+    def read_projectinfo_from_db(self):
+        projectinfo_list = self.eucadb.read_projectinfo()
+
+        for element in projectinfo_list:
+            self.projectinfo_data["fg" + str(element["ProjectId"])] = element
+
     def read_userinfo_from_db(self):
 
         userinfo_list = self.eucadb.read_userinfo()
 
         for element in userinfo_list:
             self.userinfo_data.append(element)
-        
+            self.userinfo_data2[element["ownerid"]] = element
+
     def write_to_db(self):
         for key_current in self.data:
             self.eucadb.write(self.data[key_current])
 
     def write_userinfo_to_db(self):
-        print self.userinfo_data
         for key_current in self.userinfo_data:
             self.eucadb.write_userinfo(key_current)
 
@@ -349,7 +358,7 @@ class Instances:
             values = self.data[i]
             try:
                 if values["state"] == "Teardown":
-                    t_delta = values["t_end"] - values["ts"]
+                    t_delta = (values["t_end"] or values["date"]) - values["ts"]
                 else:
                     t_delta = values["date"] - values["ts"]
 

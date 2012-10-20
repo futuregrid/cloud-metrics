@@ -18,6 +18,7 @@ class FGEucaMetricsDB(object):
     instance_table = "instance"
     userinfo_table = "userinfo"
     cloudplatform_table = "cloudplatform"
+    projectinfo_table = "projectinfo"
     column_cp_ins = "cloudPlatformIdRef"
     column_cp_cp = "cloudPlatformId"
 
@@ -211,6 +212,9 @@ class FGEucaMetricsDB(object):
         for arow in list(rows):
             ret.append(arow)
         return ret
+
+    def read_projectinfo(self, querydict={}):
+        return self._read(self.projectinfo_table, querydict)
 
     def read_userinfo(self, querydict={}):
         return self._read(self.userinfo_table, querydict)

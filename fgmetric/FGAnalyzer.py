@@ -549,8 +549,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         for prj in self.groups:
             prj_title = ""
             label = prj
-            if group in self.instances.projectinfo_data:
-                prj_title = self.instances.projectinfo_data[group]["Title"]
+            if prj in self.instances.projectinfo_data:
+                prj_title = self.instances.projectinfo_data[prj]["Title"]
                 label = str(prj) + "(" + prj_title + " ...)"
 
             gv = self.groups[prj][metric]

@@ -574,7 +574,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         if type == "highchart-column":
             self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", "bar")
             self.create_highcharts(gl_chart, filepath.replace("user", "group") + "/" + metric + "/", "bar")
-            self.create_highcharts(il_chart, filepath.replace("user", "instituion") + "/" + metric + "/", "bar")
+            self.create_highcharts(il_chart, filepath.replace("user", "institution") + "/" + metric + "/", "bar")
             self.create_highcharts(pl_chart, filepath.replace("user", "projectlead") + "/" + metric + "/", "bar")
 
         elif type == "csv":

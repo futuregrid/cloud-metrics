@@ -76,9 +76,6 @@ class FGCharts:
                 #self.chart.set_series(seriese
                 #self.chart.set_data_name(series.keys())
                 self.set_data(",".join(str(x) for x in series.values()))
-
-            else:
-                print 1
         except:
             pass
 

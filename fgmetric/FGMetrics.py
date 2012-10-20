@@ -2,6 +2,7 @@ from cmd2 import Cmd
 import sys
 from pprint import pprint
 import optparse
+import csv
 from fgmetric.FGSearch import FGSearch
 from fgmetric.FGInstances import FGInstances
 from fgmetric.FGCharts import FGCharts
@@ -81,13 +82,6 @@ class FGMetrics(Cmd):
         6) convert the result data structure to chart formatted data
         '''
 
-    def create_charts(self):
-        ''' set for test '''
-        self.chart.set_chart_api("highcharts")
-        self.chart.set_type("bar")
-        self.chart.set_datafromdict(self.search.get_metric(), self.search.metric)
-        self.chart.display()
-
     def set_configfile(self, filename):
         self.instances.db.set_conf(filename)
         self.instances.db.update_conf()
@@ -95,11 +89,43 @@ class FGMetrics(Cmd):
         print filename + " loaded."
         print "refresh db may required."
 
+    def create_csvfile(self, data, filename):
+
+        try:
+            writer = csv.writer(open(filename, 'wb'), delimiter=",",
+                    quotechar="|", quoting=csv.QUOTE_MINIMAL)
+            for row in data:
+                writer.writerow(row)
+
+            msg = filename + " is created"
+        except:
+            msg = filename + " not is created"
+            pass
+
+        print msg
+
     def do_analyze(self, line):
       
         self.show_filter_setting()
         self.measure()
-        self.create_charts()
+
+    @options([
+        make_option('-i', '--file', type="string", dest="filename", help="filename")
+        ])
+    def do_csv(self, line, opts=None):
+        data = self.search.get_metric()
+        self.create_csvfile(data, opts.filename)
+
+    @options([
+        make_option('-t', '--type', type="string", dest="ctype", default="column", help="chart e.g. bar, line, column, pie, and motion"),
+        make_option('-a', '--api', type="string", dest="api", default="highcharts", help="chart api e.g. highchart, google, jquery sparkline")
+        ])
+    def do_chart(self, line, opts=None):
+        ''' set for test '''
+        self.chart.set_chart_api(opts.api)
+        self.chart.set_type(opts.ctype)
+        self.chart.set_datafromdict(self.search.get_metric(), self.search.metric)
+        self.chart.display()
 
     def do_refresh(self, line, opts=None):
         self.do_load(line, opts)

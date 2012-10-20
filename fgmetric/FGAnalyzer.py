@@ -141,7 +141,6 @@ class CmdLineAnalyzeEucaData(Cmd):
                         raise
                     if group in self.instances.projectinfo_data:
                         institution = self.instances.projectinfo_data[group]["Institution"]
-                    if group in self.instances.projectinfo_data:
                         projectlead = self.instances.projectinfo_data[group]["ProjectLead"]
                 except:
                     group = ""
@@ -548,10 +547,16 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         gl_chart = []
         for prj in self.groups:
+            prj_title = ""
+            label = prj
+            if group in self.instances.projectinfo_data:
+                prj_title = self.instances.projectinfo_data[group]["Title"]
+                label = str(prj) + "(" + prj_title + " ...)"
+
             gv = self.groups[prj][metric]
             if metric == "runtime":
                 gv = int(math.ceil(gv / 60 / 60))
-            glabel = str(prj) + ":" + str(gv)
+            glabel = label + ":" + str(gv)
             gl_chart.append([glabel, gv])
 
         il_chart = []

@@ -6,6 +6,7 @@ from fgmetric.FGSearch import FGSearch
 from fgmetric.FGInstances import FGInstances
 from fgmetric.FGCharts import FGCharts
 from fgmetric.FGDatabase import FGDatabase
+from fgmetric.FGUtility import FGUtility
 
 class FGMetrics(Cmd):
 
@@ -45,20 +46,24 @@ class FGMetrics(Cmd):
     def show_filter_setting(self, param=None):
         pprint(vars(self.search.get_filter()))
 
-    def get_measure(self):
+    def measure(self):
 
         total_counts = self.instances.count()
 
         print "Calculating metrics in " + str(total_counts) + " records...\n"
 
         for i in range(0, total_counts):
-            instance = self.instances.get_data(i)
-            if not self.search._is_in_date(instance):
-                continue;
-            if not self.search._is_filtered(instance):
-                continue;
+            try:
+                instance = self.instances.get_data(i)
+                if not self.search._is_in_date(instance):
+                    continue;
+                if not self.search._is_filtered(instance):
+                    continue;
 
-            res = self.search.collect(instance)
+                res = self.search.collect(instance)
+
+            except:
+                raise
 
         print self.search.get_metric()
 
@@ -91,9 +96,9 @@ class FGMetrics(Cmd):
         print "refresh db may required."
 
     def do_analyze(self, line):
-       
+      
         self.show_filter_setting()
-        self.get_measure()
+        self.measure()
         self.create_charts()
 
     def do_refresh(self, line, opts=None):
@@ -121,14 +126,19 @@ class FGMetrics(Cmd):
 
     def call_attr(self, line, prefix="_", obj_name="self"):
 
-        args = line.split()
-        cmd = args[0]
-        function = prefix + cmd
+        try:
+            args = line.split()
+            cmd = args[0]
 
-        if len(args) == 2:
-            params = args[1]
-        else:
-            params = args[1:]
+            if len(args) == 2:
+                params = args[1]
+            else:
+                params = args[1:]
+        except:
+            cmd = None
+            params = ""
+
+        function = prefix + str(cmd)
 
         try:
             func = getattr(eval(obj_name), function)

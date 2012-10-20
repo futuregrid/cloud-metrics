@@ -2,6 +2,7 @@ from datetime import *
 from fgmetric.FGUtility import dotdict
 from math import ceil
 from pprint import pprint
+from fgmetric.FGUtility import FGUtility
 
 class FGSearch:
 
@@ -34,7 +35,7 @@ class FGSearch:
     def init_options(self):
         self.from_date = None
         self.to_date = None
-        self.day_count = None
+        self.day_count = 0
         self.project = None
         self.nodename = None
         self.platform = None
@@ -68,9 +69,9 @@ class FGSearch:
             })
 
     def set_metric(self, name):
-        self.init_stats()
+        #self.init_stats()
         self.metric = name
-        self.init_suboptions()
+        #self.init_suboptions()
         self.set_default_suboptions()
 
     def set_period(self, name):
@@ -131,8 +132,15 @@ class FGSearch:
         else:
             return self
 
+    def _is_searching_all(self):
+        if not self.from_date and not self.to_date:
+            return True
+        return False
+
     def _is_in_date(self, instance):
-        if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date:
+        if self._is_searching_all():
+            return True
+        if (instance["t_start"] > self.to_date) or (instance["t_end"] and instance["t_end"] < self.from_date):
            return False
         return True
 
@@ -280,7 +288,7 @@ class FGSearch:
         if single_end > self.to_date:
             single_end = self.to_date
 
-        if t_start > single_end or t_end < single_start:
+        if t_start > single_end or (t_end and t_end < single_start):
             return 0
 
         if metric == self.names.metric.runtime:
@@ -289,7 +297,7 @@ class FGSearch:
             else:
                 start_time = t_start
 
-            if t_end > single_end:
+            if not t_end or (t_end > single_end):
                 end_time = single_end
             else:
                 end_time = t_end
@@ -357,7 +365,7 @@ class FGSearch:
             return
         return self.selected[self.selected_idx - 1]
 
-    def show_None(self):
+    def show_None(self, param=None):
         self.show_filter()
 
     def show_filter(self):

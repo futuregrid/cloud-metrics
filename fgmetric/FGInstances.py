@@ -25,8 +25,8 @@ This class should be used when VM instance information is collected by the log p
 
 class FGInstances:
  
-    data = {}
-    userinfo_data = []
+    instance = {}
+    userinfo = []
     pp = None
     db = None
     in_the_future = None
@@ -44,35 +44,40 @@ class FGInstances:
         self.first_date  = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.last_date = datetime.strptime("1981-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
 
-    def clear(self):
-        self.data = {}
-        self.userinfo_data = []
+    def clear(self, opts=None):
+        if not opts or opts == "instance":
+            self.instance = {}
+        if not opts or opts == "userinfo":
+            self.userinfo = []
+
+    def get_instance(self, index=None):
+        return self.get_data(index)
 
     def get_data(self, index=None):
         if isinstance(index, (int, long)):
-            return self.data[index]
+            return self.instance[index]
         else:
-            return self.data
+            return self.instance
 
     def count(self):
-        return len(self.data)
+        return len(self.instance)
 
     def read_from_db(self):
         key = 0 
-        self.clear()
+        self.clear("instance")
         instance_list = self.db.read()
 
         for element in instance_list:
-            self.data[key] = element
+            self.instance[key] = element
             key += 1
 
     def read_userinfo_from_db(self):
 
-        self.clear()
+        self.clear("userinfo")
         userinfo_list = self.db.read_userinfo()
 
         for element in userinfo_list:
-            self.userinfo_data.append(element)
+            self.userinfo.append(element)
 
     def read_cloudplatform(self, refresh=False):
         if not self.cloudplatform or refresh:
@@ -92,11 +97,11 @@ class FGInstances:
         return None
 
     def write_to_db(self):
-        for key_current in self.data:
-            self.db.write(self.data[key_current])
+        for key_current in self.instance:
+            self.db.write(self.instance[key_current])
 
     def write_userinfo_to_db(self):
-        for key_current in self.userinfo_data:
+        for key_current in self.userinfo:
             self.db.write_userinfo(key_current)
 
     def add (self,datarecord):
@@ -110,7 +115,7 @@ class FGInstances:
 
             id = instanceId + " " + ownerId + " " + str(timestamp)
 
-            instance = self.data
+            instance = self.instance
 
             try:
                 current = instance[id]
@@ -174,14 +179,14 @@ class FGInstances:
             res["date"] = row["date"] #max(res["date"], row["date"]) # we don't need date column
             res["duration"] = row["duration"]#max(res["duration"], row["duration"])
             res["t_end"] = row["t_end"]#min(res["t_end"], row["t_end"])
-	self.data[key] = res
+	self.instance[key] = res
 
         return res
 
     def update_trace_datetime(self, key, new):
 
-        if key in self.data:
-            old = self.data[key]
+        if key in self.instance:
+            old = self.instance[key]
         else:
             old = new
 
@@ -224,8 +229,8 @@ class FGInstances:
 
     def refresh(self):
         """calculates how long each instance runs in seconds"""
-        for i in self.data:
-            values = self.data[i]
+        for i in self.instance:
+            values = self.instance[i]
             if values["state"] == "Teardown":
                 t_delta = values["t_end"] - values["ts"]
             else:
@@ -236,8 +241,8 @@ class FGInstances:
             values["duration"] = str(t_delta.total_seconds())
 
     def set_userinfo(self):
-        for i in self.data:
-            ownerid = self.data[i]["ownerId"]
+        for i in self.instance:
+            ownerid = self.instance[i]["ownerId"]
             try:
                 new_userinfo = retrieve_userinfo_ldap(ownerid)
                 self.add_userinfo(new_userinfo)
@@ -245,8 +250,8 @@ class FGInstances:
                 continue
 
     def add_userinfo(self, new_userinfo):
-        if self.userinfo_data.count(new_userinfo) == 0:
-            self.userinfo_data.append(new_userinfo)
+        if self.userinfo.count(new_userinfo) == 0:
+            self.userinfo.append(new_userinfo)
 
     '''
     need to be redefined...

@@ -137,7 +137,7 @@ class Results:
         f.close
 
     def get_content_quarter(self):
-        width = 800
+        width = "qwertyuioplkjhgfdsa"#800
         height = 600
         start_date = str(self.start_date)
         end_date = str(self.end_date)
@@ -158,7 +158,8 @@ class Results:
                 "----------------------------------------" + self.newline
 
         main_title += self.get_content_sub_header(nodename, platform)
- 
+
+        #for metrics groups by a user
         src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
         title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
@@ -178,6 +179,7 @@ class Results:
         number += 1
         metric = "count"
 
+        #for metrics groups by a platform
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(metric)s/master-detailhighcharts.html"
         title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
  
@@ -210,6 +212,43 @@ class Results:
         title = "Figure %(number)s. Total VMs count per node cluster for %(month_n_year)s on %(nodename)s"
  
         content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "count"
+        groupby = "group"
+
+        #for metrics groups by a project
+        src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
+        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+ 
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "runtime"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
+        #for metrics groups by a institution
+        number += 1
+        metric = "count"
+        groupby = "institution"
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "runtime"
+        content = content + (self.get_chart() % vars()) % vars()
+
+        #for metrics groups by a project lead
+        number += 1
+        metric = "count"
+        groupby = "projectlead"
+        content = content + (self.get_chart() % vars()) % vars()
+
+        number += 1
+        metric = "runtime"
+
+        content = content + (self.get_chart() % vars()) % vars()
+
 
         # Data for OpenStack on India is only available after 06/01/2012
         if self.start_date >= datetime.date(2012, 6, 01):
@@ -356,11 +395,14 @@ class Results:
 
         content = content + (self.get_chart() % vars()) % vars()
 
+        content = self.set_width(content, width, "100%")
         return content
 
+    def set_width(self, text, old, new):
+        return text.replace(old, new)
 
     def get_content_monthly(self):
-        width = 800
+        width = "qwertyuioplkjhgfdsa"#800
         height = 600
         start_date = str(self.start_date)
         end_date = str(self.end_date)
@@ -578,10 +620,11 @@ class Results:
 
         content = content + (self.get_chart() % vars()) % vars()
 
+        content = self.set_width(content, width, "100%")
         return content
 
     def get_content_weekly(self):
-        width = 800
+        width = "qwertyuioplkjhgfdsa"#800
         height = 600
         start_date = str(self.start_date)
         end_date = str(self.end_date)
@@ -734,6 +777,7 @@ class Results:
 
         content = content + (self.get_chart() % vars()) % vars()
 
+        content = self.set_width(content, width, "100%")
         return content
 
     def get_index_header(self):

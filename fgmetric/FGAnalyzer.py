@@ -19,6 +19,7 @@ from datetime import *
 import unittest, sys
 import calendar
 import re
+import string
 
 from fgmetric.FGParser import Instances
 from fgmetric.FGGoogleMotionChart import FGGoogleMotionChart
@@ -485,11 +486,14 @@ class CmdLineAnalyzeEucaData(Cmd):
             print "highcharts is not created.", sys.exc_info()[0]
             pass
 
-    def create_csvfile(self, list_of_data, filepath):
+    def create_csvfile(self, list_of_data, outfile):
         import csv
 
         try:
-            filename = "text.csv"
+            abspath = os.path.abspath(outfile)
+            filepath = os.path.dirname(abspath)
+            filename = os.path.basename(outfile)
+            #filename = "text.csv"
             FGUtility.ensure_dir(filepath)
             writer = csv.writer(open(filepath + "/" + filename, 'wb'), delimiter=",",
                     quotechar="|", quoting=csv.QUOTE_MINIMAL)
@@ -525,8 +529,12 @@ class CmdLineAnalyzeEucaData(Cmd):
         max_v = 0
 
         list_for_highchart = []
+        anonymous_for_highchart = []
         list_for_csv = []
         list_for_csv.append(["owner id", "user name", "value for metric"])
+        ltrs = string.lowercase
+        anonymous = [''.join(["User ",a,b]) for a in ltrs for b in ltrs]
+        a = 0
 
         if self.platform and (self.platform == "nova" or self.platform == "openstack"):
             user_list = self.nova.users
@@ -542,10 +550,13 @@ class CmdLineAnalyzeEucaData(Cmd):
             label = self.convert_ownerId_str(name) + ":" + str(number)
             label_values.append(label)
             list_for_highchart.append([label, number])
+            anonymous_for_highchart.append([anonymous[a], number])
+            a+=1
             list_for_csv.append([name, self.convert_ownerId_str(name), number])
             max_v = max(max_v, number)
 
         gl_chart = []
+        gl_chart_for_csv = ["project id", "project title","value"]
         for prj in self.groups:
             prj_title = ""
             label = prj
@@ -558,32 +569,43 @@ class CmdLineAnalyzeEucaData(Cmd):
                 gv = int(math.ceil(gv / 60 / 60))
             glabel = label + ":" + str(gv)
             gl_chart.append([glabel, gv])
+            gl_chart_for_csv.append([prj, prj_title, gv])
 
         il_chart = []
+        il_chart_for_csv = ["institution", "value"]
         for ins in self.institutions:
             iv = self.institutions[ins][metric]
             if metric == "runtime":
                 iv = int(math.ceil(iv / 60 / 60))
             ilabel = str(ins) + ":" + str(iv)
             il_chart.append([ilabel, iv])
+            il_chart_for_csv.append([ins, iv])
 
         pl_chart = []
+        pl_chart_for_csv = ["project lead", "value"]
         for pl in self.projectleads:
             pv = self.projectleads[pl][metric]
             if metric == "runtime":
                 pv = int(math.ceil(pv / 60 / 60))
             plabel = str(pl) + ":" + str(pv)
             pl_chart.append([plabel, pv])
+            pl_chart_for_csv.append([pl, pv])
 
         #self.generate_pygooglechart(type, label_values, max_v, values, filepath)
         if type == "highchart-column":
             self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", "bar")
-            self.create_highcharts(gl_chart, filepath.replace("user", "group") + "/" + metric + "/", "bar")
-            self.create_highcharts(il_chart, filepath.replace("user", "institution") + "/" + metric + "/", "bar")
-            self.create_highcharts(pl_chart, filepath.replace("user", "projectlead") + "/" + metric + "/", "bar")
+            self.create_highcharts(anonymous_for_highchart, filepath + "/" + metric + "/anonymouns/", "bar")
+            if self.platform == "eucalyptus":
+                self.create_highcharts(gl_chart, filepath.replace("user", "group") + "/" + metric + "/", "bar")
+                self.create_highcharts(il_chart, filepath.replace("user", "institution") + "/" + metric + "/", "bar")
+                self.create_highcharts(pl_chart, filepath.replace("user", "projectlead") + "/" + metric + "/", "bar")
 
         elif type == "csv":
-            self.create_csvfile(list_for_csv, filepath + "/" + metric + "/")
+            self.create_csvfile(list_for_csv, filepath + "/" + metric + "/" + metric + "_per_user.csv")
+            if self.platform == "eucalyptus":
+                self.create_csvfile(gl_chart_for_csv, filepath.replace("user", "group") + "/" + metric + "/" + metric + "_per_group.csv")
+                self.create_csvfile(il_chart_for_csv, filepath.replace("user","institution") + "/" + metric + "/" + metric + "_per_institution.csv")
+                self.create_csvfile(pl_chart_for_csv, filepath.replace("user","projectlead") + "/" + metric + "/" + metric + "_per_projectlead.csv")
 
     def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200): 
         """Create Python Google Chart but this should be merged to _create_chart()"""
@@ -833,6 +855,9 @@ class CmdLineAnalyzeEucaData(Cmd):
         """Clear all instance data and user data from the memory"""
         if arg == "users":
             self.users = {}
+            self.groups = {}
+            self.institutions = {}
+            self.projectleads = {}
         elif arg == "instances":
             self.instances = {}
         elif arg == "all":
@@ -901,7 +926,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         # It can display daily/weekly/monthly graphs for system utilization
         self.sys_stats = self.get_sys_stats(opts.metric, opts.period)
 
-        self.nova.calculate_stats(self.from_date, self.to_date)
+        if self.platform and (self.platform == "nova" or self.platform == "openstack"):
+            self.nova.calculate_stats(self.from_date, self.to_date)
 
     def do_getdaterange(self, arg): 
         """Get Date range of the instances table in mysql db"""
@@ -1118,12 +1144,13 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.create_highcharts(self.sys_stat_new['total']['count_node'], opts.output, "column")
             return
            
-        self.line_chart(self.sys_stats, opts.output)
-        self.bar_chart(self.sys_stats, opts.output)
-        self.create_highcharts(self.sys_stats, opts.output)
+        #self.line_chart(self.sys_stats, opts.output)
+        #self.bar_chart(self.sys_stats, opts.output)
 
         if opts.all:
             self.create_highcharts(self.sys_stats, opts.output, "master-detail")
+        else:
+            self.create_highcharts(self.sys_stats, opts.output)
 
     def do_filled_line_example(self, arg, opts=None):
         """Example for python Google line chart"""

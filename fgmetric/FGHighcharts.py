@@ -60,14 +60,16 @@ class FGHighcharts:
             self.reducing_list()
 
     def reducing_list(self):
-        reduce_to = 20
-        if len(self.data) <= reduce_to:
-            return
-
         if type(self.data) != type([]) or type(self.data[0]) != type([]):
             return
 
         data = sorted(self.data, key=lambda val:val[1], reverse=True)
+
+        reduce_to = 20
+        if len(self.data) <= reduce_to:
+            self.data = data
+            return
+
         count = 0
         new_data = []
         rest = ['others', 0]

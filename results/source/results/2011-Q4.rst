@@ -114,23 +114,23 @@ Results For Eucalyptus On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2011-Q4/india/eucalyptus/projectlead/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2011-Q4/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 15. Total count of VMs submitted per projectlead for Q4 2011 on india
+	Figure 15. Total count of VMs submitted per user for Q4 2011 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2011-Q4/india/eucalyptus/projectlead/FGGoogleMotionChart.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2011-Q4/india/eucalyptus/user/FGGoogleMotionChart.html" frameborder="0"></iframe>
 	</div>
-	Figure 16. Total count of VMs submitted per projectlead for Q4 2011 on india
+	Figure 16. Total count of VMs submitted per user for Q4 2011 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2011-Q4/india/eucalyptus/projectlead/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2011-Q4/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 17. Total runtime (hour) of VMs submitted per projectlead for Q4 2011 on india
+	Figure 17. Total runtime (hour) of VMs submitted per user for Q4 2011 on india
 
 .. raw:: html
 

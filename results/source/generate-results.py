@@ -255,6 +255,7 @@ class Results:
         metric = "count"
         platform = "eucalyptus"
         nodename = "india"
+        groupby = "user"
         title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
         main_title = self.get_content_sub_header(nodename, platform)
         content += main_title + self.get_chart() % vars()

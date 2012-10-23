@@ -67,9 +67,9 @@ createreport -d %(quarter)s/alamo/nimbus/user/
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
-sys_report -o %(quarter)s/all-nodes/all-platforms/count --all
+sys_report -o %(quarter)s/all-nodes/all-platforms/cluster/count --all
 analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
-sys_report -o %(quarter)s/all-nodes/all-platforms/runtime --all
+sys_report -o %(quarter)s/all-nodes/all-platforms/cluster/runtime --all
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59

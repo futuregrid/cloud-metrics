@@ -67,9 +67,9 @@ createreport -d 2011-Q4/alamo/nimbus/user/
 clear all
 set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59
 analyze -S count -f 2011-09-01T00:00:00 -t 2011-12-31T23:59:59
-sys_report -o 2011-Q4/all-nodes/all-platforms/count --all
+sys_report -o 2011-Q4/all-nodes/all-platforms/cluster/count --all
 analyze -S runtime -f 2011-09-01T00:00:00 -t 2011-12-31T23:59:59
-sys_report -o 2011-Q4/all-nodes/all-platforms/runtime --all
+sys_report -o 2011-Q4/all-nodes/all-platforms/cluster/runtime --all
 
 clear all
 set search_range 2011-09-01T00:00:00 2011-12-31T23:59:59

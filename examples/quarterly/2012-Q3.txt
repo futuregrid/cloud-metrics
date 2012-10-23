@@ -1,15 +1,15 @@
-clear users
+clear all
 set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
 analyze -f 2012-06-01T00:00:00 -t 2012-09-30T23:59:59
 createreport -d 2012-Q3/all-nodes/all-platforms/user
 
-clear users
+clear all
 set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
 set platform eucalyptus
 analyze -f 2012-06-01T00:00:00 -t 2012-09-30T23:59:59
 createreport -d 2012-Q3/all-nodes/eucalyptus/user
 
-clear users
+clear all
 set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
 set nodename india
 set platform eucalyptus

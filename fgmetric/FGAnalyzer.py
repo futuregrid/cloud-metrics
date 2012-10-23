@@ -862,6 +862,10 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.instances = {}
         elif arg == "all":
             self.users = {}
+            self.groups = {}
+            self.institutions = {}
+            self.projectleads = {}
+
             self.from_date = ""
             self.to_date = ""
             self.day_count = 0

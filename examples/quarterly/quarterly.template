@@ -1,15 +1,15 @@
-clear users
+clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/all-nodes/all-platforms/user
 
-clear users
+clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set platform eucalyptus
 analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
 createreport -d %(quarter)s/all-nodes/eucalyptus/user
 
-clear users
+clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename india
 set platform eucalyptus

@@ -138,7 +138,7 @@ class Results:
 
     def get_content_quarter(self):
         width = "qwertyuioplkjhgfdsa"#800
-        height = 600
+        height = 1
         start_date = str(self.start_date)
         end_date = str(self.end_date)
         current_month = self.start_date.timetuple()[1]
@@ -553,7 +553,7 @@ class Results:
 
     def get_content_monthly(self):
         width = "qwertyuioplkjhgfdsa"#800
-        height = 600
+        height = 1
         start_date = str(self.start_date)
         end_date = str(self.end_date)
         month_n_year = self.start_date.strftime("%B %Y")
@@ -775,7 +775,7 @@ class Results:
 
     def get_content_weekly(self):
         width = "qwertyuioplkjhgfdsa"#800
-        height = 600
+        height = 1
         start_date = str(self.start_date)
         end_date = str(self.end_date)
 

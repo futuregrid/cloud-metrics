@@ -141,7 +141,8 @@ class FGHighcharts:
         self.height = int(height)
 
     def calc_height(self):
-        self.set_height(len(self.data) * 20)
+        if self.chart_type != "master-detail":
+            self.set_height(len(self.data) * 20)
 
     def display(self):
 

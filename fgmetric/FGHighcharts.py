@@ -159,11 +159,15 @@ class FGHighcharts:
             raise
 
     def get_html_header(self):
-        self.html_header = '''
-        <!DOCTYPE html>
+        self.html_header = '''<!DOCTYPE html>
         <html>
         <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="cache-control" content="max-age=0" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+        <meta http-equiv="pragma" content="no-cache" />
         <script type='text/javascript' src='../../../../../../_static/js/jquery-1.7.2.min.js'></script>'''
         return self.html_header
 

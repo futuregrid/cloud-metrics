@@ -56,6 +56,30 @@ class FGHighcharts:
             self.data = self.convert_dict_to_list(data)
             #self.sort_data()
             self.human_sort_data()
+        else:
+            self.reducing_list()
+
+    def reducing_list(self):
+        reduce_to = 20
+        if len(self.data) <= reduce_to:
+            return
+
+        if type(self.data) != type([]) or type(self.data[0]) != type([]):
+            return
+
+        data = sorted(self.data, key=lambda val:val[1], reverse=True)
+        count = 0
+        new_data = []
+        rest = ['others', 0]
+        for k,v in data:
+            if count > reduce_to:
+                rest[1] += v
+            else:
+                new_data.append([k, v])
+            count += 1
+       
+        rest[0] = str(count - reduce_to) + " " + rest[0]
+        self.data = new_data + [rest]
 
     def get_data(self, index=""):
         if not index == "":

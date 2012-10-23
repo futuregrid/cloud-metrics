@@ -148,6 +148,7 @@ class Results:
         month_n_year = "Q" + str(quarter) + self.start_date.strftime(" %Y")
         month = self.start_date.strftime("%Y-") + month_n_year2
 
+        dummy = "?time=" + datetime.datetime.utcnow().strftime("%s")
         number = 1
         metric = "count"
         platform = "all-platforms"
@@ -560,6 +561,7 @@ class Results:
         month_n_year2 = self.start_date.strftime("%m/%Y")
         month = self.start_date.strftime("%Y-%m")
 
+        dummy = "?time=" + datetime.datetime.utcnow().strftime("%s")
         number = 1
         metric = "count"
         platform = "eucalyptus"
@@ -779,6 +781,7 @@ class Results:
         start_date = str(self.start_date)
         end_date = str(self.end_date)
 
+        dummy = "?time=" + datetime.datetime.utcnow().strftime("%s")
         number = 1
         metric = "count"
         platform = "eucalyptus"
@@ -954,7 +957,7 @@ class Results:
                 ".. raw:: html" + self.newline + \
                 "" + self.newline + \
                 self.indent + "<div style=\"margin-top:10px;\">" + self.newline + \
-                self.indent + "<iframe id=\"the_iframe%(number)s\" onLoad=\"calcHeight('the_iframe%(number)s');\" width=\"%(width)s\" height=\"%(height)s\" src=\"%(src)s\" frameborder=\"0\"></iframe>" + self.newline + \
+                self.indent + "<iframe id=\"the_iframe%(number)s\" onLoad=\"calcHeight('the_iframe%(number)s');\" width=\"%(width)s\" height=\"%(height)s\" src=\"%(src)s%(dummy)s\" frameborder=\"0\"></iframe>" + self.newline + \
                 self.indent + "</div>" + self.newline + \
                 self.indent + "%(title)s" + self.newline
                 

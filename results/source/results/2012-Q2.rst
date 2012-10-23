@@ -1,117 +1,222 @@
 Q2 2012
 ========================================
-Quarterly report (Q2)
-----------------------------------------
 
-Results for eucalyptus on india.futuregrid.org
+Quarterly report (April 01, 2012 between June 30, 2012)
+-----------------------------------------------------------------------------------------------
+
+Results For All-Platforms On All-Nodes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/all-platforms/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 1. Total count of VMs submitted per user for Q2 2012 on india
+	Figure 1. Total count of VMs submitted per user for Q2 2012 on all-nodes
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/user/FGGoogleMotionChart.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/all-platforms/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 2. Total count of VMs submitted per user for Q2 2012 on india
+	Figure 2. Total runtime (hour) of VMs submitted per user for Q2 2012 on all-nodes
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/all-platforms/cluster/count/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 3. Total runtime (hour) of VMs submitted per user for Q2 2012 on india
+	Figure 3. Total count of VMs submitted on all-nodes in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/all-platforms/cluster/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 4. Total count of VMs submitted on india in Q2 2012
+	Figure 4. Total runtime (hour) of VMs submitted on all-nodes in Q2 2012
+
+Results For Eucalyptus On All-Nodes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/eucalyptus/cluster/count/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 5. Total runtime of VMs submitted on india in Q2 2012
+	Figure 5. Total count of VMs submitted per cluster for Q2 2012 on all-nodes
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/ccvm_cores/master-detailhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/eucalyptus/cluster/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 6. Total ccvm_cores of VMs submitted on india in Q2 2012
+	Figure 6. Total runtime (hour) of VMs submitted per cluster for Q2 2012 on all-nodes
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/ccvm_mem/master-detailhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/eucalyptus/cluster/count/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 7. Total ccvm_mem of VMs submitted on india in Q2 2012
+	Figure 7. Total count of VMs submitted on all-nodes in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/ccvm_disk/master-detailhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/eucalyptus/cluster/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 8. Total ccvm_disk of VMs submitted on india in Q2 2012
+	Figure 8. Total runtime (hour) of VMs submitted on all-nodes in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/eucalyptus/group/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 9. Total VMs count per node cluster for Q2 2012 on india
+	Figure 9. Total count of VMs submitted per group on all-nodes in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/group/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/eucalyptus/group/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 10. Total count of VMs submitted per group on india in Q2 2012
+	Figure 10. Total runtime (hour) of VMs submitted per group on all-nodes in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/group/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/eucalyptus/institution/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 11. Total runtime of VMs submitted per group on india in Q2 2012
+	Figure 11. Total count of VMs submitted per institution on all-nodes in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/institution/count/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/eucalyptus/institution/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 12. Total count of VMs submitted per institution on india in Q2 2012
+	Figure 12. Total runtime (hour) of VMs submitted per institution on all-nodes in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/institution/runtime/barhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/eucalyptus/projectlead/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 13. Total runtime of VMs submitted per institution on india in Q2 2012
+	Figure 13. Total count of VMs submitted per projectlead on all-nodes in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/all-nodes/eucalyptus/projectlead/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 14. Total runtime (hour) of VMs submitted per projectlead on all-nodes in Q2 2012
+
+Results For Eucalyptus On India
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/projectlead/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 14. Total count of VMs submitted per projectlead on india in Q2 2012
+	Figure 15. Total count of VMs submitted per projectlead for Q2 2012 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/projectlead/FGGoogleMotionChart.html" frameborder="0"></iframe>
+	</div>
+	Figure 16. Total count of VMs submitted per projectlead for Q2 2012 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/projectlead/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 15. Total runtime of VMs submitted per projectlead on india in Q2 2012
+	Figure 17. Total runtime (hour) of VMs submitted per projectlead for Q2 2012 on india
 
-Results for openstack on india.futuregrid.org
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/cluster/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 18. Total count of VMs submitted on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/cluster/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 19. Total runtime (hour) of VMs submitted on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/cluster/ccvm_cores/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 20. Total ccvm_cores of VMs submitted on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/cluster/ccvm_mem/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 21. Total ccvm_mem of VMs submitted on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/cluster/ccvm_disk/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 22. Total ccvm_disk of VMs submitted on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/cluster/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 23. Total VMs count per node cluster for Q2 2012 on india
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/group/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 24. Total count of VMs submitted per group on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/group/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 25. Total runtime (hour) of VMs submitted per group on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/institution/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 26. Total count of VMs submitted per institution on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/institution/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 27. Total runtime (hour) of VMs submitted per institution on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/projectlead/count/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 28. Total count of VMs submitted per projectlead on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/eucalyptus/projectlead/runtime/barhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 29. Total runtime (hour) of VMs submitted per projectlead on india in Q2 2012
+
+Results For Openstack On India
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -119,16 +224,30 @@ Results for openstack on india.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/india/openstack/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 16. Total count of VMs submitted per user for Q2 2012 on india
+	Figure 30. Total count of VMs submitted per user for Q2 2012 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/india/openstack/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 17. Total runtime (hour) of VMs submitted per user for Q2 2012 on india
+	Figure 31. Total runtime (hour) of VMs submitted per user for Q2 2012 on india
 
-Results for eucalyptus on sierra.futuregrid.org
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/openstack/cluster/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 32. Total count of VMs submitted on india in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/india/openstack/cluster/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 33. Total runtime (hour) of VMs submitted on india in Q2 2012
+
+Results For Eucalyptus On Sierra
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -136,58 +255,58 @@ Results for eucalyptus on sierra.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 18. Total count of VMs submitted per user for Q2 2012 on sierra
+	Figure 34. Total count of VMs submitted per user for Q2 2012 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 19. Total runtime (hour) of VMs submitted per user for Q2 2012 on sierra
+	Figure 35. Total runtime (hour) of VMs submitted per user for Q2 2012 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/cluster/count/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 20. Total count of VMs submitted on sierra in Q2 2012
+	Figure 36. Total count of VMs submitted on sierra in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/cluster/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 21. Total runtime of VMs submitted on sierra in Q2 2012
+	Figure 37. Total runtime (hour) of VMs submitted on sierra in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/ccvm_cores/master-detailhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/cluster/ccvm_cores/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 22. Total ccvm_cores of VMs submitted on sierra in Q2 2012
+	Figure 38. Total ccvm_cores of VMs submitted on sierra in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/ccvm_mem/master-detailhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/cluster/ccvm_mem/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 23. Total ccvm_mem of VMs submitted on sierra in Q2 2012
+	Figure 39. Total ccvm_mem of VMs submitted on sierra in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/ccvm_disk/master-detailhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/cluster/ccvm_disk/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 24. Total ccvm_disk of VMs submitted on sierra in Q2 2012
+	Figure 40. Total ccvm_disk of VMs submitted on sierra in Q2 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/count_node/columnhighcharts.html" frameborder="0"></iframe>
+	<iframe width="100%" height="600" src="data/2012-Q2/sierra/eucalyptus/cluster/count_node/columnhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 25. Total VMs count per node cluster for Q2 2012 on sierra
+	Figure 41. Total VMs count per node cluster for Q2 2012 on sierra
 
-Results for nimbus on hotel.futuregrid.org
+Results For Nimbus On Hotel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -195,16 +314,30 @@ Results for nimbus on hotel.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/hotel/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 26. Total count of VMs submitted per user for Q2 2012 on hotel
+	Figure 42. Total count of VMs submitted per user for Q2 2012 on hotel
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/hotel/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 27. Total runtime (hour) of VMs submitted per user for Q2 2012 on hotel
+	Figure 43. Total runtime (hour) of VMs submitted per user for Q2 2012 on hotel
 
-Results for nimbus on alamo.futuregrid.org
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/hotel/nimbus/cluster/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 44. Total count of VMs submitted on hotel in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/hotel/nimbus/cluster/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 45. Total runtime (hour) of VMs submitted on hotel in Q2 2012
+
+Results For Nimbus On Alamo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -212,16 +345,30 @@ Results for nimbus on alamo.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/alamo/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 28. Total count of VMs submitted per user for Q2 2012 on alamo
+	Figure 46. Total count of VMs submitted per user for Q2 2012 on alamo
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/alamo/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 29. Total runtime (hour) of VMs submitted per user for Q2 2012 on alamo
+	Figure 47. Total runtime (hour) of VMs submitted per user for Q2 2012 on alamo
 
-Results for nimbus on foxtrot.futuregrid.org
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/alamo/nimbus/cluster/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 48. Total count of VMs submitted on alamo in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/alamo/nimbus/cluster/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 49. Total runtime (hour) of VMs submitted on alamo in Q2 2012
+
+Results For Nimbus On Foxtrot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -229,16 +376,30 @@ Results for nimbus on foxtrot.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/foxtrot/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 30. Total count of VMs submitted per user for Q2 2012 on foxtrot
+	Figure 50. Total count of VMs submitted per user for Q2 2012 on foxtrot
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/foxtrot/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 31. Total runtime (hour) of VMs submitted per user for Q2 2012 on foxtrot
+	Figure 51. Total runtime (hour) of VMs submitted per user for Q2 2012 on foxtrot
 
-Results for nimbus on sierra.futuregrid.org
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/foxtrot/nimbus/cluster/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 52. Total count of VMs submitted on foxtrot in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/foxtrot/nimbus/cluster/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 53. Total runtime (hour) of VMs submitted on foxtrot in Q2 2012
+
+Results For Nimbus On Sierra
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -246,11 +407,25 @@ Results for nimbus on sierra.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/sierra/nimbus/user/count/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 32. Total count of VMs submitted per user for Q2 2012 on sierra
+	Figure 54. Total count of VMs submitted per user for Q2 2012 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="100%" height="600" src="data/2012-Q2/sierra/nimbus/user/runtime/barhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 33. Total runtime (hour) of VMs submitted per user for Q2 2012 on sierra
+	Figure 55. Total runtime (hour) of VMs submitted per user for Q2 2012 on sierra
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/sierra/nimbus/cluster/count/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 56. Total count of VMs submitted on sierra in Q2 2012
+
+.. raw:: html
+
+	<div style="margin-top:10px;">
+	<iframe width="100%" height="600" src="data/2012-Q2/sierra/nimbus/cluster/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
+	</div>
+	Figure 57. Total runtime (hour) of VMs submitted on sierra in Q2 2012

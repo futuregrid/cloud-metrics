@@ -3,7 +3,7 @@ December 2011
 Monthly report (12/2011)
 ----------------------------------------
 
-Results for eucalyptus on india.futuregrid.org
+Results For Eucalyptus On India
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -69,7 +69,7 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 9. Total VMs count per node cluster for December 2011 on india
 
-Results for nimbus on hotel.futuregrid.org
+Results For Nimbus On Hotel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -86,7 +86,7 @@ Results for nimbus on hotel.futuregrid.org
 	</div>
 	Figure 11. Total runtime (hour) of VMs submitted per user for December 2011 on hotel
 
-Results for nimbus on alamo.futuregrid.org
+Results For Nimbus On Alamo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -103,7 +103,7 @@ Results for nimbus on alamo.futuregrid.org
 	</div>
 	Figure 13. Total runtime (hour) of VMs submitted per user for December 2011 on alamo
 
-Results for nimbus on foxtrot.futuregrid.org
+Results For Nimbus On Foxtrot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -120,7 +120,7 @@ Results for nimbus on foxtrot.futuregrid.org
 	</div>
 	Figure 15. Total runtime (hour) of VMs submitted per user for December 2011 on foxtrot
 
-Results for nimbus on sierra.futuregrid.org
+Results For Nimbus On Sierra
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -140,7 +140,7 @@ Results for nimbus on sierra.futuregrid.org
 12/06/2011 - 12/12/2011
 ------------------------------------------------------------
 
-Results for eucalyptus on india.futuregrid.org
+Results For Eucalyptus On India
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -164,7 +164,7 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 3. Total VMs count per node cluster for 2011-12-06  ~ 2011-12-12 on india
 
-Results for nimbus on hotel.futuregrid.org
+Results For Nimbus On Hotel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -181,7 +181,7 @@ Results for nimbus on hotel.futuregrid.org
 	</div>
 	Figure 5. Total runtime (hour) of VMs submitted per user for 2011-12-06 ~ 2011-12-12 on hotel
 
-Results for nimbus on alamo.futuregrid.org
+Results For Nimbus On Alamo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -198,7 +198,7 @@ Results for nimbus on alamo.futuregrid.org
 	</div>
 	Figure 7. Total runtime (hour) of VMs submitted per user for 2011-12-06 ~ 2011-12-12 on alamo
 
-Results for nimbus on foxtrot.futuregrid.org
+Results For Nimbus On Foxtrot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -215,7 +215,7 @@ Results for nimbus on foxtrot.futuregrid.org
 	</div>
 	Figure 9. Total runtime (hour) of VMs submitted per user for 2011-12-06 ~ 2011-12-12 on foxtrot
 
-Results for nimbus on sierra.futuregrid.org
+Results For Nimbus On Sierra
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -235,7 +235,7 @@ Results for nimbus on sierra.futuregrid.org
 12/13/2011 - 12/19/2011
 ------------------------------------------------------------
 
-Results for eucalyptus on india.futuregrid.org
+Results For Eucalyptus On India
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -259,7 +259,7 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 3. Total VMs count per node cluster for 2011-12-13  ~ 2011-12-19 on india
 
-Results for nimbus on hotel.futuregrid.org
+Results For Nimbus On Hotel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -276,7 +276,7 @@ Results for nimbus on hotel.futuregrid.org
 	</div>
 	Figure 5. Total runtime (hour) of VMs submitted per user for 2011-12-13 ~ 2011-12-19 on hotel
 
-Results for nimbus on alamo.futuregrid.org
+Results For Nimbus On Alamo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -293,7 +293,7 @@ Results for nimbus on alamo.futuregrid.org
 	</div>
 	Figure 7. Total runtime (hour) of VMs submitted per user for 2011-12-13 ~ 2011-12-19 on alamo
 
-Results for nimbus on foxtrot.futuregrid.org
+Results For Nimbus On Foxtrot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -310,7 +310,7 @@ Results for nimbus on foxtrot.futuregrid.org
 	</div>
 	Figure 9. Total runtime (hour) of VMs submitted per user for 2011-12-13 ~ 2011-12-19 on foxtrot
 
-Results for nimbus on sierra.futuregrid.org
+Results For Nimbus On Sierra
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -330,7 +330,7 @@ Results for nimbus on sierra.futuregrid.org
 12/20/2011 - 12/26/2011
 ------------------------------------------------------------
 
-Results for eucalyptus on india.futuregrid.org
+Results For Eucalyptus On India
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -354,7 +354,7 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 3. Total VMs count per node cluster for 2011-12-20  ~ 2011-12-26 on india
 
-Results for nimbus on hotel.futuregrid.org
+Results For Nimbus On Hotel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -371,7 +371,7 @@ Results for nimbus on hotel.futuregrid.org
 	</div>
 	Figure 5. Total runtime (hour) of VMs submitted per user for 2011-12-20 ~ 2011-12-26 on hotel
 
-Results for nimbus on alamo.futuregrid.org
+Results For Nimbus On Alamo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -388,7 +388,7 @@ Results for nimbus on alamo.futuregrid.org
 	</div>
 	Figure 7. Total runtime (hour) of VMs submitted per user for 2011-12-20 ~ 2011-12-26 on alamo
 
-Results for nimbus on foxtrot.futuregrid.org
+Results For Nimbus On Foxtrot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -405,7 +405,7 @@ Results for nimbus on foxtrot.futuregrid.org
 	</div>
 	Figure 9. Total runtime (hour) of VMs submitted per user for 2011-12-20 ~ 2011-12-26 on foxtrot
 
-Results for nimbus on sierra.futuregrid.org
+Results For Nimbus On Sierra
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -425,7 +425,7 @@ Results for nimbus on sierra.futuregrid.org
 12/27/2011 - 01/02/2012
 ------------------------------------------------------------
 
-Results for eucalyptus on india.futuregrid.org
+Results For Eucalyptus On India
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -449,7 +449,7 @@ Results for eucalyptus on india.futuregrid.org
 	</div>
 	Figure 3. Total VMs count per node cluster for 2011-12-27  ~ 2012-01-02 on india
 
-Results for nimbus on hotel.futuregrid.org
+Results For Nimbus On Hotel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -466,7 +466,7 @@ Results for nimbus on hotel.futuregrid.org
 	</div>
 	Figure 5. Total runtime (hour) of VMs submitted per user for 2011-12-27 ~ 2012-01-02 on hotel
 
-Results for nimbus on alamo.futuregrid.org
+Results For Nimbus On Alamo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -483,7 +483,7 @@ Results for nimbus on alamo.futuregrid.org
 	</div>
 	Figure 7. Total runtime (hour) of VMs submitted per user for 2011-12-27 ~ 2012-01-02 on alamo
 
-Results for nimbus on foxtrot.futuregrid.org
+Results For Nimbus On Foxtrot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -500,7 +500,7 @@ Results for nimbus on foxtrot.futuregrid.org
 	</div>
 	Figure 9. Total runtime (hour) of VMs submitted per user for 2011-12-27 ~ 2012-01-02 on foxtrot
 
-Results for nimbus on sierra.futuregrid.org
+Results For Nimbus On Sierra
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html

@@ -122,7 +122,7 @@ analyze -S count -f 2012-06-01T00:00:00 -t 2012-09-30T23:59:59
 sys_report -o 2012-Q3/all-nodes/nimbus/cluster/count --all
 analyze -S runtime -f 2012-06-01T00:00:00 -t 2012-09-30T23:59:59
 sys_report -o 2012-Q3/all-nodes/nimbus/cluster/runtime --all
- 
+
 clear all
 set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59
 set nodename hotel
@@ -167,7 +167,6 @@ analyze -S count -f 2012-06-01T00:00:00 -t 2012-09-30T23:59:59
 sys_report -o 2012-Q3/india/openstack/cluster/count --all
 analyze -S runtime -f 2012-06-01T00:00:00 -t 2012-09-30T23:59:59
 sys_report -o 2012-Q3/india/openstack/cluster/runtime --all
-
 
 clear all
 set search_range 2012-06-01T00:00:00 2012-09-30T23:59:59

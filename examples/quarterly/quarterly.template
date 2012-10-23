@@ -1,8 +1,13 @@
 clear users
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
+analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+createreport -d %(quarter)s/all-nodes/all-platforms/user
+
+clear users
+set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set platform eucalyptus
 analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
-createreport -d %(quarter)s/all/eucalyptus/user
+createreport -d %(quarter)s/all-nodes/eucalyptus/user
 
 clear users
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
@@ -29,7 +34,7 @@ clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set platform nimbus
 analyze -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
-createreport -d %(quarter)s/all/nimbus/user/
+createreport -d %(quarter)s/all-nodes/nimbus/user/
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
@@ -61,88 +66,118 @@ createreport -d %(quarter)s/alamo/nimbus/user/
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
+analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/all-nodes/all-platforms/count --all
+analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/all-nodes/all-platforms/runtime --all
+
+clear all
+set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
+set platform eucalyptus
+analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/all-nodes/eucalyptus/cluster/count --all
+analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/all-nodes/eucalyptus/cluster/runtime --all
+analyze -S ccvm_cores -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/all-nodes/eucalyptus/cluster/ccvm_cores/ --all
+analyze -S ccvm_mem -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/all-nodes/eucalyptus/cluster/ccvm_mem --all
+analyze -S ccvm_disk -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/all-nodes/eucalyptus/cluster/ccvm_disk --all
+
+clear all
+set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename india
 set platform eucalyptus
-analyze -S count
-sys_report -o %(quarter)s/india/eucalyptus/count --all
-analyze -S runtime
-sys_report -o %(quarter)s/india/eucalyptus/runtime --all
-analyze -S ccvm_cores
-sys_report -o %(quarter)s/india/eucalyptus/ccvm_cores/ --all
-analyze -S ccvm_mem
-sys_report -o %(quarter)s/india/eucalyptus/ccvm_mem --all
-analyze -S ccvm_disk
-sys_report -o %(quarter)s/india/eucalyptus/ccvm_disk --all
+analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/india/eucalyptus/cluster/count --all
+analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/india/eucalyptus/cluster/runtime --all
+analyze -S ccvm_cores -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/india/eucalyptus/cluster/ccvm_cores/ --all
+analyze -S ccvm_mem -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/india/eucalyptus/cluster/ccvm_mem --all
+analyze -S ccvm_disk -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/india/eucalyptus/cluster/ccvm_disk --all
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename sierra
 set platform eucalyptus
-analyze -S count
-sys_report -o %(quarter)s/sierra/eucalyptus/count --all
-analyze -S runtime
-sys_report -o %(quarter)s/sierra/eucalyptus/runtime --all
-analyze -S ccvm_cores
-sys_report -o %(quarter)s/sierra/eucalyptus/ccvm_cores/ --all
-analyze -S ccvm_mem
-sys_report -o %(quarter)s/sierra/eucalyptus/ccvm_mem --all
-analyze -S ccvm_disk
-sys_report -o %(quarter)s/sierra/eucalyptus/ccvm_disk --all
+analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/sierra/eucalyptus/cluster/count --all
+analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/sierra/eucalyptus/cluster/runtime --all
+analyze -S ccvm_cores -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/sierra/eucalyptus/cluster/ccvm_cores/ --all
+analyze -S ccvm_mem -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/sierra/eucalyptus/cluster/ccvm_mem --all
+analyze -S ccvm_disk -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/sierra/eucalyptus/cluster/ccvm_disk --all
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set platform nimbus
-analyze -S count
-sys_report -o %(quarter)s/all/nimbus/count --all
-analyze -S runtime
-sys_report -o %(quarter)s/all/nimbus/runtime --all
+analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/all-nodes/nimbus/cluster/count --all
+analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/all-nodes/nimbus/cluster/runtime --all
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename hotel
 set platform nimbus
-analyze -S count
-sys_report -o %(quarter)s/hotel/nimbus/count --all
-analyze -S runtime
-sys_report -o %(quarter)s/hotel/nimbus/runtime --all
+analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/hotel/nimbus/cluster/count --all
+analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/hotel/nimbus/cluster/runtime --all
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename alamo
 set platform nimbus
-analyze -S count
-sys_report -o %(quarter)s/alamo/nimbus/count --all
-analyze -S runtime
-sys_report -o %(quarter)s/alamo/nimbus/runtime --all
+analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/alamo/nimbus/cluster/count --all
+analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/alamo/nimbus/cluster/runtime --all
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename foxtrot
 set platform nimbus
-analyze -S count
-sys_report -o %(quarter)s/foxtrot/nimbus/count --all
-analyze -S runtime
-sys_report -o %(quarter)s/foxtrot/nimbus/runtime --all
+analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/foxtrot/nimbus/cluster/count --all
+analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/foxtrot/nimbus/cluster/runtime --all
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename sierra
 set platform nimbus
-analyze -S count
-sys_report -o %(quarter)s/sierra/nimbus/count --all
-analyze -S runtime
-sys_report -o %(quarter)s/sierra/nimbus/runtime --all
+analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/sierra/nimbus/cluster/count --all
+analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/sierra/nimbus/cluster/runtime --all
+
+clear all
+set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
+set nodename india
+set platform openstack
+analyze -S count -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/india/openstack/cluster/count --all
+analyze -S runtime -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/india/openstack/cluster/runtime --all
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename india
 set platform eucalyptus
-analyze -S count_node
-sys_report -o %(quarter)s/india/eucalyptus/count_node
+analyze -S count_node -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/india/eucalyptus/cluster/count_node
 
 clear all
 set search_range %(start_ymd)sT00:00:00 %(end_ymd)sT23:59:59
 set nodename sierra
 set platform eucalyptus
-analyze -S count_node
-sys_report -o %(quarter)s/sierra/eucalyptus/count_node
+analyze -S count_node -f %(start_ymd)sT00:00:00 -t %(end_ymd)sT23:59:59
+sys_report -o %(quarter)s/sierra/eucalyptus/cluster/count_node

@@ -1,8 +1,13 @@
 clear users
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
+analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+createreport -d 2012-Q1/all-nodes/all-platforms/user
+
+clear users
+set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set platform eucalyptus
 analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
-createreport -d 2012-Q1/all/eucalyptus/user
+createreport -d 2012-Q1/all-nodes/eucalyptus/user
 
 clear users
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
@@ -29,7 +34,7 @@ clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set platform nimbus
 analyze -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
-createreport -d 2012-Q1/all/nimbus/user/
+createreport -d 2012-Q1/all-nodes/nimbus/user/
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
@@ -61,88 +66,118 @@ createreport -d 2012-Q1/alamo/nimbus/user/
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
+analyze -S count -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/all-nodes/all-platforms/count --all
+analyze -S runtime -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/all-nodes/all-platforms/runtime --all
+
+clear all
+set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
+set platform eucalyptus
+analyze -S count -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/all-nodes/eucalyptus/cluster/count --all
+analyze -S runtime -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/all-nodes/eucalyptus/cluster/runtime --all
+analyze -S ccvm_cores -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/all-nodes/eucalyptus/cluster/ccvm_cores/ --all
+analyze -S ccvm_mem -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/all-nodes/eucalyptus/cluster/ccvm_mem --all
+analyze -S ccvm_disk -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/all-nodes/eucalyptus/cluster/ccvm_disk --all
+
+clear all
+set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename india
 set platform eucalyptus
-analyze -S count
-sys_report -o 2012-Q1/india/eucalyptus/count --all
-analyze -S runtime
-sys_report -o 2012-Q1/india/eucalyptus/runtime --all
-analyze -S ccvm_cores
-sys_report -o 2012-Q1/india/eucalyptus/ccvm_cores/ --all
-analyze -S ccvm_mem
-sys_report -o 2012-Q1/india/eucalyptus/ccvm_mem --all
-analyze -S ccvm_disk
-sys_report -o 2012-Q1/india/eucalyptus/ccvm_disk --all
+analyze -S count -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/india/eucalyptus/cluster/count --all
+analyze -S runtime -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/india/eucalyptus/cluster/runtime --all
+analyze -S ccvm_cores -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/india/eucalyptus/cluster/ccvm_cores/ --all
+analyze -S ccvm_mem -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/india/eucalyptus/cluster/ccvm_mem --all
+analyze -S ccvm_disk -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/india/eucalyptus/cluster/ccvm_disk --all
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename sierra
 set platform eucalyptus
-analyze -S count
-sys_report -o 2012-Q1/sierra/eucalyptus/count --all
-analyze -S runtime
-sys_report -o 2012-Q1/sierra/eucalyptus/runtime --all
-analyze -S ccvm_cores
-sys_report -o 2012-Q1/sierra/eucalyptus/ccvm_cores/ --all
-analyze -S ccvm_mem
-sys_report -o 2012-Q1/sierra/eucalyptus/ccvm_mem --all
-analyze -S ccvm_disk
-sys_report -o 2012-Q1/sierra/eucalyptus/ccvm_disk --all
+analyze -S count -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/sierra/eucalyptus/cluster/count --all
+analyze -S runtime -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/sierra/eucalyptus/cluster/runtime --all
+analyze -S ccvm_cores -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/sierra/eucalyptus/cluster/ccvm_cores/ --all
+analyze -S ccvm_mem -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/sierra/eucalyptus/cluster/ccvm_mem --all
+analyze -S ccvm_disk -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/sierra/eucalyptus/cluster/ccvm_disk --all
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set platform nimbus
-analyze -S count
-sys_report -o 2012-Q1/all/nimbus/count --all
-analyze -S runtime
-sys_report -o 2012-Q1/all/nimbus/runtime --all
+analyze -S count -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/all-nodes/nimbus/cluster/count --all
+analyze -S runtime -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/all-nodes/nimbus/cluster/runtime --all
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename hotel
 set platform nimbus
-analyze -S count
-sys_report -o 2012-Q1/hotel/nimbus/count --all
-analyze -S runtime
-sys_report -o 2012-Q1/hotel/nimbus/runtime --all
+analyze -S count -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/hotel/nimbus/cluster/count --all
+analyze -S runtime -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/hotel/nimbus/cluster/runtime --all
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename alamo
 set platform nimbus
-analyze -S count
-sys_report -o 2012-Q1/alamo/nimbus/count --all
-analyze -S runtime
-sys_report -o 2012-Q1/alamo/nimbus/runtime --all
+analyze -S count -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/alamo/nimbus/cluster/count --all
+analyze -S runtime -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/alamo/nimbus/cluster/runtime --all
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename foxtrot
 set platform nimbus
-analyze -S count
-sys_report -o 2012-Q1/foxtrot/nimbus/count --all
-analyze -S runtime
-sys_report -o 2012-Q1/foxtrot/nimbus/runtime --all
+analyze -S count -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/foxtrot/nimbus/cluster/count --all
+analyze -S runtime -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/foxtrot/nimbus/cluster/runtime --all
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename sierra
 set platform nimbus
-analyze -S count
-sys_report -o 2012-Q1/sierra/nimbus/count --all
-analyze -S runtime
-sys_report -o 2012-Q1/sierra/nimbus/runtime --all
+analyze -S count -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/sierra/nimbus/cluster/count --all
+analyze -S runtime -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/sierra/nimbus/cluster/runtime --all
+
+clear all
+set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
+set nodename india
+set platform openstack
+analyze -S count -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/india/openstack/cluster/count --all
+analyze -S runtime -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/india/openstack/cluster/runtime --all
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename india
 set platform eucalyptus
-analyze -S count_node
-sys_report -o 2012-Q1/india/eucalyptus/count_node
+analyze -S count_node -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/india/eucalyptus/cluster/count_node
 
 clear all
 set search_range 2012-00-01T00:00:00 2012-03-31T23:59:59
 set nodename sierra
 set platform eucalyptus
-analyze -S count_node
-sys_report -o 2012-Q1/sierra/eucalyptus/count_node
+analyze -S count_node -f 2012-00-01T00:00:00 -t 2012-03-31T23:59:59
+sys_report -o 2012-Q1/sierra/eucalyptus/cluster/count_node

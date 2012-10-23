@@ -954,7 +954,7 @@ class Results:
                 ".. raw:: html" + self.newline + \
                 "" + self.newline + \
                 self.indent + "<div style=\"margin-top:10px;\">" + self.newline + \
-                self.indent + "<iframe width=\"%(width)s\" height=\"%(height)s\" src=\"%(src)s\" frameborder=\"0\"></iframe>" + self.newline + \
+                self.indent + "<iframe id=\"the_iframe%(number)s\" onLoad=\"calcHeight('the_iframe%(number)s');\" width=\"%(width)s\" height=\"%(height)s\" src=\"%(src)s\" frameborder=\"0\"></iframe>" + self.newline + \
                 self.indent + "</div>" + self.newline + \
                 self.indent + "%(title)s" + self.newline
                 

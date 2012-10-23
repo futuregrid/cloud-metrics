@@ -143,7 +143,7 @@ class Results:
         end_date = str(self.end_date)
         current_month = self.start_date.timetuple()[1]
         quarter = self.get_quarter(current_month)
-        title_of_period = self.get_first_date_of_quarter(self.start_date, quarter).strftime("%B %d, %Y") + " between " + self.get_last_date_of_quarter(self.start_date, quarter).strftime("%B %d, %Y")
+        title_of_period = self.get_first_date_of_quarter(self.start_date, quarter).strftime("%B %d, %Y") + " to " + self.get_last_date_of_quarter(self.start_date, quarter).strftime("%B %d, %Y")
         month_n_year2 = "Q" + str(self.get_quarter(current_month))
         month_n_year = "Q" + str(quarter) + self.start_date.strftime(" %Y")
         month = self.start_date.strftime("%Y-") + month_n_year2

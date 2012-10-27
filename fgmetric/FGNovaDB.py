@@ -46,6 +46,12 @@ class FGNovaDB(object):
         except:
             pass
 
+    def count(self):
+        rquery = "select count(*) from " + self.instances_table
+        self.cursor.execute(rquery)
+        rows = self.cursor.fetchall()
+        return rows
+
     # read from the database.
     def _read(self, mysql_cursor, tablename, querydict, optional=""):
         

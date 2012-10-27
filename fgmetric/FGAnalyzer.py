@@ -730,7 +730,19 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.users[uname]['fullname'] = fullname
 
     def realtime(self, cmd, param):
+        if cmd == "user":
+            self.realtime_user(param)
+        elif cmd == "total":
+            self.realtime_all(param)
 
+    def realtime_all(self, param):
+        euca_nimbus = Instances()
+        res1 = euca_nimbus.eucadb.count()
+        nova = FGNovaMetric()
+        res2 = nova.novadb.count()
+        print FGUtility.convertOutput(str(res1[0].values()[0]+res2[0].values()[0]), "total")
+        
+    def realtime_user(self, param):
         users = {}
         metric = param[0]
         # Temporary for test
@@ -1337,7 +1349,7 @@ def main():
 
     parser = optparse.OptionParser()
     parser.add_option('-t', '--test', dest='unittests', action='store_true', default=False, help='Run unit test suite')
-    parser.add_option('-np', '--nopreload', dest='nopreload', action='store_true', default=False, help='Run without pre-loading db')
+    parser.add_option('-n', '--nopreload', dest='nopreload', action='store_true', default=False, help='Run without pre-loading db')
     (callopts, callargs) = parser.parse_args()
     if callopts.unittests:
         sys.argv = [sys.argv[0]]  # the --test argument upsets unittest.main()
@@ -1345,6 +1357,7 @@ def main():
     else:
         app = CmdLineAnalyzeEucaData()
         app.nopreload = callopts.nopreload
+        sys.argv = [sys.argv[0]]  # the --test argument upsets unittest.main()
         app.cmdloop()
 
 if __name__ == "__main__":

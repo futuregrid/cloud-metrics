@@ -144,6 +144,12 @@ class FGEucaMetricsDB(object):
         else:
             return entry[key]
 
+    def count(self):
+        rquery = "select count(*) from " + self.instance_table
+        self.cursor.execute(rquery)
+        rows=self.cursor.fetchall()
+        return rows
+
     def read(self, querydict={}, optional=""):
         ''' read from the database '''
         

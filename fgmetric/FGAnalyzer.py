@@ -68,6 +68,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     output_format = None
 
     groupby = None
+    nopreload = False
 
     def calculate_stats (self, from_date="all", to_date="all"):
         """Calculate user-based statstics about VM instances per user: count, min time, max time, avg time, total time
@@ -760,8 +761,9 @@ class CmdLineAnalyzeEucaData(Cmd):
             print FGUtility.convertOutput(output, "realtime")
 
     def preloop(self):
-        self.do_loaddb("")
-        self.do_loadnovadb("")
+        if not self.nopreload:
+            self.do_loaddb("")
+            self.do_loadnovadb("")
 
         # Initialize values
         self.sys_stat_new = {'total' : ""}
@@ -1335,12 +1337,14 @@ def main():
 
     parser = optparse.OptionParser()
     parser.add_option('-t', '--test', dest='unittests', action='store_true', default=False, help='Run unit test suite')
+    parser.add_option('-np', '--nopreload', dest='nopreload', action='store_true', default=False, help='Run without pre-loading db')
     (callopts, callargs) = parser.parse_args()
     if callopts.unittests:
         sys.argv = [sys.argv[0]]  # the --test argument upsets unittest.main()
         unittest.main()
     else:
         app = CmdLineAnalyzeEucaData()
+        app.nopreload = callopts.nopreload
         app.cmdloop()
 
 if __name__ == "__main__":

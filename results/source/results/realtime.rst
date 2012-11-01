@@ -8,7 +8,7 @@ Total number of VM instances created on FutureGrid (New)
 
 	<div style="margin-top:10px;">
 	Total <iframe width="200" height="60" src="/metrics/vmcounter/a.php" frameborder="0"></iframe> instances launched
-	</div>
+	</div><br>
         * India, Sierra, Alamo, Foxtrot, and Hotel are included<br>
         * Eucalyptus, OpenStack, and Nimbus are included<br>
         * 2011/11/01 is the first date of counting VMs from Eucalyptus<br>

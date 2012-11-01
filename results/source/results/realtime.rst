@@ -7,7 +7,7 @@ Total number of VM instances created on FutureGrid (New)
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe width="400" height="220" src="/metrics/vmcounter/a.php" frameborder="0"></iframe>
+	Total <iframe width="200" height="60" src="/metrics/vmcounter/a.php" frameborder="0"></iframe> instances launched
 	</div>
 	Figure 1. Total count of launched VMs on FutureGrid<br><br>
         * India, Sierra, Alamo, Foxtrot, and Hotel are included<br>

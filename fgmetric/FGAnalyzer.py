@@ -752,7 +752,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         for i in range(0, int(self.instances.count())):
             values = self.instances.getdata(i)
             # TEMPORARY
-            if values["date"] < datetime(2012, 7, 27):
+            if values["date"] < datetime(2012, 10, 27):
                 continue
             if values["state"] != "Extant":
                 continue

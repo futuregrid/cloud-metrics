@@ -25,8 +25,8 @@ Total count of running VM instances (updated every 5 seconds)
 	</div>
 	Figure 1. Total count of running VMs on India and Sierra for Eucalyptus and OpenStack
 
-Grouped by a user on India (top 5 users)
-----------------------------------------
+Grouped by a user on India (top 5 users) (Temporarily unavailable)
+------------------------------------------------------------------
 
 .. raw:: html
 
@@ -35,8 +35,8 @@ Grouped by a user on India (top 5 users)
 	</div>
 	Figure 2. Total count of running VMs per user on India for Eucalyptus
 
-Grouped by a user on Sierra (top 5 users)
------------------------------------------
+Grouped by a user on Sierra (top 5 users) (Temporarily unavailable)
+--------------------------------------------------------------------
 
 .. raw:: html
 

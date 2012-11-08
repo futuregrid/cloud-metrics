@@ -1,7 +1,7 @@
 Real time data
 =======================================
 
-Total number of VM instances created on FutureGrid (New)
+Total count of VM instances created on FutureGrid (New)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
@@ -25,7 +25,7 @@ Total count of running VM instances (updated every 5 seconds)
 	</div>
 	Figure 1. Total count of running VMs on India and Sierra for Eucalyptus and OpenStack
 
-Grouped by a user on India (top 5 users) (Temporarily unavailable)
+List of user(s) using VM instances on India
 ------------------------------------------------------------------
 
 .. raw:: html
@@ -35,7 +35,7 @@ Grouped by a user on India (top 5 users) (Temporarily unavailable)
 	</div>
 	Figure 2. Total count of running VMs per user on India for Eucalyptus
 
-Grouped by a user on Sierra (top 5 users) (Temporarily unavailable)
+List of user(s) using VM instances on Sierra
 --------------------------------------------------------------------
 
 .. raw:: html
@@ -45,5 +45,5 @@ Grouped by a user on Sierra (top 5 users) (Temporarily unavailable)
 	</div>
 	Figure 3. Total count of running VMs per user on Sierra for Eucalyptus
 
-Grouped by a user on India for Openstack (TBD)
-----------------------------------------------
+List of user(s) using VM insances on India for Openstack (TBD)
+---------------------------------------------------------------

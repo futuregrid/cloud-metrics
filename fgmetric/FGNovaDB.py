@@ -72,7 +72,7 @@ class FGNovaDB(object):
            
         try:
             mysql_cursor.execute(rquery)
-        except MYSQLdb.Error:
+        except MySQLdb.Error:
             pass
 
         rows = mysql_cursor.fetchall()

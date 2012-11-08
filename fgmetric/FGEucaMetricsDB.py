@@ -210,7 +210,7 @@ class FGEucaMetricsDB(object):
            
         try:
             self.cursor.execute(rquery)
-        except MYSQLdb.Error:
+        except MySQLdb.Error:
             pass
 
         rows = self.cursor.fetchall()

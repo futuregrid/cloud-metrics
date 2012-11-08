@@ -145,6 +145,117 @@ import shutil
 from datetime import datetime
 import fnmatch
 import argparse
+from fgmetric.FGUtility import FGUtility
+
+class FGCollectFiles:
+    def_input_dir = "/var/log/eucalyptus/"
+    def_output_dir = "/volumes/log/backup/eucalyptus/"
+    filename = "cc.log"
+    def_file_type = "cc.log.*"
+
+    input_dir = None
+    output_dir = None
+    file_type = None
+    recursive = None
+
+    def set_argparse(self):
+        parser = argparse.ArgumentParser(description="Collect files serialized by the last timestamp without having duplication. file name will be changed to date")
+        parser.add_argument("-i", "--source", dest="input_dir", default=self.def_input_dir,
+            help="access the directory to read files (default: " + self.def_input_dir + ")")
+        parser.add_argument("-o", "--backup", dest="output_dir", default=self.def_output_dir,
+            help="save the output files in this directory (default: " + self.def_output_dir + ")")
+        parser.add_argument("-r", "--recursive", action="store_true", dest="recursive", default=False,
+            help="search directories and their contents recursively")
+        parser.add_argument("-t", "--log-type", dest="file_type", default=self.def_file_type,
+            help="specify a log type to be gathered (default: %s)" % self.def_file_type)
+        args = parser.parse_args()
+
+        self.input_dir = args.input_dir
+        self.output_dir = args.output_dir
+        self.file_type = args.file_type
+        self.recursive = args.recursive
+
+    def collect_files(self):
+        """
+        this function gathers all eucalyptus log files that are located in
+        all subdirectories starting from "from_path" and copies them into
+        the specified backup directory. In addition all log file will be
+        renamed based on the timestap in the last line of the log
+        file. The fileame is date-time.cc.log where all items are
+        separated with a "-". E.g. YYYY-MM-DD-HH-mm-ss-cc.log. If a
+        logfile already exists with that name it will not be overwritten
+        and the next file in the subdirectory will be attempted to be
+        copied to backup.
+        """
+        if not FGUtility.ensure_dir(self.output_dir):
+            print "to_path '" + self.output_dir + "' doesn't exist"
+            return
+
+        if not os.path.exists (self.input_dir):
+            print "from_path '" + self.input_dir + "' doesn't exist"
+            return
+
+        for file in self.file_list():
+            path = os.path.dirname(file)
+            name = os.path.basename(file)
+            new_name = os.path.basename(self.get_filename_from_date(path, name))
+            new_location = os.path.join(self.output_dir,new_name)
+            if not os.path.exists(new_location):
+                print new_name
+                shutil.copy2 (file, new_location)
+            else:
+                print new_name + ", WARNING: file exists, copy ignored"
+        return
+
+    def file_list(self):
+        """
+        returns a list of all eucalyptus logfiles that are located in all
+        subdirectories starting from "path".
+        """
+        all_files = []
+        for dirname, dirnames, filenames in os.walk(self.input_dir):
+            for filename in filenames:
+                if fnmatch.fnmatch(filename, self.file_type):
+                    all_files.append(os.path.join(dirname, filename))
+            if not self.recursive: # if recursive is false, this iteration works like os.listdir()
+                              # Return filenames in the directory given by path except sub directories
+                break
+        return all_files
+
+    def get_filename_from_date(self, path, name):
+        """
+        Given the location of a file as "path/name", a new
+        name is generated and returned based on the time stamp in the last
+        line of the file. The name will be date-time.[origin_name] where all
+        items are separated with "-". The file will not be renamed with
+        that function.
+        """
+        old_name = os.path.join(path, name)
+        FILE = open(old_name, "r", 0) 
+        line = tail(FILE,1)
+        date_object = self.get_date_from_euca(line)
+        new_name = self.generate_filename(date_object, '-'+self.filename)
+        new_name = os.path.join(path,new_name)
+        return new_name
+
+    def get_date_from_euca(self, line):
+        """
+        Eucalyptus log files have a time stamp at the beginning of the
+        file. This function returns the date from that line as a datetime
+        object.
+        return - datetime object of the timestamp in the line
+        """
+        tmp = re.split ('\]', line.pop())
+        return datetime.strptime(tmp[0][1:], '%a %b %d %H:%M:%S %Y')
+
+    def generate_filename(self, date_object, postfix):
+        """
+        This function is an internal helper function that converts a date
+        object to a string in which all : and " " are replaced with "-"
+        """
+        name = str(date_object).replace(" ","-").replace(":","-")
+        return name + postfix 
+
 
 def tail(f, window=20):
     """
@@ -187,24 +298,6 @@ def head(file, n=1):
     file.seek(0)                            #Rewind file
     return [file.next() for x in xrange(n)]
 
-def getdate_from_euca_log_line(line):
-    """
-    Eucalyptus log files have a time stamp at the beginning of the
-    file. This function returns the date from that line as a datetime
-    object.
-    return - datetime object of the timestamp in the line
-    """
-    tmp = re.split ('\]', line.pop())
-    return datetime.strptime(tmp[0][1:], '%a %b %d %H:%M:%S %Y')
-
-def generate_filename (date_object, postfix):
-    """
-    This function is an internal helper function that converts a date
-    object to a string in which all : and " " are replaced with "-"
-    """
-    name = str(date_object).replace(" ","-").replace(":","-")
-    return name + postfix 
-
 def rename_euca_log_file (path,name):
     """
     This function renames a given eucalyptus file located in
@@ -222,22 +315,6 @@ def rename_euca_log_file (path,name):
         os.remove(old_name)
     return
 
-def generate_euca_log_filename (path, name, suffix):
-    """
-    Given the location of a eucalyptus log file as "path/name", a new
-    name is generated and returned based on the time stamp in the last
-    line of the logfile. The name will be date-time.cc.log where all
-    items are separated with "-". The file will not be renamed with
-    that function.
-    """
-    old_name = os.path.join(path,name)
-    FILE = open(old_name, "r", 0) 
-    line = tail(FILE,1)
-    date_object = getdate_from_euca_log_line(line)
-    new_name = generate_filename (date_object,'-'+suffix)
-    new_name = os.path.join(path,new_name)
-    return new_name
-
 def ls(path):
     """
     simply does a unix ls on the path. It is used for debugging.
@@ -245,59 +322,6 @@ def ls(path):
     print "----"
     os.system ("ls " + path)
     print "----"
-
-def all_euca_log_files (path, name, recursive):
-    """
-    returns a list of all eucalyptus logfiles that are located in all
-    subdirectories starting from "path".
-    """
-    all_files = []
-    for dirname, dirnames, filenames in os.walk(path):
-        for filename in filenames:
-            if fnmatch.fnmatch(filename, '*' + name + '.*'):
-                all_files.append(os.path.join(dirname, filename))
-	if not recursive: # if recursive is false, this iteration works like os.listdir()
-			  # Return filenames in the directory given by path except sub directories
-		break
-    return all_files
-
-def gather_all_euca_log_files (from_path, to_path, log_type, recursive):
-    """
-    this function gathers all eucalyptus log files that are located in
-    all subdirectories starting from "from_path" and copies them into
-    the specified backup directory. In addition all log file will be
-    renamed based on the timestap in the last line of the log
-    file. The fileame is date-time.cc.log where all items are
-    separated with a "-". E.g. YYYY-MM-DD-HH-mm-ss-cc.log. If a
-    logfile already exists with that name it will not be overwritten
-    and the next file in the subdirectory will be attempted to be
-    copied to backup.
-    """
-    if not os.path.exists (to_path):
-        try:
-            os.makedirs (to_path)
-        except OSError, e:
-            if e.errno != errno.EEXIST:
-                print e
-                print "to_path '" + to_path + "' is not accessible"
-                return
-
-    if not os.path.exists (from_path):
-        print "from_path '" + from_path + "' doesn't exist"
-	return;
-
-    print from_path
-    for file in all_euca_log_files(from_path, log_type, recursive):
-        path = os.path.dirname(file)
-        name = os.path.basename(file)
-        new_name = os.path.basename(generate_euca_log_filename (path, name, log_type))
-        new_location = os.path.join(to_path,new_name)
-        if not os.path.exists(new_location):
-            print new_name
-            shutil.copy2 (file, new_location)
-        else:
-            print new_name + ", WARNING: file exists, copy ignored"
-    return
 
 def works():
   ''' code for testing that works '''
@@ -319,27 +343,9 @@ def works():
 
 def main():
 
-   def_input_dir = "/tmp/uncompressed-euca-logbackup/"
-   def_output_dir = "/var/log/eucalyptus/BACKUP"
-   def_log_type = "cc.log"
-
-   # Parse arguments
-   # ---------------
-   parser = argparse.ArgumentParser()
-   parser.add_argument("-i", "--source", dest="input_dir", default=def_input_dir,
-		   help="specify the source directory of eucalyptus logs (default: /var/log/eucalyptus)")
-   parser.add_argument("-o", "--backup", dest="output_dir", default=def_output_dir,
-		   help="specify the backup directory (renamed log files will be saved here)")
-   parser.add_argument("-r", "--recursive", action="store_true", dest="recursive", default=False,
-		   help="search directories and their contents recursively")
-   parser.add_argument("-t", "--log-type", dest="log_type", default=def_log_type,
-		   help="specify a log type to be gathered (default: cc.log)")
-   args = parser.parse_args()
-   #print args.input_dir, args.output_dir, args.recursive
-
-   gather_all_euca_log_files (args.input_dir, args.output_dir, args.log_type, args.recursive)
-
-   return
+    obj = FGCollectFiles()
+    obj.set_argparse()
+    obj.collect_files()
 
 if __name__ == "__main__":
-	main()
+    main()

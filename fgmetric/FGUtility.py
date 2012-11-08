@@ -14,9 +14,18 @@ class FGUtility:
     @staticmethod
     def ensure_dir(f):
         d = os.path.dirname(f)
-        if d:
-            if not os.path.exists(d):
+        if not d:
+            return False
+        if not os.path.exists(d):
+            try:
                 os.makedirs(d)
+                return True
+            except OSError, e:
+                if e.errno != errno.EEXIST:
+                    print e
+                    print "to_path '" + to_path + "' is not accessible"
+                    return False
+        return True
 
     @staticmethod
     def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):

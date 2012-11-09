@@ -146,6 +146,10 @@ from datetime import datetime
 import fnmatch
 import argparse
 from fgmetric.FGUtility import FGUtility
+from pprint import pprint
+import gzip
+import sys
+import zlib 
 
 class FGCollectFiles:
     def_input_dir = "/var/log/eucalyptus/"
@@ -157,6 +161,7 @@ class FGCollectFiles:
     output_dir = None
     file_type = None
     recursive = None
+    gzipped = None
 
     def set_argparse(self):
         parser = argparse.ArgumentParser(description="Collect files serialized by the last timestamp without having duplication. file name will be changed to date")
@@ -168,12 +173,20 @@ class FGCollectFiles:
             help="search directories and their contents recursively")
         parser.add_argument("-t", "--log-type", dest="file_type", default=self.def_file_type,
             help="specify a log type to be gathered (default: %s)" % self.def_file_type)
+        parser.add_argument("-z", "--gzip", action="store_true", default=False,
+                        help="gzip compressed files will be loaded")
         args = parser.parse_args()
 
         self.input_dir = args.input_dir
         self.output_dir = args.output_dir
         self.file_type = args.file_type
         self.recursive = args.recursive
+        self.gzipped = args.gzip
+
+    def display_settings(self):
+        print "settings...=============================="
+        pprint(vars(self), indent=2)
+        print "=========================================\n"
 
     def collect_files(self):
         """
@@ -187,7 +200,7 @@ class FGCollectFiles:
         and the next file in the subdirectory will be attempted to be
         copied to backup.
         """
-        if not FGUtility.ensure_dir(self.output_dir):
+        if not FGUtility.ensure_dir(self.output_dir+"/"):
             print "to_path '" + self.output_dir + "' doesn't exist"
             return
 
@@ -231,12 +244,45 @@ class FGCollectFiles:
         that function.
         """
         old_name = os.path.join(path, name)
-        FILE = open(old_name, "r", 0) 
-        line = tail(FILE,1)
+        filename = self.filename
+        if self.gzipped:
+            line = self.tail_gzipped(old_name)
+            filename += ".gz"
+        else:
+            FILE = open(old_name, "r", 0) 
+            line = tail(FILE,1)
         date_object = self.get_date_from_euca(line)
-        new_name = self.generate_filename(date_object, '-'+self.filename)
+        new_name = self.generate_filename(date_object, '-'+filename)
         new_name = os.path.join(path,new_name)
         return new_name
+
+    def tail_gzipped(self, filename):
+        CHUNK_SIZE = 1024*1024 
+        MAX_LINE = 1024
+
+        decompress = zlib.decompressobj(-zlib.MAX_WBITS) 
+
+        in_file = gzip.open(filename,'r') 
+        in_file._read_gzip_header() 
+
+        chunk = prior_chunk = '' 
+        while 1: 
+            buf = in_file.fileobj.read(CHUNK_SIZE) 
+            if not buf: 
+                break 
+            d_buf = decompress.decompress(buf) 
+            # We might not have been at EOF in the read() but still have no 
+            # decompressed data if the only remaining data was not original data 
+            if d_buf: 
+                prior_chunk = chunk 
+                chunk = d_buf 
+
+        if len(chunk) < MAX_LINE: 
+            chunk = prior_chunk + chunk 
+
+        line = chunk[-MAX_LINE:].splitlines(True)[-1] 
+        in_file.close()
+        return line 
 
     def get_date_from_euca(self, line):
         """
@@ -245,7 +291,11 @@ class FGCollectFiles:
         object.
         return - datetime object of the timestamp in the line
         """
-        tmp = re.split ('\]', line.pop())
+        if isinstance(line, list):
+            msg = line.pop()
+        else:
+            msg = line
+        tmp = re.split ('\]', msg) 
         return datetime.strptime(tmp[0][1:], '%a %b %d %H:%M:%S %Y')
 
     def generate_filename(self, date_object, postfix):
@@ -345,6 +395,7 @@ def main():
 
     obj = FGCollectFiles()
     obj.set_argparse()
+    obj.display_settings()
     obj.collect_files()
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@ import os, sys, re
 import subprocess
 import datetime
 from fgmetric.FGInstances import FGInstances # for insert_userinfo
+import errno
 
 class FGUtility:
 
@@ -20,10 +21,10 @@ class FGUtility:
             try:
                 os.makedirs(d)
                 return True
-            except OSError, e:
+            except OSError as e:
                 if e.errno != errno.EEXIST:
                     print e
-                    print "to_path '" + to_path + "' is not accessible"
+                    print "path '" + d + "' is not accessible"
                     return False
         return True
 

@@ -10,7 +10,7 @@ import sys, os
 
 #execfile ('VERSION.py')
 # hack as VERSION does not get included in packaged tar file for some reason
-version = '3.1.0'
+version = '3.1.1'
 
 classifiers = """\
 Intended Audience :: Developers

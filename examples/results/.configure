@@ -1,0 +1,6 @@
+[FGReports]
+start_date=2011-11-01T00:00:00
+end_date=
+hostname=india,sierra,hotel,foxtrot,alamo
+platform=openstack,nimbus,eucalyptus
+period=weekly,monthly,quarterly

@@ -9,14 +9,14 @@ Results on india.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="800" height="420" src="data/all/india/eucalyptus/count/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 1. Total count of VMs launched on india (11/01/2011 - 06/30/2012)
+	Figure 1. Total count of VMs launched on india (from 11/01/2011)
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="800" height="420" src="data/all/india/eucalyptus/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 2. Total runtime (hour) of VMs launched on india (11/01/2011 - 06/30/2012)
+	Figure 2. Total runtime (hour) of VMs launched on india (from 11/01/2011)
 
 Results on sierra.futuregrid.org
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -26,11 +26,11 @@ Results on sierra.futuregrid.org
 	<div style="margin-top:10px;">
 	<iframe width="800" height="420" src="data/all/sierra/eucalyptus/count/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 3. Total count of VMs launched on sierra (05/01/2012 - 06/30/2012) 
+	Figure 3. Total count of VMs launched on sierra (from 05/01/2012)
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
 	<iframe width="800" height="420" src="data/all/sierra/eucalyptus/runtime/master-detailhighcharts.html" frameborder="0"></iframe>
 	</div>
-	Figure 4. Total runtime (hour) of VMs launched on sierra (05/01/2012 - 06/30/2012)
+	Figure 4. Total runtime (hour) of VMs launched on sierra (from 05/01/2012)

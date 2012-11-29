@@ -121,6 +121,8 @@ class FGExampleGenerator:
     def get_output_path(self, period, s_date):
         if period == "quarterly":
             return str(s_date.year) + "-Q" + str((s_date.month - 1) // 3 + 1)
+        elif period == "weekly":
+            return str(s_date.year) + "-" + str(s_date.month).zfill(2) + "-" + str(s_date.day).zfill(2)
         elif period == "all":
             return "all";
         else:

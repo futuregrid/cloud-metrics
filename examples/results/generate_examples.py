@@ -87,6 +87,8 @@ class FGExampleGenerator:
             return self.get_firstday_of_nextquarter(s_date)
         elif period == "daily":
             return timedelta(days=1).replace(hour=0,minute=0,second=0)
+        elif period == "all":
+            return self.end_date
 
     def get_firstday_of_nextquarter(self, s_date):
         current_q = (s_date.month - 1) // 3 + 1
@@ -119,8 +121,11 @@ class FGExampleGenerator:
     def get_output_path(self, period, s_date):
         if period == "quarterly":
             return str(s_date.year) + "-Q" + str((s_date.month - 1) // 3 + 1)
+        elif period == "all":
+            return "all";
         else:
             return str(s_date.year) + "-" + str(s_date.month).zfill(2)
+
     def write_file(self, hostname, platform, period, metric, replaced_txt):
         filename = self.output_path + str(metric) + "_" + str(hostname) + "_" + str(platform) + "_" + str(period) + ".txt"
         f = open(filename, "w")

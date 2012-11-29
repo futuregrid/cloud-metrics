@@ -3,8 +3,8 @@ set nodename %(hostname)s
 set platform %(platform)s
 analyze -S %(metric)s
 set search_range %(start_date)s %(end_date)s
-sysreport -o %(year)s-%(month)s/%(hostname)s/%(platform)s/%(metric)s/ -all
+sysreport -o %(path)s/%(hostname)s/%(platform)s/%(metric)s/ -all
 analyze -S ccvm_mem
-sysreport -o %(year)s-%(month)s/%(hostname)s/%(platform)s/ccvm_mem/ -all
+sysreport -o %(path)s/%(hostname)s/%(platform)s/ccvm_mem/ -all
 analyze -S ccvm_disk
-sysreport -o %(year)s-%(month)s/%(hostname)s/%(platform)s/ccvm_disk/ -all
+sysreport -o %(path)s/%(hostname)s/%(platform)s/ccvm_disk/ -all

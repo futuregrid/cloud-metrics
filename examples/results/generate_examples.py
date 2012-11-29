@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import ConfigParser
 from pprint import pprint
+import calendar
 
 class FGExampleGenerator:
 
@@ -65,37 +66,61 @@ class FGExampleGenerator:
             for hostname in self.hostnames:
                 for platform in self.platforms:
                     for period in self.periods:
-                        single_date = self.start_date
-                        while (single_date < self.end_date):
-                            accumulated += self.get_text(hostname, platform, period, metric, single_date)
-                            single_date += self.get_timegap(period)
+                        s_date = self.start_date
+                        while (s_date < self.end_date):
+                            e_date = self.get_nextdate(s_date, period)
+                            accumulated += self.get_text(hostname, platform, period, metric, s_date, e_date)
+                            s_date = e_date
                         self.write_file(hostname, platform, period, metric, accumulated)
                         accumulated = ""
 
-    def get_timegap(self, period):
+    def get_nextdate(self, s_date, period):
         if period == "weekly":
-            return timedelta(weeks=1)
+            return (s_date + timedelta(weeks=1)).replace(hour=0,minute=0,second=0)
         elif period == "monthly":
-            return timedelta(days=31)
+            try:
+                day = calendar.monthrange(s_date.year, s_date.month)[1] - s_date.day + 1
+            except:
+                day = 31
+            return (s_date + timedelta(days=day)).replace(hour=0,minute=0,second=0)
         elif period == "quarterly":
-            return timedelta(days=91)
+            return self.get_firstday_of_nextquarter(s_date)
         elif period == "daily":
-            return timedelta(days=1)
+            return timedelta(days=1).replace(hour=0,minute=0,second=0)
 
-    def get_text(self, hostname, platform, period, metric, s_date):
+    def get_firstday_of_nextquarter(self, s_date):
+        current_q = (s_date.month - 1) // 3 + 1
+        year = s_date.year
+        if current_q == 1:
+            month = 4
+        elif current_q == 2:
+            month = 7
+        elif current_q == 3:
+            month = 10
+        elif current_q == 4:
+            month = 1
+            year = s_date.year + 1
+        return s_date.replace(year=year, month=month, day=1,hour=0,minute=0,second=0)
+
+    def get_text(self, hostname, platform, period, metric, s_date, e_date):
         local = { "metric":metric,
                 "hostname":hostname,
                 "platform":platform,
                 "period":period,
                 "year":s_date.year,
                 "month":str(s_date.month).zfill(2),
+                "start_date":s_date.strftime("%Y-%m-%dT%H:%M:%S"),
+                "end_date":e_date.strftime("%Y-%m-%dT%H:%M:%S"),
+                "path":self.get_output_path(period, s_date)
                 }
-        print vars()
         replaced_txt = self.template[metric] % vars()["local"]
-        print vars()["local"]
-        print replaced_txt
         return replaced_txt
 
+    def get_output_path(self, period, s_date):
+        if period == "quarterly":
+            return str(s_date.year) + "-Q" + str((s_date.month - 1) // 3 + 1)
+        else:
+            return str(s_date.year) + "-" + str(s_date.month).zfill(2)
     def write_file(self, hostname, platform, period, metric, replaced_txt):
         filename = self.output_path + str(metric) + "_" + str(hostname) + "_" + str(platform) + "_" + str(period) + ".txt"
         f = open(filename, "w")

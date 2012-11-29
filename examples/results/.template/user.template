@@ -2,4 +2,4 @@ clear users
 set nodename %(hostname)s
 set platform %(platform)s
 analyze -M %(month)s -Y %(year)s
-createreport -d %(year)s-%(month)s/%(hostname)s/%(platform)s/%(metric)s
+createreport -d %(path)s/%(hostname)s/%(platform)s/%(metric)s

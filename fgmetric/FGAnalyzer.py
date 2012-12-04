@@ -670,7 +670,10 @@ class CmdLineAnalyzeEucaData(Cmd):
                 try:
                     return element['first_name'] + " " + element['last_name']
                 except:
-                    return id
+                    try:
+                        return element['username']
+                    except:
+                        return id
 
         # Second try if it does not exist
         for element in self.instances.userinfo_data:
@@ -678,7 +681,10 @@ class CmdLineAnalyzeEucaData(Cmd):
                 try:
                     return element['first_name'] + " " + element['last_name']
                 except:
-                    return id
+                    try:
+                        return element['username']
+                    except:
+                        return id
 
         if id == "EJMBZFNPMDQ73AUDPOUS3":
             return "eucalyptus-admin"

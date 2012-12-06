@@ -33,7 +33,6 @@ List of user(s) using VM instances on India
         <div style="margin-top:10px;">
 	<iframe width="800" height="420" src="data/realtime/count_vms_users_india.html" frameborder="0"></iframe>
 	</div>
-	Figure 2. Total count of running VMs per user on India for Eucalyptus
 
 List of user(s) using VM instances on Sierra
 --------------------------------------------------------------------
@@ -43,7 +42,6 @@ List of user(s) using VM instances on Sierra
         <div style="margin-top:10px;">
 	<iframe width="800" height="420" src="data/realtime/count_vms_users_sierra.html" frameborder="0"></iframe>
 	</div>
-	Figure 3. Total count of running VMs per user on Sierra for Eucalyptus
 
 List of user(s) using VM insances on India for Openstack (TBD)
 ---------------------------------------------------------------

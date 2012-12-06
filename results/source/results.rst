@@ -14,7 +14,7 @@ Contents:
 	results/2012-10
 	results/2012-Q3
 
-`pdf <pdf/2012-Q3.pdf>`_
+`Q3 report pdf download <results/pdf/2012-Q3.pdf>`_
 
 .. toctree::
 	:maxdepth: 2

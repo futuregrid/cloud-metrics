@@ -13,6 +13,7 @@ Contents:
 	results/2012-11
 	results/2012-10
 	results/2012-Q3
+
 `pdf <pdf/2012-Q3.pdf>`_
 
 .. toctree::

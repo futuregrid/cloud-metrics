@@ -9,63 +9,63 @@ Results For Eucalyptus On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-10/india/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-10/india/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for October 2012 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-10/india/eucalyptus/user/FGGoogleMotionChart.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-10/india/eucalyptus/user/FGGoogleMotionChart.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 2. Total count of VMs submitted per user for October 2012 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-10/india/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-10/india/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total runtime (hour) of VMs submitted per user for October 2012 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-10/india/eucalyptus/count/master-detailhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-10/india/eucalyptus/count/master-detailhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total count of VMs submitted on india in October 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-10/india/eucalyptus/runtime/master-detailhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-10/india/eucalyptus/runtime/master-detailhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 5. Total runtime of VMs submitted on india in October 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-10/india/eucalyptus/ccvm_cores/master-detailhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-10/india/eucalyptus/ccvm_cores/master-detailhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total ccvm_cores of VMs submitted on india in October 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-10/india/eucalyptus/ccvm_mem/master-detailhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-10/india/eucalyptus/ccvm_mem/master-detailhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 7. Total ccvm_mem of VMs submitted on india in October 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-10/india/eucalyptus/ccvm_disk/master-detailhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-10/india/eucalyptus/ccvm_disk/master-detailhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 8. Total ccvm_disk of VMs submitted on india in October 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-10/india/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-10/india/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 9. Total VMs count per node cluster for October 2012 on india
 
@@ -75,14 +75,14 @@ Results For Openstack On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-10/india/openstack/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-10/india/openstack/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 10. Total count of VMs submitted per user for October 2012 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-10/india/openstack/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-10/india/openstack/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 11. Total runtime (hour) of VMs submitted per user for October 2012 on india
 
@@ -92,56 +92,56 @@ Results For Eucalyptus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 12. Total count of VMs submitted per user for October 2012 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 13. Total runtime (hour) of VMs submitted per user for October 2012 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/count/master-detailhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/count/master-detailhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 14. Total count of VMs submitted on sierra in October 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/runtime/master-detailhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/runtime/master-detailhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 15. Total runtime of VMs submitted on sierra in October 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/ccvm_cores/master-detailhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/ccvm_cores/master-detailhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 16. Total ccvm_cores of VMs submitted on sierra in October 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe17" onLoad="calcHeight('the_iframe17');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/ccvm_mem/master-detailhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe17" onLoad="calcHeight('the_iframe17');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/ccvm_mem/master-detailhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 17. Total ccvm_mem of VMs submitted on sierra in October 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe18" onLoad="calcHeight('the_iframe18');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/ccvm_disk/master-detailhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe18" onLoad="calcHeight('the_iframe18');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/ccvm_disk/master-detailhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 18. Total ccvm_disk of VMs submitted on sierra in October 2012
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe19" onLoad="calcHeight('the_iframe19');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe19" onLoad="calcHeight('the_iframe19');" width="100%" height="1" src="data/2012-10/sierra/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 19. Total VMs count per node cluster for October 2012 on sierra
 
@@ -151,14 +151,14 @@ Results For Nimbus On Hotel
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe20" onLoad="calcHeight('the_iframe20');" width="100%" height="1" src="data/2012-10/hotel/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe20" onLoad="calcHeight('the_iframe20');" width="100%" height="1" src="data/2012-10/hotel/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 20. Total count of VMs submitted per user for October 2012 on hotel
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe21" onLoad="calcHeight('the_iframe21');" width="100%" height="1" src="data/2012-10/hotel/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe21" onLoad="calcHeight('the_iframe21');" width="100%" height="1" src="data/2012-10/hotel/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 21. Total runtime (hour) of VMs submitted per user for October 2012 on hotel
 
@@ -168,14 +168,14 @@ Results For Nimbus On Alamo
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe22" onLoad="calcHeight('the_iframe22');" width="100%" height="1" src="data/2012-10/alamo/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe22" onLoad="calcHeight('the_iframe22');" width="100%" height="1" src="data/2012-10/alamo/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 22. Total count of VMs submitted per user for October 2012 on alamo
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe23" onLoad="calcHeight('the_iframe23');" width="100%" height="1" src="data/2012-10/alamo/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe23" onLoad="calcHeight('the_iframe23');" width="100%" height="1" src="data/2012-10/alamo/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 23. Total runtime (hour) of VMs submitted per user for October 2012 on alamo
 
@@ -185,14 +185,14 @@ Results For Nimbus On Foxtrot
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe24" onLoad="calcHeight('the_iframe24');" width="100%" height="1" src="data/2012-10/foxtrot/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe24" onLoad="calcHeight('the_iframe24');" width="100%" height="1" src="data/2012-10/foxtrot/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 24. Total count of VMs submitted per user for October 2012 on foxtrot
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe25" onLoad="calcHeight('the_iframe25');" width="100%" height="1" src="data/2012-10/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe25" onLoad="calcHeight('the_iframe25');" width="100%" height="1" src="data/2012-10/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 25. Total runtime (hour) of VMs submitted per user for October 2012 on foxtrot
 
@@ -202,14 +202,14 @@ Results For Nimbus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe26" onLoad="calcHeight('the_iframe26');" width="100%" height="1" src="data/2012-10/sierra/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe26" onLoad="calcHeight('the_iframe26');" width="100%" height="1" src="data/2012-10/sierra/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 26. Total count of VMs submitted per user for October 2012 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe27" onLoad="calcHeight('the_iframe27');" width="100%" height="1" src="data/2012-10/sierra/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe27" onLoad="calcHeight('the_iframe27');" width="100%" height="1" src="data/2012-10/sierra/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 27. Total runtime (hour) of VMs submitted per user for October 2012 on sierra
 
@@ -222,21 +222,21 @@ Results For Eucalyptus On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-10-08/india/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-10-08/india/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for 2012-10-02  ~ 2012-10-08 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-10-08/india/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-10-08/india/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-10-02  ~ 2012-10-08 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-10-08/india/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-10-08/india/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-10-02  ~ 2012-10-08 on india
 
@@ -246,14 +246,14 @@ Results For Openstack On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-10-08/india/openstack/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-10-08/india/openstack/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total count of VMs submitted per user for 2012-10-02 ~ 2012-10-08 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-10-08/india/openstack/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-10-08/india/openstack/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 5. Total runtime (hour) of VMs submitted per user for 2012-10-02 ~ 2012-10-08 on india
 
@@ -263,21 +263,21 @@ Results For Eucalyptus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-10-08/sierra/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-10-08/sierra/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total count of VMs submitted per user for 2012-10-02  ~ 2012-10-08 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-10-08/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-10-08/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 7. Total runtime hour of VMs submitted per user for 2012-10-02  ~ 2012-10-08 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-10-08/sierra/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-10-08/sierra/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 8. Total VMs count per node cluster for 2012-10-02  ~ 2012-10-08 on sierra
 
@@ -287,14 +287,14 @@ Results For Nimbus On Hotel
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-10-08/hotel/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-10-08/hotel/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 9. Total count of VMs submitted per user for 2012-10-02 ~ 2012-10-08 on hotel
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-10-08/hotel/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-10-08/hotel/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 10. Total runtime (hour) of VMs submitted per user for 2012-10-02 ~ 2012-10-08 on hotel
 
@@ -304,14 +304,14 @@ Results For Nimbus On Alamo
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-10-08/alamo/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-10-08/alamo/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 11. Total count of VMs submitted per user for 2012-10-02 ~ 2012-10-08 on alamo
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-10-08/alamo/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-10-08/alamo/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 12. Total runtime (hour) of VMs submitted per user for 2012-10-02 ~ 2012-10-08 on alamo
 
@@ -321,14 +321,14 @@ Results For Nimbus On Foxtrot
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-10-08/foxtrot/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-10-08/foxtrot/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 13. Total count of VMs submitted per user for 2012-10-02 ~ 2012-10-08 on foxtrot
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-10-08/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-10-08/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 14. Total runtime (hour) of VMs submitted per user for 2012-10-02 ~ 2012-10-08 on foxtrot
 
@@ -338,14 +338,14 @@ Results For Nimbus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-10-08/sierra/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-10-08/sierra/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 15. Total count of VMs submitted per user for 2012-10-02 ~ 2012-10-08 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-10-08/sierra/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-10-08/sierra/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 16. Total runtime (hour) of VMs submitted per user for 2012-10-02 ~ 2012-10-08 on sierra
 
@@ -358,21 +358,21 @@ Results For Eucalyptus On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-10-15/india/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-10-15/india/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for 2012-10-09  ~ 2012-10-15 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-10-15/india/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-10-15/india/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-10-09  ~ 2012-10-15 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-10-15/india/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-10-15/india/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-10-09  ~ 2012-10-15 on india
 
@@ -382,14 +382,14 @@ Results For Openstack On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-10-15/india/openstack/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-10-15/india/openstack/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total count of VMs submitted per user for 2012-10-09 ~ 2012-10-15 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-10-15/india/openstack/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-10-15/india/openstack/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 5. Total runtime (hour) of VMs submitted per user for 2012-10-09 ~ 2012-10-15 on india
 
@@ -399,21 +399,21 @@ Results For Eucalyptus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-10-15/sierra/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-10-15/sierra/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total count of VMs submitted per user for 2012-10-09  ~ 2012-10-15 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-10-15/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-10-15/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 7. Total runtime hour of VMs submitted per user for 2012-10-09  ~ 2012-10-15 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-10-15/sierra/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-10-15/sierra/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 8. Total VMs count per node cluster for 2012-10-09  ~ 2012-10-15 on sierra
 
@@ -423,14 +423,14 @@ Results For Nimbus On Hotel
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-10-15/hotel/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-10-15/hotel/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 9. Total count of VMs submitted per user for 2012-10-09 ~ 2012-10-15 on hotel
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-10-15/hotel/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-10-15/hotel/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 10. Total runtime (hour) of VMs submitted per user for 2012-10-09 ~ 2012-10-15 on hotel
 
@@ -440,14 +440,14 @@ Results For Nimbus On Alamo
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-10-15/alamo/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-10-15/alamo/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 11. Total count of VMs submitted per user for 2012-10-09 ~ 2012-10-15 on alamo
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-10-15/alamo/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-10-15/alamo/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 12. Total runtime (hour) of VMs submitted per user for 2012-10-09 ~ 2012-10-15 on alamo
 
@@ -457,14 +457,14 @@ Results For Nimbus On Foxtrot
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-10-15/foxtrot/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-10-15/foxtrot/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 13. Total count of VMs submitted per user for 2012-10-09 ~ 2012-10-15 on foxtrot
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-10-15/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-10-15/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 14. Total runtime (hour) of VMs submitted per user for 2012-10-09 ~ 2012-10-15 on foxtrot
 
@@ -474,14 +474,14 @@ Results For Nimbus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-10-15/sierra/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-10-15/sierra/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 15. Total count of VMs submitted per user for 2012-10-09 ~ 2012-10-15 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-10-15/sierra/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-10-15/sierra/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 16. Total runtime (hour) of VMs submitted per user for 2012-10-09 ~ 2012-10-15 on sierra
 
@@ -494,21 +494,21 @@ Results For Eucalyptus On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-10-22/india/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-10-22/india/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for 2012-10-16  ~ 2012-10-22 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-10-22/india/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-10-22/india/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-10-16  ~ 2012-10-22 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-10-22/india/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-10-22/india/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-10-16  ~ 2012-10-22 on india
 
@@ -518,14 +518,14 @@ Results For Openstack On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-10-22/india/openstack/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-10-22/india/openstack/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total count of VMs submitted per user for 2012-10-16 ~ 2012-10-22 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-10-22/india/openstack/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-10-22/india/openstack/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 5. Total runtime (hour) of VMs submitted per user for 2012-10-16 ~ 2012-10-22 on india
 
@@ -535,21 +535,21 @@ Results For Eucalyptus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-10-22/sierra/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-10-22/sierra/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total count of VMs submitted per user for 2012-10-16  ~ 2012-10-22 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-10-22/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-10-22/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 7. Total runtime hour of VMs submitted per user for 2012-10-16  ~ 2012-10-22 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-10-22/sierra/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-10-22/sierra/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 8. Total VMs count per node cluster for 2012-10-16  ~ 2012-10-22 on sierra
 
@@ -559,14 +559,14 @@ Results For Nimbus On Hotel
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-10-22/hotel/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-10-22/hotel/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 9. Total count of VMs submitted per user for 2012-10-16 ~ 2012-10-22 on hotel
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-10-22/hotel/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-10-22/hotel/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 10. Total runtime (hour) of VMs submitted per user for 2012-10-16 ~ 2012-10-22 on hotel
 
@@ -576,14 +576,14 @@ Results For Nimbus On Alamo
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-10-22/alamo/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-10-22/alamo/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 11. Total count of VMs submitted per user for 2012-10-16 ~ 2012-10-22 on alamo
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-10-22/alamo/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-10-22/alamo/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 12. Total runtime (hour) of VMs submitted per user for 2012-10-16 ~ 2012-10-22 on alamo
 
@@ -593,14 +593,14 @@ Results For Nimbus On Foxtrot
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-10-22/foxtrot/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-10-22/foxtrot/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 13. Total count of VMs submitted per user for 2012-10-16 ~ 2012-10-22 on foxtrot
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-10-22/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-10-22/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 14. Total runtime (hour) of VMs submitted per user for 2012-10-16 ~ 2012-10-22 on foxtrot
 
@@ -610,14 +610,14 @@ Results For Nimbus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-10-22/sierra/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-10-22/sierra/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 15. Total count of VMs submitted per user for 2012-10-16 ~ 2012-10-22 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-10-22/sierra/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-10-22/sierra/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 16. Total runtime (hour) of VMs submitted per user for 2012-10-16 ~ 2012-10-22 on sierra
 
@@ -630,21 +630,21 @@ Results For Eucalyptus On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-10-29/india/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-10-29/india/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for 2012-10-23  ~ 2012-10-29 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-10-29/india/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-10-29/india/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-10-23  ~ 2012-10-29 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-10-29/india/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-10-29/india/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-10-23  ~ 2012-10-29 on india
 
@@ -654,14 +654,14 @@ Results For Openstack On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-10-29/india/openstack/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-10-29/india/openstack/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total count of VMs submitted per user for 2012-10-23 ~ 2012-10-29 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-10-29/india/openstack/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-10-29/india/openstack/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 5. Total runtime (hour) of VMs submitted per user for 2012-10-23 ~ 2012-10-29 on india
 
@@ -671,21 +671,21 @@ Results For Eucalyptus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-10-29/sierra/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-10-29/sierra/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total count of VMs submitted per user for 2012-10-23  ~ 2012-10-29 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-10-29/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-10-29/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 7. Total runtime hour of VMs submitted per user for 2012-10-23  ~ 2012-10-29 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-10-29/sierra/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-10-29/sierra/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 8. Total VMs count per node cluster for 2012-10-23  ~ 2012-10-29 on sierra
 
@@ -695,14 +695,14 @@ Results For Nimbus On Hotel
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-10-29/hotel/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-10-29/hotel/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 9. Total count of VMs submitted per user for 2012-10-23 ~ 2012-10-29 on hotel
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-10-29/hotel/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-10-29/hotel/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 10. Total runtime (hour) of VMs submitted per user for 2012-10-23 ~ 2012-10-29 on hotel
 
@@ -712,14 +712,14 @@ Results For Nimbus On Alamo
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-10-29/alamo/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-10-29/alamo/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 11. Total count of VMs submitted per user for 2012-10-23 ~ 2012-10-29 on alamo
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-10-29/alamo/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-10-29/alamo/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 12. Total runtime (hour) of VMs submitted per user for 2012-10-23 ~ 2012-10-29 on alamo
 
@@ -729,14 +729,14 @@ Results For Nimbus On Foxtrot
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-10-29/foxtrot/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-10-29/foxtrot/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 13. Total count of VMs submitted per user for 2012-10-23 ~ 2012-10-29 on foxtrot
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-10-29/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-10-29/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 14. Total runtime (hour) of VMs submitted per user for 2012-10-23 ~ 2012-10-29 on foxtrot
 
@@ -746,14 +746,14 @@ Results For Nimbus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-10-29/sierra/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-10-29/sierra/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 15. Total count of VMs submitted per user for 2012-10-23 ~ 2012-10-29 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-10-29/sierra/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-10-29/sierra/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 16. Total runtime (hour) of VMs submitted per user for 2012-10-23 ~ 2012-10-29 on sierra
 
@@ -766,21 +766,21 @@ Results For Eucalyptus On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-11-05/india/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe1" onLoad="calcHeight('the_iframe1');" width="100%" height="1" src="data/2012-11-05/india/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 1. Total count of VMs submitted per user for 2012-10-30  ~ 2012-11-05 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-11-05/india/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe2" onLoad="calcHeight('the_iframe2');" width="100%" height="1" src="data/2012-11-05/india/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 2. Total runtime (hour) of VMs submitted per user for 2012-10-30  ~ 2012-11-05 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-11-05/india/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe3" onLoad="calcHeight('the_iframe3');" width="100%" height="1" src="data/2012-11-05/india/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 3. Total VMs count per node cluster for 2012-10-30  ~ 2012-11-05 on india
 
@@ -790,14 +790,14 @@ Results For Openstack On India
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-11-05/india/openstack/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe4" onLoad="calcHeight('the_iframe4');" width="100%" height="1" src="data/2012-11-05/india/openstack/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 4. Total count of VMs submitted per user for 2012-10-30 ~ 2012-11-05 on india
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-11-05/india/openstack/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe5" onLoad="calcHeight('the_iframe5');" width="100%" height="1" src="data/2012-11-05/india/openstack/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 5. Total runtime (hour) of VMs submitted per user for 2012-10-30 ~ 2012-11-05 on india
 
@@ -807,21 +807,21 @@ Results For Eucalyptus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-11-05/sierra/eucalyptus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe6" onLoad="calcHeight('the_iframe6');" width="100%" height="1" src="data/2012-11-05/sierra/eucalyptus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 6. Total count of VMs submitted per user for 2012-10-30  ~ 2012-11-05 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-11-05/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe7" onLoad="calcHeight('the_iframe7');" width="100%" height="1" src="data/2012-11-05/sierra/eucalyptus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 7. Total runtime hour of VMs submitted per user for 2012-10-30  ~ 2012-11-05 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-11-05/sierra/eucalyptus/count_node/columnhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe8" onLoad="calcHeight('the_iframe8');" width="100%" height="1" src="data/2012-11-05/sierra/eucalyptus/count_node/columnhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 8. Total VMs count per node cluster for 2012-10-30  ~ 2012-11-05 on sierra
 
@@ -831,14 +831,14 @@ Results For Nimbus On Hotel
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-11-05/hotel/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe9" onLoad="calcHeight('the_iframe9');" width="100%" height="1" src="data/2012-11-05/hotel/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 9. Total count of VMs submitted per user for 2012-10-30 ~ 2012-11-05 on hotel
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-11-05/hotel/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe10" onLoad="calcHeight('the_iframe10');" width="100%" height="1" src="data/2012-11-05/hotel/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 10. Total runtime (hour) of VMs submitted per user for 2012-10-30 ~ 2012-11-05 on hotel
 
@@ -848,14 +848,14 @@ Results For Nimbus On Alamo
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-11-05/alamo/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe11" onLoad="calcHeight('the_iframe11');" width="100%" height="1" src="data/2012-11-05/alamo/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 11. Total count of VMs submitted per user for 2012-10-30 ~ 2012-11-05 on alamo
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-11-05/alamo/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe12" onLoad="calcHeight('the_iframe12');" width="100%" height="1" src="data/2012-11-05/alamo/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 12. Total runtime (hour) of VMs submitted per user for 2012-10-30 ~ 2012-11-05 on alamo
 
@@ -865,14 +865,14 @@ Results For Nimbus On Foxtrot
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-11-05/foxtrot/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe13" onLoad="calcHeight('the_iframe13');" width="100%" height="1" src="data/2012-11-05/foxtrot/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 13. Total count of VMs submitted per user for 2012-10-30 ~ 2012-11-05 on foxtrot
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-11-05/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe14" onLoad="calcHeight('the_iframe14');" width="100%" height="1" src="data/2012-11-05/foxtrot/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 14. Total runtime (hour) of VMs submitted per user for 2012-10-30 ~ 2012-11-05 on foxtrot
 
@@ -882,13 +882,13 @@ Results For Nimbus On Sierra
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-11-05/sierra/nimbus/user/count/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe15" onLoad="calcHeight('the_iframe15');" width="100%" height="1" src="data/2012-11-05/sierra/nimbus/user/count/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 15. Total count of VMs submitted per user for 2012-10-30 ~ 2012-11-05 on sierra
 
 .. raw:: html
 
 	<div style="margin-top:10px;">
-	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-11-05/sierra/nimbus/user/runtime/barhighcharts.html?time=1352512137" frameborder="0"></iframe>
+	<iframe id="the_iframe16" onLoad="calcHeight('the_iframe16');" width="100%" height="1" src="data/2012-11-05/sierra/nimbus/user/runtime/barhighcharts.html?time=1355364780" frameborder="0"></iframe>
 	</div>
 	Figure 16. Total runtime (hour) of VMs submitted per user for 2012-10-30 ~ 2012-11-05 on sierra

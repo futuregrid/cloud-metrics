@@ -19,6 +19,7 @@ class Results:
     docs_path = name + "/"
     indent = "\t"
     newline = "\n"
+    count = 0
 
     def generate_index(self):
 
@@ -773,6 +774,7 @@ class Results:
         content = content + (self.get_chart() % vars()) % vars()
 
         content = self.set_width(content, width, "100%")
+        self.count = number
         return content
 
     def get_content_weekly(self):
@@ -782,7 +784,7 @@ class Results:
         end_date = str(self.end_date)
 
         dummy = "?time=" + datetime.datetime.utcnow().strftime("%s")
-        number = 1
+        number = self.count
         metric = "count"
         platform = "eucalyptus"
         nodename = "india"

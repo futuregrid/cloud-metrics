@@ -784,7 +784,7 @@ class Results:
         end_date = str(self.end_date)
 
         dummy = "?time=" + datetime.datetime.utcnow().strftime("%s")
-        number = self.count
+        number = self.count + 1
         metric = "count"
         platform = "eucalyptus"
         nodename = "india"

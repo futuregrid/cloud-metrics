@@ -42,36 +42,43 @@ createreport -d 2012-04/hotel/nimbus/user
 
 clear users
 set nodename hotel
+set platform nimbus
 analyze -M 05
 createreport -d 2012-05/hotel/nimbus/user
 
 clear users
 set nodename hotel
+set platform nimbus
 analyze -M 06
 createreport -d 2012-06/hotel/nimbus/user
 
 clear users
 set nodename hotel
+set platform nimbus
 analyze -M 07
 createreport -d 2012-07/hotel/nimbus/user
 
 clear users
 set nodename hotel
+set platform nimbus
 analyze -M 08
 createreport -d 2012-08/hotel/nimbus/user
 
 clear users
 set nodename hotel
+set platform nimbus
 analyze -M 09
 createreport -d 2012-09/hotel/nimbus/user
 
 clear users
 set nodename hotel
+set platform nimbus
 analyze -M 10
 createreport -d 2012-10/hotel/nimbus/user
 
 clear users
 set nodename hotel
+set platform nimbus
 analyze -M 11
 createreport -d 2012-11/hotel/nimbus/user
 
@@ -113,36 +120,43 @@ createreport -d 2012-04/sierra/nimbus/user
 
 clear users
 set nodename sierra
+set platform nimbus
 analyze -M 05
 createreport -d 2012-05/sierra/nimbus/user
 
 clear users
 set nodename sierra
+set platform nimbus
 analyze -M 06
 createreport -d 2012-06/sierra/nimbus/user
 
 clear users
 set nodename sierra
+set platform nimbus
 analyze -M 07
 createreport -d 2012-07/sierra/nimbus/user
 
 clear users
 set nodename sierra
+set platform nimbus
 analyze -M 08
 createreport -d 2012-08/sierra/nimbus/user
 
 clear users
 set nodename sierra
+set platform nimbus
 analyze -M 09
 createreport -d 2012-09/sierra/nimbus/user
 
 clear users
 set nodename sierra
+set platform nimbus
 analyze -M 10
 createreport -d 2012-10/sierra/nimbus/user
 
 clear users
 set nodename sierra
+set platform nimbus
 analyze -M 11
 createreport -d 2012-11/sierra/nimbus/user
 
@@ -183,36 +197,43 @@ analyze -M 04
 createreport -d 2012-04/alamo/nimbus/user
 
 clear users
+set platform nimbus
 set nodename alamo
 analyze -M 05
 createreport -d 2012-05/alamo/nimbus/user
 
 clear users
 set nodename alamo
+set platform nimbus
 analyze -M 06
 createreport -d 2012-06/alamo/nimbus/user
 
 clear users
 set nodename alamo
+set platform nimbus
 analyze -M 07
 createreport -d 2012-07/alamo/nimbus/user
 
 clear users
 set nodename alamo
+set platform nimbus
 analyze -M 08
 createreport -d 2012-08/alamo/nimbus/user
 
 clear users
 set nodename alamo
+set platform nimbus
 analyze -M 09
 createreport -d 2012-09/alamo/nimbus/user
 
 clear users
+set platform nimbus
 set nodename alamo
 analyze -M 10
 createreport -d 2012-10/alamo/nimbus/user
 
 clear users
+set platform nimbus
 set nodename alamo
 analyze -M 11
 createreport -d 2012-11/alamo/nimbus/user
@@ -255,36 +276,43 @@ createreport -d 2012-04/foxtrot/nimbus/user
 
 clear users
 set nodename foxtrot
+set platform nimbus
 analyze -M 05
 createreport -d 2012-05/foxtrot/nimbus/user
 
 clear users
 set nodename foxtrot
+set platform nimbus
 analyze -M 06
 createreport -d 2012-06/foxtrot/nimbus/user
 
 clear users
 set nodename foxtrot
+set platform nimbus
 analyze -M 07
 createreport -d 2012-07/foxtrot/nimbus/user
 
 clear users
 set nodename foxtrot
+set platform nimbus
 analyze -M 08
 createreport -d 2012-08/foxtrot/nimbus/user
 
 clear users
 set nodename foxtrot
+set platform nimbus
 analyze -M 09
 createreport -d 2012-09/foxtrot/nimbus/user
 
 clear users
 set nodename foxtrot
+set platform nimbus
 analyze -M 10
 createreport -d 2012-10/foxtrot/nimbus/user
 
 clear users
 set nodename foxtrot
+set platform nimbus
 analyze -M 11
 createreport -d 2012-11/foxtrot/nimbus/user
 

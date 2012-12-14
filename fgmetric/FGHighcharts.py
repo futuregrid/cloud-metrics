@@ -164,7 +164,7 @@ class FGHighcharts:
         self.width = width
 
     def set_height(self, height):
-        self.height = int(height)
+        self.height = max(int(height), 150) # MINIMUM HEIGHT is 150px
 
     def calc_height(self):
         if self.chart_type != "master-detail":

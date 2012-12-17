@@ -1,4 +1,4 @@
-from cmd2 import Cmd
+from cmd2 import Cmd, options, make_option
 import sys
 from pprint import pprint
 import optparse
@@ -64,6 +64,7 @@ class FGMetrics(Cmd):
                 res = self.search.collect(instance)
 
             except:
+                print sys.exc_info()
                 raise
 
         print self.search.get_metric()

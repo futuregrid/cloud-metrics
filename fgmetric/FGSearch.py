@@ -168,6 +168,9 @@ class FGSearch:
     def get_vals(self, _dict, keys):
         ''' Same as get_val but handles non-exist keys '''
         lis = []
+        if not keys:
+            return lis
+
         for key in keys:
             if key in _dict:
                 lis.append(_dict[key])
@@ -179,7 +182,7 @@ class FGSearch:
         return self.stats
 
     def collect(self, instance):
-        metric = self.metric
+        #metric = self.metric
         selected = self.select(instance)
         self.appendi(selected)
         glist = self.get_vals(selected, self.groups)

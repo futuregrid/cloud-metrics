@@ -933,6 +933,8 @@ class Results:
         content = content + (self.get_chart() % vars()) % vars()
 
         content = self.set_width(content, width, "100%")
+
+        self.count = number
         return content
 
     def get_index_header(self):

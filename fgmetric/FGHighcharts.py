@@ -4,6 +4,7 @@
 # FGHighcharts.py (python)
 # ------------------------
 import re
+import sys
 from datetime import timedelta
 
 from fgmetric.FGUtility import FGUtility

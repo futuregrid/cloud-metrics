@@ -59,15 +59,10 @@ class FGCharts:
         try:
             if type(data) == type({}):
                 xaxis = data.keys()
-                print xaxis
                 records = data.values()
-                print records
                 yaxis = records[0].keys()
-                print yaxis
                 for name in yaxis: # count
-                    print name
                     for record in records: # {'count': 77}, {'count':119}
-                        print record
                         if not name in series:
                             series[name] = []
                         series[name].append(record[name])

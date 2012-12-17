@@ -47,7 +47,7 @@ class FGSearch:
         self.columns = None
         self.period = None
 
-        self.groups = None
+        self.groups = ["All"]
  
     def init_stats(self):
         self.metric = None
@@ -193,15 +193,17 @@ class FGSearch:
     def update_metrics(self, glist, mdict, key, value):
         if len(glist) == 0:
             new = value
-            old = None
             if key in mdict:
-                old = mdict[key]
-            mdict[key] = self.calculate(old, new)
+                old = mdict[key]["Total"]
+            else:
+                old = None
+                mdict[key] = { "Total" : None }
+            mdict[key]["Total"] = self.calculate(old, new)
             ############################
             # Add daily dict temporarily
             try:
                 period_func = getattr(self, "_divide_into_" + str(self.period))
-                period_func(mdict, value)
+                period_func(mdict[key], value)
             except:
                 pass
             # ##########################

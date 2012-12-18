@@ -103,7 +103,7 @@ class FGHighcharts:
     def convert_dict_to_list(self, data):
         dictlist = []
         for key, value in data.iteritems():
-            temp = [key,value]
+            temp = self.convert_datetime2UTC([key,value])
             dictlist.append(temp)
         return dictlist
 
@@ -178,19 +178,31 @@ class FGHighcharts:
         self.height = max(int(height), 150) # MINIMUM HEIGHT is 150px
 
     def calc_height(self):
+        if self.chart_type == "line-time-series":
+            multiply = 1
         if self.chart_type != "master-detail":
-            self.set_height(len(self.data) * 20)
+            multiply = 20
+        self.set_height(len(self.data) * multiply)
 
-    def convert_datestrings(self):
-        self.data = re.sub("datetime.datetime","Date.UTC", str(self.data))
+    def convert_datetime2UTC(self, record):
+        if type(record[0]) is datetime:
+            utc_mill = int(record[0].strftime("%s"))
+            return [utc_mill, record[1]]
+        else:
+            return record
+
+        #self.data = re.sub("datetime.datetime","Date.UTC", str(self.data))
+
+    def configure_chart_options(self):
+        self.calc_height()
+        self.convert_datetime2UTC()
+        self.set_chart_options()
 
     def display(self):
 
         try:
-            self.calc_height()
-            self.convert_datestrings()
-            self.set_chart_options()
-            
+            self.configure_chart_options()
+           
             self.html_txt = self.get_html_header() + self.get_html_script() + self.get_html_footer()
             self.html_txt = self.html_txt % vars(self)
 

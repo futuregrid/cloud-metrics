@@ -186,7 +186,7 @@ class FGHighcharts:
 
     def convert_datetime2UTC(self, record):
         if type(record[0]) is datetime:
-            utc_mill = int(record[0].strftime("%s"))
+            utc_mill = int(record[0].strftime("%s") * 1000)
             return [utc_mill, record[1]]
         else:
             return record

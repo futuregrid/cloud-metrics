@@ -180,8 +180,11 @@ class FGHighcharts:
     def calc_height(self):
         if self.chart_type == "line-time-series":
             multiply = 1
-        if self.chart_type != "master-detail":
+        elif self.chart_type == "master-detail":
+            multiply = 1
+        else:
             multiply = 20
+
         self.set_height(len(self.data) * multiply)
 
     def convert_datetime2UTC(self, record):

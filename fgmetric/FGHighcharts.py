@@ -232,10 +232,8 @@ class FGHighcharts:
             self.series_type = self.chart_type
 
     def set_chart_option(self, key, val):
-        print key, val
         setattr(self, "option_" + str(key), val)
-        option = getattr(self, "option_" + str(key))
-        print option
+        #option = getattr(self, "option_" + str(key))
         
     def get_html_header(self):
         self.html_header = '''<!DOCTYPE html>

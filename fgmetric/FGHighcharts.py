@@ -24,7 +24,7 @@ class FGHighcharts:
     xAxis_label = []
     yAxis_title = ""
     data = None
-    data_name = None
+    series_name = None
     width = 0
     height = 0
 
@@ -141,7 +141,10 @@ class FGHighcharts:
         self.detail_day = date.day
 
     def set_data_name(self, data_name):
-        self.data_name = data_name
+        self.series_name = data_name
+
+    def set_series_name(self, series_name):
+        self.set_data_name(series_name)
 
     def set_yaxis(self, title):
         self.yAxis_title = title
@@ -186,6 +189,7 @@ class FGHighcharts:
         try:
             self.calc_height()
             self.convert_datestrings()
+            self.set_chart_options()
             
             self.html_txt = self.get_html_header() + self.get_html_script() + self.get_html_footer()
             self.html_txt = self.html_txt % vars(self)
@@ -197,6 +201,42 @@ class FGHighcharts:
             print sys.exc_info()
             raise
 
+    def set_chart_options(self):
+        if self.chart_type == "line-time-series":
+            self.set_chart_option("chart", {"renderTo": 'container', "zoomType":'x', "spacingRight": 20})
+            self.set_chart_option("xAxis", {"type": 'datetime', "maxZoom": 14 * 24 * 3600000})
+            self.set_chart_option("yAxis", {"title": { "text": self.yAxis_title or ""}, "min": 0.6, "startOnTick": 0, "showFirstLabel": 0}) # used 0 instead of false of javascript
+            self.set_chart_option("tooltip", {"shared": 1}) # used 1 instead of true of javascript
+            self.set_chart_option("plotOptions", {"area": { \
+                    "fillColor": { \
+                    "linearGradient": { "x1": 0, "y1": 0, "x2": 0, "y2": 1},\
+                    "stops": [[0, 'rgba(0,0,0,0.5)'], \
+                    #Highcharts.getOptions().colors[0]],
+                    [1, 'rgba(2,0,0,0)']] }, \
+                            "lineWidth": 1, \
+                            "marker": { "enabled": 0, "states": { \
+                                "hover": { "enabled": 1, "radius": 5} \
+                                        }}, \
+                                        "shadow": 0, \
+                                        "states": { "hover": { "lineWidth": 1 }}}})
+
+            self.series_type = "area"
+
+        else:
+            #default options
+            self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
+            self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
+            self.set_chart_option("yAxis", {"min": 0, "title": { "text": self.yAxis_title }})
+            self.set_chart_option("tooltip", {"formatter": "function() { return ''+ " + self.tooltip + "; }" })
+            self.set_chart_option("plotOptions", { "column": { "pointPadding": 0.2, "borderWidth": 0 } })
+            self.series_type = self.chart_type
+
+    def set_chart_option(self, key, val):
+        print key, val
+        setattr(self, "option_" + str(key), val)
+        option = getattr(self, "option_" + str(key))
+        print option
+        
     def get_html_header(self):
         self.html_header = '''<!DOCTYPE html>
         <html>
@@ -218,26 +258,15 @@ class FGHighcharts:
                 var chart;
                 $(document).ready(function() {
                     chart = new Highcharts.Chart({
-                        chart: {
-                            renderTo: 'container',
-                            type: 'column'
-                            },
+                        chart: %(option_chart)s,
                         title: {
                             text: '%(title)s'
                             },
                         subtitle: {
-                            text: '%(subtitle)s'
+                        text: '%(subtitle)s'
                             },
-                        xAxis: {
-                            categories: 
-                                %(xAxis_categories)s
-                            },
-                        yAxis: {
-                            min: 0,
-                            title: {
-                                text: '%(yAxis_title)s'
-                                }
-                            },
+                        xAxis: %(option_xAxis)s,
+                        yAxis: %(option_yAxis)s,
                         legend: {
                             layout: 'vertical',
                             backgroundColor: '#FFFFFF',
@@ -248,22 +277,12 @@ class FGHighcharts:
                             floating: true,
                             shadow: true
                             },
-                        tooltip: {
-                            formatter: function() {
-                                return ''+
-                                %(tooltip)s;
-                                }
-                            },
-                        plotOptions: {
-                            column: {
-                                pointPadding: 0.2,
-                                borderWidth: 0
-                                }
-                            },
+                        tooltip: %(option_tooltip)s,
+                        plotOptions: %(option_plotOptions)s, 
                         series: [
                             {
-                                type: '%(chart_type)s',
-                                name: '%(data_name)s',
+                                type: '%(series_type)s',
+                                name: '%(series_name)s',
                                 data: %(data)s
                             }]
                         });
@@ -403,7 +422,7 @@ class FGHighcharts:
                 
                             series: [{
                                 type: 'area',
-                                name: '%(data_name)s',
+                                name: '%(series_name)s',
                                 pointInterval: 24 * 3600 * 1000,
                                 pointStart: Date.UTC(%(f_year)s, %(f_month)s, %(f_day)s),
                                 data: data
@@ -487,7 +506,7 @@ class FGHighcharts:
                                 }
                             },
                             series: [{
-                                name: '%(data_name)s',
+                                name: '%(series_name)s',
                                 pointStart: detailStart,
                                 pointInterval: 24 * 3600 * 1000,
                                 data: detailData

@@ -127,7 +127,6 @@ class FGMetrics(Cmd):
         self.chart.set_type(opts.ctype)
         for key, data in self.search.get_metric().iteritems():
             #self.chart.set_xaxis(key) TBD
-            print key, data
             self.chart.set_data_beta(data, self.search.metric, self.search.period)
         self.chart.display()
 

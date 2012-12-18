@@ -125,7 +125,10 @@ class FGMetrics(Cmd):
         ''' set for test '''
         self.chart.set_chart_api(opts.api)
         self.chart.set_type(opts.ctype)
-        self.chart.set_datafromdict(self.search.get_metric(), self.search.metric)
+        for key, data in self.search.get_metric().iteritems():
+            #self.chart.set_xaxis(key) TBD
+            print key, data
+            self.chart.set_data_beta(data, self.search.metric, self.search.period)
         self.chart.display()
 
     def do_refresh(self, line, opts=None):

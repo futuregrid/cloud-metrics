@@ -5,7 +5,7 @@
 # ------------------------
 import re
 import sys
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from fgmetric.FGUtility import FGUtility
 
@@ -56,7 +56,14 @@ class FGHighcharts:
         if type(data) == type({}):
             self.data = self.convert_dict_to_list(data)
             #self.sort_data()
-            self.human_sort_data()
+            try:
+                self.human_sort_data()
+            except:
+                try:
+                    self.sort_data()
+                except:
+                    pass
+                pass
         else:
             self.reducing_list()
 
@@ -171,10 +178,14 @@ class FGHighcharts:
         if self.chart_type != "master-detail":
             self.set_height(len(self.data) * 20)
 
+    def convert_datestrings(self):
+        self.data = re.sub("datetime.datetime","Date.UTC", str(self.data))
+
     def display(self):
 
         try:
             self.calc_height()
+            self.convert_datestrings()
             
             self.html_txt = self.get_html_header() + self.get_html_script() + self.get_html_footer()
             self.html_txt = self.html_txt % vars(self)

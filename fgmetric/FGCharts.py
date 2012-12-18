@@ -44,7 +44,19 @@ class FGCharts:
         self.yaxis = None
         self.data = None
 
-    def set_datafromdict(self, data, keyname):
+    def set_data_beta(self, data, keyname=None, keyname2=None):
+        if keyname and keyname in data:
+            data = data[keyname]
+        if keyname2 and keyname2 in data:
+            data = data[keyname2]
+
+        try:
+            if type(data) == type({}):
+                self.set_data(data)
+        except:
+            pass
+
+    def set_datafromdict(self, data, keyname=None):
         '''
          Example of data: {'nimbus': {'count': 77}, 'eucalyptus': {'count': 119}}
          The template is like: group1: {name of y axis: value, ...}, ...
@@ -56,6 +68,7 @@ class FGCharts:
         xaxis = []
         yaxis = []
         series = {}
+        
         try:
             if type(data) == type({}):
                 xaxis = data.keys()

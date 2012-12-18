@@ -195,7 +195,6 @@ class FGHighcharts:
 
     def configure_chart_options(self):
         self.calc_height()
-        self.convert_datetime2UTC()
         self.set_chart_options()
 
     def display(self):

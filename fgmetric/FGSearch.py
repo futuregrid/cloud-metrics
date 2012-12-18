@@ -29,7 +29,7 @@ class FGSearch:
         self.init_options()
         self.init_suboptions()
         self.init_stats()
-        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform'} #_mem', 'ccvm_cores', 'ccvm_disk' }
+        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', 'trace'} #_mem', 'ccvm_cores', 'ccvm_disk' }
         self.init_names()
 
     def init_options(self):
@@ -138,10 +138,14 @@ class FGSearch:
         return False
 
     def _is_in_date(self, instance):
+
         if self._is_searching_all():
             return True
         if (instance["t_start"] > self.to_date) or (instance["t_end"] and instance["t_end"] < self.from_date):
-           return False
+            return False
+        #Newly added for exception
+        if instance["trace"]["extant"]["stop"] and instance["trace"]["extant"]["stop"] < self.from_date:
+            return False
         return True
 
     def _is_filtered(self, instance):
@@ -293,8 +297,14 @@ class FGSearch:
         if single_end > self.to_date:
             single_end = self.to_date
 
-        if t_start > single_end or (t_end and t_end < single_start):
+        if t_start > single_end or t_end < single_start:
             return 0
+
+        # temporarily added for the exception
+        selected = self.get_recentlyselected()
+        if selected["trace"]["extant"]["stop"]:
+            if selected["trace"]["extant"]["stop"] > datetime(1970, 1, 1) and selected["trace"]["extant"]["stop"] < single_start:
+                return 0
 
         if metric == self.names.metric.runtime:
             if t_start < single_start:
@@ -302,10 +312,16 @@ class FGSearch:
             else:
                 start_time = t_start
 
-            if not t_end or (t_end > single_end):
+            if t_end > single_end:
                 end_time = single_end
             else:
                 end_time = t_end
+
+            # temporarily added
+            if t_end == datetime(3000, 1, 1):
+                if selected["trace"]["extant"]["stop"]:
+                    if selected["trace"]["extant"]["stop"] > datetime(1970, 1, 1) and selected["trace"]["extant"]["stop"] < single_end:
+                        end_time = selected["trace"]["extant"]["stop"]
 
             td = end_time - start_time
             res = td.seconds#int(ceil(float(td.seconds) / 60 / 60))

@@ -32,8 +32,9 @@ class FGSearch:
         self.init_stats()
         self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', \
                 'trace', 'state', 'date', \
-                'ProjectId', 'Title', 'Institution'} #_mem', 'ccvm_cores', 'ccvm_disk' }
+                'ProjectId', 'Title', 'Institution', 'ProjectLead'} #_mem', 'ccvm_cores', 'ccvm_disk' }
         self.init_names()
+        self.userinfo_needed = False
 
     def init_options(self):
         self.from_date = None
@@ -91,6 +92,8 @@ class FGSearch:
 
     def set_groupby(self, name):
         self.groupby = name
+
+        self.userinfo_needed = self._is_userinfo_needed(True)
 
     def set_groups(self, glist):
         try:
@@ -160,8 +163,10 @@ class FGSearch:
             return False
         return True
 
-    def _is_userinfo_needed(self):
-        if self.groupby != "project" and self.groupby != "institution":
+    def _is_userinfo_needed(self, refresh=False):
+        if not refresh:
+            return self.userinfo_needed
+        if self.groupby != "project" and self.groupby != "institution" and self.groupby != "projectleader":
             return False
         return True
 
@@ -286,6 +291,22 @@ class FGSearch:
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
         project = re.sub("None", "etc.", str(selected["Institution"]))
+        if not project in mdict[self.groupby]:
+            mdict[self.groupby][project] = val
+        else:
+            mdict[self.groupby][project] += val
+
+        return
+ 
+    def _groupby_projectleader(self, mdict, val):
+        if not self._is_userinfo_needed():
+            return
+
+        selected = self.get_recentlyselected()
+
+        if not self.groupby in mdict:
+            mdict[self.groupby] = {}
+        project = re.sub("None", "Others", str(selected["ProjectLead"]))
         if not project in mdict[self.groupby]:
             mdict[self.groupby][project] = val
         else:

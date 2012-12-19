@@ -56,13 +56,18 @@ class FGMetrics(Cmd):
 
         for i in range(0, total_counts):
             try:
+                print FGUtility.debug()
                 instance = self.instances.get_data(i, self.search._is_userinfo_needed())[0]
+                print FGUtility.debug()
                 if not self.search._is_in_date(instance):
                     continue;
+                print FGUtility.debug()
                 if not self.search._is_filtered(instance):
                     continue;
+                print FGUtility.debug()
 
                 res = self.search.collect(instance)
+                print FGUtility.debug()
 
             except:
                 print sys.exc_info()

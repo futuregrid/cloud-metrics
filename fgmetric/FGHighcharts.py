@@ -178,7 +178,7 @@ class FGHighcharts:
         self.height = max(int(height), 150) # MINIMUM HEIGHT is 150px
 
     def calc_height(self):
-        length_of_data = len(self)data
+        length_of_data = len(self.data)
         if self.chart_type == "line-time-series":
             new_height = length_of_data * 1
         elif self.chart_type == "master-detail":
@@ -269,6 +269,8 @@ class FGHighcharts:
         elif self.chart_type == "pie-basic":
             chart_name = "pie"
             self.set_chart_option("chart", {"renderTo": 'container'})
+            self.set_chart_option("xAxis", {})
+            self.set_chart_option("yAxis", {})
             self.set_chart_option("tooltip", {"pointFormat":"{series.name}: <b>{point.percentage}</b>", "percentageDecimals":1})
             self.set_chart_option("plotOptions", { chart_name: \
                     { "allowPointSelect":1, \

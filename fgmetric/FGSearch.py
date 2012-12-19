@@ -32,7 +32,7 @@ class FGSearch:
         self.init_stats()
         self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', \
                 'trace', 'state', 'date', \
-                'ProjectId', 'Title'} #_mem', 'ccvm_cores', 'ccvm_disk' }
+                'ProjectId', 'Title', 'Institution'} #_mem', 'ccvm_cores', 'ccvm_disk' }
         self.init_names()
 
     def init_options(self):
@@ -277,6 +277,22 @@ class FGSearch:
 
         return
 
+    def _groupby_institution(self, mdict, val):
+        if not self._is_userinfo_needed():
+            return
+
+        selected = self.get_recentlyselected()
+
+        if not self.groupby in mdict:
+            mdict[self.groupby] = {}
+        project = re.sub("None", "etc.", str(selected["Institution"]))
+        if not project in mdict[self.groupby]:
+            mdict[self.groupby][project] = val
+        else:
+            mdict[self.groupby][project] += val
+
+        return
+ 
     def get_t_delta(self, row):
 
 	start = row["t_start"]

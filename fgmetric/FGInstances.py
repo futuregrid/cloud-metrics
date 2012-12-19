@@ -28,6 +28,7 @@ class FGInstances:
     instance = {}
     userinfo = []
     projectinfo = {}
+    default_projectinfo = {"ProjectId":None, "Title":None} #"Completed":None, "ProjectLead":None, "Institution":None, "Department":None", "Keywords":None, "Results":None}
     pp = None
     db = None
     in_the_future = None
@@ -61,8 +62,9 @@ class FGInstances:
 
     def get_instance_with_info(self, index, withInfo):
 
+        # This should be returned with same type but this isn't. if index comes with it, returns 'dict' and without it, returns list. what a unconsistent.
         if isinstance(index, (int, long)):
-            instances = self.instance[index]
+            instances = [self.instance[index]]
         else:
             instances = self.instance
 
@@ -72,22 +74,22 @@ class FGInstances:
         res = []
         for ins in instances:
             try:
-                userinfo = self.get_userinfo({"ownerid":ins["ownerid"], "username":ins["ownerid"]})
+                userinfo = self.get_userinfo({"ownerid":ins["ownerId"], "username":ins["ownerId"]})
                 if userinfo:
-                    #ins.update(userinfo)
-                    new = userinfo
-                    new.update(ins)
+                    ins = dict(userinfo.items() + ins.items())
 
                     #Extension for project information
                     prj_id = userinfo["project"]
-                    projectinfo = self.get_projectinfo({"ProjectId":prj[2:]})
-                    if projectinfo:
-                        new2 = projectinfo
-                        new2.update(new)
-                    else:
-                        new2 = 
+                    if prj_id:
+                        if prj_id.startswith("fg"):
+                            prj_id = int(prj_id[2:])
+                        projectinfo = self.get_projectinfo(prj_id) # Remove 'fg' prefix
+                        if projectinfo:
+                            ins = dict(projectinfo.items() + ins.items())
+                else:
+                    ins = dict(ins.items() + self.default_projectinfo.items())
 
-                res.append(new2)
+                res.append(ins)
             except:
                 pass
         return res
@@ -99,13 +101,25 @@ class FGInstances:
             # Search
             for key, val in index.iteritems():
                 for userinfo in self.userinfo:
-                    print userinfo
-                    print key, val
-                    break
                     if key in userinfo and userinfo[key] == val:
                         return userinfo
-        else:
+        elif index in None:
             return self.userinfo
+        else:
+            return None
+
+    def get_projectinfo(self, index=None):
+        if isinstance(index, (int, long)):
+            return self.projectinfo[index]
+        elif isinstance(index, (dict)):
+            for key, val in index.iteritems():
+                for projectinfo in self.projectinfo:
+                    if key in projectinfo and projectinfo[key] == val:
+                        return projectinfo
+        elif index is None:
+            return self.projectinfo
+        else:
+            return None
 
     def count(self):
         return len(self.instance)
@@ -115,18 +129,19 @@ class FGInstances:
         self.clear("instance")
         instance_list = self.db.read()
 
+        self.instance = instance_list
+        '''
         for element in instance_list:
             self.instance[key] = element
             key += 1
+        '''
 
     def read_projectinfo_from_db(self):
 
         res = {}
         self.clear("projectinfo")
         prjinfo_list = self.db.read_projectinfo()
-        for element in prjinfo_list:
-            res["fg" + str(element["ProjectId"])] = element
-
+        res = {element["ProjectId"]:element for element in prjinfo_list}
         self.projectinfo = res
 
     def read_userinfo_from_db(self):

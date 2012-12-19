@@ -178,14 +178,17 @@ class FGHighcharts:
         self.height = max(int(height), 150) # MINIMUM HEIGHT is 150px
 
     def calc_height(self):
+        length_of_data = len(self)data
         if self.chart_type == "line-time-series":
-            multiply = 1
+            new_height = length_of_data * 1
         elif self.chart_type == "master-detail":
-            multiply = 1
+            new_height = length_of_data * 1
+        elif self.chart_type == "pie-basic":
+            new_height = 450
         else:
-            multiply = 20
+            new_height = length_of_data * 20
 
-        self.set_height(len(self.data) * multiply)
+        self.set_height(new_height)
 
     def convert_datetime2UTC(self, record):
         if type(record[0]) is datetime:
@@ -263,6 +266,22 @@ class FGHighcharts:
                     }})
 
             self.series_type = "column"
+        elif self.chart_type == "pie-basic":
+            chart_name = "pie"
+            self.set_chart_option("chart", {"renderTo": 'container'})
+            self.set_chart_option("tooltip", {"pointFormat":"{series.name}: <b>{point.percentage}</b>", "percentageDecimals":1})
+            self.set_chart_option("plotOptions", { chart_name: \
+                    { "allowPointSelect":1, \
+                    "cursor": 'pointer', \
+                    "dataLabels": { \
+                    "enabled": 1,\
+                    "color": "#000000", \
+                    "connectorColor": "#000000", \
+                        }#"formatter": "function() { return this.y;}" } \
+                    }})
+
+            self.series_type = chart_name
+
         else:
             #default options
             self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})

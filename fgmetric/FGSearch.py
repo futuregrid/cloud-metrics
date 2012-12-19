@@ -1,3 +1,4 @@
+import re
 from datetime import *
 from fgmetric.FGUtility import dotdict
 from math import ceil
@@ -29,7 +30,9 @@ class FGSearch:
         self.init_options()
         self.init_suboptions()
         self.init_stats()
-        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', 'trace', 'state', 'date'} #_mem', 'ccvm_cores', 'ccvm_disk' }
+        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', \
+                'trace', 'state', 'date', \
+                'ProjectId', 'Title'} #_mem', 'ccvm_cores', 'ccvm_disk' }
         self.init_names()
 
     def init_options(self):
@@ -241,21 +244,21 @@ class FGSearch:
 
         interval = t_delta // 60
         if interval < 1:
-            mdict[self.groupby]["a. <1 min"] += 1
+            mdict[self.groupby]["a. <1 min"] += val
         elif interval < 30:
-            mdict[self.groupby]["b. <30 min"] += 1
+            mdict[self.groupby]["b. <30 min"] += val
         elif interval < 60:
-            mdict[self.groupby]["c. <1 hr"] += 1
+            mdict[self.groupby]["c. <1 hr"] += val
         elif interval < 60 * 3:
-            mdict[self.groupby]["d. <3 hr"] += 1
+            mdict[self.groupby]["d. <3 hr"] += val
         elif interval < 60 * 12:
-            mdict[self.groupby]["e. <12 hr"] += 1
+            mdict[self.groupby]["e. <12 hr"] += val
         elif interval < 60 * 24:
-            mdict[self.groupby]["f. <1 day"] += 1
+            mdict[self.groupby]["f. <1 day"] += val
         elif interval < 60 * 48:
-            mdict[self.groupby]["g. <2 days"] += 1
+            mdict[self.groupby]["g. <2 days"] += val
         else:
-            mdict[self.groupby]["h. more"] += 1
+            mdict[self.groupby]["h. more"] += val
         return
     
     def _groupby_project(self, mdict, val):
@@ -265,9 +268,13 @@ class FGSearch:
         selected = self.get_recentlyselected()
 
         if not self.groupby in mdict:
-            mdict[self.groupby][selected[self.groupby]]
+            mdict[self.groupby] = {}
+        project = re.sub("fg-None:None", "etc.", "fg-" + str(selected["ProjectId"]) + ":" + str(selected["Title"]))
+        if not project in mdict[self.groupby]:
+            mdict[self.groupby][project] = val
+        else:
+            mdict[self.groupby][project] += val
 
-        
         return
 
     def get_t_delta(self, row):

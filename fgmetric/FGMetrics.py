@@ -39,6 +39,7 @@ class FGMetrics(Cmd):
         self.instances.read_from_db()
         # Get also userinfo data from the database
         self.instances.read_userinfo_from_db()
+        self.instances.read_projectinfo_from_db()
         print "\r... database loaded"
 
     def show_dbinfo(self, param=None):
@@ -55,7 +56,7 @@ class FGMetrics(Cmd):
 
         for i in range(0, total_counts):
             try:
-                instance = self.instances.get_data(i, self.search._userinfo_needed())
+                instance = self.instances.get_data(i, self.search._is_userinfo_needed())[0]
                 if not self.search._is_in_date(instance):
                     continue;
                 if not self.search._is_filtered(instance):

@@ -44,11 +44,14 @@ class FGCharts:
         self.yaxis = None
         self.data = None
 
-    def set_data_beta(self, data, keyname=None, keyname2=None):
-        if keyname and keyname in data:
+    def set_data_beta(self, data, *keynames):
+        if not keynames:
+            return data
+
+        for keyname in keynames:
+            if not keyname:
+                continue
             data = data[keyname]
-        if keyname2 and keyname2 in data:
-            data = data[keyname2]
 
         try:
             if type(data) == type({}):

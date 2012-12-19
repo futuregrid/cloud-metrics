@@ -235,7 +235,34 @@ class FGHighcharts:
                                         "states": { "hover": { "lineWidth": 1 }}}})
 
             self.series_type = "area"
+        elif self.chart_type == "column-drilldown":
+            self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
+            self.set_xaxis(list(zip(*self.data)[0]))
+            self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
+            self.set_chart_option("yAxis", {"title": { "text": self.yAxis_title or ""}})
+            self.set_chart_option("tooltip", {"shared":1})#{"formatter": "function() { return this.x +':<b>'+ this.y;"})
+            '''
+                var point = this.point,
+                s = this.x +':<b>'+ this.y +'% market share</b><br/>';
+                if (point.drilldown) {
+                s += 'Click to view '+ point.category +' versions';
+                } else {
+                s += 'Click to return to browser brands';
+                }
+                return s;
+            '''
+            self.set_chart_option("plotOptions", { "column": \
+                    { "cursor": 'pointer', \
+                    "dataLabels": { \
+                    "enabled": 1,\
+                    "color": "colors[0]", \
+                    "style": {\
+                        "fontWeight": 'bold'\
+                        }\
+                    #"formatter": "function() { return this.y;}" } \
+                    }})
 
+            self.series_type = "column"
         else:
             #default options
             self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
@@ -269,6 +296,7 @@ class FGHighcharts:
             $(function () {
                 var chart;
                 $(document).ready(function() {
+                var colors = Highcharts.getOptions().colors,
                     chart = new Highcharts.Chart({
                         chart: %(option_chart)s,
                         title: {

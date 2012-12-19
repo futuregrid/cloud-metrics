@@ -232,25 +232,25 @@ class FGSearch:
         t_delta = self.get_t_delta(selected)
 
         if not self.groupby in mdict:
-            mdict[self.groupby] = { "<1 min":0, "<30 min":0, "<1 hr":0, "<3 hr": 0, "<12 hr":0, "<1 day":0, "<2 days":0, "more":0}
+            mdict[self.groupby] = { "a. <1 min":0, "b. <30 min":0, "c. <1 hr":0, "d. <3 hr": 0, "e. <12 hr":0, "f. <1 day":0, "g. <2 days":0, "h. more":0}
 
         interval = t_delta // 60
         if interval < 1:
-            mdict[self.groupby]["<1 min"] += 1
+            mdict[self.groupby]["a. <1 min"] += 1
         elif interval < 30:
-            mdict[self.groupby]["<30 min"] += 1
+            mdict[self.groupby]["b. <30 min"] += 1
         elif interval < 60:
-            mdict[self.groupby]["<1 hr"] += 1
+            mdict[self.groupby]["c. <1 hr"] += 1
         elif interval < 60 * 3:
-            mdict[self.groupby]["<3 hr"] += 1
+            mdict[self.groupby]["d. <3 hr"] += 1
         elif interval < 60 * 12:
-            mdict[self.groupby]["<12 hr"] += 1
+            mdict[self.groupby]["e. <12 hr"] += 1
         elif interval < 60 * 24:
-            mdict[self.groupby]["<1 day"] += 1
+            mdict[self.groupby]["f. <1 day"] += 1
         elif interval < 60 * 48:
-            mdict[self.groupby]["<2 days"] += 1
+            mdict[self.groupby]["g. <2 days"] += 1
         else:
-            mdict[self.groupby]["more"] += 1
+            mdict[self.groupby]["h. more"] += 1
         return
 
     def get_t_delta(self, row):

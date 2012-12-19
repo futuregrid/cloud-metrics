@@ -157,6 +157,11 @@ class FGSearch:
             return False
         return True
 
+    def _is_userinfo_needed(self):
+        if self.groupby != "project" and self.groupby != "institution":
+            return False
+        return True
+
     def set_search_date(self, from_date, to_date):
         self.set_date(from_date, to_date)
 
@@ -251,6 +256,18 @@ class FGSearch:
             mdict[self.groupby]["g. <2 days"] += 1
         else:
             mdict[self.groupby]["h. more"] += 1
+        return
+    
+    def _groupby_project(self, mdict, val):
+        if not self._is_userinfo_needed():
+            return
+
+        selected = self.get_recentlyselected()
+
+        if not self.groupby in mdict:
+            mdict[self.groupby][selected[self.groupby]]
+
+        
         return
 
     def get_t_delta(self, row):

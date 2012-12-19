@@ -27,6 +27,7 @@ class FGInstances:
  
     instance = {}
     userinfo = []
+    projectinfo = {}
     pp = None
     db = None
     in_the_future = None
@@ -49,15 +50,62 @@ class FGInstances:
             self.instance = {}
         if not opts or opts == "userinfo":
             self.userinfo = []
+        if not opts or opts == "projectinfo":
+            self.projectinfo = {}
 
     def get_instance(self, index=None):
         return self.get_data(index)
 
-    def get_data(self, index=None):
+    def get_data(self, index=None, withInfo=False):
+        return self.get_instance_with_info(index, withInfo)
+
+    def get_instance_with_info(self, index, withInfo):
+
         if isinstance(index, (int, long)):
-            return self.instance[index]
+            instances = self.instance[index]
         else:
-            return self.instance
+            instances = self.instance
+
+        if not withInfo:
+            return instances 
+
+        res = []
+        for ins in instances:
+            try:
+                userinfo = self.get_userinfo({"ownerid":ins["ownerid"], "username":ins["ownerid"]})
+                if userinfo:
+                    #ins.update(userinfo)
+                    new = userinfo
+                    new.update(ins)
+
+                    #Extension for project information
+                    prj_id = userinfo["project"]
+                    projectinfo = self.get_projectinfo({"ProjectId":prj[2:]})
+                    if projectinfo:
+                        new2 = projectinfo
+                        new2.update(new)
+                    else:
+                        new2 = 
+
+                res.append(new2)
+            except:
+                pass
+        return res
+
+    def get_userinfo(self, index=None):
+        if isinstance(index, (int, long)):
+            return self.userinfo[index]
+        elif isinstance(index, (dict)):
+            # Search
+            for key, val in index.iteritems():
+                for userinfo in self.userinfo:
+                    print userinfo
+                    print key, val
+                    break
+                    if key in userinfo and userinfo[key] == val:
+                        return userinfo
+        else:
+            return self.userinfo
 
     def count(self):
         return len(self.instance)
@@ -71,13 +119,24 @@ class FGInstances:
             self.instance[key] = element
             key += 1
 
+    def read_projectinfo_from_db(self):
+
+        res = {}
+        self.clear("projectinfo")
+        prjinfo_list = self.db.read_projectinfo()
+        for element in prjinfo_list:
+            res["fg" + str(element["ProjectId"])] = element
+
+        self.projectinfo = res
+
     def read_userinfo_from_db(self):
 
         self.clear("userinfo")
         userinfo_list = self.db.read_userinfo()
+        self.userinfo = userinfo_list
 
-        for element in userinfo_list:
-            self.userinfo.append(element)
+        #for element in userinfo_list:
+        #    self.userinfo.append(element)
 
     def read_cloudplatform(self, refresh=False):
         if not self.cloudplatform or refresh:

@@ -12,6 +12,7 @@ class FGDatabase:
     instance_table = "instance"
     userinfo_table = "userinfo"
     cloudplatform_table = "cloudplatform"
+    projectinfo_table = "projectinfo"
     column_cp_ins = "cloudPlatformIdRef"
     column_cp_cp = "cloudPlatformId"
 
@@ -200,9 +201,13 @@ class FGDatabase:
             raise
 
         rows = cursor.fetchall()
+        return rows 
+
+        '''
         for arow in list(rows):
             ret.append(arow)
         return ret
+        '''
 
     def get_instance(self, querydict={}):
         return self.read_instance(querydict)
@@ -212,6 +217,9 @@ class FGDatabase:
 
     def get_userinfo(self, querydict={}):
         return self.read_userinfo(querydict)
+
+    def read_projectinfo(self, querydict={}):
+        return self._read(self.cursor, self.projectinfo_table, querydict)
 
     def read_userinfo(self, querydict={}):
         return self._read(self.cursor, self.userinfo_table, querydict)

@@ -55,7 +55,7 @@ class FGMetrics(Cmd):
 
         for i in range(0, total_counts):
             try:
-                instance = self.instances.get_data(i)
+                instance = self.instances.get_data(i, self.search._userinfo_needed())
                 if not self.search._is_in_date(instance):
                     continue;
                 if not self.search._is_filtered(instance):

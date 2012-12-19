@@ -259,7 +259,7 @@ class FGHighcharts:
                     "style": {\
                         "fontWeight": 'bold'\
                         }\
-                    #"formatter": "function() { return this.y;}" } \
+                        }#"formatter": "function() { return this.y;}" } \
                     }})
 
             self.series_type = "column"

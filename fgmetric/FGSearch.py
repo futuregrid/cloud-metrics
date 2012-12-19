@@ -29,7 +29,7 @@ class FGSearch:
         self.init_options()
         self.init_suboptions()
         self.init_stats()
-        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', 'trace'} #_mem', 'ccvm_cores', 'ccvm_disk' }
+        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', 'trace', 'state', 'date'} #_mem', 'ccvm_cores', 'ccvm_disk' }
         self.init_names()
 
     def init_options(self):
@@ -211,12 +211,82 @@ class FGSearch:
             except:
                 pass
             # ##########################
+            try:
+                period_func = getattr(self, "_groupby_" + str(self.groupby))
+                period_func(mdict[key], value)
+            except:
+                pass
+ 
             return mdict[key]
 
         group = glist.pop(0)
         if not group in mdict:
             mdict[group] = {}
         return self.update_metrics(glist, mdict[group], key, value)
+
+    def _groupby_None(self, *args):
+        return
+
+    def _groupby_walltime(self, mdict, val):
+        selected = self.get_recentlyselected()
+        t_delta = self.get_t_delta(selected)
+
+        if not self.groupby in mdict:
+            mdict[self.groupby] = { "<1 min":0, "<30 min":0, "<1 hr":0, "<3 hr": 0, "<12 hr":0, "<1 day":0, "<2 days":0, "more":0}
+
+        interval = t_delta // 60
+        if interval < 1:
+            mdict[self.groupby]["<1 min"] += 1
+        elif interval < 30:
+            mdict[self.groupby]["<30 min"] += 1
+        elif interval < 60:
+            mdict[self.groupby]["<1 hr"] += 1
+        elif interval < 60 * 3:
+            mdict[self.groupby]["<3 hr"] += 1
+        elif interval < 60 * 12:
+            mdict[self.groupby]["<12 hr"] += 1
+        elif interval < 60 * 24:
+            mdict[self.groupby]["<1 day"] += 1
+        elif interval < 60 * 48:
+            mdict[self.groupby]["<2 days"] += 1
+        else:
+            mdict[self.groupby]["more"] += 1
+        return
+
+    def get_t_delta(self, row):
+
+	start = row["t_start"]
+	last = row["date"]
+
+	if row["state"] == "Teardown":
+            if row["t_end"]:
+                last = min(row["date"], row["t_end"])
+
+	t_delta = (last - start).total_seconds()
+	if t_delta < 0:
+            t_delta = timedelta(0).total_seconds()
+	return t_delta
+
+    '''
+    from collections import Counter
+
+    ex)
+    res = histogram
+    1 = res[0:5]
+    2 = res[6:10]
+
+    def histogram(iterable, low, high, bins):
+    '''
+    '''Count elements from the iterable into evenly spaced bins
+        #>>> scores = [82, 85, 90, 91, 70, 87, 45]
+        #>>> histogram(scores, 0, 100, 10)
+        #[0, 0, 0, 0, 1, 0, 0, 1, 3, 2]
+    '''
+    '''
+        step = (high - low + 0.0) / bins
+        dist = Counter((float(x) - low) // step for x in iterable)
+        return [dist[b] for b in range(bins)]
+    '''
 
     def update_metric(self, selected):
         metric = self.metric

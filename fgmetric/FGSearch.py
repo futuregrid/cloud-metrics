@@ -30,9 +30,8 @@ class FGSearch:
         self.init_options()
         self.init_suboptions()
         self.init_stats()
-        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', \
-                'trace', 'state', 'date', \
-                'ProjectId', 'Title', 'Institution', 'ProjectLead'} #_mem', 'ccvm_cores', 'ccvm_disk' }
+        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', 'trace', 'state', 'date' }
+        self.keys_to_select_extra = { 'ProjectId', 'Title', 'Institution', 'ProjectLead' } #_mem', 'ccvm_cores', 'ccvm_disk' }
         self.init_names()
         self.userinfo_needed = False
 
@@ -52,6 +51,7 @@ class FGSearch:
         self.period = None
 
         self.groups = ["All"]
+        self.groupby = None
  
     def init_stats(self):
         self.metric = None
@@ -174,7 +174,12 @@ class FGSearch:
         self.set_date(from_date, to_date)
 
     def select(self, instance):
-        return self.get(instance, self.keys_to_select)
+        default = self.get(instance, self.keys_to_select)
+        extra = {}
+        if self._is_userinfo_needed():
+            extra = self.get(instance, self.keys_to_select_extra)
+        default.update(extra)
+        return default
 
     def get(self, instance, keys):
         return dict((key, instance[key]) for key in keys)

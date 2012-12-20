@@ -132,25 +132,34 @@ class FGDatabase:
                 rquery = "SELECT * FROM " + self.instance_table + "," + self.cloudplatform_table + " where " + foreign_key_for_cloudplatform + " and " + querystr + optional
                 #rquery = "select * from instance, cloudplatform  where instance.cloudPlatform=cloudplatform.cloudPlatformId limit 5";    
         else:
-            rquery = "SELECT * from " + self.instance_table + "," + self.cloudplatform_table + " where " + foreign_key_for_cloudplatform + " " + optional
+            '''
+            rquery = "SELECT uidentifier, t_start, t_end, duration, serviceTag, ownerId, ccvm_mem, ccvm_cores, ccvm_disk, hostname, " + self.cloudplatform_table + ".platform, \
+                    trace_pending_start, trace_pending_stop,\
+                    trace_extant_start, trace_extant_stop,\
+                    trace_teardown_start, trace_teardown_stop,\
+                    state, date \
+            '''
+            rquery = "select * \
+                    from " + self.instance_table + "," + self.cloudplatform_table + " where " + foreign_key_for_cloudplatform + " " + optional
         self.cursor.execute(rquery)
         rows = self.cursor.fetchall()
-        multikeys = ["trace", "ccvm", "ccnet"]
-        listvalues = ["groupNames", "volumes"]
-        lrows = list(rows)
+        multikeys = ["trace", "ccvm"]#, "ccnet"]
+        #listvalues = ["groupNames", "volumes"]
         ret = []
-        for arow in lrows:
+        for arow in rows:
             rowret = {}
             for key in arow:
                 keys = key.rsplit("_")
                 if keys[0] in multikeys:
                     self._assignVal2Multi(rowret, keys, arow[key])
-                elif key in listvalues:
-                    if not arow[key] is None:
-                        values = arow[key].rsplit(" ")
-                        rowret[key] = values
-                    else:
-                        rowret[key] = []
+                    '''
+                    elif key in listvalues:
+                        if not arow[key] is None:
+                            values = arow[key].rsplit(" ")
+                            rowret[key] = values
+                        else:
+                            rowret[key] = []
+                    '''
                 else:
                     rowret[key] = arow[key]
             ret.append(rowret)

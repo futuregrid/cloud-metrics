@@ -21,8 +21,10 @@ class FGHighcharts:
 
     title = ""
     subtitle = ""
+    tooltip = ""
     xAxis_label = []
     yAxis_title = ""
+    xAxis_categories = None
     data = None
     series_name = None
     width = 0
@@ -57,24 +59,20 @@ class FGHighcharts:
             self.data = self.convert_dict_to_list(data)
             #self.sort_data()
             try:
-                print 1
-                print data
                 self.human_sort_data()
-                print data
             except:
                 try:
-                    print 10
                     self.sort_data()
-                    print 2
-                    print data
                 except:
+                    print sys.exc_info()
                     pass
+
                 pass
         else:
             self.reducing_list()
 
     def reducing_list(self):
-        if type(self.data) != type([]) or type(self.data[0]) != type([]):
+        if not isinstance(self.data, (list)) or not isinstance(self.data[0], (list)):
             return
 
         data = sorted(self.data, key=lambda val:val[1], reverse=True)
@@ -197,7 +195,7 @@ class FGHighcharts:
         self.set_height(new_height)
 
     def convert_datetime2UTC(self, record):
-        if type(record[0]) is datetime:
+        if isinstance(record[0], (datetime)):
             utc_mill = int(record[0].strftime("%s")) * 1000
             return [utc_mill, record[1]]
         else:
@@ -221,7 +219,6 @@ class FGHighcharts:
             f.write(self.html_txt)
             f.close()
         except:
-            print sys.exc_info()
             raise
 
     def set_chart_options(self):

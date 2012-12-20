@@ -46,7 +46,9 @@ class FGMetrics(Cmd):
         pprint(vars(self.instances.db), indent=2)
 
     def show_filter_setting(self, param=None):
-        pprint(vars(self.search.get_filter()))
+        res = vars(self.search.get_filter()).copy()
+        del res["selected"]
+        pprint(res)
 
     def measure(self):
 

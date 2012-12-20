@@ -42,6 +42,15 @@ class FGCharts:
     def set_title(self, name):
         self.title = name
 
+    def set_title_beta(self, metric, period, groupby):
+        title = metric
+        plus = ""
+        if period:
+            plus = " (" + str(period) + ")"
+        if groupby:
+            plus = " by " + str(groupby) + plus
+        self.title = title + plus
+
     def set_subtitle(self, name):
         self.subtitle = name
  

@@ -38,6 +38,12 @@ class FGCharts:
 
     def set_data(self, data):
         self.data = data
+
+    def set_title(self, name):
+        self.title = name
+
+    def set_subtitle(self, name):
+        self.subtitle = name
  
     def clear_data(self):
         self.xaxis = None

@@ -129,6 +129,8 @@ class FGMetrics(Cmd):
         for key, data in self.search.get_metric().iteritems():
             #self.chart.set_xaxis(key) TBD
             self.chart.set_data_beta(data, self.search.metric, self.search.period, self.search.groupby)
+        self.chart.set_title(self.search.metric)
+        self.chart.set_subtitle("source: " + str(self.search.platform) + " on " + str(self.search.nodename))
         self.chart.display()
 
     def do_refresh(self, line, opts=None):

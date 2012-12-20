@@ -53,14 +53,20 @@ class FGHighcharts:
 
     def set_data(self, data):
         self.data = data
-        if type(data) == type({}):
+        if isinstance(data, (dict)):
             self.data = self.convert_dict_to_list(data)
             #self.sort_data()
             try:
+                print 1
+                print data
                 self.human_sort_data()
+                print data
             except:
                 try:
+                    print 10
                     self.sort_data()
+                    print 2
+                    print data
                 except:
                     pass
                 pass
@@ -286,11 +292,13 @@ class FGHighcharts:
 
         else:
             #default options
-            self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
+            self.set_chart_option("chart", {"renderTo": 'container', "type": self.chart_type})
+            if not self.xAxis_categories:
+                self.set_xaxis(list(zip(*self.data)[0]))
             self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
-            self.set_chart_option("yAxis", {"min": 0, "title": { "text": self.yAxis_title }})
+            self.set_chart_option("yAxis", {"min": 0, "title": { "text": self.yAxis_title or ""}})
             self.set_chart_option("tooltip", {"formatter": "function() { return ''+ " + self.tooltip + "; }" })
-            self.set_chart_option("plotOptions", { "column": { "pointPadding": 0.2, "borderWidth": 0 } })
+            self.set_chart_option("plotOptions", { self.chart_type: { "dataLabels":{"enabled":1}, "pointPadding": 0.2, "borderWidth": 0 } })
             self.series_type = self.chart_type
 
     def set_chart_option(self, key, val):

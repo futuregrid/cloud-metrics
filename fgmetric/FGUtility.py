@@ -46,9 +46,13 @@ class FGUtility:
             return None
 
     @staticmethod
-    def debug():
+    def debug(output=False):
+        timestamp = datetime.datetime.now().strftime('%s.%f')
         f1 = sys._getframe(1)
-        return f1.f_code.co_filename, f1.f_code.co_name, f1.f_lineno
+        msg = f1.f_code.co_filename, f1.f_code.co_name, f1.f_lineno, timestamp
+        if output:
+            print msg
+        return msg
 
     @staticmethod
     def insert_userinfo():

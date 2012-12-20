@@ -61,6 +61,7 @@ class FGSearch:
 
     def init_names(self):
         self.names = dotdict({"metric": dotdict({"count":"count", 
+                                                "countusers":"countusers",
                                                 "runtime":"runtime", 
                                                 "cores":["cpu", "ccvm_cores", "core", "cores"], 
                                                 "memories":["mem", "ccvm_mem", "memory", "memories"], 

@@ -57,13 +57,19 @@ class FGMetrics(Cmd):
 
         print "Calculating metrics in " + str(total_counts) + " records...\n"
 
+        cnt = 0
+        cnt2 = 0
+        cnt3 = 0
         for i in range(0, total_counts):
             try:
                 instance = self.instances.get_data(i, self.search._is_userinfo_needed())[0]
+                cnt += 1
                 if not self.search._is_in_date(instance):
                     continue;
+                cnt2 += 1
                 if not self.search._is_filtered(instance):
                     continue;
+                cnt3 += 1
 
                 res = self.search.collect(instance)
 
@@ -72,6 +78,7 @@ class FGMetrics(Cmd):
                 raise
 
         print self.search.get_metric()
+        #print cnt, cnt2, cnt3
 
         '''
         I am where to create a dict/list for data of charts.

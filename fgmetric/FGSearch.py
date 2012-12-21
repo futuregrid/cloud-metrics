@@ -4,6 +4,7 @@ from fgmetric.FGUtility import dotdict
 from math import ceil
 from pprint import pprint
 from fgmetric.FGUtility import FGUtility
+from collections import Counter
 
 class FGSearch:
 
@@ -34,6 +35,7 @@ class FGSearch:
         self.keys_to_select_extra = { 'ProjectId', 'Title', 'Institution', 'ProjectLead' } #_mem', 'ccvm_cores', 'ccvm_disk' }
         self.init_names()
         self.userinfo_needed = False
+        self.cache = True
 
     def init_options(self):
         self.from_date = None
@@ -52,6 +54,8 @@ class FGSearch:
 
         self.groups = ["All"]
         self.groupby = None
+
+        self.distinct = None
  
     def init_stats(self):
         self.metric = None
@@ -133,6 +137,9 @@ class FGSearch:
     def set_period(self, name):
         self.period = name
 
+    def set_distinct(self, val):
+        self.distinct = {}
+
     def get_filter(self, name=None):
         if name and name in self:
             return self.name
@@ -148,11 +155,14 @@ class FGSearch:
 
         if self._is_searching_all():
             return True
-        if (instance["t_start"] > self.to_date) or (instance["t_end"] and instance["t_end"] < self.from_date):
+        if (instance["t_start"] > self.to_date) or (instance["t_end"] < self.from_date):
             return False
         #Newly added for exception
-        if instance["trace"]["extant"]["stop"] and instance["trace"]["extant"]["stop"] < self.from_date:
-            return False
+        try:
+            if instance["trace"]["extant"]["stop"] < self.from_date:
+                return False
+        except:
+            pass
         return True
 
     def _is_filtered(self, instance):
@@ -180,6 +190,9 @@ class FGSearch:
         if self._is_userinfo_needed():
             extra = self.get(instance, self.keys_to_select_extra)
         default.update(extra)
+
+        if self.cache:
+            self.store2cache(instance) # for later use
         return default
 
     def get(self, instance, keys):
@@ -188,7 +201,7 @@ class FGSearch:
     def get_val(self, _dict, keys):
         return list(_dict[key] for key in keys)
 
-    def get_vals(self, _dict, keys):
+    def get_values(self, _dict, keys):
         ''' Same as get_val but handles non-exist keys '''
         lis = []
         if not keys:
@@ -201,35 +214,56 @@ class FGSearch:
                 lis.append(key)
         return lis
 
+    def get_groups(self, ins):
+        return self.get_values(ins, self.groups)
+
     def get_metric(self):
         return self.stats
 
     def collect(self, instance):
-        #metric = self.metric
-        selected = self.select(instance)
-        self.appendi(selected)
-        glist = self.get_vals(selected, self.groups)
-        value = self.get_metricfactor(self.columns, selected)
-        self.update_metrics(glist, self.stats, self.metric, value)
+        instance = self.select(instance)
+        self.get_statistics(instance)
         return True
+
+    def get_statistics(self, instance):
+        groups = self.get_groups(instance) # if groupby is set
+        value = self.get_metric_factor(self.columns, instance)
+        self.update_metrics(groups, self.stats, self.metric, value)
+
+    def _is_unique(self, key, value):
+        ''' if value is unique, return itself. Otherwise return None'''
+        if self.distinct is None:
+            return value
+
+        try:
+            res = value
+            if self.distinct[key][value] > 0:
+                res = None
+        except:
+            self.distinct[key] = Counter()
+            pass
+
+        self.distinct[key][value] += 1
+
+        return res
 
     def update_metrics(self, glist, mdict, key, value):
         if len(glist) == 0:
             new = value
+            total = "Total"
             if key in mdict:
-                old = mdict[key]["Total"]
+                old = mdict[key][total]
             else:
                 old = None
-                mdict[key] = { "Total" : None }
-            mdict[key]["Total"] = self.calculate(old, new)
-            ############################
+                mdict[key] = { total : None }
+            new = self._is_unique(total, new)
+            mdict[key][total] = self.calculate(old, new)
             # Add daily dict temporarily
             try:
                 period_func = getattr(self, "_divide_into_" + str(self.period))
                 period_func(mdict[key], value)
             except:
                 pass
-            # ##########################
             try:
                 period_func = getattr(self, "_groupby_" + str(self.groupby))
                 period_func(mdict[key], value)
@@ -358,7 +392,7 @@ class FGSearch:
     def update_metric(self, selected):
         metric = self.metric
         index = selected[self.groupby]
-        new = self.get_metricfactor(self.columns, selected)
+        new = self.get_metric_factor(self.columns, selected)
         old = None
 
         if index in self.stats:
@@ -367,7 +401,7 @@ class FGSearch:
 
         ''' two issues still I have
         1) how to handle 2 groupby s, one nested dict needed
-        2) get_metricfactor will get an error due to missing groupby columns. should I change it back to use instance?
+        2) get_metric_factor will get an error due to missing groupby columns. should I change it back to use instance?
         '''
 
     def _divide_into_None(self, mdict, value):
@@ -475,36 +509,54 @@ class FGSearch:
 
         if metric == self.names.metric.count:
             self.calc = "count"
+            # "count(*)"
+        elif metric == self.names.metric.countusers:
+            self.calc = "count"
+            self.columns = ["ownerId"]
+            self.set_distinct(self.columns)
+            # "count(distinct ownerId)" 
         elif metric == self.names.metric.runtime:
             self.calc = "sum"
             self.columns = ["duration"]
             self.groups = ["ownerId"]
+            # "sum(duration)"
+            # group by ownerId
         elif metric in self.names.metric.cores:
             self.calc = "sum"
             self.columns = ["ccvm", "cores"]
             self.groups = ["instance.cloudPlatformIdRef"]
             self.period = "daily"
+            # "sum(ccvm_cores)"
+            # group by instance.cloudPlatformIdRef, CAST(date as date)
         elif metric in self.names.metric.memories:
             self.calc = "sum"
             self.columns = ["ccvm", "mem"]
             self.groups = ["instance.cloudPlatformIdRef"]
             self.period = "daily"
+            # "sum(ccvm_mem)"
+            # group by instance.cloudPlatformIdRef, CAST(date as date)
         elif metric in self.names.metric.disks:
             self.calc = "sum"
             self.columns = ["ccvm", "disk"]
             self.groups = ["instance.cloudPlatformIdRef"]
             self.period = "daily"
+            # "sum(ccvm_disk)"
+            # group by instance.cloudPlatformIdRef, CAST(date as date)
 
-    def get_metricfactor(self, columns, selected):
+    # Recursion is too expensive in Python. Need to be replaced to a iteration.
+    def get_metric_factor(self, columns, selected):
         if columns is None:
             return 1
-        if len(columns) == 0:
+        elif len(columns) == 0:
             return selected
-        return self.get_metricfactor(columns[1:], selected[columns[0]])
+
+        return self.get_metric_factor(columns[1:], selected[columns[0]])
 
     def calculate(self, old, new):
         if self.calc == self.names.calc.count:
-            return (old or 0) + 1
+            if new:
+                return (old or 0) + 1
+            return (old or 0)
         elif self.calc == self.names.calc.summation:
             return (old or 0) + new
         elif self.calc == self.names.calc.average:
@@ -514,7 +566,7 @@ class FGSearch:
         elif self.calc == self.names.calc.maximum:
             return max(old or new, new)
 
-    def appendi(self, selected):
+    def store2cache(self, selected):
         self.selected.append(selected)
         self.selected_idx = len(self.selected)
 

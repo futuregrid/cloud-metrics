@@ -50,7 +50,9 @@ class FGUtility:
         timestamp = datetime.datetime.now().strftime('%s.%f')
         f1 = sys._getframe(1)
         msg = f1.f_code.co_filename, f1.f_code.co_name, f1.f_lineno, timestamp
-        if output:
+        if isinstance(output, (str)) and len(output) != 0:
+            print str(msg) + output
+        elif output:
             print msg
         return msg
 

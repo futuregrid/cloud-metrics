@@ -33,16 +33,19 @@ class GMT_5(tzinfo):
 
 
 def convert_timezone(origin, from_tz, to_tz):
-    if from_tz == "local()":
-        from_tz = strftime("%Z", gmtime())
-    if from_tz == "PST":
-        from_tz = GMT_8()
-    if to_tz == "EST":
-        to_tz = GMT_5()
-        
-    origin = origin.replace(tzinfo=from_tz)
-    new = origin.astimezone(to_tz)
-    return new
+    try:
+        if from_tz == "local()":
+            from_tz = strftime("%Z", gmtime())
+        if from_tz == "PST":
+            from_tz = GMT_8()
+        if to_tz == "EST":
+            to_tz = GMT_5()
+            
+        origin = origin.replace(tzinfo=from_tz)
+        new = origin.astimezone(to_tz)
+        return new
+    except:
+        return origin
 #dt2 = datetime(2012, 12, 21, 00, 19, 00, tzinfo=GMT_8())
 #print dt2.dst()
 #print dt2.utcoffset()

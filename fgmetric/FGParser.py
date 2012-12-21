@@ -13,6 +13,7 @@ from collections import deque
 import argparse
 
 import fgmetric.FGEucaMetricsDB
+import fgmetric.FGTimeZone
 
 manual="""
 MANUAL PAGE DRAFT
@@ -444,6 +445,7 @@ def parse_type_and_date(line,data):
     try:
 	    m = re.search( r'\[(.*)\]\[(.*)\]\[(.*)\](.*)', line, re.M|re.I)
 	    data['date'] = datetime.strptime(m.group(1), '%a %b %d %H:%M:%S %Y')
+            data['date'] = FGTimeZone.convert_timezone(data['date'], global_timezone, "EST")
 	    data['id']   = m.group(2)
 	    data['msgtype'] = m.group(3)
 	    rest =  m.group(4)
@@ -837,6 +839,8 @@ def utility_insert_userinfo_from_file_or_std():
 
     i.write_userinfo_to_db()
 
+global_timezone = "local()" #PST, EST
+
 def main():
 
     users = {}
@@ -866,8 +870,13 @@ def main():
             help="specify function names which you want to parse (types: print_ccInstance, refresh_resources)")
     parser.add_argument("-z", "--gzip", action="store_true", default=False,
             help="gzip compressed files will be loaded")
+    parser.add_argument("-tz", "--timezone", dest="timezone", default="local()",
+            help="gzip compressed files will be loaded")
+
     args = parser.parse_args()
     print args
+
+    global_timezone = args.timezone
     
     '''
     Parameters

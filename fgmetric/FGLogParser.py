@@ -18,6 +18,7 @@ import argparse
 import fileinput
 
 from fgmetric.FGInstances import FGInstances
+import fgmetric.FGTimeZone
 
 manual="""
 MANUAL PAGE DRAFT
@@ -137,6 +138,7 @@ class FGLogParser:
         try:
                 m = re.search( r'\[(.*)\]\[(.*)\]\[(.*)\](.*)', line, re.M|re.I)
                 data['date'] = datetime.strptime(m.group(1), '%a %b %d %H:%M:%S %Y')
+                data['date'] = FGTimeZone.convert_timezone(data['date'], self.args.timezone, "EST")
                 data['id']   = m.group(2)
                 data['msgtype'] = m.group(3)
                 rest =  m.group(4)
@@ -282,6 +284,8 @@ class FGLogParser:
                 help="Cloud platform version. (e.g. 2.9 for nimbus, essex for openstack, and  2.0 or 3.1 for eucalyptus)")
         parser.add_argument("-n", "--nodename", required=True,
                 help="Hostname of the cloud platform, required. (e.g., hotel, sierra, india, alamo, foxtrot)")
+        parser.add_argument("-tz", "--timezone", dest="timezone", default="local()",
+                help="gzip compressed files will be loaded")
 
         args = parser.parse_args()
         print args

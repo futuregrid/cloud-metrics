@@ -138,7 +138,7 @@ class FGLogParser:
         try:
                 m = re.search( r'\[(.*)\]\[(.*)\]\[(.*)\](.*)', line, re.M|re.I)
                 data['date'] = datetime.strptime(m.group(1), '%a %b %d %H:%M:%S %Y')
-                data['date'] = FGTimeZone.convert_timezone(data['date'], self.args.timezone, "EST")
+                data['date'] = fgmetric.FGTimeZone.convert_timezone(data['date'], self.args.timezone, "EST")
                 data['id']   = m.group(2)
                 data['msgtype'] = m.group(3)
                 rest =  m.group(4)
@@ -160,6 +160,7 @@ class FGLogParser:
                 return
         except:
                 data['linetype'] = "IGNORE"
+                #print sys.exc_info()
                 return
 
     def ccInstance_parser(self, rest, data):
@@ -433,8 +434,8 @@ class FGLogParser:
         self.instances.write_userinfo_to_db()
 
         self.print_counter("======================", "")
-        self.print_counter("instance stored total", len(self.instances.data))
-        self.print_counter("userinfo stored total", len(self.instances.userinfo_data))
+        self.print_counter("instance stored total", len(self.instances.instance))
+        self.print_counter("userinfo stored total", len(self.instances.userinfo))
 
     def get_cloudplatform_info(self):
         self.instances.db.connect()

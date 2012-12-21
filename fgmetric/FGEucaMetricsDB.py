@@ -398,10 +398,10 @@ class FGEucaMetricsDB(object):
 
 
         wquery += " on duplicate key update " \
-                + "t_end=" \
-                + self._fmtstr(str(entryObj["t_end"])) + "," \
-                + " duration=" \
-                + str(entryObj["duration"]) + "," \
+                + "t_end=GREATEST(" \
+                + self._fmtstr(str(entryObj["t_end"])) + ") ," \
+                + " duration=GREATEST(duration, " \
+                + str(entryObj["duration"]) + ") ," \
                 + " trace_pending_start=LEAST(trace_pending_start, " \
                 + self._fmtstr(str(entryObj["trace"]["pending"]["start"])) + ") ," \
                 + " trace_pending_stop=GREATEST(trace_pending_stop, " \
@@ -414,10 +414,10 @@ class FGEucaMetricsDB(object):
                 + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + ") ," \
                 + " trace_teardown_stop=GREATEST(trace_teardown_stop, " \
                 + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + ") ," \
-                + " date=" \
-                + self._fmtstr(str(entryObj["date"])) + "," \
-                + " state=" \
-                + self._fmtstr(entryObj["state"])
+                + " date=GREATEST(date, " \
+                + self._fmtstr(str(entryObj["date"])) + ")," \
+                + " state=IF(state=\"Pending\", " + self._fmtstr(entryObj["state"]) + ", " \
+                + " IF(state=\"Extant\", IF(\"Teardown\"=" + self._fmtstr(entryObj["state"]) + ", " + self._fmtstr(entryObj["state"]) + ", state), state)) "
 
         #print wquery
         try:

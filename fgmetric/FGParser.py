@@ -248,8 +248,11 @@ class Instances:
             except:
                 current = datarecord
 
-            if not ("t_end" in current):
-            #time in the future
+            try:
+                current["t_end"]
+            except:
+                #if not ("t_end" in current):
+                #time in the future
                 f = self.in_the_future
 
                 current["trace"] = {
@@ -261,7 +264,7 @@ class Instances:
                 current["t_start"] = current["ts"] # for naming consitency
                 current["duration"] = 0.0
 
-            current["t_end"] = min(current["t_end"], t)
+            current["t_end"] = max(current["t_end"], t)
             current["trace"][status]["start"] = min(current["trace"][status]["start"],t)
             current["trace"][status]["stop"] = max(current["trace"][status]["stop"],t)
 
@@ -333,6 +336,7 @@ class Instances:
 		return "extant"
 
     def get_t_end(self, row):
+        return row["date"]
 	if row["state"] == "Teardown":
 		return row["date"]
 	else:
@@ -344,8 +348,10 @@ class Instances:
 	last = row["date"]
 
 	if row["state"] == "Teardown":
-		if row["t_end"]:
-			last = min(row["date"], row["t_end"])
+            try:
+                last = max(row["date"], row["t_end"])
+            except:
+                pass
 
 	t_delta = (last - start).total_seconds()
 	if t_delta < 0:

@@ -166,11 +166,11 @@ class FGSearch:
         return True
 
     def _is_filtered(self, instance):
-        if self.username and self.username != instance["ownerId"]:
-            return False
         if self.nodename and self.nodename != instance["hostname"]:
             return False
         if self.platform and self.platform != instance["cloudplatform.platform"]:
+            return False
+        if self.username and self.username != instance["ownerId"]:
             return False
         return True
 

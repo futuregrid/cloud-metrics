@@ -106,8 +106,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             projectlead = ""
             group = ""
     
-            if not values["t_end"]:
-                values["t_end"] = self.instances.in_the_future
+            #if not values["t_end"]:
+            #    values["t_end"] = self.instances.in_the_future
 
             if not process_all:
                 #process_entry = (values['ts'] >= date_from) and (values['ts'] < date_to)

@@ -398,7 +398,7 @@ class FGEucaMetricsDB(object):
 
 
         wquery += " on duplicate key update " \
-                + "t_end=GREATEST(" \
+                + "t_end=GREATEST(t_end, " \
                 + self._fmtstr(str(entryObj["t_end"])) + ") ," \
                 + " duration=GREATEST(duration, " \
                 + str(entryObj["duration"]) + ") ," \

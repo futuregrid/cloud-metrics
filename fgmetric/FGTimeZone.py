@@ -43,6 +43,7 @@ def convert_timezone(origin, from_tz, to_tz):
             
         origin = origin.replace(tzinfo=from_tz)
         new = origin.astimezone(to_tz)
+        new.replace(tzinfo=None) # remove offset-aware to be a offset-naive
         return new
     except:
         return origin

@@ -41,6 +41,7 @@ class FGSearch:
         self.from_date = None
         self.to_date = None
         self.day_count = 0
+        self.months = None
         self.project = None
         self.nodename = None
         self.platform = None
@@ -108,7 +109,7 @@ class FGSearch:
 
         self.groups = glist
 
-    def set_date(self, dates):
+    def set_dates(self, dates):
         """Set search/analyze period
 
             Args:
@@ -133,6 +134,33 @@ class FGSearch:
         except:
             print "from and to are not specified."
             pass
+
+    def _is_in_month(self, month, from_date, to_date):
+        months = self.get_months_between_dates(from_date, to_date)
+        return set(month) & set(months)
+
+    def get_months_between_dates(self, from_date, to_date):
+        """ Get months between two dates
+
+            Args:
+                from_date (datetime)
+                to_date (datetime)
+            Returns:
+                list
+            Raises:
+                n/a
+        """
+
+        start_month = from_date.month
+        end_month = (to_date.year - from_date.year) * 12 + to_date.month + 1
+        dates = [datetime(year = yr, month = mn, day = 1) \
+                for (yr, mn) in (((m - 1) / 12 + from_date.year, (m - 1) % 12 + 1) \
+                for m in range(start_month, end_month))]
+        return dates
+
+    def set_months(self):
+        dates = self.get_months_between_date(self.from_date, self.to_date)
+        self.months = dates
 
     def set_period(self, name):
         self.period = name
@@ -182,7 +210,8 @@ class FGSearch:
         return True
 
     def set_search_date(self, from_date, to_date):
-        self.set_date(from_date, to_date)
+        self.set_dates(from_date, to_date)
+        self.set_months()
 
     def select(self, instance):
         default = self.get(instance, self.keys_to_select)
@@ -249,15 +278,7 @@ class FGSearch:
 
     def update_metrics(self, glist, mdict, key, value):
         if len(glist) == 0:
-            new = value
-            total = "Total"
-            if key in mdict:
-                old = mdict[key][total]
-            else:
-                old = None
-                mdict[key] = { total : None }
-            new = self._is_unique(total, new)
-            mdict[key][total] = self.calculate(old, new)
+            self.calculate_total(mdict, key, value)
             # Add daily dict temporarily
             try:
                 period_func = getattr(self, "_divide_into_" + str(self.period))
@@ -276,6 +297,17 @@ class FGSearch:
         if not group in mdict:
             mdict[group] = {}
         return self.update_metrics(glist, mdict[group], key, value)
+
+    def calculate_total(self, mdict, key, value):
+        new = value
+        total = "Total"
+        try:
+            old = mdict[key][total]
+        except:
+            old = None
+            mdict[key] = { total : None }
+        new = self._is_unique(total, new)
+        mdict[key][total] = self.calculate(old, new)
 
     def _groupby_None(self, *args):
         return
@@ -389,7 +421,12 @@ class FGSearch:
         return [dist[b] for b in range(bins)]
     '''
 
+    #Outdated
     def update_metric(self, selected):
+        ''' two issues still I have
+        1) how to handle 2 groupby s, one nested dict needed
+        2) get_metric_factor will get an error due to missing groupby columns. should I change it back to use instance?
+        '''
         metric = self.metric
         index = selected[self.groupby]
         new = self.get_metric_factor(self.columns, selected)
@@ -399,11 +436,6 @@ class FGSearch:
             old = self.stats[index][metric]
         self.stats[index][metric] = self.calculate(old, new)
 
-        ''' two issues still I have
-        1) how to handle 2 groupby s, one nested dict needed
-        2) get_metric_factor will get an error due to missing groupby columns. should I change it back to use instance?
-        '''
-
     def _divide_into_None(self, mdict, value):
         return
 
@@ -411,19 +443,17 @@ class FGSearch:
         selected = self.get_recentlyselected()
         t_start = selected['t_start']
         t_end = selected['t_end']
-        #self.start_date
-        #self.to_date
-        #self.stats
-        #val = mdict[self.metric]
 
-        if not self.period in mdict:
+        try:
+            mdict[self.period]
+        except:
             mdict[self.period] = {}
 
         for single_date in (self.from_date + timedelta(n) for n in range(self.day_count)):
             res = self.calculate_daily(t_start, t_end, single_date, val)
-            if single_date in mdict[self.period]:
+            try:
                 mdict[self.period][single_date] += res
-            else:
+            except:
                 mdict[self.period][single_date] = res
 
             ''' this is where I need to put calculation of daily basis metrics.
@@ -455,7 +485,31 @@ class FGSearch:
             3)
 
             '''
-        return
+
+    def _divide_into_monthly(self, mdict, new_val):
+        try:
+            mdict[self.period]
+        except:
+            mdict[self.period] = {}
+
+        for single_date in self.months:
+            #year_month = single_date.strftime("%Y-%m")
+            try:
+                old_val = mdict[self.period][single_date]
+            except:
+                mdict[self.period][single_date] = None
+                old_val = None
+            mdict[self.period][single_date] = self.calculate_monthly(single_date, old_val, new_val)
+ 
+    def calculate_monthly(self, month, old_val, new_val):
+
+        selected = self.get_recentlyselected()
+        res = self._is_in_month(month, selected["t_start"], selected["t_end"])
+        if res:
+            new_val = self._is_unique(self.period + str(single_date), new_val)
+            return self.calculate(old_val, new_val)
+        else:
+            return old_val
 
     def calculate_daily(self, t_start, t_end, single_date, value):
         metric = self.metric
@@ -473,9 +527,11 @@ class FGSearch:
 
         # temporarily added for the exception
         selected = self.get_recentlyselected()
-        if selected["trace"]["extant"]["stop"]:
+        try:
             if selected["trace"]["extant"]["stop"] > datetime(1970, 1, 1) and selected["trace"]["extant"]["stop"] < single_start:
                 return 0
+        except:
+            pass
 
         if metric == self.names.metric.runtime:
             if t_start < single_start:
@@ -558,22 +614,29 @@ class FGSearch:
                 return (old or 0) + 1
             return (old or 0)
         elif self.calc == self.names.calc.summation:
-            return (old or 0) + new
+            return (old or 0) + (new or 0)
         elif self.calc == self.names.calc.average:
-            return (old or 0) + new / 2
+            return ((old or 0) + (new or 0)) / 2
         elif self.calc == self.names.calc.minimum:
-            return min(old or new, new)
+            try:
+                return min(old or new, new)
+            except:
+                return 0
         elif self.calc == self.names.calc.maximum:
-            return max(old or new, new)
+            try:
+                return max(old or new, new)
+            except:
+                return 0
 
     def store2cache(self, selected):
         self.selected.append(selected)
         self.selected_idx = len(self.selected)
 
     def get_recentlyselected(self):
-        if self.selected_idx == 0:
+        try:
+            return self.selected[self.selected_idx - 1]
+        except:
             return
-        return self.selected[self.selected_idx - 1]
 
     def show_None(self, param=None):
         self.show_filter()

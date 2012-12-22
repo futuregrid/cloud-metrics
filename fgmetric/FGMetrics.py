@@ -70,7 +70,6 @@ class FGMetrics(Cmd):
                 if not self.search._is_filtered(instance):
                     continue;
                 cnt3 += 1
-
                 res = self.search.collect(instance)
 
             except:

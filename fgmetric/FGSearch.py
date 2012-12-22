@@ -109,7 +109,7 @@ class FGSearch:
 
         self.groups = glist
 
-    def set_dates(self, dates):
+    def set_date(self, dates):
         """Set search/analyze period
 
             Args:
@@ -131,13 +131,16 @@ class FGSearch:
             self.from_date = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
             self.to_date = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
             self.day_count = (self.to_date - self.from_date).days
+
+            # If dates are set, months are also set.
+            self.set_months()
         except:
             print "from and to are not specified."
             pass
 
     def _is_in_month(self, month, from_date, to_date):
         months = self.get_months_between_dates(from_date, to_date)
-        return set(month) & set(months)
+        return set([month]) & set(months)
 
     def get_months_between_dates(self, from_date, to_date):
         """ Get months between two dates
@@ -159,7 +162,7 @@ class FGSearch:
         return dates
 
     def set_months(self):
-        dates = self.get_months_between_date(self.from_date, self.to_date)
+        dates = self.get_months_between_dates(self.from_date, self.to_date)
         self.months = dates
 
     def set_period(self, name):
@@ -183,7 +186,12 @@ class FGSearch:
 
         if self._is_searching_all():
             return True
-        if (instance["t_start"] > self.to_date) or (instance["t_end"] < self.from_date):
+        try:
+            if (instance["t_start"] > self.to_date) or (instance["t_end"] < self.from_date):
+                return False
+        except:
+            # openstack data doesnt have t_end sometimes. 
+            # e.g. t_end is None (0000-00-00 00:00:00)
             return False
         #Newly added for exception
         try:
@@ -210,8 +218,7 @@ class FGSearch:
         return True
 
     def set_search_date(self, from_date, to_date):
-        self.set_dates(from_date, to_date)
-        self.set_months()
+        self.set_date(from_date, to_date)
 
     def select(self, instance):
         default = self.get(instance, self.keys_to_select)
@@ -506,7 +513,7 @@ class FGSearch:
         selected = self.get_recentlyselected()
         res = self._is_in_month(month, selected["t_start"], selected["t_end"])
         if res:
-            new_val = self._is_unique(self.period + str(single_date), new_val)
+            new_val = self._is_unique(str(self.period) + str(month), new_val)
             return self.calculate(old_val, new_val)
         else:
             return old_val

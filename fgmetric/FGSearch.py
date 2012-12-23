@@ -1,4 +1,5 @@
 import re
+import sys
 from datetime import *
 from fgmetric.FGUtility import dotdict
 from math import ceil
@@ -61,7 +62,6 @@ class FGSearch:
     def init_stats(self):
         self.metric = None
         self.selected = []
-        self.selected_idx = 0
         self.stats = {}
 
     def init_names(self):
@@ -161,6 +161,44 @@ class FGSearch:
                 for m in range(start_month, end_month))]
         return dates
 
+    def get_dates_between_dates(self, from_date, to_date):
+        """ Get dates between two dates
+
+            Args:
+                from_date (datetime)
+                to_date (datetime)
+            Returns:
+                list
+            Raises:
+                n/a
+        """
+
+        try:
+            days = (to_date + datetime.timedelta(days=1) - from_date).days
+            return [from_date + timedelta(days=n) for n in range(days)]
+        except:
+            FGUtility.debug(str(sys.exc_info()))
+
+    def create_dates_between_dates(self, from_date, to_date, val=None):
+        """ Get dates between two dates
+
+            Args:
+                from_date (datetime)
+                to_date (datetime)
+            Returns:
+                dict 
+            Raises:
+                n/a
+        """
+
+        try:
+            from_date = datetime(from_date.year, from_date.month, from_date.day)
+            to_date = datetime(to_date.year, to_date.month, to_date.day)
+            days = (to_date + timedelta(days=1) - from_date).days
+            return {from_date + timedelta(days=n):val for n in range(days)}
+        except:
+            FGUtility.debug(str(sys.exc_info()))
+
     def set_months(self):
         dates = self.get_months_between_dates(self.from_date, self.to_date)
         self.months = dates
@@ -227,8 +265,7 @@ class FGSearch:
             extra = self.get(instance, self.keys_to_select_extra)
         default.update(extra)
 
-        if self.cache:
-            self.store2cache(instance) # for later use
+        self.store2cache(instance) # for later use
         return default
 
     def get(self, instance, keys):
@@ -250,7 +287,8 @@ class FGSearch:
                 lis.append(key)
         return lis
 
-    def get_groups(self, ins):
+    def get_groups(self):
+        ins = self.get_recentlyselected()
         return self.get_values(ins, self.groups)
 
     def get_metric(self):
@@ -258,13 +296,12 @@ class FGSearch:
 
     def collect(self, instance):
         instance = self.select(instance)
-        self.get_statistics(instance)
+        self.get_statistics()
         return True
 
-    def get_statistics(self, instance):
-        groups = self.get_groups(instance) # if groupby is set
-        value = self.get_metric_factor(self.columns, instance)
-        self.update_metrics(groups, self.stats, self.metric, value)
+    def get_statistics(self):
+        groups = self.get_groups() # if groupby is set
+        self.update_metrics(groups, self.stats, self.metric)
 
     def _is_unique(self, key, value):
         ''' if value is unique, return itself. Otherwise return None'''
@@ -283,18 +320,18 @@ class FGSearch:
 
         return res
 
-    def update_metrics(self, glist, mdict, key, value):
+    def update_metrics(self, glist, mdict, key):
         if len(glist) == 0:
-            self.calculate_total(mdict, key, value)
+            self.calculate_total(mdict, key)
             # Add daily dict temporarily
             try:
                 period_func = getattr(self, "_divide_into_" + str(self.period))
-                period_func(mdict[key], value)
+                period_func(mdict[key])
             except:
                 pass
             try:
                 period_func = getattr(self, "_groupby_" + str(self.groupby))
-                period_func(mdict[key], value)
+                period_func(mdict[key])
             except:
                 pass
  
@@ -303,10 +340,10 @@ class FGSearch:
         group = glist.pop(0)
         if not group in mdict:
             mdict[group] = {}
-        return self.update_metrics(glist, mdict[group], key, value)
+        return self.update_metrics(glist, mdict[group], key)
 
-    def calculate_total(self, mdict, key, value):
-        new = value
+    def calculate_total(self, mdict, key):
+        new = self.get_metric_factor(self.columns, self.get_recentlyselected())
         total = "Total"
         try:
             old = mdict[key][total]
@@ -319,7 +356,8 @@ class FGSearch:
     def _groupby_None(self, *args):
         return
 
-    def _groupby_walltime(self, mdict, val):
+    def _groupby_walltime(self, mdict):
+        val = self.get_metric_factor(self.columns, self.get_recentlyselected())
         selected = self.get_recentlyselected()
         t_delta = self.get_t_delta(selected)
 
@@ -345,11 +383,12 @@ class FGSearch:
             mdict[self.groupby]["h. more"] += val
         return
     
-    def _groupby_project(self, mdict, val):
+    def _groupby_project(self, mdict):
         if not self._is_userinfo_needed():
             return
 
         selected = self.get_recentlyselected()
+        val = self.get_metric_factor(self.columns, selected)
 
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
@@ -361,11 +400,12 @@ class FGSearch:
 
         return
 
-    def _groupby_institution(self, mdict, val):
+    def _groupby_institution(self, mdict):
         if not self._is_userinfo_needed():
             return
 
         selected = self.get_recentlyselected()
+        val = self.get_metric_factor(self.columns, selected)
 
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
@@ -377,11 +417,12 @@ class FGSearch:
 
         return
  
-    def _groupby_projectleader(self, mdict, val):
+    def _groupby_projectleader(self, mdict):
         if not self._is_userinfo_needed():
             return
 
         selected = self.get_recentlyselected()
+        val = self.get_metric_factor(self.columns, selected)
 
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
@@ -428,72 +469,52 @@ class FGSearch:
         return [dist[b] for b in range(bins)]
     '''
 
-    #Outdated
-    def update_metric(self, selected):
-        ''' two issues still I have
-        1) how to handle 2 groupby s, one nested dict needed
-        2) get_metric_factor will get an error due to missing groupby columns. should I change it back to use instance?
-        '''
-        metric = self.metric
-        index = selected[self.groupby]
-        new = self.get_metric_factor(self.columns, selected)
-        old = None
-
-        if index in self.stats:
-            old = self.stats[index][metric]
-        self.stats[index][metric] = self.calculate(old, new)
-
-    def _divide_into_None(self, mdict, value):
+    def _divide_into_None(self, mdict):
         return
 
-    def _divide_into_daily(self, mdict, val):
-        selected = self.get_recentlyselected()
-        t_start = selected['t_start']
-        t_end = selected['t_end']
-
+    def _divide_into_daily(self, mdict):
         try:
             mdict[self.period]
         except:
             mdict[self.period] = {}
+            for single_date in (self.from_date + timedelta(n) for n in range(self.day_count)):
+                mdict[self.period].setdefault(single_date, 0)
+        a = mdict[self.period]
+        b = self.calculate_daily()
+        entries2update = { k: self.calculate(a.get(k, 0), b.get(k, 0)) for k in set(a) & set(b)}
+        a.update(entries2update)
 
-        for single_date in (self.from_date + timedelta(n) for n in range(self.day_count)):
-            res = self.calculate_daily(t_start, t_end, single_date, val)
-            try:
-                mdict[self.period][single_date] += res
-            except:
-                mdict[self.period][single_date] = res
+        ''' this is where I need to put calculation of daily basis metrics.
+        what I need to do is following:
+        1) create [date] = value
+        ...
+        how?
+        1.1) t_start is older than single date?
+        
+        Search period        |----------------------|
+        possible instance
+        a.        |----|
+        b.        |--------------|
+        c.        |---------------------------------|
+        d.        |------------------------------------------|
+        e.                   |-----------|
+        f.                   |----------------------|
+        g.                   |-------------------------------|
+        h.                               |-----|
+        i.                               |----------|
+        j.                               |-------------------|
+        k.                                             |-----|
+        9 possible ways to count
+        But a. and k. are not the cases because this function is supposed to be executed after checking is_in_date function,
+        which means we assume the instance is in the search date.
 
-            ''' this is where I need to put calculation of daily basis metrics.
-            what I need to do is following:
-            1) create [date] = value
-            ...
-            how?
-            1.1) t_start is older than single date?
-            
-            Search period        |----------------------|
-            possible instance
-            a.        |----|
-            b.        |--------------|
-            c.        |---------------------------------|
-            d.        |------------------------------------------|
-            e.                   |-----------|
-            f.                   |----------------------|
-            g.                   |-------------------------------|
-            h.                               |-----|
-            i.                               |----------|
-            j.                               |-------------------|
-            k.                                             |-----|
-            9 possible ways to count
-            But a. and k. are not the cases because this function is supposed to be executed after checking is_in_date function,
-            which means we assume the instance is in the search date.
+        2) Then calculate (old, new) ? for sum,avg, etc?
 
-            2) Then calculate (old, new) ? for sum,avg, etc?
+        3)
 
-            3)
+        '''
 
-            '''
-
-    def _divide_into_monthly(self, mdict, new_val):
+    def _divide_into_monthly(self, mdict):
         try:
             mdict[self.period]
         except:
@@ -504,13 +525,14 @@ class FGSearch:
             try:
                 old_val = mdict[self.period][single_date]
             except:
-                mdict[self.period][single_date] = None
+                mdict[self.period].setdefault(single_date)
                 old_val = None
-            mdict[self.period][single_date] = self.calculate_monthly(single_date, old_val, new_val)
+            mdict[self.period][single_date] = self.calculate_monthly(single_date, old_val)
  
-    def calculate_monthly(self, month, old_val, new_val):
-
+    def calculate_monthly(self, month, old_val):
+        
         selected = self.get_recentlyselected()
+        new_val = self.get_metric_factor(self.columns, selected)
         res = self._is_in_month(month, selected["t_start"], selected["t_end"])
         if res:
             new_val = self._is_unique(str(self.period) + str(month), new_val)
@@ -518,53 +540,35 @@ class FGSearch:
         else:
             return old_val
 
-    def calculate_daily(self, t_start, t_end, single_date, value):
+    def calculate_daily(self):
         metric = self.metric
-
-        single_start = single_date
-        if single_start != self.from_date:
-            single_start = datetime.combine(single_date.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
-
-        single_end = datetime.combine(single_start + timedelta(days=1), datetime.strptime("00:00:00", "%H:%M:%S").time())
-        if single_end > self.to_date:
-            single_end = self.to_date
-
-        if t_start > single_end or t_end < single_start:
-            return 0
-
-        # temporarily added for the exception
         selected = self.get_recentlyselected()
-        try:
-            if selected["trace"]["extant"]["stop"] > datetime(1970, 1, 1) and selected["trace"]["extant"]["stop"] < single_start:
-                return 0
-        except:
-            pass
+        value = self.get_metric_factor(self.columns, selected)
+        t_start = selected["t_start"]
+        t_end = selected["t_end"]
 
+        # possible metrics
+        #1. runtime
+        #2. count
+        #3. ccvm
         if metric == self.names.metric.runtime:
-            if t_start < single_start:
-                start_time =  single_start
-            else:
-                start_time = t_start
-
-            if t_end > single_end:
-                end_time = single_end
-            else:
-                end_time = t_end
-
-            # temporarily added
-            if t_end == datetime(3000, 1, 1):
-                if selected["trace"]["extant"]["stop"]:
-                    if selected["trace"]["extant"]["stop"] > datetime(1970, 1, 1) and selected["trace"]["extant"]["stop"] < single_end:
-                        end_time = selected["trace"]["extant"]["stop"]
-
-            td = end_time - start_time
-            res = td.seconds#int(ceil(float(td.seconds) / 60 / 60))
-            return res
-        elif metric == self.names.metric.count:
-            return 1
+            init_value = 60 * 60 * 24
+        elif metric in self.names.metric.count or self.names.metric.countusers:
+            init_value = 1
         elif metric in self.names.metric.cores or self.names.metric.memories or self.names.metric.disks:
-            return value
+            init_value = value
 
+        dates = self.create_dates_between_dates(t_start, t_end, value)
+        if metric == self.names.metric.runtime:
+            first_day = datetime(t_start.year, t_start.month, t_start.day)
+            end_of_first_day = first_day + timedelta(seconds=86400)#datetime.combine(t_start + timedelta(days=1), datetime.strptime("00:00:00", "%H:%M:%S").time())
+            end_day = datetime(t_end.year, t_end.month, t_end.day)#datetime.combine(t_end.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
+            start_of_end_day = end_day
+            dates[first_day] = (end_of_first_day - t_start).seconds
+            dates[end_day] = (start_of_end_day - t_end).seconds
+
+        return dates
+        
     def set_default_suboptions(self):
         metric = self.metric
         if not metric: 
@@ -636,12 +640,14 @@ class FGSearch:
                 return 0
 
     def store2cache(self, selected):
-        self.selected.append(selected)
-        self.selected_idx = len(self.selected)
+        if self.cache:
+            self.selected.append(selected)
+        else:
+            self.selected = [selected]
 
     def get_recentlyselected(self):
         try:
-            return self.selected[self.selected_idx - 1]
+            return self.selected[-1]
         except:
             return
 

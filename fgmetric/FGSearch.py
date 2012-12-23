@@ -174,6 +174,8 @@ class FGSearch:
         """
 
         try:
+            from_date = datetime(from_date.year, from_date.month, from_date.day)
+            to_date = datetime(to_date.year, to_date.month, to_date.day)
             days = (to_date + datetime.timedelta(days=1) - from_date).days
             return [from_date + timedelta(days=n) for n in range(days)]
         except:
@@ -309,16 +311,13 @@ class FGSearch:
             return value
 
         try:
-            res = value
-            if self.distinct[key][value] > 0:
-                res = None
+            self.distinct[key][value] += 1
+            if self.distinct[key][value] == 1:
+                return value
+            return None
         except:
-            self.distinct[key] = Counter()
-            pass
-
-        self.distinct[key][value] += 1
-
-        return res
+            self.distinct[key] = Counter({value : 1})
+            return value
 
     def update_metrics(self, glist, mdict, key):
         if len(glist) == 0:
@@ -477,11 +476,12 @@ class FGSearch:
             mdict[self.period]
         except:
             mdict[self.period] = {}
-            for single_date in (self.from_date + timedelta(n) for n in range(self.day_count)):
+            first_day = datetime(self.from_date.year, self.from_date.month, self.from_date.day)
+            for single_date in (first_day + timedelta(days=n) for n in range(self.day_count + 1)):
                 mdict[self.period].setdefault(single_date, 0)
         a = mdict[self.period]
         b = self.calculate_daily()
-        entries2update = { k: self.calculate(a.get(k, 0), b.get(k, 0)) for k in set(a) & set(b)}
+        entries2update = { k: self.calculate(a.get(k), b.get(k)) for k in set(a) & set(b)}
         a.update(entries2update)
 
         ''' this is where I need to put calculation of daily basis metrics.
@@ -541,9 +541,10 @@ class FGSearch:
             return old_val
 
     def calculate_daily(self):
-        metric = self.metric
         selected = self.get_recentlyselected()
         value = self.get_metric_factor(self.columns, selected)
+        if not value:
+            return {}
         t_start = selected["t_start"]
         t_end = selected["t_end"]
 
@@ -551,24 +552,28 @@ class FGSearch:
         #1. runtime
         #2. count
         #3. ccvm
-        if metric == self.names.metric.runtime:
+        init_value = value
+        if self.metric == self.names.metric.runtime:
             init_value = 60 * 60 * 24
-        elif metric in self.names.metric.count or self.names.metric.countusers:
-            init_value = 1
-        elif metric in self.names.metric.cores or self.names.metric.memories or self.names.metric.disks:
-            init_value = value
 
-        dates = self.create_dates_between_dates(t_start, t_end, value)
-        if metric == self.names.metric.runtime:
+        dates = self.create_dates_between_dates(t_start, t_end, init_value)
+        self.adjust_each_metric(dates, value)
+        return dates
+
+    def adjust_each_metric(self, dates, value=None):
+        if self.metric == self.names.metric.runtime:
             first_day = datetime(t_start.year, t_start.month, t_start.day)
             end_of_first_day = first_day + timedelta(seconds=86400)#datetime.combine(t_start + timedelta(days=1), datetime.strptime("00:00:00", "%H:%M:%S").time())
             end_day = datetime(t_end.year, t_end.month, t_end.day)#datetime.combine(t_end.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
             start_of_end_day = end_day
             dates[first_day] = (end_of_first_day - t_start).seconds
             dates[end_day] = (start_of_end_day - t_end).seconds
+        elif self.metric == self.names.metric.countusers:
+            for entry_date, entry_value in dates.iteritems():
+                new_value = self._is_unique(self.period + str(entry_date), value)
+                if new_value is None:
+                    dates[entry_date] = new_value
 
-        return dates
-        
     def set_default_suboptions(self):
         metric = self.metric
         if not metric: 

@@ -18,18 +18,19 @@ class FGMetrics(Cmd):
         Cmd.__init__(self)
         self.prompt = "fg-metric] "
         self.intro = "Welcome to FutureGrid Cloud Metrics!"
-        self.init_objects()
 
     def initialize(self, arg="all"):
         """Clear all instance data and user data on the memory"""
         print "initializing..."
+        self.search = FGSearch()
+        self.chart = FGCharts()
+        self.instances = FGInstances()
         self.instances.db.conf()
         self.instances.db.connect()
 
     def init_objects(self):
-        self.search = FGSearch()
-        self.instances = FGInstances()
-        self.chart = FGCharts()
+        self.search.__init__()
+        self.chart.__init__()
 
     def load_db(self, option=None):
         """Read the statistical data from database (MySQL, etc)"""
@@ -117,6 +118,7 @@ class FGMetrics(Cmd):
 
     def do_analyze(self, line):
       
+        self.search.init_stats()
         self.show_filter_setting()
         self.measure()
 

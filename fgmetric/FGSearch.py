@@ -1,5 +1,6 @@
 import re
 import sys
+import copy
 from datetime import *
 from fgmetric.FGUtility import dotdict
 from math import ceil
@@ -245,7 +246,9 @@ class FGSearch:
         if name and name in self:
             return self.name
         else:
-            return self
+            newval = copy.copy(self)
+            del newval.selected
+            return newval
 
     def _is_searching_all(self):
         if not self.from_date and not self.to_date:

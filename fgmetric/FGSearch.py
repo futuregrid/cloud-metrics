@@ -6,6 +6,7 @@ from math import ceil
 from pprint import pprint
 from fgmetric.FGUtility import FGUtility
 from collections import Counter
+from calendar import monthrange
 
 class FGSearch:
 
@@ -139,6 +140,17 @@ class FGSearch:
             pass
 
     def _is_in_month(self, month, from_date, to_date):
+        """ return a set of common months between the two dates and months searched
+
+            Args:
+                from_date (datetime)
+                to_date (datetime)
+            Returns:
+                set
+            Raises:
+                n/a
+        """
+
         months = self.get_months_between_dates(from_date, to_date)
         return set([month]) & set(months)
 
@@ -201,6 +213,24 @@ class FGSearch:
         except:
             FGUtility.debug(str(sys.exc_info()))
 
+    def create_months_between_dates(self, from_date, to_date, val=None):
+        """ Get months between two dates
+
+            Args:
+                from_date (datetime)
+                to_date (datetime)
+            Returns:
+                dict 
+            Raises:
+                n/a
+        """
+
+        try:
+            months = self.get_months_between_dates(from_date, to_date)
+            return {month:val for month in months}
+        except:
+            FGUtility.debug(str(sys.exc_info()))
+
     def set_months(self):
         dates = self.get_months_between_dates(self.from_date, self.to_date)
         self.months = dates
@@ -234,11 +264,11 @@ class FGSearch:
             # e.g. t_end is None (0000-00-00 00:00:00)
             return False
         #Newly added for exception
-        try:
-            if instance["trace"]["extant"]["stop"] < self.from_date:
-                return False
-        except:
-            pass
+        #try:
+        #    if instance["trace"]["extant"]["stop"] < self.from_date:
+        #        return False
+        #except:
+        #    pass
         return True
 
     def _is_filtered(self, instance):
@@ -519,34 +549,27 @@ class FGSearch:
             mdict[self.period]
         except:
             mdict[self.period] = {}
-
-        for single_date in self.months:
-            #year_month = single_date.strftime("%Y-%m")
-            try:
-                old_val = mdict[self.period][single_date]
-            except:
-                mdict[self.period].setdefault(single_date)
-                old_val = None
-            mdict[self.period][single_date] = self.calculate_monthly(single_date, old_val)
+            for single_date in self.months:
+                mdict[self.period].setdefault(single_date, 0)
+        a = mdict[self.period]
+        b = self.calculate_monthly()
+        entries2update = { k: self.calculate(a.get(k), b.get(k)) for k in set(a) & set(b)}
+        a.update(entries2update)
  
-    def calculate_monthly(self, month, old_val):
+    def calculate_monthly(self):
         
         selected = self.get_recentlyselected()
-        new_val = self.get_metric_factor(self.columns, selected)
-        res = self._is_in_month(month, selected["t_start"], selected["t_end"])
-        if res:
-            new_val = self._is_unique(str(self.period) + str(month), new_val)
-            return self.calculate(old_val, new_val)
-        else:
-            return old_val
+        value = self.get_metric_factor(self.columns, selected)
+
+        months = self.create_months_between_dates(selected["t_start"], selected["t_end"], value)
+        self.adjust_each_metric_in_month(months)
+        return months
 
     def calculate_daily(self):
         selected = self.get_recentlyselected()
         value = self.get_metric_factor(self.columns, selected)
         if not value:
             return {}
-        t_start = selected["t_start"]
-        t_end = selected["t_end"]
 
         # possible metrics
         #1. runtime
@@ -556,18 +579,47 @@ class FGSearch:
         if self.metric == self.names.metric.runtime:
             init_value = 60 * 60 * 24
 
-        dates = self.create_dates_between_dates(t_start, t_end, init_value)
+        dates = self.create_dates_between_dates(selected["t_start"], selected["t_end"], init_value)
         self.adjust_each_metric(dates, value)
         return dates
 
     def adjust_each_metric(self, dates, value=None):
         if self.metric == self.names.metric.runtime:
+            selected = self.get_recentlyselected()
+            t_start = selected["t_start"]
+            t_end = selected["t_end"]
             first_day = datetime(t_start.year, t_start.month, t_start.day)
             end_of_first_day = first_day + timedelta(seconds=86400)#datetime.combine(t_start + timedelta(days=1), datetime.strptime("00:00:00", "%H:%M:%S").time())
             end_day = datetime(t_end.year, t_end.month, t_end.day)#datetime.combine(t_end.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
             start_of_end_day = end_day
-            dates[first_day] = (end_of_first_day - t_start).seconds
-            dates[end_day] = (start_of_end_day - t_end).seconds
+            if first_day == end_day:
+                dates[first_day] = (t_end - t_start).seconds
+            else:
+                dates[first_day] = (end_of_first_day - t_start).seconds
+                dates[end_day] = (start_of_end_day - t_end).seconds
+        elif self.metric == self.names.metric.countusers:
+            for entry_date, entry_value in dates.iteritems():
+                new_value = self._is_unique(self.period + str(entry_date), value)
+                if new_value is None:
+                    dates[entry_date] = new_value
+
+    def adjust_each_metric_in_month(self, months, value=None):
+        if self.metric == self.names.metric.runtime:
+            selected = self.get_recentlyselected()
+            t_start = selected["t_start"]
+            t_end = selected["t_end"]
+            first_month = datetime(t_start.year, t_start.month, 1)
+            end_of_first_month = datetime(t_start.year, t_start.month, monthrange(t_start.year, t_start.month)[1], 23, 59,59)
+            end_month = datetime(t_end.year, t_end.month, 1)#datetime.combine(t_end.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
+            start_of_end_month = end_month
+            for month_key, month_value in months.iteritems():
+                days = monthrange(month_key.year, month_key.month)[1]
+                months[month_key] = 60 * 60 * 24 * days
+            if first_month == end_month:
+                dates[first_month] = (t_end - t_start).seconds
+            else:
+                dates[first_month] = (end_of_first_month - t_start).seconds
+                dates[end_month] = (start_of_end_month - t_end).seconds
         elif self.metric == self.names.metric.countusers:
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(self.period + str(entry_date), value)

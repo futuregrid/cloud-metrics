@@ -130,6 +130,7 @@ class FGMetrics(Cmd):
         self.create_csvfile(data, opts.filename)
 
     @options([
+        make_option('-o', '--directory', type="string", dest="DIR" help="change to directory DIR",
         make_option('-t', '--type', type="string", dest="ctype", default="column", help="chart e.g. bar, line, column, pie, and motion"),
         make_option('-a', '--api', type="string", dest="api", default="highcharts", help="chart api e.g. highchart, google, jquery sparkline")
         ])
@@ -137,6 +138,8 @@ class FGMetrics(Cmd):
         ''' set for test '''
         self.chart.set_chart_api(opts.api)
         self.chart.set_type(opts.ctype)
+        self.chart.set_output_path(opts.DIR)
+        self.chart.set_filename(self.search.get_filename() + "." + self.chart.output_type)
         for key, data in self.search.get_metric().iteritems():
             #self.chart.set_xaxis(key) TBD
             self.chart.set_data_beta(data, self.search.metric, self.search.period, self.search.groupby)

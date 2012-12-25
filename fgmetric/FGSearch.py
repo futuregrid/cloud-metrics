@@ -154,6 +154,9 @@ class FGSearch:
         months = self.get_months_between_dates(from_date, to_date)
         return set([month]) & set(months)
 
+    def get_filename(self):
+        return str(from_date) + "-" + str(to_date) + "-" + str(self.metric) + "-" + str(self.platform or "") + "-" + str(self.nodename or "") + "-" + str(self.period or "")
+
     def get_months_between_dates(self, from_date, to_date):
         """ Get months between two dates
 

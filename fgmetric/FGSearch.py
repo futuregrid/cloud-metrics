@@ -62,7 +62,6 @@ class FGSearch:
         self.distinct = None
  
     def init_stats(self):
-        self.metric = None
         self.selected = []
         self.stats = {}
 
@@ -565,7 +564,7 @@ class FGSearch:
         value = self.get_metric_factor(self.columns, selected)
 
         months = self.create_months_between_dates(selected["t_start"], selected["t_end"], value)
-        self.adjust_each_metric_in_month(months)
+        self.adjust_each_metric_in_month(months, value)
         return months
 
     def calculate_daily(self):
@@ -606,7 +605,7 @@ class FGSearch:
                 if new_value is None:
                     dates[entry_date] = new_value
 
-    def adjust_each_metric_in_month(self, months, value=None):
+    def adjust_each_metric_in_month(self, dates, value=None):
         if self.metric == self.names.metric.runtime:
             selected = self.get_recentlyselected()
             t_start = selected["t_start"]
@@ -615,9 +614,9 @@ class FGSearch:
             end_of_first_month = datetime(t_start.year, t_start.month, monthrange(t_start.year, t_start.month)[1], 23, 59,59)
             end_month = datetime(t_end.year, t_end.month, 1)#datetime.combine(t_end.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
             start_of_end_month = end_month
-            for month_key, month_value in months.iteritems():
+            for month_key, month_value in dates.iteritems():
                 days = monthrange(month_key.year, month_key.month)[1]
-                months[month_key] = 60 * 60 * 24 * days
+                dates[month_key] = 60 * 60 * 24 * days
             if first_month == end_month:
                 dates[first_month] = (t_end - t_start).seconds
             else:

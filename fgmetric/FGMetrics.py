@@ -130,7 +130,7 @@ class FGMetrics(Cmd):
         self.create_csvfile(data, opts.filename)
 
     @options([
-        make_option('-o', '--directory', type="string", dest="DIR", help="change to directory DIR",
+        make_option('-o', '--directory', type="string", dest="DIR", help="change to directory DIR"),
         make_option('-t', '--type', type="string", dest="ctype", default="column", help="chart e.g. bar, line, column, pie, and motion"),
         make_option('-a', '--api', type="string", dest="api", default="highcharts", help="chart api e.g. highchart, google, jquery sparkline")
         ])

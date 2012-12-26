@@ -53,6 +53,9 @@ class FGCharts:
 
     def set_subtitle(self, name):
         self.subtitle = name
+
+    def set_filename(self, name):
+        self.filename = name
  
     def clear_data(self):
         self.xaxis = None

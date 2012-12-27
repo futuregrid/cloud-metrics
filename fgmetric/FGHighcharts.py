@@ -159,7 +159,11 @@ class FGHighcharts:
         self.xAxis_categories = label
 
     def set_output_path(self, path):
-        FGUtility.ensure_dir(path + "/" + self.filename)
+        try:
+            FGUtility.ensure_dir(path + "/" + self.filename)
+        except:
+            path = "./"
+
         self.filepath = path
 
     def set_filename(self, filename):

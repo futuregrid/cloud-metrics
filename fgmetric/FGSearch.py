@@ -50,6 +50,7 @@ class FGSearch:
         self.platform = None
         self.userid = None
         self.username = None
+        self.metric = None
 
     def init_suboptions(self):
         self.calc = None

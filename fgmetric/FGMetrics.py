@@ -140,9 +140,11 @@ class FGMetrics(Cmd):
         self.chart.set_type(opts.ctype)
         self.chart.set_output_path(opts.DIR)
         self.chart.set_filename(self.search.get_filename() + "." + self.chart.output_type)
+
         for key, data in self.search.get_metric().iteritems():
             #self.chart.set_xaxis(key) TBD
             self.chart.set_data_beta(data, self.search.metric, self.search.period, self.search.groupby)
+
         self.chart.set_title_beta(self.search.metric, self.search.period, self.search.groupby)
         self.chart.set_subtitle("source: " + str(self.search.platform) + " on " + str(self.search.nodename))
         self.chart.display()

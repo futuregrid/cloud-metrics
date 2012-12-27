@@ -60,6 +60,9 @@ class FGSearch:
         self.groupby = None
 
         self.distinct = None
+
+        self.timetype = None
+        self.time_conversion = 1
  
     def init_stats(self):
         self.selected = []
@@ -139,6 +142,28 @@ class FGSearch:
         except:
             print "from and to are not specified."
             pass
+
+    def set_timetype(self, typename):
+        ''' set time type of data value to print out
+            
+            e.g. set datatype hour means output data will be converted from seconds to hours
+
+            Args:
+                typename(str): hour
+            Returns:
+                n/a
+            Raises:
+                n/a
+        '''
+        self.timetype = typename
+        if typename == "day":
+            self.time_conversion = 60 * 60 * 24
+        elif typename == "hour":
+            self.time_conversion = 60 * 60
+        elif typename == "minute":
+            self.time_conversion = 60
+        elif typename == "second":
+            self.time_conversion = 1
 
     def _is_in_month(self, month, from_date, to_date):
         """ return a set of common months between the two dates and months searched
@@ -583,7 +608,7 @@ class FGSearch:
         #3. ccvm
         init_value = value
         if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
-            init_value = 60 * 60 * 24
+            init_value = (60 * 60 * 24 + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
 
         dates = self.create_dates_between_dates(selected["t_start"], selected["t_end"], init_value)
         self.adjust_each_metric(dates, value)
@@ -599,10 +624,10 @@ class FGSearch:
             end_day = datetime(t_end.year, t_end.month, t_end.day)#datetime.combine(t_end.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
             start_of_end_day = end_day
             if first_day == end_day:
-                dates[first_day] = (t_end - t_start).seconds
+                dates[first_day] = ((t_end - t_start).seconds + self.time_conversion // 2) // self.time_conversion
             else:
-                dates[first_day] = (end_of_first_day - t_start).seconds
-                dates[end_day] = (t_end  - start_of_end_day).seconds
+                dates[first_day] = ((end_of_first_day - t_start).seconds + self.time_conversion // 2) // self.time_conversion
+                dates[end_day] = ((t_end  - start_of_end_day).seconds + self.time_conversion // 2) // self.time_conversion
         elif self.metric == self.names.metric.countusers:
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(self.period + str(entry_date), value)
@@ -622,10 +647,10 @@ class FGSearch:
                 days = monthrange(month_key.year, month_key.month)[1]
                 dates[month_key] = 60 * 60 * 24 * days
             if first_month == end_month:
-                dates[first_month] = (t_end - t_start).seconds
+                dates[first_month] = ((t_end - t_start).seconds + self.time_conversion // 2) // self.time_conversion
             else:
-                dates[first_month] = (end_of_first_month - t_start).seconds
-                dates[end_month] = (t_end - start_of_end_month).seconds
+                dates[first_month] = ((end_of_first_month - t_start).seconds + self.time_conversion // 2) // self.time_conversion
+                dates[end_month] = ((t_end - start_of_end_month).seconds + self.time_conversion // 2) // self.time_conversion
         elif self.metric == self.names.metric.countusers:
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(self.period + str(entry_date), value)

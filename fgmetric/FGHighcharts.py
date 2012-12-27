@@ -45,6 +45,8 @@ class FGHighcharts:
     detail_month = 0
     detail_day = 0
 
+    millisecond = 1000
+
     def __init__(self, chart_type=""):
         self.chart_type = chart_type
         self.width = 400
@@ -181,30 +183,30 @@ class FGHighcharts:
     def set_height(self, height):
         self.height = max(int(height), 150) # MINIMUM HEIGHT is 150px
 
-    def calc_height(self):
+    def resize_height(self):
+        new_height = self.height
         length_of_data = len(self.data)
-        if self.chart_type == "line-time-series":
+        if self.chart_type in {"line-time-series", "master-detail"}:
             new_height = length_of_data * 1
-        elif self.chart_type == "master-detail":
-            new_height = length_of_data * 1
-        elif self.chart_type == "pie-basic":
-            new_height = 450
-        else:
+        elif self.chart_type in {"column", "bar"}:
             new_height = length_of_data * 20
 
         self.set_height(new_height)
 
     def convert_datetime2UTC(self, record):
         if isinstance(record[0], (datetime)):
-            utc_mill = int(record[0].strftime("%s")) * 1000
+            utc_mill = int(record[0].strftime("%s")) * self.millisecond 
             return [utc_mill, record[1]]
         else:
             return record
 
-        #self.data = re.sub("datetime.datetime","Date.UTC", str(self.data))
+    def convert_UTC2date(self, data=None):
+        if data is None:
+            data = self.data
+        self.data = [[datetime.fromtimestamp(k / self.millisecond).strftime("%b (%Y)"), v] for k,v in data]
 
     def configure_chart_options(self):
-        self.calc_height()
+        self.resize_height()
         self.set_chart_options()
 
     def display(self):
@@ -241,6 +243,25 @@ class FGHighcharts:
                                         "states": { "hover": { "lineWidth": 1 }}}})
 
             self.series_type = "area"
+        elif self.chart_type == "column-basic":
+            self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
+            self.convert_UTC2date()
+            self.set_xaxis(list(zip(*self.data)[0]))
+            self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
+            self.set_chart_option("yAxis", {"title": { "text": self.yAxis_title or ""}})
+            self.set_chart_option("tooltip", {"shared":1})#{"formatter": "function() { return this.x +':<b>'+ this.y;"})
+            self.set_chart_option("plotOptions", { "column": \
+                    { "cursor": 'pointer', \
+                    "dataLabels": { \
+                    "enabled": 1,\
+                    "color": "colors[0]", \
+                    "style": {\
+                        "fontWeight": 'bold'\
+                        }\
+                        }#"formatter": "function() { return this.y;}" } \
+                    }})
+
+            self.series_type = "column"
         elif self.chart_type == "column-drilldown":
             self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
             self.set_xaxis(list(zip(*self.data)[0]))

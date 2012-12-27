@@ -147,6 +147,7 @@ class FGMetrics(Cmd):
 
         self.chart.set_title_beta(self.search.metric, self.search.period, self.search.groupby)
         self.chart.set_subtitle("source: " + str(self.search.platform) + " on " + str(self.search.nodename))
+        self.chart.set_yaxis(self.search.timetype or "")
         self.chart.display()
 
     def do_refresh(self, line, opts=None):

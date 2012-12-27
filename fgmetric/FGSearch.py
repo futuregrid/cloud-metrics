@@ -464,6 +464,10 @@ class FGSearch:
         selected = self.get_recentlyselected()
         val = self.get_metric_factor(self.columns, selected)
 
+        # Temporary lines 12/27/2012
+        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
+            val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
+
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
         project = re.sub("fg-None:None", "etc.", "fg-" + str(selected["ProjectId"]) + ":" + str(selected["Title"]))
@@ -479,6 +483,10 @@ class FGSearch:
         selected = self.get_recentlyselected()
         val = self.get_metric_factor(self.columns, selected)
 
+        # Temporary lines 12/27/2012
+        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
+            val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
+
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
         project = re.sub("None", "etc.", str(selected["Institution"]))
@@ -493,6 +501,10 @@ class FGSearch:
 
         selected = self.get_recentlyselected()
         val = self.get_metric_factor(self.columns, selected)
+
+        # Temporary lines 12/27/2012
+        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
+            val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
 
         if not self.groupby in mdict:
             mdict[self.groupby] = {}

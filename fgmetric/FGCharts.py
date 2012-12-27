@@ -10,6 +10,8 @@ class FGCharts:
         self.type = None
         self.data = None
         self.data_name = "all"
+        self.series = []
+        self.data_beta = { "type":None, "name":None, "data":None } 
         self.xaxis = None
         self.yaxis = None
         self.output_path = "./"#None
@@ -72,8 +74,7 @@ class FGCharts:
             data = data[keyname]
 
         try:
-            if type(data) == type({}):
-                self.set_data(data)
+            self.set_data(data)
         except:
             pass
 

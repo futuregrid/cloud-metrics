@@ -92,6 +92,8 @@ class FGInstances:
                 res.append(ins)
             except:
                 pass
+
+        # MISSING error exception for empty res return. it may occur index error of the call in FGMetrics. i.e. ... [0]
         return res
 
     def get_userinfo(self, index=None):

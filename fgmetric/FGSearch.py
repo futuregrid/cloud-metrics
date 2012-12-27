@@ -114,6 +114,7 @@ class FGSearch:
             pass
 
         self.groups = glist
+        self.userinfo_needed = self._is_userinfo_needed(True)
 
     def set_date(self, dates):
         """Set search/analyze period
@@ -315,9 +316,13 @@ class FGSearch:
     def _is_userinfo_needed(self, refresh=False):
         if not refresh:
             return self.userinfo_needed
-        if self.groupby != "project" and self.groupby != "institution" and self.groupby != "projectleader":
-            return False
-        return True
+        if self.groupby in {"project", "institution", "projectleader"}:
+            return True
+        elif self.groups:
+            for k in self.groups:
+                if k in {"ProjectLead", "ProjectId", "Institution"}:
+                    return True
+        return False
 
     def set_search_date(self, from_date, to_date):
         self.set_date(from_date, to_date)
@@ -391,6 +396,15 @@ class FGSearch:
             except:
                 pass
             try:
+                # This _groupby_ shall be removed and merged to groups because it has same functionality with groups... 12/27/2012
+                # E.g. set groups ProjectLead
+                '''
+                {'Yogesh Simmhan': {'count': {'Total': 56}}, 'David Lowenthal': {'count': {'Total': 2}}, 'Morris Riedel': {'count': {'Total': 8}}, 'Hyungro Lee': {'count': {'Total': 2}}, 'Alan Sill': {'count': {'Total': 1}}, 'Gregor von Laszewski': {'count': {'Total': 201}}, 'Shantenu Jha': {'count': {'Total': 14}}, 'Zhan Wang': {'count': {'Total': 24}}, 'Ilkay Altintas': {'count': {'Total': 12}}, 'Shava Smallen': {'count': {'Total': 2}}, 'Preston Smith': {'count': {'Total': 4}}, 'Michael Wilde': {'count': {'Total': 16}}}
+                '''
+                # e.g. set groupby projectleader
+                '''
+                {'All': {'count': {'projectleader': {'Yogesh Simmhan': 56, 'David Lowenthal': 2, 'Morris Riedel': 8, 'Hyungro Lee': 2, 'Alan Sill': 1, 'Gregor von Laszewski': 201, 'Shantenu Jha': 14, 'Zhan Wang': 24, 'Ilkay Altintas': 12, 'Shava Smallen': 2, 'Preston Smith': 4, 'Michael Wilde': 16}, 'Total': 342}}}
+                '''
                 period_func = getattr(self, "_groupby_" + str(self.groupby))
                 period_func(mdict[key])
             except:

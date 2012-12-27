@@ -69,6 +69,7 @@ class FGSearch:
         self.names = dotdict({"metric": dotdict({"count":"count", 
                                                 "countusers":"countusers",
                                                 "runtime":"runtime", 
+                                                "runtimeusers":"runtimeusers",
                                                 "cores":["cpu", "ccvm_cores", "core", "cores"], 
                                                 "memories":["mem", "ccvm_mem", "memory", "memories"], 
                                                 "disks":["disk", "ccvm_disk", "disks"]}),
@@ -581,7 +582,7 @@ class FGSearch:
         #2. count
         #3. ccvm
         init_value = value
-        if self.metric == self.names.metric.runtime:
+        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
             init_value = 60 * 60 * 24
 
         dates = self.create_dates_between_dates(selected["t_start"], selected["t_end"], init_value)
@@ -589,7 +590,7 @@ class FGSearch:
         return dates
 
     def adjust_each_metric(self, dates, value=None):
-        if self.metric == self.names.metric.runtime:
+        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
             selected = self.get_recentlyselected()
             t_start = selected["t_start"]
             t_end = selected["t_end"]
@@ -601,7 +602,7 @@ class FGSearch:
                 dates[first_day] = (t_end - t_start).seconds
             else:
                 dates[first_day] = (end_of_first_day - t_start).seconds
-                dates[end_day] = (start_of_end_day - t_end).seconds
+                dates[end_day] = (t_end  - start_of_end_day).seconds
         elif self.metric == self.names.metric.countusers:
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(self.period + str(entry_date), value)
@@ -609,7 +610,7 @@ class FGSearch:
                     dates[entry_date] = new_value
 
     def adjust_each_metric_in_month(self, dates, value=None):
-        if self.metric == self.names.metric.runtime:
+        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
             selected = self.get_recentlyselected()
             t_start = selected["t_start"]
             t_end = selected["t_end"]
@@ -624,7 +625,7 @@ class FGSearch:
                 dates[first_month] = (t_end - t_start).seconds
             else:
                 dates[first_month] = (end_of_first_month - t_start).seconds
-                dates[end_month] = (start_of_end_month - t_end).seconds
+                dates[end_month] = (t_end - start_of_end_month).seconds
         elif self.metric == self.names.metric.countusers:
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(self.period + str(entry_date), value)
@@ -645,6 +646,9 @@ class FGSearch:
             self.set_distinct(self.columns)
             # "count(distinct ownerId)" 
         elif metric == self.names.metric.runtime:
+            self.calc = "sum"
+            self.columns = ["duration"]
+        elif metric == self.names.metric.runtimeusers:
             self.calc = "sum"
             self.columns = ["duration"]
             self.groups = ["ownerId"]

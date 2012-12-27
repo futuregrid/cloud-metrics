@@ -419,6 +419,7 @@ class FGSearch:
 
     def calculate_total(self, mdict, key):
         new = self.get_metric_factor(self.columns, self.get_recentlyselected())
+        new = self.do_time_conversion(new)
         total = "Total"
         try:
             old = mdict[key][total]
@@ -427,6 +428,12 @@ class FGSearch:
             mdict[key] = { total : None }
         new = self._is_unique(total, new)
         mdict[key][total] = self.calculate(old, new)
+
+    def do_time_conversion(self, val):
+        # Temporary lines 12/27/2012
+        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
+            val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
+        return val
 
     def _groupby_None(self, *args):
         return
@@ -464,10 +471,6 @@ class FGSearch:
         selected = self.get_recentlyselected()
         val = self.get_metric_factor(self.columns, selected)
 
-        # Temporary lines 12/27/2012
-        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
-            val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
-
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
         project = re.sub("fg-None:None", "etc.", "fg-" + str(selected["ProjectId"]) + ":" + str(selected["Title"]))
@@ -482,10 +485,7 @@ class FGSearch:
 
         selected = self.get_recentlyselected()
         val = self.get_metric_factor(self.columns, selected)
-
-        # Temporary lines 12/27/2012
-        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
-            val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
+        val = self.do_time_conversion(val)
 
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
@@ -501,10 +501,7 @@ class FGSearch:
 
         selected = self.get_recentlyselected()
         val = self.get_metric_factor(self.columns, selected)
-
-        # Temporary lines 12/27/2012
-        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
-            val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
+        val = self.do_time_conversion(val)
 
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
@@ -628,7 +625,7 @@ class FGSearch:
         #3. ccvm
         init_value = value
         if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
-            init_value = (60 * 60 * 24 + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
+            init_value = self.do_time_conversion(86400) # 864000 seconds = 1440 minutes = 24 hours = 1 day 
 
         dates = self.create_dates_between_dates(selected["t_start"], selected["t_end"], init_value)
         self.adjust_each_metric(dates, value)
@@ -644,10 +641,10 @@ class FGSearch:
             end_day = datetime(t_end.year, t_end.month, t_end.day)#datetime.combine(t_end.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
             start_of_end_day = end_day
             if first_day == end_day:
-                dates[first_day] = ((t_end - t_start).seconds + self.time_conversion // 2) // self.time_conversion
+                dates[first_day] = self.do_time_conversion((t_end - t_start).seconds)
             else:
-                dates[first_day] = ((end_of_first_day - t_start).seconds + self.time_conversion // 2) // self.time_conversion
-                dates[end_day] = ((t_end  - start_of_end_day).seconds + self.time_conversion // 2) // self.time_conversion
+                dates[first_day] = self.do_time_conversion((end_of_first_day - t_start).seconds)
+                dates[end_day] = self.do_time_conversion((t_end  - start_of_end_day).seconds)
         elif self.metric == self.names.metric.countusers:
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(self.period + str(entry_date), value)
@@ -667,10 +664,10 @@ class FGSearch:
                 days = monthrange(month_key.year, month_key.month)[1]
                 dates[month_key] = 60 * 60 * 24 * days
             if first_month == end_month:
-                dates[first_month] = ((t_end - t_start).seconds + self.time_conversion // 2) // self.time_conversion
+                dates[first_month] = self.do_time_conversion((t_end - t_start).seconds)
             else:
-                dates[first_month] = ((end_of_first_month - t_start).seconds + self.time_conversion // 2) // self.time_conversion
-                dates[end_month] = ((t_end - start_of_end_month).seconds + self.time_conversion // 2) // self.time_conversion
+                dates[first_month] = self.do_time_conversion((end_of_first_month - t_start).seconds)
+                dates[end_month] = self.do_time_conversion((t_end - start_of_end_month).seconds)
         elif self.metric == self.names.metric.countusers:
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(self.period + str(entry_date), value)

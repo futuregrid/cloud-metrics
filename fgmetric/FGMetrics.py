@@ -55,12 +55,9 @@ class FGMetrics(Cmd):
     def measure(self):
 
         total_counts = self.instances.count()
-
         print "Calculating metrics in " + str(total_counts) + " records...\n"
 
-        cnt = 0
-        cnt2 = 0
-        cnt3 = 0
+        cnt = cnt2 = cnt3 = 0
         for i in range(0, total_counts):
             try:
                 instance = self.instances.get_data(i, self.search._is_userinfo_needed())[0]
@@ -74,8 +71,8 @@ class FGMetrics(Cmd):
                 res = self.search.collect(instance)
 
             except:
-                print sys.exc_info()
-                raise
+                #print sys.exc_info()
+                pass#raise
 
         print self.search.get_metric()
         #print cnt, cnt2, cnt3

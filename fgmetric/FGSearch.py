@@ -442,7 +442,6 @@ class FGSearch:
             mdict[self.groupby]["g. <2 days"] += val
         else:
             mdict[self.groupby]["h. more"] += val
-        return
     
     def _groupby_project(self, mdict):
         if not self._is_userinfo_needed():
@@ -459,8 +458,6 @@ class FGSearch:
         else:
             mdict[self.groupby][project] += val
 
-        return
-
     def _groupby_institution(self, mdict):
         if not self._is_userinfo_needed():
             return
@@ -475,8 +472,6 @@ class FGSearch:
             mdict[self.groupby][project] = val
         else:
             mdict[self.groupby][project] += val
-
-        return
  
     def _groupby_projectleader(self, mdict):
         if not self._is_userinfo_needed():
@@ -493,8 +488,6 @@ class FGSearch:
         else:
             mdict[self.groupby][project] += val
 
-        return
- 
     def get_t_delta(self, row):
 
 	start = row["t_start"]

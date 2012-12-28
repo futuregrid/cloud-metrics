@@ -7,6 +7,7 @@ import MySQLdb
 import hashlib
 import argparse
 import sys
+from datetime import datetime
 
 pp = pprint.PrettyPrinter(indent=0)
     
@@ -295,7 +296,9 @@ class FGEucaMetricsDB(object):
 
     def write(self, entryObj):
         ''' write instance object into db '''
-        uidcat = entryObj["instanceId"] + " - " + str(entryObj["ts"])
+        # ts has small variation. we ignore seconds here to create index
+        new_ts = datetime(entryObj["ts"].year, entryObj["ts"].month, entryObj["ts"].day, entryObj["ts"].hour, entryObj["ts"].minute, 0)
+        uidcat = entryObj["instanceId"] + " - " + str(new_ts)#str(entryObj["ts"])
         m = hashlib.md5()
         m.update(uidcat)
         uid = m.hexdigest()

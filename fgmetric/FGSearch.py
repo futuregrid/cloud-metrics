@@ -55,7 +55,7 @@ class FGSearch:
     def init_suboptions(self):
         self.calc = None
         self.columns = None
-        self.period = "Total"
+        self.period = None#"Total"
 
         self.groups = ["All"]
         self.groupby = None

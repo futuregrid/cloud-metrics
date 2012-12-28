@@ -55,7 +55,7 @@ class FGSearch:
     def init_suboptions(self):
         self.calc = None
         self.columns = None
-        self.period = None
+        self.period = "Total"
 
         self.groups = ["All"]
         self.groupby = None
@@ -438,6 +438,9 @@ class FGSearch:
     def _groupby_None(self, *args):
         return
 
+    def _groupby_Total(self, *args):
+        return self._groupby_None(args)
+
     def _groupby_walltime(self, mdict):
         val = self.get_metric_factor(self.columns, self.get_recentlyselected())
         selected = self.get_recentlyselected()
@@ -548,6 +551,9 @@ class FGSearch:
 
     def _divide_into_None(self, mdict):
         return
+
+    def _divide_into_Total(self, mdict):
+        return self._divide_into_None(mdict)
 
     def _divide_into_daily(self, mdict):
         try:
@@ -673,6 +679,26 @@ class FGSearch:
                 new_value = self._is_unique(self.period + str(entry_date), value)
                 if new_value is None:
                     dates[entry_date] = new_value
+
+    def adjust_stats_keys(self, key=None):
+        if set(self.groups) & set(["serviceTag"]):
+            if key:
+                new_key = self.get_clustername(key)
+                return new_key
+                #self.stats[new_key] = self.stats.pop(key)
+            else:
+                for key, val in self.stats.iteritems():
+                    new_key = self.get_clustername(key)
+                    self.stats[new_key] = self.stats.pop(key)
+
+    def get_clustername(self, name):
+        try:
+            m = re.search(r'http://(.*):8775/axis2/services/EucalyptusNC',name, re.M|re.I)
+            return m.group(1)
+        except:
+            print name
+            FGUtility.debug(True)
+            return name
 
     def set_default_suboptions(self):
         metric = self.metric

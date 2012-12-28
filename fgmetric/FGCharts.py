@@ -65,49 +65,66 @@ class FGCharts:
         self.data = None
 
     def set_data_beta(self, data, *keynames):
-        if not keynames:
-            return data
 
-        for keyname in keynames:
-            if not keyname:
-                continue
-            data = data[keyname]
+        try:
+            for keyname in keynames:
+                try:
+                    data = data[keyname]
+                except:
+                    continue
+        except:
+            pass
 
         try:
             self.set_data(data)
         except:
             pass
 
-    def set_datafromdict(self, data, keyname=None):
+    def set_data_beta2(self, key, val, *keynames):
         '''
-         Example of data: {'nimbus': {'count': 77}, 'eucalyptus': {'count': 119}}
+         Example of data: {'nimbus': {'count': {'Total':77}}, 'eucalyptus': {'count': {'Total':119}}}
          The template is like: group1: {name of y axis: value, ...}, ...
          possible ways that I can think of are ...
-         1. { metric: value }
-         2. { group1: { metric: value}, ...
-         3. { group1: { metric1: value, ... }, ...
+         1. { metric: { type : value } }
+         2. { group1: { metric: { type: value } }, ...
+         3. { group1: { metric1: { type: value }, ... }, ...
         ''' 
-        xaxis = []
-        yaxis = []
-        series = {}
         
         try:
-            if type(data) == type({}):
-                xaxis = data.keys()
-                records = data.values()
-                yaxis = records[0].keys()
-                for name in yaxis: # count
-                    for record in records: # {'count': 77}, {'count':119}
-                        if not name in series:
-                            series[name] = []
-                        series[name].append(record[name])
-
-                self.set_xaxis(xaxis)
-                #self.chart.set_series(seriese
-                #self.chart.set_data_name(series.keys())
-                self.set_data(",".join(str(x) for x in series.values()))
+            for keyname in keynames:
+                try:
+                    val = val[keyname]
+                except:
+                    continue
         except:
             pass
+
+        res = [key,val]
+        try:
+            self.data.append(res)
+        except:
+            self.set_data([])
+            self.data.append(res)
+
+        '''
+            records = dataes() # {'count':...}
+            yaxis = records[0].keys() # 'count'
+            for name in yaxis: # count
+                for record in records: # {'count': {'Total':77}}, {'count':{'Total':119}}
+                    if not name in series:
+                        series[name] = []
+                    if keyname:
+                        series[name].append(record[name][keyname])
+                    else:
+                        series[name].append(record[name])
+
+            self.set_xaxis(xaxis)
+            #self.chart.set_series(seriese
+            #self.chart.set_data_name(series.keys())
+            self.set_data(",".join(str(x) for x in series.values()))
+        except:
+            pass
+        '''
 
     def _create_chart(self):
         try:

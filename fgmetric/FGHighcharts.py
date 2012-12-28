@@ -207,7 +207,10 @@ class FGHighcharts:
     def convert_UTC2date(self, data=None):
         if data is None:
             data = self.data
-        self.data = [[datetime.fromtimestamp(k / self.millisecond).strftime("%b (%Y)"), v] for k,v in data]
+        try:
+            self.data = [[datetime.fromtimestamp(k / self.millisecond).strftime("%b (%Y)"), v] for k,v in data]
+        except:
+            pass
 
     def configure_chart_options(self):
         self.resize_height()

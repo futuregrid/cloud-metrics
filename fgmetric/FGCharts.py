@@ -99,6 +99,8 @@ class FGCharts:
         except:
             pass
 
+        # doesnt cover val is dict which is not integer.
+        # if we choose period monthly, or daily, val shoulde be like {datetime.datetime... : integer value, ...}
         res = [key,val]
         try:
             self.data.append(res)

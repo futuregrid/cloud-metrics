@@ -191,7 +191,7 @@ class FGHighcharts:
         new_height = self.height
         length_of_data = len(self.data)
         if self.chart_type in {"line-time-series", "master-detail"}:
-            new_height = length_of_data * 1
+            new_height = new_height #length_of_data * 1
         elif self.chart_type in {"column", "bar"}:
             new_height = length_of_data * 20
 

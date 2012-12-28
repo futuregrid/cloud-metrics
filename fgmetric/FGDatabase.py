@@ -273,7 +273,7 @@ class FGDatabase:
         ''' write instance object into db '''
         # ts has small variation. we ignore seconds here to create index
         new_ts = datetime(entryObj["ts"].year, entryObj["ts"].month, entryObj["ts"].day, entryObj["ts"].hour, entryObj["ts"].minute, 0)
-        uid = self._get_hash(entryObj["instanceId"] + " - " + str(new_ts)#str(entryObj["ts"]))
+        uid = self._get_hash(entryObj["instanceId"] + " - " + str(new_ts))#str(entryObj["ts"]))
         #self.pp.pprint(entryObj)
         wquery = "INSERT INTO " + self.instance_table + " ( uidentifier, \
                                     instanceId, \

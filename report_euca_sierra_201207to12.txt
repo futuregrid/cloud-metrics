@@ -1,0 +1,119 @@
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set period monthly
+set metric countusers
+analyze
+chart -t column-basic --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set period monthly
+set metric count
+analyze
+chart -t column-basic --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set period monthly
+set metric runtime
+set timetype hour
+analyze
+chart -t column-basic --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set period daily
+set metric countusers
+analyze
+chart -t line-time-series --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set period daily
+set metric count
+analyze
+chart -t line-time-series --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set period daily
+set metric runtime
+set timetype hour
+analyze
+chart -t line-time-series --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set groupby walltime
+set metric count
+analyze
+chart -t column-drilldown --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set groupby project
+set metric count
+analyze
+chart -t pie-basic --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set groupby projectleader
+set metric count
+analyze
+chart -t pie-basic --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set groupby institution
+set metric count
+analyze
+chart -t pie-basic --directory 2012-07to12/
+
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set groupby projectleader
+set metric runtime
+set groups All
+set timetype hour
+analyze
+chart -t bar --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set metric count
+set groups serviceTag
+analyze
+chart -t column-basic --directory 2012-07to12/
+
+clear
+set nodename sierra
+set platform eucalyptus
+set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+set metric runtime
+set groups serviceTag
+set timetype hour
+analyze
+chart -t column-basic --directory 2012-07to12

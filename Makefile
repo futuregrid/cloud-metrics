@@ -47,6 +47,8 @@ help:
 clean:
 	-rm -rf $(BUILDDIR)/*
 
+cleandata:
+	-rm -rf $(HTMLPATH)/*
 data:
 	@echo
 	@echo "Start generating data..."
@@ -69,8 +71,9 @@ html2png:
 	@echo
 	@echo "All html pages are rendered to PNG images."
 
-report: injectJs html2png latexpdf
-#report: data injectJs html2png latexpdf
+reportonly: injectJs html2png latexpdf
+
+report: cleandata data injectJs html2png latexpdf
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

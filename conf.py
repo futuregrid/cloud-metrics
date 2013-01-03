@@ -160,7 +160,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'FGSierra6monthsReportdoc'
+htmlhelp_basename = 'FGResourceReportdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -179,7 +179,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'FGSierra6monthsReport.tex', 
+  ('index', 'FGResourceReport.tex', 
   u'FG Resource Report',
    u'Hyungro Lee, Gregor von Laszewski, Fugang Wang, Geoffrey C. Fox', 'manual'),
 ]
@@ -210,7 +210,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'fgsierra6monthsreport', u'FG Resource Report',
+    ('index', 'fgresourcereport', u'FG Resource Report',
      [u'Hyungro Lee, Gregor von Laszewski, Fugang Wang'], 1)
 ]
 
@@ -224,7 +224,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'FGSierra6monthsReport', u'FG Resource Report',
+  ('index', 'FGResourceReport', u'FG Resource Report',
    u'Hyungro Lee, Gregor von Laszewski, Fugang Wang', 'FGSierra6monthsReport', 
    'One line description of project.',
    'Miscellaneous'),

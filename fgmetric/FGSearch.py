@@ -183,7 +183,7 @@ class FGSearch:
         return set([month]) & set(months)
 
     def get_filename(self):
-        return self.from_date.strftime("%Y%m%dT%H:%M:%S") + "-" + self.to_date.strftime("%Y%m%dT%H:%M:%S") + "-" + str(self.metric) + "-" + str(self.platform or "") + "-" + str(self.nodename or "") + "-" + str(self.period or "")
+        return self.from_date.strftime("%Y%m%dT%H:%M:%S") + "-" + self.to_date.strftime("%Y%m%dT%H:%M:%S") + "-" + str(self.metric) + "-" + str(self.platform or "") + "-" + str(self.nodename or "") + "-" + str(self.period or "") + str(self.groupby or "")
 
     def get_months_between_dates(self, from_date, to_date):
         """ Get months between two dates

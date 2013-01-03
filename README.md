@@ -25,3 +25,21 @@ How to modify command?
 Edit data.txt or report_euca_sierra_201207to12.txt
 
 The file has the list of commands to generate charts that included in the report.
+
+Add Ons to be included
+-----------------------
+
+1) command to create a report by resource and period
+
+report -resource sierra -service eucalyptus -from ??:??:?? -to ??:??:?? 
+
+report -summary -resource sierra india -service eucalyptus openstack -from ??:??:?? -to ??:??:?? 
+report -summary -resource sierra -service openstack -from ??:??:?? -to ??:??:?? 
+report -summary -resource sierra -service eucalyptus -from ??:??:?? -to ??:??:?? 
+
+
+possibly add format to the command 
+
+-format pdf
+-format sphinx
+-format html       ?

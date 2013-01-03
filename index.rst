@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    sierra
+..   india
 
 Indices and tables
 ==================

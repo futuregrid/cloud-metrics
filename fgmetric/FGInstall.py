@@ -13,6 +13,7 @@ class FGInstall(object):
 
     instance_table = "instance"
     userinfo_table = "userinfo"
+    projectinfo_table = "projectinfo"
     cloudplatform_table = "cloudplatform"
 
     # Initialize
@@ -113,11 +114,25 @@ class FGInstall(object):
                 version varchar(8), \
                 platform varchar(16))"
 
+        create_projectinfo_table = "CREATE TABLE if not exist " + self.projectinfo_table + " (\
+              `ProjectId` int(11) NOT NULL DEFAULT '0',\
+              `Completed` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,\
+              `Title` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,\
+              `ProjectLead` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,\
+              `Institution` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,\
+              `Department` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,\
+              `Keywords` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,\
+              `Results` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,\
+              PRIMARY KEY (`ProjectId`)\
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
+
         try:
             self.cursor.execute(create_instance_table)
             print self.instance_table + " created if not exists"
             self.cursor.execute(create_userinfo_table)
             print self.userinfo_table + " created if not exists"
+            self.cursor.execute(create_projectinfo_table)
+            print self.projectinfo_table + " created if not exists"
             self.cursor.execute(create_cloudplatform_table)
             print self.cloudplatform_table + " created if not exists"
         except MySQLdb.Error:

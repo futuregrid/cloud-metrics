@@ -11,10 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   test
-   test2
-
-
+   sierra
 
 Indices and tables
 ==================

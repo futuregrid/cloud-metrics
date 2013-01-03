@@ -9,6 +9,9 @@ BUILDDIR      = _build
 
 # Latest FG Cloud Metrics should be installed to run Makefile.
 FGMETRIC      = fg-metric-beta
+PHANTOMJS     = phantomjs
+HTMLPATH      = 2012-07to12
+IMGPATH       = images
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -51,12 +54,23 @@ data:
 	@echo
 	@echo "All data generated."
 
-image:
+injectJs:
+	perl -pi -e 's#../../../../../../_static/js/jquery-1.7.2.min.js#http://code.jquery.com/jquery-1.7.2.min.js#' $(HTMLPATH)/*.html
+	perl -pi -e 's#../../../../../../_static/js/highcharts.js#http://code.highcharts.com/highcharts.js#' $(HTMLPATH)/*.html
+	perl -pi -e 's#../../../../../../_static/js/modules/exporting.js#http://code.highcharts.com/modules/exporting.js#' $(HTMLPATH)/*.html
+	@echo
+	@echo "Local path of js converted to global links"
+
+html2png:
 	@echo
 	@echo "Start to convert html pages to PNG images using phantomjs..."
-	find 2012-07to12/*.html -exec echo phantomjs rasterizefromfile.js {} images/{}.jpg \;
+	find $(HTMLPATH)/*.html -exec $(PHANTOMJS) rasterizefromfile.js {} $(IMGPATH)/{}.png \; 
+	find $(IMGPATH)/$(HTMLPATH)/*.png -exec rename 's/\.html\.png/\.png/' .png {} \;
 	@echo
 	@echo "All html pages are rendered to PNG images."
+
+report: injectJs html2png latexpdf
+#report: data injectJs html2png latexpdf
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

@@ -181,7 +181,7 @@ latex_elements = {
 latex_documents = [
   ('index', 'FGSierra6monthsReport.tex', 
   u'FG Resource Report',
-   u'Hyungro Lee, Gregor von Laszewski, Fugang Wang, Geoffrey C. Fox', 'report'),
+   u'Hyungro Lee, Gregor von Laszewski, Fugang Wang, Geoffrey C. Fox', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

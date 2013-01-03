@@ -1,8 +1,8 @@
 from cmd2 import Cmd, options, make_option
 import sys
-from pprint import pprint
 import optparse
 import csv
+from pprint import pprint
 from fgmetric.FGSearch import FGSearch
 from fgmetric.FGInstances import FGInstances
 from fgmetric.FGCharts import FGCharts

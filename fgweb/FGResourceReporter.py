@@ -36,22 +36,34 @@ class FGResourceReporter:
                 status = "Off"
             else:
                 status = "On"
-                
+            utilization = self.get_utilization(service)
+            self.adjust_nimbus(service)
             #print self.euca2ools.stats
             res.append({ "Name":service["hostname"], \
                     "Institution": service["institution"], \
                     "Cloud Service": service["platform"], \
                     "Status": status, \
-                    "Utilization": str(round(100 * float(self.euca2ools.stats["5. Running VMs"]) / float(service["cores"]), 2)) + "%" , \
+                    "Utilization":  utilization, \
                     "Active Projects": self.euca2ools.stats["2. Groups"], \
                     "Active Users": self.euca2ools.stats["3. Users"], \
                     "Running Instances": self.euca2ools.stats["5. Running VMs"], \
-                    "Number of cores available for a service": service["cores"], \
-                    "Number of cores used currently": self.euca2ools.stats["5. Running VMs"]
+                    "Cores (used/avail)":  str(self.euca2ools.stats["5. Running VMs"]) + " / " + str(service["cores"]) \
                     })
             #print self.euca2ools.display_stats()
             
         return res
+
+    def get_utilization(self, service):
+        cores = service["cores"]
+        if service["platform"] == "nimbus":
+            return "--*"
+        return str(round(100 * float(self.euca2ools.stats["5. Running VMs"]) / float(cores), 2)) + "%"
+
+    def adjust_nimbus(self, service):
+        if service["platform"] == "nimbus":
+            self.euca2ools.stats["2. Groups"] = "--*"
+            self.euca2ools.stats["3. Users"] = "--*"
+            self.euca2ools.stats["5. Running VMs"] = "--*"
     
 class FGRRWeb(object):
 

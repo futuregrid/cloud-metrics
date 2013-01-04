@@ -113,7 +113,8 @@ class FGInstall(object):
                 hostname varchar(32), \
                 version varchar(8), \
                 platform varchar(16), \
-                institution varchar(16))"
+                institution varchar(16), \
+                cores int default 0)"
 
         create_projectinfo_table = "CREATE TABLE if not exist " + self.projectinfo_table + " (\
               `ProjectId` int(11) NOT NULL DEFAULT '0',\

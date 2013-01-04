@@ -117,7 +117,9 @@ class FGEucaMetricsDB(object):
                 cloudPlatformId tinyint primary key auto_increment not null, \
                 hostname varchar(32), \
                 version varchar(8), \
-                platform varchar(16))"
+                platform varchar(16), \
+                institution varchar(16), \
+                cores int default 0)"
 
         try:
             self.cursor.execute(create_instance_table)

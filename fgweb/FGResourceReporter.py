@@ -31,10 +31,17 @@ class FGResourceReporter:
                 self.euca2ools.read_from_cmd()
                 self.euca2ools.convert_xml_to_dict()
                 self.euca2ools.print_ins(self.euca2ools.xml2dict)
+
+            if self.euca2ools.fail_cmd:
+                status = "Off"
+            else:
+                status = "On"
+                
             #print self.euca2ools.stats
             res.append({ "Name":service["hostname"], \
                     "Institution": service["institution"], \
                     "Cloud Service": service["platform"], \
+                    "Status": status, \
                     "Utilization": str(round(100 * float(self.euca2ools.stats["5. Running VMs"]) / float(service["cores"]), 2)) + "%" , \
                     "Active Projects": self.euca2ools.stats["2. Groups"], \
                     "Active Users": self.euca2ools.stats["3. Users"], \

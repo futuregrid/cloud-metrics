@@ -66,8 +66,10 @@ injectJs:
 html2png:
 	@echo
 	@echo "Start to convert html pages to PNG images using phantomjs..."
+	#Temporary for handling legend in charts
+	perl -pi -e 's#x: -100#x: -50#' $(HTMLPATH)/*.html
 	find $(HTMLPATH)/*.html -exec $(PHANTOMJS) rasterizefromfile.js {} $(IMGPATH)/{}.png \; 
-	find $(IMGPATH)/$(HTMLPATH)/*.png -exec rename 's/\.html\.png/\.png/' .png {} \;
+	find $(IMGPATH)/$(HTMLPATH)/*.png -exec rename -f 's/\.html\.png/\.png/' .png {} \;
 	@echo
 	@echo "All html pages are rendered to PNG images."
 

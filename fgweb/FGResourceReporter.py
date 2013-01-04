@@ -45,7 +45,10 @@ class FGResourceReporter:
                     "Utilization": str(round(100 * float(self.euca2ools.stats["5. Running VMs"]) / float(service["cores"]), 2)) + "%" , \
                     "Active Projects": self.euca2ools.stats["2. Groups"], \
                     "Active Users": self.euca2ools.stats["3. Users"], \
-                    "Running Instances": self.euca2ools.stats["5. Running VMs"]})
+                    "Running Instances": self.euca2ools.stats["5. Running VMs"], \
+                    "Number of cores available for a service": service["cores"], \
+                    "Number of cores used currently": self.euca2ools.stats["5. Running VMs"]
+                    })
             #print self.euca2ools.display_stats()
             
         return res

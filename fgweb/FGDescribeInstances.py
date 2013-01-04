@@ -54,6 +54,12 @@ class DescribeInstances:
         self.hostname = obj["nodename"]
         self.search_dict = obj["search"]
 
+    def set_service(self, name):
+        self.platform = name
+
+    def set_hostname(self, name):
+        self.hostname = name
+
     def list_instances(self):
         self.init_stats()
         res1 = self.list_eucalyptus()

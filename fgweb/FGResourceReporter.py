@@ -2,9 +2,12 @@ import cherrypy
 import sys
 import MySQLdb
 from fgmetric.FGDatabase import FGDatabase
-from cherrypy
+from fgweb.FGDescribeInstances import DescribeInstances
+
 class FGResourceReporter:
     def __init__(self):
+        self.euca2ools = DescribeInstances()
+        self.euca2ools.init_stats()
         self.db = FGDatabase()
         self.db.conf()
         self.db.connect()
@@ -17,6 +20,12 @@ class FGResourceReporter:
         self.read_cloudservice()
         for service in self.cloudservice:
             print service["hostname"], service["institution"], service["platform"]
+            self.euca2ools.set_service(service["platform"])
+            self.euca2ools.set_hostname(service["hostname"])
+            self.euca2ools.read_from_cmd()
+            self.euca2ools.convert_xml_to_dict()
+            print self.euca2ools.print_ins(self.euca2ools.xml2dict)
+            print self.euca2ools.display_stats()
             
         return self.cloudservice
     

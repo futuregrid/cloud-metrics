@@ -29,6 +29,10 @@ class DescribeInstances:
         self.stats_internal = { "users": {}, "groups": {}}
         self.fail_cmd = False
 
+    def init_xml(self):
+        self.xmloutput = None
+        self.xml2dict = None
+
     def get(self, obj):
         accumulated = {}
         self.set_search(obj)
@@ -202,8 +206,11 @@ class DescribeInstances:
                 break
 
     def convert_xml_to_dict(self):
-        xml2dict = Xml2Dict.Xml2Dict(self.xmloutput)
-        self.xml2dict = xml2dict.parse()
+        try:
+            xml2dict = Xml2Dict.Xml2Dict(self.xmloutput)
+            self.xml2dict = xml2dict.parse()
+        except:
+            pass
 
     def header(self):
         return "<h1>Web-based euca-describe-instances</h1> showing information about instances on FutureGrid (Eucalyptus, OpenStack)"
@@ -294,18 +301,21 @@ class DescribeInstances:
 
     def print_ins(self, dictionary, ident = '', braces=1):
         all_msg = ""
-        for key, value in dictionary.iteritems():
-            msg = ""
-            if isinstance(value, dict):
-                #msg = '%s%s%s%s' %(ident,braces*'[',key,braces*']') 
-                if braces == 2:
-                    msg = "<tr>"
-                ident = str(key)
-                msg = msg + self.print_ins(value, ident+' ', braces+1)
-            else:
-                msg = "<td>" + str(value) + "</td>"
-                self.count_stats(key, value)
-            all_msg = all_msg + msg
+        try:
+            for key, value in dictionary.iteritems():
+                msg = ""
+                if isinstance(value, dict):
+                    #msg = '%s%s%s%s' %(ident,braces*'[',key,braces*']') 
+                    if braces == 2:
+                        msg = "<tr>"
+                    ident = str(key)
+                    msg = msg + self.print_ins(value, ident+' ', braces+1)
+                else:
+                    msg = "<td>" + str(value) + "</td>"
+                    self.count_stats(key, value)
+                all_msg = all_msg + msg
+        except:
+            pass
 
         return all_msg
 

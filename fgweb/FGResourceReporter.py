@@ -17,17 +17,31 @@ class FGResourceReporter:
         self.cloudservice = self.db.read_cloudplatform()
 
     def list(self):
+        res = []
         self.read_cloudservice()
         for service in self.cloudservice:
-            print service["hostname"], service["institution"], service["platform"]
-            self.euca2ools.set_service(service["platform"])
-            self.euca2ools.set_hostname(service["hostname"])
-            self.euca2ools.read_from_cmd()
-            self.euca2ools.convert_xml_to_dict()
-            print self.euca2ools.print_ins(self.euca2ools.xml2dict)
-            print self.euca2ools.display_stats()
+            self.euca2ools.init_stats()
+            self.euca2ools.init_xml()
+            # TEMPORARy
+            if service["cloudPlatformId"] == 1:
+                continue
+            if service["platform"] != "nimbus":
+                self.euca2ools.set_service(service["platform"])
+                self.euca2ools.set_hostname(service["hostname"])
+                self.euca2ools.read_from_cmd()
+                self.euca2ools.convert_xml_to_dict()
+                self.euca2ools.print_ins(self.euca2ools.xml2dict)
+            #print self.euca2ools.stats
+            res.append({ "Name":service["hostname"], \
+                    "Institution": service["institution"], \
+                    "Cloud Service": service["platform"], \
+                    "Utilization": str(round(100 * float(self.euca2ools.stats["5. Running VMs"]) / float(service["cores"]), 2)) + "%" , \
+                    "Active Projects": self.euca2ools.stats["2. Groups"], \
+                    "Active Users": self.euca2ools.stats["3. Users"], \
+                    "Running Instances": self.euca2ools.stats["5. Running VMs"]})
+            #print self.euca2ools.display_stats()
             
-        return self.cloudservice
+        return res
     
 class FGRRWeb(object):
 
@@ -35,7 +49,20 @@ class FGRRWeb(object):
         self.ins = FGResourceReporter()
 
     def list(self):
-        return self.ins.list()
+        html_table = ""
+        html_table_header = ""
+        first = 0
+        res = self.ins.list()
+        for row in res:
+            for k, v in row.iteritems():
+                if first == 0:
+                    html_table_header += "<th>" + str(k) + "</th>"
+                html_table += "<td>" + str(v) + "</td>"
+            first = 1
+            html_table += "</tr><tr>"
+        html_table = "<table><tr>" + html_table_header + "</tr><tr>" + html_table + "</tr></table>"
+        html_table += "<br><p>* Nimbus doesn't support real time monitoring"
+        return html_table
 
     @cherrypy.expose
     @cherrypy.tools.json_out()

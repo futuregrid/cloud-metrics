@@ -50,7 +50,7 @@ class FGSearch:
         self.platform = None
         self.userid = None
         self.username = None
-        self.metric = None
+        self.metric = []
 
     def init_suboptions(self):
         self.calc = None
@@ -86,7 +86,12 @@ class FGSearch:
 
     def set_metric(self, name):
         #self.init_stats()
-        self.metric = name
+        try:
+            metrics = name.split()
+        except:
+            metrics = name
+
+        self.metric = metrics
         #self.init_suboptions()
         self.set_default_suboptions()
 
@@ -183,7 +188,7 @@ class FGSearch:
         return set([month]) & set(months)
 
     def get_filename(self):
-        return self.from_date.strftime("%Y%m%dT%H:%M:%S") + "-" + self.to_date.strftime("%Y%m%dT%H:%M:%S") + "-" + str(self.metric) + "-" + str(self.platform or "") + "-" + str(self.nodename or "") + "-" + str(self.period or "") + str(self.groupby or "")
+        return self.from_date.strftime("%Y%m%dT%H:%M:%S") + "-" + self.to_date.strftime("%Y%m%dT%H:%M:%S") + "-" + str(''.join(self.metric)) + "-" + str(self.platform or "") + "-" + str(self.nodename or "") + "-" + str(self.period or "") + str(self.groupby or "")
 
     def get_months_between_dates(self, from_date, to_date):
         """ Get months between two dates
@@ -370,7 +375,8 @@ class FGSearch:
 
     def get_statistics(self):
         groups = self.get_groups() # if groupby is set
-        self.update_metrics(groups, self.stats, self.metric)
+        for metric in self.metric:
+            self.update_metrics(groups, self.stats, metric)
 
     def _is_unique(self, key, value):
         ''' if value is unique, return itself. Otherwise return None'''
@@ -431,7 +437,7 @@ class FGSearch:
 
     def do_time_conversion(self, val):
         # Temporary lines 12/27/2012
-        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
+        if set(self.metric) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
             val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
         return val
 
@@ -630,7 +636,7 @@ class FGSearch:
         #2. count
         #3. ccvm
         init_value = value
-        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
+        if set(self.metric) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
             init_value = self.do_time_conversion(86400) # 864000 seconds = 1440 minutes = 24 hours = 1 day 
 
         dates = self.create_dates_between_dates(selected["t_start"], selected["t_end"], init_value)
@@ -638,7 +644,7 @@ class FGSearch:
         return dates
 
     def adjust_each_metric(self, dates, value=None):
-        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
+        if set(self.metric) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
             selected = self.get_recentlyselected()
             t_start = selected["t_start"]
             t_end = selected["t_end"]
@@ -651,14 +657,14 @@ class FGSearch:
             else:
                 dates[first_day] = self.do_time_conversion((end_of_first_day - t_start).seconds)
                 dates[end_day] = self.do_time_conversion((t_end  - start_of_end_day).seconds)
-        elif self.metric == self.names.metric.countusers:
+        elif set(self.metric) & set(self.names.metric.countusers):
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(self.period + str(entry_date), value)
                 if new_value is None:
                     dates[entry_date] = new_value
 
     def adjust_each_metric_in_month(self, dates, value=None):
-        if self.metric in {self.names.metric.runtime, self.names.metric.runtimeusers}:
+        if set(self.metric) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
             selected = self.get_recentlyselected()
             t_start = selected["t_start"]
             t_end = selected["t_end"]
@@ -674,7 +680,7 @@ class FGSearch:
             else:
                 dates[first_month] = self.do_time_conversion((end_of_first_month - t_start).seconds)
                 dates[end_month] = self.do_time_conversion((t_end - start_of_end_month).seconds)
-        elif self.metric == self.names.metric.countusers:
+        elif set(self.metric) & set(self.names.metric.countusers):
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(self.period + str(entry_date), value)
                 if new_value is None:
@@ -705,38 +711,38 @@ class FGSearch:
         if not metric: 
             return
 
-        if metric == self.names.metric.count:
+        if set(metric) & set(self.names.metric.count):
             self.calc = "count"
             # "count(*)"
-        elif metric == self.names.metric.countusers:
+        elif set(metric) & set(self.names.metric.countusers):
             self.calc = "count"
             self.columns = ["ownerId"]
             self.set_distinct(self.columns)
             # "count(distinct ownerId)" 
-        elif metric == self.names.metric.runtime:
+        elif set(metric) & set(self.names.metric.runtime):
             self.calc = "sum"
             self.columns = ["duration"]
-        elif metric == self.names.metric.runtimeusers:
+        elif set(metric) & set(self.names.metric.runtimeusers):
             self.calc = "sum"
             self.columns = ["duration"]
             self.groups = ["ownerId"]
             # "sum(duration)"
             # group by ownerId
-        elif metric in self.names.metric.cores:
+        elif set(metric) & set(self.names.metric.cores):
             self.calc = "sum"
             self.columns = ["ccvm", "cores"]
             self.groups = ["instance.cloudPlatformIdRef"]
             self.period = "daily"
             # "sum(ccvm_cores)"
             # group by instance.cloudPlatformIdRef, CAST(date as date)
-        elif metric in self.names.metric.memories:
+        elif set(metric) & set(self.names.metric.memories):
             self.calc = "sum"
             self.columns = ["ccvm", "mem"]
             self.groups = ["instance.cloudPlatformIdRef"]
             self.period = "daily"
             # "sum(ccvm_mem)"
             # group by instance.cloudPlatformIdRef, CAST(date as date)
-        elif metric in self.names.metric.disks:
+        elif set(metric) & set(self.names.metric.disks):
             self.calc = "sum"
             self.columns = ["ccvm", "disk"]
             self.groups = ["instance.cloudPlatformIdRef"]

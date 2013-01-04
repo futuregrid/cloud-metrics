@@ -141,13 +141,13 @@ class FGMetrics(Cmd):
         for key, data in self.search.get_metric().iteritems():
             #self.chart.set_xaxis(key) TBD
             if key == "All":
-                self.chart.set_data_beta(data, self.search.metric, self.search.period, self.search.groupby)
+                self.chart.set_data_beta(data, ''.join(self.search.metric), self.search.period, self.search.groupby)
             else:
                 new_key = self.search.adjust_stats_keys(key)
-                self.chart.set_data_beta2(new_key, data, self.search.metric, self.search.period or "Total")
+                self.chart.set_data_beta2(new_key, data, ''.join(self.search.metric), self.search.period or "Total")
             #self.chart.set_series_beta(data)
 
-        self.chart.set_title_beta(self.search.metric, self.search.period, self.search.groupby)
+        self.chart.set_title_beta(''.join(self.search.metric), self.search.period, self.search.groupby)
         self.chart.set_subtitle("source: " + str(self.search.platform) + " on " + str(self.search.nodename))
         self.chart.set_yaxis(self.search.timetype or "")
         self.chart.display()

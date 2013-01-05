@@ -68,12 +68,19 @@ class FGSearch:
     def init_stats(self):
         self.selected = []
         self.stats = {}
+        self.stats_beta = { "system": None,\
+                            "service": None,\
+                            "period": None,\
+                            "from": None,\
+                            "to": None,\
+                            "metric": None,\
+                            "value": None}
 
     def init_names(self):
-        self.names = dotdict({"metric": dotdict({"count":"count", 
-                                                "countusers":"countusers",
-                                                "runtime":"runtime", 
-                                                "runtimeusers":"runtimeusers",
+        self.names = dotdict({"metric": dotdict({"count":["count"], 
+                                                "countusers":["countusers"],
+                                                "runtime":["runtime"], 
+                                                "runtimeusers":["runtimeusers"],
                                                 "cores":["cpu", "ccvm_cores", "core", "cores"], 
                                                 "memories":["mem", "ccvm_mem", "memory", "memories"], 
                                                 "disks":["disk", "ccvm_disk", "disks"]}),
@@ -367,6 +374,15 @@ class FGSearch:
 
     def get_metric(self):
         return self.stats
+
+    def get_series(self):
+        series = []
+        for group, metrics in self.get_metric().iteritems():
+            for metric, period in metrics.iteritems():
+                stat = {"name": metric,\
+                        "data": period.values()[0] }
+                series.append(stat)
+        return series
 
     def collect(self, instance):
         instance = self.select(instance)

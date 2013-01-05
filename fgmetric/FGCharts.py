@@ -64,6 +64,9 @@ class FGCharts:
         self.yaxis = None
         self.data = None
 
+    def set_series(self, data):
+        self.series = data
+
     def set_data_beta(self, data, *keynames):
 
         try:
@@ -139,6 +142,7 @@ class FGCharts:
             self.chart.set_data(self.data)
             # highcharts
             self.chart.set_data_name(self.data_name)
+            self.chart.set_series(self.series)
             self.chart.set_subtitle(self.subtitle)
             self.chart.set_xaxis(self.xaxis)
             self.chart.set_yaxis(self.yaxis)

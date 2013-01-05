@@ -27,6 +27,7 @@ class FGHighcharts:
     xAxis_categories = None
     data = None
     series_name = None
+    series = None
     width = 0
     height = 0
 
@@ -73,21 +74,23 @@ class FGHighcharts:
         else:
             self.reducing_list()
 
-    def reducing_list(self):
-        if not isinstance(self.data, (list)) or not isinstance(self.data[0], (list)):
+    def reducing_list(self, data=None):
+        data = data or self.data
+            
+        if not isinstance(data, (list)) or not isinstance(data[0], (list)):
             return
 
-        data = sorted(self.data, key=lambda val:val[1], reverse=True)
+        res_data = sorted(data, key=lambda val:val[1], reverse=True)
 
         reduce_to = 20
-        if len(self.data) <= reduce_to:
-            self.data = data
+        if len(data) <= reduce_to:
+            data = res_data
             return
 
         count = 0
         new_data = []
         rest = ['others', 0]
-        for k,v in data:
+        for k,v in res_data:
             if count > reduce_to:
                 rest[1] += v
             else:
@@ -95,9 +98,12 @@ class FGHighcharts:
             count += 1
        
         rest[0] = str(count - reduce_to) + " " + rest[0]
-        self.data = new_data + [rest]
+        res_data = new_data + [rest]
+
+        data = res_data
 
     def get_data(self, index=""):
+        ''' outdated '''
         if not index == "":
             res = []
             for i in self.data:
@@ -113,16 +119,18 @@ class FGHighcharts:
             dictlist.append(temp)
         return dictlist
 
-    def sort_data(self):
-        self.data = sorted(self.data, key=lambda key: key)
+    def sort_data(self, data=None):
+        data = data or self.data
+        data = sorted(data, key=lambda key: key)
 
-    def human_sort_data(self):
+    def human_sort_data(self, data=None):
+        data = data or self.data
         key_pat = re.compile( r"^(\D+)(\d+)$" )
         def key( item ):
             item = item[0]
             m= key_pat.match( item )
             return m.group(1), int(m.group(2))
-        self.data.sort(key=key)
+        data.sort(key=key)
     
     def set_from_date(self, date):
         self.from_date = date
@@ -187,9 +195,26 @@ class FGHighcharts:
     def set_height(self, height):
         self.height = max(int(height), 150) # MINIMUM HEIGHT is 150px
 
+    def set_series(self, data):
+        print data
+        for record in data:
+            list_data = self.convert_dict_to_list(record["data"])
+            #self.sort_data()
+            try:
+                self.human_sort_data(list_data)
+            except:
+                try:
+                    self.sort_data(list_data)
+                except:
+                    print sys.exc_info()
+                    pass
+                pass
+            record["data"] = list_data
+        self.series = data
+
     def resize_height(self):
         new_height = self.height
-        length_of_data = len(self.data)
+        length_of_data = self.get_data_length()
         if self.chart_type in {"line-time-series", "master-detail"}:
             new_height = new_height #length_of_data * 1
         elif self.chart_type in {"column", "bar"}:
@@ -205,16 +230,28 @@ class FGHighcharts:
             return record
 
     def convert_UTC2date(self, data=None):
-        if data is None:
-            data = self.data
+        data = data or self.data
         try:
-            self.data = [[datetime.fromtimestamp(k / self.millisecond).strftime("%b (%Y)"), v] for k,v in data]
+            data = [[datetime.fromtimestamp(k / self.millisecond).strftime("%b (%Y)"), v] for k,v in data]
         except:
             pass
+
+    def adjust_series(self):
+
+        for record in self.series:
+            record["type"] = self.series_type
+        '''
+            [{
+                type: '%(series_type)s',
+                name: '%(series_name)s',
+                data: %(data)s
+            }]
+        '''
 
     def configure_chart_options(self):
         self.resize_height()
         self.set_chart_options()
+        self.adjust_series()
 
     def display(self):
 
@@ -253,7 +290,7 @@ class FGHighcharts:
         elif self.chart_type == "column-basic":
             self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
             self.convert_UTC2date()
-            self.set_xaxis(list(zip(*self.data)[0]))
+            self.set_xaxis(self.get_categories())
             self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
             self.set_chart_option("yAxis", {"title": { "text": self.yAxis_title or ""}})
             self.set_chart_option("tooltip", {"shared":1})#{"formatter": "function() { return this.x +':<b>'+ this.y;"})
@@ -271,7 +308,7 @@ class FGHighcharts:
             self.series_type = "column"
         elif self.chart_type == "column-drilldown":
             self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
-            self.set_xaxis(list(zip(*self.data)[0]))
+            self.set_xaxis(self.get_categories())
             self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
             self.set_chart_option("yAxis", {"title": { "text": self.yAxis_title or ""}})
             self.set_chart_option("tooltip", {"shared":1})#{"formatter": "function() { return this.x +':<b>'+ this.y;"})
@@ -319,7 +356,7 @@ class FGHighcharts:
             #default options
             self.set_chart_option("chart", {"renderTo": 'container', "type": self.chart_type})
             if not self.xAxis_categories:
-                self.set_xaxis(list(zip(*self.data)[0]))
+                self.set_xaxis(self.get_categories())
             self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
             self.set_chart_option("yAxis", {"min": 0, "title": { "text": self.yAxis_title or ""}})
             self.set_chart_option("tooltip", {"formatter": "function() { return ''+ " + self.tooltip + "; }" })
@@ -329,7 +366,19 @@ class FGHighcharts:
     def set_chart_option(self, key, val):
         setattr(self, "option_" + str(key), val)
         #option = getattr(self, "option_" + str(key))
-        
+      
+    def get_categories(self):
+        try:
+            return list(zip(*self.series[0].data)[0])
+        except:
+            return list(zip(*self.data)[0])
+
+    def get_data_length(self):
+        try:
+            return len(self.series[0].data)
+        except:
+            return len(self.data)
+
     def get_html_header(self):
         self.html_header = '''<!DOCTYPE html>
         <html>
@@ -373,12 +422,7 @@ class FGHighcharts:
                             },
                         tooltip: %(option_tooltip)s,
                         plotOptions: %(option_plotOptions)s, 
-                        series: [
-                            {
-                                type: '%(series_type)s',
-                                name: '%(series_name)s',
-                                data: %(data)s
-                            }]
+                        series: %(series)s
                         });
                     });
             });

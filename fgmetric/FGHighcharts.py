@@ -62,10 +62,10 @@ class FGHighcharts:
             self.data = self.convert_dict_to_list(data)
             #self.sort_data()
             try:
-                self.human_sort_data()
+                self.data = self.human_sort_data()
             except:
                 try:
-                    self.sort_data()
+                    self.data = self.sort_data()
                 except:
                     print sys.exc_info()
                     pass
@@ -113,7 +113,7 @@ class FGHighcharts:
         return self.data
     def get_multi_yaxis(self):
         yaxis = []
-        onleftside = 1
+        onleftside = 0
         guideline = 1
         colors = ['#AA4643', '#4572A7', '#89A54E']
         for record in self.series:
@@ -125,7 +125,7 @@ class FGHighcharts:
                                 "style": { "color": color } },\
                     "gridLineWidth": guideline, \
                     "opposite": onleftside }
-            onleftside = 0
+            onleftside = 1
             guideline = 0
             yaxis.append(res)
         return yaxis
@@ -140,6 +140,7 @@ class FGHighcharts:
     def sort_data(self, data=None):
         data = data or self.data
         data = sorted(data, key=lambda key: key)
+        return data
 
     def human_sort_data(self, data=None):
         data = data or self.data
@@ -149,6 +150,7 @@ class FGHighcharts:
             m= key_pat.match( item )
             return m.group(1), int(m.group(2))
         data.sort(key=key)
+        return data
     
     def set_from_date(self, date):
         self.from_date = date
@@ -218,10 +220,10 @@ class FGHighcharts:
             list_data = self.convert_dict_to_list(record["data"])
             #self.sort_data()
             try:
-                self.human_sort_data(list_data)
+                list_data = self.human_sort_data(list_data)
             except:
                 try:
-                    self.sort_data(list_data)
+                    list_data = self.sort_data(list_data)
                 except:
                     print sys.exc_info()
                     pass
@@ -263,8 +265,11 @@ class FGHighcharts:
 
     def adjust_series(self):
         series_type = self.series_type
+        cnt = 0
         for record in self.series:
             record["type"] = series_type
+            record["yAxis"] = cnt
+            cnt += 1
             # Temporary
             # primary record: column or else
             # after secondary one: line 

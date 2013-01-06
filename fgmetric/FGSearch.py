@@ -33,6 +33,7 @@ class FGSearch:
     def __init__(self):
         self.init_options()
         self.init_suboptions()
+        self.init_internal_options()
         self.init_stats()
         self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', 'trace', 'state', 'date' }
         self.keys_to_select_extra = { 'ProjectId', 'Title', 'Institution', 'ProjectLead' } #_mem', 'ccvm_cores', 'ccvm_disk' }
@@ -51,17 +52,17 @@ class FGSearch:
         self.userid = None
         self.username = None
         self.metric = []
+        self.selected_metric = None
 
-    def init_suboptions(self):
+    def init_internal_options(self):
         self.calc = None
         self.columns = None
-        self.period = None#"Total"
+        self.distinct = False
 
+    def init_suboptions(self):
+        self.period = None#"Total"
         self.groups = ["All"]
         self.groupby = None
-
-        self.distinct = None
-
         self.timetype = None
         self.time_conversion = 1
  
@@ -75,6 +76,7 @@ class FGSearch:
                             "to": None,\
                             "metric": None,\
                             "value": None}
+        self.distinct_list = {}
 
     def init_names(self):
         self.names = dotdict({"metric": dotdict({"count":["count"], 
@@ -92,15 +94,12 @@ class FGSearch:
             })
 
     def set_metric(self, name):
-        #self.init_stats()
         try:
             metrics = name.split()
         except:
             metrics = name
 
         self.metric = metrics
-        #self.init_suboptions()
-        self.set_default_suboptions()
 
     def set_period(self, name):
         self.period = name
@@ -282,7 +281,7 @@ class FGSearch:
         self.period = name
 
     def set_distinct(self, val):
-        self.distinct = {}
+        self.distinct = val
 
     def get_filter(self, name=None):
         if name and name in self:
@@ -349,6 +348,10 @@ class FGSearch:
         self.store2cache(instance) # for later use
         return default
 
+    def select_metric(self, name):
+        self.selected_metric = name
+        self.set_internal_options([name])
+
     def get(self, instance, keys):
         return dict((key, instance[key]) for key in keys)
 
@@ -369,7 +372,7 @@ class FGSearch:
         return lis
 
     def get_groups(self):
-        ins = self.get_recentlyselected()
+        ins = self.get_selected_instance()
         return self.get_values(ins, self.groups)
 
     def get_metric(self):
@@ -390,23 +393,45 @@ class FGSearch:
         return True
 
     def get_statistics(self):
-        groups = self.get_groups() # if groupby is set
+        groups = self.get_groups()
         for metric in self.metric:
-            self.update_metrics(groups, self.stats, metric)
+            self.select_metric(metric)
+            self.update_metric_beta(groups, metric)
+            #self.update_metrics(groups, self.stats, metric)
 
     def _is_unique(self, key, value):
         ''' if value is unique, return itself. Otherwise return None'''
-        if self.distinct is None:
+        if not self.distinct:
             return value
 
         try:
-            self.distinct[key][value] += 1
-            if self.distinct[key][value] == 1:
+            self.distinct_list[key][value] += 1
+            if self.distinct_list[key][value] == 1:
                 return value
             return None
         except:
-            self.distinct[key] = Counter({value : 1})
+            self.distinct_list[key] = Counter({value : 1})
             return value
+
+    def update_metric_beta(self, groups, metric):
+        mdict = self.stats
+        for group in groups:
+            try:
+                mdict = mdict[group]
+            except:
+                mdict[group] = {}
+                mdict = mdict[group]
+
+        # Total
+        self.calculate_total(mdict, metric)
+        # Period
+        try:
+            period_func = getattr(self, "_divide_into_" + str(self.period))
+            period_func(mdict[metric])
+            period_func = getattr(self, "_groupby_" + str(self.groupby))
+            period_func(mdict[metric])
+        except:
+            pass
 
     def update_metrics(self, glist, mdict, key):
         if len(glist) == 0:
@@ -440,7 +465,7 @@ class FGSearch:
         return self.update_metrics(glist, mdict[group], key)
 
     def calculate_total(self, mdict, key):
-        new = self.get_metric_factor(self.columns, self.get_recentlyselected())
+        new = self.get_metric_factor(self.columns, self.get_selected_instance())
         new = self.do_time_conversion(new)
         total = "Total"
         try:
@@ -448,12 +473,12 @@ class FGSearch:
         except:
             old = None
             mdict[key] = { total : None }
-        new = self._is_unique(total, new)
+        new = self._is_unique(key + total, new)
         mdict[key][total] = self.calculate(old, new)
 
     def do_time_conversion(self, val):
         # Temporary lines 12/27/2012
-        if set(self.metric) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
+        if set([self.selected_metric]) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
             val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
         return val
 
@@ -464,8 +489,8 @@ class FGSearch:
         return self._groupby_None(args)
 
     def _groupby_walltime(self, mdict):
-        val = self.get_metric_factor(self.columns, self.get_recentlyselected())
-        selected = self.get_recentlyselected()
+        val = self.get_metric_factor(self.columns, self.get_selected_instance())
+        selected = self.get_selected_instance()
         t_delta = self.get_t_delta(selected)
 
         if not self.groupby in mdict:
@@ -493,7 +518,7 @@ class FGSearch:
         if not self._is_userinfo_needed():
             return
 
-        selected = self.get_recentlyselected()
+        selected = self.get_selected_instance()
         val = self.get_metric_factor(self.columns, selected)
 
         if not self.groupby in mdict:
@@ -508,7 +533,7 @@ class FGSearch:
         if not self._is_userinfo_needed():
             return
 
-        selected = self.get_recentlyselected()
+        selected = self.get_selected_instance()
         val = self.get_metric_factor(self.columns, selected)
         val = self.do_time_conversion(val)
 
@@ -524,7 +549,7 @@ class FGSearch:
         if not self._is_userinfo_needed():
             return
 
-        selected = self.get_recentlyselected()
+        selected = self.get_selected_instance()
         val = self.get_metric_factor(self.columns, selected)
         val = self.do_time_conversion(val)
 
@@ -633,8 +658,7 @@ class FGSearch:
         a.update(entries2update)
  
     def calculate_monthly(self):
-        
-        selected = self.get_recentlyselected()
+        selected = self.get_selected_instance()
         value = self.get_metric_factor(self.columns, selected)
 
         months = self.create_months_between_dates(selected["t_start"], selected["t_end"], value)
@@ -642,7 +666,7 @@ class FGSearch:
         return months
 
     def calculate_daily(self):
-        selected = self.get_recentlyselected()
+        selected = self.get_selected_instance()
         value = self.get_metric_factor(self.columns, selected)
         if not value:
             return {}
@@ -652,16 +676,16 @@ class FGSearch:
         #2. count
         #3. ccvm
         init_value = value
-        if set(self.metric) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
+        if set([self.selected_metric]) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
             init_value = self.do_time_conversion(86400) # 864000 seconds = 1440 minutes = 24 hours = 1 day 
 
         dates = self.create_dates_between_dates(selected["t_start"], selected["t_end"], init_value)
-        self.adjust_each_metric(dates, value)
+        self.adjust_each_metric_daily(dates, value)
         return dates
 
-    def adjust_each_metric(self, dates, value=None):
-        if set(self.metric) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
-            selected = self.get_recentlyselected()
+    def adjust_each_metric_daily(self, dates, value=None):
+        if set([self.selected_metric]) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
+            selected = self.get_selected_instance()
             t_start = selected["t_start"]
             t_end = selected["t_end"]
             first_day = datetime(t_start.year, t_start.month, t_start.day)
@@ -673,15 +697,15 @@ class FGSearch:
             else:
                 dates[first_day] = self.do_time_conversion((end_of_first_day - t_start).seconds)
                 dates[end_day] = self.do_time_conversion((t_end  - start_of_end_day).seconds)
-        elif set(self.metric) & set(self.names.metric.countusers):
+        elif set([self.selected_metric]) & set(self.names.metric.countusers):
             for entry_date, entry_value in dates.iteritems():
-                new_value = self._is_unique(self.period + str(entry_date), value)
+                new_value = self._is_unique(self.selected_metric + self.period + str(entry_date), value)
                 if new_value is None:
                     dates[entry_date] = new_value
 
     def adjust_each_metric_in_month(self, dates, value=None):
-        if set(self.metric) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
-            selected = self.get_recentlyselected()
+        if set([self.selected_metric]) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
+            selected = self.get_selected_instance()
             t_start = selected["t_start"]
             t_end = selected["t_end"]
             first_month = datetime(t_start.year, t_start.month, 1)
@@ -696,9 +720,9 @@ class FGSearch:
             else:
                 dates[first_month] = self.do_time_conversion((end_of_first_month - t_start).seconds)
                 dates[end_month] = self.do_time_conversion((t_end - start_of_end_month).seconds)
-        elif set(self.metric) & set(self.names.metric.countusers):
+        elif set([self.selected_metric]) & set(self.names.metric.countusers):
             for entry_date, entry_value in dates.iteritems():
-                new_value = self._is_unique(self.period + str(entry_date), value)
+                new_value = self._is_unique(self.selected_metric + self.period + str(entry_date), value)
                 if new_value is None:
                     dates[entry_date] = new_value
 
@@ -722,22 +746,26 @@ class FGSearch:
             FGUtility.debug(True)
             return name
 
-    def set_default_suboptions(self):
-        metric = self.metric
-        if not metric: 
-            return
+    def set_internal_options(self, metric):
+        '''Set default values for internal calculation and statistics
 
+            Args: 
+                metric (list): metric selected
+        '''
         if set(metric) & set(self.names.metric.count):
             self.calc = "count"
+            self.columns = None
+            self.set_distinct(False)
             # "count(*)"
         elif set(metric) & set(self.names.metric.countusers):
             self.calc = "count"
             self.columns = ["ownerId"]
-            self.set_distinct(self.columns)
+            self.set_distinct(True)
             # "count(distinct ownerId)" 
         elif set(metric) & set(self.names.metric.runtime):
             self.calc = "sum"
             self.columns = ["duration"]
+            self.set_distinct(False)
         elif set(metric) & set(self.names.metric.runtimeusers):
             self.calc = "sum"
             self.columns = ["duration"]
@@ -801,7 +829,7 @@ class FGSearch:
         else:
             self.selected = [selected]
 
-    def get_recentlyselected(self):
+    def get_selected_instance(self):
         try:
             return self.selected[-1]
         except:

@@ -27,7 +27,7 @@ class FGHighcharts:
     xAxis_categories = None
     data = None
     series_name = None
-    series = None
+    series = []
     width = 0
     height = 0
 
@@ -111,7 +111,25 @@ class FGHighcharts:
             return res
             
         return self.data
-    
+    def get_multi_yaxis(self):
+        yaxis = []
+        onleftside = 1
+        guideline = 1
+        colors = ['#AA4643', '#4572A7', '#89A54E']
+        for record in self.series:
+            color = colors.pop()
+            res = { "labels": { \
+                                #"formatter": "function() {return this.value +' user';}", \
+                                "style": { "color": color }},\
+                    "title": { "text": record["name"], \
+                                "style": { "color": color } },\
+                    "gridLineWidth": guideline, \
+                    "opposite": onleftside }
+            onleftside = 0
+            guideline = 0
+            yaxis.append(res)
+        return yaxis
+
     def convert_dict_to_list(self, data):
         dictlist = []
         for key, value in data.iteritems():
@@ -196,7 +214,6 @@ class FGHighcharts:
         self.height = max(int(height), 150) # MINIMUM HEIGHT is 150px
 
     def set_series(self, data):
-        print data
         for record in data:
             list_data = self.convert_dict_to_list(record["data"])
             #self.sort_data()
@@ -229,17 +246,29 @@ class FGHighcharts:
         else:
             return record
 
-    def convert_UTC2date(self, data=None):
+    def convert_UTC2date(self, date_format="%b (%Y)", data=None):
         data = data or self.data
         try:
-            data = [[datetime.fromtimestamp(k / self.millisecond).strftime("%b (%Y)"), v] for k,v in data]
+            data = [[datetime.fromtimestamp(k / self.millisecond).strftime(date_format), v] for k,v in data]
         except:
             pass
+        return data
+
+    def convert_UTC2date_inseries(self, date_format="%b (%Y)"):
+        cnt = 0
+        for record in self.series:
+            record["data"] = self.convert_UTC2date(date_format, record["data"])
+            self.series[cnt]["data"] = record["data"]
+            cnt += 1 
 
     def adjust_series(self):
-
+        series_type = self.series_type
         for record in self.series:
-            record["type"] = self.series_type
+            record["type"] = series_type
+            # Temporary
+            # primary record: column or else
+            # after secondary one: line 
+            series_type = "line"
         '''
             [{
                 type: '%(series_type)s',
@@ -289,7 +318,7 @@ class FGHighcharts:
             self.series_type = "area"
         elif self.chart_type == "column-basic":
             self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
-            self.convert_UTC2date()
+            self.data = self.convert_UTC2date()
             self.set_xaxis(self.get_categories())
             self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
             self.set_chart_option("yAxis", {"title": { "text": self.yAxis_title or ""}})
@@ -306,6 +335,16 @@ class FGHighcharts:
                     }})
 
             self.series_type = "column"
+        elif self.chart_type == "combo-multi-axes":
+            self.set_chart_option("chart", {"renderTo": 'container', "zoomType": 'xy'})
+            self.convert_UTC2date_inseries()
+            self.set_xaxis(self.get_categories())
+            self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
+            self.set_chart_option("yAxis", self.get_multi_yaxis())#{"title": { "text": self.yAxis_title or ""}})
+            self.set_chart_option("tooltip", {"shared":1})#{"formatter": "function() { return this.x +':<b>'+ this.y;"})
+            self.set_chart_option("plotOptions", {})
+            self.series_type = "column"
+
         elif self.chart_type == "column-drilldown":
             self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
             self.set_xaxis(self.get_categories())
@@ -369,7 +408,7 @@ class FGHighcharts:
       
     def get_categories(self):
         try:
-            return list(zip(*self.series[0].data)[0])
+            return list(zip(*self.series[0]["data"])[0])
         except:
             return list(zip(*self.data)[0])
 

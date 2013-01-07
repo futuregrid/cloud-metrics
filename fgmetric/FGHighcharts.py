@@ -154,7 +154,7 @@ class FGHighcharts:
     def sort_data(self, data=None):
         data = data or self.data
         func = getattr(self, "_sort_data_" + self.sort)
-        func(data)
+        return func(data)
 
     def _sort_data_bykey(self, data):
         return sorted(data, key=lambda key: key)

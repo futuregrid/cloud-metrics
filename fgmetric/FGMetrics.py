@@ -148,7 +148,7 @@ class FGMetrics(Cmd):
             #self.chart.set_series_beta(data)
 
         self.chart.set_series(self.search.get_series())
-        self.chart.set_title_beta(''.join(self.search.metric), self.search.period, self.search.groupby)
+        self.chart.set_title_beta(', '.join(self.search.metric), self.search.period, self.search.groupby)
         self.chart.set_subtitle("source: " + str(self.search.platform) + " on " + str(self.search.nodename))
         self.chart.set_yaxis(self.search.timetype or "")
         self.chart.display()

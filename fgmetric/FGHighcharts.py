@@ -56,6 +56,7 @@ class FGHighcharts:
 
     def init_options(self):
         self.option_preloader = ""
+        self.sort = "bykey"
 
     def set_type(self, name):
         self.chart_type = name
@@ -152,13 +153,14 @@ class FGHighcharts:
 
     def sort_data(self, data=None):
         data = data or self.data
-        data = sorted(data, key=lambda key: key)
-        return data
+        func = getattr(self, "_sort_data_" + self.sort)
+        func(data)
 
-    def sort_data_byvalue(self, data=None):
-        data = data or self.data
-        data = sorted(data, key=lambda key: key[1], reverse=True)
-        return data
+    def _sort_data_bykey(self, data):
+        return sorted(data, key=lambda key: key)
+
+    def _sort_data_byvalue(self, data):
+        return sorted(data, key=lambda key: key[1], reverse=True)
 
     def human_sort_data(self, data=None):
         data = data or self.data
@@ -169,7 +171,10 @@ class FGHighcharts:
             return m.group(1), int(m.group(2))
         data.sort(key=key)
         return data
-    
+   
+    def set_sort(self, by):
+        self.sort = by
+
     def set_from_date(self, date):
         self.from_date = date
         self.f_year = date.year
@@ -242,8 +247,7 @@ class FGHighcharts:
                     list_data = self.human_sort_data(list_data)
                 except:
                     try:
-                        #list_data = self.sort_data(list_data)
-                        list_data = self.sort_data_byvalue(list_data)
+                        list_data = self.sort_data(list_data)
                     except:
                         print sys.exc_info()
                         pass

@@ -21,11 +21,19 @@ class FGCharts:
         self.subtitle = ""#None
         self.filename = FGUtility.timeStamped("chart") + "." + self.output_type#None
 
+        self.sort = "bykey"
+
     def set_chart_api(self, name="highcharts"):
         self.chart_api = name
 
     def set_type(self, name):
         self.type = name
+        # for those charts, we use sorting by value
+        if name[:3] in { "pie", "bar" }:
+            self.set_sort = "byvalue"
+
+    def set_sort(self, by):
+        self.sort = by
 
     def set_output_path(self, name):
         self.output_path = name
@@ -140,6 +148,7 @@ class FGCharts:
             elif self.chart_api == "googlechart":
                 self.chart = FGPyGoogleChart()
             self.chart.set_type(self.type)
+            self.chart.set_sort(self.sort)
             self.chart.set_data(self.data)
             # highcharts
             self.chart.set_data_name(self.data_name)

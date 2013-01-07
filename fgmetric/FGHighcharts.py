@@ -52,6 +52,10 @@ class FGHighcharts:
         self.chart_type = chart_type
         self.width = 400
         self.height = 550
+        self.init_options()
+
+    def init_options(self):
+        self.option_preloader = ""
 
     def set_type(self, name):
         self.chart_type = name
@@ -129,6 +133,15 @@ class FGHighcharts:
             guideline = 0
             yaxis.append(res)
         return yaxis
+
+    def get_template(self, filename):
+        try:
+            with open(filename) as f:
+                lines = f.read().splitlines()
+                return lines
+        except:
+            return []
+
 
     def convert_dict_to_list(self, data):
         dictlist = []
@@ -305,6 +318,7 @@ class FGHighcharts:
             f.write(self.html_txt)
             f.close()
         except:
+            print sys.exc_info()
             raise
 
     def set_chart_options(self):
@@ -390,6 +404,7 @@ class FGHighcharts:
             self.set_chart_option("xAxis", {})
             self.set_chart_option("yAxis", {})
             self.set_chart_option("tooltip", {"pointFormat":"{series.name}: <b>{point.percentage}</b>", "percentageDecimals":1})
+            '''
             self.set_chart_option("plotOptions", { chart_name: \
                     { "allowPointSelect":1, \
                     "cursor": 'pointer', \
@@ -399,9 +414,23 @@ class FGHighcharts:
                     "connectorColor": "#000000", \
                         }#"formatter": "function() { return this.y;}" } \
                     }})
-
+            '''
+            self.set_chart_option("plotOptions", "plotOptions: {'pie': { 'size': 180, 'cursor': 'pointer', 'dataLabels': {'color': '#000000', 'connectorColor': '#000000', 'enabled': 1,formatter: function() {\
+                    return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';\
+                    }}, 'allowPointSelect': 1}}")
             self.series_type = chart_name
-
+        elif self.chart_type == "pie-basic-with-table":
+            chart_name = "pie"
+            self.set_chart_option("chart", "{ renderTo: 'container', events: { load: Highcharts.drawTable }, marginBottom: 450 }")
+            self.set_chart_option("xAxis", {})
+            self.set_chart_option("yAxis", {})
+            self.set_chart_option("tooltip", {"pointFormat":"{series.name}: <b>{point.percentage}</b>", "percentageDecimals":1})
+            self.set_chart_option("plotOptions", "plotOptions: {'pie': { 'size': 180, 'cursor': 'pointer', 'dataLabels': {'color': '#000000', 'connectorColor': '#000000', 'enabled': 1,formatter: function() {\
+                    return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';\
+                    }}, 'allowPointSelect': 1}}")
+            self.series_type = chart_name
+            template = self.get_template("highcharts/datatable2pie.js")
+            self.set_chart_option("preloader", '\r\n'.join(template))
         else:
             #default options
             self.set_chart_option("chart", {"renderTo": 'container', "type": self.chart_type})
@@ -447,6 +476,7 @@ class FGHighcharts:
         <script type='text/javascript'>
         //<![CDATA[ 
             $(function () {
+                %(option_preloader)s
                 var chart;
                 $(document).ready(function() {
                 var colors = Highcharts.getOptions().colors,

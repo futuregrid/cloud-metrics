@@ -380,11 +380,15 @@ class FGSearch:
 
     def get_series(self):
         series = []
-        for group, metrics in self.get_metric().iteritems():
-            for metric, period in metrics.iteritems():
-                stat = {"name": metric,\
-                        "data": period.values()[0] }
-                series.append(stat)
+        try:
+            for group, metrics in self.get_metric().iteritems():
+                for metric, period in metrics.iteritems():
+                    stat = {"name": metric,\
+                            "data": period[self.period or self.groupby]}#period.values()[0] }
+                    series.append(stat)
+        except:
+            print sys.exc_info()
+            FGUtility.debug(True)
         return series
 
     def collect(self, instance):

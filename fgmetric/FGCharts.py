@@ -1,6 +1,7 @@
 from fgmetric.FGPygooglechart import FGPyGoogleChart
 from fgmetric.FGHighcharts import FGHighcharts
 from fgmetric.FGUtility import FGUtility
+import sys
 
 class FGCharts:
 
@@ -151,6 +152,7 @@ class FGCharts:
             self.chart.set_filename(self.filename)
             self.chart.set_tooltip("")
         except:
+            print sys.exc_info()
             pass
 
     def display(self):

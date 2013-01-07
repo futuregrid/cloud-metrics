@@ -267,7 +267,7 @@ class FGHighcharts:
         if self.chart_type in {"line-time-series", "master-detail"}:
             new_height = new_height #length_of_data * 1
         elif self.chart_type in {"column", "bar"}:
-            new_height = length_of_data * 20
+            new_height = length_of_data * 20 + 200
         elif self.chart_type in {"pie-basic-with-table"}:
             new_height += length_of_data * 10
 

@@ -1,7 +1,7 @@
 .. FG Usage Report
 
-FG Ussage Report
-================
+FG Usage Report
+===============
 
 Resource: sierra.futuregrid.org
 

@@ -142,6 +142,11 @@ class FGHighcharts:
         data = sorted(data, key=lambda key: key)
         return data
 
+    def sort_data_byvalue(self, data=None):
+        data = data or self.data
+        data = sorted(data, key=lambda key: key[1], reverse=True)
+        return data
+
     def human_sort_data(self, data=None):
         data = data or self.data
         key_pat = re.compile( r"^(\D+)(\d+)$" )
@@ -223,7 +228,8 @@ class FGHighcharts:
                 list_data = self.human_sort_data(list_data)
             except:
                 try:
-                    list_data = self.sort_data(list_data)
+                    #list_data = self.sort_data(list_data)
+                    list_data = self.sort_data_byvalue(list_data)
                 except:
                     print sys.exc_info()
                     pass

@@ -415,7 +415,7 @@ class FGHighcharts:
                         }#"formatter": "function() { return this.y;}" } \
                     }})
             '''
-            self.set_chart_option("plotOptions", "plotOptions: {'pie': { 'size': 180, 'cursor': 'pointer', 'dataLabels': {'color': '#000000', 'connectorColor': '#000000', 'enabled': 1,formatter: function() {\
+            self.set_chart_option("plotOptions", "{'pie': { 'size': 180, 'cursor': 'pointer', 'dataLabels': {'color': '#000000', 'connectorColor': '#000000', 'enabled': 1,formatter: function() {\
                     return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';\
                     }}, 'allowPointSelect': 1}}")
             self.series_type = chart_name
@@ -425,7 +425,7 @@ class FGHighcharts:
             self.set_chart_option("xAxis", {})
             self.set_chart_option("yAxis", {})
             self.set_chart_option("tooltip", {"pointFormat":"{series.name}: <b>{point.percentage}</b>", "percentageDecimals":1})
-            self.set_chart_option("plotOptions", "plotOptions: {'pie': { 'size': 180, 'cursor': 'pointer', 'dataLabels': {'color': '#000000', 'connectorColor': '#000000', 'enabled': 1,formatter: function() {\
+            self.set_chart_option("plotOptions", "{'pie': { 'size': 180, 'cursor': 'pointer', 'dataLabels': {'color': '#000000', 'connectorColor': '#000000', 'enabled': 1,formatter: function() {\
                     return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';\
                     }}, 'allowPointSelect': 1}}")
             self.series_type = chart_name

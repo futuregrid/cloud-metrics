@@ -23,12 +23,15 @@ class FGHighchartsTemplate:
                 renderer = chart.renderer,
                 cellLeft = tableLeft;
 
+            var strLength = 33; 
+
             $.each(series, function(i, serie) {
                 $.each(serie.data, function(row, point) {
-                    
+
+                var trimmedString = point.name.length > strLength ? point.name.substring(0, strLength - 3) + "..." : point.name.substring(0, strLength);
                     // Apply the cell text
                     renderer.text(
-                            point.name,
+                            trimmedString,
                             cellLeft + cellPadding, 
                             tableTop + (row + 2) * rowHeight - cellPadding
                         )

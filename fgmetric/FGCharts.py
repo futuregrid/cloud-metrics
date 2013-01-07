@@ -30,7 +30,7 @@ class FGCharts:
         self.type = name
         # for those charts, we use sorting by value
         if name[:3] in { "pie", "bar" }:
-            self.set_sort = "byvalue"
+            self.set_sort("byvalue")
 
     def set_sort(self, by):
         self.sort = by

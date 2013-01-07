@@ -36,7 +36,7 @@ class FGSearch:
         self.init_suboptions()
         self.init_internal_options()
         self.init_stats()
-        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', 'trace', 'state', 'date' }
+        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', 'trace', 'state', 'date', 'cloudPlatformIdRef' }
         self.keys_to_select_extra = { 'ProjectId', 'Title', 'Institution', 'ProjectLead' } #_mem', 'ccvm_cores', 'ccvm_disk' }
         self.init_names()
         self.userinfo_needed = False

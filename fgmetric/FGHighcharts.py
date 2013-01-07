@@ -8,6 +8,7 @@ import sys
 from datetime import timedelta, datetime
 
 from fgmetric.FGUtility import FGUtility
+from fgmetric.FGHighchartsTemplate import FGHighchartsTemplate
 
 class FGHighcharts:
 
@@ -120,7 +121,7 @@ class FGHighcharts:
         yaxis = []
         onleftside = 0
         guideline = 1
-        colors = ['#AA4643', '#4572A7', '#89A54E']
+        colors = ['#89A54E', '#AA4643', '#4572A7']
         for record in self.series:
             color = colors.pop()
             res = { "labels": { \
@@ -135,14 +136,17 @@ class FGHighcharts:
             yaxis.append(res)
         return yaxis
 
-    def get_template(self, filename):
+    def get_template(self, name):
+        func = getattr(FGHighchartsTemplate, "get_" + name)
+        return func()
+
+    def get_template_from_file(self, filename):
         try:
             with open(filename) as f:
                 lines = f.read().splitlines()
                 return lines
         except:
             return []
-
 
     def convert_dict_to_list(self, data):
         dictlist = []
@@ -441,8 +445,8 @@ class FGHighcharts:
                     return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';\
                     }}, 'allowPointSelect': 1}}")
             self.series_type = chart_name
-            template = self.get_template("highcharts/datatable2pie.js")
-            self.set_chart_option("preloader", '\r\n'.join(template))
+            template = self.get_template("datatable2pie")
+            self.set_chart_option("preloader", template)
         else:
             #default options
             self.set_chart_option("chart", {"renderTo": 'container', "type": self.chart_type})

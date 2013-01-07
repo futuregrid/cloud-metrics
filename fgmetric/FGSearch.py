@@ -6,7 +6,7 @@ from fgmetric.FGUtility import dotdict
 from math import ceil
 from pprint import pprint
 from fgmetric.FGUtility import FGUtility
-from collections import Counter
+from collections import Counter, OrderedDict
 from calendar import monthrange
 
 class FGSearch:
@@ -52,7 +52,7 @@ class FGSearch:
         self.platform = None
         self.userid = None
         self.username = None
-        self.metric = []
+        self.metric = OrderedDict()
         self.selected_metric = None
 
     def init_internal_options(self):
@@ -69,7 +69,7 @@ class FGSearch:
  
     def init_stats(self):
         self.selected = []
-        self.stats = {}
+        self.stats = OrderedDict()#{}
         self.stats_beta = { "system": None,\
                             "service": None,\
                             "period": None,\
@@ -424,7 +424,7 @@ class FGSearch:
             try:
                 mdict = mdict[group]
             except:
-                mdict[group] = {}
+                mdict[group] = OrderedDict()
                 mdict = mdict[group]
 
         # Total

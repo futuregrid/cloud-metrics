@@ -473,7 +473,7 @@ class FGHighcharts:
 
     def get_data_length(self):
         try:
-            return len(self.series[0].data)
+            return len(self.series[0]["data"])
         except:
             return len(self.data)
 

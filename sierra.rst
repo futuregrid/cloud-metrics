@@ -9,78 +9,46 @@ Usage Half-Yearly Report for Eucalyptus on Sierra
 Histogram
 ---------
 
-Users count (Monthly)
+Summary (Monthly)
 ^^^^^^^^^^^^^^^^^^^^^
-.. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-countusers-eucalyptus-sierra-monthly.png
-Figure 1: ....
+.. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-runtimecountcountusers-eucalyptus-sierra-monthly.png
+Figure 1: Average Usage Data (Wall hour, Launched VMs, Users)
 
-VMs count (Monthly)
-^^^^^^^^^^^^^^^^^^^
-.. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-count-eucalyptus-sierra-monthly.png
-Figure 2: ....
-
-Wall Hours (Monthly)
-^^^^^^^^^^^^^^^^^^^^
-.. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-runtime-eucalyptus-sierra-monthly.png
-Figure 3: ....
-
-Users count daily
+Summary (Daily)
 ^^^^^^^^^^^^^^^^^^^
 .. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-countusers-eucalyptus-sierra-daily.png
-Figure 4: ....
+Figure 2: Users count
 
-VMs count daily
-^^^^^^^^^^^^^^^^^^^
 .. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-count-eucalyptus-sierra-daily.png
-Figure 5: ....
+Figure 3: VMs count
 
-Wall Hours daily
-^^^^^^^^^^^^^^^^^^^
 .. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-runtime-eucalyptus-sierra-daily.png
-Figure 6: ....
+Figure 4: Wall Hours
 
 Distribution
 ------------
 
-VMs count by Wall Hours
-^^^^^^^^^^^^^^^^^^^^^^^
 .. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-count-eucalyptus-sierra-walltime.png
-Figure 7: ....
+Figure 5: VM count by Wall Hours
 
-
-VMs count by Project
-^^^^^^^^^^^^^^^^^^^^^
 .. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-count-eucalyptus-sierra-project.png
-Figure 8: ....
+Figure 6: VMs count by Project
 
-
-VMs count by Project Leader
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-count-eucalyptus-sierra-projectleader.png
-Figure 9: ....
+Figure 7: VMs count by Project Leader
 
-
-VMs count by Institution 
-^^^^^^^^^^^^^^^^^^^^^^^^
 .. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-count-eucalyptus-sierra-institution.png
-Figure 10: ....
+Figure 8: VMs count by Institution 
 
-
-Wall Hours by Project Leader
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-runtime-eucalyptus-sierra-projectleader.png
-Figure 11: ....
+Figure 9: Wall Hours by Project Leader
 
 System information
 -------------------
-Sierra has used 14 clusters range from s61 to s74 for Eucalyptus.
+Sierra has used 14 systems range from s61 to s74 for Eucalyptus.
 
-VMs count by Cluster
-^^^^^^^^^^^^^^^^^^^^^^^^
 .. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-count-eucalyptus-sierra-.png
-Figure 12: ....
+Figure 10: VMs count by systems in Cluster (S61 - S74)
 
-Wall Hours by Cluster 
-^^^^^^^^^^^^^^^^^^^^^^^^
 .. image:: images/2012-07to12/20120701T00:00:00-20121231T00:00:00-runtime-eucalyptus-sierra-.png
-Figure 13: ....
+Figure 11: Wall Hours by systems in Cluster (S61 - S74)

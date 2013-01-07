@@ -29,6 +29,7 @@ class FGSearch:
 
     calc = None # count, avg, min, max, sum
     '''
+    all_name = "All"
 
     def __init__(self):
         self.init_options()
@@ -61,7 +62,7 @@ class FGSearch:
 
     def init_suboptions(self):
         self.period = None#"Total"
-        self.groups = ["All"]
+        self.groups = [self.all_name]
         self.groupby = None
         self.timetype = None
         self.time_conversion = 1
@@ -746,8 +747,6 @@ class FGSearch:
             m = re.search(r'http://(.*):8775/axis2/services/EucalyptusNC',name, re.M|re.I)
             return m.group(1)
         except:
-            print name
-            FGUtility.debug(True)
             return name
 
     def set_internal_options(self, metric):

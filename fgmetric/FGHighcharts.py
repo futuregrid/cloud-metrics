@@ -234,21 +234,24 @@ class FGHighcharts:
         self.height = max(int(height), 150) # MINIMUM HEIGHT is 150px
 
     def set_series(self, data):
-        for record in data:
-            list_data = self.convert_dict_to_list(record["data"])
-            #self.sort_data()
-            try:
-                list_data = self.human_sort_data(list_data)
-            except:
+        try:
+            for record in data:
+                list_data = self.convert_dict_to_list(record["data"])
+                #self.sort_data()
                 try:
-                    #list_data = self.sort_data(list_data)
-                    list_data = self.sort_data_byvalue(list_data)
+                    list_data = self.human_sort_data(list_data)
                 except:
-                    print sys.exc_info()
+                    try:
+                        #list_data = self.sort_data(list_data)
+                        list_data = self.sort_data_byvalue(list_data)
+                    except:
+                        print sys.exc_info()
+                        pass
                     pass
-                pass
-            record["data"] = list_data
-        self.series = data
+                record["data"] = list_data
+            self.series = data
+        except:
+            self.series = []
 
     def resize_height(self):
         new_height = self.height
@@ -293,6 +296,11 @@ class FGHighcharts:
             # primary record: column or else
             # after secondary one: line 
             series_type = "line"
+
+        if len(self.series) == 0:
+            self.series.append({ "type": series_type, \
+                                "name": self.series_name, \
+                                "data": self.data})
         '''
             [{
                 type: '%(series_type)s',

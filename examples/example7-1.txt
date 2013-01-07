@@ -153,3 +153,15 @@ set nodename sierra
 set platform eucalyptus
 analyze -S count_node -M 11 -Y 2012
 sys_report -o 2012-11/sierra/eucalyptus/count_node
+
+clear all
+set nodename india
+set platform eucalyptus
+analyze -S count_node -M 12 -Y 2012
+sys_report -o 2012-12/india/eucalyptus/count_node
+
+clear all
+set nodename sierra
+set platform eucalyptus
+analyze -S count_node -M 12 -Y 2012
+sys_report -o 2012-12/sierra/eucalyptus/count_node

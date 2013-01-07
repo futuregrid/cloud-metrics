@@ -268,6 +268,8 @@ class FGHighcharts:
             new_height = new_height #length_of_data * 1
         elif self.chart_type in {"column", "bar"}:
             new_height = length_of_data * 20
+        elif self.chart_type in {"pie-basic-with-table"}:
+            new_height += length_of_data * 10
 
         self.set_height(new_height)
 
@@ -437,7 +439,8 @@ class FGHighcharts:
             self.series_type = chart_name
         elif self.chart_type == "pie-basic-with-table":
             chart_name = "pie"
-            self.set_chart_option("chart", "{ renderTo: 'container', events: { load: Highcharts.drawTable }, marginBottom: 450 }")
+            spacing = self.get_data_length() * 10 + 250
+            self.set_chart_option("chart", "{ renderTo: 'container', events: { load: Highcharts.drawTable }, marginBottom: " + spacing + " }")
             self.set_chart_option("xAxis", {})
             self.set_chart_option("yAxis", {})
             self.set_chart_option("tooltip", {"pointFormat":"{series.name}: <b>{point.percentage}</b>", "percentageDecimals":1})

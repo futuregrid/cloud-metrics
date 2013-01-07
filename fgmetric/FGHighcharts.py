@@ -440,7 +440,7 @@ class FGHighcharts:
         elif self.chart_type == "pie-basic-with-table":
             chart_name = "pie"
             spacing = self.get_data_length() * 10 + 250
-            self.set_chart_option("chart", "{ renderTo: 'container', events: { load: Highcharts.drawTable }, marginBottom: " + spacing + " }")
+            self.set_chart_option("chart", "{ renderTo: 'container', events: { load: Highcharts.drawTable }, marginBottom: " + str(spacing) + " }")
             self.set_chart_option("xAxis", {})
             self.set_chart_option("yAxis", {})
             self.set_chart_option("tooltip", {"pointFormat":"{series.name}: <b>{point.percentage}</b>", "percentageDecimals":1})

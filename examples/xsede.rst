@@ -1,10 +1,10 @@
 Usage Half-Yearly Report for %(service)s on %(hostname)s
 ================================================================
 
-- Search period: %(from_date)s to %(to_date)s
+- Period: %(from_date)s to %(to_date)s
 - Hostname: %(hostname)s.futuregrid.org
-- Cloud platform: %(service)s
-- Metrics: VMs count, Users count, Wall hours, etc.
+- Services: %(service)s
+- Metrics: VMs count, Users count, Wall hours, Distribution by Wall Hours, Project, Project Leader, and Institution, and Systems
 
 Histogram
 ---------

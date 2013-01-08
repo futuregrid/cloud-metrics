@@ -10,8 +10,10 @@ BUILDDIR      = _build
 # Latest FG Cloud Metrics should be installed to run Makefile.
 FGMETRIC      = fg-metric-beta
 PHANTOMJS     = phantomjs
-HTMLPATH      = 2012-07to12
+HTMLPATH      = output
 IMGPATH       = images
+PYTHON        = python
+REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n sierra -s eucalyptus -t xsede --from 20120701T00:00:00 --to 20121231T23:59:59
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -49,10 +51,14 @@ clean:
 
 cleandata:
 	-rm -rf $(HTMLPATH)/*
+generatereport:
+	$(REPORTGENERATOR)
+	@echo
+	@echo "$(REPORTGENERATOR) executed."
 data:
 	@echo
 	@echo "Start generating data..."
-	cat data.txt | $(FGMETRIC) 
+	cat reports/cmd/*.txt | $(FGMETRIC) 
 	@echo
 	@echo "All data generated."
 
@@ -75,7 +81,7 @@ html2png:
 
 reportonly: injectJs html2png latexpdf
 
-report: cleandata data injectJs html2png latexpdf
+report: cleandata generatereport data injectJs html2png latexpdf
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

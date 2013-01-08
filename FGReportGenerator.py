@@ -41,18 +41,16 @@ class FGReportGenerator:
         self.services = args.services
         self.template = args.template
         try:
-            from_date = datetime.strptime(args.from_date, '%Y-%m-%dT%H:%M:%S')
-            to_date = datetime.strptime(args.to_date, '%Y-%m-%dT%H:%M:%S')
-            self.from_dateT = args.from_date
-            self.to_dateT = args.to_date
+            from_date = datetime.strptime(args.from_date, '%Y%m%dT%H:%M:%S')
+            to_date = datetime.strptime(args.to_date, '%Y%m%dT%H:%M:%S')
         except:
             today = date.today()
             sixmonthsago = today - timedelta(days=181)
             from_date = datetime(sixmonthsago.year, sixmonthsago.month, sixmonthsago.day, 0, 0, 0)
             to_date = datetime(today.year, today.month, today.day, 0, 0, 0)
-            self.from_dateT = from_date.strftime('%Y-%m-%dT%H:%M:%S')
-            self.to_dateT = to_date.strftime('%Y-%m-%dT%H:%M:%S')
 
+        self.from_dateT = from_date.strftime('%Y-%m-%dT%H:%M:%S')
+        self.to_dateT = to_date.strftime('%Y-%m-%dT%H:%M:%S')
         self.from_date = str(from_date)
         self.to_date = str(to_date)
 
@@ -106,9 +104,10 @@ class FGReportGenerator:
                 "===============", \
                 "Date Created: ",\
                 today, \
-                "", \
+                " ", \
                 ".. toctree::", \
-                ":maxdepth: 2", \
+                "\t:maxdepth: 2", \
+                " ", \
                 list_of_rst ]
         msg = "\r\n".join(msg)
 
@@ -118,7 +117,7 @@ class FGReportGenerator:
         res = []
         for host in self.hostnames:
             for serv in self.services:
-                res.append(self.reports_directory + "/" + host + "-" + serv)
+                res.append("\t" + self.rst_directory + host + "-" + serv)
         return res
 
     def write_cmd_text(self):

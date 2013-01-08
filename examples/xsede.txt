@@ -2,7 +2,7 @@ set nodename %(hostname)s
 set platform %(service)s
 set date %(from_dateT)s %(to_dateT)s
 set period monthly
-set metric runtime, count, countusers
+set metric runtime count countusers
 set timetype hour
 analyze
 chart -t combo-multi-axes --directory %(output_directory)s

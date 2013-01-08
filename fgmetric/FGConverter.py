@@ -218,7 +218,10 @@ class FGConverter:
                         record["ownerId"] = record["dn"].split("CN=")[1]
                     else:
                         record["ownerId"] = record["dn"]
-                del record["dn"]
+                try:
+                    del record["dn"]
+                except:
+                    pass
                 record["date"] = record["t_start"]
                 #record["id"] = 0
                 #record["ncHostIdx"] = 0

@@ -59,6 +59,8 @@ class FGSearch:
         self.calc = None
         self.columns = None
         self.distinct = False
+        self.all_nodenames = "India, Sierra, Alamo, Foxtrot, Hotel" # This should be filled by retrieving db
+        self.all_platforms = "Eucalyptus, OpenStack, Nimbus" # This as well
 
     def init_suboptions(self):
         self.period = None#"Total"
@@ -837,6 +839,12 @@ class FGSearch:
             return self.selected[-1]
         except:
             return
+
+    def get_node_names(self):
+        return str(self.nodename) or str(self.all_nodenames)
+
+    def get_platform_names(self):
+        return str(self.platform) or str(self.all_platforms)
 
     def show_None(self, param=None):
         self.show_filter()

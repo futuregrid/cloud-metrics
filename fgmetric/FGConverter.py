@@ -93,8 +93,10 @@ class FGConverter:
                     vcpus as ccvm_cores, \
                     host as serviceTag, \
                     reservation_id as reservationId,\
-                    COALESCE(launched_at, created_at, scheduled_at) as t_start, \
-                    COALESCE(terminated_at, deleted_at) as t_end, \
+                    '  \
+                    + 'created_at as t_start, ' \
+                    #COALESCE(launched_at, created_at, scheduled_at) as t_start, \
+                    + 'COALESCE(deleted_at, terminated_at, updated_at) as t_end, \
                     uuid as instanceId, \
                     access_ip_v4 as ccnet_publicIp,\
                     ephemeral_gb as ccvm_disk \

@@ -12,8 +12,10 @@ FGMETRIC      = fg-metric-beta
 PHANTOMJS     = phantomjs
 HTMLPATH      = output
 IMGPATH       = images
+REPORTPATH1   = reports/cmd
+REPORTPATH2   = reports/rst
 PYTHON        = python
-REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n sierra -s eucalyptus -t xsede --from 20120701T00:00:00 --to 20121231T23:59:59
+REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n sierra india hotel alamo foxtrot -t xsede --from 20120701T00:00:00 --to 20121231T23:59:59
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -53,6 +55,9 @@ cleanmain:
 
 cleandata:
 	-rm -rf $(HTMLPATH)/*
+	-rm -rf $(IMGPATH)/*
+	-rm -rf $(REPORTPATH1)/*
+	-rm -rf $(REPORTPATH2)/*
 
 generatereport:
 	$(REPORTGENERATOR)

@@ -30,8 +30,8 @@ class FGReportGenerator:
 
     def get_parameter(self):
         parser = ArgumentParser()
-        parser.add_argument('-n', '--hostname', dest='hostnames', nargs='*', help="hostname (e.g. india, sierra, alamo, foxtrot, hotel, etc..)")
-        parser.add_argument('-s', '--service', dest='services', nargs='*', help="cloud service (e.g. eucalyptus, openstack, nimbus, openebula, etc..)")
+        parser.add_argument('-n', '--hostname', dest='hostnames', default=[], nargs='*', help="hostname (e.g. india, sierra, alamo, foxtrot, hotel, etc..)")
+        parser.add_argument('-s', '--service', dest='services', default=[], nargs='*', help="cloud service (e.g. eucalyptus, openstack, nimbus, openebula, etc..)")
         parser.add_argument('-t', '--template', required=True, help="template name to use (e.g. xsede reads xsede.rst xsede.txt)")
         parser.add_argument('--from', dest="from_date", help="from date (YYYYMMDDThh:mm:ss)")
         parser.add_argument('--to', dest="to_date", help="to date (YYYYMMDDThh:mm:ss")
@@ -54,8 +54,8 @@ class FGReportGenerator:
         self.from_date = str(from_date)
         self.to_date = str(to_date)
 
-        self.hostname = ", ".join(self.hostnames)
-        self.service = ", ".join(self.services)
+        #self.hostname = ", ".join(self.hostnames)
+        #self.service = ", ".join(self.services)
 
     def read_template(self):
         self.raw_cmd_txt = self.read_file(self.template_directory + self.template + self.cmd_ext)
@@ -92,8 +92,10 @@ class FGReportGenerator:
     def replace_vars(self,name):
         var = getattr(self, "raw_" + str(name) + "_txt")
         res = {}
-        for host in self.hostnames:
-            for serv in self.services:
+        for host in self.hostnames or ["All"]:
+            for serv in self.services or ["All"]:
+                self.adjust_names("hostname", host)
+                self.adjust_names("service", serv)
                 res[host] = { serv : var % vars(self) }
         return res
 
@@ -131,6 +133,10 @@ class FGReportGenerator:
             for serv, msg in service.iteritems():
                 filename = host + "-" + serv + self.rst_ext
                 self.write_file(self.rst_directory + filename, msg)
+
+    def adjust_names(self, name, val):
+        if val != "All":
+            setattr(self, name, val)
 
 if __name__ == "__main__":
     report = FGReportGenerator()

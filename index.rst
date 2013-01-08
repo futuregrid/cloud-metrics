@@ -6,4 +6,3 @@ Tue, 08 Jan 2013
 .. toctree::
 	:maxdepth: 2
  
-	reports/rst/sierra-eucalyptus

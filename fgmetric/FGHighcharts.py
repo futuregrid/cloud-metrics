@@ -512,14 +512,7 @@ class FGHighcharts:
                         xAxis: %(option_xAxis)s,
                         yAxis: %(option_yAxis)s,
                         legend: {
-                            layout: 'vertical',
-                            backgroundColor: '#FFFFFF',
-                            align: 'right',
-                            verticalAlign: 'top',
-                            x: -100,
-                            y: 70,
-                            floating: true,
-                            shadow: true
+                                enabled: false
                             },
                         tooltip: %(option_tooltip)s,
                         plotOptions: %(option_plotOptions)s, 
@@ -529,7 +522,20 @@ class FGHighcharts:
             });
         //]]>  
         </script>'''
-
+        # Legend removed for some reason. 01/09/2013
+        '''
+                        legend: {
+                            layout: 'vertical',
+                            backgroundColor: '#FFFFFF',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: -100,
+                            y: 70,
+                            floating: true,
+                            shadow: true
+                            },
+        '''
+ 
         if self.chart_type == "master-detail":
             self.html_script = '''<script type='text/javascript'>
                 //<![CDATA[ 

@@ -28,6 +28,9 @@ class FGReportGenerator:
         self.to_dateT = ""
         self.output_directory = "output/" # + from and to date
 
+        self.all_services = "eucalyptus, openstack, nimbus"
+        self.all_hostnames = "india, sierra, alamo, foxtrot, hotel"
+
     def get_parameter(self):
         parser = ArgumentParser()
         parser.add_argument('-n', '--hostname', dest='hostnames', default=[], nargs='*', help="hostname (e.g. india, sierra, alamo, foxtrot, hotel, etc..)")
@@ -87,7 +90,16 @@ class FGReportGenerator:
         self.cmd_txt = self.replace_vars("cmd")
 
     def generate_rst_text(self):
+        if not len(self.services):
+            self.services = self.all_services
+        if not len(self.hostnames):
+            self.hostnames = self.all_hostnames
+
         self.rst_txt = self.replace_vars("rst")
+        if self.services == self.all_services:
+            self.services = []
+        if self.hostnames == self.all_hostnames:
+            self.hostnames = []
 
     def replace_vars(self,name):
         var = getattr(self, "raw_" + str(name) + "_txt")
@@ -118,7 +130,7 @@ class FGReportGenerator:
     def get_list_of_rst(self):
         res = []
         for host in self.hostnames:
-            for serv in self.services:
+            for serv in self.services or ["All"]:
                 res.append("\t" + self.rst_directory + host + "-" + serv)
         return res
 

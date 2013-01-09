@@ -105,9 +105,9 @@ class FGReportGenerator:
                 res[host] = { serv : var % vars(self) }
         return res
 
-    def update_index_rst(self):
+    def start_with_header_index_rst(self):
         today = date.today().strftime("%a, %d %b %Y")
-        list_of_rst = "\r\n".join(self.get_list_of_rst())
+        header = "\tsummary\r\n"
         msg = ["FG Usage Report", \
                 "===============", \
                 "Date Created: ",\
@@ -116,10 +116,15 @@ class FGReportGenerator:
                 ".. toctree::", \
                 "\t:maxdepth: 2", \
                 " ", \
-                list_of_rst ]
+                header ]
+        self.write_file(self.index_rst, msg)
+
+    def update_index_rst(self):
+        list_of_rst = "\r\n".join(self.get_list_of_rst())
+        msg = [ list_of_rst ]
         msg = "\r\n".join(msg)
 
-        self.write_file(self.index_rst, msg)
+        self.write_file(self.index_rst, msg, "a")
 
     def get_list_of_rst(self):
         res = []
@@ -166,5 +171,6 @@ if __name__ == "__main__":
     report.generate_rst_text()
     report.write_cmd_text()
     report.write_rst_text()
+    report.start_with_header_index_rst()
     report.update_index_rst()
     report.append_lines_index_rst()

@@ -737,7 +737,7 @@ class FGSearch:
             start_of_end_month = end_month
             for month_key, month_value in dates.iteritems():
                 days = monthrange(month_key.year, month_key.month)[1]
-                dates[month_key] = 60 * 60 * 24 * days
+                dates[month_key] = self.do_time_conversion(86400 * days)
             if first_month == end_month:
                 dates[first_month] = self.do_time_conversion((t_end - t_start).seconds)
             else:

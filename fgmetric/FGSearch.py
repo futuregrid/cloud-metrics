@@ -386,7 +386,11 @@ class FGSearch:
         try:
             for group, metrics in self.get_metric().iteritems():
                 for metric, period in metrics.iteritems():
-                    stat = {"name": metric,\
+                    if len(metrics)>1:
+                        series_name = metric
+                    else:
+                        series_name = group
+                    stat = {"name": series_name,\
                             "data": period[self.period or self.groupby]}#period.values()[0] }
                     series.append(stat)
         except:

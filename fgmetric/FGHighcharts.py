@@ -365,20 +365,24 @@ class FGHighcharts:
             self.set_xaxis(self.get_categories())
             self.set_chart_option("xAxis", {}) #Temporarily removed due to large length of the categories. it's not sufficieint to display #{"categories": self.xAxis_categories})
             self.set_chart_option("yAxis", {"title": { "text": self.yAxis_title or ""}})
-            self.set_chart_option("tooltip", {"shared":1})#{"formatter": "function() { return this.x +':<b>'+ this.y;"})
-            self.set_chart_option("plotOptions", { "column": \
-                    { "cursor": 'pointer', \
-                    "dataLabels": { \
-                    "enabled": 1,\
-                    "color": "colors[0]", \
-                    "style": {\
-                        "fontWeight": 'bold'\
-                        }\
-                        }#"formatter": "function() { return this.y;}" } \
-                    }})
+            self.set_chart_option("tooltip", "{formatter: function() { return this.x +':<b>'+ this.y; }}")
+            self.set_chart_option("plotOptions", { "column": { "cursor": 'pointer', \
+                                "dataLabels": { "enabled": 1,\
+                                "color": "colors[0]", \
+                                "style": { "fontWeight": 'bold'}}}})
             # Temporarily removed due to large length of the categories. it's not sufficieint to display
             self.set_chart_option("plotOptions", { 'column': { 'pointPadding': 0.2, 'borderWidth': 0 } } )
-
+            self.series_type = "column"
+        elif self.chart_type == "column-stacked":
+            self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
+            self.data = self.convert_UTC2date()
+            self.set_xaxis(self.get_categories())
+            self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
+            self.set_chart_option("yAxis", { "min": 0, \
+                                            "title": { "text": self.yAxis_title or ""}, \
+                                            "stackLabels": { "enabled": 1, "style": "fontWeight": 'bold', "color": 'gray' } })
+            self.set_chart_option("tooltip", {"shared":1})
+            self.set_chart_option("plotOptions", { 'column': { "stacking": 'normal', "dataLabels": { "enabled": 1, "color": 'white'}}})
             self.series_type = "column"
         elif self.chart_type == "combo-multi-axes":
             self.set_chart_option("chart", {"renderTo": 'container', "zoomType": 'xy'})

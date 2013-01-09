@@ -376,6 +376,7 @@ class FGHighcharts:
         elif self.chart_type == "column-stacked":
             self.set_chart_option("chart", {"renderTo": 'container', "type": 'column'})
             self.data = self.convert_UTC2date()
+            self.convert_UTC2date_inseries()
             self.set_xaxis(self.get_categories())
             self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
             self.set_chart_option("yAxis", { "min": 0, \

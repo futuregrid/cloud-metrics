@@ -3,7 +3,7 @@ Usage Half-Yearly Report for %(service)s on %(hostname)s
 
 - Period: %(from_date)s to %(to_date)s
 - Hostname: %(hostname)s.futuregrid.org
-- Services: %(service)s
+- Services: %(service_name)s
 - Metrics: VMs count, Users count, Wall hours, Distribution by Wall Hours, Project, Project Leader, and Institution, and Systems
 
 Histogram
@@ -31,10 +31,10 @@ Distribution
 Summary (All)
 ^^^^^^^^^^^^^^^^
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-hostname.png
+.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s--hostname.png
 Figure 5: Wall Hours by Clusters
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-monthlyhostname.png
+.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s--monthlyhostname.png
 Figure 6: Wall Hours by Clusters (Monthly)
 
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-walltimeAll.png

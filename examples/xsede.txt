@@ -7,6 +7,7 @@ set timetype hour
 analyze
 chart -t combo-multi-axes --directory %(output_directory)s
 
+clear
 set date %(from_dateT)s %(to_dateT)s
 set metric runtime
 set timetype hour
@@ -14,6 +15,7 @@ set groups hostname
 analyze
 chart -t pie-basic --directory %(output_directory)s
 
+clear
 set date %(from_dateT)s %(to_dateT)s
 set metric runtime
 set timetype hour

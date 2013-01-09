@@ -30,6 +30,8 @@ class FGReportGenerator:
 
         self.all_services = "eucalyptus, openstack, nimbus"
         self.all_hostnames = "india, sierra, alamo, foxtrot, hotel"
+        self.service_name = ""
+        self.host_name = ""
 
     def get_parameter(self):
         parser = ArgumentParser()
@@ -90,16 +92,8 @@ class FGReportGenerator:
         self.cmd_txt = self.replace_vars("cmd")
 
     def generate_rst_text(self):
-        if not len(self.services):
-            self.services = self.all_services
-        if not len(self.hostnames):
-            self.hostnames = self.all_hostnames
-
+        self.set_template_vars()
         self.rst_txt = self.replace_vars("rst")
-        if self.services == self.all_services:
-            self.services = []
-        if self.hostnames == self.all_hostnames:
-            self.hostnames = []
 
     def replace_vars(self,name):
         var = getattr(self, "raw_" + str(name) + "_txt")
@@ -149,6 +143,16 @@ class FGReportGenerator:
     def adjust_names(self, name, val):
         if val != "All":
             setattr(self, name, val)
+
+    def set_template_vars(self):
+        self.host_name = self.hostname
+        self.service_name = self.service
+
+        if not len(self.hostnames):
+            self.host_name = self.all_hostnames
+
+        if not len(self.services):
+            self.service_name = self.all_services
 
 if __name__ == "__main__":
     report = FGReportGenerator()

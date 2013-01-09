@@ -392,6 +392,18 @@ class FGSearch:
         except:
             print sys.exc_info()
             FGUtility.debug(True)
+
+            #Just try  01/08/2013
+            for metric_name in self.metric: #self.metric is list
+                record = {}
+                for group, v in self.get_metric().iteritems():
+                    val = v[metric_name][self.period or self.groupby or "Total"]
+                    record[group] = val
+
+                stat = {"name": metric_name,\
+                        "data": record}
+                series.append(stat)
+
         return series
 
     def collect(self, instance):
@@ -841,10 +853,10 @@ class FGSearch:
             return
 
     def get_node_names(self):
-        return str(self.nodename) or str(self.all_nodenames)
+        return str(self.nodename or self.all_nodenames)
 
     def get_platform_names(self):
-        return str(self.platform) or str(self.all_platforms)
+        return str(self.platform or self.all_platforms)
 
     def show_None(self, param=None):
         self.show_filter()

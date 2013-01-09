@@ -73,12 +73,12 @@ class FGReportGenerator:
             lines = f.read().splitlines()
             return lines
 
-    def write_file(self, filepath, msg):
+    def write_file(self, filepath, msg, mode="w"):
         # Write mode creates a new file or overwrites the existing content of the file. 
         # Write mode will _always_ destroy the existing contents of a file.
         try:
             # This will create a new file or **overwrite an existing file**.
-            f = open(filepath, "w")
+            f = open(filepath, mode)
             try:
                 if isinstance(msg, list):
                     msg = '\r\n'.join(msg)
@@ -154,6 +154,10 @@ class FGReportGenerator:
         if not len(self.services):
             self.service_name = self.all_services
 
+    def append_lines_index_rst():
+        msg = "\tuserlist"
+        self.write_file(self.index_rst, msg, "a")
+
 if __name__ == "__main__":
     report = FGReportGenerator()
     report.get_parameter()
@@ -163,3 +167,4 @@ if __name__ == "__main__":
     report.write_cmd_text()
     report.write_rst_text()
     report.update_index_rst()
+    report.append_lines_index_rst()

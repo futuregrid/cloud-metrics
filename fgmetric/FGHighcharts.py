@@ -380,7 +380,7 @@ class FGHighcharts:
             self.set_chart_option("xAxis", {"categories": self.xAxis_categories})
             self.set_chart_option("yAxis", { "min": 0, \
                                             "title": { "text": self.yAxis_title or ""}, \
-                                            "stackLabels": { "enabled": 1, "style": "fontWeight": 'bold', "color": 'gray' } })
+                                            "stackLabels": { "enabled": 1, "style": {"fontWeight": 'bold', "color": 'gray' }}})
             self.set_chart_option("tooltip", {"shared":1})
             self.set_chart_option("plotOptions", { 'column': { "stacking": 'normal', "dataLabels": { "enabled": 1, "color": 'white'}}})
             self.series_type = "column"

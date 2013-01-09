@@ -419,7 +419,7 @@ class FGSearch:
                         series_name = metric
                     else:
                         series_name = group
-                    for k, v in period[self.period or self.groupby]:
+                    for k, v in period[self.period or self.groupby].iteritems():
                         series.append([k, v])
         except:
 
@@ -445,6 +445,7 @@ class FGSearch:
 
     def _is_unique(self, key, value):
         ''' if value is unique, return itself. Otherwise return None'''
+        if not self.distinct:
             return value
 
         try:

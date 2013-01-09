@@ -304,10 +304,10 @@ class FGHighcharts:
             if self.chart_type == "combo-multi-axes":
                 record["yAxis"] = cnt
                 cnt += 1
-            # Temporary
-            # primary record: column or else
-            # after secondary one: line 
-            series_type = "line"
+                # Temporary
+                # primary record: column or else
+                # after secondary one: line 
+                series_type = "line"
 
         if len(self.series) == 0:
             self.series.append({ "type": series_type, \

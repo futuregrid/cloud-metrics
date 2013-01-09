@@ -28,26 +28,35 @@ Figure 4: Wall Hours
 Distribution
 ------------
 
+Summary (All)
+^^^^^^^^^^^^^^^^
+
+.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-hostname.png
+Figure 5: Wall Hours by Clusters
+
+.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-monthlyhostname.png
+Figure 6: Wall Hours by Clusters (Monthly)
+
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-walltimeAll.png
-Figure 5: VM count by Wall Hours
+Figure 7: VM count by Wall Hours
 
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectAll.png
-Figure 6: VMs count by Project
+Figure 8: VMs count by Project
 
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectleaderAll.png
-Figure 7: VMs count by Project Leader
+Figure 9: VMs count by Project Leader
 
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-institutionAll.png
-Figure 8: VMs count by Institution 
+Figure 10: VMs count by Institution 
 
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-projectleaderAll.png
-Figure 9: Wall Hours by Project Leader
+Figure 11: Wall Hours by Project Leader
 
 System information
 -------------------
 
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-serviceTag.png
-Figure 10: VMs count by systems in Cluster 
+Figure 12: VMs count by systems in Cluster 
 
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-serviceTag.png
-Figure 11: Wall Hours by systems in Cluster 
+Figure 12: Wall Hours by systems in Cluster 

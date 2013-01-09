@@ -58,6 +58,7 @@ class FGHighcharts:
     def init_options(self):
         self.option_preloader = ""
         self.sort = "bykey"
+        self.option_legend = { "enabled": 0 }
 
     def set_type(self, name):
         self.chart_type = name
@@ -300,8 +301,9 @@ class FGHighcharts:
         cnt = 0
         for record in self.series:
             record["type"] = series_type
-            record["yAxis"] = cnt
-            cnt += 1
+            if self.chart_type == "combo-multi-axes":
+                record["yAxis"] = cnt
+                cnt += 1
             # Temporary
             # primary record: column or else
             # after secondary one: line 
@@ -384,6 +386,7 @@ class FGHighcharts:
                                             "stackLabels": { "enabled": 1, "style": {"fontWeight": 'bold', "color": 'gray' }}})
             self.set_chart_option("tooltip", {"shared":1})
             self.set_chart_option("plotOptions", { 'column': { "stacking": 'normal', "dataLabels": { "enabled": 1, "color": 'white'}}})
+            self.set_chart_option("legend", {"enabled":1})
             self.series_type = "column"
         elif self.chart_type == "combo-multi-axes":
             self.set_chart_option("chart", {"renderTo": 'container', "zoomType": 'xy'})
@@ -517,9 +520,7 @@ class FGHighcharts:
                             },
                         xAxis: %(option_xAxis)s,
                         yAxis: %(option_yAxis)s,
-                        legend: {
-                                enabled: false
-                            },
+                        legend: %(option_legend)s,
                         tooltip: %(option_tooltip)s,
                         plotOptions: %(option_plotOptions)s, 
                         series: %(series)s

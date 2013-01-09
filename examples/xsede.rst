@@ -43,11 +43,20 @@ Figure 7: VM count by Wall Hours
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectAll.png
 Figure 8: VMs count by Project
 
+.. csv-table:: VMs count by Project
+        :file: ../../%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectAll.csv
+
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectleaderAll.png
 Figure 9: VMs count by Project Leader
 
+.. csv-table:: VMs count by Project Leader
+        :file: ../../%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectleaderAll.csv
+
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-institutionAll.png
 Figure 10: VMs count by Institution 
+
+.. csv-table:: VMs count by Institution
+        :file: ../../%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-institutionAll.csv
 
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-projectleaderAll.png
 Figure 11: Wall Hours by Project Leader

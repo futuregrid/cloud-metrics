@@ -154,8 +154,8 @@ class FGReportGenerator:
         if not len(self.services):
             self.service_name = self.all_services
 
-    def append_lines_index_rst():
-        msg = "\tuserlist"
+    def append_lines_index_rst(self):
+        msg = "\r\n\tuserlist"
         self.write_file(self.index_rst, msg, "a")
 
 if __name__ == "__main__":

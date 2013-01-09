@@ -69,7 +69,8 @@ set date %(from_dateT)s %(to_dateT)s
 set groupby project
 set metric count
 analyze
-chart -t pie-basic-with-table --directory %(output_directory)s
+csv --directory %(output_directory)s
+chart -t pie-basic --directory %(output_directory)s
 
 clear
 set nodename %(hostname)s
@@ -78,7 +79,8 @@ set date %(from_dateT)s %(to_dateT)s
 set groupby projectleader
 set metric count
 analyze
-chart -t pie-basic-with-table --directory %(output_directory)s
+csv --directory %(output_directory)s
+chart -t pie-basic --directory %(output_directory)s
 
 clear
 set nodename %(hostname)s
@@ -87,7 +89,8 @@ set date %(from_dateT)s %(to_dateT)s
 set groupby institution
 set metric count
 analyze
-chart -t pie-basic-with-table --directory %(output_directory)s
+csv --directory %(output_directory)s
+chart -t pie-basic --directory %(output_directory)s
 
 clear
 set nodename %(hostname)s

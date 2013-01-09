@@ -98,11 +98,11 @@ class FGMetrics(Cmd):
         print filename + " loaded."
         print "refresh db may required."
 
-    def create_csvfile(self, data, filename):
+    def create_csvfile(self, data, filename="default.csv"):
 
         try:
             writer = csv.writer(open(filename, 'wb'), delimiter=",",
-                    quotechar="|", quoting=csv.QUOTE_MINIMAL)
+                    quotechar="\"", quoting=csv.QUOTE_NONNUMERIC)#QUOTE_MINIMAL)
             for row in data:
                 writer.writerow(row)
 
@@ -123,7 +123,10 @@ class FGMetrics(Cmd):
         make_option('-i', '--file', type="string", dest="filename", help="filename")
         ])
     def do_csv(self, line, opts=None):
-        data = self.search.get_metric()
+        data = self.search.get_csv()
+        if not opts.filename:
+            opts.filename = self.search.get_filename() + "." + "csv"
+
         self.create_csvfile(data, opts.filename)
 
     @options([

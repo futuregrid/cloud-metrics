@@ -410,6 +410,27 @@ class FGSearch:
 
         return series
 
+    def get_csv(self):
+        series = []
+        try:
+            for group, metrics in self.get_metric().iteritems():
+                for metric, period in metrics.iteritems():
+                    if len(metrics)>1:
+                        series_name = metric
+                    else:
+                        series_name = group
+                    for k, v in period[self.period or self.groupby]:
+                        series.append([k, v])
+        except:
+
+            #Just try  01/08/2013
+            for metric_name in self.metric: #self.metric is list
+                for group, v in self.get_metric().iteritems():
+                    val = v[metric_name][self.period or self.groupby or "Total"]
+                    series.append([group, val])
+
+        return series
+
     def collect(self, instance):
         instance = self.select(instance)
         self.get_statistics()
@@ -424,7 +445,6 @@ class FGSearch:
 
     def _is_unique(self, key, value):
         ''' if value is unique, return itself. Otherwise return None'''
-        if not self.distinct:
             return value
 
         try:

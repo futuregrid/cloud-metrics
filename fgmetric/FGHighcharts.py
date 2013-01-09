@@ -444,7 +444,8 @@ class FGHighcharts:
                     }})
             '''
             self.set_chart_option("plotOptions", "{'pie': { 'size': 180, 'cursor': 'pointer', 'dataLabels': {'color': '#000000', 'connectorColor': '#000000', 'enabled': 1,formatter: function() {\
-                    return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';\
+                    var strLength = 25; var trimmedString = this.point.name.length > strLength ? this.point.name.substring(0, strLength - 3) + ' ...' : this.point.name.substring(0, strLength);\
+                    return '<b>'+ trimmedString +'</b>: '+ Math.round(this.percentage) +' %';\
                     }}, 'allowPointSelect': 1}}")
             self.series_type = chart_name
         elif self.chart_type == "pie-basic-with-table":
@@ -455,7 +456,7 @@ class FGHighcharts:
             self.set_chart_option("yAxis", {})
             self.set_chart_option("tooltip", {"pointFormat":"{series.name}: <b>{point.percentage}</b>", "percentageDecimals":1})
             self.set_chart_option("plotOptions", "{'pie': { 'size': 180, 'cursor': 'pointer', 'dataLabels': {'color': '#000000', 'connectorColor': '#000000', 'enabled': 1,formatter: function() {\
-                    var strLength = 33; var trimmedString = this.point.name.length > strLength ? this.point.name.substring(0, strLength - 3) + ' ...' : this.point.name.substring(0, strLength);\
+                    var strLength = 25; var trimmedString = this.point.name.length > strLength ? this.point.name.substring(0, strLength - 3) + ' ...' : this.point.name.substring(0, strLength);\
                     return '<b>'+ trimmedString +'</b>: '+ Math.round(this.percentage) +' %';\
                     }}, 'allowPointSelect': 1}}")
             self.series_type = chart_name

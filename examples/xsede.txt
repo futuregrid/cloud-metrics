@@ -1,3 +1,4 @@
+clear
 set nodename %(hostname)s
 set platform %(service)s
 set date %(from_dateT)s %(to_dateT)s
@@ -88,6 +89,7 @@ set metric count
 analyze
 chart -t pie-basic-with-table --directory %(output_directory)s
 
+clear
 set nodename %(hostname)s
 set platform %(service)s
 set date %(from_dateT)s %(to_dateT)s
@@ -116,3 +118,4 @@ set groups serviceTag
 set timetype hour
 analyze
 chart -t column-basic --directory %(output_directory)s
+

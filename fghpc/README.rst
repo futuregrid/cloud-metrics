@@ -42,7 +42,7 @@ This is an approach to answer Q1.
       553849.i136                twisterJob       yangruan        00:00:00 R delta-long
 
 2. We collect user name by selecting specific fields in ``qstat``. 
-   ``R`` indicates Running jobs so we search ``S`` in ``qstat`` and get unique user names.
+   ``R`` indicates Running jobs so we search ``R`` in ``S`` field in ``qstat`` and get unique user names.
    
 ``qstat|grep " R "|awk '{ print $3}'|sort -u``
         

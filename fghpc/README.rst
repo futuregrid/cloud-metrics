@@ -56,6 +56,11 @@ This is an approach to answer Q1.
           xcguser
           yangruan
 
+3. Get numbers by adding ``wc``
+
+``qstat|grep " R "|awk '{ print $3}'|sort -u|wc -l``
+
+
 Getting an active node list (or number of active nodes)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 This is an approach to answer Q2.

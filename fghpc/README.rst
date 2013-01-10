@@ -86,7 +86,7 @@ This is an approach to answer Q2.
 
 2. The template looks like {node name with node number/number of cores+...}, so we parse them in such a way that following. 
    
-   ``qstat -n|grep "/"|sed -e "s/+/\\n/g" -e "s/\s\+//g"|awk -F"/" '{ print $1}'|sort -u|wc``
+   ``qstat -n|grep "/"|sed -e "s/+/\\n/g" -e "s/\s\+//g"|awk -F"/" '{ print $1}'|sort -u|wc -l``
 
    If we remove ``wc``, then we can get the list of active nodes.
 

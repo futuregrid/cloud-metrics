@@ -1,13 +1,7 @@
 Real-time monitoring for HPC in FutureGrid
 ------------------------------------------
 
-Usage
------
-
-Development
------------
-
-Sample usage
+Sample
 ------------
 http://129.79.49.179:18080/list
 

@@ -42,7 +42,7 @@ This is an approach to answer Q1.
       553849.i136                twisterJob       yangruan        00:00:00 R delta-long
 
 2. We collect user name by selecting specific fields in ``qstat``. 
-   ``R`` indicates Running jobs so we search ``S`` in ``qstat`` and get unique user names.
+   ``R`` indicates Running jobs so we search ``R`` in ``S`` field in ``qstat`` and get unique user names.
    
 ``qstat|grep " R "|awk '{ print $3}'|sort -u``
         
@@ -86,7 +86,7 @@ This is an approach to answer Q2.
 
 2. The template looks like {node name with node number/number of cores+...}, so we parse them in such a way that following. 
    
-   ``qstat -n|grep "/"|sed -e "s/+/\\n/g" -e "s/\s\+//g"|awk -F"/" '{ print $1}'|sort -u|wc``
+   ``qstat -n|grep "/"|sed -e "s/+/\\n/g" -e "s/\s\+//"|awk -F"/" '{ print $1}'|sort -u|wc -l``
 
    If we remove ``wc``, then we can get the list of active nodes.
 

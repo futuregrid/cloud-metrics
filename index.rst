@@ -7,5 +7,9 @@ Fri, 11 Jan 2013
 	:maxdepth: 2
  
 	summary
-	reports/rst/sierra india hotel alamo foxtrot-All
+	reports/rst/sierra-All
+	reports/rst/india-All
+	reports/rst/hotel-All
+	reports/rst/alamo-All
+	reports/rst/foxtrot-All
 	userlist

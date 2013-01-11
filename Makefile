@@ -5,7 +5,7 @@
 # to date chosen to be one second before midnight
 #FROM_DATE     = 20121001
 #TO_DATE       = 20121231
-RESOURCES      = "sierra india hotel alamo foxtrot"
+RESOURCES      = sierra india hotel alamo foxtrot
 TEMPLATE       = xsede 
 # You can set these variables from the command line.
 SPHINXOPTS    =

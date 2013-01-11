@@ -65,6 +65,12 @@ cleandata:
 	-rm -rf $(REPORTPATH1)/*
 	-rm -rf $(REPORTPATH2)/*
 
+createdirectory:
+	mkdir $(HTMLPATH)
+	mkdir $(IMGPATH)
+	mkdir -p $(REPORTPATH1)
+	mkdir -p $(REPORTPATH2)
+
 generatereport:
 	$(REPORTGENERATOR)
 	@echo
@@ -95,7 +101,7 @@ html2png:
 
 reportonly: injectJs html2png latexpdf
 
-report: cleandata generatereport data injectJs html2png latexpdf
+report: cleandata createdirectory generatereport data injectJs html2png latexpdf
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

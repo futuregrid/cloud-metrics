@@ -109,6 +109,27 @@ class FGHighcharts:
 
         data = res_data
 
+    def reduce_data(self, data=None):
+        data = data or self.data
+            
+        reduce_to = 30
+        if len(data) <= reduce_to:
+            return data
+
+        count = 0
+        new_data = []
+        others = ['Others', 0]
+        for k,v in data:
+            if count > reduce_to:
+                others[1] += v
+            else:
+                new_data.append([k, v])
+            count += 1
+       
+        others[0] = str(count - reduce_to) + " " + others[0]
+        new_data += [others]
+        return new_data
+
     def get_data(self, index=""):
         ''' outdated '''
         if not index == "":
@@ -253,6 +274,7 @@ class FGHighcharts:
                 except:
                     try:
                         list_data = self.sort_data(list_data)
+                        list_data = self.reduce_data(list_data)
                     except:
                         print sys.exc_info()
                         pass

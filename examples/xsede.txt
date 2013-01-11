@@ -1,3 +1,4 @@
+
 clear
 set nodename %(hostname)s
 set platform %(service)s

@@ -1,0 +1,46 @@
+clear
+set date %(from_dateT)s %(to_dateT)s
+set metric runtime
+set timetype hour
+set groups hostname
+analyze
+chart -t pie-basic --directory %(output_directory)s
+
+clear
+set date %(from_dateT)s %(to_dateT)s
+set metric runtime
+set timetype hour
+set groups hostname
+set period monthly
+analyze
+chart -t column-stacked --directory %(output_directory)s
+
+clear
+set date %(from_dateT)s %(to_dateT)s
+set metric count
+set groups hostname
+analyze
+chart -t pie-basic --directory %(output_directory)s
+
+clear
+set date %(from_dateT)s %(to_dateT)s
+set metric count
+set groups hostname
+set period monthly
+analyze
+chart -t column-stacked --directory %(output_directory)s
+
+clear
+set date %(from_dateT)s %(to_dateT)s
+set metric countusers
+set groups hostname
+analyze
+chart -t pie-basic --directory %(output_directory)s
+
+clear
+set date %(from_dateT)s %(to_dateT)s
+set metric countusers
+set groups hostname
+set period monthly
+analyze
+chart -t column-stacked --directory %(output_directory)s

@@ -1,3 +1,4 @@
+import json
 import subprocess
 import cherrypy
 import sys
@@ -65,52 +66,93 @@ class FGResourceReporter:
                 self.euca2ools.read_from_cmd()
                 self.euca2ools.convert_xml_to_dict()
                 self.euca2ools.print_ins(self.euca2ools.xml2dict)
+                groups = self.euca2ools.stats["2. Groups"]
+                users = self.euca2ools.stats["3. Users"]
+                vms = self.euca2ools.stats["5. Running VMs"]
+                cores = vms
+                utilization = self.get_utilization(service)
+                if self.euca2ools.fail_cmd:
+                    status = "Off"
+                else:
+                    status = "On"
 
-            if self.euca2ools.fail_cmd:
-                status = "Off"
             else:
-                status = "On"
-            utilization = self.get_utilization(service)
-            self.adjust_nimbus(service)
+                groups = "--"
+                users = self.nimbustools(service["hostname"],"users")
+                vms = self.nimbustools(service["hostname"],"nodes")
+                cores = self.nimbustools(service["hostname"],"cores")
+                utilization = self.get_utilization_nimbus(cores, service)
+                status = "On*"
+
             #print self.euca2ools.stats
             res.append({ "Name":service["hostname"], \
                     "Institution": service["institution"], \
                     "Cloud Service": service["platform"], \
                     "Status": status, \
                     "Utilization":  utilization, \
-                    "Active Projects": self.euca2ools.stats["2. Groups"], \
-                    "Active Users": self.euca2ools.stats["3. Users"], \
-                    "Running Instances": self.euca2ools.stats["5. Running VMs"], \
-                    "Cores (used/avail)":  str(self.euca2ools.stats["5. Running VMs"]) + " / " + str(service["cores"]) \
+                    "Active Projects": groups, \
+                    "Active Users": users, \
+                    "Running Instances": vms, \
+                    "Cores (used/avail)":  str(cores) + " / " + str(service["cores"]) \
                     })
             #print self.euca2ools.display_stats()
             
         return res
 
     def get_utilization(self, service):
-        cores = service["cores"]
-        if service["platform"] == "nimbus":
-            return "--*"
-        return str(round(100 * float(self.euca2ools.stats["5. Running VMs"]) / float(cores), 2)) + "%"
+        return str(round(100 * float(self.euca2ools.stats["5. Running VMs"]) / float(service["cores"]), 2)) + "%"
 
-    def adjust_nimbus(self, service):
-        if service["platform"] == "nimbus":
-            self.euca2ools.stats["2. Groups"] = "--*"
-            self.euca2ools.stats["3. Users"] = "--*"
-            self.euca2ools.stats["5. Running VMs"] = "--*"
+    def get_utilization_nimbus(self, vms, service):
+        return str(round(100 * float(vms) / float(service["cores"]), 2)) + "%"
 
     def hpctools(self, server, name, data=None):
-        func = getattr(self, "_hpctools_" + str(name))
+        func = getattr(self, "_hpc_" + str(name))
         return func(server, data)
 
-    def _hpctools_usercount(self, server, data=None):
+    def _hpc_usercount(self, server, data=None):
         return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","qstat|grep \" R \"|awk '{ print $3}'|sort -u|wc -l"])
  
-    def _hpctools_nodecount(self, server, data=None):
+    def _hpc_nodecount(self, server, data=None):
         return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","qstat -n|grep \"/\"|sed -e \"s/+/\\n/g\" -e \"s/\s\+//\"|awk -F\"/\" '{ print $1}'|sort -u|wc -l"])
 
-    def _hpctools_corecount(self, server, data=None):
+    def _hpc_corecount(self, server, data=None):
         return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","qstat -n|grep \"/\"|sed -e \"s/+/\\n/g\" -e \"s/\s\+//\"|awk -F\"/\" '{ print $2}'|awk '{s+=1} END {print s}'"])
+
+    def nimbustools(self, server, name, data=None):
+        func = getattr(self, "_nimbus_" + str(name))
+        return func(server, data)
+
+    def _nimbus_users(self, server, data=None):
+        res = subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@hotel.futuregrid.org","cat /home/nimbus/realtime_metrics/" + server + "/nimbus_admin.json"])
+        data = json.loads(res)
+        self.nimbus_users = data
+        users = {}
+        for record in data:
+            if record["state"] in {"Running", "Cancelled"} :
+                users[record["creator"]] = None
+        return len(users)
+
+    def _nimbus_cores(self, server, data=None):
+        try:
+            data = self.nimbus_users
+        except:
+            res = subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@hotel.futuregrid.org","cat /home/nimbus/realtime_metrics/" + server + "/nimbus_admin.json"])
+            data = json.loads(res)
+            self.nimbus_users = data
+        cores = 0
+        for record in data:
+            if record["state"] in { "Running", "Cancelled"}:
+                cores += int(record["cpu count"])
+        return cores
+
+    def _nimbus_nodes(self, server, data=None):
+        res = subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@hotel.futuregrid.org","cat /home/nimbus/realtime_metrics/" + server + "/nimbus_nodes.json"])
+        data = json.loads(res)
+        cnt = 0
+        for record in data:
+            if record["in_use"] == "true":#record["active"] == "true":
+                cnt += 1
+        return cnt
 
 class FGRRWeb(object):
 
@@ -130,7 +172,7 @@ class FGRRWeb(object):
             first = 1
             html_table += "</tr><tr>"
         html_table = "<table><tr>" + html_table_header + "</tr><tr>" + html_table + "</tr></table>"
-        html_table += "<br><p>* Nimbus doesn't support real time monitoring at this time"
+        html_table += "<br>* Nimbus has been updated every minute"
         html_table += "<br>** HPC indicates nodes instead of VM instances" 
         return html_table
 

@@ -1,6 +1,12 @@
 # Makefile for Sphinx documentation
 #
 
+# from date chosen to be zero second from midnight
+# to date chosen to be one second before midnight
+#FROM_DATE     = 20121001
+#TO_DATE       = 20121231
+RESOURCES      = "sierra india hotel alamo foxtrot"
+TEMPLATE       = xsede 
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
@@ -15,7 +21,7 @@ IMGPATH       = images
 REPORTPATH1   = reports/cmd
 REPORTPATH2   = reports/rst
 PYTHON        = python
-REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n sierra india hotel alamo foxtrot -t xsede --from 20120701T00:00:00 --to 20121231T23:59:59
+REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n $(RESOURCES) -t $(TEMPLATE) --from $(FROM_DATE)T00:00:00 --to $(TO_DATE)T23:59:59
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4

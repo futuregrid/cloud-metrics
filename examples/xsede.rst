@@ -11,52 +11,71 @@ Histogram
 
 Summary (Monthly)
 ^^^^^^^^^^^^^^^^^^^^^
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtimecountcountusers-%(service)s-%(hostname)s-monthlyAll.png
-Figure 1: Average Usage Data (Wall hour, Launched VMs, Users)
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtimecountcountusers-%(service)s-%(hostname)s-monthlyAll.png
+   :alt: Average Monthly Usage Data (Wall hour, Launched VMs, Users)
+   
+   Figure 1: Average Monthly Usage Data (Wall hour, Launched VMs, Users)
+
+   This chart represents average monthly usage as to Wall Hour (runtime), Count and the number of Users for VM instances.
+
+   +-------------+-------------------------------------+
+   | Metric      | Description                         |
+   +=============+=====================================+
+   | Wall Hour   | Terminated time - Launched time     |
+   +-------------+-------------------------------------+
+   | count       | The number of launched VM instances |
+   +-------------+-------------------------------------+
+   | user count  | The number of users who launched VMs|
+   +-------------+-------------------------------------+
+
 
 Summary (Daily)
 ^^^^^^^^^^^^^^^^^^^
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-countusers-%(service)s-%(hostname)s-dailyAll.png
-Figure 2: Users count
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-countusers-%(service)s-%(hostname)s-dailyAll.png
+   :alt: Users count (daily)
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-dailyAll.png
+   Figure 2: The count of users
+
+   This chart represents daily active user counts for services.
+
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-dailyAll.png
 Figure 3: VMs count
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-dailyAll.png
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-dailyAll.png
 Figure 4: Wall Hours
 
 Distribution
 ------------
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-walltimeAll.png
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-walltimeAll.png
 Figure 5: VM count by Wall Hours
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectAll.png
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectAll.png
 Figure 6: VMs count by Project
 
 .. csv-table:: VMs count by Project
         :file: ../../%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectAll.csv
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectleaderAll.png
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectleaderAll.png
 Figure 7: VMs count by Project Leader
 
 .. csv-table:: VMs count by Project Leader
         :file: ../../%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectleaderAll.csv
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-institutionAll.png
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-institutionAll.png
 Figure 8: VMs count by Institution 
 
 .. csv-table:: VMs count by Institution
         :file: ../../%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-institutionAll.csv
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-projectleaderAll.png
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-projectleaderAll.png
 Figure 9: Wall Hours by Project Leader
 
 System information
 -------------------
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-serviceTag.png
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-serviceTag.png
 Figure 10: VMs count by systems in Cluster 
 
-.. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-serviceTag.png
+.. figure:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-runtime-%(service)s-%(hostname)s-serviceTag.png
 Figure 11: Wall Hours by systems in Cluster 

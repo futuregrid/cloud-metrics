@@ -33,7 +33,7 @@ if (system.args.length < 3 || system.args.length > 5) {
             window.setTimeout(function () {
                 page.render(output);
                 phantom.exit();
-            }, 900);
+            }, 990);
         }
     });
 }

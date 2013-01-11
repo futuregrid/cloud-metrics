@@ -12,4 +12,4 @@ User table (HPC)
         :file: ../../hpcusers.csv
         :header-rows: 1
 
-   This table provides detailed information on users, including average job size, average wait time, and average run time. 
+This table provides detailed information on users, including average job size, average wait time, and average run time. 

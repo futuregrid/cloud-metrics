@@ -141,7 +141,7 @@ class FGReportGenerator:
                 " ", \
                 ".. toctree::", \
                 "\t:maxdepth: 2", \
-                " "]
+                " \r\n"]
         self.write_file(self.index_rst, msg)
 
     def append_header_rst(self):

@@ -430,7 +430,7 @@ class FGSearch:
                     series.append([group, val])
 
         # TEMP ADDED FOR SORTING 01/09/2013
-        series = sorted(series, key=lambda item: item[1])
+        series = sorted(series, key=lambda item: item[1], reverse=True)
         return series
 
     def collect(self, instance):

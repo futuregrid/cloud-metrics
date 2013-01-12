@@ -111,7 +111,10 @@ class FGHighcharts:
 
     def reduce_data(self, data=None):
         data = data or self.data
-            
+
+        if not self.chart_type in {"column", "bar"}:
+            return data
+           
         reduce_to = 25 
         if len(data) <= reduce_to:
             return data

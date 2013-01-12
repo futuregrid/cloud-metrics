@@ -19,6 +19,7 @@ class FGReportGenerator:
         self.cmd_directory = self.reports_directory + "/cmd/"
         self.rst_directory = self.reports_directory + "/rst/"
         self.header = ".header"
+        self.main = ".main"
         self.footer = ".footer"
 
     def init_template_vars(self):
@@ -48,6 +49,7 @@ class FGReportGenerator:
         self.services = args.services
         self.template = args.template
         self.template_header = self.template + self.header
+        self.template_main = self.template + self.main
         self.template_footer = self.template + self.footer
 
         try:
@@ -70,10 +72,10 @@ class FGReportGenerator:
     def read_template(self):
         self.raw_cmd_txt = self.read_file(self.template_directory + self.template + self.cmd_ext)
         self.raw_cmd_txt = "\r\n".join(self.raw_cmd_txt)
-        self.raw_cmd_singlerun_txt = self.read_file(self.template_directory + self.template_header  + self.cmd_ext)
+        self.raw_cmd_singlerun_txt = self.read_file(self.template_directory + self.template + self.header  + self.cmd_ext)
         self.raw_cmd_singlerun_txt = "\r\n".join(self.raw_cmd_singlerun_txt)
 
-        self.raw_rst_txt = self.read_file(self.template_directory + self.template + self.rst_ext)
+        self.raw_rst_txt = self.read_file(self.template_directory + self.template_main + self.rst_ext)
         self.raw_rst_txt = "\r\n".join(self.raw_rst_txt)
         self.raw_rst_header_txt = self.read_file(self.template_directory + self.template_header + self.rst_ext)
         self.raw_rst_header_txt = "\r\n".join(self.raw_rst_header_txt)

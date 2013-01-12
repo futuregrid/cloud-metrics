@@ -112,6 +112,7 @@ Distribution
 
 .. csv-table:: VMs count by Project
    :file: ../../%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectAll.csv
+   :header-rows: 1
 
 .. ================================================================================================================
 .. 7) VM COUNT BY PL
@@ -126,6 +127,7 @@ Distribution
 
 .. csv-table:: VMs count by Project Leader
    :file: ../../%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-projectleaderAll.csv
+   :header-rows: 1
 
 .. ================================================================================================================
 .. 8) VM COUNT BY INSTITUTION
@@ -140,6 +142,7 @@ Distribution
 
 .. csv-table:: VMs count by Institution
    :file: ../../%(output_directory)s/%(from_dateT)s-%(to_dateT)s-count-%(service)s-%(hostname)s-institutionAll.csv
+   :header-rows: 1
 
 .. ================================================================================================================
 .. 9) WALL HOURS BY PL

@@ -66,8 +66,8 @@ cleandata:
 	-rm -rf $(REPORTPATH2)/*
 
 createdirectory:
-	mkdir $(HTMLPATH)
-	mkdir $(IMGPATH)
+	mkdir -p $(HTMLPATH)
+	mkdir -p $(IMGPATH)
 	mkdir -p $(REPORTPATH1)
 	mkdir -p $(REPORTPATH2)
 

@@ -112,7 +112,7 @@ class FGHighcharts:
     def reduce_data(self, data=None):
         data = data or self.data
             
-        reduce_to = 30
+        reduce_to = 25 
         if len(data) <= reduce_to:
             return data
 

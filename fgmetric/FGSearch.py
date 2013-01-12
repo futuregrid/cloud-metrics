@@ -526,7 +526,7 @@ class FGSearch:
         # Temporary lines 12/27/2012
         if set([self.selected_metric]) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
             val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
-        return val
+        return val or 1
 
     def _groupby_None(self, *args):
         return

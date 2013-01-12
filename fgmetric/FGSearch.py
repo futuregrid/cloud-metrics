@@ -431,6 +431,10 @@ class FGSearch:
 
         # TEMP ADDED FOR SORTING 01/09/2013
         series = sorted(series, key=lambda item: item[1], reverse=True)
+
+        #HEADER ADDED
+        header = [[self.groupby or "Total", "value"]]
+        series = header + series
         return series
 
     def collect(self, instance):

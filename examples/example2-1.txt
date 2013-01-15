@@ -5,5 +5,5 @@
 #
 # Analyze entire data and create report
 clear users
-analyze -M 01
+analyze -M 01 -Y 2012
 createreport -d 2012-01

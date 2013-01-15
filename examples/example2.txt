@@ -19,73 +19,73 @@ createreport -d 2011-12/india/eucalyptus/user
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 01
+analyze -M 01 -Y 2012
 createreport -d 2012-01/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 02
+analyze -M 02 -Y 2012
 createreport -d 2012-02/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 03
+analyze -M 03 -Y 2012
 createreport -d 2012-03/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 04
+analyze -M 04 -Y 2012
 createreport -d 2012-04/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 05
+analyze -M 05 -Y 2012
 createreport -d 2012-05/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 06
+analyze -M 06 -Y 2012
 createreport -d 2012-06/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 07
+analyze -M 07 -Y 2012
 createreport -d 2012-07/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 08
+analyze -M 08 -Y 2012
 createreport -d 2012-08/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 09
+analyze -M 09 -Y 2012
 createreport -d 2012-09/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 10
+analyze -M 10 -Y 2012
 createreport -d 2012-10/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 11
+analyze -M 11 -Y 2012
 createreport -d 2012-11/india/eucalyptus/user
 
 clear users
 set nodename india
 set platform eucalyptus
-analyze -M 12
+analyze -M 12 -Y 2012
 createreport -d 2012-12/india/eucalyptus/user
 
 # Create index.html for the reports above

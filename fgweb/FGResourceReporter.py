@@ -146,11 +146,11 @@ class FGResourceReporter:
         return cores
 
     def _nimbus_nodes(self, server, data=None):
-        res = subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@hotel.futuregrid.org","cat /home/nimbus/realtime_metrics/" + server + "/nimbus_nodes.json"])
+        res = subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@hotel.futuregrid.org","cat /home/nimbus/realtime_metrics/" + server + "/nimbus_admin.json"])
         data = json.loads(res)
         cnt = 0
         for record in data:
-            if record["in_use"] == "true":#record["active"] == "true":
+            if record["state"] in { "Running", "Cancelled"}:#record["in_use"] == "true":#record["active"] == "true":
                 cnt += 1
         return cnt
 

@@ -335,9 +335,9 @@ class FGHighcharts:
                 series_type = "line"
 
         if len(self.series) == 0:
-            self.series.append({ "type": series_type, \
+            self.series = [{ "type": series_type, \
                                 "name": self.series_name, \
-                                "data": self.data})
+                                "data": self.data}]
         '''
             [{
                 type: '%(series_type)s',

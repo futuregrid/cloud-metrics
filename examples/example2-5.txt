@@ -83,6 +83,18 @@ analyze -M 11 -Y 2012
 createreport -d 2012-11/hotel/nimbus/user
 
 clear users
+set nodename hotel
+set platform nimbus
+analyze -M 12 -Y 2012
+createreport -d 2012-12/hotel/nimbus/user
+
+clear users
+set nodename hotel
+set platform nimbus
+analyze -M 01 -Y 2013
+createreport -d 2013-01/hotel/nimbus/user
+
+clear users
 set nodename sierra
 set platform nimbus
 analyze -M 11 -Y 2011
@@ -161,6 +173,19 @@ analyze -M 11 -Y 2012
 createreport -d 2012-11/sierra/nimbus/user
 
 clear users
+set nodename sierra
+set platform nimbus
+analyze -M 12 -Y 2012
+createreport -d 2012-12/sierra/nimbus/user
+
+clear users
+set nodename sierra
+set platform nimbus
+analyze -M 01 -Y 2013
+createreport -d 2013-01/sierra/nimbus/user
+
+
+clear users
 set nodename alamo
 set platform nimbus
 analyze -M 11 -Y 2011
@@ -237,6 +262,20 @@ set platform nimbus
 set nodename alamo
 analyze -M 11 -Y 2012
 createreport -d 2012-11/alamo/nimbus/user
+
+clear users
+set platform nimbus
+set nodename alamo
+analyze -M 12 -Y 2012
+createreport -d 2012-12/alamo/nimbus/user
+
+clear users
+set platform nimbus
+set nodename alamo
+analyze -M 01 -Y 2013
+createreport -d 2013-01/alamo/nimbus/user
+
+
 
 clear users
 set nodename foxtrot

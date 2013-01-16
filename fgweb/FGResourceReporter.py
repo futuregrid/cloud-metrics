@@ -23,7 +23,19 @@ class FGResourceReporter:
         self.hpc = [{"hostname":"india", \
                     "institution": "IU", \
                     "platform": "HPC", \
-                    "cores": 496 }]
+                    "cores": 488 },
+                    {"hostname":"alamo", \
+                    "institution": "TACC", \
+                    "platform": "HPC", \
+                    "cores": 608 },
+                    {"hostname": "hotel", \
+                    "institution": "UC", \
+                    "platform": "HPC", \
+                    "cores": 312 },
+                    {"hostname": "sierra", \
+                    "institution": "UCSD", \
+                    "platform": "HPC", \
+                    "cores": 248}]
 
     def list(self):
         res = self.list_cloudservice()
@@ -35,10 +47,15 @@ class FGResourceReporter:
         self.read_HPC()
         for hpc in self.hpc:
             status = "On" # for test
-            usercount = self.hpctools(hpc["hostname"], "usercount").strip()
-            nodecount = self.hpctools(hpc["hostname"], "nodecount").strip()
-            corecount = self.hpctools(hpc["hostname"], "corecount").strip()
-            utilization = str(round(100 * float(corecount) / hpc["cores"], 2)) + "%"
+            try:
+                usercount = self.hpctools(hpc["hostname"], "usercount").strip()
+                nodecount = self.hpctools(hpc["hostname"], "nodecount").strip()
+                corecount = self.hpctools(hpc["hostname"], "corecount").strip()
+                utilization = str(round(100 * float(corecount) / hpc["cores"], 2)) + "%"
+            except:
+                print sys.exc_info()
+                usercount = nodecount  = corecount = utilization = 0 
+
             res.append({ "Name": hpc["hostname"], \
                     "Institution": hpc["institution"], \
                     "Cloud Service": hpc["platform"], \
@@ -110,13 +127,14 @@ class FGResourceReporter:
         return func(server, data)
 
     def _hpc_usercount(self, server, data=None):
-        return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","qstat|grep \" R \"|awk '{ print $3}'|sort -u|wc -l"])
+        return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","source /etc/bashrc;qstat|grep \" R \"|awk '{ print $3}'|sort -u|wc -l"])
  
     def _hpc_nodecount(self, server, data=None):
-        return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","qstat -n|grep \"/\"|sed -e \"s/+/\\n/g\" -e \"s/\s\+//\"|awk -F\"/\" '{ print $1}'|sort -u|wc -l"])
+        return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","source /etc/bashrc;qstat -f -1|sed -ne \"s/^\\s*exec_host = //p\"|sed \"s/+/\\n/g\"|awk -F\"/\" '{ print $1}'|sort -u|wc -l"])
 
     def _hpc_corecount(self, server, data=None):
-        return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","qstat -n|grep \"/\"|sed -e \"s/+/\\n/g\" -e \"s/\s\+//\"|awk -F\"/\" '{ print $2}'|awk '{s+=1} END {print s}'"])
+        return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","source /etc/bashrc;qstat -f -1|sed -ne \"s/^\\s*exec_host = //p\"|sed \"s/+/\\n/g\"|wc -l"])
+            #awk -F\"/\" '{ print $2}'|awk '{s+=1} END {print s}'"])
 
     def nimbustools(self, server, name, data=None):
         func = getattr(self, "_nimbus_" + str(name))

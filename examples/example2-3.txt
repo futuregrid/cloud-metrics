@@ -48,3 +48,9 @@ set nodename india
 set platform nova
 analyze -M 12 -Y 2012
 createreport -d 2012-12/india/openstack/user/
+
+clear users
+set nodename india
+set platform nova
+analyze -M 01 -Y 2013
+createreport -d 2013-01/india/openstack/user/

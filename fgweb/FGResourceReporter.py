@@ -127,9 +127,20 @@ class FGResourceReporter:
         return func(server, data)
 
     def _hpc_usercount(self, server, data=None):
+        ''' Execute qstat in remote
+        
+        qstat provides pbs node information for more detail, see:http://www.clusterresources.com/torquedocs21/commands/qstat.shtml 
+        We get " R " state. This can be performed in the other way like 'qstat -B' but it is same, we keep our own way.
+        
+        '''
         return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","source /etc/bashrc;qstat|grep \" R \"|awk '{ print $3}'|sort -u|wc -l"])
  
     def _hpc_nodecount(self, server, data=None):
+        ''' Execute qstat in remote and parse exec_host values to get nodes
+
+        qstat -f -1 displays full information. exec_host means running host information with specific template like 'hostname/core_number+...'
+        our script simply separates them and counts it'''
+
         return subprocess.check_output(["ssh","-i", "/home/hyungro/.ssh/.i","hrlee@" + server + ".futuregrid.org","source /etc/bashrc;qstat -f -1|sed -ne \"s/^\\s*exec_host = //p\"|sed \"s/+/\\n/g\"|awk -F\"/\" '{ print $1}'|sort -u|wc -l"])
 
     def _hpc_corecount(self, server, data=None):

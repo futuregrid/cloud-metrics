@@ -28,7 +28,7 @@ class FGInstances:
     instance = {}
     userinfo = []
     projectinfo = {}
-    default_projectinfo = {"ProjectId":None, "Title":None, "Institution":None, "ProjectLead":None} #"Completed":None, "Department":None", "Keywords":None, "Results":None}
+    default_projectinfo = {"ProjectId":None, "Title":None, "Institution":None, "ProjectLead":None, "Discipline":None} #"Completed":None, "Department":None", "Keywords":None, "Results":None}
     pp = None
     db = None
     in_the_future = None

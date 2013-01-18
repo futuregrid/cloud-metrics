@@ -37,7 +37,7 @@ class FGSearch:
         self.init_internal_options()
         self.init_stats()
         self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', 'trace', 'state', 'date', 'cloudPlatformIdRef' }
-        self.keys_to_select_extra = { 'ProjectId', 'Title', 'Institution', 'ProjectLead' } #_mem', 'ccvm_cores', 'ccvm_disk' }
+        self.keys_to_select_extra = { 'ProjectId', 'Title', 'Institution', 'ProjectLead', 'Discipline' } #_mem', 'ccvm_cores', 'ccvm_disk' }
         self.init_names()
         self.userinfo_needed = False
         self.cache = True
@@ -330,11 +330,11 @@ class FGSearch:
     def _is_userinfo_needed(self, refresh=False):
         if not refresh:
             return self.userinfo_needed
-        if self.groupby in {"project", "institution", "projectleader"}:
+        if self.groupby in {"project", "institution", "projectleader", "discipline"}:
             return True
         elif self.groups:
             for k in self.groups:
-                if k in {"ProjectLead", "ProjectId", "Institution"}:
+                if k in {"ProjectLead", "ProjectId", "Institution", "Discipline"}:
                     return True
         return False
 
@@ -606,6 +606,22 @@ class FGSearch:
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
         project = re.sub("None", "Others", str(selected["ProjectLead"]))
+        if not project in mdict[self.groupby]:
+            mdict[self.groupby][project] = val
+        else:
+            mdict[self.groupby][project] += val
+
+    def _groupby_discipline(self, mdict):
+        if not self._is_userinfo_needed():
+            return
+
+        selected = self.get_selected_instance()
+        val = self.get_metric_factor(self.columns, selected)
+        val = self.do_time_conversion(val)
+
+        if not self.groupby in mdict:
+            mdict[self.groupby] = {}
+        project = re.sub("None", "Others", str(selected["Discipline"]))
         if not project in mdict[self.groupby]:
             mdict[self.groupby][project] = val
         else:

@@ -61,25 +61,10 @@ class FGMongodb:
         #
             return
 
-    def find(self, query):
-
-        #party = database.adventurers.find({'level': {'$gte': 10}})
-    
-        # Our query returns a Cursor, which can be counted and iterated 
-        # normally.
-        #
-        if party.count() > 0:
-            print('The quest begins!')
-            for adventurer in party:
-                print('%s, level %s %s, departs wearing %s and wielding a %s and %s.'
-                       % ( adventurer['name'], adventurer['level'],
-                           adventurer['class'],
-                           adventurer['equipment']['armor'],
-                           adventurer['equipment']['main-hand'],
-                           adventurer['equipment']['off-hand'] ))
-            print('Good luck, you %s brave souls!' % party.count())
-        else:
-            print('No one is high enough level!')
+    def find(self, collection, query):
+        func = getattr(self.database, collection)
+        res = func.find(query)
+        return res
        
     def drop(self, collection):
         # Since this is an example, we'll clean up after ourselves.

@@ -59,6 +59,7 @@ class FGHighcharts:
         self.option_preloader = ""
         self.sort = "bykey"
         self.option_legend = { "enabled": 0 }
+        self.load_local_script_path()
 
     def set_type(self, name):
         self.chart_type = name
@@ -351,13 +352,16 @@ class FGHighcharts:
         self.set_chart_options()
         self.adjust_series()
 
-    def display(self):
+    def display(self, to=None):
 
         try:
             self.configure_chart_options()
            
             self.html_txt = self.get_html_header() + self.get_html_script() + self.get_html_footer()
             self.html_txt = self.html_txt % vars(self)
+            if to:
+                to["stdout"] = self.html_txt
+                return
 
             f = open(self.filepath + "/" + self.filename, "w")
             f.write(self.html_txt)
@@ -514,6 +518,18 @@ class FGHighcharts:
         except:
             return len(self.data)
 
+    def load_script_path(self, name):
+        func = getattr(self, "load_" + str(name) + "_script_path")
+        func()
+
+    def load_local_script_path(self):
+        self.set_chart_option("script_path1", "../../../../../../_static/js")
+        self.set_chart_option("script_path2", "../../../../../../_static/js")
+
+    def load_global_script_path(self):
+        self.set_chart_option("script_path1", "http://code.jquery.com")
+        self.set_chart_option("script_path2", "http://code.highcharts.com")
+
     def get_html_header(self):
         self.html_header = '''<!DOCTYPE html>
         <html>
@@ -524,7 +540,7 @@ class FGHighcharts:
         <meta http-equiv="expires" content="0" />
         <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
         <meta http-equiv="pragma" content="no-cache" />
-        <script type='text/javascript' src='../../../../../../_static/js/jquery-1.7.2.min.js'></script>'''
+        <script type='text/javascript' src='%(option_script_path1)s/jquery-1.7.2.min.js'></script>'''
         return self.html_header
 
     def get_html_script(self):
@@ -822,8 +838,8 @@ class FGHighcharts:
         self.html_footer = '''
         </head>
         <body>
-        <script src="../../../../../../_static/js/highcharts.js"></script>
-        <script src="../../../../../../_static/js/modules/exporting.js"></script>
+        <script src="%(option_script_path2)s/highcharts.js"></script>
+        <script src="%(option_script_path2)s/modules/exporting.js"></script>
         <div id="container" style="width: 100%%; height: %(height)dpx; margin: 0 auto"></div>
         </body>
         </html>

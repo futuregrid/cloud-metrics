@@ -20,6 +20,7 @@ class FGCharts:
         self.title = "FG Charts"#None
         self.subtitle = ""#None
         self.filename = FGUtility.timeStamped("chart") + "." + self.output_type#None
+        self.script_path = "local"
 
         self.sort = "bykey"
 
@@ -140,6 +141,9 @@ class FGCharts:
             pass
         '''
 
+    def load_script_path(self, name):
+        self.script_path = name
+
     def _create_chart(self):
         try:
             # inherit object variables?
@@ -160,11 +164,12 @@ class FGCharts:
             self.chart.set_title(self.title)
             self.chart.set_filename(self.filename)
             self.chart.set_tooltip("")
+            self.chart.load_script_path(self.script_path)
         except:
             print sys.exc_info()
             pass
 
-    def display(self):
+    def display(self, opts=None):
 
         self._create_chart() # default
-        self.chart.display()
+        self.chart.display(opts)

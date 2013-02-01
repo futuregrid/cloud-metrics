@@ -730,6 +730,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             if element['id'] == id:
                 return element['name']
 
+        return id
+
     def set_fullname(self):
         for uname in self.users:
             fullname = self.convert_ownerId_str(uname)

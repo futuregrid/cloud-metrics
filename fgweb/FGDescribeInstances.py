@@ -1,6 +1,7 @@
 import cherrypy
 import subprocess
 import sys
+import os
 import re
 from collections import OrderedDict
 import Xml2Dict
@@ -375,7 +376,7 @@ class DescribeInstancesWeb(object):
     count_vms_user_sierra_euca.exposed = True
 
 def connect(thread_index):
-    cherrypy.thread_data.db = MySQLdb.connect('suzie.futuregrid.org', 'hrlee', 'AeT2W8Rh', 'cloudmetrics')
+    cherrypy.thread_data.db = MySQLdb.connect(os.environ["FG_METRIC_DB_HOST"], os.environ["FG_METRIC_DB_ID"], os.environ["FG_METRIC_DB_PASS"], os.environ["FG_METRIC_DB_NAME"])
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "cmd":
@@ -390,7 +391,7 @@ def main():
         #cherrypy.engine.block()
         # CherryPy autoreload must be disabled for the flup server to work
         #cherrypy.config.update({'engine.autoreload_on':False})
-        cherrypy.config.update({'server.socket_host': '129.79.49.179',
+        cherrypy.config.update({'server.socket_host': os.environ["FG_HOSTING_IP"],
             'server.socket_port': 8080,
         #    'server.thread_pool': 10,
             })

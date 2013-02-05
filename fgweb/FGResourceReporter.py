@@ -2,6 +2,7 @@ import json
 import subprocess
 import cherrypy
 import sys
+import os
 import MySQLdb
 from fgmetric.FGDatabase import FGDatabase
 from fgweb.FGDescribeInstances import DescribeInstances
@@ -55,6 +56,7 @@ class FGResourceReporter:
             except:
                 print sys.exc_info()
                 usercount = nodecount  = corecount = utilization = 0 
+                status = "Off"
 
             res.append({ "Name": hpc["hostname"], \
                     "Institution": hpc["institution"], \
@@ -63,7 +65,7 @@ class FGResourceReporter:
                     "Utilization":  utilization, \
                     "Active Projects": "--",\
                     "Active Users": usercount,\
-                    "Running Instances": nodecount + "**", \
+                    "Running Instances": str(nodecount) + "**", \
                     "Cores (used/avail)":  str(corecount) + " / " + str(hpc["cores"]) \
                     })
         return res
@@ -82,7 +84,7 @@ class FGResourceReporter:
                 self.euca2ools.set_hostname(service["hostname"])
                 self.euca2ools.read_from_cmd()
                 self.euca2ools.convert_xml_to_dict()
-                self.euca2ools.print_ins(self.euca2ools.xml2dict)
+                html = self.euca2ools.print_ins(self.euca2ools.xml2dict)
                 groups = self.euca2ools.stats["2. Groups"]
                 users = self.euca2ools.stats["3. Users"]
                 vms = self.euca2ools.stats["5. Running VMs"]
@@ -92,6 +94,8 @@ class FGResourceReporter:
                     status = "Off"
                 else:
                     status = "On"
+                if html[:13] == "<td>None</td>":
+                    status = "Off"
 
             else:
                 groups = "--"
@@ -220,14 +224,14 @@ class FGRRWeb(object):
     count_vms_user_india_euca.exposed = True
 
 def connect(thread_index):
-    cherrypy.thread_data.db = MySQLdb.connect('suzie.futuregrid.org', 'hrlee', 'AeT2W8Rh', 'cloudmetrics')
+    cherrypy.thread_data.db = MySQLdb.connect(os.environ["FG_METRIC_DB_HOST"], os.environ["FG_METRIC_DB_ID"], os.environ["FG_METRIC_DB_PASS"], os.environ["FG_METRIC_DB_NAME"])
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "cmd":
         obj = FGResourceReporter()
         print obj.list()
     else:
-        cherrypy.config.update({'server.socket_host': '129.79.49.179',
+        cherrypy.config.update({'server.socket_host': os.environ["FG_HOSTING_IP"],
             'server.socket_port': 18080,
         #    'server.thread_pool': 10,
             })

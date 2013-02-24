@@ -127,16 +127,11 @@ class FGInstances:
         return len(self.instance)
 
     def read_from_db(self):
-        key = 0 
-        self.clear("instance")
-        instance_list = self.db.read()
+        self.read_instances()
 
-        self.instance = instance_list
-        '''
-        for element in instance_list:
-            self.instance[key] = element
-            key += 1
-        '''
+    def read_instances(self, querydict={}, optional=""):
+        self.clear("instance")
+        self.instance = self.db.read(querydict, optional)
 
     def read_projectinfo_from_db(self):
 
@@ -147,13 +142,12 @@ class FGInstances:
         self.projectinfo = res
 
     def read_userinfo_from_db(self):
+        self.read_userinfo()
+
+    def read_userinfo(self, querydict={}):
 
         self.clear("userinfo")
-        userinfo_list = self.db.read_userinfo()
-        self.userinfo = userinfo_list
-
-        #for element in userinfo_list:
-        #    self.userinfo.append(element)
+        self.userinfo = self.db.read_userinfo(querydict)
 
     def read_cloudplatform(self, refresh=False):
         if not self.cloudplatform or refresh:

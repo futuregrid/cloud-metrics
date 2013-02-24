@@ -129,7 +129,6 @@ class FGDatabase:
                 if querystr != "":
                     querystr += " and "
                 querystr += astr            
-                print "qstr:->" + querystr + "<---"
                 rquery = "SELECT * FROM " + self.instance_table + "," + self.cloudplatform_table + " where " + foreign_key_for_cloudplatform + " and " + querystr + optional
                 #rquery = "select * from instance, cloudplatform  where instance.cloudPlatform=cloudplatform.cloudPlatformId limit 5";    
         else:

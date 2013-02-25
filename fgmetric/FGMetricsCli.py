@@ -88,6 +88,9 @@ class FGMetricsCli:
         print res
 
 if __name__ == "__main__":
+    main()
+
+def main():
     cli = FGMetricsCli()
     cli.set_argparse()
     cli.set_vars()

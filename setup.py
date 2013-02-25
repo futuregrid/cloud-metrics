@@ -71,7 +71,8 @@ setup(
              'fg-logparser = fgmetric.FGLogParser:main',
              'fg-metric-converter = fgmetric.FGConverter:main',
              'fg-metric = fgmetric.FGAnalyzer:main',
-             'fg-metric-beta = fgmetric.FGMetrics:main'
+             'fg-metric-beta = fgmetric.FGMetrics:main',
+             'fg-metric-cli = fgmetric.FGMetricsCli:main'
              ]},
     
     # install_requires = [

@@ -1,4 +1,5 @@
 #from fgmetric.FGDatabase import FGDatabase
+from pprint import pprint
 from fgmetric.FGSearch import FGSearch
 from fgmetric.FGInstances import FGInstances
 
@@ -29,7 +30,7 @@ class FGMetricsAPI:
     api = FGMetricsAPI()
     api.set_user('hrlee')
     api.set_date('2012-01-01', '2012-12-31')
-    api.set_metric('vmcount')
+    api.set_metric('count')
     res = api.get_stats()
     print res
 
@@ -46,9 +47,9 @@ class FGMetricsAPI:
         self.instances.db.conf()
         self.instances.db.connect()
 
-    def set_date(self, s_date, e_date):
-        self.start_date = s_date
-        self.end_date = e_date
+    def set_date(self, *dates):
+        self.start_date = dates[0]
+        self.end_date = dates[1]
 
     def set_metric(self, name):
         self.metric = name
@@ -82,7 +83,9 @@ class FGMetricsAPI:
         self._get_instances(ownerids)
         self.search.init_stats()
         self._set_search_vars()
-        self.calculate_stats()
+        #pprint(vars(self.search.get_filter()))
+        self._calculate_stats()
+        return self.search.get_metric()
 
     def _set_search_vars(self):
         self.search.set_date([self.start_date, self.end_date])
@@ -90,7 +93,7 @@ class FGMetricsAPI:
         self.search.set_platform(self.cloud)
         self.search.set_nodename(self.hostname)
 
-    def calculate_stats(self):
+    def _calculate_stats(self):
         for i in range(0, self.instances.count()):
             instance = self.instances.get_data(i, self.search._is_userinfo_needed())[0]
             if not self.search._is_in_date(instance):
@@ -98,7 +101,6 @@ class FGMetricsAPI:
             if not self.search._is_filtered(instance):
                 continue
             res = self.search.collect(instance)
-        print self.search.get_metric()
 
     def _get_ownerids(self):
         self.instances.read_userinfo({"username":self.username})
@@ -109,6 +111,3 @@ class FGMetricsAPI:
     def _get_instances(self, ownerids):
         res = []
         self.instances.read_instances({}, " and ownerid in " + str(tuple(ownerids)) + "")
-        #instances = self.instances.instance
-        #return instances
-

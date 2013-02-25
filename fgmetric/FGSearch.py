@@ -1,7 +1,7 @@
 import re
 import sys
 import copy
-from datetime import *
+from datetime import datetime, timedelta
 from fgmetric.FGUtility import dotdict
 from math import ceil
 from pprint import pprint
@@ -134,23 +134,25 @@ class FGSearch:
         """Set search/analyze period
 
             Args:
-                from_date (str): first date of calculation. '%Y-%m-%dT%H:%M:%S' is only allowed.
-                to_date (str): end date of calculation.
+                dates (list): start_date and end_date are expected to search. '%Y-%m-%dT%H:%M:%S' is only allowed.
             Returns:
                 n/a
             Raises:
                 n/a
 
         """
-        if len(dates) < 2:
-            return
-
-        from_date = dates[0]
-        to_date = dates[1]
 
         try:
-            self.from_date = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
-            self.to_date = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
+            from_date = dates[0]
+            to_date = dates[1]
+            if isinstance(from_date, datetime):
+                self.from_date = from_date
+            else:
+                self.from_date = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
+            if isinstance(to_date, datetime):
+                self.to_date = to_date
+            else:
+                self.to_date = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
             self.day_count = (self.to_date - self.from_date).days
 
             # If dates are set, months are also set.

@@ -1,4 +1,5 @@
 import argparse
+from datetime import datetime, timedelta
 from fgmetric.FGMetricsAPI import FGMetricsAPI
 
 class FGMetricsCli:
@@ -45,13 +46,21 @@ class FGMetricsCli:
     development_status = (2, "Pre-alpha")
 
     def __init__(self):
+        self.default_search_days = 180 # Search usage data for this number
+        self.default_search_end = datetime.now() # Search starts from this date back to days within default_search_days
         self.api = FGMetricsAPI()
+        self.set_default_options()
+
+    def set_default_options(self):
+        self.end_date = self.default_search_end
+        self.start_date = self.end_date + timedelta(-self.default_search_days)
+        self.metric = 'count, runtime'
 
     def set_argparse(self):
         parser = argparse.ArgumentParser(description='Specify search options for usage statistics')
-        parser.add_argument('-s', '--s_date', help="start date of search")
-        parser.add_argument('-e', '--e_date', help="end date of search")
-        parser.add_argument('-m', '--metric', help="metric name to search")
+        parser.add_argument('-s', '--s_date', help="start date of search", default=self.start_date)
+        parser.add_argument('-e', '--e_date', help="end date of search", default=self.end_date)
+        parser.add_argument('-m', '--metric', help="metric name to search", default=self.metric)
         parser.add_argument('-lm', '--listmetrics', help="list of metric possible to search")
         parser.add_argument('-u', '--user', help='owerid (i.e. fg portal id) to search', required=True)
         parser.add_argument('-c', '--cloud', help='cloud name to search')
@@ -75,8 +84,8 @@ class FGMetricsCli:
         self.api.set_period(args.period)
 
     def get_stats(self):
-        self.api.get_stats()
-        return
+        res = self.api.get_stats()
+        print res
 
 if __name__ == "__main__":
     cli = FGMetricsCli()

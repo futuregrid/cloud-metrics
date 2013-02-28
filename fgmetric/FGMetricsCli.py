@@ -1,4 +1,5 @@
 import argparse
+from pprint import pprint
 from datetime import datetime, timedelta
 from fgmetric.FGMetricsAPI import FGMetricsAPI
 
@@ -54,7 +55,7 @@ class FGMetricsCli:
     def set_default_options(self):
         self.end_date = self.default_search_end
         self.start_date = self.end_date + timedelta(-self.default_search_days)
-        self.metric = 'count, runtime'
+        self.metric = 'count runtime'
 
     def set_argparse(self):
         parser = argparse.ArgumentParser(description='Specify search options for usage statistics')
@@ -73,9 +74,14 @@ class FGMetricsCli:
         args = parser.parse_args()
         self.args = args
 
-    def set_vars(self):
-        args = self.args
+        self._set_vars()
 
+    def _set_vars(self):
+        self._set_api_vars()
+        self._set_dict_vars()
+
+    def _set_api_vars(self):
+        args = self.args
         self.api.set_date(args.s_date, args.e_date)
         self.api.set_metric(args.metric)
         self.api.set_user(args.user)
@@ -83,15 +89,31 @@ class FGMetricsCli:
         self.api.set_hostname(args.host)
         self.api.set_period(args.period)
 
-    def get_stats(self):
-        res = self.api.get_stats()
-        print res
+    def _set_dict_vars(self):
+        self.result = {
+            "start_date"    :   self.start_date,
+            "end_date"      :   self.end_date,
+            "ownerid"       :   self.args.user,
+            "metric"        :   self.args.metric.split(),
+            "period"        :   self.args.period or "All",
+            "clouds"        :   self.args.cloud or "All",
+            "hostname"      :   self.args.host or "All"
+        }
 
-if __name__ == "__main__":
-    main()
+    def get_stats(self):
+        self.stats = self.api.get_stats()
+
+    def return_dict(self):
+        self.result['stats'] = self.stats
+        pprint (self.result)
 
 def main():
     cli = FGMetricsCli()
     cli.set_argparse()
-    cli.set_vars()
     cli.get_stats()
+    cli.return_dict()
+
+if __name__ == "__main__":
+    main()
+
+

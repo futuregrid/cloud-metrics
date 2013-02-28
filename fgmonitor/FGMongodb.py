@@ -9,6 +9,7 @@ class FGMongodb:
         # database info. Ex:
         #    mongodb_uri = 'mongodb://username:password@localhost:27017/dbname'
         #
+        self.load_conf()
         self.mongodb_uri = 'mongodb://%(dbuser)s:%(dbpasswd)s@%(dbhost)s:%(dbport)d/%(dbname)s' % self.get_dbinfo()
         self.db_name = '%(dbname)s' % self.get_dbinfo()
 
@@ -106,5 +107,4 @@ class FGMongodb:
         Return:
             self.mongodb_information (dict)
         """
-
         return self.mongodb_information

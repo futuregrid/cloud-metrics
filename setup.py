@@ -81,7 +81,8 @@ setup(
     #     'cmd2',
     #     'pip',
     #     'pygooglechart',
-    #     'mysql-python'
+    #     'mysql-python',
+    #     'pymongo'
     #     ],
     )
 

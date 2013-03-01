@@ -1,3 +1,5 @@
+from bson import json_util
+import json
 import argparse
 from pprint import pprint
 from datetime import datetime, timedelta
@@ -105,13 +107,16 @@ class FGMetricsCli:
 
     def return_dict(self):
         self.result['stats'] = self.stats
-        pprint (self.result)
+        return json.dumps(self.result, default=json_util.default)
 
 def main():
     cli = FGMetricsCli()
     cli.set_argparse()
     cli.get_stats()
-    cli.return_dict()
+    dic = cli.return_dict()
+    print dic
+    # deserialization
+    # print json.loads(dic, object_hook=json_util.object_hook)
 
 if __name__ == "__main__":
     main()

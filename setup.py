@@ -72,6 +72,7 @@ setup(
              'fg-metric-converter = fgmetric.FGConverter:main',
              'fg-metric = fgmetric.FGAnalyzer:main',
              'fg-metric-beta = fgmetric.FGMetrics:main',
+             'fgmetric = fgmetric.FGMetricsCli:main',
              'fg-metric-cli = fgmetric.FGMetricsCli:main'
              ]},
     
@@ -80,7 +81,8 @@ setup(
     #     'cmd2',
     #     'pip',
     #     'pygooglechart',
-    #     'mysql-python'
+    #     'mysql-python',
+    #     'pymongo'
     #     ],
     )
 

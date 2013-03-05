@@ -1,5 +1,7 @@
 import sys
 import pymongo
+import ConfigParser
+from fgmetric.FGConstants import FGConst
 
 class FGMongodb:
     def __init__(self):
@@ -7,8 +9,9 @@ class FGMongodb:
         # database info. Ex:
         #    mongodb_uri = 'mongodb://username:password@localhost:27017/dbname'
         #
-        self.mongodb_uri = 'mongodb://fgcloudadmin:fg-metric@ds035167.mongolab.com:35167/fgcloudmetrics'
-        self.db_name = 'fgcloudmetrics'
+        self.load_conf()
+        self.mongodb_uri = 'mongodb://%(dbuser)s:%(dbpasswd)s@%(dbhost)s:%(dbport)d/%(dbname)s' % self.get_dbinfo()
+        self.db_name = '%(dbname)s' % self.get_dbinfo()
 
     def connect(self):
         # pymongo.Connection creates a connection directly from the URI, performing
@@ -70,3 +73,38 @@ class FGMongodb:
         # Since this is an example, we'll clean up after ourselves.
         #database.drop_collection('adventurers')
         return
+
+
+    def load_conf(self):
+        self.config_filename = FGConst.DEFAULT_CONFIG_FILENAME
+        self.config_filepath = FGConst.DEFAULT_CONFIG_FILEPATH
+        self._set_conf()
+
+    def _set_conf(self):
+        config = ConfigParser.ConfigParser()
+        config.read(self._get_config_file())
+
+        try:
+            self.mongodb_information = { 
+                    "dbhost" : config.get('MongoDB', 'host'),
+                    "dbport" : int(config.get('MongoDB', 'port')),
+                    "dbuser" : config.get('MongoDB', 'user'),
+                    "dbpasswd" : config.get('MongoDB', 'passwd'),
+                    "dbname" : config.get('MongoDB', 'db') 
+                    }
+        except ConfigParser.NoSectionError:
+            raise
+
+    def _get_config_file(self):
+        return self.config_filepath + "/" + self.config_filename
+
+    def get_dbinfo(self):
+        """ Return db information """
+
+        """
+        Args:
+            n/a
+        Return:
+            self.mongodb_information (dict)
+        """
+        return self.mongodb_information

@@ -12,6 +12,14 @@ The statistics can be displayed in a graphical form such a javascript chart or a
 
 Please check out the `github:pages <http://futuregrid.github.com/cloud-metrics>`_ for the installation.
 
+
+Additional pacakes that are undocumented
+----------------------------------
+
+    $ hg clone http://bitbucket.org/birkenfeld/sphinx-contrib/
+    $ cd sphinx-contrib/autorun
+    $ python setup.py install
+
 ------------------------------------
 Results pages on the portal
 ------------------------------------

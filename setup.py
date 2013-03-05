@@ -77,6 +77,8 @@ setup(
              ]},
     
     # install_requires = [
+    #     'sphinxcontrib-issuetracker',
+    #     'sphinxcontrib-googlechart',
     #     'setuptools',
     #     'cmd2',
     #     'pip',

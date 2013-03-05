@@ -1,0 +1,6 @@
+clear all
+set nodename %(hostname)s
+set platform %(platform)s
+analyze -S %(metric)s
+set search_range %(start_date)s %(end_date)s
+sysreport -o %(path)s/%(hostname)s/%(platform)s/%(metric)s/ -all

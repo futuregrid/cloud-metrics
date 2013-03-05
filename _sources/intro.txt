@@ -2,7 +2,6 @@
 LOG ANALYZER FOR CLOUDS v2.1
 ============================
 
-
 ------------
 INTRODUCTION
 ------------

@@ -1,0 +1,10 @@
+clear all
+set nodename %(hostname)s
+set platform %(platform)s
+set search_range %(start_date)s %(end_date)s
+analyze -S ccvm_cores
+sysreport -o %(path)s/%(hostname)s/%(platform)s/ccvm_cores/ -all
+analyze -S ccvm_mem
+sysreport -o %(path)s/%(hostname)s/%(platform)s/ccvm_mem/ -all
+analyze -S ccvm_disk
+sysreport -o %(path)s/%(hostname)s/%(platform)s/ccvm_disk/ -all

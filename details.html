@@ -9,8 +9,12 @@
     
     <title>Details &mdash; Cloud Metrics 2.1.3 documentation</title>
     
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/jquery.hoverscroll.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/issuetracker.css" type="text/css" />
     
     <script type="text/javascript">
@@ -25,146 +29,85 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/jquery.ba-hashchange.js"></script>
+    <script type="text/javascript" src="_static/jquery.hoverscroll.js"></script>
+    <script type="text/javascript" src="_static/bootstrap.js"></script>
+    <script type="text/javascript" src="_static/bootstrap.scrollspy.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="top" title="Cloud Metrics 2.1.3 documentation" href="index.html" />
     <link rel="next" title="Stand Allone Web Server" href="lighttpd.html" />
     <link rel="prev" title="Quick Start" href="quickstart.html" />
- 
-
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-11111']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   </head>
   <body>
-
-<div style="background-image:url('_static/header_bg.png');background-color: black; text-align: left; padding: 10px 10px 15px 35px">
-<table>
-  <tr>
-    <td>
-      <a href="index.html"><img src="http://futuregrid.github.com/doc/_static/fg-logo-grid-glow.png" border="0" alt="FutureGrid Cloud Metric"/></a>
-    </td>
-    <td>
-      <font size="5" color="white"><b><i>FutureGrid</i></b></font><br><br>
-      <font size="10" color="white" face="Comic Sans MS"><b><i>Cloud Metric</i></b></font>
-    </td>
-  </tr>
-</table>
-
-</div>
-
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="lighttpd.html" title="Stand Allone Web Server"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="quickstart.html" title="Quick Start"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Overview</a>|&nbsp;</li>
-        <li><a href="about.html">About</a>|&nbsp;</li>
-        <li><a href="installation.html">Installation</a>|&nbsp;</li>
-        <li><a href="quickstart.html">Quick Start</a>|&nbsp;</li>
-        <li><a href="#">Details</a>|&nbsp;</li>
-        <li><a href="metrics.html">Metrics</a>|&nbsp;</li>
-        <li><a href="man/index.html">Commands</a>|&nbsp;</li>
-        <li><a href="download.html">Download</a>|&nbsp;</li>
-        <li><a href="support.html">Support</a>|&nbsp;</li>
-	<li><a href="https://portal.futuregrid.org/metrics">Results</a>|&nbsp;</li>
-        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
- 
-      </ul>
-    </div>
-
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Details</a><ul>
-<li><a class="reference internal" href="#shell-to-analyze-data">Shell to analyze data</a></li>
-<li><a class="reference internal" href="#examples">Examples</a><ul>
-<li><a class="reference internal" href="#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
-<li><a class="reference internal" href="#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
-<li><a class="reference internal" href="#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+  <div id="navbar" class="navbar navbar-inverse no-js">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <a class="brand" href="index.html">Cloud Metrics</a>
+        <span class="navbar-text pull-left"></span>
+        <ul class="nav">
+          <li class="divider-vertical"></li>
+          <li><b class="navbar-text">2.1.3</b></li>
+          
+            <li class="dropdown">
+  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="current dropdown-menu">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="">Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download.html">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 </ul>
+
 </li>
-<li><a class="reference internal" href="#eucalyptus-2-0">Eucalyptus 2.0</a><ul>
-<li><a class="reference internal" href="#data-gathering">Data gathering</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#prerequisite">Prerequisite</a><ul>
-<li><a class="reference internal" href="#installation-from-pypi">Installation from pypi</a></li>
-<li><a class="reference internal" href="#installation-form-the-source-in-github">Installation form the source in github</a></li>
-<li><a class="reference internal" href="#what-to-do-if-i-do-not-have-root-privilege">What to do if I do not have root privilege</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#commands">Commands</a></li>
-<li><a class="reference internal" href="#examples-scripts">Examples Scripts</a></li>
-<li><a class="reference internal" href="#feature-requests">FEATURE REQUESTS</a></li>
-</ul>
-</li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="quickstart.html"
-                        title="previous chapter">Quick Start</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="lighttpd.html"
-                        title="next chapter">Stand Allone Web Server</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/details.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-
-    <div class="document">
-<body style="background-image:url('_static/header_bg.png');background-color: grey;">
-</body>
-
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
             
+          
+          
+            
+  <li class="hidden-phone"><a href="quickstart.html"
+         title="previous chapter">&laquo; Quick Start</a></li>
+  <li class="hidden-phone"><a href="lighttpd.html"
+         title="next chapter">Stand Allone Web Server &raquo;</a></li>
+          
+          
+            <li>
+  <a href="_sources/details.txt"
+         rel="nofollow">Source</a></li>
+          
+        </ul>
+        
+          
+<form class="navbar-search pull-right hidden-phone" style="margin-bottom:-3px;" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        
+      </div>
+    </div>
+  </div>
+
+ <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $( "#accordion" ).accordion();
+  });
+  </script>
+  <div class="body container-fluid">
+  <div class="row-fluid">
+    <div class="content span9">
+      
+      
   <div class="section" id="details">
 <h1>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="shell-to-analyze-data">
 <h2>Shell to analyze data<a class="headerlink" href="#shell-to-analyze-data" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>The purpose of our framework is to identify and analyze data from
+<p>The purpose of our framework is to identify and analyze data from
 various production clouds. Relevant data will be uploaded into a
 database.  We have several convenient mechanisms to deal with the
 data.  We can create summary of the data and can export in a variety
@@ -177,7 +120,8 @@ data directly from our database. Some simple example illustrate our
 usage of the shell.</p>
 <p>The following picture gives an overview on which components are
 communicating with each other to gather and display the data</p>
-<p class="graphviz">
+<blockquote>
+<div><p class="graphviz">
 <img src="_images/graphviz-bd4636a741e9bb633548ef8cfa59ead31ea8faac.png" alt="digraph foo {
    graph [rankdir=LR];
    &quot;Log Cloud A&quot; -&gt; &quot;Backup&quot;;
@@ -191,6 +135,7 @@ communicating with each other to gather and display the data</p>
    &quot;Shell&quot; -&gt; &quot;Shell User&quot;;
 }" />
 </p>
+</div></blockquote>
 <ol class="arabic">
 <li><p class="first">various clouds produce many log files</p>
 </li>
@@ -221,14 +166,12 @@ directory tree in sphinx that will be refreshed from ime to time.
 </ol>
 <p>To show some commands of the shell we have provided a small set of
 examples.</p>
-</div></blockquote>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="create-a-summary-table-for-the-month-of-january">
 <h3>Create a summary table for the month of January<a class="headerlink" href="#create-a-summary-table-for-the-month-of-january" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>The following will create a table with data produced for the month of January:</p>
+<p>The following will create a table with data produced for the month of January:</p>
 <div class="highlight-python"><pre>&gt; fg-metric
 fg&gt; clear users
 fg&gt; analyze -M 01
@@ -237,14 +180,12 @@ fg&gt; quit</pre>
 </div>
 <p>Naturally you could store this script in a file and pipe to fg-metric
 in case you have more complex or repetitive analysis to do.</p>
-</div></blockquote>
 </div>
 <div class="section" id="create-a-summary-analysis-for-multiple-month">
 <h3>Create a summary analysis for multiple month<a class="headerlink" href="#create-a-summary-analysis-for-multiple-month" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>Assume you like to create a nice html page directory with the
-analysis of the data contained. This can be done as follows. Assume
-the following contents is in the file analyze.txt:</p>
+<p>Assume you like to create a nice html page directory with the analysis
+of the data contained. This can be done as follows. Assume the
+following contents is in the file analyze.txt:</p>
 <div class="highlight-python"><pre>clear users
 analyze -M 01 -Y 2012
 createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
@@ -264,13 +205,11 @@ included. The resulting report is an html report.</p>
 </div>
 <p>This will produce a nice directory tree with all the data needed for a
 display.</p>
-</div></blockquote>
 </div>
 <div class="section" id="show-machine-image-counts-for-eucalyptus">
 <h3>Show machine image counts for Eucalyptus<a class="headerlink" href="#show-machine-image-counts-for-eucalyptus" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>Based on Jonathan&#8217;s code, we are able to get image counts via cmd2 tools.
-It&#8217;s established on &#8216;euca-describe-images&#8217; command:</p>
+<p>Based on Jonathan's code, we are able to get image counts via cmd2 tools.
+It's established on 'euca-describe-images' command:</p>
 <div class="highlight-python"><pre>(Cmd) count_images
 ...
 sazh72  1
@@ -282,9 +221,9 @@ wchen-server-stage-1    2
 <p>There are additional options which might be useful,</p>
 <ol class="arabic">
 <li><p class="first">showing only image numbers owned by the userid specified:</p>
-<div class="highlight-python"><pre>(Cmd) count_image -u jdiaz</pre>
+<div class="highlight-python"><pre>(Cmd) count_image -u jdiaz
+jdiaz   7</pre>
 </div>
-<p>jdiaz   7</p>
 </li>
 <li><p class="first">displaying details about images:</p>
 <div class="highlight-python"><pre>(Cmd) count_images -u jdiaz -d
@@ -303,10 +242,11 @@ IMAGE   emi-48141244    ajyounge/ajyounge-1563160039.img.manifest.xml   ajyounge
 IMAGE   emi-FC6A1197    ajyounge/ubuntu-natty.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store</pre>
 </div>
 </li>
-<li><p class="first">displaying summary values about images.
-e.g. total image counts, total user counts, average image counts
+<li><dl class="first docutils">
+<dt>displaying summary values about images.</dt>
+<dd><p class="first">e.g. total image counts, total user counts, average image counts
 per user, and maximum image counts and userid:</p>
-<div class="highlight-python"><pre>(Cmd) count_images -s
+<div class="last highlight-python"><pre>(Cmd) count_images -s
 ...
 = Summary =
 Total image counts:     128
@@ -315,34 +255,33 @@ Average image counts per user:  1.80281690141
 Maximum image counts and userid:        ajyounge has 12
 ==========</pre>
 </div>
+</dd>
+</dl>
 </li>
 </ol>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="eucalyptus-2-0">
 <h2>Eucalyptus 2.0<a class="headerlink" href="#eucalyptus-2-0" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="data-gathering">
 <h3>Data gathering<a class="headerlink" href="#data-gathering" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>Eucalyptus provides a substantial set of log information. The
-information is stored in the eucalyptus log directory.
-Typically it is configured by the system administrator with log
-rotation. This naturally would mean that the information is lost
-after a time period specified by the log rotation
-configuration. There are two mechanisms of avoiding this. The first
-method is to change the eucalyptus configuration files in order to
-disable log rotation. However this has the disadvantage that the
-directories may fill up and eucalyptus runs out of space.  How to
-disable Eucalyptus log rotation is discussed in the manaula at ... .
-However we decided to go another route, buy copying the Eucalyptus
-log files after a particular period of time and place them onto our
-analysis server and also a backup server. To set this mechanism up, a
-Eucalyptus system administrator simply can install our tools in a
-predefined directory and call a command that copies the log
-files. Ideally This is integrated into a cron script so that the
-process is done on regular basis.</p>
-<p>To switch on eucalyptus in debug mode &#8216;EUCADEBUG&#8217;  you will have to do the
+<p>Eucalyptus provides a substantial set of log information. The
+information is stored in the eucalyptus log directory.  Typically it
+is configured by the system administrator with log rotation. This
+naturally would mean that the information is lost after a time period
+specified by the log rotation configuration. There are two mechanisms
+of avoiding this. The first method is to change the eucalyptus
+configuration files in order to disable log rotation. However this has
+the disadvantage that the directories may fill up and eucalyptus runs
+out of space.  How to disable Eucalyptus log rotation is discussed in
+the manaula at ... .  However we decided to go another route, buy
+copying the Eucalyptus log files after a particular period of time and
+place them onto our analysis server and also a backup server. To set
+this mechanism up, a Eucalyptus system administrator simply can
+install our tools in a predefined directory and call a command that
+copies the log files. Ideally This is integrated into a cron script so
+that the process is done on regular basis.</p>
+<p>To switch on eucalyptus in debug mode 'EUCADEBUG'  you will have to do the
 following</p>
 <blockquote>
 <div>TODO</div></blockquote>
@@ -365,35 +304,30 @@ the commandline or a web page to create information about usage and
 utilization.</p>
 <p>To see more information about this command, please visit the manual
 page [fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)</p>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div>You have various options to install this program. However it requiers
-the MYSQL python library which is on some platforms not that easy to install.</div></blockquote>
+<p>You have various options to install this program. However it requiers
+the MYSQL python library which is on some platforms not that easy to install.</p>
 </div>
 <div class="section" id="prerequisite">
 <h2>Prerequisite<a class="headerlink" href="#prerequisite" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>Python version &gt;= 2.7</p>
+<p>Python version &gt;= 2.7</p>
 <p>(Required Python packages)
 setuptools
 pygooglechart</p>
-</div></blockquote>
+<p>TODO: there seem to be other dependencies that are not listed here</p>
 <div class="section" id="installation-from-pypi">
 <h3>Installation from pypi<a class="headerlink" href="#installation-from-pypi" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div>The programs are distributed in <a class="reference external" href="http://pypi.python.org/pypi/futuregrid.cloud.metric/">pypi</a> . It
-contains our current release version of the software.</div></blockquote>
+<p>The programs are distributed in <a class="reference external" href="http://pypi.python.org/pypi/futuregrid.cloud.metric/">pypi</a> . It
+contains our current release version of the software.</p>
 </div>
 <div class="section" id="installation-form-the-source-in-github">
 <h3>Installation form the source in github<a class="headerlink" href="#installation-form-the-source-in-github" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>If you are adventures, you can work with our newest code checked into
+<p>If you are adventures, you can work with our newest code checked into
 github. To obtain this code, please conduct the following steps.  We
-assume you have root privileges to execute &#8220;make force&#8221;:</p>
+assume you have root privileges to execute &quot;make force&quot;:</p>
 <div class="highlight-python"><pre>wget https://github.com/futuregrid/futuregrid-cloud-metrics/tarball/v2.1.1
 tar xvzf v2.1.1
 cd futuregrid-futuregrid-cloud-metrics-4635fc9
@@ -402,19 +336,16 @@ make force</pre>
 <p>This will install the programs in:</p>
 <div class="highlight-python"><pre>/usr/bin/</pre>
 </div>
-</div></blockquote>
 </div>
 <div class="section" id="what-to-do-if-i-do-not-have-root-privilege">
 <h3>What to do if I do not have root privilege<a class="headerlink" href="#what-to-do-if-i-do-not-have-root-privilege" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div>If you do not have root privileges, you can also install the program
-via pythons virtualenv.</div></blockquote>
+<p>If you do not have root privileges, you can also install the program
+via pythons virtualenv.</p>
 </div>
 </div>
 <div class="section" id="commands">
 <h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p><a class="reference external" href="./man/fg-cleanup-db.html">fg-cleanup-db</a></p>
+<p><a class="reference external" href="./man/fg-cleanup-db.html">fg-cleanup-db</a></p>
 <blockquote>
 <div>erases the content of the database</div></blockquote>
 <p><a class="reference external" href="./man/fg-parser.html">fg-parser</a></p>
@@ -429,12 +360,10 @@ log file rotation in eucalyptus.</div></blockquote>
 <p><a class="reference external" href="./man/fg-metric.html">fg-metric</a></p>
 <blockquote>
 <div>a shell to interact with the metric database.</div></blockquote>
-</div></blockquote>
 </div>
 <div class="section" id="examples-scripts">
 <h2>Examples Scripts<a class="headerlink" href="#examples-scripts" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>Please find a small set of example scripts. Example 2 is most
+<p>Please find a small set of example scripts. Example 2 is most
 interesting as it produces output for multiple month on VM ussage and
 wallclock time associated with the users</p>
 <ul class="simple">
@@ -442,57 +371,56 @@ wallclock time associated with the users</p>
 <li><a class="reference external" href="./examples/example2.txt">example2.txt</a></li>
 <li><a class="reference external" href="./examples/test.txt">test.txt</a></li>
 </ul>
-</div></blockquote>
 </div>
 <div class="section" id="feature-requests">
 <h2>FEATURE REQUESTS<a class="headerlink" href="#feature-requests" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div>This project is under active development. In order for us to identify
+<p>This project is under active development. In order for us to identify
 priorities please let us know what features you like us to add.  We
 will include a list here and identify based on resources and
-priorities how to integrate them.</div></blockquote>
+priorities how to integrate them.</p>
 </div>
 </div>
 
 
-          </div>
-        </div>
+    </div>
+      <div class="page-toc page-sidebar span3 visible-desktop">
+        <div class="well"><ul class="nav nav-list">
+<li class="nav-header"><a class="reference internal" href="#">Details</a></li>
+<li><a class="reference internal" href="#shell-to-analyze-data">Shell to analyze data</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li><a class="reference internal" href="#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li><a class="reference internal" href="#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#eucalyptus-2-0">Eucalyptus 2.0</a><ul>
+<li><a class="reference internal" href="#data-gathering">Data gathering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#prerequisite">Prerequisite</a><ul>
+<li><a class="reference internal" href="#installation-from-pypi">Installation from pypi</a></li>
+<li><a class="reference internal" href="#installation-form-the-source-in-github">Installation form the source in github</a></li>
+<li><a class="reference internal" href="#what-to-do-if-i-do-not-have-root-privilege">What to do if I do not have root privilege</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#commands">Commands</a></li>
+<li><a class="reference internal" href="#examples-scripts">Examples Scripts</a></li>
+<li><a class="reference internal" href="#feature-requests">FEATURE REQUESTS</a></li>
+</ul>
+</div>
       </div>
-
-      <div class="clearer"></div>
-    </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="lighttpd.html" title="Stand Allone Web Server"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="quickstart.html" title="Quick Start"
-             >previous</a> |</li>
-        <li><a href="index.html">Overview</a>|&nbsp;</li>
-        <li><a href="about.html">About</a>|&nbsp;</li>
-        <li><a href="installation.html">Installation</a>|&nbsp;</li>
-        <li><a href="quickstart.html">Quick Start</a>|&nbsp;</li>
-        <li><a href="#">Details</a>|&nbsp;</li>
-        <li><a href="metrics.html">Metrics</a>|&nbsp;</li>
-        <li><a href="man/index.html">Commands</a>|&nbsp;</li>
-        <li><a href="download.html">Download</a>|&nbsp;</li>
-        <li><a href="support.html">Support</a>|&nbsp;</li>
-	<li><a href="https://portal.futuregrid.org/metrics">Results</a>|&nbsp;</li>
-        <li><a href="https://portal.futuregrid.org/">Portal</a>|&nbsp;</li>
- 
-      </ul>
-    </div>
-    <div class="footer">
-        &copy; Copyright 2012, Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier Diaz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.
-    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+        &copy; Created as part of FutureGrid 2012, Developed for FutureGrid by Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier Diaz<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

@@ -16,48 +16,37 @@ Metrics
 There are currently eight different metrics to deliver system utilization, user activities and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as virtual machine (VM) instances, registered VM images, virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, you can find descriptions, instructions, and examples for the metrics.
 
 
-Number of VM instances used per user
+Number of VM instances per user
 ----------------------------------------------------------------------
 
-It is virtual machine instance count launched by users or accounts
-based on log files of eucalyptus. It shows a user's activity and a
-system utilization by counting launched VM instances during a certain
-period (Figure 1).
-
-
-.. figure:: _static/examples/example1.png
-  :scale: 50 %
-  :alt: The number of VM instances used per user
-
-  Figure 1. The number of used VM instances grouped by an ownerid (January 2012 in India)
-
-
-Table 1. Specifications for the example options
-
-====== ========================================================================
-X-axis indicates the number of VM instances.
-Y-axis indicates an ownerid and the number of VM instances used by the ownerid.
-====== ========================================================================
-           
-
-
-**Example commands**
+Within the framework we have a convenient way to obtain information
+about the **number of VM instances** per user. To obtain this
+information you can invoke the following commands within the
+``fg-metric`` shell. In this example we generate a report .... bla bla ....:
 
 
 .. literalinclude:: _static/examples/example2-1.txt 
 
-*This included block is from examples/example2-1.txt*
+This script uses the following command:
 
-**Related commands**
+* **clear users** - clear memory for user data
+* **analyze** - analyze user data for a certain period
+* **createreport** - create a graph
 
-clear users
-     clear memory for user data
+The output of this command sores the result in a file called .... bla
+bl .. as we specified in the prefious shell commands:
 
-analyze
-      analyze user data for a certain period
+.. figure:: _static/examples/example1.png
+    :scale: 50 %
+    :alt: The number of VM instances used per user
 
-createreport
-      create a graph
+    **X-axis** = indicates the number of VM instances.
+
+    **Y-axis** = indicates an ownerid and the number of VM instances used by the ownerid.
+
+    **Figure 1.** The number of used VM instances grouped by an ownerid (January 2012 in India)
+
+
 
         
 Total runtime of VM instance used per user

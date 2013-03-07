@@ -1,15 +1,7 @@
 ============================
-LOG ANALYZER FOR CLOUDS v2.1
+Log Analyzer For Clouds 
 ============================
 
-------------
-INTRODUCTION
-------------
-
-
----------------------
-Shell to analyze data
----------------------
 
 The purpose of our framework is to identify and analyze data from
 various production clouds. Relevant data will be uploaded into a
@@ -24,7 +16,8 @@ data directly from our database. Some simple example illustrate our
 usage of the shell. 
  
 Example: Create a summary table for the month of January
-========================================================
+----------------------------------------------------------------------
+
 
 The following will create a table with data produced for the month of January::
 
@@ -38,7 +31,7 @@ Naturally you could store this script in a file and pipe to fg-metric
 in case you have more complex or repetitive analysis to do. 
 
 Example: How to create a summary analysis for multiple month
-============================================================
+----------------------------------------------------------------------
 
 Assume you like to create a nice html page directory with the analysis
 of the data contained. This can be done as follows. Assume the following 
@@ -66,9 +59,9 @@ To start the script, simply use::
 This will produce a nice directory tree with all the data needed for a
 display.
 
--------------------------------
+
 Eucalyptus 2.0 Data Integration
--------------------------------
+======================================================================
 
 To achieve analysis of eucalyptus data, we are using 'cc.log'
 files. The needed information must be gathered while eucalyptus runs
@@ -82,7 +75,7 @@ in 'EUCADEBUG' mode. We assume the following directory layout::
     
     
 Eucalyptus data gathering
-=========================
+----------------------------------------------------------------------
 
 Eucalyptus provides a substantial set of log information. The
 information is typically stored in the eucalyptus log directory
@@ -123,9 +116,9 @@ To see more information about this command, please visit the manual
 page [fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)
 
 
-----
+
 TODO
-----
+----------------------------------------------------------------------
 
 define variables::
 
@@ -138,19 +131,19 @@ define variables::
 We recommend that the FutureGrid directory is included in the PATH of
 the shell that will run the commands.
 
-------------
+
 INSTALLATION
-------------
+======================================================================
 
 
 Installation from pypi 
-======================
+----------------------------------------------------------------------
 
 The programs are distributed in [pypi](xyz). It contains our current release version of the software. 
 
 
 Installation form the source in github
-======================================
+----------------------------------------------------------------------
 
 If you are adventures, you can work with our newest code checked into
 github. To obtain this code, please conduct the following steps.  We
@@ -166,7 +159,7 @@ This will install the programs in::
     /usr/bin/
     
 What to do if I do not have root privilege
-==========================================
+----------------------------------------------------------------------
 
 If you do not have root privileges, you can also install the program
 via pythons virtualenv.
@@ -174,9 +167,8 @@ via pythons virtualenv.
 Note: Please see our documentation on virtual cluster on how to do that ;-)
 
 
---------
 COMMANDS
---------
+======================================================================
 
 [fg-cleanup-db](./man/fg-cleanup-db.md)
 
@@ -199,9 +191,9 @@ rotation in eucalyptus.
 
 a shell to interact with the metric database. 
 
---------
+
 EXAMPLES
---------
+======================================================================
 
 `example.txt <./examples/example1.txt>`_
 * ????
@@ -213,9 +205,9 @@ EXAMPLES
 * ????
 
 
------
+
 OTHER
------
+======================================================================
 
 ./www
 
@@ -224,8 +216,6 @@ OTHER
 * Be displaying via google chart tools.
 
 
-KNOWN BUGS
-==========
 
 FEATURE REQUESTS
 ================

@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>LOG ANALYZER FOR CLOUDS v2.1 &mdash; Cloud Metrics 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap-responsive.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="Cloud Metrics 0.1 documentation" href="index.html" />
+    <link rel="prev" title="Modules" href="modules.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+<div class="container">
+  
+  <div id="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="brand" href="index.html">Cloud Metrics</a>
+      <span class="navbar-text pull-left"><b>0.1</b></span>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="divider-vertical"></li>
+          
+            <li class="dropdown globaltoc-container">
+  <a href="index.html"
+     class="dropdown-toggle"
+     data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+    ><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#goals">Goals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#joining-the-development-team">Joining the Development Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#related-activities">Related Activities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#create-a-log-backup-of-eucalyptus">Create A Log Backup of Eucalyptus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#parse-the-log-backup">Parse the Log Backup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#generate-results">Generate Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#additional-notes">Additional Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#using-the-standalone-server">Using the Standalone server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#browsing-the-contents">Browsing the contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="details.html">Details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="details.html#shell-to-analyze-data">Shell to analyze data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="details.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l3"><a class="reference internal" href="details.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l3"><a class="reference internal" href="details.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#eucalyptus-2-0">Eucalyptus 2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="details.html#data-gathering">Data gathering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#prerequisite">Prerequisite</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="details.html#installation-from-pypi">Installation from pypi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="details.html#installation-form-the-source-in-github">Installation form the source in github</a></li>
+<li class="toctree-l3"><a class="reference internal" href="details.html#what-to-do-if-i-do-not-have-root-privilege">What to do if I do not have root privilege</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#examples-scripts">Examples Scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#feature-requests">FEATURE REQUESTS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Cloud Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#download-fg-cloud-metric">1. Download FG Cloud Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#create-web-pages-using-sphinx">2. Create Web pages using Sphinx</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">LOG ANALYZER FOR CLOUDS v2.1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">INTRODUCTION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shell-to-analyze-data">Shell to analyze data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-create-a-summary-table-for-the-month-of-january">Example: Create a summary table for the month of January</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-how-to-create-a-summary-analysis-for-multiple-month">Example: How to create a summary analysis for multiple month</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#eucalyptus-2-0-data-integration">Eucalyptus 2.0 Data Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#eucalyptus-data-gathering">Eucalyptus data gathering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#todo">TODO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">INSTALLATION</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-from-pypi">Installation from pypi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-form-the-source-in-github">Installation form the source in github</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-to-do-if-i-do-not-have-root-privilege">What to do if I do not have root privilege</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#commands">COMMANDS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">EXAMPLES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other">OTHER</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#known-bugs">KNOWN BUGS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feature-requests">FEATURE REQUESTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#joining-the-team-and-contributions">JOINING THE TEAM AND CONTRIBUTIONS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+            <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">LOG ANALYZER FOR CLOUDS v2.1</a><ul>
+<li><a class="reference internal" href="#introduction">INTRODUCTION</a></li>
+<li><a class="reference internal" href="#shell-to-analyze-data">Shell to analyze data</a><ul>
+<li><a class="reference internal" href="#example-create-a-summary-table-for-the-month-of-january">Example: Create a summary table for the month of January</a></li>
+<li><a class="reference internal" href="#example-how-to-create-a-summary-analysis-for-multiple-month">Example: How to create a summary analysis for multiple month</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#eucalyptus-2-0-data-integration">Eucalyptus 2.0 Data Integration</a><ul>
+<li><a class="reference internal" href="#eucalyptus-data-gathering">Eucalyptus data gathering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#todo">TODO</a></li>
+<li><a class="reference internal" href="#installation">INSTALLATION</a><ul>
+<li><a class="reference internal" href="#installation-from-pypi">Installation from pypi</a></li>
+<li><a class="reference internal" href="#installation-form-the-source-in-github">Installation form the source in github</a></li>
+<li><a class="reference internal" href="#what-to-do-if-i-do-not-have-root-privilege">What to do if I do not have root privilege</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#commands">COMMANDS</a></li>
+<li><a class="reference internal" href="#examples">EXAMPLES</a></li>
+<li><a class="reference internal" href="#other">OTHER</a><ul>
+<li><a class="reference internal" href="#known-bugs">KNOWN BUGS</a></li>
+<li><a class="reference internal" href="#feature-requests">FEATURE REQUESTS</a></li>
+<li><a class="reference internal" href="#joining-the-team-and-contributions">JOINING THE TEAM AND CONTRIBUTIONS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+          
+          
+            
+  <li><a href="modules.html"
+         title="previous chapter">&laquo; Modules</a></li>
+          
+          
+        </ul>
+
+        
+          
+<form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="log-analyzer-for-clouds-v2-1">
+<h1>LOG ANALYZER FOR CLOUDS v2.1<a class="headerlink" href="#log-analyzer-for-clouds-v2-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>INTRODUCTION<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="shell-to-analyze-data">
+<h2>Shell to analyze data<a class="headerlink" href="#shell-to-analyze-data" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of our framework is to identify and analyze data from
+various production clouds. Relevant data will be uploaded into a
+database.  We have several convenient mechanisms to deal with the
+data.  We can create summary of the data and can export in a variety
+of formats. This summary is especially important for administrators
+who like to find out what is happening on their clouds, but also for
+users to see with who they compete for resources. The output format
+includes png, googlecharts, and cvs tables.  As part of our analysis
+we are also developing an interactive shell that can be used to query
+data directly from our database. Some simple example illustrate our
+usage of the shell.</p>
+<div class="section" id="example-create-a-summary-table-for-the-month-of-january">
+<h3>Example: Create a summary table for the month of January<a class="headerlink" href="#example-create-a-summary-table-for-the-month-of-january" title="Permalink to this headline">¶</a></h3>
+<p>The following will create a table with data produced for the month of January:</p>
+<div class="highlight-python"><pre>&gt; fg-metric
+fg&gt; clear users
+fg&gt; analyze -M 01
+fg&gt; table --type users --separator ,  --caption Testing_the_csv_table
+fg&gt; quit</pre>
+</div>
+<p>Naturally you could store this script in a file and pipe to fg-metric
+in case you have more complex or repetitive analysis to do.</p>
+</div>
+<div class="section" id="example-how-to-create-a-summary-analysis-for-multiple-month">
+<h3>Example: How to create a summary analysis for multiple month<a class="headerlink" href="#example-how-to-create-a-summary-analysis-for-multiple-month" title="Permalink to this headline">¶</a></h3>
+<p>Assume you like to create a nice html page directory with the analysis
+of the data contained. This can be done as follows. Assume the following
+contents is in the file analyze.txt:</p>
+<div class="highlight-python"><pre>clear users
+analyze -M 01 -Y 2012
+createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+
+clear users
+analyze -M 02 -Y 2012
+createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+
+createreports 2012-01 2012-02</pre>
+</div>
+<p>This page creates a beautiful report page with links to the generated
+graphs contained in the directories specified. All index files in
+the directories are printed before the images in the directory are
+included. The resulting report is an html report.</p>
+<p>To start the script, simply use:</p>
+<div class="highlight-python"><pre>cat analyze.txt | fg-metric</pre>
+</div>
+<p>This will produce a nice directory tree with all the data needed for a
+display.</p>
+</div>
+</div>
+<div class="section" id="eucalyptus-2-0-data-integration">
+<h2>Eucalyptus 2.0 Data Integration<a class="headerlink" href="#eucalyptus-2-0-data-integration" title="Permalink to this headline">¶</a></h2>
+<p>To achieve analysis of eucalyptus data, we are using &#8216;cc.log&#8217;
+files. The needed information must be gathered while eucalyptus runs
+in &#8216;EUCADEBUG&#8217; mode. We assume the following directory layout:</p>
+<div class="highlight-python"><pre>./futurgrid/
+./futurgrid/bin - includes all commands needed to run the log analyzing
+./futurgrid/lib - includes libraries that may be called from the bin files
+./futurgrid/etc - location of configuration files
+./futurgrid/www - location of the www files</pre>
+</div>
+<div class="section" id="eucalyptus-data-gathering">
+<h3>Eucalyptus data gathering<a class="headerlink" href="#eucalyptus-data-gathering" title="Permalink to this headline">¶</a></h3>
+<p>Eucalyptus provides a substantial set of log information. The
+information is typically stored in the eucalyptus log directory
+Typically it is also configured by the system administrator with log
+rotation. This naturally would mean that the information is lost after
+a time period specified by the log rotation configuration. There are
+two mechanisms of avoiding this. The first method is to change the
+eucalyptus configuration files in order to disable log
+rotation. However this has the disadvantage that the directories may
+fill up and eucalyptus runs out of space.  How to disable Eucalyptus
+log rotation is discussed in the manaula at ... .  However we decided
+to go another route, buy copying the Eucalyptus log files after a
+particular period of time and place them onto our analysis server and
+also a backup server. To set this mechanism up, a Eucalyptus system
+administrator simply can install our tools in a predefined directory
+and call a command that copies the log files. Ideally This is
+integrated into a cron script so that the process is done on regular
+basis.</p>
+<p>Here is how you set this up:</p>
+<div class="highlight-python"><pre>pip install ....</pre>
+</div>
+<p>This will install several commands in the bin directory. Make sure
+that it is in your path</p>
+<p>Now you can call the command:</p>
+<div class="highlight-python"><pre>[fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)</pre>
+</div>
+<p>which will copy all logfiles that has not yet been copied into our
+backup directory. The log files have a numerical value from 1 to 9 as
+a postfix Once this is done, our analysis scripts can be called from
+the commandline or a web page to create information about usage and
+utilization.</p>
+<p>To see more information about this command, please visit the manual
+page [fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)</p>
+</div>
+</div>
+<div class="section" id="todo">
+<h2>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
+<p>define variables:</p>
+<div class="highlight-python"><pre>FG_LOG_ANALYZER_WWW_OUTPUT - location where the www files for display are stored
+FG_TMP - location where temporary files are located that are analyzed
+FG_DATA - location where the permanent data is being stored
+FG_HOME_LOG_ANALYZER - is set to the location of the "futuregrid" directory.
+EUCALYPTUS_LOG_DIR - location where the eucalyptus log dirs are stored</pre>
+</div>
+<p>We recommend that the FutureGrid directory is included in the PATH of
+the shell that will run the commands.</p>
+</div>
+<div class="section" id="installation">
+<h2>INSTALLATION<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installation-from-pypi">
+<h3>Installation from pypi<a class="headerlink" href="#installation-from-pypi" title="Permalink to this headline">¶</a></h3>
+<p>The programs are distributed in [pypi](xyz). It contains our current release version of the software.</p>
+</div>
+<div class="section" id="installation-form-the-source-in-github">
+<h3>Installation form the source in github<a class="headerlink" href="#installation-form-the-source-in-github" title="Permalink to this headline">¶</a></h3>
+<p>If you are adventures, you can work with our newest code checked into
+github. To obtain this code, please conduct the following steps.  We
+assume you have root privileges to execute &#8220;make force&#8221;:</p>
+<div class="highlight-python"><pre>wget https://github.com/futuregrid/futuregrid-cloud-metrics/tarball/v2.1.1
+tar xvzf v2.1.1
+cd futuregrid-futuregrid-cloud-metrics-4635fc9
+make force</pre>
+</div>
+<p>This will install the programs in:</p>
+<div class="highlight-python"><pre>/usr/bin/</pre>
+</div>
+</div>
+<div class="section" id="what-to-do-if-i-do-not-have-root-privilege">
+<h3>What to do if I do not have root privilege<a class="headerlink" href="#what-to-do-if-i-do-not-have-root-privilege" title="Permalink to this headline">¶</a></h3>
+<p>If you do not have root privileges, you can also install the program
+via pythons virtualenv.</p>
+<p>Note: Please see our documentation on virtual cluster on how to do that ;-)</p>
+</div>
+</div>
+<div class="section" id="commands">
+<h2>COMMANDS<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
+<p>[fg-cleanup-db](./man/fg-cleanup-db.md)</p>
+<p>erases the content of the database</p>
+<p>[fg-parser](./man/fg-parser.md)</p>
+<p>parses eucalyptus log entries and includes them into the database</p>
+<p>[fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)</p>
+<p>gathers all eucalyptus log files into a single directory from the
+eucalyptus log file directory. This script can be called from cron
+repeatedly in order to avoid that log data is lost by using log file
+rotation in eucalyptus.</p>
+<p>[fg-metric](./man/fg-metric.md)</p>
+<p>a shell to interact with the metric database.</p>
+</div>
+<div class="section" id="examples">
+<h2>EXAMPLES<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="./examples/example1.txt">example.txt</a>
+* ????</p>
+<p>[example2.txt](./examples/example2.txt)
+* ????</p>
+<p>[test.txt](./examples/test.txt)
+* ????</p>
+</div>
+<div class="section" id="other">
+<h2>OTHER<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h2>
+<p>./www</p>
+<ul class="simple">
+<li>displays graphs about data usage metrics are in &#8216;www&#8217;</li>
+<li>Be displaying via google chart tools.</li>
+</ul>
+<div class="section" id="known-bugs">
+<h3>KNOWN BUGS<a class="headerlink" href="#known-bugs" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="feature-requests">
+<h3>FEATURE REQUESTS<a class="headerlink" href="#feature-requests" title="Permalink to this headline">¶</a></h3>
+<p>This project is under active development. In order for us to identify
+priorities please let us know what features you like us to add.  We
+will include a list here and identify based on resources and
+priorities how to integrate them.</p>
+</div>
+<div class="section" id="joining-the-team-and-contributions">
+<h3>JOINING THE TEAM AND CONTRIBUTIONS<a class="headerlink" href="#joining-the-team-and-contributions" title="Permalink to this headline">¶</a></h3>
+<p>If you like to join the development efforts, please e-mail us. We can
+than discuss how best you can contribute. You may have enhanced our
+code already or used it in your system. If so, please let us know.</p>
+</div>
+</div>
+</div>
+
+
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, FUgang Wang.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

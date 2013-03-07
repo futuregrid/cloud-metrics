@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Details &mdash; Cloud Metrics 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap-responsive.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="Cloud Metrics 0.1 documentation" href="index.html" />
+    <link rel="prev" title="Stand Allone Web Server" href="lighttpd.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+<div class="container">
+  
+  <div id="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="brand" href="index.html">Cloud Metrics</a>
+      <span class="navbar-text pull-left"><b>0.1</b></span>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="divider-vertical"></li>
+          
+            <li class="dropdown globaltoc-container">
+  <a href="index.html"
+     class="dropdown-toggle"
+     data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+    ><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#goals">Goals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#joining-the-development-team">Joining the Development Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#related-activities">Related Activities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#create-a-log-backup-of-eucalyptus">Create A Log Backup of Eucalyptus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#parse-the-log-backup">Parse the Log Backup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#generate-results">Generate Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#additional-notes">Additional Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#using-the-standalone-server">Using the Standalone server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#browsing-the-contents">Browsing the contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#shell-to-analyze-data">Shell to analyze data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#eucalyptus-2-0">Eucalyptus 2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-gathering">Data gathering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisite">Prerequisite</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-from-pypi">Installation from pypi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-form-the-source-in-github">Installation form the source in github</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-to-do-if-i-do-not-have-root-privilege">What to do if I do not have root privilege</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples-scripts">Examples Scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#feature-requests">FEATURE REQUESTS</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+            <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">Details</a><ul>
+<li><a class="reference internal" href="#shell-to-analyze-data">Shell to analyze data</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li><a class="reference internal" href="#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li><a class="reference internal" href="#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#eucalyptus-2-0">Eucalyptus 2.0</a><ul>
+<li><a class="reference internal" href="#data-gathering">Data gathering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#prerequisite">Prerequisite</a><ul>
+<li><a class="reference internal" href="#installation-from-pypi">Installation from pypi</a></li>
+<li><a class="reference internal" href="#installation-form-the-source-in-github">Installation form the source in github</a></li>
+<li><a class="reference internal" href="#what-to-do-if-i-do-not-have-root-privilege">What to do if I do not have root privilege</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#commands">Commands</a></li>
+<li><a class="reference internal" href="#examples-scripts">Examples Scripts</a></li>
+<li><a class="reference internal" href="#feature-requests">FEATURE REQUESTS</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+          
+          
+            
+  <li><a href="lighttpd.html"
+         title="previous chapter">&laquo; Stand Allone Web Server</a></li>
+          
+          
+        </ul>
+
+        
+          
+<form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="details">
+<h1>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="shell-to-analyze-data">
+<h2>Shell to analyze data<a class="headerlink" href="#shell-to-analyze-data" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of our framework is to identify and analyze data from
+various production clouds. Relevant data will be uploaded into a
+database.  We have several convenient mechanisms to deal with the
+data.  We can create summary of the data and can export in a variety
+of formats. This summary is especially important for administrators
+who like to find out what is happening on their clouds, but also for
+users to see with who they compete for resources. The output format
+includes png, googlecharts, and cvs tables.  As part of our analysis
+we are also developing an interactive shell that can be used to query
+data directly from our database. Some simple example illustrate our
+usage of the shell.</p>
+<p>The following picture gives an overview on which components are
+communicating with each other to gather and display the data</p>
+<p class="blockdiag">
+<img src="_images/blockdiag-cc3ff58e81a5742318df5f82f4727a7dd885b32d.png" alt="None" width="1024" height="440" />
+</p>
+<ol class="arabic">
+<li><p class="first">various clouds produce many log files</p>
+</li>
+<li><p class="first">the log files will be moved to a backup directory</p>
+</li>
+<li><dl class="first docutils">
+<dt>the log files that have been recently moved will be inspected and</dt>
+<dd><p class="first last">their contents will be added to the database</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>the database is queried by a fg-metric commandwhich is a simple</dt>
+<dd><p class="first last">shell that allows to quey for some very elementary iformation. It also
+allows to generate graphics for this information and place them in
+a web server</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>For our portal we havechosen not to use an interactive portal that</dt>
+<dd><p class="first last">interacts with the database on demand, but to just provide a static
+directory tree in sphinx that will be refreshed from ime to time.
+(This is sufficient for our current use case</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>To show some commands of the shell we have provided a small set of
+examples.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-a-summary-table-for-the-month-of-january">
+<h3>Create a summary table for the month of January<a class="headerlink" href="#create-a-summary-table-for-the-month-of-january" title="Permalink to this headline">¶</a></h3>
+<p>The following will create a table with data produced for the month of January:</p>
+<div class="highlight-python"><pre>&gt; fg-metric
+fg&gt; clear users
+fg&gt; analyze -M 01
+fg&gt; table --type users --separator ,  --caption Testing_the_csv_table
+fg&gt; quit</pre>
+</div>
+<p>Naturally you could store this script in a file and pipe to fg-metric
+in case you have more complex or repetitive analysis to do.</p>
+</div>
+<div class="section" id="create-a-summary-analysis-for-multiple-month">
+<h3>Create a summary analysis for multiple month<a class="headerlink" href="#create-a-summary-analysis-for-multiple-month" title="Permalink to this headline">¶</a></h3>
+<p>Assume you like to create a nice html page directory with the analysis
+of the data contained. This can be done as follows. Assume the
+following contents is in the file analyze.txt:</p>
+<div class="highlight-python"><pre>clear users
+analyze -M 01 -Y 2012
+createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+
+clear users
+analyze -M 02 -Y 2012
+createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+
+createreports 2012-01 2012-02</pre>
+</div>
+<p>This page creates a beautiful report page with links to the generated
+graphs contained in the directories specified. All index files in the
+directories are printed before the images in the directory are
+included. The resulting report is an html report.</p>
+<p>To start the script, simply use:</p>
+<div class="highlight-python"><pre>cat analyze.txt | fg-metric</pre>
+</div>
+<p>This will produce a nice directory tree with all the data needed for a
+display.</p>
+</div>
+<div class="section" id="show-machine-image-counts-for-eucalyptus">
+<h3>Show machine image counts for Eucalyptus<a class="headerlink" href="#show-machine-image-counts-for-eucalyptus" title="Permalink to this headline">¶</a></h3>
+<p>Based on Jonathan&#8217;s code, we are able to get image counts via cmd2 tools.
+It&#8217;s established on &#8216;euca-describe-images&#8217; command:</p>
+<div class="highlight-python"><pre>(Cmd) count_images
+...
+sazh72  1
+debian-rm1984   1
+pegasus-images  3
+wchen-server-stage-1    2
+...</pre>
+</div>
+<p>There are additional options which might be useful,</p>
+<ol class="arabic">
+<li><p class="first">showing only image numbers owned by the userid specified:</p>
+<div class="highlight-python"><pre>(Cmd) count_image -u jdiaz
+jdiaz   7</pre>
+</div>
+</li>
+<li><p class="first">displaying details about images:</p>
+<div class="highlight-python"><pre>(Cmd) count_images -u jdiaz -d
+jdiaz   7
+IMAGE   emi-1CA015A7    centos-image-bucket/centos.5-3.x86-64.img.manifest.xml  taklwu  available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-DBC4106B    ubuntu-0904-saga-1.5.2/image.manifest.xml       luckow  available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-F840162A    myubuntubucket/ubuntufloeserver.img.manifest.xml        sreedharnat1    available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   eki-7A031340    mybucket/vmlinuz-2.6.28-11-generic.manifest.xml ajyounge        available       public          x86_64  kernel                  instance-store
+IMAGE   emi-E5D514DA    jdiaz/ubuntunattyjdiaz3595279807.img_0.manifest.xml     javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-46861248    jdiaz/centos6jdiaz2698814667.img.manifest.xml   javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-431F1230    jdiaz/centos6jdiaz2710350825.img.manifest.xml   javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-0E0E165E    ajyounge/ubuntu-twister-memcached.img.manifest.xml      ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-A5B6148A    ajyounge/ubuntu-lucid-minimal.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-4A051306    ajyounge/ubuntu-lucid-mpj.img.manifest.xml      ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-48141244    ajyounge/ajyounge-1563160039.img.manifest.xml   ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-FC6A1197    ajyounge/ubuntu-natty.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store</pre>
+</div>
+</li>
+<li><dl class="first docutils">
+<dt>displaying summary values about images.</dt>
+<dd><p class="first">e.g. total image counts, total user counts, average image counts
+per user, and maximum image counts and userid:</p>
+<div class="last highlight-python"><pre>(Cmd) count_images -s
+...
+= Summary =
+Total image counts:     128
+Total user counts:      71
+Average image counts per user:  1.80281690141
+Maximum image counts and userid:        ajyounge has 12
+==========</pre>
+</div>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="eucalyptus-2-0">
+<h2>Eucalyptus 2.0<a class="headerlink" href="#eucalyptus-2-0" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-gathering">
+<h3>Data gathering<a class="headerlink" href="#data-gathering" title="Permalink to this headline">¶</a></h3>
+<p>Eucalyptus provides a substantial set of log information. The
+information is stored in the eucalyptus log directory.  Typically it
+is configured by the system administrator with log rotation. This
+naturally would mean that the information is lost after a time period
+specified by the log rotation configuration. There are two mechanisms
+of avoiding this. The first method is to change the eucalyptus
+configuration files in order to disable log rotation. However this has
+the disadvantage that the directories may fill up and eucalyptus runs
+out of space.  How to disable Eucalyptus log rotation is discussed in
+the manaula at ... .  However we decided to go another route, buy
+copying the Eucalyptus log files after a particular period of time and
+place them onto our analysis server and also a backup server. To set
+this mechanism up, a Eucalyptus system administrator simply can
+install our tools in a predefined directory and call a command that
+copies the log files. Ideally This is integrated into a cron script so
+that the process is done on regular basis.</p>
+<p>To switch on eucalyptus in debug mode &#8216;EUCADEBUG&#8217;  you will have to do the
+following</p>
+<blockquote>
+<div>TODO</div></blockquote>
+<p>Here is how you set this up:</p>
+<div class="highlight-python"><pre>pip install futuregrid.cloud.metric</pre>
+</div>
+<p>This will install several commands in the bin directory. Make sure
+that it is in your path</p>
+<p>Now you can call the command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fg</span><span class="o">-</span><span class="n">euca</span><span class="o">-</span><span class="n">gather</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="n">files</span>
+</pre></div>
+</div>
+<p>A more detailed description is provided as part of the
+<a class="reference external" href="./man/fg-euca-gather-log-files.html">fg-euca-gather-log-files</a>
+manual page</p>
+<p>which will copy all logfiles that has not yet been copied into our
+backup directory. The log files have a numerical value from 1 to 9 as
+a postfix Once this is done, our analysis scripts can be called from
+the commandline or a web page to create information about usage and
+utilization.</p>
+<p>To see more information about this command, please visit the manual
+page [fg-euca-gather-log-files](./man/fg-euca-gather-log-files.md)</p>
+</div>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>You have various options to install this program. However it requiers
+the MYSQL python library which is on some platforms not that easy to install.</p>
+</div>
+<div class="section" id="prerequisite">
+<h2>Prerequisite<a class="headerlink" href="#prerequisite" title="Permalink to this headline">¶</a></h2>
+<p>Python version &gt;= 2.7</p>
+<p>(Required Python packages)
+setuptools
+pygooglechart</p>
+<p>TODO: there seem to be other dependencies that are not listed here</p>
+<div class="section" id="installation-from-pypi">
+<h3>Installation from pypi<a class="headerlink" href="#installation-from-pypi" title="Permalink to this headline">¶</a></h3>
+<p>The programs are distributed in <a class="reference external" href="http://pypi.python.org/pypi/futuregrid.cloud.metric/">pypi</a> . It
+contains our current release version of the software.</p>
+</div>
+<div class="section" id="installation-form-the-source-in-github">
+<h3>Installation form the source in github<a class="headerlink" href="#installation-form-the-source-in-github" title="Permalink to this headline">¶</a></h3>
+<p>If you are adventures, you can work with our newest code checked into
+github. To obtain this code, please conduct the following steps.  We
+assume you have root privileges to execute &#8220;make force&#8221;:</p>
+<div class="highlight-python"><pre>wget https://github.com/futuregrid/futuregrid-cloud-metrics/tarball/v2.1.1
+tar xvzf v2.1.1
+cd futuregrid-futuregrid-cloud-metrics-4635fc9
+make force</pre>
+</div>
+<p>This will install the programs in:</p>
+<div class="highlight-python"><pre>/usr/bin/</pre>
+</div>
+</div>
+<div class="section" id="what-to-do-if-i-do-not-have-root-privilege">
+<h3>What to do if I do not have root privilege<a class="headerlink" href="#what-to-do-if-i-do-not-have-root-privilege" title="Permalink to this headline">¶</a></h3>
+<p>If you do not have root privileges, you can also install the program
+via pythons virtualenv.</p>
+</div>
+</div>
+<div class="section" id="commands">
+<h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="./man/fg-cleanup-db.html">fg-cleanup-db</a></p>
+<blockquote>
+<div>erases the content of the database</div></blockquote>
+<p><a class="reference external" href="./man/fg-parser.html">fg-parser</a></p>
+<blockquote>
+<div>parses eucalyptus log entries and includes them into the database</div></blockquote>
+<p><a class="reference external" href="./man/fg-euca-gather-log-files.html">fg-euca-gather-log-files</a></p>
+<blockquote>
+<div>gathers all eucalyptus log files into a single directory from the
+eucalyptus log file directory. This script can be called from
+cron repeatedly in order to avoid that log data is lost by using
+log file rotation in eucalyptus.</div></blockquote>
+<p><a class="reference external" href="./man/fg-metric.html">fg-metric</a></p>
+<blockquote>
+<div>a shell to interact with the metric database.</div></blockquote>
+</div>
+<div class="section" id="examples-scripts">
+<h2>Examples Scripts<a class="headerlink" href="#examples-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Please find a small set of example scripts. Example 2 is most
+interesting as it produces output for multiple month on VM ussage and
+wallclock time associated with the users</p>
+<ul class="simple">
+<li><a class="reference external" href="../../../examples/example1.txt">example1.txt</a></li>
+<li><a class="reference external" href="../../../examples/example2.txt">example2.txt</a></li>
+<li><a class="reference external" href="../../../examples/test.txt">test.txt</a></li>
+</ul>
+</div>
+<div class="section" id="feature-requests">
+<h2>FEATURE REQUESTS<a class="headerlink" href="#feature-requests" title="Permalink to this headline">¶</a></h2>
+<p>This project is under active development. In order for us to identify
+priorities please let us know what features you like us to add.  We
+will include a list here and identify based on resources and
+priorities how to integrate them.</p>
+</div>
+</div>
+
+
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, FUgang Wang.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Stand Allone Web Server &mdash; Cloud Metrics 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap-responsive.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="Cloud Metrics 0.1 documentation" href="index.html" />
+    <link rel="next" title="Details" href="details.html" />
+    <link rel="prev" title="UBMoD" href="ubmod.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+<div class="container">
+  
+  <div id="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="brand" href="index.html">Cloud Metrics</a>
+      <span class="navbar-text pull-left"><b>0.1</b></span>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="divider-vertical"></li>
+          
+            <li class="dropdown globaltoc-container">
+  <a href="index.html"
+     class="dropdown-toggle"
+     data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+    ><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#goals">Goals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#contributors">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#joining-the-development-team">Joining the Development Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#related-activities">Related Activities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#create-a-log-backup-of-eucalyptus">Create A Log Backup of Eucalyptus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#parse-the-log-backup">Parse the Log Backup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#generate-results">Generate Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#additional-notes">Additional Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Stand Allone Web Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#instalation-of-lighttpd">Instalation of lighttpd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-standalone-server">Using the Standalone server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#browsing-the-contents">Browsing the contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="details.html">Details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="details.html#shell-to-analyze-data">Shell to analyze data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="details.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l3"><a class="reference internal" href="details.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l3"><a class="reference internal" href="details.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#eucalyptus-2-0">Eucalyptus 2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="details.html#data-gathering">Data gathering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#prerequisite">Prerequisite</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="details.html#installation-from-pypi">Installation from pypi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="details.html#installation-form-the-source-in-github">Installation form the source in github</a></li>
+<li class="toctree-l3"><a class="reference internal" href="details.html#what-to-do-if-i-do-not-have-root-privilege">What to do if I do not have root privilege</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#examples-scripts">Examples Scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="details.html#feature-requests">FEATURE REQUESTS</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+            <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">Stand Allone Web Server</a><ul>
+<li><a class="reference internal" href="#instalation-of-lighttpd">Instalation of lighttpd</a></li>
+<li><a class="reference internal" href="#using-the-standalone-server">Using the Standalone server</a></li>
+<li><a class="reference internal" href="#browsing-the-contents">Browsing the contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+          
+          
+            
+  <li><a href="ubmod.html"
+         title="previous chapter">&laquo; UBMoD</a></li>
+  <li><a href="details.html"
+         title="next chapter">Details &raquo;</a></li>
+          
+          
+        </ul>
+
+        
+          
+<form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="stand-allone-web-server">
+<h1>Stand Allone Web Server<a class="headerlink" href="#stand-allone-web-server" title="Permalink to this headline">¶</a></h1>
+<p>Often it is convenient to test some features of the metrics framework. If you do not have access to a preinstalled web server, we offer you to use lighttpd.</p>
+<div class="section" id="instalation-of-lighttpd">
+<h2>Instalation of lighttpd<a class="headerlink" href="#instalation-of-lighttpd" title="Permalink to this headline">¶</a></h2>
+<p>All you need to do is to insall lighttpd in your machine and make sure you have it in your path.</p>
+</div>
+<div class="section" id="using-the-standalone-server">
+<h2>Using the Standalone server<a class="headerlink" href="#using-the-standalone-server" title="Permalink to this headline">¶</a></h2>
+<p>Make sure you download the code from github.</p>
+<p>Generate the code and install it on your system with:</p>
+<div class="highlight-python"><pre>make force</pre>
+</div>
+<p>Than go into the lighttpd directory and say:</p>
+<div class="highlight-python"><pre>cd lighttpd
+make start</pre>
+</div>
+<p>If you like to sop the server say:</p>
+<div class="highlight-python"><pre>make stop</pre>
+</div>
+</div>
+<div class="section" id="browsing-the-contents">
+<h2>Browsing the contents<a class="headerlink" href="#browsing-the-contents" title="Permalink to this headline">¶</a></h2>
+<p>To browse the contents of the created data, simply open your browser  and type in the address</p>
+<blockquote>
+<div><a class="reference external" href="http://localhost:3000/index.html">http://localhost:3000/index.html</a></div></blockquote>
+<p>Thats all you need to do, it is that simple.</p>
+<p>If you are interested in providing us with a better framework for</p>
+<ul class="simple">
+<li>drupal</li>
+<li>web2py</li>
+</ul>
+<p>or you want to improve the current lighttpd code, please contact</p>
+<p><a class="reference external" href="mailto:laszewski&#37;&#52;&#48;gmail&#46;com">laszewski<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+</div>
+</div>
+
+
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, FUgang Wang.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

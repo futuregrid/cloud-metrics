@@ -10,6 +10,9 @@ Contents:
 	results/all
 	results/realtime
 	results/thismonth
+	results/2013-Q1
+	results/2013-03
+	results/2013-02
 	results/2013-01
 	results/2012-Q4
 	results/2012-12

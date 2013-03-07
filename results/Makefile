@@ -165,6 +165,7 @@ create:
 metric:
 	mkdir -p build/html/results/data/
 	cp ../examples/example4.png build/html/results/data/image_counts.png
+	cd ./source;python generate-results.py
 	cd ../examples;python generate_thismonth.py; cd example6; python generate_examples.py
 	cd build/html/results/data/; cat ../../../../../examples/example2.txt ../../../../../examples/example2-2.txt ../../../../../examples/example2-3.txt ../../../../../examples/example2-5.txt ../../../../../examples/example5-6.txt ../../../../../examples/example5-7.txt ../../../../../examples/example6/*.txt ../../../../../examples/example7-1.txt ../../../../../examples/example8.txt ../../../../../examples/thismonth.txt, ../../../../../examples/quarterly/*.txt | fg-metric
 

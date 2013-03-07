@@ -37,21 +37,11 @@ In this section, graphs, and commands for each metric will be viewed.
 1. The number of VM instances used per user
    generates a graph like below.
 
-..
-        .. figure:: ../results/data/2012-01/india/bar.count.png
+        .. figure:: _static/examples/example1.png
+           :scale: 50 %
+           :alt: The number of VM instances used per user
 
-.. image:: _static/result/test.png
-
-..
-   :scale: 50 %
-   :alt: The number of VM instances used per user
-
-   Figure 1. The number of used VM instances grouped by an ownerid (January 2012 in India)
-
-
-NOPE
-======
-
+           Figure 1. The number of used VM instances grouped by an ownerid (January 2012 in India)
 
            ====== ========================================================================
            ====== ========================================================================
@@ -63,8 +53,8 @@ NOPE
 
         **Example commands**
 
-..
-        .. literalinclude:: examples/example2-1.txt 
+
+        .. literalinclude:: _static/examples/example2-1.txt 
 
         *This included block is from examples/example2-1.txt*
 
@@ -80,8 +70,8 @@ NOPE
 2. Total runtime of VM instance used per user
    generates a graph like below.
 
-..
-        .. figure:: ../results/data/2012-01/india/bar.sum.png
+
+        .. figure:: _static/examples/example2.png
            :scale: 50 %
            :alt: The wall-clock hour for all VM instances executed per user
 
@@ -97,16 +87,15 @@ NOPE
 
         **Example commands**
 
-..
-        .. literalinclude:: ../../../examples/example2-1.txt
+        .. literalinclude:: _static/examples/example2-1.txt
 
         *This included block is from examples/example2-1.txt*
 
 3. A count of VM images owned per user
    generates a graph like below.
 
-..
-        .. figure:: ../results/data/image_counts.png
+
+        .. figure:: _static/examples/example3.png
            :scale: 50 %
            :alt: A count of VM images owned per user in India
 
@@ -121,8 +110,8 @@ NOPE
            Table 3. Specifications for the example options
 
         **Example commands**
-..
-        .. literalinclude:: ../../../examples/example4.txt
+
+        .. literalinclude:: _static/examples/example4.txt
 
         *This included block is from examples/example4.txt*
         
@@ -137,8 +126,8 @@ NOPE
 4. The total number of VM instances used in a system
    generates a graph like below.
 
-..
-        .. figure:: ../results/data/2011-11/india/count/linechart.png
+
+        .. figure:: _static/examples/example4.png
            :scale: 50 %
            :alt: The total number of VM instances used in a system
 
@@ -159,8 +148,8 @@ NOPE
            Table 4. Specifications for the example options
 
         **Example commands**
-..
-        .. literalinclude:: ../../../examples/example5-1.txt
+
+        .. literalinclude:: _static/examples/example5-1.txt
 
         *This included block is from examples/example5-1.txt*
 
@@ -193,8 +182,7 @@ NOPE
 5. Total runtime of VM instances used in a system
    generates a graph like below.
 
-..
-        .. figure:: ../results/data/2011-11/india/runtime/linechart.png
+        .. figure:: _static/examples/example5.png
            :scale: 50 %
            :alt: The total wall-clock hours of VM instances used in a system
 
@@ -217,8 +205,7 @@ NOPE
 
         **Example commands**
 
-..
-        .. literalinclude:: ../../../examples/example5.txt
+        .. literalinclude:: _static/examples/example5.txt
 
         *This included block is from examples/example5.txt*
 
@@ -237,8 +224,8 @@ NOPE
 6. Total CPU cores of VM instances used in a system
    generates a graph like below.
 
-..
-        .. figure:: ../results/data/2011-11/india/cores/linechart.png
+
+        .. figure:: _static/examples/example6.png
            :scale: 50 %
            :alt: The total CPU cores of VM instances used in a system
 
@@ -260,8 +247,8 @@ NOPE
 
         **Example commands**
 
-..
-        .. literalinclude:: ../../../examples/example5-3.txt
+
+        .. literalinclude:: _static/examples/example5-3.txt
 
         *This included block is from examples/example5-3.txt*
 
@@ -286,8 +273,8 @@ NOPE
 7. Total memories of VM instances used in a system
    generates a graph like below.
 
-..
-        .. figure:: ../results/data/2011-11/india/mem/linechart.png
+
+        .. figure:: _static/examples/example7.png
            :scale: 50 %
            :alt: The total memories of VM instances used in a system
 
@@ -310,7 +297,7 @@ NOPE
         **Example commands**
 
 ..
-        .. literalinclude:: ../../../examples/example5-4.txt
+        .. literalinclude:: _static/examples/example5-4.txt
 
         *This included block is from examples/example5-4.txt*
 
@@ -318,7 +305,7 @@ NOPE
    generates a graph like below.
 
 ..
-        .. figure:: ../results/data/2011-11/india/disk/linechart.png
+        .. figure:: _static/examples/example8.png
            :scale: 50 %
            :alt: The total disk of VM instances used in a system
 
@@ -340,7 +327,7 @@ NOPE
 
         **Example commands**
 
-..
-        .. literalinclude:: ../../../examples/example5-5.txt
+
+        .. literalinclude:: _static/examples/example5-5.txt
 
         *This included block is from examples/example5-5.txt*

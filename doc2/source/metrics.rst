@@ -296,7 +296,7 @@ In this section, graphs, and commands for each metric will be viewed.
 
         **Example commands**
 
-..
+
         .. literalinclude:: _static/examples/example5-4.txt
 
         *This included block is from examples/example5-4.txt*
@@ -304,7 +304,7 @@ In this section, graphs, and commands for each metric will be viewed.
 8. Total disks of VM instances used in a system
    generates a graph like below.
 
-..
+
         .. figure:: _static/examples/example8.png
            :scale: 50 %
            :alt: The total disk of VM instances used in a system

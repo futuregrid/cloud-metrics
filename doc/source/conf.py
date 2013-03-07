@@ -12,12 +12,13 @@
 # serve to show the default.
 
 import sys, os
+import sphinx_bootstrap_theme
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('_themes'))
+#sys.path.insert(0, os.path.abspath('_themes'))
 sys.path.insert(0, os.path.abspath('../../futuregrid/cloud/metric'))
 
 # -- General configuration -----------------------------------------------------
@@ -27,26 +28,27 @@ sys.path.insert(0, os.path.abspath('../../futuregrid/cloud/metric'))
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc',
-              'sphinx.ext.autosummary',
-              'sphinx.ext.doctest',
-              'sphinx.ext.intersphinx',
-              'sphinx.ext.todo',
-              'sphinx.ext.graphviz',
-              'sphinxcontrib.googlechart',
-              'sphinx.ext.inheritance_diagram',
-              'sphinx.ext.coverage',
-              'sphinx.ext.pngmath',
-              'sphinx.ext.ifconfig',
-              'sphinx.ext.viewcode',
-              'sphinx.ext.extlinks',
-              'sphinx.ext.intersphinx',
-              'sphinxcontrib.issuetracker']
 
-extensions.append('sphinxcontrib.autorun')
+#extensions = ['sphinx.ext.autodoc',
+#              'sphinx.ext.autosummary',
+#              'sphinx.ext.doctest',
+#              'sphinx.ext.intersphinx',
+#              'sphinx.ext.todo',
+#              'sphinx.ext.graphviz',
+#              'sphinxcontrib.googlechart',
+#              'sphinx.ext.inheritance_diagram',
+#              'sphinx.ext.coverage',
+#              'sphinx.ext.pngmath',
+#              'sphinx.ext.ifconfig',
+#              'sphinx.ext.viewcode',
+#              'sphinx.ext.extlinks',
+#              'sphinx.ext.intersphinx']
+              #              'sphinxcontrib.issuetracker']
 
-issuetracker = 'bitbucket'
-issuetracker_project = 'birkenfeld/sphinx'
+#extensions.append('sphinxcontrib.autorun')
+
+#issuetracker = 'bitbucket'
+#issuetracker_project = 'birkenfeld/sphinx'
 
 
 extlinks = {
@@ -124,21 +126,31 @@ pygments_style = 'sphinx'
 #html_theme = 'sphinxdoc'
 
 html_theme = 'bootstrap'
-html_translator_class = 'bootstrap.HTMLTranslator'
+#html_translator_class = 'bootstrap.HTMLTranslator'
 
 
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {
-  'page_toc_position': 'sidebar-right',
+#html_theme_options = {
+#  'page_toc_position': 'sidebar-right',
   #'globaltoc_depth': -1,
   #'navbar_fixed_top': "true",
+#}
+html_theme_options = {
+    #    'local_toc_position': 'sidebar-right',
+    'navbar_fixed_top': "true",
+    'navbar_class': "navbar navbar-inverse",
+    'source_link_position': "no",
+    'globaltoc_depth': -1,
 }
 
+
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = ['_themes']
+#html_theme_path = ['_themes']
+html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -328,4 +340,4 @@ epub_copyright = u'2012, Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier 
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None}
+#intersphinx_mapping = {'http://docs.python.org/': None}

@@ -40,7 +40,7 @@ In this section, graphs, and commands for each metric will be viewed.
 ..
         .. figure:: ../results/data/2012-01/india/bar.count.png
 
-.. image:: result/test.png
+.. image:: _static/result/test.png
 
 ..
    :scale: 50 %

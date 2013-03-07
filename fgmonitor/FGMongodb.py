@@ -4,6 +4,7 @@ import ConfigParser
 from fgmetric.FGConstants import FGConst
 
 class FGMongodb:
+
     def __init__(self):
         # If your database server is running in auth mode, you will need user and
         # database info. Ex:

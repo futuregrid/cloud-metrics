@@ -57,7 +57,7 @@ class FGMetricsCli:
     def set_default_options(self):
         self.end_date = self.default_search_end
         self.start_date = self.end_date + timedelta(-self.default_search_days)
-        self.metric = 'count runtime'
+        self.metric = 'count runtime cores mem disks'
 
     def set_argparse(self):
         parser = argparse.ArgumentParser(description='Specify search options for usage statistics')

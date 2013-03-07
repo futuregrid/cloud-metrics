@@ -2,6 +2,15 @@
 Log Analyzer For Clouds 
 ============================
 
+.. sidebar:: 
+   . 
+
+  .. contents:: Table of Contents
+     :depth: 3
+
+
+..
+
 
 The purpose of our framework is to identify and analyze data from
 various production clouds. Relevant data will be uploaded into a
@@ -132,7 +141,7 @@ We recommend that the FutureGrid directory is included in the PATH of
 the shell that will run the commands.
 
 
-INSTALLATION
+Installation
 ======================================================================
 
 
@@ -167,7 +176,7 @@ via pythons virtualenv.
 Note: Please see our documentation on virtual cluster on how to do that ;-)
 
 
-COMMANDS
+Commands
 ======================================================================
 
 [fg-cleanup-db](./man/fg-cleanup-db.md)
@@ -192,7 +201,7 @@ rotation in eucalyptus.
 a shell to interact with the metric database. 
 
 
-EXAMPLES
+Examples
 ======================================================================
 
 `example.txt <./examples/example1.txt>`_
@@ -206,7 +215,7 @@ EXAMPLES
 
 
 
-OTHER
+Other
 ======================================================================
 
 ./www
@@ -217,7 +226,7 @@ OTHER
 
 
 
-FEATURE REQUESTS
+Feature Requests
 ================
 
 This project is under active development. In order for us to identify
@@ -225,7 +234,7 @@ priorities please let us know what features you like us to add.  We
 will include a list here and identify based on resources and
 priorities how to integrate them.
 
-JOINING THE TEAM AND CONTRIBUTIONS
+Joining the Team and Contributions
 ==================================
 
 If you like to join the development efforts, please e-mail us. We can

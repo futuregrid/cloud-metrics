@@ -92,6 +92,7 @@ class FGMetricsAPI:
         self.search.set_metric(self.metric)
         self.search.set_platform(self.cloud)
         self.search.set_nodename(self.hostname)
+        self.search.set_period(self.period)
 
     def _calculate_stats(self):
         for i in range(0, self.instances.count()):

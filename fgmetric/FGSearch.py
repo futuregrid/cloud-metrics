@@ -842,21 +842,21 @@ class FGSearch:
             self.calc = "sum"
             self.columns = ["ccvm", "cores"]
             self.groups = ["instance.cloudPlatformIdRef"]
-            self.period = "daily"
+            #self.period = "daily"
             # "sum(ccvm_cores)"
             # group by instance.cloudPlatformIdRef, CAST(date as date)
         elif set(metric) & set(self.names.metric.memories):
             self.calc = "sum"
             self.columns = ["ccvm", "mem"]
             self.groups = ["instance.cloudPlatformIdRef"]
-            self.period = "daily"
+            #self.period = "daily"
             # "sum(ccvm_mem)"
             # group by instance.cloudPlatformIdRef, CAST(date as date)
         elif set(metric) & set(self.names.metric.disks):
             self.calc = "sum"
             self.columns = ["ccvm", "disk"]
             self.groups = ["instance.cloudPlatformIdRef"]
-            self.period = "daily"
+            #self.period = "daily"
             # "sum(ccvm_disk)"
             # group by instance.cloudPlatformIdRef, CAST(date as date)
 

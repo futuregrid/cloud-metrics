@@ -49,6 +49,9 @@ html: clean examples
 force: create html metric
 	@echo "make force done"
 
+report-html: html metric
+	@echo "make report-html done"
+
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
 	@echo

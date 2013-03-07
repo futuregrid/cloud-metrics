@@ -1,3 +1,0 @@
-# Display virtual machine image counts grouped by accountId
-# It generates bar chart with 'image_counts.png' filename
-count_images

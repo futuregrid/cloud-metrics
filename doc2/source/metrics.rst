@@ -37,11 +37,21 @@ In this section, graphs, and commands for each metric will be viewed.
 1. The number of VM instances used per user
    generates a graph like below.
 
+..
         .. figure:: ../results/data/2012-01/india/bar.count.png
-           :scale: 50 %
-           :alt: The number of VM instances used per user
 
-           Figure 1. The number of used VM instances grouped by an ownerid (January 2012 in India)
+.. image:: result/test.png
+
+..
+   :scale: 50 %
+   :alt: The number of VM instances used per user
+
+   Figure 1. The number of used VM instances grouped by an ownerid (January 2012 in India)
+
+
+NOPE
+======
+
 
            ====== ========================================================================
            ====== ========================================================================

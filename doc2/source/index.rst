@@ -16,6 +16,7 @@ Welcome to Cloud Metrics's documentation!
        intro
        metrics
 
+
 BUG
 ======
  'file_insertion_enabled': 1,
@@ -60,15 +61,6 @@ Support
 If you run into problems when using the cloud metric framework, please use our 
 help form at `https://portal.futuregrid.org/help <https://portal.futuregrid.org/help>`_.
 
-
-
-..
-   quickstart
-   details
-   lighttpd
-   download
-   support
-   metrics
 
 
 ..

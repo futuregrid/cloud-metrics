@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>REST: I FOUND THIS IN SOME OTHER FILE &mdash; Cloud Metrics  documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap-responsive.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Cloud Metrics  documentation" href="index.html" />
+    <link rel="next" title="UBMoD" href="ubmod.html" />
+    <link rel="prev" title="Yet more Examples" href="examples.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+<div class="container">
+  
+  <div id="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="brand" href="index.html">Cloud Metrics</a>
+      <span class="navbar-text pull-left"><b>3.1.1
+</b></span>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="divider-vertical"></li>
+          
+            <li class="dropdown globaltoc-container">
+  <a href="index.html"
+     class="dropdown-toggle"
+     data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+    ><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Administrator Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#installing-the-code">Installing the Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#production-version">Production Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#development-version">Development Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#additional-packages-for-sphinx">Additional packages for sphinx</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#setting-up-a-database">Setting Up a Database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#getting-data">Getting Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#eucalyptus">Eucalyptus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#log-frequency">Log Frequency</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#create-a-log-backup">Create A Log Backup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#parse-the-log-backup">Parse the Log Backup</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#openstack">OpenStack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#nimbus">Nimbus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#generate-results">Generate Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#create-production-web-pages-using-sphinx">Create Production Web pages using Sphinx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#create-production-web-pages-using-flask">Create Production Web pages using Flask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#create-pdf-reports">Create PDF reports</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#number-of-vm-instances-per-user">Number of VM instances per user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-runtime-of-vm-instance-used-per-user">Total runtime of VM instance used per user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#a-count-of-vm-images-owned-per-user">A count of VM images owned per user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-total-number-of-vm-instances-used-in-a-system">The total number of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-runtime-of-vm-instances-used-in-a-system">Total runtime of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-cpu-cores-of-vm-instances-used-in-a-system">Total CPU cores of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-memories-of-vm-instances-used-in-a-system">Total memories of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-disks-of-vm-instances-used-in-a-system">Total disks of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#examples-that-need-to-be-integrated-into-the-above-sections">Examples that need to be integrated into the above sections</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id1">Total runtime of VM instance used per user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id2">A count of VM images owned per user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id3">The total number of VM instances used in a system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id4">Total runtime of VM instances used in a system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id11">Total memories of VM instances used in a system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id12">Total disks of VM instances used in a system</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Yet more Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id1">Create a summary table for the month of January</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#how-to-create-a-summary-analysis-for-multiple-month">How to create a summary analysis for multiple month</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#yet-another-set-of-examples-scripts-copied-from-somewhere">Yet another set of Examples Scripts copied from somewhere</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">REST: I FOUND THIS IN SOME OTHER FILE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#eucalyptus-2-0-data-integration">Eucalyptus 2.0 Data Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#todo">TODO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#using-the-standalone-server">Using the Standalone server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#browsing-the-contents">Browsing the contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+</ul>
+</ul>
+</li>
+            <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">REST: I FOUND THIS IN SOME OTHER FILE</a><ul>
+<li><a class="reference internal" href="#eucalyptus-2-0-data-integration">Eucalyptus 2.0 Data Integration</a><ul>
+<li><a class="reference internal" href="#todo">TODO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+          
+          
+            
+  <li><a href="examples.html"
+         title="previous chapter">&laquo; Yet more Examples</a></li>
+  <li><a href="ubmod.html"
+         title="next chapter">UBMoD &raquo;</a></li>
+          
+          
+        </ul>
+
+        
+          
+<form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="rest-i-found-this-in-some-other-file">
+<h1>REST: I FOUND THIS IN SOME OTHER FILE<a class="headerlink" href="#rest-i-found-this-in-some-other-file" title="Permalink to this headline">¶</a></h1>
+<p>Not sure if this is redundant or provides real additional
+information. If it does, i suggest to include in main section.</p>
+<div class="section" id="eucalyptus-2-0-data-integration">
+<h2>Eucalyptus 2.0 Data Integration<a class="headerlink" href="#eucalyptus-2-0-data-integration" title="Permalink to this headline">¶</a></h2>
+<p>To achieve analysis of eucalyptus data, we are using &#8216;cc.log&#8217;
+files. The needed information must be gathered while eucalyptus runs
+in &#8216;EUCADEBUG&#8217; mode. We assume the following directory layout:</p>
+<div class="highlight-python"><pre>./futurgrid/
+./futurgrid/bin - includes all commands needed to run the log analyzing
+./futurgrid/lib - includes libraries that may be called from the bin files
+./futurgrid/etc - location of configuration files
+./futurgrid/www - location of the www files</pre>
+</div>
+<div class="section" id="todo">
+<h3>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h3>
+<p>define variables:</p>
+<div class="highlight-python"><pre>FG_LOG_ANALYZER_WWW_OUTPUT - location where the www files for display are stored
+FG_TMP - location where temporary files are located that are analyzed
+FG_DATA - location where the permanent data is being stored
+FG_HOME_LOG_ANALYZER - is set to the location of the "futuregrid" directory.
+EUCALYPTUS_LOG_DIR - location where the eucalyptus log dirs are stored</pre>
+</div>
+<p>We recommend that the FutureGrid directory is included in the PATH of
+the shell that will run the commands.</p>
+</div>
+</div>
+</div>
+
+
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, FUgang Wang.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

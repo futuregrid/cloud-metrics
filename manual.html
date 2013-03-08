@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Administrator Guide &mdash; Cloud Metrics  documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap-responsive.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Cloud Metrics  documentation" href="index.html" />
+    <link rel="next" title="Metrics" href="metrics.html" />
+    <link rel="prev" title="Welcome to Cloud Metrics’s documentation!" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+<div class="container">
+  
+  <div id="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="brand" href="index.html">Cloud Metrics</a>
+      <span class="navbar-text pull-left"><b>3.1.1
+</b></span>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="divider-vertical"></li>
+          
+            <li class="dropdown globaltoc-container">
+  <a href="index.html"
+     class="dropdown-toggle"
+     data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+    ><ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Administrator Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-the-code">Installing the Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#production-version">Production Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#development-version">Development Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-packages-for-sphinx">Additional packages for sphinx</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-database">Setting Up a Database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getting-data">Getting Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eucalyptus">Eucalyptus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#log-frequency">Log Frequency</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-log-backup">Create A Log Backup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parse-the-log-backup">Parse the Log Backup</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#openstack">OpenStack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nimbus">Nimbus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#generate-results">Generate Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-production-web-pages-using-sphinx">Create Production Web pages using Sphinx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-production-web-pages-using-flask">Create Production Web pages using Flask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-pdf-reports">Create PDF reports</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#number-of-vm-instances-per-user">Number of VM instances per user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-runtime-of-vm-instance-used-per-user">Total runtime of VM instance used per user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#a-count-of-vm-images-owned-per-user">A count of VM images owned per user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-total-number-of-vm-instances-used-in-a-system">The total number of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-runtime-of-vm-instances-used-in-a-system">Total runtime of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-cpu-cores-of-vm-instances-used-in-a-system">Total CPU cores of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-memories-of-vm-instances-used-in-a-system">Total memories of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-disks-of-vm-instances-used-in-a-system">Total disks of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#examples-that-need-to-be-integrated-into-the-above-sections">Examples that need to be integrated into the above sections</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id1">Total runtime of VM instance used per user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id2">A count of VM images owned per user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id3">The total number of VM instances used in a system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id4">Total runtime of VM instances used in a system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id11">Total memories of VM instances used in a system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id12">Total disks of VM instances used in a system</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Yet more Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id1">Create a summary table for the month of January</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#how-to-create-a-summary-analysis-for-multiple-month">How to create a summary analysis for multiple month</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#yet-another-set-of-examples-scripts-copied-from-somewhere">Yet another set of Examples Scripts copied from somewhere</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">REST: I FOUND THIS IN SOME OTHER FILE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#eucalyptus-2-0-data-integration">Eucalyptus 2.0 Data Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="todo.html#todo">TODO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#using-the-standalone-server">Using the Standalone server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#browsing-the-contents">Browsing the contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+</ul>
+</ul>
+</li>
+            <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">Administrator Guide</a><ul>
+<li><a class="reference internal" href="#installing-the-code">Installing the Code</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#production-version">Production Version</a></li>
+<li><a class="reference internal" href="#development-version">Development Version</a></li>
+<li><a class="reference internal" href="#additional-packages-for-sphinx">Additional packages for sphinx</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setting-up-a-database">Setting Up a Database</a><ul>
+<li><a class="reference internal" href="#getting-data">Getting Data</a></li>
+<li><a class="reference internal" href="#eucalyptus">Eucalyptus</a><ul>
+<li><a class="reference internal" href="#log-frequency">Log Frequency</a></li>
+<li><a class="reference internal" href="#create-a-log-backup">Create A Log Backup</a></li>
+<li><a class="reference internal" href="#parse-the-log-backup">Parse the Log Backup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#openstack">OpenStack</a></li>
+<li><a class="reference internal" href="#nimbus">Nimbus</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#generate-results">Generate Results</a></li>
+<li><a class="reference internal" href="#commands">Commands</a></li>
+<li><a class="reference internal" href="#create-production-web-pages-using-sphinx">Create Production Web pages using Sphinx</a></li>
+<li><a class="reference internal" href="#create-production-web-pages-using-flask">Create Production Web pages using Flask</a></li>
+<li><a class="reference internal" href="#create-pdf-reports">Create PDF reports</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+          
+          
+            
+  <li><a href="index.html"
+         title="previous chapter">&laquo; Welcome to Cloud Metrics&#8217;s documentation!</a></li>
+  <li><a href="metrics.html"
+         title="next chapter">Metrics &raquo;</a></li>
+          
+          
+        </ul>
+
+        
+          
+<form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="administrator-guide">
+<h1><a class="toc-backref" href="#id2">Administrator Guide</a><a class="headerlink" href="#administrator-guide" title="Permalink to this headline">¶</a></h1>
+<div class="sidebar">
+<p class="first sidebar-title">.</p>
+<div class="contents last topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#administrator-guide" id="id2">Administrator Guide</a><ul>
+<li><a class="reference internal" href="#installing-the-code" id="id3">Installing the Code</a><ul>
+<li><a class="reference internal" href="#prerequisites" id="id4">Prerequisites</a></li>
+<li><a class="reference internal" href="#production-version" id="id5">Production Version</a></li>
+<li><a class="reference internal" href="#development-version" id="id6">Development Version</a></li>
+<li><a class="reference internal" href="#additional-packages-for-sphinx" id="id7">Additional packages for sphinx</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setting-up-a-database" id="id8">Setting Up a Database</a><ul>
+<li><a class="reference internal" href="#getting-data" id="id9">Getting Data</a></li>
+<li><a class="reference internal" href="#eucalyptus" id="id10">Eucalyptus</a><ul>
+<li><a class="reference internal" href="#log-frequency" id="id11">Log Frequency</a></li>
+<li><a class="reference internal" href="#create-a-log-backup" id="id12">Create A Log Backup</a></li>
+<li><a class="reference internal" href="#parse-the-log-backup" id="id13">Parse the Log Backup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#openstack" id="id14">OpenStack</a></li>
+<li><a class="reference internal" href="#nimbus" id="id15">Nimbus</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#generate-results" id="id16">Generate Results</a></li>
+<li><a class="reference internal" href="#commands" id="id17">Commands</a></li>
+<li><a class="reference internal" href="#create-production-web-pages-using-sphinx" id="id18">Create Production Web pages using Sphinx</a></li>
+<li><a class="reference internal" href="#create-production-web-pages-using-flask" id="id19">Create Production Web pages using Flask</a></li>
+<li><a class="reference internal" href="#create-pdf-reports" id="id20">Create PDF reports</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="installing-the-code">
+<h2><a class="toc-backref" href="#id3">Installing the Code</a><a class="headerlink" href="#installing-the-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="prerequisites">
+<h3><a class="toc-backref" href="#id4">Prerequisites</a><a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
+<p>We assume you have a valid python version (2.7.2 or higher) and all
+the needed libraries on the system where you run the code.</p>
+</div>
+<div class="section" id="production-version">
+<h3><a class="toc-backref" href="#id5">Production Version</a><a class="headerlink" href="#production-version" title="Permalink to this headline">¶</a></h3>
+<p>The FG Cloud Metric is available from PyPI and can be easily installed
+with pip. We recommend that you use virtualenv to manage your local
+python instalations. As install tool we recommend pip:</p>
+<div class="highlight-python"><pre>pip install futuregrid-cloud-metric</pre>
+</div>
+</div>
+<div class="section" id="development-version">
+<h3><a class="toc-backref" href="#id6">Development Version</a><a class="headerlink" href="#development-version" title="Permalink to this headline">¶</a></h3>
+<p>The development version is available from github at and you can clone
+it and install with:</p>
+<div class="highlight-python"><pre>git clone https://github.com/futuregrid/cloud-metrics
+cd cloud-metrics
+python setup.py install</pre>
+</div>
+</div>
+<div class="section" id="additional-packages-for-sphinx">
+<h3><a class="toc-backref" href="#id7">Additional packages for sphinx</a><a class="headerlink" href="#additional-packages-for-sphinx" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">TODO Hyungro please document here all packages that can not be
+installed via pip. I think there may be one or two. all others do
+not need to be mentioned as we ave them in setup, which i modified.
+if something is mssing add them to setup. HOpe setup works, if not, fix.
+ideally i like the setup be also outo install these packages with
+wget, hg, curl, or other tools, so that thinsg are done
+automatically. if a tool is installed with hg, we need to test if
+its on system and interrupt if it can not be found to ask users to
+install hg, and other tools</p>
+</div>
+</div>
+</div>
+<div class="section" id="setting-up-a-database">
+<h2><a class="toc-backref" href="#id8">Setting Up a Database</a><a class="headerlink" href="#setting-up-a-database" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">TODO Hyungro, where is this documented?</p>
+</div>
+<p><a class="reference external" href="http://dev.mysql.com/downloads/mysql/">mysql community server</a></p>
+<div class="section" id="getting-data">
+<h3><a class="toc-backref" href="#id9">Getting Data</a><a class="headerlink" href="#getting-data" title="Permalink to this headline">¶</a></h3>
+<p>For cloud-metric to work, you naturally need some data to ingest into
+it. Cloudmetric can at this time uses mostly IaaS log files as input,
+but in future we will add additional information sources form other
+information providors. Currently we support Eucalyptus, OpenStack, as
+well as Nimbus.</p>
+</div>
+<div class="section" id="eucalyptus">
+<h3><a class="toc-backref" href="#id10">Eucalyptus</a><a class="headerlink" href="#eucalyptus" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="log-frequency">
+<h4><a class="toc-backref" href="#id11">Log Frequency</a><a class="headerlink" href="#log-frequency" title="Permalink to this headline">¶</a></h4>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">TODO
+Hyungro, describe how to se the log frequency, point
+to manual if needed, list concrete parameter and filename where
+parameters is to be set. Work with Allan on that.</p>
+</div>
+<p>HERE IS AN OLD INCOMPLETE TEXT I FOUND, THERE IS NOW SOME REDUNDANT
+INFORMATION HERE WITH OTHER PORTIONS:</p>
+<p>Eucalyptus provides a substantial set of log information. The
+information is stored in the eucalyptus log directory.  Typically it
+is configured by the system administrator with log rotation. This
+naturally would mean that the information is lost after a time period
+specified by the log rotation configuration. There are two mechanisms
+of avoiding this. The first method is to change the eucalyptus
+configuration files in order to disable log rotation. However this has
+the disadvantage that the directories may fill up and eucalyptus runs
+out of space.  How to disable Eucalyptus log rotation is discussed in
+the manaula at ... .  However we decided to go another route, buy
+copying the Eucalyptus log files after a particular period of time and
+place them onto our analysis server and also a backup server. To set
+this mechanism up, a Eucalyptus system administrator simply can
+install our tools in a predefined directory and call a command that
+copies the log files. Ideally This is integrated into a cron script so
+that the process is done on regular basis.</p>
+<p>To switch on eucalyptus in debug mode &#8216;EUCADEBUG&#8217;  you will have to do the
+following</p>
+<blockquote>
+<div>TODO Hyungro</div></blockquote>
+</div>
+<div class="section" id="create-a-log-backup">
+<h4><a class="toc-backref" href="#id12">Create A Log Backup</a><a class="headerlink" href="#create-a-log-backup" title="Permalink to this headline">¶</a></h4>
+<p>This section explains how to make a log backup of eucalyptus using our
+tools.  The Eucalyptus Cluster Controller (CC) generates a log file
+named <tt class="docutils literal"><span class="pre">cc.log</span></tt>. In many production environments this log file is
+stored in rotating fashion so that you have a number attached with the
+log file, while keeping the number of log files to a small set as not
+to overwhelm the server on which EUcalyptus runs with data.
+Naturally for a metric analysis tool such a deployment is not ideal,
+as we will lose data soon.</p>
+<p>To collect all data, we have written a small tool that looks into the
+log files renames them with time stamps and copies them over onto
+another machine. This process is best set up via a cronscript, but
+could also be performed by hand. As we rename that files based on data
+entries from the file, we can invoke the command as many times as we
+want. If the data is already copied, the file is not transferred.</p>
+<p>Note that in our example the backup directory could be a remote location.</p>
+<ol class="arabic">
+<li><p class="first">Log into the management node of eucalyptus that provides access to the log files</p>
+</li>
+<li><p class="first">Create crontab:</p>
+<div class="highlight-python"><pre>#Hourly
+0 * * * * fg-euca-gather-log-files -i &lt;directory of log files&gt; -o &lt;directory of backup&gt;</pre>
+</div>
+</li>
+</ol>
+<p>A more detailed description is provided as part of the
+<a class="reference external" href="./man/fg-euca-gather-log-files.html">fg-euca-gather-log-files</a>
+manual page.</p>
+</div>
+<div class="section" id="parse-the-log-backup">
+<h4><a class="toc-backref" href="#id13">Parse the Log Backup</a><a class="headerlink" href="#parse-the-log-backup" title="Permalink to this headline">¶</a></h4>
+<p>Once we collected log files into the backup directory via the
+<cite>fg-euca-gather-log-files`</cite> command, we need to parse them into a
+convenient database that is easier for us to query. The database
+configuration is stored in a file called <tt class="docutils literal"><span class="pre">~/.futuregrid/futuregrid.cfg</span></tt> and
+includes hostname, id, password, and port number, thus you need to
+store it securely. The file includes the following:</p>
+<div class="highlight-python"><pre>[EucaLogDB]
+host=&lt;yourhostname&gt;
+port=&lt;portnumber&gt;
+user=&lt;username&gt;
+passwd=&lt;password&gt;
+db=&lt;dbname&gt;</pre>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">TODO
+it is illogical to have an entry EucaLogDB, why not &#8220;cloud-db&#8221;,
+also you may want tothink about using a yaml file so we can
+integrate this better with cloudmesh</p>
+</div>
+<p>To invoke the parsing all you have to do is specify
+the backup directory. The <tt class="docutils literal"><span class="pre">-i</span></tt> flag indicates we insert new data
+into existing data:</p>
+<div class="highlight-python"><pre>fg-parser -i &lt;directory of the backup&gt;</pre>
+</div>
+</div>
+</div>
+<div class="section" id="openstack">
+<h3><a class="toc-backref" href="#id14">OpenStack</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h3>
+<p>TODO: Hyungro</p>
+<p>In <tt class="docutils literal"><span class="pre">~/.futuregrid/futuregrid.cfg</span></tt> please add:</p>
+<div class="highlight-python"><pre>[NovaDB]
+host=&lt;your openstack database host - mysql&gt;
+port=&lt;port number&gt;
+user=&lt;username&gt;
+passwd=&lt;password&gt;
+novadb=&lt;nova database name which includes instances table&gt;
+keystonedb=&lt;nova keystone database name which includes user table&gt;</pre>
+</div>
+</div>
+<div class="section" id="nimbus">
+<h3><a class="toc-backref" href="#id15">Nimbus</a><a class="headerlink" href="#nimbus" title="Permalink to this headline">¶</a></h3>
+<p>TODO: Hyungro</p>
+</div>
+</div>
+<div class="section" id="generate-results">
+<h2><a class="toc-backref" href="#id16">Generate Results</a><a class="headerlink" href="#generate-results" title="Permalink to this headline">¶</a></h2>
+<p>Now you can use the convenient fg-metric shell to create results. The
+reason why we have developed a shell is to allow us to issue
+consecutive commands as is typically needed in a production
+environment. Here we show an example on how to analyze and create
+reports for the year 2012:</p>
+<div class="highlight-python"><pre>$ fg-metric
+fg-metric&gt; analyze -Y 2012
+fg-metric&gt; createreport -d 2012</pre>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">TODO
+the command create report will be renamed to &#8220;create report&#8221; note
+the space. It is also unintitive to have a -d option without
+explanation while -Y is used in previous. I suggest to add
+additional -Y option and say this will create automatically
+directory with that year ....  Than you can point out that if you
+like different directory name you can use -d option</p>
+</div>
+<p>As our metric system can use scripts either via piper or named files,
+you can store more complex queries into a file and start the metric
+framework with them:</p>
+<div class="highlight-python"><pre>cat examples/example2.txt | fg-metric</pre>
+</div>
+<p>or with file flag:</p>
+<div class="highlight-python"><pre>fg-metric -f examples/example2.txt</pre>
+</div>
+</div>
+<div class="section" id="commands">
+<h2><a class="toc-backref" href="#id17">Commands</a><a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><a class="reference external" href="./man/fg-cleanup-db.html">fg-cleanup-db</a></dt>
+<dd>erases the content of the database</dd>
+<dt><a class="reference external" href="./man/fg-parser.html">fg-parser</a></dt>
+<dd>parses eucalyptus log entries and includes them into the database</dd>
+<dt><a class="reference external" href="./man/fg-euca-gather-log-files.html">fg-euca-gather-log-files</a></dt>
+<dd>gathers all eucalyptus log files into a single directory from the
+eucalyptus log file directory. This script can be called from
+cron repeatedly in order to avoid that log data is lost by using
+log file rotation in eucalyptus.</dd>
+<dt><a class="reference external" href="./man/fg-metric.html">fg-metric</a></dt>
+<dd>a shell to interact with the metric database.</dd>
+</dl>
+</div>
+<div class="section" id="create-production-web-pages-using-sphinx">
+<h2><a class="toc-backref" href="#id18">Create Production Web pages using Sphinx</a><a class="headerlink" href="#create-production-web-pages-using-sphinx" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">TODO Hyungro, fix all ?? and make suer contents in this section is ok</p>
+</div>
+<p>We provide a simple producton service that uses sphinx to render the
+information associated with a cloud deployment. We have done this in
+order o provide a very simple framework that you can expand while not
+needing to invest any time in learning a web framework. To do this you
+must use the development version of the cloud metric framework as
+discussed in section ??.</p>
+<p>Next please execute:</p>
+<div class="highlight-python"><pre>cd cloud-metric/doc
+make force</pre>
+</div>
+<p>If you met all the prerequisits, you will find the index file in:</p>
+<div class="highlight-python"><pre>cloud-metric*/doc/build/html/index.html</pre>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">TODO Hyungro, I do not think that thsi at all works, you are not describing
+what you do with results</p>
+</div>
+<p>live example of the data is available at</p>
+<ul class="simple">
+<li><a class="reference external" href="http://portal.futuregrid.org/metrics/html/results.html">http://portal.futuregrid.org/metrics/html/results.html</a></li>
+</ul>
+</div>
+<div class="section" id="create-production-web-pages-using-flask">
+<h2><a class="toc-backref" href="#id19">Create Production Web pages using Flask</a><a class="headerlink" href="#create-production-web-pages-using-flask" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">TODO Hyungro</p>
+</div>
+</div>
+<div class="section" id="create-pdf-reports">
+<h2><a class="toc-backref" href="#id20">Create PDF reports</a><a class="headerlink" href="#create-pdf-reports" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">TODO Hyungro</p>
+</div>
+</div>
+</div>
+
+
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, FUgang Wang.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

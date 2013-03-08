@@ -1,26 +1,23 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>UBMoD &mdash; Cloud Metrics 2.1.3 documentation</title>
+    <title>UBMoD &mdash; Cloud Metrics  documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/jquery.hoverscroll.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap-responsive.min.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '2.1.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,53 +26,141 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/jquery.ba-hashchange.js"></script>
-    <script type="text/javascript" src="_static/jquery.hoverscroll.js"></script>
-    <script type="text/javascript" src="_static/bootstrap.js"></script>
-    <script type="text/javascript" src="_static/bootstrap.scrollspy.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="author" title="About these documents" href="about.html" />
-    <link rel="top" title="Cloud Metrics 2.1.3 documentation" href="index.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="top" title="Cloud Metrics  documentation" href="index.html" />
+    <link rel="next" title="Stand Allone Web Server" href="lighttpd.html" />
+    <link rel="prev" title="REST: I FOUND THIS IN SOME OTHER FILE" href="todo.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-  <div id="navbar" class="navbar navbar-inverse no-js">
+<div class="container">
+  
+  <div id="navbar" class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
-      <div class="container-fluid">
-        <a class="brand" href="index.html">Cloud Metrics</a>
-        <span class="navbar-text pull-left"></span>
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="brand" href="index.html">Cloud Metrics</a>
+      <span class="navbar-text pull-left"><b>3.1.1
+</b></span>
+
+      <div class="nav-collapse">
         <ul class="nav">
           <li class="divider-vertical"></li>
-          <li><b class="navbar-text">2.1.3</b></li>
           
-            <li class="dropdown">
-  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">Site <b class="caret"></b></a>
-  <ul class="dropdown-menu">
-<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="details.html">Details</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a></li>
-<li class="toctree-l1"><a class="reference internal" href="download.html">Download</a></li>
-<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+            <li class="dropdown globaltoc-container">
+  <a href="index.html"
+     class="dropdown-toggle"
+     data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+    ><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Administrator Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#installing-the-code">Installing the Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#production-version">Production Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#development-version">Development Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#additional-packages-for-sphinx">Additional packages for sphinx</a></li>
 </ul>
-
 </li>
-            
+<li class="toctree-l2"><a class="reference internal" href="manual.html#setting-up-a-database">Setting Up a Database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#getting-data">Getting Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#eucalyptus">Eucalyptus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#log-frequency">Log Frequency</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#create-a-log-backup">Create A Log Backup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#parse-the-log-backup">Parse the Log Backup</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#openstack">OpenStack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#nimbus">Nimbus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#generate-results">Generate Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#create-production-web-pages-using-sphinx">Create Production Web pages using Sphinx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#create-production-web-pages-using-flask">Create Production Web pages using Flask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#create-pdf-reports">Create PDF reports</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#number-of-vm-instances-per-user">Number of VM instances per user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-runtime-of-vm-instance-used-per-user">Total runtime of VM instance used per user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#a-count-of-vm-images-owned-per-user">A count of VM images owned per user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-total-number-of-vm-instances-used-in-a-system">The total number of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-runtime-of-vm-instances-used-in-a-system">Total runtime of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-cpu-cores-of-vm-instances-used-in-a-system">Total CPU cores of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-memories-of-vm-instances-used-in-a-system">Total memories of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-disks-of-vm-instances-used-in-a-system">Total disks of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#examples-that-need-to-be-integrated-into-the-above-sections">Examples that need to be integrated into the above sections</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id1">Total runtime of VM instance used per user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id2">A count of VM images owned per user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id3">The total number of VM instances used in a system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id4">Total runtime of VM instances used in a system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id11">Total memories of VM instances used in a system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#id12">Total disks of VM instances used in a system</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Yet more Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id1">Create a summary table for the month of January</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#how-to-create-a-summary-analysis-for-multiple-month">How to create a summary analysis for multiple month</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#yet-another-set-of-examples-scripts-copied-from-somewhere">Yet another set of Examples Scripts copied from somewhere</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">REST: I FOUND THIS IN SOME OTHER FILE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#eucalyptus-2-0-data-integration">Eucalyptus 2.0 Data Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="todo.html#todo">TODO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">UBMoD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#using-the-standalone-server">Using the Standalone server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#browsing-the-contents">Browsing the contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+</ul>
+</ul>
+</li>
+            <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">UBMoD</a></li>
+</ul>
+</ul>
+</li>
           
           
             
+  <li><a href="todo.html"
+         title="previous chapter">&laquo; REST: I FOUND THIS IN SOME OTHER FILE</a></li>
+  <li><a href="lighttpd.html"
+         title="next chapter">Stand Allone Web Server &raquo;</a></li>
           
-          
-            <li>
-  <a href="_sources/ubmod.txt"
-         rel="nofollow">Source</a></li>
           
         </ul>
+
         
           
-<form class="navbar-search pull-right hidden-phone" style="margin-bottom:-3px;" action="search.html" method="get">
+<form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <input type="hidden" name="check_keywords" value="yes" />
   <input type="hidden" name="area" value="default" />
@@ -85,48 +170,29 @@
     </div>
   </div>
 
- <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-  <script>
-  $(function() {
-    $( "#accordion" ).accordion();
-  });
-  </script>
-  <div class="body container-fluid">
-  <div class="row-fluid">
-    <div class="content span9">
-      
-      
+  
   <div class="section" id="ubmod">
 <h1>UBMoD<a class="headerlink" href="#ubmod" title="Permalink to this headline">¶</a></h1>
-<p>UBMoD (UB Metrics on Demand) is an open source tool for collecting and mining statistical data from cluster resource managers (such as TORQUE, OpenPBS, and SGE) commonly found in high-performance computing environments. Apart from FutureGrid Cloud Metric, UBMoD has been installed to measure resource utilization of FutureGrid HPC clusters managed by Indiana University, Bloomington. The available link is here <a class="reference external" href="http://ubmod.futuregrid.org/">http://ubmod.futuregrid.org/</a> . UBMoD has been developed by the Center for Computational Research at the University at Buffalo, SUNY and presents resource utilization including CPU cycles consumed, total jobs, average wait time, etc. for individual users, research groups, departments, and decanal units. The web-based user interface provides a dashboard for displaying resource consumption along with fine-grained control over the time period and resources displayed. The data warehouse can easily be customized to support new resource managers. The information presented in easy-to-understand charts and tables and provides system administrators, users, and directors of HPC centers with a rich set of metrics to better understand how their resources are being utilized. The current release, which was completely re-written in PHP, adds the ability to apply custom tags to users and jobs and to then filter all reports using those tags. This provides complete flexibility for organizing users into departments, projects, and groups. For example, users can be tagged as members of one or more projects and reports can be dynamically generated for those projects.</p>
-</div>
-<div class="section" id="ubmod-for-futuregrid-hpc">
-<h1>UBMoD for FutureGrid HPC*<a class="headerlink" href="#ubmod-for-futuregrid-hpc" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="http://ubmod.futuregrid.org/">http://ubmod.futuregrid.org/</a></p>
-<ul class="simple">
-<li>only for resources managed by IU</li>
-</ul>
+<p>UBMoD (UB Metrics on Demand) is an open source tool for collecting and mining statistical data from cluster resource managers (such as TORQUE, OpenPBS, and SGE) commonly found in high-performance computing environments. Apart from FutureGrid Cloud Metric, UBMoD has been installed to measure resource utilization of FutureGrid HPC clusters managed by Indiana University, Bloomington <a class="reference internal" href="#r1">[R1]</a>. UBMoD has been developed by the Center for Computational Research at the University at Buffalo, SUNY and presents resource utilization including CPU cycles consumed, total jobs, average wait time, etc. for individual users, research groups, departments, and decanal units. The web-based user interface provides a dashboard for displaying resource consumption along with fine-grained control over the time period and resources displayed. The data warehouse can easily be customized to support new resource managers. The information presented in easy-to-understand charts and tables and provides system administrators, users, and directors of HPC centers with a rich set of metrics to better understand how their resources are being utilized. The current release, which was completely re-written in PHP, adds the ability to apply custom tags to users and jobs and to then filter all reports using those tags. This provides complete flexibility for organizing users into departments, projects, and groups. For example, users can be tagged as members of one or more projects and reports can be dynamically generated for those projects.</p>
+<table class="docutils citation" frame="void" id="r1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[R1]</a></td><td>UBMoD <a class="reference external" href="http://ubmod.futuregrid.org/">http://ubmod.futuregrid.org/</a></td></tr>
+</tbody>
+</table>
 </div>
 
 
-    </div>
-      <div class="page-toc page-sidebar span3 visible-desktop">
-        <div class="well"><ul>
-<li><a class="reference internal" href="#">UBMoD</a></li>
-<li><a class="reference internal" href="#ubmod-for-futuregrid-hpc">UBMoD for FutureGrid HPC*</a></li>
-</ul>
-</div>
-      </div>
-  </div>
 </div>
 <footer class="footer">
   <div class="container">
     <p class="pull-right">
       <a href="#">Back to top</a>
+      
     </p>
     <p>
-        &copy; Created as part of FutureGrid 2012, Developed for FutureGrid by Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier Diaz<br/>
+        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, FUgang Wang.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
     </p>
   </div>
 </footer>

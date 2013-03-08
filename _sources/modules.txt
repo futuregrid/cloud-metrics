@@ -4,9 +4,6 @@ Modules
 .. automodule:: fgmetric.FGAnalyzer
     :members:
 
-.. automodule:: fgmetric.FGEucaGatherLogFiles
-    :members:
-
 .. automodule:: fgmetric.FGEucaMetricsDB
     :members:
 
@@ -14,9 +11,6 @@ Modules
     :members:
 
 .. automodule:: fgmetric.FGParser
-    :members:
-
-.. automodule:: fgmetric.FGTemplate
     :members:
 
 .. automodule:: fgmetric.FGUtility

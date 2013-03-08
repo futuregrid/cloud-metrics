@@ -1,12 +1,37 @@
 Quick Start
 ===========
 
+.. sidebar:: 
+   . 
+
+  .. contents:: Table of Contents
+     :depth: 3
+
+
+..
+
 Download 
 ---------------------------
 
-Download FG Cloud Metric from PyPI. You can achieve this with::
+The FG Cloud Metric is available from PyPI and can be easily installed with pip. We recommend that you use virtualenv to manage your local python instalations. As install tool we recommend pip.
 
         pip install futuregrid-cloud-metric
+
+Development version
+----------------------------------------------------------------------
+
+The development version is available from github at 
+
+* ... TODO: Hyungro
+
+YOu can download a tar.gz file from 
+
+* ... TODO: Hyungro
+
+Once you donloaded and uncompressed the file you will see a folder ``cloud-metric``. Cd in this folder and say::
+
+     python setup.py install
+
 
 Create A Log Backup of Eucalyptus
 ----------------------------------
@@ -17,10 +42,13 @@ eucalyptus generates a log file (named cc.log) which is a main
 resource provider for the tools, so creating log backup of eucalyptus
 is the most important start-up.
 
-        1. Log into the management node of eucalyptus with access to the log files
-        2. Create crontab::
-           #Hourly
-           0 * * * * fg-euca-gather-log-files -i <directory of log files> -o <directory of backup>
+1. Log into the management node of eucalyptus with access to the log files
+
+2. Create crontab::
+
+      #Hourly
+      0 * * * * fg-euca-gather-log-files -i <directory of log files> -o <directory of backup>
+
 
 Parse the Log Backup 
 -----------------------------------
@@ -28,11 +56,10 @@ Parse the Log Backup
 Once we collected log backup by ``fg-euca-gather-log-files``, we need to
 parse and store log files into database. MySQL configuration should be
 set by ``.futuregrid.cfg`` such as hostname, id, password, and port
-number.
-
- ::
+number::
 
         fg-parser -i <directory of the backup>
+
 
 Generate Results
 -------------------
@@ -102,3 +129,7 @@ A live example of the data is available at
 
 *  `http://portal.futuregrid.org/doc/metric/results.html <http://portal.futuregrid.org/doc/metric/results.html>`_
 
+OpenStack
+======================================================================
+
+TODO: Hyungro

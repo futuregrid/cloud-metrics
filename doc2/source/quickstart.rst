@@ -13,7 +13,9 @@ Quick Start
 Download 
 ---------------------------
 
-The FG Cloud Metric is available from PyPI and can be easily installed with pip. We recommend that you use virtualenv to manage your local python instalations. As install tool we recommend pip.
+The FG Cloud Metric is available from PyPI and can be easily installed
+with pip. We recommend that you use virtualenv to manage your local
+python instalations. As install tool we recommend pip.
 
         pip install futuregrid-cloud-metric
 
@@ -28,7 +30,8 @@ YOu can download a tar.gz file from
 
 * ... TODO: Hyungro
 
-Once you donloaded and uncompressed the file you will see a folder ``cloud-metric``. Cd in this folder and say::
+Once you donloaded and uncompressed the file you will see a folder
+``cloud-metric``. Cd in this folder and say::
 
      python setup.py install
 

@@ -6,7 +6,6 @@ Welcome to Cloud Metrics's documentation!
     .. toctree::
        :maxdepth: 2
 
-       installation2
        installation
        details
        examples
@@ -15,7 +14,7 @@ Welcome to Cloud Metrics's documentation!
        ubmod
        lighttpd
        modules
-
+       todo
 
 .. warning:: TODO Hyungro, please include nice image here
 
@@ -76,50 +75,25 @@ The contribution impact is recorded at
 The original database integration was contributed by Fugang Wang and
 was not tracked.
 
-Support
-=======
+If you like to join the development efforts, please e-mail us. We can
+than discuss how best you can contribute. You may have enhanced our
+code already or used it in your system. If so, please let us know.
 
 If you run into problems when using the cloud metric framework, please use our 
 help form at `https://portal.futuregrid.org/help <https://portal.futuregrid.org/help>`_.
 
 
-Joining the Development Team
-----------------------------
-
-If you like to join the development efforts, please e-mail us. We can
-than discuss how best you can contribute. You may have enhanced our
-code already or used it in your system. If so, please let us know.
-
-Related Activities
+Production Deployment
 --------------------
 
-Inca
-      Inca does monitoring at specific time intervals. The information
-      about clouds on FG is available at
-      https://portal.futuregrid.org/monitoring/cloud
-
-
-Nimbus
-    Nimbus provides their own metric framework. For FG you can see it
-    at http://inca.futuregrid.org/nimbus-stats/.
-    This front page is not very pretty, but lists in its pu data the
-    following metrics for each machine:
-
-     * requests made by user
-     * minutes used by user
-
-     * requests made by week
-     * minutes used by user
-
-     In the ussgae data we find for the week of the year the following
-     information for each machine
-
-     * minutes used by week
-
-
-
-
-
+`Cloud Metrics <https://portal.futuregrid.org/metrics>`_ is our main
+monitoring system for clouds on FuturegGrid. In addition we also
+deployed other monitoring systems such as `Inca <https://portal.futuregrid.org/monitoring/cloud>`_ which does
+monitoring at specific time intervals, and `Nimbus
+<http://inca.futuregrid.org/nimbus-stats/>`_ which offers a less
+sophisticated and less comprehensive set of monitoring tools than our
+framework provides. However we integrate the data from Nimbus in our
+framework
 
 
 ..

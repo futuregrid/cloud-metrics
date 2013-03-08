@@ -1,5 +1,6 @@
+**********************************************************************
 Administrator Guide
-======================
+**********************************************************************
 
 .. sidebar:: 
    . 
@@ -10,14 +11,17 @@ Administrator Guide
 
 ..
 
+Installing the Code
+======================================================================
+
 Prerequisites
--------------
+----------------------------------------------------------------------
 
 We assume you have a valid python version (2.7.2 or higher) and all
 the needed libraries on the system where you run the code.
 
 Production Version
----------------------------
+----------------------------------------------------------------------
 
 The FG Cloud Metric is available from PyPI and can be easily installed
 with pip. We recommend that you use virtualenv to manage your local
@@ -51,14 +55,14 @@ Additional packages for sphinx
 
 
 Setting Up a Database
-==============
+======================================================================
 
 .. warning:: TODO Hyungro, where is this documented?
 
 `mysql community server <http://dev.mysql.com/downloads/mysql/>`_
 
 Getting Data
-========================
+----------------------------------------------------------------------
 
 For cloud-metric to work, you naturally need some data to ingest into
 it. Cloudmetric can at this time uses mostly IaaS log files as input,
@@ -70,15 +74,42 @@ Eucalyptus
 ----------------------------------------------------------------------
 
 Log Frequency
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. warning:: TODO 
    Hyungro, describe how to se the log frequency, point
    to manual if needed, list concrete parameter and filename where
    parameters is to be set. Work with Allan on that.
 
+HERE IS AN OLD INCOMPLETE TEXT I FOUND, THERE IS NOW SOME REDUNDANT
+INFORMATION HERE WITH OTHER PORTIONS:
+
+Eucalyptus provides a substantial set of log information. The
+information is stored in the eucalyptus log directory.  Typically it
+is configured by the system administrator with log rotation. This
+naturally would mean that the information is lost after a time period
+specified by the log rotation configuration. There are two mechanisms
+of avoiding this. The first method is to change the eucalyptus
+configuration files in order to disable log rotation. However this has
+the disadvantage that the directories may fill up and eucalyptus runs
+out of space.  How to disable Eucalyptus log rotation is discussed in
+the manaula at ... .  However we decided to go another route, buy
+copying the Eucalyptus log files after a particular period of time and
+place them onto our analysis server and also a backup server. To set
+this mechanism up, a Eucalyptus system administrator simply can
+install our tools in a predefined directory and call a command that
+copies the log files. Ideally This is integrated into a cron script so
+that the process is done on regular basis.
+
+To switch on eucalyptus in debug mode 'EUCADEBUG'  you will have to do the
+following
+
+    TODO Hyungro
+
+
 Create A Log Backup
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 This section explains how to make a log backup of eucalyptus using our
 tools.  The Eucalyptus Cluster Controller (CC) generates a log file
@@ -105,9 +136,13 @@ Note that in our example the backup directory could be a remote location.
       #Hourly
       0 * * * * fg-euca-gather-log-files -i <directory of log files> -o <directory of backup>
 
+A more detailed description is provided as part of the
+`fg-euca-gather-log-files <./man/fg-euca-gather-log-files.html>`_
+manual page.
+
 
 Parse the Log Backup 
------------------------------------
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Once we collected log files into the backup directory via the
 `fg-euca-gather-log-files`` command, we need to parse them into a
@@ -135,9 +170,31 @@ into existing data::
 
         fg-parser -i <directory of the backup>
 
+OpenStack
+----------------------------------------------------------------------
+
+TODO: Hyungro
+
+In ``~/.futuregrid/futuregrid.cfg`` please add::
+
+    [NovaDB]
+    host=<your openstack database host - mysql>
+    port=<port number>
+    user=<username>
+    passwd=<password>
+    novadb=<nova database name which includes instances table>
+    keystonedb=<nova keystone database name which includes user table> 
+
+
+
+Nimbus
+----------------------------------------------------------------------
+
+TODO: Hyungro
+
 
 Generate Results
--------------------
+======================================================================
 
 Now you can use the convenient fg-metric shell to create results. The
 reason why we have developed a shell is to allow us to issue
@@ -169,27 +226,25 @@ or with file flag::
 
         fg-metric -f examples/example2.txt
 
-OpenStack
+Commands
 ======================================================================
 
-TODO: Hyungro
+`fg-cleanup-db <./man/fg-cleanup-db.html>`_ 
+     erases the content of the database
 
-In ``~/.futuregrid/futuregrid.cfg`` please add::
-
-    [NovaDB]
-    host=<your openstack database host - mysql>
-    port=<port number>
-    user=<username>
-    passwd=<password>
-    novadb=<nova database name which includes instances table>
-    keystonedb=<nova keystone database name which includes user table> 
+`fg-parser <./man/fg-parser.html>`_     
+     parses eucalyptus log entries and includes them into the database
 
 
+`fg-euca-gather-log-files <./man/fg-euca-gather-log-files.html>`_ 
+     gathers all eucalyptus log files into a single directory from the
+     eucalyptus log file directory. This script can be called from
+     cron repeatedly in order to avoid that log data is lost by using
+     log file rotation in eucalyptus.
 
-Nimbus
-======================================================================
+`fg-metric <./man/fg-metric.html>`_
+     a shell to interact with the metric database. 
 
-TODO: Hyungro
 
 
 Create Production Web pages using Sphinx

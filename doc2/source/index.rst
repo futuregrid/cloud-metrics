@@ -1,12 +1,13 @@
+**********************************************************************
 Welcome to Cloud Metrics's documentation!
-=========================================
+**********************************************************************
 
 .. sidebar:: Table of Contents
 
     .. toctree::
-       :maxdepth: 2
+       :maxdepth: 5
 
-       installation
+       instalation
        details
        examples
        rest
@@ -47,6 +48,20 @@ includes png, googlecharts, and cvs tables.  As part of our analysis
 we are also developing an interactive shell that can be used to query
 data directly from our database. Some simple example illustrate our
 usage of the shell. 
+
+Figure 1 provides an overview of the main components that
+are communication as part of the clout metric framework.
+
+Together thes components provide the following functionality: (a) various clouds produce
+many log files, (b) the log files will be moved to a backup directory,
+(c) the log files that have been recently moved will be inspected and
+their contents will be added to the database, (d) the database is
+queried by a fg-metric command which is a simple shell that allows to
+quey for some very elementary iformation. It also allows to generate
+graphics for this information and place them in a web server (e) a
+sphinx portal framework - no login required (f) a flask portal
+framework - login required.
+
 
 .. 
    We are also collaborating with the TAS project that developd
@@ -93,9 +108,27 @@ monitoring at specific time intervals, and `Nimbus
 <http://inca.futuregrid.org/nimbus-stats/>`_ which offers a less
 sophisticated and less comprehensive set of monitoring tools than our
 framework provides. However we integrate the data from Nimbus in our
-framework
+framework.
 
 
+.. blockdiag::
+
+   blockdiag {
+     default_shape = roundedbox
+      "Log Cloud A" -> "Backup";
+      "Log Cloud B" -> "Backup";
+      "          ...      " -> "Backup";
+      "Log Cloud N" -> "Backup";
+      "Backup" -> "Database";
+      "Database" -> "Shell";
+      "Database" -> "Sphinx Portal";
+      "Database" -> "Flask Portal";
+      "Sphinx Portal" -> "Users (A)";
+      "Flask Portal" -> "Users (B)";
+      "Shell" -> "Shell User";
+   }
+
+**Figure 1:** cloud metrics components. 
 ..
     Indices and tables
     ==================

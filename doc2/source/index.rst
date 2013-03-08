@@ -45,8 +45,8 @@ Our gols include to enable the following capabilities
    over the next year to accomplish this goal.
 
 
-Contributors
-------------
+Authors in Alphabetical Order
+--------------------------------------
 
 * Lee, Hyungro (lee212@indiana.edu)   
 * von Laszewski, Gregor (laszewski@gmail.com)

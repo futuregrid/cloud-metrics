@@ -1,14 +1,23 @@
 """FutureGrid: Cloud Metrics
 
 This project is the basis for providing several metrics as part of the
-usage analysis of multiple cloud environments.  At this time
-Eucalyptus is supported.
+usage analysis of multiple cloud environments. 
 """
 
 from setuptools import setup, find_packages
 import sys, os
 
+doclines = __doc__.split("\n")
+
+######################################################################
+# VERSION
+######################################################################
+
 version = open("VERSION.txt").read()
+
+######################################################################
+# CLASSIFIER
+######################################################################
 
 classifiers = """\
 Intended Audience :: Developers
@@ -28,6 +37,10 @@ Topic :: System :: Clustering
 Topic :: System :: Distributed Computing
 """
 
+######################################################################
+# VERSION CHECK
+######################################################################
+
 if sys.version_info < (2, 7):
     _setup = setup
     def setup(**kwargs):
@@ -35,9 +48,34 @@ if sys.version_info < (2, 7):
             del kwargs["classifiers"]
         _setup(**kwargs)
 
-doclines = __doc__.split("\n")
-
 #DISTUTILS_DEBUG=1
+
+######################################################################
+# REQUIREMENTS
+######################################################################
+
+requires = [
+    'sphinxcontrib-issuetracker',
+    'sphinxcontrib-googlechart',
+    'setuptools',
+    'cmd2',
+    'pip',
+    'pygooglechart',
+    'mysql-python',
+    'pymongo'
+    ],
+
+install_requires = []
+
+for package in requires:
+    try:
+        import package
+    except ImportError:
+        install_requires.append(package)
+
+######################################################################
+# SETUP
+######################################################################
 
 setup(
     name='fgmetric',
@@ -56,9 +94,6 @@ setup(
     packages = find_packages(exclude=['ez_setup', 'examples', 'tests']),
     #include_package_data=True,
     #zip_safe=True,
-    #install_requires=[
-    #    # -*- Extra requirements: -*-
-    #],
     
     entry_points={
         'console_scripts':
@@ -73,17 +108,8 @@ setup(
              'fgmetric = fgmetric.FGMetricsCli:main',
              'fg-metric-cli = fgmetric.FGMetricsCli:main'
              ]},
-    
-    # install_requires = [
-    #     'sphinxcontrib-issuetracker',
-    #     'sphinxcontrib-googlechart',
-    #     'setuptools',
-    #     'cmd2',
-    #     'pip',
-    #     'pygooglechart',
-    #     'mysql-python',
-    #     'pymongo'
-    #     ],
+
+    install_reqquires=install_requires
     )
 
     # Removed console script

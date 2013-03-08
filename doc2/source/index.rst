@@ -6,16 +6,18 @@ Welcome to Cloud Metrics's documentation!
     .. toctree::
        :maxdepth: 2
 
-       about
        installation2
        installation
-       intro
        details
+       examples
+       rest
        metrics
        ubmod
        lighttpd
        modules
 
+
+.. warning:: TODO Hyungro, please include nice image here
 
 Cloud metrics is an open source code project that allows to analyze
 the log files for various cloud infrastructure tools. At this time, we
@@ -35,6 +37,17 @@ Our gols include to enable the following capabilities
 * Integration of HPC services
 * integration of Nimbus
 * integration of OpenNebula
+
+Relevant data will be uploaded into a
+database.  We have several convenient mechanisms to deal with the
+data.  We can create summary of the data and can export in a variety
+of formats. This summary is especially important for administrators
+who like to find out what is happening on their clouds, but also for
+users to see with who they compete for resources. The output format
+includes png, googlecharts, and cvs tables.  As part of our analysis
+we are also developing an interactive shell that can be used to query
+data directly from our database. Some simple example illustrate our
+usage of the shell. 
 
 .. 
    We are also collaborating with the TAS project that developd

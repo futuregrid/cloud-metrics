@@ -9,13 +9,14 @@ Welcome to Cloud Metrics's documentation!
 
        instalation
        details
+       metrics
        examples
        rest
-       metrics
+       todo
        ubmod
        lighttpd
        modules
-       todo
+
 
 .. warning:: TODO Hyungro, please include nice image here
 
@@ -43,14 +44,12 @@ database.  We have several convenient mechanisms to deal with the
 data.  We can create summary of the data and can export in a variety
 of formats. This summary is especially important for administrators
 who like to find out what is happening on their clouds, but also for
-users to see with who they compete for resources. The output format
-includes png, googlecharts, and cvs tables.  As part of our analysis
-we are also developing an interactive shell that can be used to query
-data directly from our database. Some simple example illustrate our
-usage of the shell. 
+users to see with who they compete for resources. 
 
-Figure 1 provides an overview of the main components that
-are communication as part of the clout metric framework.
+..
+  Figure 1 provides an overview of the main components that
+  are communication as part of the clout metric framework.
+
 
 Together thes components provide the following functionality: (a) various clouds produce
 many log files, (b) the log files will be moved to a backup directory,
@@ -60,7 +59,8 @@ queried by a fg-metric command which is a simple shell that allows to
 quey for some very elementary iformation. It also allows to generate
 graphics for this information and place them in a web server (e) a
 sphinx portal framework - no login required (f) a flask portal
-framework - login required.
+framework - login required, (g) the output format
+includes png, googlecharts, and cvs tables.  
 
 
 .. 
@@ -72,7 +72,7 @@ framework - login required.
    over the next year to accomplish this goal.
 
 
-Authors in Alphabetical Order
+Authors (Alphabetical)
 --------------------------------------
 
 * Lee, Hyungro (lee212@indiana.edu)   
@@ -110,30 +110,42 @@ sophisticated and less comprehensive set of monitoring tools than our
 framework provides. However we integrate the data from Nimbus in our
 framework.
 
-
-.. blockdiag::
-
-   blockdiag {
-     default_shape = roundedbox
-      "Log Cloud A" -> "Backup";
-      "Log Cloud B" -> "Backup";
-      "          ...      " -> "Backup";
-      "Log Cloud N" -> "Backup";
-      "Backup" -> "Database";
-      "Database" -> "Shell";
-      "Database" -> "Sphinx Portal";
-      "Database" -> "Flask Portal";
-      "Sphinx Portal" -> "Users (A)";
-      "Flask Portal" -> "Users (B)";
-      "Shell" -> "Shell User";
-   }
-
-**Figure 1:** cloud metrics components. 
 ..
-    Indices and tables
-    ==================
+     default_fontsize = 20;
 
-    * :ref:`genindex`
-    * :ref:`modindex`
-    * :ref:`search`
+.. 
+   WE DO NOT DISLAY IMAGE WE WILL USE PPT
+   blockdiag::
+
+      blockdiag {
+	 default_node_color = lightyellow;
+	 default_shape = roundedbox;
+	 user_a [shape = actor];
+	 user_b [shape = actor];
+	 user_c [shape = actor];
+	 Database [shape = flowchart.database];
+	 Backup [shape = flowchart.database];
+
+	  "Log OpenStack" -> Backup;
+	  "Log Eucalyptus" -> Backup; 
+	  "Log Nimbus" ->  Backup;
+	  Backup -> Database;
+
+	  Database <-> "Shell";
+	  Database <-> "Sphinx Portal";
+	  Database <-> "Flask Portal";
+
+	  "Sphinx Portal" -> user_a
+	  "Flask Portal" -> user_b
+	  "Shell" -> user_c
+       }
+
+    **Figure 1:** cloud metrics components. 
+    
+    
+..    Indices and tables
+..    ==================
+..    * :ref:`genindex`
+..    * :ref:`modindex`
+..    * :ref:`search`
 

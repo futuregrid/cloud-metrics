@@ -83,8 +83,9 @@ Total disks of VM instances used in a system
 ----------------------------------------------------------------------
 It is a total size of storage for VM instances requested by users in a system. It shows disk allocation by adding up the the size of a disk requested during a certain period.
 
-Examples
---------
+Examples that need to be integrated into the above sections
+------------------------------------------------------------------------------
+
 In this section, graphs, and commands for each metric will be viewed.
 
 

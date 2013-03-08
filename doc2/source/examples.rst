@@ -1,5 +1,7 @@
-Examples
+Yet more Examples 
 ============================
+
+that may have to be merged into metrics section
 
 .. sidebar:: 
    . 

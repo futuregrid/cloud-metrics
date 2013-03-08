@@ -95,7 +95,7 @@ two mechanisms of avoiding this. The first method is to change the
 eucalyptus configuration files in order to disable log
 rotation. However this has the disadvantage that the directories may
 fill up and eucalyptus runs out of space.  How to disable Eucalyptus
-log rotation is discussed in the manaula at ... .  However we decided
+log rotation is discussed in the manaul at ... .  However we decided
 to go another route, buy copying the Eucalyptus log files after a
 particular period of time and place them onto our analysis server and
 also a backup server. To set this mechanism up, a Eucalyptus system
@@ -103,13 +103,6 @@ administrator simply can install our tools in a predefined directory
 and call a command that copies the log files. Ideally This is
 integrated into a cron script so that the process is done on regular
 basis.
-
-Here is how you set this up::
-
-    pip install ....
-    
-This will install several commands in the bin directory. Make sure
-that it is in your path
 
 Now you can call the command::
 
@@ -143,37 +136,6 @@ the shell that will run the commands.
 
 Installation
 ======================================================================
-
-
-Installation from pypi 
-----------------------------------------------------------------------
-
-The programs are distributed in [pypi](xyz). It contains our current release version of the software. 
-
-
-Installation form the source in github
-----------------------------------------------------------------------
-
-If you are adventures, you can work with our newest code checked into
-github. To obtain this code, please conduct the following steps.  We
-assume you have root privileges to execute "make force"::
-
-    wget https://github.com/futuregrid/futuregrid-cloud-metrics/tarball/v2.1.1
-    tar xvzf v2.1.1
-    cd futuregrid-futuregrid-cloud-metrics-4635fc9
-    make force 
-    
-This will install the programs in::
-
-    /usr/bin/
-    
-What to do if I do not have root privilege
-----------------------------------------------------------------------
-
-If you do not have root privileges, you can also install the program
-via pythons virtualenv.
-
-Note: Please see our documentation on virtual cluster on how to do that ;-)
 
 
 Commands

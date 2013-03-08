@@ -7,8 +7,7 @@ Welcome to Cloud Metrics's documentation!
     .. toctree::
        :maxdepth: 5
 
-       instalation
-       details
+       manual
        metrics
        examples
        rest

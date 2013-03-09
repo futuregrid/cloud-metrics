@@ -229,21 +229,15 @@ or with file flag::
 Commands
 ======================================================================
 
-`fg-cleanup-db <./man/fg-cleanup-db.html>`_ 
-     erases the content of the database
+.. csv-table:: List of commands
+   :header: Command, Description
+   :widths: 15, 50
 
-`fg-parser <./man/fg-parser.html>`_     
-     parses eucalyptus log entries and includes them into the database
+   `fg-cleanup-db <./man/fg-cleanup-db.html>`_ ,     erases the content of the database
+   `fg-parser <./man/fg-parser.html>`_ ,    parses eucalyptus log entries and includes them into the database
+   `fg-euca-gather-log-files <./man/fg-euca-gather-log-files.html>`_ , gathers all eucalyptus log files into a single directory from the eucalyptus log file directory. This script can be called from cron repeatedly in order to avoid that log data is lost by using log file rotation in eucalyptus.
+     `fg-metric <./man/fg-metric.html>`_, a shell to interact with the metric database. 
 
-
-`fg-euca-gather-log-files <./man/fg-euca-gather-log-files.html>`_ 
-     gathers all eucalyptus log files into a single directory from the
-     eucalyptus log file directory. This script can be called from
-     cron repeatedly in order to avoid that log data is lost by using
-     log file rotation in eucalyptus.
-
-`fg-metric <./man/fg-metric.html>`_
-     a shell to interact with the metric database. 
 
 
 

@@ -42,17 +42,7 @@ it and install with::
 Additional packages for sphinx
 ------------------------------------------
 
-.. warning:: 
-   TODO Hyungro please document here all packages that can not be
-   installed via pip. I think there may be one or two. all others do
-   not need to be mentioned as we ave them in setup, which i modified.
-   if something is mssing add them to setup. HOpe setup works, if not, fix.
-   ideally i like the setup be also outo install these packages with
-   wget, hg, curl, or other tools, so that thinsg are done
-   automatically. if a tool is installed with hg, we need to test if
-   its on system and interrupt if it can not be found to ask users to
-   install hg, and other tools
-
+.. checked all included in setup.py
 
 Setting Up a Database
 ======================================================================

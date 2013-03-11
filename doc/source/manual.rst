@@ -169,7 +169,6 @@ A more detailed description is provided as part of the
 `fg-euca-gather-log-files <./man/fg-euca-gather-log-files.html>`_
 manual page.
 
-
 Parse the Log Backup 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -192,7 +191,6 @@ store it securely. The file includes the following::
    also you may want tothink about using a yaml file so we can
    integrate this better with cloudmesh
 
-
 To invoke the parsing all you have to do is specify
 the backup directory. The ``-i`` flag indicates we insert new data
 into existing data::
@@ -202,7 +200,8 @@ into existing data::
 OpenStack
 ----------------------------------------------------------------------
 
-TODO: Hyungro
+Please refer: `DB access information for FG CloudMetrics <https://docs.google.com/document/d/1aAyrEfZpRukqvsf3-HWdKKE5mMolh-EGtBVaZIgDUck/edit>`_
+(only accessible by collaborators) to obtain db access information.
 
 In ``~/.futuregrid/futuregrid.cfg`` please add::
 
@@ -214,12 +213,21 @@ In ``~/.futuregrid/futuregrid.cfg`` please add::
     novadb=<nova database name which includes instances table>
     keystonedb=<nova keystone database name which includes user table> 
 
-
-
 Nimbus
 ----------------------------------------------------------------------
 
-TODO: Hyungro
+Nimbus has sqlite3 database to keep the record on cloud usage. 
+**FG Cloud Metrics** provides a tool to convert service-oriented db into unified FG Cloud Metrics database.
+``fg-metric-converter -s YYYMMDD -e YYYMMDD -p $cloud_service (e.g.nimbus) -db $db_type (e.g. sqlite3, mysql) -i $file_path (sqlite3 is used a single file as a database) -n $nodename (e.g. hotel, india)``
+
+For example, FutureGrid collects nimbus data daily and uses cron to convert and store as following:
+
+::
+
+ 0 6 * * * fg-metric-converter -s `date +\%Y\%m\%d -d "1 day ago"` -e `date +\%Y\%m\%d -d "1 day ago"` -p nimbus -db sqlite3 -i /nimbus/hotel -n hotel
+ 0 6 * * * fg-metric-converter -s `date +\%Y\%m\%d -d "1 day ago"` -e `date +\%Y\%m\%d -d "1 day ago"` -p nimbus -db sqlite3 -i /nimbus/sierra -n sierra
+ 0 6 * * * fg-metric-converter -s `date +\%Y\%m\%d -d "1 day ago"` -e `date +\%Y\%m\%d -d "1 day ago"` -p nimbus -db sqlite3 -i /nimbus/foxtrot -n foxtrot
+ 0 6 * * * fg-metric-converter -s `date +\%Y\%m\%d -d "1 day ago"` -e `date +\%Y\%m\%d -d "1 day ago"` -p nimbus -db sqlite3 -i /nimbus/alamo -n alamo
 
 
 Generate Results

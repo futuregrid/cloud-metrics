@@ -47,10 +47,11 @@ it and install with::
 Setting Up a Database
 ======================================================================
 
-Access information for MySQL and mongodb setup needed to run FG CloudMetrics
-MySQL server installation is not required.
+|  DB access information for MySQL and mongodb needed to run FG CloudMetrics.
+|  MySQL server installation is not required.
 
 To obtain access information, `DB access information for FG CloudMetrics <https://docs.google.com/document/d/1aAyrEfZpRukqvsf3-HWdKKE5mMolh-EGtBVaZIgDUck/edit>`_
+(only accessible by collaborators)
 
 .. `mysql community server <http://dev.mysql.com/downloads/mysql/>`_
 
@@ -69,10 +70,43 @@ Eucalyptus
 Log Frequency
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-.. warning:: TODO 
-   Hyungro, describe how to se the log frequency, point
-   to manual if needed, list concrete parameter and filename where
-   parameters is to be set. Work with Allan on that.
+FG CloudMetrics is collecting accounting information from log files in
+a Eucalyptus management server. Two methods have been used: real-time and daily update.
+
+First, we need to specify which files that FG CloudMetrics is looking for. 
+
+::
+
+  cc.log
+
+Second, we need to understand what information it does have, for example:
+
+::
+
+  [Sun Jan  1 04:11:31 2012][032300][EUCADEBUG ] print_ccInstance(): refresh_instances():  instanceId=i-4791080F reservationId=r-3CC30810 emiId=emi-CD38100F kernelId=eki-78EF12D0 ramdiskId=eri-5BB61250 emiURL=http://149.165.146.130:8773/services/Walrus/jklingin/centos5-6.x86_64.manifest.xml kernelURL=http://149.165.146.130:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml ramdiskURL=http://149.165.146.130:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml state=Extant ts=1325364349 ownerId=abcde keyName=ssh-rsa sddd abc@eucalyptus ccnet={privateIp=10.128.3.0 publicIp=149.165.159.140 privateMac=D0:0D:47:91:08:0F vlan=14 networkIndex=5} ccvm={cores=1 mem=512 disk=5} ncHostIdx=6 serviceTag=http://i0:8775/axis2/services/EucalyptusNC userData= launchIndex=0 volumesSize=0 volumes={} groupNames={default }
+  
+Third, we parse and store the information in two ways: real-time, and daily update
+
+  * Real-time collector with 'tail -f' like logwatcher.py
+
+    ``python logwatcher.py | python fg-logparser -i -`` in management server.
+
+    This way allows us to collect accounting information instantly from logs.
+    
+    * logwatcher.py script observes cc.log files like a 'tail -f' command,
+      but it does not lose file control if the cc.log file is rotated to cc.log.1 or .*
+    * fg-logparser (FGParser.py) parses log messages and stores metric values into FG Cloud Metrics db.
+
+  * Daily update
+
+    cron runs fg-logparser daily to adjust possible missing messages from real-time collector.
+    ``0 4 * * * fg-logparser -s `date +\%Y\%m\%d -d "1 day ago"` -e `date +\%Y\%m\%d -d "1 day ago"` -i $backup_directory -n $nodename -z (zipped) -tz $timezone (e.g. PST)``
+
+    **This is based on backups of log files**
+
+     * ``fg-euca-gather-log-files (FGCollectFiles.py)`` makes backups by hourly checking log directory with cron
+
+       ``2 * * * * fg-euca-gather-log-files``
 
 HERE IS AN OLD INCOMPLETE TEXT I FOUND, THERE IS NOW SOME REDUNDANT
 INFORMATION HERE WITH OTHER PORTIONS:
@@ -97,12 +131,14 @@ that the process is done on regular basis.
 To switch on eucalyptus in debug mode 'EUCADEBUG'  you will have to do the
 following
 
-    TODO Hyungro
+::
 
+        change LOGLEVEL to DEBUG in eucalyptus.conf
+        LOGLEVEL="DEBUG"
+Reference: `eucalyptus.conf man page <http://manpages.ubuntu.com/manpages/lucid/man5/eucalyptus.conf.5.html>`_
 
 Create A Log Backup
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 This section explains how to make a log backup of eucalyptus using our
 tools.  The Eucalyptus Cluster Controller (CC) generates a log file

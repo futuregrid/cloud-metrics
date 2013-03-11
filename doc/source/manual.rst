@@ -234,19 +234,13 @@ consecutive commands as is typically needed in a production
 environment. Here we show an example on how to analyze and create
 reports for the year 2012::
 
-        $ fg-metric
-        fg-metric> analyze -Y 2012
-        fg-metric> createreport -d 2012 
-
+        $ fg-metric-beta
+        Welcome to FutureGrid Cloud Metrics!
+        fg-metric] set date 2012-01-01T00:00:00 2012-12-31T00:00:00
+        fg-metric] set metric runtime
+        fg-metric] analyze 
+        fg-metric] chart
 ..
-
-.. warning:: TODO
-    the command create report will be renamed to "create report" note
-    the space. It is also unintitive to have a -d option without
-    explanation while -Y is used in previous. I suggest to add
-    additional -Y option and say this will create automatically
-    directory with that year ....  Than you can point out that if you
-    like different directory name you can use -d option
 
 As our metric system can use scripts either via piper or named files,
 you can store more complex queries into a file and start the metric
@@ -270,9 +264,6 @@ Commands
    `fg-euca-gather-log-files <./man/fg-euca-gather-log-files.html>`_ , gathers all eucalyptus log files into a single directory from the eucalyptus log file directory. This script can be called from cron repeatedly in order to avoid that log data is lost by using log file rotation in eucalyptus.
      `fg-metric <./man/fg-metric.html>`_, a shell to interact with the metric database. 
 
-
-
-
 Create Production Web pages using Sphinx
 ======================================================================
 
@@ -281,11 +272,10 @@ Create Production Web pages using Sphinx
 
 We provide a simple producton service that uses sphinx to render the
 information associated with a cloud deployment. We have done this in
-order o provide a very simple framework that you can expand while not
+order to provide a very simple framework that you can expand while not
 needing to invest any time in learning a web framework. To do this you
 must use the development version of the cloud metric framework as
 discussed in section ??. 
-
 
 Next please execute:: 
 
@@ -300,9 +290,7 @@ If you met all the prerequisits, you will find the index file in::
    TODO Hyungro, I do not think that thsi at all works, you are not describing
    what you do with results
 
-
 ..
-
 
 live example of the data is available at
 
@@ -317,5 +305,6 @@ Create Production Web pages using Flask
 Create PDF reports
 ======================================================================
 
-.. warning::
-   TODO Hyungro
+This is a part of separated task which is at: `PDF Report generator <https://github.com/lee212/Report_eucalyptus_on_sierra>`_
+
+This will be merged into CloudMetrics with a better format.

@@ -1,20 +1,25 @@
-
-
 Metrics
 =======
 
 .. sidebar:: 
-   . 
+   Metrics 
 
   .. contents:: Table of Contents
      :depth: 3
 
-
-..
-
-
 There are currently eight different metrics to deliver system utilization, user activities and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as virtual machine (VM) instances, registered VM images, virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, you can find descriptions, instructions, and examples for the metrics.
 
+Usage
+-----
+
+::
+
+ $ fg-metric-beta
+ fg-metric] set nodename india
+ fg-metric] set platform openstack
+ fg-metric] set metric runtime
+ fg-metric] analyze
+ fg-metric] chart 
 
 Number of VM instances per user
 ----------------------------------------------------------------------
@@ -23,7 +28,6 @@ Within the framework we have a convenient way to obtain information
 about the **number of VM instances** per user. To obtain this
 information you can invoke the following commands within the
 ``fg-metric`` shell. In this example we generate a report .... bla bla ....:
-
 
 .. literalinclude:: _static/examples/example2-1.txt 
 

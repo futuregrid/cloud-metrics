@@ -11,7 +11,7 @@ Administrator Guide
 
 ..
 
-Installing the Code
+Installation
 ======================================================================
 
 Prerequisites
@@ -25,7 +25,7 @@ Production Version
 
 The FG Cloud Metric is available from PyPI and can be easily installed
 with pip. We recommend that you use virtualenv to manage your local
-python instalations. As install tool we recommend pip::
+python installation. We recommend to use pip::
 
         pip install futuregrid-cloud-metric
 
@@ -44,7 +44,7 @@ it and install with::
 
 .. checked all included in setup.py
 
-Setting Up a Database
+Database Configuration
 ======================================================================
 
 |  DB access information for MySQL and mongodb needed to run FG CloudMetrics.
@@ -55,14 +55,26 @@ To obtain access information, `DB access information for FG CloudMetrics <https:
 
 .. `mysql community server <http://dev.mysql.com/downloads/mysql/>`_
 
-Getting Data
+Obtaining Cloud Usage information
 ----------------------------------------------------------------------
 
 For cloud-metric to work, you naturally need some data to ingest into
-it. Cloudmetric can at this time uses mostly IaaS log files as input,
+it. Cloudmetric can at this time use mostly IaaS log files as input,
 but in future we will add additional information sources from other
 information providers. Currently we support Eucalyptus, OpenStack, as
 well as Nimbus.
+
+.. blockdiag::
+
+        blockdiag {
+        Eucalyptus -> 'Log analyzer' -> CloudMetrics
+        OpenStack -> 'MySQL' -> CloudMetrics
+        Nimbus -> 'sqlite3' -> CloudMetrics
+
+        MySQL [shape = flowchart.database];
+        sqlite3 [shape = flowchart.database];
+        CloudMetrics [shape = cloud];
+        }
 
 Eucalyptus
 ----------------------------------------------------------------------
@@ -307,4 +319,4 @@ Create PDF reports
 
 This is a part of separated task which is at: `PDF Report generator <https://github.com/lee212/Report_eucalyptus_on_sierra>`_
 
-This will be merged into CloudMetrics with a better format.
+This will be merged into CloudMetrics with a better format soon.

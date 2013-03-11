@@ -16,14 +16,13 @@ Welcome to Cloud Metrics's documentation!
        lighttpd
        modules
 
-
-       ::
-
-        set date 2012-10-01 2013-02-01
-        set metric runtime
-        set platform openstack
-        set nodename india
-        analyze
+::
+ 
+ set date 2012-10-01 2013-02-01
+ set metric runtime
+ set platform openstack
+ set nodename india
+ analyze
 
 Cloud metrics is an open source code project that allows to analyze
 the log files for various cloud infrastructure tools. At this time, we

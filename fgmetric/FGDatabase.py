@@ -37,13 +37,20 @@ class FGDatabase:
         config.read(self.get_config_file())
 
         try:
-            self.dbhost = config.get('EucaLogDB', 'host')
-            self.dbport = int(config.get('EucaLogDB', 'port'))
-            self.dbuser = config.get('EucaLogDB', 'user')
-            self.dbpasswd = config.get('EucaLogDB', 'passwd')
-            self.dbname = config.get('EucaLogDB', 'db')
+            self.dbhost = config.get('CloudMetricsDB', 'host')
+            self.dbport = int(config.get('CloudMetricsDB', 'port'))
+            self.dbuser = config.get('CloudMetricsDB', 'user')
+            self.dbpasswd = config.get('CloudMetricsDB', 'passwd')
+            self.dbname = config.get('CloudMetricsDB', 'db')
         except ConfigParser.NoSectionError:
-            raise
+            try:
+                self.dbhost = config.get('EucaLogDB', 'host')
+                self.dbport = int(config.get('EucaLogDB', 'port'))
+                self.dbuser = config.get('EucaLogDB', 'user')
+                self.dbpasswd = config.get('EucaLogDB', 'passwd')
+                self.dbname = config.get('EucaLogDB', 'db')
+            except ConfigParser.NoSectionError:
+                raise
 
     def set_conf(self, input_file):
 

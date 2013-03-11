@@ -179,17 +179,12 @@ configuration is stored in a file called ``~/.futuregrid/futuregrid.cfg`` and
 includes hostname, id, password, and port number, thus you need to
 store it securely. The file includes the following::
 
-    [EucaLogDB]
+    [CloudMetricsDB]
     host=<yourhostname>
     port=<portnumber>
     user=<username>
     passwd=<password>
     db=<dbname>
-
-.. warning:: TODO
-   it is illogical to have an entry EucaLogDB, why not "cloud-db",
-   also you may want tothink about using a yaml file so we can
-   integrate this better with cloudmesh
 
 To invoke the parsing all you have to do is specify
 the backup directory. The ``-i`` flag indicates we insert new data

@@ -181,7 +181,7 @@ A more detailed description is provided as part of the
 `fg-euca-gather-log-files <./man/fg-euca-gather-log-files.html>`_
 manual page.
 
-Parse the Log Backup 
+Parse A Log Backup 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Once we collected log files into the backup directory via the
@@ -236,8 +236,7 @@ For example, FutureGrid collects nimbus data daily and uses cron to convert and 
  0 6 * * * fg-metric-converter -s `date +\%Y\%m\%d -d "1 day ago"` -e `date +\%Y\%m\%d -d "1 day ago"` -p nimbus -db sqlite3 -i /nimbus/foxtrot -n foxtrot
  0 6 * * * fg-metric-converter -s `date +\%Y\%m\%d -d "1 day ago"` -e `date +\%Y\%m\%d -d "1 day ago"` -p nimbus -db sqlite3 -i /nimbus/alamo -n alamo
 
-
-Generate Results
+Usage
 ======================================================================
 
 Now you can use the convenient fg-metric shell to create results. The
@@ -254,7 +253,7 @@ reports for the year 2012::
         fg-metric] chart
 ..
 
-As our metric system can use scripts either via piper or named files,
+As our metric system can use scripts either via pipe or a file,
 you can store more complex queries into a file and start the metric
 framework with them::
 
@@ -265,7 +264,7 @@ or with file flag::
         fg-metric -f examples/example2.txt
 
 Commands
-======================================================================
+-----------
 
 .. csv-table:: List of commands
    :header: Command, Description
@@ -276,7 +275,7 @@ Commands
    `fg-euca-gather-log-files <./man/fg-euca-gather-log-files.html>`_ , gathers all eucalyptus log files into a single directory from the eucalyptus log file directory. This script can be called from cron repeatedly in order to avoid that log data is lost by using log file rotation in eucalyptus.
      `fg-metric <./man/fg-metric.html>`_, a shell to interact with the metric database. 
 
-Create Production Web pages using Sphinx
+Production Web Pages using Sphinx
 ======================================================================
 
 .. warning::
@@ -308,13 +307,13 @@ live example of the data is available at
 
 *   `http://portal.futuregrid.org/metrics/html/results.html <http://portal.futuregrid.org/metrics/html/results.html>`_
 
-Create Production Web pages using Flask
+Production Web Pages using Flask
 ======================================================================
 
 .. warning::
    TODO Hyungro
 
-Create PDF reports
+PDF Reports
 ======================================================================
 
 This is a part of separated task which is at: `PDF Report generator <https://github.com/lee212/Report_eucalyptus_on_sierra>`_

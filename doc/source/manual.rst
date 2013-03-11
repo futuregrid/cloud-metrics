@@ -39,25 +39,28 @@ it and install with::
   cd cloud-metrics
   python setup.py install
 
-Additional packages for sphinx
-------------------------------------------
+.. Additional packages for sphinx
+.. ------------------------------------------
 
 .. checked all included in setup.py
 
 Setting Up a Database
 ======================================================================
 
-.. warning:: TODO Hyungro, where is this documented?
+Access information for MySQL and mongodb setup needed to run FG CloudMetrics
+MySQL server installation is not required.
 
-`mysql community server <http://dev.mysql.com/downloads/mysql/>`_
+To obtain access information, `DB access information for FG CloudMetrics <https://docs.google.com/document/d/1aAyrEfZpRukqvsf3-HWdKKE5mMolh-EGtBVaZIgDUck/edit>`_
+
+.. `mysql community server <http://dev.mysql.com/downloads/mysql/>`_
 
 Getting Data
 ----------------------------------------------------------------------
 
 For cloud-metric to work, you naturally need some data to ingest into
 it. Cloudmetric can at this time uses mostly IaaS log files as input,
-but in future we will add additional information sources form other
-information providors. Currently we support Eucalyptus, OpenStack, as
+but in future we will add additional information sources from other
+information providers. Currently we support Eucalyptus, OpenStack, as
 well as Nimbus.
 
 Eucalyptus

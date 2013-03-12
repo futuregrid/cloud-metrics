@@ -72,6 +72,32 @@ Before to perform analysis, several settings can be specified to narrow results.
   fg-metric] set date help
   Usage: set date YYYY-MM-DDTHH:MM:SS. (e.g. set date 2012-01-01T00:00:00 2012-12-31T23:59:59)
 
+Results
+-----------------------------------------------------------------
+Cloud Metrics supports several output options such as stdout, JSON, csv, jpg, png, html.
+
+Chart library
+^^^^^^^^^^^^^
+``chart`` is a command to create a chart html file with different chart types (e.g. bar, line, column, etc.).
+To help understanding of data, selecting a type of charts should be made carefully to represent data properly.
+
+Let's say, the data is:
+
+* historical representation of quantity, then the type of chart should be => a line chart with x-axis as date and y-axis as quantity.
+  - daily metrics 
+* just quantities of different groups, then the type of chart should be => a pie chart
+  - comparison across cloud services, locations, projects.
+
+::
+
+  fg-metric] ...(skipped)...
+  fg-metric] analyze
+  fg-metric] chart -t pie-basic --directory $directory_name
+
+CSV file
+^^^^^^^^
+``csv``
+
 Number of VM instances per user
 ----------------------------------------------------------------------
 

@@ -156,7 +156,7 @@ Daily active user count
 
 This example shows you how to represent data in a certain time period.
 ``set period daily`` provides statistics grouped by date. For example, if the date settings cover 30 days, the statistics will have 30 record sets instead of a single record.
-Chart type can be selected by ``chart -t`` option. ``line-time-series`` is one of the types in highcharts. For more detail of types, see here: `Highchart Demo <http://www.highcharts.com/demo/>`_ .
+Chart type can be selected by ``chart -t`` option. ``line-time-series`` is one of the types in highcharts. For more details of the types, see here: `Highchart Demo <http://www.highcharts.com/demo/>`_.
 
 ::
 
@@ -169,15 +169,41 @@ Chart type can be selected by ``chart -t`` option. ``line-time-series`` is one o
  analyze
  chart -t line-time-series --directory %(output_directory)s
 
-.. figure:: _static/examples/daily_active_user_count.png
-    :scale: 70 %
-    :alt: Daily active user count
+Result html page
 
-   The count of active users
+.. figure:: _static/examples/daily_active_user_count.png
+   :scale: 70 %
+   :alt: Daily active user count
+
+   Figure 1. The count of active users
 
    This time series chart represents daily active user counts for cloud services and shows historical changes during the period.
 
+VMs count by Project
+^^^^^^^^^^^^^^^^^^^^^
 
+This example represents data in percentages for different project groups. In this example, we use ``groupby`` instead of ``period`` in the previous example.
+
+::
+
+ clear
+ set nodename %(hostname)s
+ set platform %(service)s
+ set date %(from_dateT)s %(to_dateT)s
+ set groupby project
+ set metric count
+ analyze
+ chart -t pie-basic --directory %(output_directory)s
+
+Result html page
+
+.. figure:: _static/examples/vms_count_by_project.png
+   :scale: 70 %
+   :alt: VMs count by Project
+
+   Figure 2. VMs count by Projec
+
+   This pie chart illustrates propotion of Launched VM instances by Project groups. To represent certain information, the table follows.
 
 Number of VM instances per user
 ----------------------------------------------------------------------

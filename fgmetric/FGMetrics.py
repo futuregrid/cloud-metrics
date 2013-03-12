@@ -114,6 +114,20 @@ class FGMetrics(Cmd):
         print msg
 
     def do_analyze(self, line):
+        """Run analysis for cloud usage data. 
+        
+        Typically, set platform ***, set nodename ***, set date ***  *** are required prior to this command
+        Once analysis is finised, 'chart' command is usually following to generate results in a chart html file."""
+        """
+
+            Args:
+                line(str): input line
+            Returns:
+                n/a
+            Raises:
+                n/a
+
+        """
       
         self.search.init_stats()
         self.show_filter_setting()
@@ -158,12 +172,25 @@ class FGMetrics(Cmd):
         self.chart.display()
 
     def do_refresh(self, line, opts=None):
+        """Refresh component (same as 'load')
+
+        Usage example:
+        fg-metric] refresh db"""
         self.do_load(line, opts)
 
     def do_load(self, line, opts=None):
+        """Load component
+
+        Usage example:
+        fg-metric] load db"""
         self.call_attr(line, "load_")
 
     def do_showconf(self, line, opts=None):
+        """Display current settings
+
+        Usage example:
+        fg-metric] showconf dbinfo
+        fg-metric] showconf filter_setting"""
         self.call_attr(line, "show_")
 
     def do_show (self, line, opts=None):
@@ -171,9 +198,14 @@ class FGMetrics(Cmd):
         self.call_attr(line, "show_", "self.search")
 
     def do_get(self, line, opts=None):
+        """Show current settings
+
+        Usage example:
+        fg-metric] get filter"""
         self.call_attr(line, "get_", "self.search")
 
     def do_setconf(self, line, opts=None):
+        """Set a configuration"""
         self.call_attr(line, "set_")
 
     def do_set(self, line, opts=None):
@@ -206,6 +238,7 @@ class FGMetrics(Cmd):
             pass
 
     def do_clear(self, line):
+        """Clear settings for analysis. (e.g. nodename, platform, date will be cleared)"""
         self.init_objects()
 
     def preloop(self):

@@ -1,20 +1,135 @@
-
-
-Metrics
-=======
+Metrics on CLI
+==============
 
 .. sidebar:: 
-   . 
+   Metrics 
 
   .. contents:: Table of Contents
      :depth: 3
 
+Cloud Metrics supports Command Line Interface (CLI), interactive shells for cloud usage data analysis. It is designed to read a user's input, calculate metrics, and then provide the results in an appropriate format such as a standard output (STDOUT), JSON, JPG, PNG, and html with javascript charting libraries.
 
-..
+.. There are currently eight different metrics to deliver system utilization, user activities and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as virtual machine (VM) instances, registered VM images, virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, you can find descriptions, instructions, and examples for the metrics.
+
+Usage
+-----
+
+::
+
+ $ fg-metric-beta
+ fg-metric] set nodename india
+ fg-metric] set platform openstack
+ fg-metric] set metric runtime
+ fg-metric] analyze
+ fg-metric] chart 
+
+Settings
+---------
+
+Before to perform analysis, several settings can be specified to narrow results. ``set`` is a main command for settings and it comes with two parameters: ``key`` and ``value`` at least.
+
+``fg-metric] set $key $value[ $value2 ...]``
+
+1. Set date
+  Analyze data between these two dates.
+
+::
+ 
+  fg-metric] set date 2012-01-01T00:00:00 2012-12-31T23:59:59
+
+2. Set metric
+  Specify which metric item will be calculated.
+
+::
+
+  fg-metric] set metric runtime
+
+  (multiple metrics)
+  fg-metric] set metric runtime count
+
+3. Set hostname
+  Specify which machine will be included.
+
+::
+
+  fg-metric] set hostname india
+
+4. Set cloud service
+  Specify which cloud service will be included.
+
+::
+
+  fg-metric] set platform openstack
 
 
-There are currently eight different metrics to deliver system utilization, user activities and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as virtual machine (VM) instances, registered VM images, virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, you can find descriptions, instructions, and examples for the metrics.
+``help`` command is useful to understand how to use them.
 
+* Example 1. help
+
+::
+
+  fg-metric] help
+
+  Documented commands (type help <topic>):
+  ========================================
+  _load           clear           edit     l     pause    run      shell
+  _relative_load  cmdenvironment  get      li    py       save     shortcuts
+  analyze         csv             hi       list  r        set      show
+  chart           ed              history  load  refresh  setconf  showconf
+
+  Undocumented commands:
+  ======================
+  EOF  eof  exit  help  q  quit
+
+* Example 2. help for a command
+
+::
+
+  fg-metric] help set
+  Set a function with parameter(s)
+
+  fg-metric] set help
+
+  Possible commands
+  =================
+  set date $from $to
+  set metric $name
+  set platform $name
+  set nodename $name
+
+* Example 3. help for a command parameter
+
+::
+
+  fg-metric] set date help
+  Usage: set date YYYY-MM-DDTHH:MM:SS. (e.g. set date 2012-01-01T00:00:00 2012-12-31T23:59:59)
+
+Results
+-----------------------------------------------------------------
+Cloud Metrics supports several output options such as stdout, JSON, csv, jpg, png, html.
+
+Chart library
+^^^^^^^^^^^^^
+``chart`` is a command to create a chart html file with different chart types (e.g. bar, line, column, etc.).
+To help understanding of data, a type of charts should be selected carefully. Relationships between data and chart type refer to proper representation.
+
+Let's say, the data is:
+
+* historical representation of quantity, then the type of chart should be => a line chart with x-axis as date and y-axis as quantity.
+  - daily metrics 
+* just quantities of different groups, then the type of chart should be => a pie chart
+  - comparison across cloud services, locations, projects.
+
+Example usage of ``chart`` command
+::
+
+  fg-metric] ...(skipped)...
+  fg-metric] analyze
+  fg-metric] chart -t pie-basic --directory $directory_name
+
+CSV file
+^^^^^^^^
+``csv``
 
 Number of VM instances per user
 ----------------------------------------------------------------------
@@ -23,7 +138,6 @@ Within the framework we have a convenient way to obtain information
 about the **number of VM instances** per user. To obtain this
 information you can invoke the following commands within the
 ``fg-metric`` shell. In this example we generate a report .... bla bla ....:
-
 
 .. literalinclude:: _static/examples/example2-1.txt 
 

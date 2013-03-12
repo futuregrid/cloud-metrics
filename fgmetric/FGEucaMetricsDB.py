@@ -33,16 +33,26 @@ class FGEucaMetricsDB(object):
 
         try:
             #db parameters
-            dbhost = config.get('EucaLogDB', 'host')
-            dbport = int(config.get('EucaLogDB', 'port'))
-            dbuser = config.get('EucaLogDB', 'user')
-            dbpasswd = config.get('EucaLogDB', 'passwd')
-            dbname = config.get('EucaLogDB', 'db')
-            euca_hostname = config.get('EucaLogDB', 'euca_hostname')
-            euca_version = config.get('EucaLogDB', 'euca_version')
+            dbhost = config.get('CloudMetricsDB', 'host')
+            dbport = int(config.get('CloudMetricsDB', 'port'))
+            dbuser = config.get('CloudMetricsDB', 'user')
+            dbpasswd = config.get('CloudMetricsDB', 'passwd')
+            dbname = config.get('CloudMetricsDB', 'db')
+            euca_hostname = config.get('CloudMetricsDB', 'euca_hostname')
+            euca_version = config.get('CloudMetricsDB', 'euca_version')
         except ConfigParser.NoSectionError:
-            print cfgfile + " does not exist"
-            sys.exit()
+            try:
+                #db parameters
+                dbhost = config.get('EucaLogDB', 'host')
+                dbport = int(config.get('EucaLogDB', 'port'))
+                dbuser = config.get('EucaLogDB', 'user')
+                dbpasswd = config.get('EucaLogDB', 'passwd')
+                dbname = config.get('EucaLogDB', 'db')
+                euca_hostname = config.get('EucaLogDB', 'euca_hostname')
+                euca_version = config.get('EucaLogDB', 'euca_version')
+            except ConfigParser.NoSectionError:
+                print cfgfile + " does not exist"
+                sys.exit()
 
         #set parameters
         self.euca_version = euca_version

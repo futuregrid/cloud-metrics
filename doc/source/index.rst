@@ -10,6 +10,7 @@ Welcome to Cloud Metrics's documentation!
        manual
        metrics
        examples
+       developer
        rest
        todo
        ubmod

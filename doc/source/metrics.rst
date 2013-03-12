@@ -30,6 +30,38 @@ Before to perform analysis, several settings can be specified to narrow results.
 
 ``fg-metric] set $key $value[ $value2 ...]``
 
+1. Set date
+  Analyze data between these two dates.
+
+::
+ 
+  fg-metric] set date 2012-01-01T00:00:00 2012-12-31T23:59:59
+
+2. Set metric
+  Specify which metric item will be calculated.
+
+::
+
+  fg-metric] set metric runtime
+
+  (multiple metrics)
+  fg-metric] set metric runtime count
+
+3. Set hostname
+  Specify which machine will be included.
+
+::
+
+  fg-metric] set hostname india
+
+4. Set cloud service
+  Specify which cloud service will be included.
+
+::
+
+  fg-metric] set platform openstack
+
+
 ``help`` command is useful to understand how to use them.
 
 * Example 1. help
@@ -79,7 +111,7 @@ Cloud Metrics supports several output options such as stdout, JSON, csv, jpg, pn
 Chart library
 ^^^^^^^^^^^^^
 ``chart`` is a command to create a chart html file with different chart types (e.g. bar, line, column, etc.).
-To help understanding of data, selecting a type of charts should be made carefully to represent data properly.
+To help understanding of data, a type of charts should be selected carefully. Relationships between data and chart type refer to proper representation.
 
 Let's say, the data is:
 
@@ -88,6 +120,7 @@ Let's say, the data is:
 * just quantities of different groups, then the type of chart should be => a pie chart
   - comparison across cloud services, locations, projects.
 
+Example usage of ``chart`` command
 ::
 
   fg-metric] ...(skipped)...

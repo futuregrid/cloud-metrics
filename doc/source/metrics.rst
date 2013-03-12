@@ -102,7 +102,8 @@ Before to perform analysis, several settings can be specified to narrow results.
 ::
 
   fg-metric] set date help
-  Usage: set date YYYY-MM-DDTHH:MM:SS. (e.g. set date 2012-01-01T00:00:00 2012-12-31T23:59:59)
+  Usage: set date from_date(YYYY-MM-DDTHH:MM:SS) to_date(YYYY-MM-DDTHH:MM:SS). 
+  (e.g. set date 2012-01-01T00:00:00 2012-12-31T23:59:59)
 
 Results
 -----------------------------------------------------------------
@@ -121,6 +122,7 @@ Let's say, the data is:
   - comparison across cloud services, locations, projects.
 
 Example usage of ``chart`` command
+
 ::
 
   fg-metric] ...(skipped)...
@@ -129,7 +131,27 @@ Example usage of ``chart`` command
 
 CSV file
 ^^^^^^^^
-``csv``
+``csv`` ia a command to export statistics as a comma-separated values (csv) file.
+
+Example usage of ``csv`` command
+
+::
+
+  fg-metric] ...(skipped)...
+  fg-metric] analyze
+  fg-metric] csv
+  2012-01-01T00:00:00-2013-01-01T00:00:00-runtime-openstack-india-dailyAll.csv is created
+
+  (or)
+  fg-metric] csv -o test/result.csv
+  test/result.csv is created
+
+Examples of using metrics
+-------------------------
+
+Some examples would be helpful to understand as how to generate statistics.
+
+
 
 Number of VM instances per user
 ----------------------------------------------------------------------

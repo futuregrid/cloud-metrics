@@ -1,3 +1,4 @@
+from os.path import split
 from cmd2 import Cmd, options, make_option
 import sys
 import optparse
@@ -108,7 +109,8 @@ class FGMetrics(Cmd):
 
             msg = filename + " is created"
         except:
-            msg = filename + " not is created"
+            msg = filename + " is not created"
+            print sys.exc_info()
             pass
 
         print msg
@@ -134,15 +136,23 @@ class FGMetrics(Cmd):
         self.measure()
 
     @options([
-        make_option('-o', '--directory', type="string", dest="DIR", help="change to directory DIR"),
-        make_option('-i', '--file', type="string", dest="filename", help="filename")
+        make_option('-o', '--output', type="string", dest="filepath", help="filepath to export a csv file")
         ])
     def do_csv(self, line, opts=None):
-        data = self.search.get_csv()
-        if not opts.filename:
-            opts.filename = self.search.get_filename() + "." + "csv"
+        """Export statistics as a csv file"""
+        try:
+            data = self.search.get_csv()
+            if not opts.filepath:
+                filedir = "./"
+                filename = self.search.get_filename() + "." + "csv"
+            else:
+                filedir, filename = split(opts.filepath)
 
-        self.create_csvfile(data, opts.DIR, opts.filename)
+            self.create_csvfile(data, filedir, filename)
+        except:
+            print "no dataset is available to export."
+            print "please perform 'analyze' first to export data"
+            print
 
     @options([
         make_option('-o', '--directory', type="string", dest="DIR", help="change to directory DIR"),

@@ -125,8 +125,17 @@ class FGSearch:
     def set_username(self, name):
         self.username = name
 
+    def set_cloud(self, name):
+        self.set_platform(name)
+
+    def set_cloudservice(self, name):
+        self.set_platform(name)
+
     def set_platform(self, name):
         self.platform = name
+
+    def set_hostname(self, name):
+        self.set_nodename(name)
 
     def set_nodename(self, name):
         self.nodename = name
@@ -173,7 +182,9 @@ class FGSearch:
             # If dates are set, months are also set.
             self.set_months()
         except:
-            print "Usage: set date YYYY-MM-DDTHH:MM:SS. (e.g. set date 2012-01-01T00:00:00 2012-12-31T23:59:59)"
+            print "Usage: set date from_date(YYYY-MM-DDTHH:MM:SS) to_date(YYYY-MM-DDTHH:MM:SS)."
+            print "(e.g. set date 2012-01-01T00:00:00 2012-12-31T23:59:59)"
+            print
             pass
 
     def set_timetype(self, typename):

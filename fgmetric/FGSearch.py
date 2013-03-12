@@ -96,6 +96,21 @@ class FGSearch:
                                             "maximum":"max" })
             })
 
+    def set_help(self, line):
+        """Display usage"""
+
+        print
+        print "Possible commands"
+        print "================="
+        print " set date $from $to"
+        print " set metric $name"
+        print " set platform $name"
+        print " set nodename $name"
+        print
+        
+    def set_None(self, line):
+        self.set_help(line)
+
     def set_metric(self, name):
         try:
             metrics = name.split()
@@ -158,7 +173,7 @@ class FGSearch:
             # If dates are set, months are also set.
             self.set_months()
         except:
-            print "from and to are not specified."
+            print "Usage: set date YYYY-MM-DDTHH:MM:SS. (e.g. set date 2012-01-01T00:00:00 2012-12-31T23:59:59)"
             pass
 
     def set_timetype(self, typename):

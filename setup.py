@@ -62,7 +62,8 @@ requires = [
     'pip',
     'pygooglechart',
     'mysql-python',
-    'pymongo'
+    'pymongo',
+    'libmysqlclient-dev'
     ],
 
 install_requires = []

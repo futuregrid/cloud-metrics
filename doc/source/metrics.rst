@@ -151,6 +151,32 @@ Examples of using metrics
 
 Some examples would be helpful to understand as how to generate statistics.
 
+Daily active user count
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This example shows you how to represent data in a certain time period.
+``set period daily`` provides statistics grouped by date. For example, if the date settings cover 30 days, the statistics will have 30 record sets instead of a single record.
+Chart type can be selected by ``chart -t`` option. ``line-time-series`` is one of the types in highcharts. For more detail of types, see here: `Highchart Demo <http://www.highcharts.com/demo/>`_ .
+
+::
+
+ clear
+ set nodename %(hostname)s
+ set platform %(service)s
+ set date %(from_dateT)s %(to_dateT)s
+ set period daily
+ set metric countusers
+ analyze
+ chart -t line-time-series --directory %(output_directory)s
+
+.. figure:: _static/examples/daily_active_user_count.png
+    :scale: 70 %
+    :alt: Daily active user count
+
+   The count of active users
+
+   This time series chart represents daily active user counts for cloud services and shows historical changes during the period.
+
 
 
 Number of VM instances per user
@@ -173,7 +199,7 @@ The output of this command sores the result in a file called .... bla
 bl .. as we specified in the prefious shell commands:
 
 .. figure:: _static/examples/example1.png
-    :scale: 50 %
+    :scale: 100 %
     :alt: The number of VM instances used per user
 
     **X-axis** = indicates the number of VM instances.

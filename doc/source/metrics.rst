@@ -1,4 +1,4 @@
-Metrics on CLI
+Metrics 
 ==============
 
 .. sidebar:: 
@@ -7,68 +7,87 @@ Metrics on CLI
   .. contents:: Table of Contents
      :depth: 3
 
-Cloud Metrics supports Command Line Interface (CLI), interactive shells for cloud usage data analysis. It is designed to read a user's input, calculate metrics, and then provide the results in an appropriate format such as a standard output (STDOUT), JSON, JPG, PNG, and html with javascript charting libraries.
+Cloud Metrics supports a command line interface and a convenient build
+in shell to aide in the cloud usage data analysis. It is advisable
+that users use the shell in case you like to conduct multiple analysis
+steps.  The shell is designed to read a user's input, calculate
+metrics data, and then provide the results in an appropriate format
+such as a standard output, JSON, JPG, PNG, and html with javascript
+charting libraries embedded
 
 .. There are currently eight different metrics to deliver system utilization, user activities and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as virtual machine (VM) instances, registered VM images, virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, you can find descriptions, instructions, and examples for the metrics.
 
 Usage
 -----
 
-::
+To activate the metric shell please execute the command::
 
- $ fg-metric-beta
- fg-metric] set nodename india
- fg-metric] set platform openstack
- fg-metric] set metric runtime
- fg-metric] analyze
- fg-metric] chart 
+ $ fg-metric
 
-Settings
----------
+Onc you do this you can issue some of th emetric shell command. Here
+is a simple example that analyzes the runtime metric for a machine
+india on which openstack is installed and prints a chart::
+
+ fg-metric> set nodename india
+ fg-metric> set platform openstack
+ fg-metric> set metric runtime
+ fg-metric> analyze
+ fg-metric> chart 
+
+The  "set" Command
+-------------------------------------------------------------------------------
 
 Before to perform analysis, several settings can be specified to narrow results. ``set`` is a main command for settings and it comes with two parameters: ``key`` and ``value`` at least.
 
-``fg-metric] set $key $value[ $value2 ...]``
+``fg-metric> set $key $value[ $value2 ...]``
 
-1. Set date
-  Analyze data between these two dates.
+Set the date range
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-::
+To analyze data between these two dates please set the date range::
  
-  fg-metric] set date 2012-01-01T00:00:00 2012-12-31T23:59:59
+  fg-metric> set date 2012-01-01T00:00:00 2012-12-31T23:59:59
 
-2. Set metric
-  Specify which metric item will be calculated.
 
-::
+Set the metric
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To specify  which metric item will be calculated please set it as follows::
 
-  fg-metric] set metric runtime
+  fg-metric> set metric runtime
 
   (multiple metrics)
-  fg-metric] set metric runtime count
+  fg-metric> set metric runtime count
 
-3. Set hostname
-  Specify which machine will be included.
+We are supporting the following metrics:
 
-::
-
-  fg-metric] set hostname india
-
-4. Set cloud service
-  Specify which cloud service will be included.
-
-::
-
-  fg-metric] set platform openstack
+.. note:: TODO: Hyungro, please add
 
 
-``help`` command is useful to understand how to use them.
+Set the hostname
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+As our metric system can handle multiple coulds, it is important to
+set for which host the calculations are to be specified. Please set it
+ass follows where the name india is your machine that holds the IaaS::
 
-* Example 1. help
+  fg-metric> set hostname india
 
-::
 
-  fg-metric] help
+Set the cloud service
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To specify which cloud service will be included please use the
+following command::
+
+  fg-metric> set platform openstack
+
+The "help" command
+----------------------------------------------------------------------
+
+
+The ``help`` command is useful to obtain a simple help message for the
+available commoand::
+
+  fg-metric> help
 
   Documented commands (type help <topic>):
   ========================================
@@ -81,14 +100,13 @@ Before to perform analysis, several settings can be specified to narrow results.
   ======================
   EOF  eof  exit  help  q  quit
 
-* Example 2. help for a command
+To find out more details about an available shell command, simply type
+in help followed by the command you like to query::
 
-::
-
-  fg-metric] help set
+  fg-metric> help set
   Set a function with parameter(s)
 
-  fg-metric] set help
+  fg-metric> set help
 
   Possible commands
   =================
@@ -97,68 +115,79 @@ Before to perform analysis, several settings can be specified to narrow results.
   set platform $name
   set nodename $name
 
-* Example 3. help for a command parameter
+To ask for help for a paramter you can do this as follows (here we
+give an example for finding mor out about the set data command::
 
-::
-
-  fg-metric] set date help
+  fg-metric> set date help
   Usage: set date from_date(YYYY-MM-DDTHH:MM:SS) to_date(YYYY-MM-DDTHH:MM:SS). 
   (e.g. set date 2012-01-01T00:00:00 2012-12-31T23:59:59)
 
-Results
------------------------------------------------------------------
-Cloud Metrics supports several output options such as stdout, JSON, csv, jpg, png, html.
+The "analyze" command
+----------------------------------------------------------------------
 
-Chart library
-^^^^^^^^^^^^^
-``chart`` is a command to create a chart html file with different chart types (e.g. bar, line, column, etc.).
-To help understanding of data, a type of charts should be selected carefully. Relationships between data and chart type refer to proper representation.
+.. note:: TODO Hyungro
 
-Let's say, the data is:
+Once you have run analyze, cloud metrics supports several output
+options such as stdout, JSON, csv, jpg, png, html that can be created
+with the help of various commands such as chart and csv which we
+describe next.
 
-* historical representation of quantity, then the type of chart should be => a line chart with x-axis as date and y-axis as quantity.
+
+The "chart" command
+----------------------------------------------------------------------
+
+``chart`` is a command to create a chart html file with different
+chart types (e.g. bar, line, column, etc.).  To help understanding of
+data, a type of charts should be selected carefully. Relationships
+between data and chart type refer to proper representation.
+
+Assume, the data is:
+
+* historical representation of quantity, then the type of chart should
+  be => a line chart with x-axis as date and y-axis as quantity.
   - daily metrics 
+
 * just quantities of different groups, then the type of chart should be => a pie chart
   - comparison across cloud services, locations, projects.
 
-Example usage of ``chart`` command
+Example usage of the ``chart`` command::
 
-::
+  fg-metric> ...(skipped)...
+  fg-metric> analyze
+  fg-metric> chart -t pie-basic --directory $directory_name
 
-  fg-metric] ...(skipped)...
-  fg-metric] analyze
-  fg-metric] chart -t pie-basic --directory $directory_name
+The "csv" command
+----------------------------------------------------------------------
 
-CSV file
-^^^^^^^^
 ``csv`` ia a command to export statistics as a comma-separated values (csv) file.
 
-Example usage of ``csv`` command
+Example usage of ``csv`` command::
 
-::
-
-  fg-metric] ...(skipped)...
-  fg-metric] analyze
-  fg-metric] csv
+  fg-metric> ...(skipped)...
+  fg-metric> analyze
+  fg-metric> csv
   2012-01-01T00:00:00-2013-01-01T00:00:00-runtime-openstack-india-dailyAll.csv is created
 
   (or)
-  fg-metric] csv -o test/result.csv
+  fg-metric> csv -o test/result.csv
   test/result.csv is created
 
 Examples of using metrics
 -------------------------
 
-Some examples would be helpful to understand as how to generate statistics.
+We show now some examples to highlight how easy it is to generate
+statistics with our framework.
 
 Daily active user count
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-This example shows you how to represent data in a certain time period.
-``set period daily`` provides statistics grouped by date. For example, if the date settings cover 30 days, the statistics will have 30 record sets instead of a single record.
-Chart type can be selected by ``chart -t`` option. ``line-time-series`` is one of the types in highcharts. For more details of the types, see here: `Highchart Demo <http://www.highcharts.com/demo/>`_.
-
-::
+This example shows you how to retrieve data for a certain time period.
+``set period daily`` provides statistics grouped by date. For example,
+if the date settings cover 30 days, the statistics will have 30 record
+sets instead of a single record.  Chart type can be selected by
+``chart -t`` option. ``line-time-series`` is one of the types in
+highcharts. For more details of the types, see here: 
+`Highchart Demo <http://www.highcharts.com/demo/>`_::
 
  clear
  set nodename %(hostname)s
@@ -182,9 +211,9 @@ Result html page
 VMs count by Project
 ^^^^^^^^^^^^^^^^^^^^^
 
-This example represents data in percentages for different project groups. In this example, we use ``groupby`` instead of ``period`` in the previous example.
-
-::
+This example represents data in percentages for different project
+groups. In this example, we use ``groupby`` instead of ``period`` in
+the previous example::
 
  clear
  set nodename %(hostname)s
@@ -208,9 +237,9 @@ Result html page
 Three metrics in a single chart
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This example represents multiple data in a single chart with multiple axes. ``combo-multi-axes`` allows to depict three metrics in a single chart.
-
-::
+This example represents multiple data in a single chart with multiple
+axes. ``combo-multi-axes`` allows to depict three metrics in a single
+chart::
 
  clear
  set nodename %(hostname)s

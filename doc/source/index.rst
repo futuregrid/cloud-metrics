@@ -103,7 +103,7 @@ the prefix: "METRICS: " in the subject of email messages.
 
 The contribution impact is recorded at
 
-* https://github.com/futuregrid/futuregrid-cloud-metrics/graphs
+* https://github.com/futuregrid/cloud-metrics/graphs
 * https://github.com/futuregrid/cloud-metrics/contributors
 
 The original database integration was contributed by Fugang Wang and

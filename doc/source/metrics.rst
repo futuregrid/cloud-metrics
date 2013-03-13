@@ -60,8 +60,18 @@ To specify  which metric item will be calculated please set it as follows::
 
 We are supporting the following metrics:
 
-.. note:: TODO: Hyungro, please add
-
+::
+ 
+ fg-metric> set metric help
+ Possible commands
+ =================
+  set metric count
+  set metric runtime
+  set metric countusers
+  set metric cores
+  set metric runtimeusers
+  set metric memories
+  set metric disks
 
 Set the hostname
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

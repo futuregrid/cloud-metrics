@@ -23,7 +23,7 @@ We have designed a directory layout as follows:
           cloud-metrics -> www;
 
                   group {
-                  label="";
+                  label="png files";
                   data
                   }
                   group {
@@ -31,7 +31,7 @@ We have designed a directory layout as follows:
                   doc 
                   }
                   group {
-                  label="out-dated documentation";
+                  label="outdated documentation";
                   doc-old
                   }
                   group {
@@ -47,7 +47,7 @@ We have designed a directory layout as follows:
                   examples
                   }
                   group {
-                  label="Real-time monitoring for HPC";
+                  label="HPC Real-time monitoring";
                   fghpc
                   }
                   group {
@@ -59,7 +59,7 @@ We have designed a directory layout as follows:
                   fgmonitor
                   }
                   group {
-                  label="CherryPy version of CloudMetrics";
+                  label="CherryPy of CloudMetrics";
                   fgweb
                   }
                   group {
@@ -71,16 +71,45 @@ We have designed a directory layout as follows:
                   lighttpd
                   }
                   group {
-                  label="Sphinx pages for statistics";
+                  label="Sphinx for statistics";
                   results
                   }
                   group {
-                  label="out-dated";
+                  label="outdated";
                   todo
                   }
                   group {
-                  label="out-dated";
+                  label="outdated";
                   www
                   }
            }
 
+
+File contents
+=============
+
+::
+  | FGAnalyzer.py - old version of metric analyzer
+  | FGCollectFiles.py - log backup tool
+  | FGConverter.py - data converting tool from Nimbus, Openstack to Cloud Metrics
+  | FGEucaMetricsDB.py - old version of metrics db
+  | FGHighcharts.py - Highcharts API
+  | FGInstall.py - Initializer of Cloud Metrics (db configuration, etc)
+  | FGLogParser.py - Eucalyptus log parser
+  | FGMetricsCli.py - fg-metric-cli command tool
+  | FGNovaDB.py - outdated OpenStack API
+  | FGParser.py - old version of VM instance class
+  | FGSearch.py - New version of 
+  | FGTimeZone.py - TimeZone helper for managing timestamp in logs
+  | FGCharts.py - Chart library API
+  | FGConstants.py - Constants class
+  | FGDatabase.py - New version of database class
+  | FGGoogleMotionChart.py - Old version of Google Chart API
+  | FGHighchartsTemplate.py - outdated Highcharts API
+  | FGInstances.py - New version of VM instance class
+  | FGMetricsAPI.py - New version of Metrics API class
+  | FGMetrics.py - New version of main class of Cloud Metrics
+  | FGNovaMetric.py - outdated OpenStack class for metric
+  | FGPygooglechart.py - outdated python google chart API
+  | FGTester.py - outdated Tester
+  | FGUtility.py - Utility libraries

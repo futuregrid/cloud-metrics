@@ -62,8 +62,7 @@ requires = [
     'pip',
     'pygooglechart',
     'mysql-python',
-    'pymongo',
-    'libmysqlclient-dev'
+    'pymongo'
     ],
 
 install_requires = []
@@ -110,7 +109,7 @@ setup(
              'fg-metric-cli = fgmetric.FGMetricsCli:main'
              ]},
 
-    install_reqquires=install_requires
+        install_requires=install_requires
     )
 
     # Removed console script

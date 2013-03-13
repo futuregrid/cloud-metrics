@@ -59,9 +59,7 @@ To specify  which metric item will be calculated please set it as follows::
   (multiple metrics)
   fg-metric> set metric runtime count
 
-We are supporting the following metrics:
-
-::
+We are supporting the following metrics::
  
  fg-metric> set metric help
  Possible commands

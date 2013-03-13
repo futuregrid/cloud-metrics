@@ -201,9 +201,36 @@ Result html page
    :scale: 70 %
    :alt: VMs count by Project
 
-   Figure 2. VMs count by Projec
+   Figure 2. VMs count by Project
 
    This pie chart illustrates propotion of Launched VM instances by Project groups. To represent certain information, the table follows.
+
+Three metrics in a single chart
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This example represents multiple data in a single chart with multiple axes. ``combo-multi-axes`` allows to depict three metrics in a single chart.
+
+::
+
+ clear
+ set nodename %(hostname)s
+ set platform %(service)s
+ set date %(from_dateT)s %(to_dateT)s
+ set period monthly
+ set metric runtime count countusers
+ set timetype hour
+ analyze
+ chart -t combo-multi-axes --directory %(output_directory)s
+
+Result html page
+
+.. figure:: _static/examples/three_metrics_in_a_single_chart.png
+   :scale: 70 %
+   :alt: Average Monthly Usage Data (Wall hour, Launched VMs, Users)
+
+   Figure 3. Average Monthly Usage Data (Wall hour, Launched VMs, Users)
+
+   This mixed chart represents average monthly usage as to Wall Hour (runtime), Count and the number of Users for VM instances.
 
 Number of VM instances per user
 ----------------------------------------------------------------------

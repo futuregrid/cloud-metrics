@@ -93,7 +93,13 @@ class FGSearch:
                                             "summation":"sum", 
                                             "average":"avg", 
                                             "minimum":"min", 
-                                            "maximum":"max" })
+                                            "maximum":"max" }),
+                            "period": dotdict({"daily":"daily",
+                                                "monthly":"monthly"}),
+                            "timetype": dotdict({"day":"day",
+                                                    "hour":"hour",
+                                                    "minute":"minute",
+                                                    "second":"second"})
             })
 
     def set_help(self, line):
@@ -106,21 +112,55 @@ class FGSearch:
         print " set metric $name"
         print " set platform $name"
         print " set nodename $name"
+        print " set period $name"
         print
         
     def set_None(self, line):
         self.set_help(line)
 
-    def set_metric(self, name):
-        try:
-            metrics = name.split()
-        except:
-            metrics = name
+    def period_help(self):
+        """Display usage period"""
 
-        self.metric = metrics
+        print "Possible commands"
+        print "================="
+        for val in self.names['period'].keys():
+            print " set period " + val
+        print
+
+    def metric_help(self):
+        """Display usage metric"""
+
+        print "Possible commands"
+        print "================="
+        for val in self.names['metric'].keys():
+            print " set metric " + val
+        print
+ 
+    def timetype_help(self):
+        """Display usage timetype"""
+
+        print "Possible commands"
+        print "================="
+        for val in self.names['timetype'].keys():
+            print " set timetype " + val
+        print
+
+    def set_metric(self, name):
+        if name == "help":
+            self.metric_help()
+        else:
+            try:
+                metrics = name.split()
+            except:
+                metrics = name
+
+            self.metric = metrics
 
     def set_period(self, name):
-        self.period = name
+        if name == "help":
+            self.period_help()
+        else:
+            self.period = name
 
     def set_username(self, name):
         self.username = name
@@ -199,6 +239,10 @@ class FGSearch:
             Raises:
                 n/a
         '''
+        if typename == "help":
+            self.timetype_help()
+            return
+
         self.timetype = typename
         if typename == "day":
             self.time_conversion = 60 * 60 * 24
@@ -307,9 +351,6 @@ class FGSearch:
     def set_months(self):
         dates = self.get_months_between_dates(self.from_date, self.to_date)
         self.months = dates
-
-    def set_period(self, name):
-        self.period = name
 
     def set_distinct(self, val):
         self.distinct = val

@@ -18,13 +18,26 @@ Welcome to Cloud Metrics's documentation!
 ..
        modules
 
-::
+**Screenshots**::
  
  set date 2012-10-01 2013-02-01
  set metric runtime
  set platform openstack
  set nodename india
  analyze
+
+.. raw:: html
+
+   <table>
+   <tr>
+   <td> 
+   <img src="_static/examples/daily_active_user_count.png"/>
+   </td>
+   <td>
+   <img src="_static/examples/vms_count_by_project.png"/>
+   </td>
+   </tr>
+   </table>
 
 Cloud metrics is an open source code project that allows to analyze
 the log files for various cloud infrastructure tools. At this time, we

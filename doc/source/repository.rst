@@ -75,11 +75,11 @@ We have designed a directory layout as follows:
                   results
                   }
                   group {
-                  label="";
+                  label="out-dated";
                   todo
                   }
                   group {
-                  label="";
+                  label="out-dated";
                   www
                   }
            }

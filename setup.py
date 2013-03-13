@@ -55,12 +55,16 @@ if sys.version_info < (2, 7):
 ######################################################################
 
 requires = [
+    'setuptools',
+    'pip',
     'sphinxcontrib-issuetracker',
     'sphinxcontrib-googlechart',
-    'setuptools',
+    'cherrypy',
+    'pymongo',
     'cmd2',
-    'pip',
     'pygooglechart',
+    'sqlalchemy',
+    'mysql-connector-python',
     'mysql-python',
     'pymongo',
     'libmysqlclient-dev'

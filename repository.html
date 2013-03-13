@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python Module Index &mdash; Cloud Metrics  documentation</title>
+    <title>Directory Structure &mdash; Cloud Metrics  documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -31,13 +31,12 @@
     <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="Cloud Metrics  documentation" href="index.html" />
-
+    <link rel="next" title="UBMoD" href="ubmod.html" />
+    <link rel="prev" title="Developers Manual" href="developer.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-
-
 
   </head>
   <body>
@@ -65,7 +64,7 @@
      class="dropdown-toggle"
      data-toggle="dropdown">Site <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
-    ><ul>
+    ><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Administrator Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="manual.html#installation">Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#prerequisites">Prerequisites</a></li>
@@ -126,8 +125,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="developer.html">Developers Manual</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repository.html">Directory Structure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repository.html#file-contents">File contents</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Directory Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#file-contents">File contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
@@ -140,11 +139,19 @@
 </li>
             <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
-  <ul class="dropdown-menu localtoc"></ul>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">Directory Structure</a></li>
+<li><a class="reference internal" href="#file-contents">File contents</a></li>
+</ul>
+</ul>
 </li>
           
           
             
+  <li><a href="developer.html"
+         title="previous chapter">&laquo; Developers Manual</a></li>
+  <li><a href="ubmod.html"
+         title="next chapter">UBMoD &raquo;</a></li>
           
           
         </ul>
@@ -162,55 +169,41 @@
   </div>
 
   
-
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-f"><strong>f</strong></a>
-   </div>
-
-   <table class="indextable modindextable" cellspacing="0" cellpadding="2">
-     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
-     <tr class="cap" id="cap-f"><td></td><td>
-       <strong>f</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="modules.html#module-FGAnalyzer"><tt class="xref">FGAnalyzer</tt></a> <em>(Unix)</em></td><td>
-       <em>An analyzer of system utilization for the cloud based on the database collected by log files.
-It calculates metrics data and generates graph images like PNG files and html files with javascript.</em></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <tt class="xref">fgmetric</tt></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="modules.html#module-fgmetric.FGAnalyzer"><tt class="xref">fgmetric.FGAnalyzer</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="modules.html#module-fgmetric.FGEucaMetricsDB"><tt class="xref">fgmetric.FGEucaMetricsDB</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="modules.html#module-fgmetric.FGGoogleMotionChart"><tt class="xref">fgmetric.FGGoogleMotionChart</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="modules.html#module-fgmetric.FGParser"><tt class="xref">fgmetric.FGParser</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="modules.html#module-fgmetric.FGUtility"><tt class="xref">fgmetric.FGUtility</tt></a></td><td>
-       <em></em></td></tr>
-   </table>
+  <div class="section" id="directory-structure">
+<h1>Directory Structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h1>
+<p>We have designed a directory layout as follows:</p>
+<p class="blockdiag">
+<img src="_images/blockdiag-af76017d3f8405a506fd3b398bac3d5c5b4bbb03.png" alt="None" width="448" height="1240" />
+</p>
+</div>
+<div class="section" id="file-contents">
+<h1>File contents<a class="headerlink" href="#file-contents" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python"><pre>| FGAnalyzer.py - old version of metric analyzer
+| FGCollectFiles.py - log backup tool
+| FGConverter.py - data converting tool from Nimbus, Openstack to Cloud Metrics
+| FGEucaMetricsDB.py - old version of metrics db
+| FGHighcharts.py - Highcharts API
+| FGInstall.py - Initializer of Cloud Metrics (db configuration, etc)
+| FGLogParser.py - Eucalyptus log parser
+| FGMetricsCli.py - fg-metric-cli command tool
+| FGNovaDB.py - outdated OpenStack API
+| FGParser.py - old version of VM instance class
+| FGSearch.py - New version of
+| FGTimeZone.py - TimeZone helper for managing timestamp in logs
+| FGCharts.py - Chart library API
+| FGConstants.py - Constants class
+| FGDatabase.py - New version of database class
+| FGGoogleMotionChart.py - Old version of Google Chart API
+| FGHighchartsTemplate.py - outdated Highcharts API
+| FGInstances.py - New version of VM instance class
+| FGMetricsAPI.py - New version of Metrics API class
+| FGMetrics.py - New version of main class of Cloud Metrics
+| FGNovaMetric.py - outdated OpenStack class for metric
+| FGPygooglechart.py - outdated python google chart API
+| FGTester.py - outdated Tester
+| FGUtility.py - Utility libraries</pre>
+</div>
+</div>
 
 
 </div>

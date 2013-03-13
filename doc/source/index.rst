@@ -12,7 +12,7 @@ Welcome to Cloud Metrics's documentation!
        examples
        developer
        rest
-       todo
+       repository
        ubmod
        lighttpd
        modules

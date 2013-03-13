@@ -20,6 +20,11 @@ Prerequisites
 We assume you have a valid python version (2.7.2 or higher) and all
 the needed libraries on the system where you run the code.
 
+ :: 
+
+  sudo apt-get install libmysqlclient-dev
+  sudo apt-get install python-dev
+
 Production Version
 ----------------------------------------------------------------------
 

@@ -17,12 +17,11 @@ class FGMetrics(Cmd):
 
     def __init__(self):
         Cmd.__init__(self)
-        self.prompt = "fg-metric] "
+        self.prompt = "fg-metric> "
         self.intro = "Welcome to FutureGrid Cloud Metrics!"
 
     def initialize(self, arg="all"):
         """Clear all instance data and user data on the memory"""
-        print "initializing..."
         self.search = FGSearch()
         self.chart = FGCharts()
         self.instances = FGInstances()
@@ -42,7 +41,7 @@ class FGMetrics(Cmd):
         # Get also userinfo data from the database
         self.instances.read_userinfo_from_db()
         self.instances.read_projectinfo_from_db()
-        print "\r... database loaded"
+        print "\r... loaded"
 
     def show_dbinfo(self, param=None):
         pprint(vars(self.instances.db), indent=2)

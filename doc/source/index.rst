@@ -11,7 +11,6 @@ Welcome to Cloud Metrics's documentation!
        metrics
        examples
        developer
-       rest
        repository
        ubmod
        lighttpd
@@ -104,7 +103,7 @@ help form at `https://portal.futuregrid.org/help <https://portal.futuregrid.org/
 
 
 Production Deployment
---------------------
+----------------------
 
 `Cloud Metrics <https://portal.futuregrid.org/metrics>`_ is our main
 monitoring system for clouds on FuturegGrid. In addition we also

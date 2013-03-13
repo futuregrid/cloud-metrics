@@ -147,6 +147,7 @@ following
 
         change LOGLEVEL to DEBUG in eucalyptus.conf
         LOGLEVEL="DEBUG"
+
 Reference: `eucalyptus.conf man page <http://manpages.ubuntu.com/manpages/lucid/man5/eucalyptus.conf.5.html>`_
 
 Create A Log Backup

@@ -52,6 +52,7 @@ DESCRIPTION
  **clear**
         Clear all instance data and user data from the memory
         ::
+
                 clear users (clear user data)
 
         ::

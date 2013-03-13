@@ -10,7 +10,7 @@ We have designed a directory layout as follows:
           cloud-metrics -> doc;
           cloud-metrics -> doc-old;
           cloud-metrics -> draft;
-          cloud-metrics -> etc;
+          cloud-metrics -> misc;
           cloud-metrics -> examples;
           cloud-metrics -> fghpc;
           cloud-metrics -> fgmetric;
@@ -39,39 +39,39 @@ We have designed a directory layout as follows:
                   draft
                   }
                   group {
-                  label="";
-                  etc
+                  label="miscellaneous files";
+                  misc
                   }
                   group {
-                  label="";
+                  label="Examples for CloudMetrics CLI";
                   examples
                   }
                   group {
-                  label="";
+                  label="Real-time monitoring for HPC";
                   fghpc
                   }
                   group {
-                  label="";
+                  label="Main development";
                   fgmetric
                   }
                   group {
-                  label="";
+                  label="Real-time monitoring";
                   fgmonitor
                   }
                   group {
-                  label="";
+                  label="CherryPy version of CloudMetrics";
                   fgweb
                   }
                   group {
-                  label="";
+                  label="Flask WSGI service";
                   fgws
                   }
                   group {
-                  label="";
+                  label="lighttpd";
                   lighttpd
                   }
                   group {
-                  label="";
+                  label="Sphinx pages for statistics";
                   results
                   }
                   group {

@@ -3,6 +3,8 @@ from cmd2 import Cmd, options, make_option
 import sys
 import optparse
 import csv
+from datetime import datetime
+from calendar import monthrange
 from pprint import pprint
 from fgmetric.FGSearch import FGSearch
 from fgmetric.FGInstances import FGInstances
@@ -114,12 +116,19 @@ class FGMetrics(Cmd):
 
         print msg
 
-    def do_analyze(self, line):
+    @options([
+        make_option('-f', '--start_date', type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-t', '--end_date', type="string", help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-M', '--month', type="int", help="month to analyze (type. MM)"),
+        make_option('-Y', '--year', type="int", help="year to analyze (type. YYYY)"),
+        make_option('-m', '--metric', dest="metric", type="string", help="item name to measure (e.g. runtime, count)"),
+        make_option('-P', '--period', dest="period", type="string", help="search period (monthly, daily)")
+        ])
+    def do_analyze(self, line, opts=None):
         """Run analysis for cloud usage data. 
         
         Typically, set platform ***, set nodename ***, set date ***  *** are required prior to this command
-        Once analysis is finised, 'chart' command is usually following to generate results in a chart html file."""
-        """
+        Once analysis is finised, 'chart' command is usually following to generate results in a chart html file.
 
             Args:
                 line(str): input line
@@ -129,10 +138,16 @@ class FGMetrics(Cmd):
                 n/a
 
         """
-      
-        self.search.init_stats()
-        self.show_filter_setting()
-        self.measure()
+        try:
+            self.set_parameters(opts)
+            self.search.check_vailidity()
+            self.search.init_stats()
+            self.show_filter_setting()
+            self.measure()
+        except ValueError as e:
+            print e
+        except:
+            print sys.exc_info()
 
     @options([
         make_option('-o', '--output', type="string", dest="filepath", help="filepath to export a csv file")
@@ -245,6 +260,47 @@ class FGMetrics(Cmd):
         except:
             print sys.exc_info()
             pass
+
+    def set_parameters(self, opts):
+        """Set search options from opt parse variables
+
+        What variables are set:
+            a. dates
+            b. metric
+            c. period
+
+        Setting prioirity
+        1. start_date, end_date
+        2. year, month
+        3. set date $from $to (set by prior to analyze command)
+
+        For example, 
+        if opts.start_date and opts.end_date are given, opts.year and opts.month will be ignored.
+
+            Args:
+                opts.start_date
+                opts.end_date
+                opts.year
+                opts.month
+                opts.period
+                opts.metric
+        
+        """
+
+        if opts.year or opts.month:
+            now = datetime.now()
+            from_date = datetime(opts.year or now.year, opts.month or 1, 1)
+            to_date = datetime(opts.year or now.year, opts.month or 12, monthrange(opts.year or now.year, opts.month or 12)[1])
+            self.search.set_date([from_date, to_date])
+        if opts.start_date and opts.end_date:
+            self.search.set_date([opts.start_date, opts.end_date])
+        if opts.period:
+            self.search.set_period(opts.period)
+        if opts.metric:
+            self.search.set_metric(opts.metric)
+
+    def help_analyze(self):
+        print "Run analysis for cloud usage data"
 
     def do_clear(self, line):
         """Clear settings for analysis. (e.g. nodename, platform, date will be cleared)"""

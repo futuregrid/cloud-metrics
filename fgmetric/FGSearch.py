@@ -102,6 +102,28 @@ class FGSearch:
                                                     "second":"second"})
             })
 
+    def check_vailidity(self):
+        """Check settings before performing analysis
+
+        There are certain variables that have to be set before calculation.
+        1) Date
+        2) Metric
+        3) (option) hostname
+        4) (option) cloudservice
+
+            Raises:
+                ValueError
+        """
+        if not self.from_date or not self.to_date:
+            raise ValueError("Missing Dates: please 'set date $from $to' first")
+        elif not self.metric:
+            raise ValueError("Missing Metric: please 'set metric $name' first")
+        else:
+            pass
+        
+    def set_None(self, line):
+        self.set_help(line)
+
     def set_help(self, line):
         """Display usage"""
 
@@ -115,10 +137,7 @@ class FGSearch:
         print " set period $name"
         print
         
-    def set_None(self, line):
-        self.set_help(line)
-
-    def period_help(self):
+    def help_period(self):
         """Display usage period"""
 
         print "Possible commands"
@@ -127,7 +146,7 @@ class FGSearch:
             print " set period " + val
         print
 
-    def metric_help(self):
+    def help_metric(self):
         """Display usage metric"""
 
         print "Possible commands"
@@ -136,7 +155,7 @@ class FGSearch:
             print " set metric " + val
         print
  
-    def timetype_help(self):
+    def help_timetype(self):
         """Display usage timetype"""
 
         print "Possible commands"
@@ -147,7 +166,7 @@ class FGSearch:
 
     def set_metric(self, name):
         if name == "help":
-            self.metric_help()
+            self.help_metric()
         else:
             try:
                 metrics = name.split()
@@ -158,7 +177,7 @@ class FGSearch:
 
     def set_period(self, name):
         if name == "help":
-            self.period_help()
+            self.help_period()
         else:
             self.period = name
 
@@ -240,7 +259,7 @@ class FGSearch:
                 n/a
         '''
         if typename == "help":
-            self.timetype_help()
+            self.help_timetype()
             return
 
         self.timetype = typename

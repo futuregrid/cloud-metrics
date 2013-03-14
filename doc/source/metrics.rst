@@ -275,5 +275,97 @@ will result in the following image:
 
    Figure 3. Average Monthly Usage Data (Wall hour, Launched VMs, Users)
 
+Create a summary table for the month of January
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following will create a table with data produced for the month of January::
+
+    > fg-metric
+    fg> clear users
+    fg> analyze -M 01
+    fg> table --type users --separator ,  --caption Testing_the_csv_table
+    fg> quit
+
+Naturally you could store this script in a file and pipe to fg-metric
+in case you have more complex or repetitive analysis to do. 
+
+Create a summary analysis for multiple month
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note:: TOODO: Why is this eucalyptus? 
+.. note:: TOODO: Why not " " in -t argument?
+
+Assume you like to create a nice html page directory with the analysis
+of the data contained. This can be done as follows. Assume the
+following contents is in the file analyze.txt::
+
+    clear users
+    analyze -M 01 -Y 2012
+    createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+    
+    clear users
+    analyze -M 02 -Y 2012
+    createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
+  
+    createreports 2012-01 2012-02
+
+This page creates a beautiful report page with links to the generated
+graphs contained in the directories specified. All index files in the
+directories are printed before the images in the directory are
+included. The resulting report is an html report.
+
+To start the script, simply use::
+
+    cat analyze.txt | fg-metric
+
+This will produce a nice directory tree with all the data needed for a
+display.
+
+Python Program to create a summary analysis for multiple month
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note:: TOODO: Hyungro do the test and complete, this will help you getting your automatic example going
+.. note:: TOODO: Why is this eucalyptus? 
 
 
+The previous example has the disadvantage that one has to explicitly
+copy the lines that we use to access the analysis. However as Python
+includes loops, we can just use loops to create such a script
+programatically, while changing some parameters at the beginning::
+
+  #! /usr/bin/env python
+  from sh import fg-metric as metric
+
+  filename = "/tmp/analyze.txt"
+
+  years = ['2013']
+  months =['01', '02']
+
+  script = """
+  clear users
+  analyze -M %s(month) -Y %s(year)
+  createreport -d %s(year)-result -t Running_instances_per_user_of_Eucalyptus_in_%s(host)
+  """
+  ###############################
+  # DO NOT CHANGE FRM HERE
+  #
+  # Assampble the anzlyses to be done 
+
+  f = open (filename, "w") 
+
+  for year in years:
+    for  month in months:
+       data = {"year": year, "month": month}
+       print >>f, script % data 
+  close f
+  # finish the script 
+
+  metric("-f", filename)
+
+Naturaly this programm pattern can be used for more cases such as
+identifying the current time and generating based on this scripts the
+automatically create new alanysis, or the detection if an analysis was
+already performed and skipping it. Hence it is possible to create a
+fast script that does not need to recreate the majority of the
+calculations, but only injects new data and calculate metrics based on
+this new data.  

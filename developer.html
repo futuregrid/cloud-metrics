@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python Module Index &mdash; Cloud Metrics  documentation</title>
+    <title>Developers Manual &mdash; Cloud Metrics  documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -31,13 +31,12 @@
     <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="Cloud Metrics  documentation" href="index.html" />
-
+    <link rel="next" title="TODO: examples" href="todo.html" />
+    <link rel="prev" title="Metric Shell" href="metrics.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-
-
 
   </head>
   <body>
@@ -65,7 +64,7 @@
      class="dropdown-toggle"
      data-toggle="dropdown">Site <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
-    ><ul>
+    ><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Administrator Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="manual.html#installation">Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#prerequisites">Prerequisites</a></li>
@@ -111,21 +110,21 @@
 <li class="toctree-l3"><a class="reference internal" href="metrics.html#daily-active-user-count">Daily active user count</a></li>
 <li class="toctree-l3"><a class="reference internal" href="metrics.html#vms-count-by-project">VMs count by Project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="metrics.html#three-metrics-in-a-single-chart">Three metrics in a single chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#python-program-to-create-a-summary-analysis-for-multiple-month">Python Program to create a summary analysis for multiple month</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Yet more Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#id1">Create a summary table for the month of January</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#how-to-create-a-summary-analysis-for-multiple-month">How to create a summary analysis for multiple month</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#examples">Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#yet-another-set-of-examples-scripts-copied-from-somewhere">Yet another set of Examples Scripts copied from somewhere</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Developers Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">TODO: examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#showing-only-image-numbers-owned-by-the-userid-specified">Showing only image numbers owned by the userid specified::</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#displaying-details-about-images">Displaying details about images::</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#displaying-summary-values-about-images">Displaying summary values about images</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Developers Manual</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repository.html">Directory Structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repository.html#file-contents">File contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
@@ -140,11 +139,18 @@
 </li>
             <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
-  <ul class="dropdown-menu localtoc"></ul>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">Developers Manual</a></li>
+</ul>
+</ul>
 </li>
           
           
             
+  <li><a href="metrics.html"
+         title="previous chapter">&laquo; Metric Shell</a></li>
+  <li><a href="todo.html"
+         title="next chapter">TODO: examples &raquo;</a></li>
           
           
         </ul>
@@ -162,55 +168,217 @@
   </div>
 
   
-
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-f"><strong>f</strong></a>
-   </div>
-
-   <table class="indextable modindextable" cellspacing="0" cellpadding="2">
-     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
-     <tr class="cap" id="cap-f"><td></td><td>
-       <strong>f</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="modules.html#module-FGAnalyzer"><tt class="xref">FGAnalyzer</tt></a> <em>(Unix)</em></td><td>
-       <em>An analyzer of system utilization for the cloud based on the database collected by log files.
-It calculates metrics data and generates graph images like PNG files and html files with javascript.</em></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <tt class="xref">fgmetric</tt></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="modules.html#module-fgmetric.FGAnalyzer"><tt class="xref">fgmetric.FGAnalyzer</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="modules.html#module-fgmetric.FGEucaMetricsDB"><tt class="xref">fgmetric.FGEucaMetricsDB</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="modules.html#module-fgmetric.FGGoogleMotionChart"><tt class="xref">fgmetric.FGGoogleMotionChart</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="modules.html#module-fgmetric.FGParser"><tt class="xref">fgmetric.FGParser</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="modules.html#module-fgmetric.FGUtility"><tt class="xref">fgmetric.FGUtility</tt></a></td><td>
-       <em></em></td></tr>
-   </table>
+  <div class="section" id="developers-manual">
+<h1>Developers Manual<a class="headerlink" href="#developers-manual" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<caption>List of commands</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Field</td>
+<td>Type</td>
+<td>Sample value</td>
+</tr>
+<tr class="row-odd"><td>uidentifier (primary key)</td>
+<td>varchar(32)</td>
+<td>785750fc55cca86ab5e36f46ac7642a8</td>
+</tr>
+<tr class="row-even"><td>instanceId</td>
+<td>varchar(16)</td>
+<td>i-57AB09CE</td>
+</tr>
+<tr class="row-odd"><td>Ts</td>
+<td>datetime</td>
+<td>11/4/11 16:26</td>
+</tr>
+<tr class="row-even"><td>Calltype</td>
+<td>varchar(32)</td>
+<td>refresh_instances</td>
+</tr>
+<tr class="row-odd"><td>userData</td>
+<td>varchar(32)</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>kernelId</td>
+<td>varchar(32)</td>
+<td>eki-78EF12D2</td>
+</tr>
+<tr class="row-odd"><td>emiURL</td>
+<td>varchar(128)</td>
+<td><a class="reference external" href="http://">http://</a><em>.</em>.*.*:8773/services/Walrus/ubuntu904/ubuntu.9-04.x86-64.img.manifest.xml</td>
+</tr>
+<tr class="row-even"><td>t_start</td>
+<td>datetime</td>
+<td>11/4/11 16:26</td>
+</tr>
+<tr class="row-odd"><td>t_end</td>
+<td>datetime</td>
+<td>11/9/11 17:32</td>
+</tr>
+<tr class="row-even"><td>Duration</td>
+<td>float</td>
+<td>435991</td>
+</tr>
+<tr class="row-odd"><td>trace_pending_start</td>
+<td>datetime</td>
+<td>11/4/11 16:26</td>
+</tr>
+<tr class="row-even"><td>trace_pending_stop</td>
+<td>datetime</td>
+<td>11/4/11 16:26</td>
+</tr>
+<tr class="row-odd"><td>trace_extant_start</td>
+<td>datetime</td>
+<td>11/4/11 16:26</td>
+</tr>
+<tr class="row-even"><td>trace_extant_stop</td>
+<td>datetime</td>
+<td>11/9/11 17:32</td>
+</tr>
+<tr class="row-odd"><td>trace_teardown_start</td>
+<td>datetime</td>
+<td>11/9/11 17:32</td>
+</tr>
+<tr class="row-even"><td>trace_teardown_stop</td>
+<td>datetime</td>
+<td>11/9/11 17:32</td>
+</tr>
+<tr class="row-odd"><td>serviceTag</td>
+<td>varchar(128)</td>
+<td><a class="reference external" href="http://i24:8775/axis2/services/EucalyptusNC">http://i24:8775/axis2/services/EucalyptusNC</a></td>
+</tr>
+<tr class="row-even"><td>groupNames</td>
+<td>varchar(64)</td>
+<td>default</td>
+</tr>
+<tr class="row-odd"><td>keyName</td>
+<td>varchar(512)</td>
+<td>ssh-rsa ?</td>
+</tr>
+<tr class="row-even"><td>msgtype</td>
+<td>varchar(16)</td>
+<td>EUCADEBUG</td>
+</tr>
+<tr class="row-odd"><td>volumesSize</td>
+<td>float</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>linetype</td>
+<td>varchar(32)</td>
+<td>print_ccInstance</td>
+</tr>
+<tr class="row-odd"><td>ownerId</td>
+<td>varchar(32)</td>
+<td>panoat</td>
+</tr>
+<tr class="row-even"><td>date</td>
+<td>datetime</td>
+<td>11/9/11 17:32</td>
+</tr>
+<tr class="row-odd"><td>id</td>
+<td>int(11)</td>
+<td>8128</td>
+</tr>
+<tr class="row-even"><td>ncHostIdx</td>
+<td>int(11)</td>
+<td>22</td>
+</tr>
+<tr class="row-odd"><td>ccvm_mem</td>
+<td>int(11)</td>
+<td>1024</td>
+</tr>
+<tr class="row-even"><td>ccvm_cores</td>
+<td>int(11)</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>ccvm_disk</td>
+<td>int(11)</td>
+<td>7</td>
+</tr>
+<tr class="row-even"><td>emiId</td>
+<td>varchar(32)</td>
+<td>emi-308A11D6</td>
+</tr>
+<tr class="row-odd"><td>ccnet_publicIp</td>
+<td>varchar(32)</td>
+<td>149.165.159.144</td>
+</tr>
+<tr class="row-even"><td>ccnet_privateMac</td>
+<td>varchar(32)</td>
+<td>D0:0D:57:AB:09:CE</td>
+</tr>
+<tr class="row-odd"><td>ccnet_networkIndex</td>
+<td>varchar(32)</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>ccnet_vlan</td>
+<td>varchar(32)</td>
+<td>14</td>
+</tr>
+<tr class="row-odd"><td>ccnet_privateIp</td>
+<td>varchar(32)</td>
+<td>10.0.6.3</td>
+</tr>
+<tr class="row-even"><td>ramdiskURL</td>
+<td>varchar(128)</td>
+<td><a class="reference external" href="http://">http://</a><em>.</em>.*.*:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml</td>
+</tr>
+<tr class="row-odd"><td>state</td>
+<td>varchar(16)</td>
+<td>Extant</td>
+</tr>
+<tr class="row-even"><td>accountId</td>
+<td>varchar(32)</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>kernelURL</td>
+<td>varchar(128)</td>
+<td><a class="reference external" href="http://">http://</a><em>.</em>.*.*:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml</td>
+</tr>
+<tr class="row-even"><td>ramdiskId</td>
+<td>varchar(32)</td>
+<td>eri-5BB61255</td>
+</tr>
+<tr class="row-odd"><td>volumes</td>
+<td>varchar(32)</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>launchIndex</td>
+<td>int(11)</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>platform</td>
+<td>varchar(16)</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>bundleTaskStateName</td>
+<td>varchar(16)</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>reservationId</td>
+<td>varchar(32)</td>
+<td>r-52D10884</td>
+</tr>
+<tr class="row-even"><td>euca_hostname</td>
+<td>varchar(32)</td>
+<td>india</td>
+</tr>
+<tr class="row-odd"><td>euca_version</td>
+<td>varchar(32)</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 
 </div>
@@ -222,7 +390,7 @@ It calculates metrics data and generates graph images like PNG files and html fi
     </p>
     <p>
         &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, FUgang Wang.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
     </p>
   </div>
 </footer>

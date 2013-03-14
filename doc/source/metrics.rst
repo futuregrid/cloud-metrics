@@ -369,3 +369,4 @@ already performed and skipping it. Hence it is possible to create a
 fast script that does not need to recreate the majority of the
 calculations, but only injects new data and calculate metrics based on
 this new data.  
+

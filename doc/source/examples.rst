@@ -1,21 +1,13 @@
-Yet more Examples 
+TODO: examples
 ============================
 
-that may have to be merged into metrics section
-
-.. sidebar:: 
-   . 
-
-  .. contents:: Table of Contents
-     :depth: 3
-
-
-..
-
-
+what is here cmd? 
 
 Show machine image counts for Eucalyptus
-----------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note:: TODO Hyungro, its unclear to me wher ethis code is and how i
+              can access it through the shell
 
 Based on Jonathan's code, we are able to get image counts via cmd2 tools.
 It's established on 'euca-describe-images' command::
@@ -30,12 +22,15 @@ It's established on 'euca-describe-images' command::
 
 There are additional options which might be useful,
 
-1. showing only image numbers owned by the userid specified::
+
+Showing only image numbers owned by the userid specified::
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     (Cmd) count_image -u jdiaz
     jdiaz   7
    
-2. displaying details about images::
+Displaying details about images::
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         (Cmd) count_images -u jdiaz -d
         jdiaz   7
@@ -52,7 +47,8 @@ There are additional options which might be useful,
         IMAGE   emi-48141244    ajyounge/ajyounge-1563160039.img.manifest.xml   ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
         IMAGE   emi-FC6A1197    ajyounge/ubuntu-natty.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
 
-3. displaying summary values about images.
+Displaying summary values about images
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     e.g. total image counts, total user counts, average image counts 
     per user, and maximum image counts and userid::
 
@@ -66,76 +62,4 @@ There are additional options which might be useful,
         ==========
 
  
-Create a summary table for the month of January
-----------------------------------------------------------------------
 
-
-The following will create a table with data produced for the month of January::
-
-    > fg-metric
-    fg> clear users
-    fg> analyze -M 01
-    fg> table --type users --separator ,  --caption Testing_the_csv_table
-    fg> quit
-
-Naturally you could store this script in a file and pipe to fg-metric
-in case you have more complex or repetitive analysis to do. 
-
-How to create a summary analysis for multiple month
-----------------------------------------------------------------------
-
-Assume you like to create a nice html page directory with the analysis
-of the data contained. This can be done as follows. Assume the following 
-contents is in the file analyze.txt::
-
-    clear users
-    analyze -M 01 -Y 2012
-    createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
-    
-    clear users
-    analyze -M 02 -Y 2012
-    createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
-  
-    createreports 2012-01 2012-02
-
-This page creates a beautiful report page with links to the generated
-graphs contained in the directories specified. All index files in
-the directories are printed before the images in the directory are
-included. The resulting report is an html report.
-
-To start the script, simply use::
-
-    cat analyze.txt | fg-metric
-
-This will produce a nice directory tree with all the data needed for a
-display.
-
-
-
-Examples
-----------------------------------------------------------------------
-
-`example.txt <./examples/example1.txt>`_
-* ????
-
-[example2.txt](./examples/example2.txt)
-* ????
-
-[test.txt](./examples/test.txt)
-* ????
-
-
-WHY ARE YOU USING md syntax, but we use rst ?
-
-
-
-Yet another set of Examples Scripts copied from somewhere
---------------------------------------------------------------------------------
-
-Please find a small set of example scripts. Example 2 is most
-interesting as it produces output for multiple month on VM ussage and
-wallclock time associated with the users
-
-* `example1.txt <../../../examples/example1.txt>`_
-* `example2.txt <../../../examples/example2.txt>`_
-* `test.txt <../../../examples/test.txt>`_

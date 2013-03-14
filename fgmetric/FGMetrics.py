@@ -3,6 +3,7 @@ from cmd2 import Cmd, options, make_option
 import sys
 import optparse
 import csv
+import subprocess
 from datetime import datetime
 from calendar import monthrange
 from pprint import pprint
@@ -195,6 +196,74 @@ class FGMetrics(Cmd):
         self.chart.set_yaxis(self.search.timetype or "")
         self.chart.display()
 
+    @options([
+        make_option('-u', '--user', type="string", help="Show only image numbers owned by the userid specified."),
+        make_option('-d', '--detail', action="store_true", default=False, help="Show details about images"),
+        make_option('-s', '--summary', action="store_true", default=False, help="Show summary values about images")
+        ])
+    def count_images(self, arg, opts=None):
+        """Count bucket images per user (development level)
+
+            It is virtual machine image counts grouped by users or accounts based on euca2ools. 
+            It shows that which user or account currently owns how many virtual machine images on the system. 
+            This metric is based on the euca2ool command .euca-describe-images. that a eucalyptus user can see
+            a list of machine images. 
+        """
+        bucket_dict = {}
+        details = {}
+        detail = {}
+        max_user = ["", 0]
+        bin_path = subprocess.check_output(["which", "euca-describe-images"])
+        eucabin = bin_path.split("\n")
+        output = subprocess.check_output(["python2.7", eucabin[0]])
+        # Split the output by end-of-line chars.
+        lines = output.split("\n")
+        chart_labels = []
+
+        # Loop through lines. The image path is the third item.
+        # Split by "/" to get bucket and key.
+        for line in lines:
+            if line:
+                try:
+                    values = line.split()
+                    bucket, key = values[2].split("/")
+                    # replace bucket with accountId - hrlee
+                    # No reason to gather bucket name. Instead, accountid would be meaningful.
+                    bucket = values[3] + "(" + values[3] + ")"
+                    count = bucket_dict.get(bucket, 0)
+                    detail[count] = line 
+                    details[bucket] = detail
+                    bucket_dict[bucket] = count + 1
+                    if bucket_dict[bucket] > max_user[1]:
+                        max_user[0] = bucket
+                        max_user[1] = bucket_dict[bucket]
+                except:
+                    continue
+
+        for key, value in bucket_dict.items():
+            if opts.user:
+                if opts.user != key:
+                    continue
+            print("\t".join([key, str(value)]))
+            chart_labels.append( key + ":" + str(value))
+
+        # show detail information of image owned by a specific user from -u, --user option
+        if opts.user and opts.detail:
+            for key, value in details[opts.user].items():
+                print (value)
+
+        # Show summary of images. i.e. number of total images, number of users, average numbers of images, and maximum numbers of images.
+        if opts.summary:
+            total_image_count = str(len(lines) - 1) # Except (-1) last \n line count
+            total_user_count = str(len(bucket_dict))
+            print ""
+            print "= Summary ="
+            print "Total image counts:\t" + total_image_count
+            print "Total user counts:\t" + total_user_count
+            print "Average image counts per user:\t" + str(float(total_image_count) / float(total_user_count))
+            print "Maximum image counts and userid:\t" + max_user[0] + " has " +  str(max_user[1])
+            print "=========="
+
     def do_refresh(self, line, opts=None):
         """Refresh component (same as 'load')
 
@@ -236,13 +305,19 @@ class FGMetrics(Cmd):
         """Set a function with parameter(s)"""
         self.call_attr(line, "set_", "self.search")
 
+    def do_count(self, line, opts=None):
+        """Set a function with parameter(s)"""
+        self.call_attr(line, "count_")
+
     def call_attr(self, line, prefix="_", obj_name="self"):
 
         try:
             args = line.split()
             cmd = args[0]
 
-            if len(args) == 2:
+            if len(args) == 1:
+                params = ""
+            elif len(args) == 2:
                 params = args[1]
             else:
                 params = args[1:]

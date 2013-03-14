@@ -38,6 +38,7 @@ Welcome to Cloud Metrics's documentation!
    </td>
    </tr>
    </table>
+    <hr>
 
 Cloud metrics is an open source code project that allows to analyze
 the log files for various cloud infrastructure tools. At this time, we

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Metrics &mdash; Cloud Metrics  documentation</title>
+    <title>Metric Shell &mdash; Cloud Metrics  documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="Cloud Metrics  documentation" href="index.html" />
-    <link rel="next" title="Yet more Examples" href="examples.html" />
+    <link rel="next" title="Developers Manual" href="developer.html" />
     <link rel="prev" title="Administrator Guide" href="manual.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -66,69 +66,67 @@
   <ul class="dropdown-menu globaltoc"
     ><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Administrator Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#installing-the-code">Installing the Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#installation">Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#prerequisites">Prerequisites</a></li>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#production-version">Production Version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#development-version">Development Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="manual.html#additional-packages-for-sphinx">Additional packages for sphinx</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#setting-up-a-database">Setting Up a Database</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="manual.html#getting-data">Getting Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#database-configuration">Database Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#obtaining-cloud-usage-information">Obtaining Cloud Usage information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#eucalyptus">Eucalyptus</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="manual.html#log-frequency">Log Frequency</a></li>
 <li class="toctree-l4"><a class="reference internal" href="manual.html#create-a-log-backup">Create A Log Backup</a></li>
-<li class="toctree-l4"><a class="reference internal" href="manual.html#parse-the-log-backup">Parse the Log Backup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#parse-a-log-backup">Parse A Log Backup</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#openstack">OpenStack</a></li>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#nimbus">Nimbus</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#generate-results">Generate Results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#commands">Commands</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#create-production-web-pages-using-sphinx">Create Production Web pages using Sphinx</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#create-production-web-pages-using-flask">Create Production Web pages using Flask</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#create-pdf-reports">Create PDF reports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#commands">Commands</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Metrics</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#number-of-vm-instances-per-user">Number of VM instances per user</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#total-runtime-of-vm-instance-used-per-user">Total runtime of VM instance used per user</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#a-count-of-vm-images-owned-per-user">A count of VM images owned per user</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-total-number-of-vm-instances-used-in-a-system">The total number of VM instances used in a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#total-runtime-of-vm-instances-used-in-a-system">Total runtime of VM instances used in a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#total-cpu-cores-of-vm-instances-used-in-a-system">Total CPU cores of VM instances used in a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#total-memories-of-vm-instances-used-in-a-system">Total memories of VM instances used in a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#total-disks-of-vm-instances-used-in-a-system">Total disks of VM instances used in a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#examples-that-need-to-be-integrated-into-the-above-sections">Examples that need to be integrated into the above sections</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">Total runtime of VM instance used per user</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">A count of VM images owned per user</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">The total number of VM instances used in a system</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">Total runtime of VM instances used in a system</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">Total memories of VM instances used in a system</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id12">Total disks of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#production-web-pages-using-sphinx">Production Web Pages using Sphinx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#production-web-pages-using-flask">Production Web Pages using Flask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#pdf-reports">PDF Reports</a></li>
 </ul>
 </li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Metric Shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#starting-the-cloud-metric-shell">Starting the cloud metric shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-set-command">The  &#8220;set&#8221; Command</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#set-the-date-range">Set the date range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-the-metric">Set the metric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-the-hostname">Set the hostname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-the-cloud-service">Set the cloud service</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Yet more Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#id1">Create a summary table for the month of January</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#how-to-create-a-summary-analysis-for-multiple-month">How to create a summary analysis for multiple month</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#examples">Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#yet-another-set-of-examples-scripts-copied-from-somewhere">Yet another set of Examples Scripts copied from somewhere</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="todo.html">REST: I FOUND THIS IN SOME OTHER FILE</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="todo.html#eucalyptus-2-0-data-integration">Eucalyptus 2.0 Data Integration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="todo.html#todo">TODO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-help-command">The &#8220;help&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-analyze-command">The &#8220;analyze&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-chart-command">The &#8220;chart&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-csv-command">The &#8220;csv&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples-of-using-the-metric-shell">Examples of using the metric shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#daily-active-user-count">Daily active user count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vms-count-by-project">VMs count by Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#three-metrics-in-a-single-chart">Three metrics in a single chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-program-to-create-a-summary-analysis-for-multiple-month">Python Program to create a summary analysis for multiple month</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developers Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">TODO: examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#showing-only-image-numbers-owned-by-the-userid-specified">Showing only image numbers owned by the userid specified::</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#displaying-details-about-images">Displaying details about images::</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#displaying-summary-values-about-images">Displaying summary values about images</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="repository.html">Directory Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repository.html#file-contents">File contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
@@ -136,29 +134,32 @@
 <li class="toctree-l2"><a class="reference internal" href="lighttpd.html#browsing-the-contents">Browsing the contents</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
 </ul>
 </ul>
 </li>
             <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
   <ul class="dropdown-menu localtoc"><ul>
-<li><a class="reference internal" href="#">Metrics</a><ul>
-<li><a class="reference internal" href="#number-of-vm-instances-per-user">Number of VM instances per user</a></li>
-<li><a class="reference internal" href="#total-runtime-of-vm-instance-used-per-user">Total runtime of VM instance used per user</a></li>
-<li><a class="reference internal" href="#a-count-of-vm-images-owned-per-user">A count of VM images owned per user</a></li>
-<li><a class="reference internal" href="#the-total-number-of-vm-instances-used-in-a-system">The total number of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#total-runtime-of-vm-instances-used-in-a-system">Total runtime of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#total-cpu-cores-of-vm-instances-used-in-a-system">Total CPU cores of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#total-memories-of-vm-instances-used-in-a-system">Total memories of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#total-disks-of-vm-instances-used-in-a-system">Total disks of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#examples-that-need-to-be-integrated-into-the-above-sections">Examples that need to be integrated into the above sections</a><ul>
-<li><a class="reference internal" href="#id1">Total runtime of VM instance used per user</a></li>
-<li><a class="reference internal" href="#id2">A count of VM images owned per user</a></li>
-<li><a class="reference internal" href="#id3">The total number of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#id4">Total runtime of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#id11">Total memories of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#id12">Total disks of VM instances used in a system</a></li>
+<li><a class="reference internal" href="#">Metric Shell</a><ul>
+<li><a class="reference internal" href="#starting-the-cloud-metric-shell">Starting the cloud metric shell</a></li>
+<li><a class="reference internal" href="#the-set-command">The  &#8220;set&#8221; Command</a><ul>
+<li><a class="reference internal" href="#set-the-date-range">Set the date range</a></li>
+<li><a class="reference internal" href="#set-the-metric">Set the metric</a></li>
+<li><a class="reference internal" href="#set-the-hostname">Set the hostname</a></li>
+<li><a class="reference internal" href="#set-the-cloud-service">Set the cloud service</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-help-command">The &#8220;help&#8221; command</a></li>
+<li><a class="reference internal" href="#the-analyze-command">The &#8220;analyze&#8221; command</a></li>
+<li><a class="reference internal" href="#the-chart-command">The &#8220;chart&#8221; command</a></li>
+<li><a class="reference internal" href="#the-csv-command">The &#8220;csv&#8221; command</a></li>
+<li><a class="reference internal" href="#examples-of-using-the-metric-shell">Examples of using the metric shell</a><ul>
+<li><a class="reference internal" href="#daily-active-user-count">Daily active user count</a></li>
+<li><a class="reference internal" href="#vms-count-by-project">VMs count by Project</a></li>
+<li><a class="reference internal" href="#three-metrics-in-a-single-chart">Three metrics in a single chart</a></li>
+<li><a class="reference internal" href="#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li><a class="reference internal" href="#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li><a class="reference internal" href="#python-program-to-create-a-summary-analysis-for-multiple-month">Python Program to create a summary analysis for multiple month</a></li>
 </ul>
 </li>
 </ul>
@@ -171,8 +172,8 @@
             
   <li><a href="manual.html"
          title="previous chapter">&laquo; Administrator Guide</a></li>
-  <li><a href="examples.html"
-         title="next chapter">Yet more Examples &raquo;</a></li>
+  <li><a href="developer.html"
+         title="next chapter">Developers Manual &raquo;</a></li>
           
           
         </ul>
@@ -190,29 +191,33 @@
   </div>
 
   
-  <div class="section" id="metrics">
-<h1><a class="toc-backref" href="#id15">Metrics</a><a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="metric-shell">
+<h1><a class="toc-backref" href="#id1">Metric Shell</a><a class="headerlink" href="#metric-shell" title="Permalink to this headline">¶</a></h1>
 <div class="sidebar">
-<p class="first sidebar-title">.</p>
+<p class="first sidebar-title">Metrics</p>
 <div class="contents last topic" id="table-of-contents">
 <p class="topic-title first">Table of Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#metrics" id="id15">Metrics</a><ul>
-<li><a class="reference internal" href="#number-of-vm-instances-per-user" id="id16">Number of VM instances per user</a></li>
-<li><a class="reference internal" href="#total-runtime-of-vm-instance-used-per-user" id="id17">Total runtime of VM instance used per user</a></li>
-<li><a class="reference internal" href="#a-count-of-vm-images-owned-per-user" id="id18">A count of VM images owned per user</a></li>
-<li><a class="reference internal" href="#the-total-number-of-vm-instances-used-in-a-system" id="id19">The total number of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#total-runtime-of-vm-instances-used-in-a-system" id="id20">Total runtime of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#total-cpu-cores-of-vm-instances-used-in-a-system" id="id21">Total CPU cores of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#total-memories-of-vm-instances-used-in-a-system" id="id22">Total memories of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#total-disks-of-vm-instances-used-in-a-system" id="id23">Total disks of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#examples-that-need-to-be-integrated-into-the-above-sections" id="id24">Examples that need to be integrated into the above sections</a><ul>
-<li><a class="reference internal" href="#id1" id="id25">Total runtime of VM instance used per user</a></li>
-<li><a class="reference internal" href="#id2" id="id26">A count of VM images owned per user</a></li>
-<li><a class="reference internal" href="#id3" id="id27">The total number of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#id4" id="id28">Total runtime of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#id11" id="id29">Total memories of VM instances used in a system</a></li>
-<li><a class="reference internal" href="#id12" id="id30">Total disks of VM instances used in a system</a></li>
+<li><a class="reference internal" href="#metric-shell" id="id1">Metric Shell</a><ul>
+<li><a class="reference internal" href="#starting-the-cloud-metric-shell" id="id2">Starting the cloud metric shell</a></li>
+<li><a class="reference internal" href="#the-set-command" id="id3">The  &#8220;set&#8221; Command</a><ul>
+<li><a class="reference internal" href="#set-the-date-range" id="id4">Set the date range</a></li>
+<li><a class="reference internal" href="#set-the-metric" id="id5">Set the metric</a></li>
+<li><a class="reference internal" href="#set-the-hostname" id="id6">Set the hostname</a></li>
+<li><a class="reference internal" href="#set-the-cloud-service" id="id7">Set the cloud service</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-help-command" id="id8">The &#8220;help&#8221; command</a></li>
+<li><a class="reference internal" href="#the-analyze-command" id="id9">The &#8220;analyze&#8221; command</a></li>
+<li><a class="reference internal" href="#the-chart-command" id="id10">The &#8220;chart&#8221; command</a></li>
+<li><a class="reference internal" href="#the-csv-command" id="id11">The &#8220;csv&#8221; command</a></li>
+<li><a class="reference internal" href="#examples-of-using-the-metric-shell" id="id12">Examples of using the metric shell</a><ul>
+<li><a class="reference internal" href="#daily-active-user-count" id="id13">Daily active user count</a></li>
+<li><a class="reference internal" href="#vms-count-by-project" id="id14">VMs count by Project</a></li>
+<li><a class="reference internal" href="#three-metrics-in-a-single-chart" id="id15">Three metrics in a single chart</a></li>
+<li><a class="reference internal" href="#create-a-summary-table-for-the-month-of-january" id="id16">Create a summary table for the month of January</a></li>
+<li><a class="reference internal" href="#create-a-summary-analysis-for-multiple-month" id="id17">Create a summary analysis for multiple month</a></li>
+<li><a class="reference internal" href="#python-program-to-create-a-summary-analysis-for-multiple-month" id="id18">Python Program to create a summary analysis for multiple month</a></li>
 </ul>
 </li>
 </ul>
@@ -220,517 +225,339 @@
 </ul>
 </div>
 </div>
-<p>There are currently eight different metrics to deliver system utilization, user activities and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as virtual machine (VM) instances, registered VM images, virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, you can find descriptions, instructions, and examples for the metrics.</p>
-<div class="section" id="number-of-vm-instances-per-user">
-<h2><a class="toc-backref" href="#id16">Number of VM instances per user</a><a class="headerlink" href="#number-of-vm-instances-per-user" title="Permalink to this headline">¶</a></h2>
-<p>Within the framework we have a convenient way to obtain information
-about the <strong>number of VM instances</strong> per user. To obtain this
-information you can invoke the following commands within the
-<tt class="docutils literal"><span class="pre">fg-metric</span></tt> shell. In this example we generate a report .... bla bla ....:</p>
-<div class="highlight-python"><pre># This is an example of fg-metric cmd tool
-# You can test like below
-# $ cat example2.txt | fg-metric
-# Or you can type the commands below manually once you enter fg-metric
-#
-# Analyze entire data and create report
-clear users
-analyze -M 01 -Y 2012
-createreport -d 2012-01
-</pre>
+<p>Cloud Metrics supports a convenient shell to aide in the cloud usage
+data analysis. It is advisable that users use the shell in case you
+like to conduct multiple analysis steps.  The shell is designed to
+read a user&#8217;s input, calculate metrics data, and then provide the
+results in an appropriate format such as a standard output, JSON, JPG,
+PNG, and html with javascript charting libraries embedded</p>
+<div class="section" id="starting-the-cloud-metric-shell">
+<h2><a class="toc-backref" href="#id2">Starting the cloud metric shell</a><a class="headerlink" href="#starting-the-cloud-metric-shell" title="Permalink to this headline">¶</a></h2>
+<p>To activate the metric shell please execute the command:</p>
+<div class="highlight-python"><pre>$ fg-metric</pre>
 </div>
-<p>This script uses the following command:</p>
+<p>Once you do this you can issue some of the metric shell commands. Here
+is a simple example that analyzes the runtime metric for a machine
+india on which openstack is installed and prints a chart:</p>
+<div class="highlight-python"><pre>fg-metric&gt; set nodename india
+fg-metric&gt; set platform openstack
+fg-metric&gt; set metric runtime
+fg-metric&gt; analyze
+fg-metric&gt; chart</pre>
+</div>
+</div>
+<div class="section" id="the-set-command">
+<h2><a class="toc-backref" href="#id3">The  &#8220;set&#8221; Command</a><a class="headerlink" href="#the-set-command" title="Permalink to this headline">¶</a></h2>
+<p>Before performing an analysis, several settings need to be specified
+with the <tt class="docutils literal"><span class="pre">set</span></tt> command. This command allows to associate
+one or more values with a key:</p>
+<div class="highlight-python"><pre>fg-metric&gt; set $key $value[ $value2 ...]</pre>
+</div>
+<div class="section" id="set-the-date-range">
+<h3><a class="toc-backref" href="#id4">Set the date range</a><a class="headerlink" href="#set-the-date-range" title="Permalink to this headline">¶</a></h3>
+<p>To analyze data between these two dates please set the date range:</p>
+<div class="highlight-python"><pre>fg-metric&gt; set date 2012-01-01T00:00:00 2012-12-31T23:59:59</pre>
+</div>
+</div>
+<div class="section" id="set-the-metric">
+<h3><a class="toc-backref" href="#id5">Set the metric</a><a class="headerlink" href="#set-the-metric" title="Permalink to this headline">¶</a></h3>
+<p>To specify  which metric item will be calculated please set it as follows:</p>
+<div class="highlight-python"><pre>fg-metric&gt; set metric runtime
+
+(multiple metrics)
+fg-metric&gt; set metric runtime count</pre>
+</div>
+<p>We are supporting the following metrics:</p>
+<div class="highlight-python"><pre>fg-metric&gt; set metric help
+Possible commands
+=================
+ set metric count
+ set metric runtime
+ set metric countusers
+ set metric cores
+ set metric runtimeusers
+ set metric memories
+ set metric disks</pre>
+</div>
+</div>
+<div class="section" id="set-the-hostname">
+<h3><a class="toc-backref" href="#id6">Set the hostname</a><a class="headerlink" href="#set-the-hostname" title="Permalink to this headline">¶</a></h3>
+<p>As our metric system can handle multiple coulds, it is important to
+set for which host the calculations are to be specified. Please set it
+ass follows where the name india is your machine that holds the IaaS:</p>
+<div class="highlight-python"><pre>fg-metric&gt; set hostname india</pre>
+</div>
+</div>
+<div class="section" id="set-the-cloud-service">
+<h3><a class="toc-backref" href="#id7">Set the cloud service</a><a class="headerlink" href="#set-the-cloud-service" title="Permalink to this headline">¶</a></h3>
+<p>To specify which cloud service will be included please use the
+following command:</p>
+<div class="highlight-python"><pre>fg-metric&gt; set platform openstack</pre>
+</div>
+</div>
+</div>
+<div class="section" id="the-help-command">
+<h2><a class="toc-backref" href="#id8">The &#8220;help&#8221; command</a><a class="headerlink" href="#the-help-command" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">help</span></tt> command is useful to obtain a simple help message for the
+available commoand:</p>
+<div class="highlight-python"><pre>fg-metric&gt; help
+
+Documented commands (type help &lt;topic&gt;):
+========================================
+_load           clear           edit     l     pause    run      shell
+_relative_load  cmdenvironment  get      li    py       save     shortcuts
+analyze         csv             hi       list  r        set      show
+chart           ed              history  load  refresh  setconf  showconf
+
+Undocumented commands:
+======================
+EOF  eof  exit  help  q  quit</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">TODO: document the undocumented commands and include new output here once done.</p>
+</div>
+<p>To find out more details about an available shell command, simply type
+in help followed by the command:</p>
+<div class="highlight-python"><pre>fg-metric&gt; help set
+Set a function with parameter(s)
+
+fg-metric&gt; set help
+
+Possible commands
+=================
+set date $from $to
+set metric $name
+set platform $name
+set nodename $name</pre>
+</div>
+<p>To ask for help for a parameter you can do this as follows (here we
+give an example for finding mor out about the set data command:</p>
+<div class="highlight-python"><pre>fg-metric&gt; set date help
+Usage: set date from_date(YYYY-MM-DDTHH:MM:SS) to_date(YYYY-MM-DDTHH:MM:SS).
+(e.g. set date 2012-01-01T00:00:00 2012-12-31T23:59:59)</pre>
+</div>
+</div>
+<div class="section" id="the-analyze-command">
+<h2><a class="toc-backref" href="#id9">The &#8220;analyze&#8221; command</a><a class="headerlink" href="#the-analyze-command" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">TODO Hyungro</p>
+</div>
+<p>Once you conducted an analyze, cloud metrics supports several output
+options such as stdout, JSON, csv, jpg, png, html that can be created
+with the help of various commands such as chart and csv which we
+describe next.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">TODO Hyungro, what about the other commands? I do not think they are listed here.</p>
+</div>
+</div>
+<div class="section" id="the-chart-command">
+<h2><a class="toc-backref" href="#id10">The &#8220;chart&#8221; command</a><a class="headerlink" href="#the-chart-command" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">chart</span></tt> is a command to create a chart html file with different
+chart types (e.g. bar, line, column, etc.).  To help understanding of
+data, a type of charts should be selected carefully. Relationships
+between data and chart type refer to proper representation.</p>
+<p>Assume, the data is:</p>
 <ul class="simple">
-<li><strong>clear users</strong> - clear memory for user data</li>
-<li><strong>analyze</strong> - analyze user data for a certain period</li>
-<li><strong>createreport</strong> - create a graph</li>
+<li>historical representation of quantity, then the type of chart should
+be =&gt; a line chart with x-axis as date and y-axis as quantity.
+- daily metrics</li>
+<li>just quantities of different groups, then the type of chart should be =&gt; a pie chart
+- comparison across cloud services, locations, projects.</li>
 </ul>
-<p>The output of this command sores the result in a file called .... bla
-bl .. as we specified in the prefious shell commands:</p>
+<p>Example usage of the <tt class="docutils literal"><span class="pre">chart</span></tt> command:</p>
+<div class="highlight-python"><pre>fg-metric&gt; ...(skipped)...
+fg-metric&gt; analyze
+fg-metric&gt; chart -t pie-basic --directory $directory_name</pre>
+</div>
+</div>
+<div class="section" id="the-csv-command">
+<h2><a class="toc-backref" href="#id11">The &#8220;csv&#8221; command</a><a class="headerlink" href="#the-csv-command" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">csv</span></tt> ia a command to export statistics as a comma-separated values (csv) file.</p>
+<p>Example usage of <tt class="docutils literal"><span class="pre">csv</span></tt> command:</p>
+<div class="highlight-python"><pre>fg-metric&gt; ...(skipped)...
+fg-metric&gt; analyze
+fg-metric&gt; csv
+2012-01-01T00:00:00-2013-01-01T00:00:00-runtime-openstack-india-dailyAll.csv is created
+
+(or)
+fg-metric&gt; csv -o test/result.csv
+test/result.csv is created</pre>
+</div>
+</div>
+<div class="section" id="examples-of-using-the-metric-shell">
+<h2><a class="toc-backref" href="#id12">Examples of using the metric shell</a><a class="headerlink" href="#examples-of-using-the-metric-shell" title="Permalink to this headline">¶</a></h2>
+<p>We show now some examples to highlight how easy it is to generate
+statistics with the metric shell.</p>
+<div class="section" id="daily-active-user-count">
+<h3><a class="toc-backref" href="#id13">Daily active user count</a><a class="headerlink" href="#daily-active-user-count" title="Permalink to this headline">¶</a></h3>
+<p>This example shows you how to retrieve data for a certain time period.
+<tt class="docutils literal"><span class="pre">set</span> <span class="pre">period</span> <span class="pre">daily</span></tt> provides statistics grouped by date. For example,
+if the date settings cover 30 days, the statistics will have 30 record
+sets instead of a single record.  The chart type can be selected with
+<tt class="docutils literal"><span class="pre">chart</span> <span class="pre">-t</span></tt> option. <tt class="docutils literal"><span class="pre">line-time-series</span></tt> is one of the types in
+highcharts. For more details of the types, see here:
+<a class="reference external" href="http://www.highcharts.com/demo/">Highchart Demo</a>. In our example we
+create a chart that represents for each day the number of users using
+a cloud services in a histogram over the specified period (see Figure
+1). Using the script:</p>
+<div class="highlight-python"><pre>clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set period daily
+set metric countusers
+analyze
+chart -t line-time-series --directory %(output_directory)s</pre>
+</div>
+<p>will result in the following image:</p>
 <div class="figure">
-<a class="reference internal image-reference" href="_images/example1.png"><img alt="The number of VM instances used per user" src="_images/example1.png" style="width: 400.0px; height: 113.5px;" /></a>
-<p class="caption"><strong>X-axis</strong> = indicates the number of VM instances.</p>
-<div class="legend">
-<p><strong>Y-axis</strong> = indicates an ownerid and the number of VM instances used by the ownerid.</p>
-<p><strong>Figure 1.</strong> The number of used VM instances grouped by an ownerid (January 2012 in India)</p>
+<a class="reference internal image-reference" href="_images/daily_active_user_count.png"><img alt="Daily active user count" src="_images/daily_active_user_count.png" style="width: 476.0px; height: 396.2px;" /></a>
+<p class="caption">Figure 1. The count of active users.</p>
 </div>
 </div>
+<div class="section" id="vms-count-by-project">
+<h3><a class="toc-backref" href="#id14">VMs count by Project</a><a class="headerlink" href="#vms-count-by-project" title="Permalink to this headline">¶</a></h3>
+<p>This example represents data in percentages for different project
+groups. In this example, we use <tt class="docutils literal"><span class="pre">groupby</span></tt> instead of <tt class="docutils literal"><span class="pre">period</span></tt> in
+the previous example. It will result in a pie chart showing the
+fractions  of Launched VM instances by Project groups (Figure
+2). Using the script:</p>
+<div class="highlight-python"><pre>clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set groupby project
+set metric count
+analyze
+chart -t pie-basic --directory %(output_directory)s</pre>
 </div>
-<div class="section" id="total-runtime-of-vm-instance-used-per-user">
-<h2><a class="toc-backref" href="#id17">Total runtime of VM instance used per user</a><a class="headerlink" href="#total-runtime-of-vm-instance-used-per-user" title="Permalink to this headline">¶</a></h2>
-<p>It is the total runtime for virtual machine instances grouped by users or accounts based on log files of eucalyptus. It shows the amount of resources used by users and a system utilization by adding up the total lifetime of instances during a certain period.</p>
-</div>
-<div class="section" id="a-count-of-vm-images-owned-per-user">
-<h2><a class="toc-backref" href="#id18">A count of VM images owned per user</a><a class="headerlink" href="#a-count-of-vm-images-owned-per-user" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>It is virtual machine image count grouped by users or accounts based on euca2ools. It shows that which user or account currently owns how many virtual machine images on the system. This metric is based on the euca2ool command <em>euca-describe-images</em> that a eucalyptus user can see a list of machine images. For example in Eucalyptus 3.0, the euca-describe-images generates information like below.</dt>
-<dd><div class="first last highlight-python"><pre>$ euca-describe-images
-IMAGE emi-0E19393A jdiaz/ubuntuprecisejdiaz2122518911.img.manifest.xml 281408815495 available public i386 machine eki-226638E6 eri-32DE3771 instance-store
-IMAGE eri-4E163AA8 ramdik/initrd.img-2.6.28-11-generic.manifest.xml 000000000001 available public i386 ramdisk instance-store
-...</pre>
-</div>
-</dd>
-</dl>
-</div>
-<div class="section" id="the-total-number-of-vm-instances-used-in-a-system">
-<h2><a class="toc-backref" href="#id19">The total number of VM instances used in a system</a><a class="headerlink" href="#the-total-number-of-vm-instances-used-in-a-system" title="Permalink to this headline">¶</a></h2>
-<p>It is a count of virtual machine instance used during a certain period in a system. It shows a system utilization and a performance comparison among other systems by counting launched VM instances. It is similar to the metric of the number of VM instances used per user but it is grouped by a system instead of a user.</p>
-</div>
-<div class="section" id="total-runtime-of-vm-instances-used-in-a-system">
-<h2><a class="toc-backref" href="#id20">Total runtime of VM instances used in a system</a><a class="headerlink" href="#total-runtime-of-vm-instances-used-in-a-system" title="Permalink to this headline">¶</a></h2>
-<p>It is a total wall-clock hour(s) for virtual machine instances used in a system. It shows the amount of resources allocated and a system utilization by adding up the total lifetime of instances during a certain period. It is similar to the metric of total runtime of VM instance used per user but it is grouped by a system instead of a user.</p>
-</div>
-<div class="section" id="total-cpu-cores-of-vm-instances-used-in-a-system">
-<h2><a class="toc-backref" href="#id21">Total CPU cores of VM instances used in a system</a><a class="headerlink" href="#total-cpu-cores-of-vm-instances-used-in-a-system" title="Permalink to this headline">¶</a></h2>
-<p>It is a total amount of CPU cores for VM instances requested by users in a system. It shows CPU resource allocation by adding up the CPU cores requested during a certain period.</p>
-</div>
-<div class="section" id="total-memories-of-vm-instances-used-in-a-system">
-<h2><a class="toc-backref" href="#id22">Total memories of VM instances used in a system</a><a class="headerlink" href="#total-memories-of-vm-instances-used-in-a-system" title="Permalink to this headline">¶</a></h2>
-<p>It is a total size of memories for VM instances requested by users in a system. It shows memory resource allocation by adding up the size of a memory block requested during a certain period.</p>
-</div>
-<div class="section" id="total-disks-of-vm-instances-used-in-a-system">
-<h2><a class="toc-backref" href="#id23">Total disks of VM instances used in a system</a><a class="headerlink" href="#total-disks-of-vm-instances-used-in-a-system" title="Permalink to this headline">¶</a></h2>
-<p>It is a total size of storage for VM instances requested by users in a system. It shows disk allocation by adding up the the size of a disk requested during a certain period.</p>
-</div>
-<div class="section" id="examples-that-need-to-be-integrated-into-the-above-sections">
-<h2><a class="toc-backref" href="#id24">Examples that need to be integrated into the above sections</a><a class="headerlink" href="#examples-that-need-to-be-integrated-into-the-above-sections" title="Permalink to this headline">¶</a></h2>
-<p>In this section, graphs, and commands for each metric will be viewed.</p>
-<div class="section" id="id1">
-<h3><a class="toc-backref" href="#id25">Total runtime of VM instance used per user</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>generates a graph like below.</p>
-<blockquote>
-<div><div class="figure">
-<a class="reference internal image-reference" href="_images/example2.png"><img alt="The wall-clock hour for all VM instances executed per user" src="_images/example2.png" style="width: 400.0px; height: 113.5px;" /></a>
-<p class="caption">Figure 2. The wall-clock hour for all VM instances executed per user (January 2012 in India)</p>
-<div class="legend">
-<table border="1" class="docutils">
-<colgroup>
-<col width="7%" />
-<col width="93%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">&nbsp;</th>
-<th class="head">&nbsp;</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>X-axis</td>
-<td>indicates the total wall-clock hours for all VM instances.</td>
-</tr>
-<tr class="row-odd"><td>Y-axis</td>
-<td>indicates the an ownerid and the total hours of VM instances used by the ownerid.</td>
-</tr>
-</tbody>
-</table>
-<p>Table 2. Specifications for the example options</p>
+<p>will result in the following image:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/vms_count_by_project.png"><img alt="VMs count by Project" src="_images/vms_count_by_project.png" style="width: 476.0px; height: 396.2px;" /></a>
+<p class="caption">Figure 2. VMs count by Project.</p>
 </div>
 </div>
-<p><strong>Example commands</strong></p>
-<div class="highlight-python"><pre># This is an example of fg-metric cmd tool
-# You can test like below
-# $ cat example2.txt | fg-metric
-# Or you can type the commands below manually once you enter fg-metric
-#
-# Analyze entire data and create report
-clear users
+<div class="section" id="three-metrics-in-a-single-chart">
+<h3><a class="toc-backref" href="#id15">Three metrics in a single chart</a><a class="headerlink" href="#three-metrics-in-a-single-chart" title="Permalink to this headline">¶</a></h3>
+<p>This example represents multiple data in a single chart with multiple
+axes. <tt class="docutils literal"><span class="pre">combo-multi-axes</span></tt> allows to depict three metrics in a single
+chart.    Here we show a chart that includes average monthly usage as
+to Wall Hour (runtime), Count and the number of Users for VM instances
+(Figure 3). Using the script:</p>
+<div class="highlight-python"><pre>clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set period monthly
+set metric runtime count countusers
+set timetype hour
+analyze
+chart -t combo-multi-axes --directory %(output_directory)s</pre>
+</div>
+<p>will result in the following image:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/three_metrics_in_a_single_chart.png"><img alt="Average Monthly Usage Data (Wall hour, Launched VMs, Users)" src="_images/three_metrics_in_a_single_chart.png" style="width: 476.0px; height: 396.2px;" /></a>
+<p class="caption">Figure 3. Average Monthly Usage Data (Wall hour, Launched VMs, Users)</p>
+</div>
+</div>
+<div class="section" id="create-a-summary-table-for-the-month-of-january">
+<h3><a class="toc-backref" href="#id16">Create a summary table for the month of January</a><a class="headerlink" href="#create-a-summary-table-for-the-month-of-january" title="Permalink to this headline">¶</a></h3>
+<p>The following will create a table with data produced for the month of January:</p>
+<div class="highlight-python"><pre>&gt; fg-metric
+fg&gt; clear users
+fg&gt; analyze -M 01
+fg&gt; table --type users --separator ,  --caption Testing_the_csv_table
+fg&gt; quit</pre>
+</div>
+<p>Naturally you could store this script in a file and pipe to fg-metric
+in case you have more complex or repetitive analysis to do.</p>
+</div>
+<div class="section" id="create-a-summary-analysis-for-multiple-month">
+<h3><a class="toc-backref" href="#id17">Create a summary analysis for multiple month</a><a class="headerlink" href="#create-a-summary-analysis-for-multiple-month" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">TOODO: Why is this eucalyptus?</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">TOODO: Why not &#8221; &#8221; in -t argument?</p>
+</div>
+<p>Assume you like to create a nice html page directory with the analysis
+of the data contained. This can be done as follows. Assume the
+following contents is in the file analyze.txt:</p>
+<div class="highlight-python"><pre>clear users
 analyze -M 01 -Y 2012
-createreport -d 2012-01
-</pre>
-</div>
-<p><em>This included block is from examples/example2-1.txt</em></p>
-</div></blockquote>
-</div></blockquote>
-</div>
-<div class="section" id="id2">
-<h3><a class="toc-backref" href="#id26">A count of VM images owned per user</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>generates a graph like below.</p>
-<blockquote>
-<div><div class="figure">
-<a class="reference internal image-reference" href="_images/example3.png"><img alt="A count of VM images owned per user in India" src="_images/example3.png" style="width: 250.0px; height: 100.0px;" /></a>
-<p class="caption">Figure 3. A count of VM images owned per user (Current data in India)</p>
-<div class="legend">
-<table border="1" class="docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">&nbsp;</th>
-<th class="head">&nbsp;</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>X-axis</td>
-<td>indicates a count of VM images owned by an ownerid.</td>
-</tr>
-<tr class="row-odd"><td>Y-axis</td>
-<td>indicates an account id or an user id with the count.</td>
-</tr>
-</tbody>
-</table>
-<p>Table 3. Specifications for the example options</p>
-</div>
-</div>
-<p><strong>Example commands</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># Display virtual machine image counts grouped by accountId</span>
-<span class="c"># It generates bar chart with &#39;image_counts.png&#39; filename</span>
-<span class="n">count_images</span>
-</pre></div>
-</div>
-<p><em>This included block is from examples/example4.txt</em></p>
-<p><strong>Related commands</strong></p>
-<dl class="docutils">
-<dt>count_images</dt>
-<dd><div class="first last line-block">
-<div class="line">Count virtual machine images per user id or account id.</div>
-<div class="line">A user should read configurations and credentials of euca2ools from the config file i.e. eucarc.</div>
-<div class="line">Otherwise, this command does not return anything.</div>
-<div class="line">Typically, this is only allowed for administrators.</div>
-</div>
-</dd>
-</dl>
-</div></blockquote>
-</div></blockquote>
-</div>
-<div class="section" id="id3">
-<h3><a class="toc-backref" href="#id27">The total number of VM instances used in a system</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>generates a graph like below.</p>
-<blockquote>
-<div><div class="figure">
-<a class="reference internal image-reference" href="_images/example4.png"><img alt="The total number of VM instances used in a system" src="_images/example4.png" style="width: 250.0px; height: 100.0px;" /></a>
-<p class="caption">Figure 4. The total number of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)</p>
-<div class="legend">
-<table border="1" class="docutils">
-<colgroup>
-<col width="9%" />
-<col width="91%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr class="row-even"><td>X-axis:</td>
-<td>a day for the search range
-(e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)</td>
-</tr>
-<tr class="row-odd"><td>Y-axis:</td>
-<td>instance counts</td>
-</tr>
-<tr class="row-even"><td>Search range:</td>
-<td>2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)</td>
-</tr>
-<tr class="row-odd"><td>Period:</td>
-<td>daily</td>
-</tr>
-</tbody>
-</table>
-<p>Table 4. Specifications for the example options</p>
-</div>
-</div>
-<p><strong>Example commands</strong></p>
-<div class="highlight-python"><pre># New metric for system utilization
-# These commands will produce a line chart for system usage
-clear all
+createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
 
-# A user can specify a data range
-set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
+clear users
+analyze -M 02 -Y 2012
+createreport -d 2012-01 -t Running_instances_per_user_of_Eucalyptus_in_India
 
-# A user can specify a node name (e.g. india, sierra)
-set nodename india
-
-# It requires a metric which can be specified with -S, --stat option with analyze command.
-analyze -S count
-
-# Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/count
-</pre>
+createreports 2012-01 2012-02</pre>
 </div>
-<p><em>This included block is from examples/example5-1.txt</em></p>
-<p><strong>Related commands</strong></p>
-<dl class="docutils">
-<dt>set_range</dt>
-<dd>Specify search range</dd>
-<dt>set_nodename</dt>
-<dd>Specify search node name</dd>
-<dt>analyze</dt>
-<dd><p class="first">Analyze for a metric specified by -S option</p>
-<p><em>Options</em></p>
-<dl class="last docutils">
-<dt>count</dt>
-<dd>Analyze for counting the total number of VM instances</dd>
-<dt>runtime</dt>
-<dd>Analyze for wall-clock hours for VM instances</dd>
-<dt>ccvm_cores</dt>
-<dd>Analyze for CPU cores of VM instances</dd>
-<dt>ccvm_mem</dt>
-<dd>Analyze for memory allocation for VM instances</dd>
-<dt>ccvm_disk</dt>
-<dd>Analyze for disk allocation for VM instances</dd>
-</dl>
-</dd>
-<dt>sys_report</dt>
-<dd><div class="first last line-block">
-<div class="line">Generate a graph for the analyzed data</div>
-<div class="line">&#8216;analyze&#8217; command needs to be executed prior to run this command</div>
+<p>This page creates a beautiful report page with links to the generated
+graphs contained in the directories specified. All index files in the
+directories are printed before the images in the directory are
+included. The resulting report is an html report.</p>
+<p>To start the script, simply use:</p>
+<div class="highlight-python"><pre>cat analyze.txt | fg-metric</pre>
 </div>
-</dd>
-</dl>
-</div></blockquote>
-</div></blockquote>
+<p>This will produce a nice directory tree with all the data needed for a
+display.</p>
 </div>
-<div class="section" id="id4">
-<h3><a class="toc-backref" href="#id28">Total runtime of VM instances used in a system</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>Generates a graph as shown in Figure 5.</p>
-<blockquote>
-<div><div class="figure">
-<a class="reference internal image-reference" href="_images/example5.png"><img alt="The total wall-clock hours of VM instances used in a system" src="_images/example5.png" style="width: 250.0px; height: 100.0px;" /></a>
-<p class="caption">Figure 5. The total wall-clock hours of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)</p>
-<div class="legend">
-<table border="1" class="docutils">
-<colgroup>
-<col width="9%" />
-<col width="91%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr class="row-even"><td>X-axis:</td>
-<td>a day for the search range
-(e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)</td>
-</tr>
-<tr class="row-odd"><td>Y-axis:</td>
-<td>total wall-clock hours
-(e.g. 1860 indicates maximum used hours during this search range)</td>
-</tr>
-<tr class="row-even"><td>Search range:</td>
-<td>2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)</td>
-</tr>
-<tr class="row-odd"><td>Period:</td>
-<td>daily</td>
-</tr>
-</tbody>
-</table>
-<p>Table 5. Specifications for the example options</p>
+<div class="section" id="python-program-to-create-a-summary-analysis-for-multiple-month">
+<h3><a class="toc-backref" href="#id18">Python Program to create a summary analysis for multiple month</a><a class="headerlink" href="#python-program-to-create-a-summary-analysis-for-multiple-month" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">TOODO: Hyungro do the test and complete, this will help you getting your automatic example going</p>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">TOODO: Why is this eucalyptus?</p>
 </div>
-<p><strong>Example commands</strong></p>
-<div class="highlight-python"><pre># New metric for system utilization
-# These commands will produce a line chart for system usage
+<p>The previous example has the disadvantage that one has to explicitly
+copy the lines that we use to access the analysis. However as Python
+includes loops, we can just use loops to create such a script
+programatically, while changing some parameters at the beginning:</p>
+<div class="highlight-python"><pre>#! /usr/bin/env python
+from sh import fg-metric as metric
 
-# A user can specify a data range
-set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
+filename = "/tmp/analyze.txt"
 
-# A user can specify a node name (e.g. india, sierra)
-set nodename india
+years = ['2013']
+months =['01', '02']
 
-# It requires a metric which can be specified with -S, --stat option with analyze command.
-analyze -S runtime
+script = """
+clear users
+analyze -M %s(month) -Y %s(year)
+createreport -d %s(year)-result -t Running_instances_per_user_of_Eucalyptus_in_%s(host)
+"""
+###############################
+# DO NOT CHANGE FRM HERE
+#
+# Assampble the anzlyses to be done
 
-# Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/runtime
-</pre>
+f = open (filename, "w")
+
+for year in years:
+  for  month in months:
+     data = {"year": year, "month": month}
+     print &gt;&gt;f, script % data
+close f
+# finish the script
+
+metric("-f", filename)</pre>
 </div>
-<p><em>This included block is from examples/example5.txt</em></p>
-<p><strong>Related commands</strong></p>
-<dl class="docutils">
-<dt>set_range</dt>
-<dd>Specify search range</dd>
-<dt>set_nodename</dt>
-<dd>Specify search node name</dd>
-<dt>analyze</dt>
-<dd>Analyze for a metric specified by -S option</dd>
-<dt>sys_report</dt>
-<dd><div class="first last line-block">
-<div class="line">Generate a graph for the analyzed data</div>
-<div class="line">&#8216;analyze&#8217; command needs to be executed prior to run this command</div>
-</div>
-</dd>
-</dl>
-</div></blockquote>
-<ol class="arabic" start="6">
-<li><p class="first">Total CPU cores of VM instances used in a system
-generates a graph like below.</p>
-<blockquote>
-<div><div class="figure">
-<a class="reference internal image-reference" href="_images/example6.png"><img alt="The total CPU cores of VM instances used in a system" src="_images/example6.png" style="width: 250.0px; height: 100.0px;" /></a>
-<p class="caption">Figure 6. The total CPU cores of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)</p>
-<div class="legend">
-<p>Table 6. Specifications for the example options
-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+
-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+
-<a href="#id13"><span class="problematic" id="id14">|X-axis:       | a day for the search range                                                                                                             |
-|              | (e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)|</span></a>
-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+
-<a href="#id5"><span class="problematic" id="id6">|</span></a>Y-axis:       | the number of CPU cores                                                                                                                |
-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+
-<a href="#id7"><span class="problematic" id="id8">|</span></a>Search range: | 2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)                                                                                   |
-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+
-<a href="#id9"><span class="problematic" id="id10">|</span></a>Period:       | daily                                                                                                                                  |
-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+</p>
-</div>
-</div>
-<p><strong>Example commands</strong></p>
-<div class="highlight-python"><pre># New metric for system utilization
-# These commands will produce a line chart for system usage
-
-# A user can specify a data range
-set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
-
-# A user can specify a node name (e.g. india, sierra)
-set nodename india
-
-# It requires a metric which can be specified with -S, --stat option with analyze command.
-analyze -S ccvm_cores
-
-# Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/cores/
-</pre>
-</div>
-<p><em>This included block is from examples/example5-3.txt</em></p>
-<p><strong>Related commands</strong></p>
-<dl class="docutils">
-<dt>analyze</dt>
-<dd><p class="first">Analyze for a metric specified by -S option</p>
-<p><em>Options</em></p>
-<dl class="last docutils">
-<dt>count</dt>
-<dd><p class="first last">Analyze for counting the total number of VM instances</p>
-</dd>
-<dt>runtime</dt>
-<dd><p class="first last">Analyze for wall-clock hours for VM instances</p>
-</dd>
-<dt>ccvm_cores</dt>
-<dd><p class="first last">Analyze for CPU cores of VM instances</p>
-</dd>
-<dt>ccvm_mem</dt>
-<dd><p class="first last">Analyze for memory allocation for VM instances</p>
-</dd>
-<dt>ccvm_disk</dt>
-<dd><p class="first last">Analyze for disk allocation for VM instances</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</div></blockquote>
-</li>
-</ol>
-</div>
-<div class="section" id="id11">
-<h3><a class="toc-backref" href="#id29">Total memories of VM instances used in a system</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>generates a graph like below.</p>
-<blockquote>
-<div><div class="figure">
-<a class="reference internal image-reference" href="_images/example7.png"><img alt="The total memories of VM instances used in a system" src="_images/example7.png" style="width: 250.0px; height: 100.0px;" /></a>
-<p class="caption">Figure 7. The total memories of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)</p>
-<div class="legend">
-<table border="1" class="docutils">
-<colgroup>
-<col width="9%" />
-<col width="91%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr class="row-even"><td>X-axis:</td>
-<td>a day for the search range
-(e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)</td>
-</tr>
-<tr class="row-odd"><td>Y-axis:</td>
-<td>the total memory allocation</td>
-</tr>
-<tr class="row-even"><td>Search range:</td>
-<td>2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)</td>
-</tr>
-<tr class="row-odd"><td>Period:</td>
-<td>daily</td>
-</tr>
-</tbody>
-</table>
-<p>Table 7. Specifications for the example options</p>
-</div>
-</div>
-<p><strong>Example commands</strong></p>
-<div class="highlight-python"><pre># New metric for system utilization
-# These commands will produce a line chart for system usage
-
-# A user can specify a data range
-set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
-
-# A user can specify a node name (e.g. india, sierra)
-set nodename india
-
-# It requires a metric which can be specified with -S, --stat option with analyze command.
-analyze -S ccvm_mem
-
-# Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/mem
-</pre>
-</div>
-<p><em>This included block is from examples/example5-4.txt</em></p>
-</div></blockquote>
-</div></blockquote>
-</div>
-<div class="section" id="id12">
-<h3><a class="toc-backref" href="#id30">Total disks of VM instances used in a system</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>generates a graph like below.</p>
-<blockquote>
-<div><div class="figure">
-<a class="reference internal image-reference" href="_images/example8.png"><img alt="The total disk of VM instances used in a system" src="_images/example8.png" style="width: 250.0px; height: 100.0px;" /></a>
-<p class="caption">Figure 8. The total disks of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)</p>
-<div class="legend">
-<table border="1" class="docutils">
-<colgroup>
-<col width="9%" />
-<col width="91%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr class="row-even"><td>X-axis:</td>
-<td>a day for the search range
-(e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)</td>
-</tr>
-<tr class="row-odd"><td>Y-axis:</td>
-<td>the total disk allocation</td>
-</tr>
-<tr class="row-even"><td>Search range:</td>
-<td>2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)</td>
-</tr>
-<tr class="row-odd"><td>Period:</td>
-<td>daily</td>
-</tr>
-</tbody>
-</table>
-<p>Table 8. Specifications for the example options</p>
-</div>
-</div>
-<p><strong>Example commands</strong></p>
-<div class="highlight-python"><pre># New metric for system utilization
-# These commands will produce a line chart for system usage
-
-# A user can specify a data range
-set search_range 2011-11-01T00:00:00 2012-05-14T23:59:59
-
-# A user can specify a node name (e.g. india, sierra)
-set nodename india
-
-# It requires a metric which can be specified with -S, --stat option with analyze command.
-analyze -S ccvm_disk
-
-# Finally, it can create a graph for the analyzed data
-sys_report -o 2011-11/india/disk
-</pre>
-</div>
-<p><em>This included block is from examples/example5-5.txt</em></p>
-</div></blockquote>
-</div></blockquote>
+<p>Naturaly this programm pattern can be used for more cases such as
+identifying the current time and generating based on this scripts the
+automatically create new alanysis, or the detection if an analysis was
+already performed and skipping it. Hence it is possible to create a
+fast script that does not need to recreate the majority of the
+calculations, but only injects new data and calculate metrics based on
+this new data.</p>
 </div>
 </div>
 </div>

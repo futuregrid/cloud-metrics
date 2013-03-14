@@ -9,15 +9,36 @@ Welcome to Cloud Metrics's documentation!
 
        manual
        metrics
-       examples
-       rest
+       developer
        todo
+       repository
        ubmod
        lighttpd
+
+..
        modules
 
+**Screenshots**::
+ 
+ set date 2012-10-01 2013-02-01
+ set metric runtime
+ set platform openstack
+ set nodename india
+ analyze
 
-.. warning:: TODO Hyungro, please include nice image here
+.. raw:: html
+
+   <table>
+   <tr>
+   <td> 
+   <img src="_static/examples/daily_active_user_count.png"/>
+   </td>
+   <td>
+   <img src="_static/examples/vms_count_by_project.png"/>
+   </td>
+   </tr>
+   </table>
+    <hr>
 
 Cloud metrics is an open source code project that allows to analyze
 the log files for various cloud infrastructure tools. At this time, we
@@ -83,7 +104,7 @@ the prefix: "METRICS: " in the subject of email messages.
 
 The contribution impact is recorded at
 
-* https://github.com/futuregrid/futuregrid-cloud-metrics/graphs
+* https://github.com/futuregrid/cloud-metrics/graphs
 * https://github.com/futuregrid/cloud-metrics/contributors
 
 The original database integration was contributed by Fugang Wang and
@@ -98,7 +119,7 @@ help form at `https://portal.futuregrid.org/help <https://portal.futuregrid.org/
 
 
 Production Deployment
---------------------
+----------------------
 
 `Cloud Metrics <https://portal.futuregrid.org/metrics>`_ is our main
 monitoring system for clouds on FuturegGrid. In addition we also

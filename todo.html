@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>REST: I FOUND THIS IN SOME OTHER FILE &mdash; Cloud Metrics  documentation</title>
+    <title>TODO: examples &mdash; Cloud Metrics  documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -31,8 +31,8 @@
     <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="Cloud Metrics  documentation" href="index.html" />
-    <link rel="next" title="UBMoD" href="ubmod.html" />
-    <link rel="prev" title="Yet more Examples" href="examples.html" />
+    <link rel="next" title="Directory Structure" href="repository.html" />
+    <link rel="prev" title="Developers Manual" href="developer.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -66,69 +66,67 @@
   <ul class="dropdown-menu globaltoc"
     ><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Administrator Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#installing-the-code">Installing the Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#installation">Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#prerequisites">Prerequisites</a></li>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#production-version">Production Version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#development-version">Development Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="manual.html#additional-packages-for-sphinx">Additional packages for sphinx</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#setting-up-a-database">Setting Up a Database</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="manual.html#getting-data">Getting Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#database-configuration">Database Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#obtaining-cloud-usage-information">Obtaining Cloud Usage information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#eucalyptus">Eucalyptus</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="manual.html#log-frequency">Log Frequency</a></li>
 <li class="toctree-l4"><a class="reference internal" href="manual.html#create-a-log-backup">Create A Log Backup</a></li>
-<li class="toctree-l4"><a class="reference internal" href="manual.html#parse-the-log-backup">Parse the Log Backup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#parse-a-log-backup">Parse A Log Backup</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#openstack">OpenStack</a></li>
 <li class="toctree-l3"><a class="reference internal" href="manual.html#nimbus">Nimbus</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#generate-results">Generate Results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#commands">Commands</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#create-production-web-pages-using-sphinx">Create Production Web pages using Sphinx</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#create-production-web-pages-using-flask">Create Production Web pages using Flask</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual.html#create-pdf-reports">Create PDF reports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#commands">Commands</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="metrics.html#number-of-vm-instances-per-user">Number of VM instances per user</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-runtime-of-vm-instance-used-per-user">Total runtime of VM instance used per user</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics.html#a-count-of-vm-images-owned-per-user">A count of VM images owned per user</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-total-number-of-vm-instances-used-in-a-system">The total number of VM instances used in a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-runtime-of-vm-instances-used-in-a-system">Total runtime of VM instances used in a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-cpu-cores-of-vm-instances-used-in-a-system">Total CPU cores of VM instances used in a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-memories-of-vm-instances-used-in-a-system">Total memories of VM instances used in a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics.html#total-disks-of-vm-instances-used-in-a-system">Total disks of VM instances used in a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics.html#examples-that-need-to-be-integrated-into-the-above-sections">Examples that need to be integrated into the above sections</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="metrics.html#id1">Total runtime of VM instance used per user</a></li>
-<li class="toctree-l3"><a class="reference internal" href="metrics.html#id2">A count of VM images owned per user</a></li>
-<li class="toctree-l3"><a class="reference internal" href="metrics.html#id3">The total number of VM instances used in a system</a></li>
-<li class="toctree-l3"><a class="reference internal" href="metrics.html#id4">Total runtime of VM instances used in a system</a></li>
-<li class="toctree-l3"><a class="reference internal" href="metrics.html#id11">Total memories of VM instances used in a system</a></li>
-<li class="toctree-l3"><a class="reference internal" href="metrics.html#id12">Total disks of VM instances used in a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#production-web-pages-using-sphinx">Production Web Pages using Sphinx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#production-web-pages-using-flask">Production Web Pages using Flask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#pdf-reports">PDF Reports</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metric Shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#starting-the-cloud-metric-shell">Starting the cloud metric shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-set-command">The  &#8220;set&#8221; Command</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-date-range">Set the date range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-metric">Set the metric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-hostname">Set the hostname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-cloud-service">Set the cloud service</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Yet more Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#id1">Create a summary table for the month of January</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#how-to-create-a-summary-analysis-for-multiple-month">How to create a summary analysis for multiple month</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#examples">Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#yet-another-set-of-examples-scripts-copied-from-somewhere">Yet another set of Examples Scripts copied from somewhere</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">REST: I FOUND THIS IN SOME OTHER FILE</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#eucalyptus-2-0-data-integration">Eucalyptus 2.0 Data Integration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#todo">TODO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-help-command">The &#8220;help&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-analyze-command">The &#8220;analyze&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-chart-command">The &#8220;chart&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-csv-command">The &#8220;csv&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#examples-of-using-the-metric-shell">Examples of using the metric shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#daily-active-user-count">Daily active user count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#vms-count-by-project">VMs count by Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#three-metrics-in-a-single-chart">Three metrics in a single chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#python-program-to-create-a-summary-analysis-for-multiple-month">Python Program to create a summary analysis for multiple month</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developers Manual</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">TODO: examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#showing-only-image-numbers-owned-by-the-userid-specified">Showing only image numbers owned by the userid specified::</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#displaying-details-about-images">Displaying details about images::</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#displaying-summary-values-about-images">Displaying summary values about images</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="repository.html">Directory Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repository.html#file-contents">File contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
@@ -136,18 +134,17 @@
 <li class="toctree-l2"><a class="reference internal" href="lighttpd.html#browsing-the-contents">Browsing the contents</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
 </ul>
 </ul>
 </li>
             <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
   <ul class="dropdown-menu localtoc"><ul>
-<li><a class="reference internal" href="#">REST: I FOUND THIS IN SOME OTHER FILE</a><ul>
-<li><a class="reference internal" href="#eucalyptus-2-0-data-integration">Eucalyptus 2.0 Data Integration</a><ul>
-<li><a class="reference internal" href="#todo">TODO</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">TODO: examples</a><ul>
+<li><a class="reference internal" href="#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li><a class="reference internal" href="#showing-only-image-numbers-owned-by-the-userid-specified">Showing only image numbers owned by the userid specified::</a></li>
+<li><a class="reference internal" href="#displaying-details-about-images">Displaying details about images::</a></li>
+<li><a class="reference internal" href="#displaying-summary-values-about-images">Displaying summary values about images</a></li>
 </ul>
 </li>
 </ul>
@@ -156,10 +153,10 @@
           
           
             
-  <li><a href="examples.html"
-         title="previous chapter">&laquo; Yet more Examples</a></li>
-  <li><a href="ubmod.html"
-         title="next chapter">UBMoD &raquo;</a></li>
+  <li><a href="developer.html"
+         title="previous chapter">&laquo; Developers Manual</a></li>
+  <li><a href="repository.html"
+         title="next chapter">Directory Structure &raquo;</a></li>
           
           
         </ul>
@@ -177,33 +174,67 @@
   </div>
 
   
-  <div class="section" id="rest-i-found-this-in-some-other-file">
-<h1>REST: I FOUND THIS IN SOME OTHER FILE<a class="headerlink" href="#rest-i-found-this-in-some-other-file" title="Permalink to this headline">¶</a></h1>
-<p>Not sure if this is redundant or provides real additional
-information. If it does, i suggest to include in main section.</p>
-<div class="section" id="eucalyptus-2-0-data-integration">
-<h2>Eucalyptus 2.0 Data Integration<a class="headerlink" href="#eucalyptus-2-0-data-integration" title="Permalink to this headline">¶</a></h2>
-<p>To achieve analysis of eucalyptus data, we are using &#8216;cc.log&#8217;
-files. The needed information must be gathered while eucalyptus runs
-in &#8216;EUCADEBUG&#8217; mode. We assume the following directory layout:</p>
-<div class="highlight-python"><pre>./futurgrid/
-./futurgrid/bin - includes all commands needed to run the log analyzing
-./futurgrid/lib - includes libraries that may be called from the bin files
-./futurgrid/etc - location of configuration files
-./futurgrid/www - location of the www files</pre>
+  <div class="section" id="todo-examples">
+<h1>TODO: examples<a class="headerlink" href="#todo-examples" title="Permalink to this headline">¶</a></h1>
+<p>what is here cmd?</p>
+<div class="section" id="show-machine-image-counts-for-eucalyptus">
+<h2>Show machine image counts for Eucalyptus<a class="headerlink" href="#show-machine-image-counts-for-eucalyptus" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">TODO Hyungro, its unclear to me wher ethis code is and how i
+can access it through the shell</p>
 </div>
-<div class="section" id="todo">
-<h3>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h3>
-<p>define variables:</p>
-<div class="highlight-python"><pre>FG_LOG_ANALYZER_WWW_OUTPUT - location where the www files for display are stored
-FG_TMP - location where temporary files are located that are analyzed
-FG_DATA - location where the permanent data is being stored
-FG_HOME_LOG_ANALYZER - is set to the location of the "futuregrid" directory.
-EUCALYPTUS_LOG_DIR - location where the eucalyptus log dirs are stored</pre>
+<p>Based on Jonathan&#8217;s code, we are able to get image counts via cmd2 tools.
+It&#8217;s established on &#8216;euca-describe-images&#8217; command:</p>
+<div class="highlight-python"><pre>(Cmd) count_images
+...
+sazh72  1
+debian-rm1984   1
+pegasus-images  3
+wchen-server-stage-1    2
+...</pre>
 </div>
-<p>We recommend that the FutureGrid directory is included in the PATH of
-the shell that will run the commands.</p>
+<p>There are additional options which might be useful,</p>
 </div>
+<div class="section" id="showing-only-image-numbers-owned-by-the-userid-specified">
+<h2>Showing only image numbers owned by the userid specified::<a class="headerlink" href="#showing-only-image-numbers-owned-by-the-userid-specified" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>(Cmd) count_image -u jdiaz
+jdiaz   7</div></blockquote>
+</div>
+<div class="section" id="displaying-details-about-images">
+<h2>Displaying details about images::<a class="headerlink" href="#displaying-details-about-images" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>(Cmd) count_images -u jdiaz -d
+jdiaz   7
+IMAGE   emi-1CA015A7    centos-image-bucket/centos.5-3.x86-64.img.manifest.xml  taklwu  available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-DBC4106B    ubuntu-0904-saga-1.5.2/image.manifest.xml       luckow  available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-F840162A    myubuntubucket/ubuntufloeserver.img.manifest.xml        sreedharnat1    available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   eki-7A031340    mybucket/vmlinuz-2.6.28-11-generic.manifest.xml ajyounge        available       public          x86_64  kernel                  instance-store
+IMAGE   emi-E5D514DA    jdiaz/ubuntunattyjdiaz3595279807.img_0.manifest.xml     javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-46861248    jdiaz/centos6jdiaz2698814667.img.manifest.xml   javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-431F1230    jdiaz/centos6jdiaz2710350825.img.manifest.xml   javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-0E0E165E    ajyounge/ubuntu-twister-memcached.img.manifest.xml      ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-A5B6148A    ajyounge/ubuntu-lucid-minimal.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-4A051306    ajyounge/ubuntu-lucid-mpj.img.manifest.xml      ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-48141244    ajyounge/ajyounge-1563160039.img.manifest.xml   ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-FC6A1197    ajyounge/ubuntu-natty.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store</div></blockquote>
+</div>
+<div class="section" id="displaying-summary-values-about-images">
+<h2>Displaying summary values about images<a class="headerlink" href="#displaying-summary-values-about-images" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>e.g. total image counts, total user counts, average image counts
+per user, and maximum image counts and userid:</p>
+<div class="highlight-python"><pre>(Cmd) count_images -s
+...
+= Summary =
+Total image counts:     128
+Total user counts:      71
+Average image counts per user:  1.80281690141
+Maximum image counts and userid:        ajyounge has 12
+==========</pre>
+</div>
+</div></blockquote>
 </div>
 </div>
 

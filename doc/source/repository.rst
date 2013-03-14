@@ -10,7 +10,6 @@ We have designed a directory layout as follows:
                   
                   data, png files
                   doc , Documentation
-                  doc-old, outdated documentation
                   draft, Software development plans
                   misc, miscellaneous files
                   examples, Examples for CloudMetrics CLI
@@ -22,6 +21,7 @@ We have designed a directory layout as follows:
                   lighttpd, lighttpd
                   results, Sphinx for statistics
                   todo, outdated
+                  doc-old, outdated documentation
 		  deprecated, outdated
 
 

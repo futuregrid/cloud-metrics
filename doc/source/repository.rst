@@ -3,86 +3,26 @@ Directory Structure
 
 We have designed a directory layout as follows:
 
-.. blockdiag::
 
-          blockdiag {
-          cloud-metrics -> data;
-          cloud-metrics -> doc;
-          cloud-metrics -> doc-old;
-          cloud-metrics -> draft;
-          cloud-metrics -> misc;
-          cloud-metrics -> examples;
-          cloud-metrics -> fghpc;
-          cloud-metrics -> fgmetric;
-          cloud-metrics -> fgmonitor;
-          cloud-metrics -> fgweb;
-          cloud-metrics -> fgws;
-          cloud-metrics -> lighttpd;
-          cloud-metrics -> results;  
-          cloud-metrics -> todo;
-          cloud-metrics -> www;
-
-                  group {
-                  label="png files";
-                  data
-                  }
-                  group {
-                  label="Documentation";
-                  doc 
-                  }
-                  group {
-                  label="outdated documentation";
-                  doc-old
-                  }
-                  group {
-                  label="Software development plans";
-                  draft
-                  }
-                  group {
-                  label="miscellaneous files";
-                  misc
-                  }
-                  group {
-                  label="Examples for CloudMetrics CLI";
-                  examples
-                  }
-                  group {
-                  label="HPC Real-time monitoring";
-                  fghpc
-                  }
-                  group {
-                  label="Main development";
-                  fgmetric
-                  }
-                  group {
-                  label="Real-time monitoring";
-                  fgmonitor
-                  }
-                  group {
-                  label="CherryPy of CloudMetrics";
-                  fgweb
-                  }
-                  group {
-                  label="Flask WSGI service";
-                  fgws
-                  }
-                  group {
-                  label="lighttpd";
-                  lighttpd
-                  }
-                  group {
-                  label="Sphinx for statistics";
-                  results
-                  }
-                  group {
-                  label="outdated";
-                  todo
-                  }
-                  group {
-                  label="outdated";
-                  www
-                  }
-           }
+.. csv-table:: Main directory structure of cloud metric 
+   :header: Directory, Description
+   :widths: 10, 50
+                  
+                  data, png files
+                  doc , Documentation
+                  doc-old, outdated documentation
+                  draft, Software development plans
+                  misc, miscellaneous files
+                  examples, Examples for CloudMetrics CLI
+                  fghpc, HPC Real-time monitoring
+                  fgmetric, Main development
+                  fgmonitor, Real-time monitoring
+                  fgweb, CherryPy of CloudMetrics
+                  fgws, Flask WSGI service
+                  lighttpd, lighttpd
+                  results, Sphinx for statistics
+                  todo, outdated
+		  deprecated, outdated
 
 
 File contents

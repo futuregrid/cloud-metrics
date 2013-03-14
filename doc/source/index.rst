@@ -9,8 +9,8 @@ Welcome to Cloud Metrics's documentation!
 
        manual
        metrics
-       examples
        developer
+       todo
        repository
        ubmod
        lighttpd

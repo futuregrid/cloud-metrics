@@ -35,7 +35,7 @@ Highchart demo in sphinx
       });
   });
   </script>
-  <div id="container" style="width:100%; height:400px;"></div>
+  <div id="container" style="width:100%;"></div>
 
   <script>
   $(document).ready(function() {
@@ -60,11 +60,11 @@ Highchart demo in sphinx
 	      name: 'Gregor',
 	      data: [2, 4, 0]},
 	  {
-	      name: 'FUgang',
+	      name: 'Fugang',
 	      data: [3, 1, 7]}],
       });
   });
   </script>
-  <div id="container2" style="width:100%; height:400px;"></div>
+  <div id="container2" style="width:100%;"></div>
 
 

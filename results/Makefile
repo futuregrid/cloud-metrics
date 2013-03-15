@@ -7,6 +7,14 @@ SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = build
 
+#For metrics
+SOURCEDIR     = source
+BUILDHTMLDIR  = $(BUILDDIR)/html
+EXAMPLEDIR    = ../examples
+EXAMPLEDIR2    = ../../../../$(EXAMPLEDIR)
+RESULTDIR     = data
+RESULTDATADIR = $(BUILDHTMLDIR)/results/$(RESULTDIR)
+
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
@@ -166,11 +174,11 @@ create:
 	cd ..; make force
 
 metric:
-	mkdir -p build/html/results/data/
-	cp ../examples/example4.png build/html/results/data/image_counts.png
-	cd ./source;python generate-results.py
-	cd ../examples;python generate_thismonth.py; cd example6; python generate_examples.py
-	cd build/html/results/data/; cat ../../../../../examples/example2.txt ../../../../../examples/example2-2.txt ../../../../../examples/example2-3.txt ../../../../../examples/example2-5.txt ../../../../../examples/example5-6.txt ../../../../../examples/example5-7.txt ../../../../../examples/example6/*.txt ../../../../../examples/example7-1.txt ../../../../../examples/example8.txt ../../../../../examples/thismonth.txt, ../../../../../examples/quarterly/*.txt | fg-metric
+	mkdir -p $(RESULTDATADIR)
+	cp $(EXAMPLEDIR)/example4.png $(RESULTDATADIR)/image_counts.png
+	cd $(SOURCEDIR);python generate-results.py
+	cd $(EXAMPLEDIR);python generate_thismonth.py; cd example6; python generate_examples.py
+	cd $(RESULTDATADIR)/; cat $(EXAMPLEDIR2)/example2.txt $(EXAMPLEDIR2)/example2-2.txt $(EXAMPLEDIR2)/example2-3.txt $(EXAMPLEDIR2)/example2-5.txt $(EXAMPLEDIR2)/example5-6.txt $(EXAMPLEDIR2)/example5-7.txt $(EXAMPLEDIR2)/example6/*.txt $(EXAMPLEDIR2)/example7-1.txt $(EXAMPLEDIR2)/example8.txt $(EXAMPLEDIR2)/thismonth.txt, $(EXAMPLEDIR2)/quarterly/*.txt | fg-metric
 
 tar:
 	tar cvfz fg-metric.tar.gz build/html/

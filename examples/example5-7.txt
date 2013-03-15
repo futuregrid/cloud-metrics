@@ -585,3 +585,25 @@ set nodename sierra
 set platform eucalyptus
 analyze -S runtime
 sys_report -o 2013-01/sierra/eucalyptus/runtime --all
+
+clear all
+set search_range 2013-02-01T00:00:00 2013-02-31T23:59:59
+set nodename india
+set platform eucalyptus
+analyze -S count
+sys_report -o 2013-02/india/eucalyptus/count --all
+
+clear all
+set search_range 2013-03-01T00:00:00 2013-03-31T23:59:59
+set nodename india
+set platform eucalyptus
+analyze -S runtime
+sys_report -o 2013-03/india/eucalyptus/runtime --all
+
+clear all
+set search_range 2013-04-01T00:00:00 2013-04-30T23:59:59
+set nodename india
+set platform eucalyptus
+analyze -S runtime
+sys_report -o 2013-04/india/eucalyptus/runtime --all
+

@@ -42,3 +42,15 @@ createreport -d 2012-12/sierra/eucalyptus/user/
 clear users
 analyze -M 01 -Y 2013
 createreport -d 2013-01/sierra/eucalyptus/user/
+
+clear users
+analyze -M 02 -Y 2013
+createreport -d 2013-02/sierra/eucalyptus/user/
+
+clear users
+analyze -M 03 -Y 2013
+createreport -d 2013-03/sierra/eucalyptus/user/
+
+clear users
+analyze -M 04 -Y 2013
+createreport -d 2013-04/sierra/eucalyptus/user/

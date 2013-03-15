@@ -495,3 +495,34 @@ analyze -S ccvm_mem
 sys_report -o 2013-01/sierra/eucalyptus/ccvm_mem --all
 analyze -S ccvm_disk
 sys_report -o 2013-01/sierra/eucalyptus/ccvm_disk --all
+
+set search_range 2013-02-01T00:00:00 2013-02-28T23:59:59
+set nodename india
+set platform eucalyptus
+analyze -S ccvm_cores
+sys_report -o 2013-02/india/eucalyptus/ccvm_cores/ --all
+analyze -S ccvm_mem
+sys_report -o 2013-02/india/eucalyptus/ccvm_mem --all
+analyze -S ccvm_disk
+sys_report -o 2013-02/india/eucalyptus/ccvm_disk --all
+
+set search_range 2013-03-01T00:00:00 2013-03-31T23:59:59
+set nodename india
+set platform eucalyptus
+analyze -S ccvm_cores
+sys_report -o 2013-03/india/eucalyptus/ccvm_cores/ --all
+analyze -S ccvm_mem
+sys_report -o 2013-03/india/eucalyptus/ccvm_mem --all
+analyze -S ccvm_disk
+sys_report -o 2013-03/india/eucalyptus/ccvm_disk --all
+
+set search_range 2013-04-01T00:00:00 2013-04-30T23:59:59
+set nodename india
+set platform eucalyptus
+analyze -S ccvm_cores
+sys_report -o 2013-04/india/eucalyptus/ccvm_cores/ --all
+analyze -S ccvm_mem
+sys_report -o 2013-04/india/eucalyptus/ccvm_mem --all
+analyze -S ccvm_disk
+sys_report -o 2013-04/india/eucalyptus/ccvm_disk --all
+

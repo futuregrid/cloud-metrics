@@ -7,6 +7,7 @@ week = datetime.timedelta(weeks=1)
 
 name = "quarterly"
 template_file = name + ".template"
+output_dir = name + "_reports/"
 
 f = open(template_file, "r")
 f_txt = f.read()
@@ -34,7 +35,7 @@ while(1):
     end_ymd = str(last_day_of_month(start_date))
     replaced_txt = f_txt % vars()
     fname = str(year) + "-Q" + str(get_quarter(month))
-    f2 = open(fname + ".txt", "w")
+    f2 = open(output_dir + fname + ".txt", "w")
     f2.write(replaced_txt)
     f2.close()
     start_date = start_date + week

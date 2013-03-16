@@ -1,13 +1,25 @@
-# This is an example of fg-metric cmd tool
-# You can test like below
-# $ cat example1.txt | fg-metric
-# Or you can type the commands below manually once you enter fg-metric
+######################################################################
+# Purpose:
+#      create a table with seperator , and create some images
 #
-# Analyze entire data and create table
+######################################################################
+
+#---------------------------------------------------------------------
+# Initialize
+#---------------------------------------------------------------------
+
 clear users
 analyze
+
+#---------------------------------------------------------------------
+# Create the table
+#---------------------------------------------------------------------
+
 table --type users --seperator ,  --caption Testing_the_csv_table
 
+#---------------------------------------------------------------------
 # Create image files
+#---------------------------------------------------------------------
+
 graph --type=pie --filename=piechart.png
 graph --type=bar --filename=barchart.png

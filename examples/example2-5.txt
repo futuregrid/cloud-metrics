@@ -1,9 +1,9 @@
-# This is an example of fg-metric cmd tool
-# You can test like below
-# $ cat example2.txt | fg-metric
-# Or you can type the commands below manually once you enter fg-metric
+######################################################################
+# Purpose:
+#      ???
 #
-# Analyze entire data and create report
+######################################################################
+
 clear users
 set nodename hotel
 set platform nimbus

@@ -1,13 +1,17 @@
 import datetime
+
+name = "weekly"
+
 start_date = datetime.date(2011, 11, 01)
 start_date_for_weekly = start_date
 #t_end_date = datetime.date(2012, 07, 26)
 t_end_date = datetime.date.today()
 week = datetime.timedelta(weeks=1)
 
-template_file = ".template"
+template_file = name + ".template"
 f = open(template_file, "r")
 f_txt = f.read()
+output_dir = name + "_reports/"
 
 while (1):
     if start_date > t_end_date:
@@ -15,7 +19,7 @@ while (1):
 
     end_date = start_date + datetime.timedelta(days=6)
     replaced_txt = f_txt % vars()
-    f2 = open(str(start_date) + ".txt", "w")
+    f2 = open(output_dir + str(start_date) + ".txt", "w")
     f2.write(replaced_txt)
     f2.close
     start_date = start_date + week

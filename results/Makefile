@@ -11,9 +11,14 @@ BUILDDIR      = build
 SOURCEDIR     = source
 BUILDHTMLDIR  = $(BUILDDIR)/html
 EXAMPLEDIR    = ../examples
-EXAMPLEDIR2    = ../../../../$(EXAMPLEDIR)
+EXAMPLEDIR2   = ../../../../$(EXAMPLEDIR)
 RESULTDIR     = data
 RESULTDATADIR = $(BUILDHTMLDIR)/results/$(RESULTDIR)
+
+#Metrics bata
+CMDSCRIPTSDIR = cmd
+RESULTDIR     = data
+SOURCEDIR     = source
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -179,6 +184,17 @@ metric:
 	cd $(SOURCEDIR);python generate-results.py
 	cd $(EXAMPLEDIR);python generate_thismonth.py; cd example6; python generate_examples.py
 	cd $(RESULTDATADIR)/; cat $(EXAMPLEDIR2)/example2.txt $(EXAMPLEDIR2)/example2-2.txt $(EXAMPLEDIR2)/example2-3.txt $(EXAMPLEDIR2)/example2-5.txt $(EXAMPLEDIR2)/example5-6.txt $(EXAMPLEDIR2)/example5-7.txt $(EXAMPLEDIR2)/example6/*.txt $(EXAMPLEDIR2)/example7-1.txt $(EXAMPLEDIR2)/example8.txt $(EXAMPLEDIR2)/thismonth.txt, $(EXAMPLEDIR2)/quarterly/*.txt | fg-metric
+
+metric-bata:
+#UNDER DEVELOPMENT. NOT WORKING PROPERLY
+#This function generates statistics and creats rst files. Once all processes are finished, sphinx html will be created.
+	@echo "1. Generate cmd command files"
+	cd  $(CMDSCRIPTSDIR)/; python generate-reports.py
+	@echo "2. Run fg-metric"
+	mkdir -p $(RESULTDIR)/; cd $(RESULTDIR)/; cat ../$(CMDSCRIPTSDIR)/*/*.txt | fg-metric
+	@echo "3. Create rst files"
+	cd $(SOURCEDIR)/; python generate-rst.py
+	@echo "Ready to call 'make html'"
 
 tar:
 	tar cvfz fg-metric.tar.gz build/html/

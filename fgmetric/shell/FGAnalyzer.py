@@ -1,3 +1,4 @@
+"""OUTDATED. WILL BE DEPRECATED"""
 """
 .. module:: FGAnalyzer
    :platform: Unix

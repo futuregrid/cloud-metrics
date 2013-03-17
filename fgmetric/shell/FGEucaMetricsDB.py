@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""OUTDATED. WILL BE DEPRECATED"""
 
 import pprint
 import os

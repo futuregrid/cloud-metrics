@@ -1,3 +1,5 @@
+
+"""OUTDATED. WILL BE DEPRECATED"""
 from bson import json_util
 import json
 import argparse

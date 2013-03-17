@@ -499,18 +499,11 @@ class FGMetricsParameters:
         self.result['stats'] = self.stats
         return json.dumps(self.result, default=json_util.default)
 
-    def main():
-        cli = FGMetricsParameters()
-        cli.set_argparse()
-        cli.get_stats()
-        dic = cli.return_dict()
-        print dic
-        # deserialization
-        # print json.loads(dic, object_hook=json_util.object_hook)
-
 def main():
 
     app = FGMetrics()
+    param = FGMetricsParameters()
+    #param.set_argparse()
 
     parser = optparse.OptionParser()
     parser.add_option('--conf', help='Run unit test suite')

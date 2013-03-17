@@ -1,0 +1,10 @@
+rain $abc
+
+rain $time
+
+rain $date
+
+var x=time
+var y=date
+
+rain $x $y

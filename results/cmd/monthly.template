@@ -1,0 +1,123 @@
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set period monthly
+set metric runtime count countusers
+set timetype hour
+analyze
+chart -t combo-multi-axes --directory %(output_directory)s
+
+clear
+set date %(from_dateT)s %(to_dateT)s
+set metric runtime
+set timetype hour
+set groups hostname
+analyze
+chart -t pie-basic --directory %(output_directory)s
+
+clear
+set date %(from_dateT)s %(to_dateT)s
+set metric runtime
+set timetype hour
+set groups hostname
+set period monthly
+analyze
+chart -t column-stacked --directory %(output_directory)s
+
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set period daily
+set metric countusers
+analyze
+chart -t line-time-series --directory %(output_directory)s
+
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set period daily
+set metric count
+analyze
+chart -t line-time-series --directory %(output_directory)s
+
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set period daily
+set metric runtime
+set timetype hour
+analyze
+chart -t line-time-series --directory %(output_directory)s
+
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set groupby walltime
+set metric count
+analyze
+chart -t column-drilldown --directory %(output_directory)s
+
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set groupby project
+set metric count
+analyze
+csv --directory %(output_directory)s
+chart -t pie-basic --directory %(output_directory)s
+
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set groupby projectleader
+set metric count
+analyze
+csv --directory %(output_directory)s
+chart -t pie-basic --directory %(output_directory)s
+
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set groupby institution
+set metric count
+analyze
+csv --directory %(output_directory)s
+chart -t pie-basic --directory %(output_directory)s
+
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set groupby projectleader
+set metric runtime
+set groups All
+set timetype hour
+analyze
+chart -t bar --directory %(output_directory)s
+
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set metric count
+set groups serviceTag
+analyze
+chart -t column-basic --directory %(output_directory)s
+
+clear
+set nodename %(hostname)s
+set platform %(service)s
+set date %(from_dateT)s %(to_dateT)s
+set metric runtime
+set groups serviceTag
+set timetype hour
+analyze
+chart -t column-basic --directory %(output_directory)s

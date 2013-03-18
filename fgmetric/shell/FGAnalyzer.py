@@ -27,7 +27,7 @@ from fgmetric.shell.FGParser import Instances
 
 from fgmetric.util.FGUtility import FGUtility
 #GVL: THE NEXT LINE IS NOT IN THE CODE
-#from fgmetric.FGNovaMetric import FGNovaMetric
+from fgmetric.shell.FGNovaMetric import FGNovaMetric
 
 from fgmetric.charts.FGPygooglechart import FGPyGoogleChart
 from fgmetric.charts.FGGoogleMotionChart import FGGoogleMotionChart

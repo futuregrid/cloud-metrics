@@ -136,7 +136,40 @@ give an example for finding mor out about the set data command::
 The "analyze" command
 ----------------------------------------------------------------------
 
-.. note:: TODO Hyungro
+Perform analysis based on analysis options.
+Parameters are not required if options already set.
+
+::
+
+ fg-metric> analyze -h
+ Run analysis for cloud usage data. Parameters are not required if they are set.
+
+        Usage 1: (analyze between $from_date and $to_date for $name metric)
+            set date $from_date $to_date
+            set metric $name
+            analyze
+
+        Usage 2:
+            analyze -f $from_date -t $to_date -m $name
+
+        Usage 3: (analyze $name metric in a selected year. -M $month option can be include)
+            analyze -Y $year -m $name
+
+ Usage: analyze [options] arg
+
+ Options:
+  -h, --help            show this help message and exit
+  -f START_DATE, --start_date=START_DATE
+                        start time to analyze (type. YYYY-MM-DDThh:mm:ss)
+  -t END_DATE, --end_date=END_DATE
+                        end time to analyze (type. YYYY-MM-DDThh:mm:ss)
+  -M MONTH, --month=MONTH
+                        month to analyze (type. MM)
+  -Y YEAR, --year=YEAR  year to analyze (type. YYYY)
+  -m METRIC, --metric=METRIC
+                        item name to measure (e.g. runtime, count)
+  -P PERIOD, --period=PERIOD
+                        search period (monthly, daily)
 
 Once you conducted an analyze, cloud metrics supports several output
 options such as stdout, JSON, csv, jpg, png, html that can be created

@@ -125,15 +125,27 @@ class FGMetrics(Cmd):
         print msg
 
     @options([
-        make_option('-f', '--start_date', type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
-        make_option('-t', '--end_date', type="string", help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-f', '--start_date', type="string", help="start time to analyze (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-t', '--end_date', type="string", help="end time to analyze (type. YYYY-MM-DDThh:mm:ss)"),
         make_option('-M', '--month', type="int", help="month to analyze (type. MM)"),
         make_option('-Y', '--year', type="int", help="year to analyze (type. YYYY)"),
-        make_option('-m', '--metric', dest="metric", type="string", help="item name to measure (e.g. runtime, count)"),
-        make_option('-P', '--period', dest="period", type="string", help="search period (monthly, daily)")
+        make_option('-m', '--metric', type="string", help="item name to measure (e.g. runtime, count)"),
+        make_option('-P', '--period', type="string", help="search period (monthly, daily)")
         ])
     def do_analyze(self, line, opts=None):
-        """Run analysis for cloud usage data. 
+        """Run analysis for cloud usage data. Parameters are not required if they are set.
+        Usage 1: (analyze between $from_date and $to_date for $name metric)
+            set date $from_date $to_date
+            set metric $name
+            analyze
+
+        Usage 2:
+            analyze -f $from_date -t $to_date -m $name
+
+        Usage 3: (analyze $name metric in a selected year. -M $month option can be include)
+            analyze -Y $year -m $name
+        """
+        """
         
         Typically, set platform ***, set nodename ***, set date ***  *** are required prior to this command
         Once analysis is finised, 'chart' command is usually following to generate results in a chart html file.
@@ -188,17 +200,6 @@ class FGMetrics(Cmd):
         self.chart.set_output_path(opts.DIR)
         self.chart.set_filename(self.search.get_filename() + "." + self.chart.output_type)
 
-        for key, data in self.search.get_metric().iteritems():
-            #self.chart.set_xaxis(key) TBD
-            if key == "All":
-                self.chart.set_data_beta(data, self.search.metric, self.search.period, self.search.groupby)
-            else:
-                new_key = self.search.adjust_stats_keys(key)
-                self.chart.set_data_beta2(new_key, data, ''.join(self.search.metric), self.search.period or "Total")
-            #self.chart.set_series_beta(data)
-
-        self.chart.set_series(self.search.get_series())
-        self.chart.set_title_beta(', '.join(self.search.metric), self.search.period, self.search.groupby)
         self.chart.set_subtitle("source: " + str(self.search.get_platform_names()) + " on " + str(self.search.get_node_names()))
         self.chart.set_yaxis(self.search.timetype or "")
         self.chart.display()

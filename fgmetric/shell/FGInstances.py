@@ -31,10 +31,17 @@ class FGInstances:
     instance = {}
     userinfo = []
     projectinfo = {}
-    default_projectinfo = {"ProjectId": None, "Title": None, "Institution": None, "ProjectLead":
-                           None, "Discipline": None}
 
-                           # "Completed":None, "Department":None", "Keywords":None, "Results":None}
+    default_projectinfo = {"ProjectId": None,
+                           "Title": None,
+                           "Institution": None,
+                           "ProjectLead": None,
+                           "Discipline": None}
+
+                           # "Completed":None,
+                           #"Department":None",
+                           #"Keywords":None,
+                           #"Results":None}
     pp = None
     db = None
     in_the_future = None
@@ -86,8 +93,8 @@ class FGInstances:
         res = []
         for ins in instances:
             try:
-                userinfo = self.get_userinfo({"ownerid": ins[
-                                             "ownerId"], "username": ins["ownerId"]})
+                userinfo = self.get_userinfo({"ownerid": ins["ownerId"],
+                    "username": ins["ownerId"]})
                 if userinfo:
                     ins = dict(userinfo.items() + ins.items())
 
@@ -111,7 +118,34 @@ class FGInstances:
         # index error of the call in FGMetrics. i.e. ... [0]
         return res
 
+    """
+
+    REPLACEMENT FOR get_userinfo get_projectinfo
+
+    def _get_info(self, type, index=None):
+        if isinstance(index, (int, long)):
+            return type[index]
+        elif isinstance(index, (dict)):
+            # Search
+            for key, val in index.iteritems():
+                for element in type:
+                    if key in element and type[key] == val:
+                        return element
+        elif index in None:
+            return type
+        else:
+            return None
+
     def get_userinfo(self, index=None):
+        return _get_info(self.userinfo, index):
+
+    def get_projectinfo(self, index=None):
+        return _get_info(self.projectinfo, index):
+
+    """
+
+    def get_userinfo(self, index=None):
+        """should be replaced with above code"""
         if isinstance(index, (int, long)):
             return self.userinfo[index]
         elif isinstance(index, (dict)):
@@ -126,6 +160,7 @@ class FGInstances:
             return None
 
     def get_projectinfo(self, index=None):
+        """should be replaced with above code"""
         if isinstance(index, (int, long)):
             return self.projectinfo[index]
         elif isinstance(index, (dict)):

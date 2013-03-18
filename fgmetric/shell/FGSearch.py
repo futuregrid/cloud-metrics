@@ -10,6 +10,7 @@ from pprint import pprint
 from collections import Counter, OrderedDict
 from calendar import monthrange
 
+
 class FGSearch:
 
     '''
@@ -37,8 +38,11 @@ class FGSearch:
         self.init_suboptions()
         self.init_internal_options()
         self.init_stats()
-        self.keys_to_select = { 'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId', 'ccvm', 'hostname', 'cloudplatform.platform', 'trace', 'state', 'date', 'cloudPlatformIdRef' }
-        self.keys_to_select_extra = { 'ProjectId', 'Title', 'Institution', 'ProjectLead', 'Discipline' } #_mem', 'ccvm_cores', 'ccvm_disk' }
+        self.keys_to_select = {
+            'uidentifier', 't_start', 't_end', 'duration', 'serviceTag', 'ownerId',
+            'ccvm', 'hostname', 'cloudplatform.platform', 'trace', 'state', 'date', 'cloudPlatformIdRef'}
+        self.keys_to_select_extra = {
+            'ProjectId', 'Title', 'Institution', 'ProjectLead', 'Discipline'}  # _mem', 'ccvm_cores', 'ccvm_disk' }
         self.init_names()
         self.userinfo_needed = False
         self.cache = True
@@ -60,48 +64,48 @@ class FGSearch:
         self.calc = None
         self.columns = None
         self.distinct = False
-        self.all_nodenames = "India, Sierra, Alamo, Foxtrot, Hotel" # This should be filled by retrieving db
-        self.all_platforms = "Eucalyptus, OpenStack, Nimbus" # This as well
+        self.all_nodenames = "India, Sierra, Alamo, Foxtrot, Hotel"  # This should be filled by retrieving db
+        self.all_platforms = "Eucalyptus, OpenStack, Nimbus"  # This as well
 
     def init_suboptions(self):
-        self.period = None#"Total"
+        self.period = None  # "Total"
         self.groups = [self.all_name]
         self.groupby = None
         self.timetype = None
         self.time_conversion = 1
- 
+
     def init_stats(self):
         self.selected = []
-        self.stats = OrderedDict()#{}
-        self.stats_beta = { "system": None,\
-                            "service": None,\
-                            "period": None,\
-                            "from": None,\
-                            "to": None,\
-                            "metric": None,\
-                            "value": None}
+        self.stats = OrderedDict()  # {}
+        self.stats_beta = {"system": None,
+                           "service": None,
+                           "period": None,
+                           "from": None,
+                           "to": None,
+                           "metric": None,
+                           "value": None}
         self.distinct_list = {}
 
     def init_names(self):
-        self.names = dotdict({"metric": dotdict({"count":["count"], 
-                                                "countusers":["countusers"],
-                                                "runtime":["runtime"], 
-                                                "runtimeusers":["runtimeusers"],
-                                                "cores":["cpu", "ccvm_cores", "core", "cores"], 
-                                                "memories":["mem", "ccvm_mem", "memory", "memories"], 
-                                                "disks":["disk", "ccvm_disk", "disks"]}),
-                            "calc":dotdict({"count":"count", 
-                                            "summation":"sum", 
-                                            "average":"avg", 
-                                            "minimum":"min", 
-                                            "maximum":"max" }),
-                            "period": dotdict({"daily":"daily",
-                                                "monthly":"monthly"}),
-                            "timetype": dotdict({"day":"day",
-                                                    "hour":"hour",
-                                                    "minute":"minute",
-                                                    "second":"second"})
-            })
+        self.names = dotdict({"metric": dotdict({"count": ["count"],
+                                                "countusers": ["countusers"],
+                                                "runtime": ["runtime"],
+                                                "runtimeusers": ["runtimeusers"],
+                                                "cores": ["cpu", "ccvm_cores", "core", "cores"],
+                                                "memories": ["mem", "ccvm_mem", "memory", "memories"],
+                                                "disks": ["disk", "ccvm_disk", "disks"]}),
+                              "calc": dotdict({"count": "count",
+                                               "summation": "sum",
+                                               "average": "avg",
+                                               "minimum": "min",
+                                               "maximum": "max"}),
+                              "period": dotdict({"daily": "daily",
+                                                "monthly": "monthly"}),
+                              "timetype": dotdict({"day": "day",
+                                                   "hour": "hour",
+                                                   "minute": "minute",
+                                                   "second": "second"})
+                              })
 
     def check_vailidity(self):
         """Check settings before performing analysis
@@ -116,12 +120,13 @@ class FGSearch:
                 ValueError
         """
         if not self.from_date or not self.to_date:
-            raise ValueError("Missing Dates: please 'set date $from $to' first")
+            raise ValueError(
+                "Missing Dates: please 'set date $from $to' first")
         elif not self.metric:
             raise ValueError("Missing Metric: please 'set metric $name' first")
         else:
             pass
-        
+
     def set_None(self, line):
         self.set_help(line)
 
@@ -137,7 +142,7 @@ class FGSearch:
         print " set nodename $name"
         print " set period $name"
         print
-        
+
     def help_period(self):
         """Display usage period"""
 
@@ -155,7 +160,7 @@ class FGSearch:
         for val in self.names['metric'].keys():
             print " set metric " + val
         print
- 
+
     def help_timetype(self):
         """Display usage timetype"""
 
@@ -232,7 +237,8 @@ class FGSearch:
             if isinstance(from_date, datetime):
                 self.from_date = from_date
             else:
-                self.from_date = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
+                self.from_date = datetime.strptime(
+                    from_date, '%Y-%m-%dT%H:%M:%S')
             if isinstance(to_date, datetime):
                 self.to_date = to_date
             else:
@@ -249,7 +255,7 @@ class FGSearch:
 
     def set_timetype(self, typename):
         ''' set time type of data value to print out
-            
+
             e.g. set datatype hour means output data will be converted from seconds to hours
 
             Args:
@@ -305,9 +311,9 @@ class FGSearch:
 
         start_month = from_date.month
         end_month = (to_date.year - from_date.year) * 12 + to_date.month + 1
-        dates = [datetime(year = yr, month = mn, day = 1) \
-                for (yr, mn) in (((m - 1) / 12 + from_date.year, (m - 1) % 12 + 1) \
-                for m in range(start_month, end_month))]
+        dates = [datetime(year=yr, month=mn, day=1)
+                         for (yr, mn) in (((m - 1) / 12 + from_date.year, (m - 1) % 12 + 1)
+                                          for m in range(start_month, end_month))]
         return dates
 
     def get_dates_between_dates(self, from_date, to_date):
@@ -323,7 +329,8 @@ class FGSearch:
         """
 
         try:
-            from_date = datetime(from_date.year, from_date.month, from_date.day)
+            from_date = datetime(
+                from_date.year, from_date.month, from_date.day)
             to_date = datetime(to_date.year, to_date.month, to_date.day)
             days = (to_date + datetime.timedelta(days=1) - from_date).days
             return [from_date + timedelta(days=n) for n in range(days)]
@@ -337,16 +344,17 @@ class FGSearch:
                 from_date (datetime)
                 to_date (datetime)
             Returns:
-                dict 
+                dict
             Raises:
                 n/a
         """
 
         try:
-            from_date = datetime(from_date.year, from_date.month, from_date.day)
+            from_date = datetime(
+                from_date.year, from_date.month, from_date.day)
             to_date = datetime(to_date.year, to_date.month, to_date.day)
             days = (to_date + timedelta(days=1) - from_date).days
-            return {from_date + timedelta(days=n):val for n in range(days)}
+            return {from_date + timedelta(days=n): val for n in range(days)}
         except:
             FGUtility.debug(str(sys.exc_info()))
 
@@ -357,14 +365,14 @@ class FGSearch:
                 from_date (datetime)
                 to_date (datetime)
             Returns:
-                dict 
+                dict
             Raises:
                 n/a
         """
 
         try:
             months = self.get_months_between_dates(from_date, to_date)
-            return {month:val for month in months}
+            return {month: val for month in months}
         except:
             FGUtility.debug(str(sys.exc_info()))
 
@@ -396,14 +404,14 @@ class FGSearch:
             if (instance["t_start"] > self.to_date) or (instance["t_end"] < self.from_date):
                 return False
         except:
-            # openstack data doesnt have t_end sometimes. 
+            # openstack data doesnt have t_end sometimes.
             # e.g. t_end is None (0000-00-00 00:00:00)
             return False
-        #Newly added for exception
-        #try:
+        # Newly added for exception
+        # try:
         #    if instance["trace"]["extant"]["stop"] < self.from_date:
         #        return False
-        #except:
+        # except:
         #    pass
         return True
 
@@ -437,7 +445,7 @@ class FGSearch:
             extra = self.get(instance, self.keys_to_select_extra)
         default.update(extra)
 
-        self.store2cache(instance) # for later use
+        self.store2cache(instance)  # for later use
         return default
 
     def select_metric(self, name):
@@ -475,25 +483,26 @@ class FGSearch:
         try:
             for group, metrics in self.get_metric().iteritems():
                 for metric, period in metrics.iteritems():
-                    if len(metrics)>1:
+                    if len(metrics) > 1:
                         series_name = metric
                     else:
                         series_name = group
-                    stat = {"name": series_name,\
-                            "data": period[self.period or self.groupby]}#period.values()[0] }
+                    stat = {"name": series_name,
+                            "data": period[self.period or self.groupby]}  # period.values()[0] }
                     series.append(stat)
         except:
             print sys.exc_info()
             FGUtility.debug(True)
 
-            #Just try  01/08/2013
-            for metric_name in self.metric: #self.metric is list
+            # Just try  01/08/2013
+            for metric_name in self.metric:  # self.metric is list
                 record = {}
                 for group, v in self.get_metric().iteritems():
-                    val = v[metric_name][self.period or self.groupby or "Total"]
+                    val = v[metric_name][
+                        self.period or self.groupby or "Total"]
                     record[group] = val
 
-                stat = {"name": metric_name,\
+                stat = {"name": metric_name,
                         "data": record}
                 series.append(stat)
 
@@ -504,7 +513,7 @@ class FGSearch:
         try:
             for group, metrics in self.get_metric().iteritems():
                 for metric, period in metrics.iteritems():
-                    if len(metrics)>1:
+                    if len(metrics) > 1:
                         series_name = metric
                     else:
                         series_name = group
@@ -512,16 +521,17 @@ class FGSearch:
                         series.append([k, v])
         except:
 
-            #Just try  01/08/2013
-            for metric_name in self.metric: #self.metric is list
+            # Just try  01/08/2013
+            for metric_name in self.metric:  # self.metric is list
                 for group, v in self.get_metric().iteritems():
-                    val = v[metric_name][self.period or self.groupby or "Total"]
+                    val = v[metric_name][
+                        self.period or self.groupby or "Total"]
                     series.append([group, val])
 
         # TEMP ADDED FOR SORTING 01/09/2013
         series = sorted(series, key=lambda item: item[1], reverse=True)
 
-        #HEADER ADDED
+        # HEADER ADDED
         header = [[self.groupby or "Total", "value"]]
         series = header + series
         return series
@@ -536,7 +546,7 @@ class FGSearch:
         for metric in self.metric:
             self.select_metric(metric)
             self.update_metric_beta(groups, metric)
-            #self.update_metrics(groups, self.stats, metric)
+            # self.update_metrics(groups, self.stats, metric)
 
     def _is_unique(self, key, value):
         ''' if value is unique, return itself. Otherwise return None'''
@@ -549,7 +559,7 @@ class FGSearch:
                 return value
             return None
         except:
-            self.distinct_list[key] = Counter({value : 1})
+            self.distinct_list[key] = Counter({value: 1})
             return value
 
     def update_metric_beta(self, groups, metric):
@@ -595,7 +605,7 @@ class FGSearch:
                 period_func(mdict[key])
             except:
                 pass
- 
+
             return mdict[key]
 
         group = glist.pop(0)
@@ -604,21 +614,23 @@ class FGSearch:
         return self.update_metrics(glist, mdict[group], key)
 
     def calculate_total(self, mdict, key):
-        new = self.get_metric_factor(self.columns, self.get_selected_instance())
+        new = self.get_metric_factor(
+            self.columns, self.get_selected_instance())
         new = self.do_time_conversion(new)
         total = "Total"
         try:
             old = mdict[key][total]
         except:
             old = None
-            mdict[key] = { total : None }
+            mdict[key] = {total: None}
         new = self._is_unique(key + total, new)
         mdict[key][total] = self.calculate(old, new)
 
     def do_time_conversion(self, val):
         # Temporary lines 12/27/2012
         if set([self.selected_metric]) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
-            val = (val + self.time_conversion // 2) // self.time_conversion # 864000 seconds = 1440 minutes = 24 hours = 1 day 
+            val = (
+                val + self.time_conversion // 2) // self.time_conversion  # 864000 seconds = 1440 minutes = 24 hours = 1 day
         return val or 1
 
     def _groupby_None(self, *args):
@@ -628,12 +640,15 @@ class FGSearch:
         return self._groupby_None(args)
 
     def _groupby_walltime(self, mdict):
-        val = self.get_metric_factor(self.columns, self.get_selected_instance())
+        val = self.get_metric_factor(
+            self.columns, self.get_selected_instance())
         selected = self.get_selected_instance()
         t_delta = self.get_t_delta(selected)
 
         if not self.groupby in mdict:
-            mdict[self.groupby] = { "a. <1 min":0, "b. <30 min":0, "c. <1 hr":0, "d. <3 hr": 0, "e. <12 hr":0, "f. <1 day":0, "g. <2 days":0, "h. more":0}
+            mdict[
+                self.groupby] = {"a. <1 min": 0, "b. <30 min": 0, "c. <1 hr": 0,
+                                 "d. <3 hr": 0, "e. <12 hr": 0, "f. <1 day": 0, "g. <2 days": 0, "h. more": 0}
 
         interval = t_delta // 60
         if interval < 1:
@@ -652,7 +667,7 @@ class FGSearch:
             mdict[self.groupby]["g. <2 days"] += val
         else:
             mdict[self.groupby]["h. more"] += val
-    
+
     def _groupby_project(self, mdict):
         if not self._is_userinfo_needed():
             return
@@ -662,7 +677,8 @@ class FGSearch:
 
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
-        project = re.sub("fg-None:None", "etc.", "fg-" + str(selected["ProjectId"]) + ":" + str(selected["Title"]))
+        project = re.sub("fg-None:None", "etc.", "fg-" + str(
+            selected["ProjectId"]) + ":" + str(selected["Title"]))
         if not project in mdict[self.groupby]:
             mdict[self.groupby][project] = val
         else:
@@ -683,7 +699,7 @@ class FGSearch:
             mdict[self.groupby][project] = val
         else:
             mdict[self.groupby][project] += val
- 
+
     def _groupby_projectleader(self, mdict):
         if not self._is_userinfo_needed():
             return
@@ -718,17 +734,17 @@ class FGSearch:
 
     def get_t_delta(self, row):
 
-	start = row["t_start"]
-	last = row["date"]
+        start = row["t_start"]
+        last = row["date"]
 
-	if row["state"] == "Teardown":
+        if row["state"] == "Teardown":
             if row["t_end"]:
                 last = min(row["date"], row["t_end"])
 
-	t_delta = (last - start).total_seconds()
-	if t_delta < 0:
+        t_delta = (last - start).total_seconds()
+        if t_delta < 0:
             t_delta = timedelta(0).total_seconds()
-	return t_delta
+        return t_delta
 
     '''
     from collections import Counter
@@ -762,12 +778,14 @@ class FGSearch:
             mdict[self.period]
         except:
             mdict[self.period] = {}
-            first_day = datetime(self.from_date.year, self.from_date.month, self.from_date.day)
+            first_day = datetime(
+                self.from_date.year, self.from_date.month, self.from_date.day)
             for single_date in (first_day + timedelta(days=n) for n in range(self.day_count + 1)):
                 mdict[self.period].setdefault(single_date, 0)
         a = mdict[self.period]
         b = self.calculate_daily()
-        entries2update = { k: self.calculate(a.get(k), b.get(k)) for k in set(a) & set(b)}
+        entries2update = {k: self.calculate(a.get(
+            k), b.get(k)) for k in set(a) & set(b)}
         a.update(entries2update)
 
         ''' this is where I need to put calculation of daily basis metrics.
@@ -776,7 +794,7 @@ class FGSearch:
         ...
         how?
         1.1) t_start is older than single date?
-        
+
         Search period        |----------------------|
         possible instance
         a.        |----|
@@ -809,14 +827,16 @@ class FGSearch:
                 mdict[self.period].setdefault(single_date, 0)
         a = mdict[self.period]
         b = self.calculate_monthly()
-        entries2update = { k: self.calculate(a.get(k), b.get(k)) for k in set(a) & set(b)}
+        entries2update = {k: self.calculate(a.get(
+            k), b.get(k)) for k in set(a) & set(b)}
         a.update(entries2update)
- 
+
     def calculate_monthly(self):
         selected = self.get_selected_instance()
         value = self.get_metric_factor(self.columns, selected)
 
-        months = self.create_months_between_dates(selected["t_start"], selected["t_end"], value)
+        months = self.create_months_between_dates(
+            selected["t_start"], selected["t_end"], value)
         self.adjust_each_metric_in_month(months, value)
         return months
 
@@ -827,14 +847,16 @@ class FGSearch:
             return {}
 
         # possible metrics
-        #1. runtime
-        #2. count
-        #3. ccvm
+        # 1. runtime
+        # 2. count
+        # 3. ccvm
         init_value = value
         if set([self.selected_metric]) & (set(self.names.metric.runtime) | set(self.names.metric.runtimeusers)):
-            init_value = self.do_time_conversion(86400) # 864000 seconds = 1440 minutes = 24 hours = 1 day 
+            init_value = self.do_time_conversion(
+                86400)  # 864000 seconds = 1440 minutes = 24 hours = 1 day
 
-        dates = self.create_dates_between_dates(selected["t_start"], selected["t_end"], init_value)
+        dates = self.create_dates_between_dates(selected[
+                                                "t_start"], selected["t_end"], init_value)
         self.adjust_each_metric_daily(dates, value)
         return dates
 
@@ -844,17 +866,25 @@ class FGSearch:
             t_start = selected["t_start"]
             t_end = selected["t_end"]
             first_day = datetime(t_start.year, t_start.month, t_start.day)
-            end_of_first_day = first_day + timedelta(seconds=86400)#datetime.combine(t_start + timedelta(days=1), datetime.strptime("00:00:00", "%H:%M:%S").time())
-            end_day = datetime(t_end.year, t_end.month, t_end.day)#datetime.combine(t_end.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
+            end_of_first_day = first_day + timedelta(
+                seconds=86400)  # datetime.combine(t_start + timedelta(days=1), datetime.strptime("00:00:00", "%H:%M:%S").time())
+            end_day = datetime(t_end.year, t_end.month, t_end.day)
+                               # datetime.combine(t_end.date(),
+                               # datetime.strptime("00:00:00",
+                               # "%H:%M:%S").time())
             start_of_end_day = end_day
             if first_day == end_day:
-                dates[first_day] = self.do_time_conversion((t_end - t_start).seconds)
+                dates[first_day] = self.do_time_conversion(
+                    (t_end - t_start).seconds)
             else:
-                dates[first_day] = self.do_time_conversion((end_of_first_day - t_start).seconds)
-                dates[end_day] = self.do_time_conversion((t_end  - start_of_end_day).seconds)
+                dates[first_day] = self.do_time_conversion(
+                    (end_of_first_day - t_start).seconds)
+                dates[end_day] = self.do_time_conversion(
+                    (t_end - start_of_end_day).seconds)
         elif set([self.selected_metric]) & set(self.names.metric.countusers):
             for entry_date, entry_value in dates.iteritems():
-                new_value = self._is_unique(self.selected_metric + self.period + str(entry_date), value)
+                new_value = self._is_unique(
+                    self.selected_metric + self.period + str(entry_date), value)
                 if new_value is None:
                     dates[entry_date] = new_value
 
@@ -864,20 +894,26 @@ class FGSearch:
             t_start = selected["t_start"]
             t_end = selected["t_end"]
             first_month = datetime(t_start.year, t_start.month, 1)
-            end_of_first_month = datetime(t_start.year, t_start.month, monthrange(t_start.year, t_start.month)[1], 23, 59,59)
-            end_month = datetime(t_end.year, t_end.month, 1)#datetime.combine(t_end.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
+            end_of_first_month = datetime(t_start.year, t_start.month, monthrange(
+                t_start.year, t_start.month)[1], 23, 59, 59)
+            end_month = datetime(
+                t_end.year, t_end.month, 1)  # datetime.combine(t_end.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
             start_of_end_month = end_month
             for month_key, month_value in dates.iteritems():
                 days = monthrange(month_key.year, month_key.month)[1]
                 dates[month_key] = self.do_time_conversion(86400 * days)
             if first_month == end_month:
-                dates[first_month] = self.do_time_conversion((t_end - t_start).seconds)
+                dates[first_month] = self.do_time_conversion(
+                    (t_end - t_start).seconds)
             else:
-                dates[first_month] = self.do_time_conversion((end_of_first_month - t_start).seconds)
-                dates[end_month] = self.do_time_conversion((t_end - start_of_end_month).seconds)
+                dates[first_month] = self.do_time_conversion(
+                    (end_of_first_month - t_start).seconds)
+                dates[end_month] = self.do_time_conversion(
+                    (t_end - start_of_end_month).seconds)
         elif set([self.selected_metric]) & set(self.names.metric.countusers):
             for entry_date, entry_value in dates.iteritems():
-                new_value = self._is_unique(self.selected_metric + self.period + str(entry_date), value)
+                new_value = self._is_unique(
+                    self.selected_metric + self.period + str(entry_date), value)
                 if new_value is None:
                     dates[entry_date] = new_value
 
@@ -886,7 +922,7 @@ class FGSearch:
             if key:
                 new_key = self.get_clustername(key)
                 return new_key
-                #self.stats[new_key] = self.stats.pop(key)
+                # self.stats[new_key] = self.stats.pop(key)
             else:
                 for key, val in self.stats.iteritems():
                     new_key = self.get_clustername(key)
@@ -894,7 +930,8 @@ class FGSearch:
 
     def get_clustername(self, name):
         try:
-            m = re.search(r'http://(.*):8775/axis2/services/EucalyptusNC',name, re.M|re.I)
+            m = re.search(
+                r'http://(.*):8775/axis2/services/EucalyptusNC', name, re.M | re.I)
             return m.group(1)
         except:
             return name
@@ -902,7 +939,7 @@ class FGSearch:
     def set_internal_options(self, metric):
         '''Set default values for internal calculation and statistics
 
-            Args: 
+            Args:
                 metric (list): metric selected
         '''
         if set(metric) & set(self.names.metric.count):
@@ -914,7 +951,7 @@ class FGSearch:
             self.calc = "count"
             self.columns = ["ownerId"]
             self.set_distinct(True)
-            # "count(distinct ownerId)" 
+            # "count(distinct ownerId)"
         elif set(metric) & set(self.names.metric.runtime):
             self.calc = "sum"
             self.columns = ["duration"]
@@ -929,21 +966,21 @@ class FGSearch:
             self.calc = "sum"
             self.columns = ["ccvm", "cores"]
             self.groups = ["instance.cloudPlatformIdRef"]
-            #self.period = "daily"
+            # self.period = "daily"
             # "sum(ccvm_cores)"
             # group by instance.cloudPlatformIdRef, CAST(date as date)
         elif set(metric) & set(self.names.metric.memories):
             self.calc = "sum"
             self.columns = ["ccvm", "mem"]
             self.groups = ["instance.cloudPlatformIdRef"]
-            #self.period = "daily"
+            # self.period = "daily"
             # "sum(ccvm_mem)"
             # group by instance.cloudPlatformIdRef, CAST(date as date)
         elif set(metric) & set(self.names.metric.disks):
             self.calc = "sum"
             self.columns = ["ccvm", "disk"]
             self.groups = ["instance.cloudPlatformIdRef"]
-            #self.period = "daily"
+            # self.period = "daily"
             # "sum(ccvm_disk)"
             # group by instance.cloudPlatformIdRef, CAST(date as date)
 

@@ -1,12 +1,13 @@
 """OUTDATED. WILL BE DEPRECATED"""
 """
-.. module:: FGAnalyzer
+   module:: FGAnalyzer
    :platform: Unix
-   :synopsis: An analyzer of system utilization for the cloud based on the database collected by log files.
-              It calculates metrics data and generates graph images like PNG files and html files with javascript.
+   :synopsis: An analyzer of system utilization for the cloud based on the
+              database collected by log files.  It calculates metrics
+              data and generates graph images like PNG files and html
+              files with javascript.
 
-.. moduleauthor:: Gregor von laszewski, Hyungro Lee <lee212@indiana.edu>
-
+    moduleauthor:: Gregor von laszewski, Hyungro Lee <lee212@indiana.edu>
 
 """
 
@@ -14,7 +15,7 @@ from pygooglechart import PieChart3D, StackedHorizontalBarChart, SimpleLineChart
 import math
 import os
 import pprint
-import optparse
+#import optparse
 from cmd2 import Cmd, make_option, options, Cmd2TestCase
 from datetime import *
 import unittest, sys
@@ -40,7 +41,8 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     .. note::
         
-        Examples of this class are in the examples/ directory from the root repository of /futuregrid-cloud-metrics/
+        Examples of this class are in the examples/ directory from the
+        root repository of /futuregrid-cloud-metrics/
     
     '''
     
@@ -1357,8 +1359,12 @@ class CmdLineAnalyzeEucaData(Cmd):
 #####################################################################
 # main
 #####################################################################
-def main():
 
+
+if __name__ == "__main__":
+
+    pass
+    """
     parser = optparse.OptionParser()
     parser.add_option('-t', '--test', dest='unittests', action='store_true', default=False, help='Run unit test suite')
     parser.add_option('-n', '--nopreload', dest='nopreload', action='store_true', default=False, help='Run without pre-loading db')
@@ -1371,6 +1377,4 @@ def main():
         app.nopreload = callopts.nopreload
         sys.argv = [sys.argv[0]]  # the --test argument upsets unittest.main()
         app.cmdloop()
-
-if __name__ == "__main__":
-    main()
+    """

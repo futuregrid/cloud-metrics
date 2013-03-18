@@ -5,7 +5,7 @@ import json
 import argparse
 from pprint import pprint
 from datetime import datetime, timedelta
-from fgmetric.FGMetricsAPI import FGMetricsAPI
+from fgmetric.shell.FGMetricsAPI import FGMetricsAPI
 
 class FGMetricsCli:
     """

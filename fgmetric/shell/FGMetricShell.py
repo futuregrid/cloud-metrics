@@ -1,7 +1,7 @@
 from os.path import split
 from cmd2 import Cmd, options, make_option
 import sys
-import optparse
+#import optparse
 import csv
 import subprocess
 from datetime import datetime
@@ -388,18 +388,19 @@ class FGMetrics(Cmd):
     def postloop(self):
         print "Bye ..."
 
-def main():
 
+
+if __name__ == "__main__":
     app = FGMetrics()
 
+    """
     parser = optparse.OptionParser()
     parser.add_option('--conf', help='Run unit test suite')
     (callopts, callargs) = parser.parse_args()
     if callopts.conf:
         app.set_configfile(callopts.conf)
         sys.argv = [sys.argv[0]]
+    """
 
     app.cmdloop()
 
-if __name__ == "__main__":
-    main()

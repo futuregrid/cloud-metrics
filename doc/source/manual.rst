@@ -14,6 +14,17 @@ Administrator Guide
 Installation
 ======================================================================
 
+NOTES
+------
+
+::
+
+   install futuregrid.cfg
+   chmod go-rw ~/.futuregrid/futuregrid.cfg 
+
+
+
+
 Prerequisites
 ----------------------------------------------------------------------
 

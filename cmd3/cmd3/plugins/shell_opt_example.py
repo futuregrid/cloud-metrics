@@ -12,7 +12,8 @@ class shell_opt_example:
     def help_opt_example(self):
         """
         Usage:
-               opt_example [-vr] [FILE] ...
+               opt_example metric [-vr] [FILE] ...
+               opt_example db [-db] [FILE] ...
 
         Process FILE and optionally apply some options
 
@@ -24,7 +25,7 @@ class shell_opt_example:
           -r       make report
 
         """
-
+    
     def do_opt_example(self, args):
 
         arguments = _get_doc_args(self.help_opt_example,args)

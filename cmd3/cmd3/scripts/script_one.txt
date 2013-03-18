@@ -4,7 +4,7 @@ rain $time
 
 rain $date
 
-var one_yx=time
+var one_y=time
 var one_x=date
 
 rain $one_x $one_y

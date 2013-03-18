@@ -49,7 +49,7 @@ rain $HOME $_
 ######################################################################
 
 var abc=123
-script load
+
 script one
 var abc=456
 script one
@@ -60,7 +60,8 @@ script one
 
 help opt_example
 
-opt_example -r file
+opt_example metric -r file
+opt_example db -db file
 
 	
 ######################################################################

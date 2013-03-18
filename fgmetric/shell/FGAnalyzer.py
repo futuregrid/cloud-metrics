@@ -15,7 +15,7 @@ from pygooglechart import PieChart3D, StackedHorizontalBarChart, SimpleLineChart
 import math
 import os
 import pprint
-#import optparse
+import optparse
 from cmd2 import Cmd, make_option, options, Cmd2TestCase
 from datetime import *
 import unittest, sys
@@ -1356,15 +1356,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             row = {first_column:first_value, second_column:second_value, third_column:third_value}
             result.append()
 
-#####################################################################
-# main
-#####################################################################
-
-
-if __name__ == "__main__":
-
-    pass
-    """
+def main():
+    
     parser = optparse.OptionParser()
     parser.add_option('-t', '--test', dest='unittests', action='store_true', default=False, help='Run unit test suite')
     parser.add_option('-n', '--nopreload', dest='nopreload', action='store_true', default=False, help='Run without pre-loading db')
@@ -1377,4 +1370,13 @@ if __name__ == "__main__":
         app.nopreload = callopts.nopreload
         sys.argv = [sys.argv[0]]  # the --test argument upsets unittest.main()
         app.cmdloop()
-    """
+
+
+
+#####################################################################
+# main
+#####################################################################
+
+
+if __name__ == "__main__":
+    main()

@@ -14,6 +14,8 @@ from collections import deque
 import argparse
 
 import fgmetric.shell.FGEucaMetricsDB
+
+from fgmetric.shell.FGEucaMetricsDB import FGEucaMetricsDB
 import fgmetric.util.FGTimeZone
 
 manual="""
@@ -107,7 +109,7 @@ class Instances:
         self.in_the_past = datetime.strptime("1970-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.pp = pprint.PrettyPrinter(indent=0)
         self.data = {}
-        self.eucadb = fgmetric.FGEucaMetricsDB.FGEucaMetricsDB("futuregrid.cfg")
+        self.eucadb = FGEucaMetricsDB("futuregrid.cfg")
         self.withSQL = False
         self.first_date  = datetime.strptime("3000-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
         self.last_date = datetime.strptime("1981-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')

@@ -116,10 +116,13 @@ well as Nimbus.
         Eucalyptus -> 'Log analyzer' -> CloudMetrics
         OpenStack -> 'MySQL' -> CloudMetrics
         Nimbus -> 'sqlite3' -> CloudMetrics
+        CloudMetrics <-> Shell
+        CloudMetrics <-> Shpinx
+        CloudMetrics <-> Flask
 
         MySQL [shape = flowchart.database];
         sqlite3 [shape = flowchart.database];
-        CloudMetrics [shape = cloud];
+        CloudMetrics [shape = flowchart.database];
         }
 
 Eucalyptus

@@ -97,6 +97,8 @@ class Shell(cmd.Cmd,
         """Called on an input line when the command prefix is not recognized.
            In that case we execute the line as Python code.
         """
+        if line.startswith ("for"):
+            return
         try:
             exec(line) in self._locals, self._globals
         except Exception, e:

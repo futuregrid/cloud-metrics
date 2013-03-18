@@ -106,29 +106,86 @@ class shell_scope():
 
     def emptyline(self):
         return
+
+    forblock = False
+    block = []
+    forstatement = ""
+
+    def replace_vars(self,line):
+        time = datetime.datetime.now().strftime("%H:%M:%S")
+        date = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        newline = line
+        newline = newline.replace("$time",time)
+        newline = newline.replace("$date",date)
+        for v in self.variables:
+            newline = newline.replace("$"+v,self.variables[v])
+        for v in os.environ:
+            newline = newline.replace("$"+v,os.environ[v])
+        return newline
     
     def precmd(self, line):
-        if line != "hist":
+        if line == None or line == "":
+            return ""
+
+        if line.startswith("#"):
+            print line
+            return ""
+
+        line = self.replace_vars(line)
+
+        ############################################################
+        # handeling for loops
+        ############################################################
+        if self.forblock == True and line.startswith(" "):
+            self.block.append(line)
+            # add line to block
+        elif self.forblock ==True:
+            print ">>>> EXECUTE LOOP"
+            print self.forstatement
+            print self.forblock
+            print self.block
+            self.forblock = False
+
+            
+            (loopvar, values) = self.forstatement.split('in')
+            loopvar = loopvar.replace("for","").replace(" ","")
+            values = values.replace("[","").replace("]","").replace(" ","")
+            values = values.split(",")
+            print values
+            for v in values:
+                self.do_var("%s=%s" % (loopvar, v))
+                for l in self.block:
+                    l = self.replace_vars(l)
+                    self.precmd(l)
+                    self.onecmd(l)
+                    
+            
+        if line.startswith("for"):
+            self.forblock = True
+            self.forstatement = line
+            self.block = []
+        ############################################################
+        # history
+        ############################################################
+            
+        if line != "hist" and line:
             self._hist += [ line.strip() ]
+
+        ############################################################
+        # strip
+        ############################################################
 
         line = line.strip()
         if line == "":
             print
             return line
 
-        if line.startswith("#"):
-            print line
-            return ""
 
-        time = datetime.datetime.now().strftime("%H:%M:%S")
-        date = datetime.datetime.now().strftime("%Y-%m-%d")
 
-        line = line.replace("$time",time)
-        line = line.replace("$date",date)
-        for v in self.variables:
-            line = line.replace("$"+v,self.variables[v])
-        for v in os.environ:
-            line = line.replace("$"+v,os.environ[v])
+        ############################################################
+        # scopes
+        ############################################################
 
         try:
             (start, rest) = line.split(" ")
@@ -140,6 +197,10 @@ class shell_scope():
         else:
             line = self.scope + " " + line
 
+        ############################################################
+        # echo
+        ############################################################
+        
         if self.echo:
             print line
 
@@ -151,10 +212,10 @@ class shell_scope():
     # Echo
     ######################################################################
 
-    def do_echo(self, boolean):
+    def do_verbose(self, boolean):
         self.echo = boolean == 'True'
 
-    def help_echo(self):
+    def help_verbose(self):
         msg = """
         DESCRIPTION
 

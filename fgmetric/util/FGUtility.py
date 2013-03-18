@@ -1,8 +1,11 @@
-import os, sys, re
+import os
+import sys
+import re
 import subprocess
 import datetime
-from fgmetric.shell.FGInstances import FGInstances # for insert_userinfo
+from fgmetric.shell.FGInstances import FGInstances  # for insert_userinfo
 import errno
+
 
 class FGUtility:
 
@@ -10,7 +13,7 @@ class FGUtility:
 
     @staticmethod
     def convertOutput(argument, name):
-        return FGUtility.prefix + "[" + name + "]" + argument 
+        return FGUtility.prefix + "[" + name + "]" + argument
 
     @staticmethod
     def ensure_dir(f):
@@ -35,12 +38,13 @@ class FGUtility:
     @staticmethod
     def retrieve_userinfo_ldap(ownerid):
 
-        #cmd = ['python', 'fg-user-project-info.py', '-u', ownerid, '-n']
+        # cmd = ['python', 'fg-user-project-info.py', '-u', ownerid, '-n']
         cmd = ['fg-user-project-info.py', '-u', ownerid, '-n']
         try:
             output = subprocess.check_output(cmd)
             res = re.split(',', output.rstrip())
-            result = { 'ownerid': ownerid, 'first_name':res[0], 'last_name' : res[1], 'uid' : res[2], 'email' : res[3] }
+            result = {'ownerid': ownerid, 'first_name': res[
+                0], 'last_name': res[1], 'uid': res[2], 'email': res[3]}
             return result
         except:
             return None
@@ -58,9 +62,9 @@ class FGUtility:
 
     @staticmethod
     def insert_userinfo():
-
-        '''Store userinfo into database by reading a userid(s) from a text file or a standard input
-        This command will read a userid(s) and do ldapsearch to find userinfo. And then it will
+        '''Store userinfo into database by reading a userid(s) from a
+        text file or a standard input This command will read a
+        userid(s) and do ldapsearch to find userinfo. And then it will
         store the userinfo into mysql database.
 
         Usage: $ fg-metrics-utility insert_userinfo -i filename [hostname]
@@ -110,13 +114,16 @@ class FGUtility:
                         m = None
                         pass
 
-                    # In euca3.0+, username is an ownerid of past version of euca
+                    # In euca3.0+, username is an ownerid of past version of
+                    # euca
                     if username:
                         ownerid = username
                 res = self.retrieve_userinfo_ldap(ownerid)
                 if res:
                     if m:
-                        # if m exists, res (dict) should be merged with the comma separated values in order to store the info into db
+                        # if m exists, res (dict) should be merged with the
+                        # comma separated values in order to store the info
+                        # into db
                         res["ownerid"] = userid
                         res["username"] = username
                         res["project"] = project
@@ -131,9 +138,12 @@ class FGUtility:
 
         i.write_userinfo_to_db()
 
+
 class dotdict(dict):
-    ''' dot notation dictionary from http://parand.com/say/index.php/2008/10/24/python-dot-notation-dictionary-access/ '''
+    ''' dot notation dictionary from
+    http://pearand.com/say/index.php/2008/10/24/python-dot-notation-dictionary-access/
+    '''
     def __getattr__(self, attr):
         return self.get(attr, None)
-    __setattr__= dict.__setitem__
-    __delattr__= dict.__delitem__
+    __setattr__ = dict.__setitem__
+    __delattr__ = dict.__delitem__

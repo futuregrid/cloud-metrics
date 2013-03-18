@@ -34,7 +34,7 @@ print sys.path
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinxcontrib.blockdiag']
 
 # for some reason font seems not to work
-blockdiag_fontpath = '_status/arial.ttf'
+#blockdiag_fontpath = '_status/arial.ttf'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

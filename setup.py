@@ -112,10 +112,8 @@ setup(
              'fg-parser = fgmetric.shell.FGParser:main',
              'fg-logparser = fgmetric.FGLogParser:main',
              'fg-metric-converter = fgmetric.shell.FGConverter:main',
-             'fg-metric = fgmetric.shell.FGAnalyzer:main',
-             'fg-metric-beta = fgmetric.shell.FGMetrics:main',
-             'fgmetric = fgmetric.shell.FGMetricsCli:main',
-             'fg-metric-cli = fgmetric.shell.FGMetricsCli:main'
+             'fg-metric-old = fgmetric.shell.FGAnalyzer:main',
+             'fg-metric = fgmetric.shell.FGMetricShell:main',
              ]},
 
         install_requires=install_requires

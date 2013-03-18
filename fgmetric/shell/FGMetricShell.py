@@ -1,7 +1,7 @@
 from os.path import split
 from cmd2 import Cmd, options, make_option
 import sys
-#import optparse
+import optparse
 import csv
 import subprocess
 from datetime import datetime
@@ -13,7 +13,7 @@ from fgmetric.charts.FGCharts import FGCharts
 from fgmetric.shell.FGDatabase import FGDatabase
 from fgmetric.util.FGUtility import FGUtility
 
-class FGMetrics(Cmd):
+class FGMetricShell(Cmd):
 
     instances = None
     search = None
@@ -389,7 +389,7 @@ class FGMetrics(Cmd):
         print "Bye ..."
 
 def main():
-    app = FGMetrics()
+    app = FGMetricShell()
     parser = optparse.OptionParser()
     parser.add_option('--conf', help='Run unit test suite')
     (callopts, callargs) = parser.parse_args()

@@ -109,7 +109,7 @@ available commoand::
   ======================
   EOF  eof  exit  help  q  quit
 
-.. note:: TODO: document the undocumented commands and include new output here once done.
+.. todo::  document the undocumented commands and include new output here once done.
 
 To find out more details about an available shell command, simply type
 in help followed by the command::
@@ -136,14 +136,14 @@ give an example for finding mor out about the set data command::
 The "analyze" command
 ----------------------------------------------------------------------
 
-.. note:: TODO Hyungro
+.. todo::  Hyungro
 
 Once you conducted an analyze, cloud metrics supports several output
 options such as stdout, JSON, csv, jpg, png, html that can be created
 with the help of various commands such as chart and csv which we
 describe next.
 
-.. note:: TODO Hyungro, what about the other commands? I do not think they are listed here.
+.. todo::  Hyungro, what about the other commands? I do not think they are listed here.
 
 The "chart" command
 ----------------------------------------------------------------------

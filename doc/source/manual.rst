@@ -328,8 +328,8 @@ Commands
 Production Web Pages using Sphinx
 ======================================================================
 
-.. warning::
-   TODO Hyungro, fix all ?? and make suer contents in this section is ok
+.. todo::
+   Hyungro, fix all ?? and make suer contents in this section is ok
 
 We provide a simple producton service that uses sphinx to render the
 information associated with a cloud deployment. We have done this in
@@ -347,8 +347,8 @@ If you met all the prerequisits, you will find the index file in::
 
    cloud-metric*/doc/build/html/index.html
 
-.. warning::
-   TODO Hyungro, I do not think that thsi at all works, you are not describing
+.. todo::
+   Hyungro, I do not think that thsi at all works, you are not describing
    what you do with results
 
 ..
@@ -360,8 +360,8 @@ live example of the data is available at
 Production Web Pages using Flask
 ======================================================================
 
-.. warning::
-   TODO Hyungro
+.. todo::
+   Hyungro
 
 PDF Reports
 ======================================================================

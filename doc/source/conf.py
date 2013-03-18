@@ -31,7 +31,7 @@ print sys.path
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinxcontrib.blockdiag']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinxcontrib.blockdiag','sphinx.ext.todo']
 
 # for some reason font seems not to work
 #blockdiag_fontpath = '_status/arial.ttf'
@@ -160,6 +160,8 @@ html_static_path = ['_static']
 
 # If false, no index is generated.
 #html_use_index = True
+
+todo_include_todos = True
 
 # If true, the index is split into individual pages for each letter.
 #html_split_index = False

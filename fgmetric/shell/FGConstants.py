@@ -1,5 +1,6 @@
 import os
 
+
 class FGConst:
     DEFAULT_NIMBUS_VERSION = "2.9"
     DEFAULT_NIMBUS_DB = "sqlite3"

@@ -7,11 +7,11 @@ import subprocess
 from datetime import datetime
 from calendar import monthrange
 from pprint import pprint
-from fgmetric.FGSearch import FGSearch
-from fgmetric.FGInstances import FGInstances
-from fgmetric.FGCharts import FGCharts
-from fgmetric.FGDatabase import FGDatabase
-from fgmetric.FGUtility import FGUtility
+from fgmetric.shell.FGSearch import FGSearch
+from fgmetric.shell.FGInstances import FGInstances
+from fgmetric.charts.FGCharts import FGCharts
+from fgmetric.shell.FGDatabase import FGDatabase
+from fgmetric.util.FGUtility import FGUtility
 
 class FGMetrics(Cmd):
 

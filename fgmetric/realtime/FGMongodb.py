@@ -1,7 +1,7 @@
 import sys
 import pymongo
 import ConfigParser
-from fgmetric.FGConstants import FGConst
+from fgmetric.shell.FGConstants import FGConst
 
 class FGMongodb:
 

@@ -13,8 +13,8 @@ from datetime import *
 from collections import deque
 import argparse
 
-import fgmetric.FGEucaMetricsDB
-import fgmetric.FGTimeZone
+import fgmetric.shell.FGEucaMetricsDB
+import fgmetric.util.FGTimeZone
 
 manual="""
 MANUAL PAGE DRAFT

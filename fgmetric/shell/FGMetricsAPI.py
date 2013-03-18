@@ -1,7 +1,7 @@
-#from fgmetric.FGDatabase import FGDatabase
+#from fgmetric.shell.FGDatabase import FGDatabase
 from pprint import pprint
-from fgmetric.FGSearch import FGSearch
-from fgmetric.FGInstances import FGInstances
+from fgmetric.shell.FGSearch import FGSearch
+from fgmetric.shell.FGInstances import FGInstances
 
 class FGMetricsAPI:
     """ FG Metric Python API

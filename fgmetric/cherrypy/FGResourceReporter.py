@@ -4,8 +4,8 @@ import cherrypy
 import sys
 import os
 import MySQLdb
-from fgmetric.FGDatabase import FGDatabase
-from fgweb.FGDescribeInstances import DescribeInstances
+from fgmetric.shell.FGDatabase import FGDatabase
+from fgmetric.cherrypy.FGDescribeInstances import DescribeInstances
 
 class FGResourceReporter:
     def __init__(self):

@@ -1,7 +1,7 @@
 import os, sys, re
 import subprocess
 import datetime
-from fgmetric.FGInstances import FGInstances # for insert_userinfo
+from fgmetric.shell.FGInstances import FGInstances # for insert_userinfo
 import errno
 
 class FGUtility:

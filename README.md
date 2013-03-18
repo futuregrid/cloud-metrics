@@ -47,3 +47,18 @@ The web pages can be generated on a local machine. Simple steps to do that are h
 3. make force
 
 4. open build/html/index.html
+
+
+OSX
+===
+install mysql from the oracle web site
+add /usr/local/mysql/bin to your local path
+and for some reason also do
+sudo ln -s /usr/local/mysql/bin/mysql_config /usr/bin/mysql_config 
+sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
+
+or 
+
+http://mxcl.github.com/homebrew/
+brew install mysql
+pip install MySQL-python

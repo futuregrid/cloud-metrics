@@ -153,6 +153,6 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 manpages:
-	rm -r -f source/modules
-	#sphinx-apidoc -f -H "Modules and Classes" -o source/modules ../.
-	echo ignore
+	#rm -r -f source/modules
+	sphinx-apidoc -f -H "Modules and Classes" -o source/modules ../.
+	#echo ignore

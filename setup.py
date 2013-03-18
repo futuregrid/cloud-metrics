@@ -66,7 +66,8 @@ requires = [
     'sqlalchemy',
     'mysql-connector-python',
     'mysql-python',
-    'pymongo'
+    'pymongo',
+    'mimerender'
     ],
 
 install_requires = []

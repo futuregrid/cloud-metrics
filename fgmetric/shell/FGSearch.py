@@ -2,10 +2,11 @@ import re
 import sys
 import copy
 from datetime import datetime, timedelta
-from fgmetric.FGUtility import dotdict
+from fgmetric.util.FGUtility import dotdict
+from fgmetric.util.FGUtility import FGUtility
+
 from math import ceil
 from pprint import pprint
-from fgmetric.FGUtility import FGUtility
 from collections import Counter, OrderedDict
 from calendar import monthrange
 

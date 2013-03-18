@@ -22,13 +22,16 @@ import calendar
 import re
 import string
 
-from fgmetric.FGParser import Instances
-from fgmetric.FGGoogleMotionChart import FGGoogleMotionChart
-from fgmetric.FGPygooglechart import FGPyGoogleChart
-from fgmetric.FGUtility import FGUtility
-from fgmetric.FGHighcharts import FGHighcharts
-from fgmetric.FGNovaMetric import FGNovaMetric
-from fgmetric.FGCharts import FGCharts
+from fgmetric.shell.FGParser import Instances
+
+from fgmetric.util.FGUtility import FGUtility
+#GVL: THE NEXT LINE IS NOT IN THE CODE
+#from fgmetric.FGNovaMetric import FGNovaMetric
+
+from fgmetric.charts.FGPygooglechart import FGPyGoogleChart
+from fgmetric.charts.FGGoogleMotionChart import FGGoogleMotionChart
+from fgmetric.charts.FGHighcharts import FGHighcharts
+from fgmetric.charts.FGCharts import FGCharts
 
 class CmdLineAnalyzeEucaData(Cmd):
     '''This class analyzes utilization data to make a report

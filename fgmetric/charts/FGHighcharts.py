@@ -7,8 +7,8 @@ import re
 import sys
 from datetime import timedelta, datetime
 
-from fgmetric.FGUtility import FGUtility
-from fgmetric.FGHighchartsTemplate import FGHighchartsTemplate
+from fgmetric.util.FGUtility import FGUtility
+from fgmetric.charts.FGHighchartsTemplate import FGHighchartsTemplate
 
 class FGHighcharts:
 

@@ -6,7 +6,7 @@ import MySQLdb
 import sqlite3
 import pprint
 from datetime import datetime
-from fgmetric.FGConstants import FGConst
+from fgmetric.shell.FGConstants import FGConst
 
 class FGDatabase:
 

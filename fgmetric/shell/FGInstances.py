@@ -9,7 +9,7 @@ from datetime import *
 from collections import deque
 import argparse
 
-from fgmetric.FGDatabase import FGDatabase
+from fgmetric.shell.FGDatabase import FGDatabase
 
 manual="""
 MANUAL PAGE DRAFT

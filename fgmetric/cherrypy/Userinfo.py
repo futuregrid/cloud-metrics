@@ -1,4 +1,4 @@
-from fgmetric.FGParser import Instances
+from fgmetric.shell.FGParser import Instances
 import MySQLdb
 import sys
 import cherrypy

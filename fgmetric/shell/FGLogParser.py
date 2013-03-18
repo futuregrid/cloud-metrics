@@ -17,8 +17,8 @@ from datetime import *
 import argparse
 import fileinput
 
-from fgmetric.FGInstances import FGInstances
-import fgmetric.FGTimeZone
+from fgmetric.shell.FGInstances import FGInstances
+import fgmetric.util.FGTimeZone
 
 manual="""
 MANUAL PAGE DRAFT

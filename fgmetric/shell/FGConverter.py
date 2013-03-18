@@ -3,9 +3,9 @@ import sqlite3 as lite
 import MySQLdb
 from collections import deque
 from datetime import datetime
-from fgmetric.FGConstants import FGConst
-from fgmetric.FGDatabase import FGDatabase
-from fgmetric.FGUtility import FGUtility
+from fgmetric.shell.FGConstants import FGConst
+from fgmetric.shell.FGDatabase import FGDatabase
+from fgmetric.util.FGUtility import FGUtility
 
 class FGConverter:
 

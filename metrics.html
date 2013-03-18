@@ -30,6 +30,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="_static/fg-favicon.ico"/>
     <link rel="top" title="Cloud Metrics  documentation" href="index.html" />
     <link rel="next" title="Developers Manual" href="developer.html" />
     <link rel="prev" title="Administrator Guide" href="manual.html" />
@@ -118,6 +119,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="developer.html">Developers Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="highchart.html">Highchart demo in sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="todo.html">TODO: examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="todo.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="todo.html#showing-only-image-numbers-owned-by-the-userid-specified">Showing only image numbers owned by the userid specified::</a></li>
@@ -340,9 +342,37 @@ Usage: set date from_date(YYYY-MM-DDTHH:MM:SS) to_date(YYYY-MM-DDTHH:MM:SS).
 </div>
 <div class="section" id="the-analyze-command">
 <h2><a class="toc-backref" href="#id9">The &#8220;analyze&#8221; command</a><a class="headerlink" href="#the-analyze-command" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">TODO Hyungro</p>
+<p>Perform analysis based on analysis options.
+Parameters are not required if options already set.</p>
+<div class="highlight-python"><pre>fg-metric&gt; analyze -h
+Run analysis for cloud usage data. Parameters are not required if they are set.
+
+       Usage 1: (analyze between $from_date and $to_date for $name metric)
+           set date $from_date $to_date
+           set metric $name
+           analyze
+
+       Usage 2:
+           analyze -f $from_date -t $to_date -m $name
+
+       Usage 3: (analyze $name metric in a selected year. -M $month option can be include)
+           analyze -Y $year -m $name
+
+Usage: analyze [options] arg
+
+Options:
+ -h, --help            show this help message and exit
+ -f START_DATE, --start_date=START_DATE
+                       start time to analyze (type. YYYY-MM-DDThh:mm:ss)
+ -t END_DATE, --end_date=END_DATE
+                       end time to analyze (type. YYYY-MM-DDThh:mm:ss)
+ -M MONTH, --month=MONTH
+                       month to analyze (type. MM)
+ -Y YEAR, --year=YEAR  year to analyze (type. YYYY)
+ -m METRIC, --metric=METRIC
+                       item name to measure (e.g. runtime, count)
+ -P PERIOD, --period=PERIOD
+                       search period (monthly, daily)</pre>
 </div>
 <p>Once you conducted an analyze, cloud metrics supports several output
 options such as stdout, JSON, csv, jpg, png, html that can be created
@@ -571,8 +601,7 @@ this new data.</p>
       
     </p>
     <p>
-        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, FUgang Wang.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, Fugang Wang.<br/>
     </p>
   </div>
 </footer>

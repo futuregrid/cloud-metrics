@@ -20,17 +20,44 @@ Prerequisites
 We assume you have a valid python version (2.7.2 or higher) and all
 the needed libraries on the system where you run the code.
 
- :: 
+Autorun
+----------------------------------
 
+    $ hg clone http://bitbucket.org/birkenfeld/sphinx-contrib/
+    $ cd sphinx-contrib/autorun
+    $ python setup.py install
+
+
+
+Linux
+^^^^^^^^^^^^^^^
   sudo apt-get install libmysqlclient-dev
   sudo apt-get install python-dev
+
+OSX
+^^^^^^^^^^^^^^^
+
+1. install mysql from the oracle web site
+
+2.  add /usr/local/mysql/bin to your local path
+
+3. and for some reason also do::
+
+  sudo ln -s /usr/local/mysql/bin/mysql_config /usr/bin/mysql_config 
+  sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
+
+or 
+
+http://mxcl.github.com/homebrew/
+brew install mysql
+pip install MySQL-python
 
 Production Version
 ----------------------------------------------------------------------
 
 The FG Cloud Metric is available from PyPI and can be easily installed
 with pip. We recommend that you use virtualenv to manage your local
-python installation. We recommend to use pip::
+python installation::
 
         pip install futuregrid-cloud-metric
 
@@ -43,6 +70,20 @@ it and install with::
   git clone https://github.com/futuregrid/cloud-metrics
   cd cloud-metrics
   python setup.py install
+
+Creating the Documentation
+-----------------------------
+
+::
+
+    cd doc
+    make html
+    open build/html/index.html
+
+To see the pythin code::
+
+    open build/html/modules/modules.html
+
 
 .. Additional packages for sphinx
 .. ------------------------------------------

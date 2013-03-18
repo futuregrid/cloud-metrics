@@ -176,7 +176,7 @@ options such as stdout, JSON, csv, jpg, png, html that can be created
 with the help of various commands such as chart and csv which we
 describe next.
 
-.. note:: TODO Hyungro, what about the other commands? I do not think they are listed here.
+.. note:: Other commands will be described.
 
 The "chart" command
 ----------------------------------------------------------------------

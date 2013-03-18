@@ -2,7 +2,6 @@
 Welcome to Cloud Metrics's documentation!
 **********************************************************************
 
-.. todolist::
 
 .. sidebar:: Table of Contents
 

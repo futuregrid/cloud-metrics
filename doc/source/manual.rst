@@ -23,6 +23,8 @@ the needed libraries on the system where you run the code.
 Autorun
 ----------------------------------
 
+::
+
     $ hg clone http://bitbucket.org/birkenfeld/sphinx-contrib/
     $ cd sphinx-contrib/autorun
     $ python setup.py install
@@ -31,6 +33,9 @@ Autorun
 
 Linux
 ^^^^^^^^^^^^^^^
+
+::
+
   sudo apt-get install libmysqlclient-dev
   sudo apt-get install python-dev
 
@@ -41,16 +46,20 @@ OSX
 
 2.  add /usr/local/mysql/bin to your local path
 
-3. and for some reason also do::
+3. and for some reason also do
+
+::
 
   sudo ln -s /usr/local/mysql/bin/mysql_config /usr/bin/mysql_config 
   sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
 
 or 
 
-http://mxcl.github.com/homebrew/
-brew install mysql
-pip install MySQL-python
+::
+
+  http://mxcl.github.com/homebrew/
+  brew install mysql
+  pip install MySQL-python
 
 Production Version
 ----------------------------------------------------------------------
@@ -74,13 +83,30 @@ it and install with::
 Creating the Documentation
 -----------------------------
 
-::
+Production Web Pages using Sphinx
+----------------------------------------------------------------------
 
-    cd doc
-    make html
+To create the sphinx documentation you must have mysql installed on
+your machine as the sphinx autodoc will need the. However if you
+remove from the ``doc/Makefile`` the manpages after the ``html:``
+you can also compile portions of the pages without it.
+
+To create the pages please execute:: 
+
+   cd cloud-metric
+   python setup.py install
+   cd doc/result
+   make html
+
+If you met all the prerequisits, you will find the index file in::
+
+   cloud-metric*/???/build/html/index.html
+
+On OSX you can for example now look at it with::
+
     open build/html/index.html
 
-To see the pythin code::
+To see the python code::
 
     open build/html/modules/modules.html
 
@@ -134,38 +160,35 @@ Log Frequency
 FG CloudMetrics is collecting accounting information from log files in
 a Eucalyptus management server. Two methods have been used: real-time and daily update.
 
-First, we need to specify which files that FG CloudMetrics is looking for. 
-
-::
+First, we need to specify which files that FG CloudMetrics is looking for::
 
   cc.log
 
-Second, we need to understand what information it does have, for example:
-
-::
+Second, we need to understand what information it does have, for example::
 
   [Sun Jan  1 04:11:31 2012][032300][EUCADEBUG ] print_ccInstance(): refresh_instances():  instanceId=i-4791080F reservationId=r-3CC30810 emiId=emi-CD38100F kernelId=eki-78EF12D0 ramdiskId=eri-5BB61250 emiURL=http://149.165.146.130:8773/services/Walrus/jklingin/centos5-6.x86_64.manifest.xml kernelURL=http://149.165.146.130:8773/services/Walrus/xenkernel/vmlinuz-2.6.27.21-0.1-xen.manifest.xml ramdiskURL=http://149.165.146.130:8773/services/Walrus/xeninitrd/initrd-2.6.27.21-0.1-xen.manifest.xml state=Extant ts=1325364349 ownerId=abcde keyName=ssh-rsa sddd abc@eucalyptus ccnet={privateIp=10.128.3.0 publicIp=149.165.159.140 privateMac=D0:0D:47:91:08:0F vlan=14 networkIndex=5} ccvm={cores=1 mem=512 disk=5} ncHostIdx=6 serviceTag=http://i0:8775/axis2/services/EucalyptusNC userData= launchIndex=0 volumesSize=0 volumes={} groupNames={default }
   
 Third, we parse and store the information in two ways: real-time, and daily update
 
-  * Real-time collector with 'tail -f' like logwatcher.py
+1. Real-time collector with 'tail -f' like logwatcher.py::
 
     ``python logwatcher.py | python fg-logparser -i -`` in management server.
 
-    This way allows us to collect accounting information instantly from logs.
+This way allows us to collect accounting information instantly from logs.
     
-    * logwatcher.py script observes cc.log files like a 'tail -f' command,
+* logwatcher.py script observes cc.log files like a 'tail -f' command,
       but it does not lose file control if the cc.log file is rotated to cc.log.1 or .*
-    * fg-logparser (FGParser.py) parses log messages and stores metric values into FG Cloud Metrics db.
+    
+2. fg-logparser (FGParser.py) parses log messages and stores metric values into FG Cloud Metrics db.
 
-  * Daily update
+3. Daily update::
 
     cron runs fg-logparser daily to adjust possible missing messages from real-time collector.
     ``0 4 * * * fg-logparser -s `date +\%Y\%m\%d -d "1 day ago"` -e `date +\%Y\%m\%d -d "1 day ago"` -i $backup_directory -n $nodename -z (zipped) -tz $timezone (e.g. PST)``
 
-    **This is based on backups of log files**
+**This is based on backups of log files**
 
-     * ``fg-euca-gather-log-files (FGCollectFiles.py)`` makes backups by hourly checking log directory with cron
+4. ``fg-euca-gather-log-files (FGCollectFiles.py)`` makes backups by hourly checking log directory with cron::
 
        ``2 * * * * fg-euca-gather-log-files``
 
@@ -220,9 +243,9 @@ want. If the data is already copied, the file is not transferred.
 
 Note that in our example the backup directory could be a remote location.
 
-1. Log into the management node of eucalyptus that provides access to the log files
+5. Log into the management node of eucalyptus that provides access to the log files
 
-2. Create crontab::
+6. Create crontab::
 
       #Hourly
       0 * * * * fg-euca-gather-log-files -i <directory of log files> -o <directory of backup>
@@ -325,47 +348,44 @@ Commands
    `fg-euca-gather-log-files <./man/fg-euca-gather-log-files.html>`_ , gathers all eucalyptus log files into a single directory from the eucalyptus log file directory. This script can be called from cron repeatedly in order to avoid that log data is lost by using log file rotation in eucalyptus.
      `fg-metric <./man/fg-metric.html>`_, a shell to interact with the metric database. 
 
-Production Web Pages using Sphinx
+Setting up a Production Environment
 ======================================================================
 
-.. todo::
-   Hyungro, fix all ?? and make suer contents in this section is ok
+Production Web Pages using Sphinx
+----------------------------------------------------------------------
 
-We provide a simple producton service that uses sphinx to render the
-information associated with a cloud deployment. We have done this in
-order to provide a very simple framework that you can expand while not
-needing to invest any time in learning a web framework. To do this you
-must use the development version of the cloud metric framework as
-discussed in section ??. 
+.. todo:: The creation of the production pages is prbably not working right
 
-Next please execute:: 
+To create the sphinx documentation you must have mysql installed on
+your machine as the sphinx autodoc will need the. However if you
+remove from the ``doc/Makefile`` the manpages after the ``html:``
+you can also compile portions of the pages without it.
 
-   cd cloud-metric/doc
-   make force
+To create the pages please execute:: 
+
+   cd cloud-metric
+   python setup.py install
+   cd doc/result
+   make html
 
 If you met all the prerequisits, you will find the index file in::
 
-   cloud-metric*/doc/build/html/index.html
+   cloud-metric*/???/build/html/index.html
 
-.. todo::
-   Hyungro, I do not think that thsi at all works, you are not describing
-   what you do with results
-
-..
-
-live example of the data is available at
+A live example of data produced with cloudmetrics can be found at
 
 *   `http://portal.futuregrid.org/metrics/html/results.html <http://portal.futuregrid.org/metrics/html/results.html>`_
 
 Production Web Pages using Flask
-======================================================================
+----------------------------------------------------------------------
 
-.. todo::
-   Hyungro
 
-PDF Reports
-======================================================================
+.. todo:: Develop the documentation on how to set up the flask environment
+
+
+Production PDF Reports
+----------------------------------------------------------------------
 
 This is a part of separated task which is at: `PDF Report generator <https://github.com/lee212/Report_eucalyptus_on_sierra>`_
 
-This will be merged into CloudMetrics with a better format soon.
+.. todo:: Meger the PDF reported into cloud-metrics

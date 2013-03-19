@@ -1,0 +1,14 @@
+# set start date and end date of analysis
+set date 2012-01-01T00:00:00 2012-12-31T23:59:59
+
+# set metric
+set metric runtime
+
+# set groupby 'hostname'
+set groups hostname
+
+# perform analysis
+analyze
+
+# create chart html -t option indicates a chart type and --directory indicates output directory
+chart -t pie-basic --directory example1

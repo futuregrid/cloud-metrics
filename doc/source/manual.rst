@@ -90,10 +90,7 @@ Database
 
 Installation
 ^^^^^^^^^^^^^
-You should better haver installed mysql on your machine or remote.
-Get hostname, db name, user id, password, port number.
-DBUser should have permission to write/delete/select/modify tables.
-
+You should have installed mysql on your machine or remote.
 ::
 
  sudo apt-get update
@@ -105,8 +102,8 @@ TODO: Once we have moved mongodb, this should be updated.
 
 Server Access Information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-futuregrid.cfg has database user id, password, hostname, port number,
-database name.
+futuregrid.cfg includes dbusername, password, hostname, port number,
+and database name.
 
 ::
 
@@ -114,20 +111,20 @@ database name.
    chmod go-rw ~/.futuregrid/futuregrid.cfg 
 
 Database initialization
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 First creation of database and tables
 
 ::
 
- $ fg-metric-install (something something...)
+ $ fg-metric-install (...)
  .... database created! ...
 
 
-
-Measuring data from logs and database
--------------------------------------
-There are two means to collect metric data into Cloud Metrics: 
-log parsing, database converting.
+Obtaining metric data from logs and database
+-----------------------------------------------
+There are two means to collect metric data from IaaS services: 
+log parsing, and database converting. The collected data will
+be stored into Cloud Metrics database.
 
 Eucalyptus
 ^^^^^^^^^^
@@ -199,15 +196,15 @@ RESOURCE INFORMATION FROM IaaS SERVICES.
 
 Generating PDF reports
 ----------------------
-- this has been done January 2013 for XSEDE REPORT and NSF.
+- This has been done in January 2013 for XSEDE REPORT and NSF.
 - using Sphinx latexpdf
 - main code is at doc/pdf_reports
 
-TODO: THIS NEEDS DOCUMENTATION about how to use it.
+TODO: THIS NEEDS DOCUMENTATION as how to use it.
 
-I belive readme.rst explains a main concept and gives instruction as how
-to do it but haven't tested recently. There must be something need to be
-addressed and improved in terms of installation guide, instruction.
+readme.rst explains a main concept and gives instruction as how
+to do it but haven't fully tested. There must be something need to be
+addressed and improved ragards to installation guide, instruction.
 
 
 Creating the Documentation

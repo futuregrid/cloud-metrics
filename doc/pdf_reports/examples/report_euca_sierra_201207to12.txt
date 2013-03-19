@@ -2,28 +2,37 @@ set nodename sierra
 set platform eucalyptus
 set date 2012-07-01T00:00:00 2012-12-31T00:00:00
 set period monthly
-set metric countusers
-analyze
-chart -t column-basic --directory 2012-07to12/
-
-clear
-set nodename sierra
-set platform eucalyptus
-set date 2012-07-01T00:00:00 2012-12-31T00:00:00
-set period monthly
-set metric count
-analyze
-chart -t column-basic --directory 2012-07to12/
-
-clear
-set nodename sierra
-set platform eucalyptus
-set date 2012-07-01T00:00:00 2012-12-31T00:00:00
-set period monthly
-set metric runtime
+set metric runtime count countusers
 set timetype hour
 analyze
-chart -t column-basic --directory 2012-07to12/
+chart -t combo-multi-axes --directory 2012-07to12/
+#
+#set nodename sierra
+#set platform eucalyptus
+#set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+#set period monthly
+#set metric countusers
+#analyze
+#chart -t column-basic --directory 2012-07to12/
+#
+#clear
+#set nodename sierra
+#set platform eucalyptus
+#set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+#set period monthly
+#set metric count
+#analyze
+#chart -t column-basic --directory 2012-07to12/
+#
+#clear
+#set nodename sierra
+#set platform eucalyptus
+#set date 2012-07-01T00:00:00 2012-12-31T00:00:00
+#set period monthly
+#set metric runtime
+#set timetype hour
+#analyze
+#chart -t column-basic --directory 2012-07to12/
 
 clear
 set nodename sierra
@@ -69,7 +78,7 @@ set date 2012-07-01T00:00:00 2012-12-31T00:00:00
 set groupby project
 set metric count
 analyze
-chart -t pie-basic --directory 2012-07to12/
+chart -t pie-basic-with-table --directory 2012-07to12/
 
 clear
 set nodename sierra
@@ -78,8 +87,7 @@ set date 2012-07-01T00:00:00 2012-12-31T00:00:00
 set groupby projectleader
 set metric count
 analyze
-chart -t pie-basic --directory 2012-07to12/
-clear
+chart -t pie-basic-with-table --directory 2012-07to12/
 
 clear
 set nodename sierra
@@ -88,7 +96,7 @@ set date 2012-07-01T00:00:00 2012-12-31T00:00:00
 set groupby institution
 set metric count
 analyze
-chart -t pie-basic --directory 2012-07to12/
+chart -t pie-basic-with-table --directory 2012-07to12/
 
 set nodename sierra
 set platform eucalyptus

@@ -1,20 +1,36 @@
 # Makefile for Sphinx documentation
 #
 
+# from date chosen to be zero second from midnight
+# to date chosen to be one second before midnight
+#FROM_DATE     = 20121001
+#TO_DATE       = 20121231
+RESOURCES      = sierra india hotel alamo foxtrot
+TEMPLATE       = xsede 
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
-BUILDDIR      = build
+BUILDDIR      = _build
+
+# Latest FG Cloud Metrics should be installed to run Makefile.
+FGMETRIC      = fg-metric-beta
+PHANTOMJS     = phantomjs
+HTMLPATH      = output
+IMGPATH       = images
+REPORTPATH1   = reports/cmd
+REPORTPATH2   = reports/rst
+PYTHON        = python
+REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n $(RESOURCES) -t $(TEMPLATE) --from $(FROM_DATE)T00:00:00 --to $(TO_DATE)T23:59:59
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
+ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 # the i18n builder cannot share the environment and doctrees with the others
-I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
+I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
-.PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext 
+.PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
@@ -38,21 +54,66 @@ help:
 	@echo "  linkcheck  to check all external links for integrity"
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 
-clean:
-	-rm -rf $(BUILDDIR)
-	-rm -rf source/modules
+clean: cleanmain cleandata
 
-html: manpages
+cleanmain:
+	-rm -rf $(BUILDDIR)/*
+
+cleandata:
+	-rm -rf $(HTMLPATH)/*
+	-rm -rf $(IMGPATH)/*
+	-rm -rf $(REPORTPATH1)/*
+	-rm -rf $(REPORTPATH2)/*
+
+createdirectory:
+	mkdir -p $(HTMLPATH)
+	mkdir -p $(IMGPATH)
+	mkdir -p $(REPORTPATH1)
+	mkdir -p $(REPORTPATH2)
+
+generatereport:
+	$(REPORTGENERATOR)
+	@echo
+	@echo "$(REPORTGENERATOR) executed."
+data:
+	@echo
+	@echo "Start generating data..."
+	cat reports/cmd/*.txt | $(FGMETRIC) 
+	@echo
+	@echo "All data generated."
+
+injectJs:
+	perl -pi -e 's#../../../../../../_static/js/jquery-1.7.2.min.js#http://code.jquery.com/jquery-1.7.2.min.js#' $(HTMLPATH)/*.html
+	perl -pi -e 's#../../../../../../_static/js/highcharts.js#http://code.highcharts.com/highcharts.js#' $(HTMLPATH)/*.html
+	perl -pi -e 's#../../../../../../_static/js/modules/exporting.js#http://code.highcharts.com/modules/exporting.js#' $(HTMLPATH)/*.html
+	@echo
+	@echo "Local path of js converted to global links"
+
+html2png:
+	@echo
+	@echo "Start to convert html pages to PNG images using phantomjs..."
+	#Temporary for handling legend in charts
+	perl -pi -e 's#x: -100#x: -50#' $(HTMLPATH)/*.html
+	find $(HTMLPATH)/*.html -exec $(PHANTOMJS) rasterizefromfile.js {} $(IMGPATH)/{}.png \; 
+	find $(IMGPATH)/$(HTMLPATH)/*.png -exec rename -f 's/\.html\.png/\.png/' .png {} \;
+	@echo
+	@echo "All html pages are rendered to PNG images."
+
+reportonly: injectJs html2png latexpdf
+
+report: cleandata createdirectory generatereport data injectJs html2png latexpdf
+
+html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
-dirhtml: manpages 
+dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/dirhtml."
 
-singlehtml: manpages 
+singlehtml:
 	$(SPHINXBUILD) -b singlehtml $(ALLSPHINXOPTS) $(BUILDDIR)/singlehtml
 	@echo
 	@echo "Build finished. The HTML page is in $(BUILDDIR)/singlehtml."
@@ -78,17 +139,17 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/CloudMetrics.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/FGSierra6monthsReport.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/CloudMetrics.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/FGSierra6monthsReport.qhc"
 
 devhelp:
 	$(SPHINXBUILD) -b devhelp $(ALLSPHINXOPTS) $(BUILDDIR)/devhelp
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/CloudMetrics"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/CloudMetrics"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/FGSierra6monthsReport"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/FGSierra6monthsReport"
 	@echo "# devhelp"
 
 epub:
@@ -96,14 +157,14 @@ epub:
 	@echo
 	@echo "Build finished. The epub file is in $(BUILDDIR)/epub."
 
-latex: manpages 
+latex:
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in $(BUILDDIR)/latex."
 	@echo "Run \`make' in that directory to run these through (pdf)latex" \
 	      "(use \`make latexpdf' here to do that automatically)."
 
-latexpdf: manpages 
+latexpdf:
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
 	@echo "Running LaTeX files through pdflatex..."
 	$(MAKE) -C $(BUILDDIR)/latex all-pdf
@@ -152,9 +213,3 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
-
-manpages:
-	#rm -r -f source/modules
-	sphinx-apidoc -f -H "Modules and Classes" -o source/modules ../.
-	#rm source/modules/setup.*
-	#echo ignore

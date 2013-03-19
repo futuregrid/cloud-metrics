@@ -1,0 +1,16 @@
+#! /bin/sh
+
+# USAGE fg-report 20121001 20121231
+
+# report from 2012/10/01 2012/12/31 date in yyyy/mm/dd
+
+FROM_DATE=$1
+TO_DATE=$2
+
+
+cd /tmp
+git clone git@github.com:lee212/Report_eucalyptus_on_sierra.git
+cd Report_eucalyptus_on_sierra/
+make -f Makefile FROM_DATE=$FROM_DATE TO_DATE=$TO_DATE report
+
+

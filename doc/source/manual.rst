@@ -14,13 +14,6 @@ Administrator Guide
 Installation
 ======================================================================
 
-NOTES
-------
-
-::
-
-   install futuregrid.cfg
-   chmod go-rw ~/.futuregrid/futuregrid.cfg 
 
 
 
@@ -90,6 +83,129 @@ it and install with::
   git clone https://github.com/futuregrid/cloud-metrics
   cd cloud-metrics
   python setup.py install
+
+
+Database
+-----------
+
+Installation
+^^^^^^^^^^^^^
+You should have installed mysql on your machine or remote.
+::
+
+ sudo apt-get update
+ sudo apt-get dist-upgrade
+ sudo apt-get install mysql-server mysql-client
+ sudo mysqladmin -u root -h localhost password 'mypassword'
+
+TODO: Once we have moved mongodb, this should be updated.
+
+Server Access Information
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+futuregrid.cfg includes dbusername, password, hostname, port number,
+and database name.
+
+::
+
+   install futuregrid.cfg
+   chmod go-rw ~/.futuregrid/futuregrid.cfg 
+
+Database initialization
+^^^^^^^^^^^^^^^^^^^^^^^
+First creation of database and tables
+
+::
+
+ $ fg-metric-install (...)
+ .... database created! ...
+
+
+Obtaining metric data from logs and database
+-----------------------------------------------
+There are two means to collect metric data from IaaS services: 
+log parsing, and database converting. The collected data will
+be stored into Cloud Metrics database.
+
+Eucalyptus
+^^^^^^^^^^
+For Eucalyptus, Cloud Metrics uses fg-logparser to parse and 
+store metric information to Cloud Metrics database.
+* This is a real-time collector with log watcher python module.
+
+::
+
+  TODO: Describe how it works in futuregrid
+  (EXAMPLE, not real)
+  e.g.
+  1. login into management server
+  ssh i135
+
+  2. store futuregrid.cfg file in $HOME/.futuregrid
+
+  3. install fg-metric
+     
+  4. run scripts
+  python logwatcher.py|fg-logparser /var/log/eucalyptus/ ...
+
+OpenStack
+^^^^^^^^^
+For OpenStack, Cloud Metrics simply converts OpenStack's MySQL
+to Cloud Metrics database using fg-converter.
+* This is a daily update based on cron.
+
+::
+
+  TODO: Describe how it works in futuregrid
+  
+  1. get access to openstack database
+  db name, host, id, pass
+
+  2. hook up with fg-converter
+     e.g. fg-converter -db info ...
+     (THIS IS WHERE CRON DOES ACT)
+     5 * * * * fg-converter ...
+
+  3. what fg-converter basically does...
+     SELECT * from instances (OPENSTACK)
+     INSERT into instance (CLOUD METRICS)
+
+Nimbus
+^^^^^^
+For Nimbus, Cloud Metrics simplys converts Nimbus' sqlite3
+to Cloud Metrics database using fg-converter.
+* This is a daily update based on cron.
+
+::
+
+  TODO: Describe how it works in futuregrid
+  
+  1. get nimbus sqlite3 database files
+     Nimbus group pushes db files into ***fg-ravel4** server
+
+  2. hook up with fg-converter
+     e.g. fg-converter -db info ...
+     (THIS IS WHERE CRON DOES ACT)
+     5 * * * * fg-converter ...
+
+  3. what fg-converter basically does...
+     SELECT * from instances (NIMBUS)
+     INSERT into instance (CLOUD METRICS)
+
+THIS IS ALL INFORMATION (NEED MORE DETAILS TO FILL IN) ABOUT COLLECTING
+RESOURCE INFORMATION FROM IaaS SERVICES.
+
+Generating PDF reports
+----------------------
+- This has been done in January 2013 for XSEDE REPORT and NSF.
+- using Sphinx latexpdf
+- main code is at doc/pdf_reports
+
+TODO: THIS NEEDS DOCUMENTATION as how to use it.
+
+readme.rst explains a main concept and gives instruction as how
+to do it but haven't fully tested. There must be something need to be
+addressed and improved ragards to installation guide, instruction.
+
 
 Creating the Documentation
 -----------------------------
@@ -398,6 +514,4 @@ Production Web Pages using Flask
 Production PDF Reports
 ----------------------------------------------------------------------
 
-This is a part of separated task which is at: `PDF Report generator <https://github.com/lee212/Report_eucalyptus_on_sierra>`_
-
-.. todo:: Meger the PDF reported into cloud-metrics
+PDF Report generator: doc/pdf_reports

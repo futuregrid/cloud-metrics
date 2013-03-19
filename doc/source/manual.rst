@@ -84,8 +84,26 @@ it and install with::
   cd cloud-metrics
   python setup.py install
 
-Database configuration
-----------------------
+
+Database
+-----------
+
+Installation
+^^^^^^^^^^^^^
+You should better haver installed mysql on your machine or remote.
+Get hostname, db name, user id, password, port number.
+DBUser should have permission to write/delete/select/modify tables.
+
+::
+  sudo apt-get install mysql-server
+
+TODO: Once we have moved mongodb, this should be updated.
+
+Server Access Information
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+futuregrid.cfg has database user id, password, hostname, port number,
+database name.
+
 ::
 
    install futuregrid.cfg

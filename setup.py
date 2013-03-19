@@ -107,12 +107,12 @@ setup(
     entry_points={
         'console_scripts':
             [
-             'fg-cleanup-db = fgmetric.shell.FGEucaMetricsDB:command_clean_database',
+             #'fg-cleanup-db = fgmetric.shell.FGEucaMetricsDB:command_clean_database',
              'fg-euca-gather-log-files = fgmetric.shell.FGCollectFiles:main',
              'fg-parser = fgmetric.shell.FGParser:main',
-             'fg-logparser = fgmetric.FGLogParser:main',
+             'fg-logparser = fgmetric.shell.FGLogParser:main',
              'fg-metric-converter = fgmetric.shell.FGConverter:main',
-             'fg-metric-old = fgmetric.shell.FGAnalyzer:main',
+             #'fg-metric-old = fgmetric.shell.FGAnalyzer:main',
              'fg-metric = fgmetric.shell.FGMetricShell:main',
              ]},
 

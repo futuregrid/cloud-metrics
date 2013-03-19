@@ -1,14 +1,15 @@
-#from fgmetric.shell.FGDatabase import FGDatabase
+# from fgmetric.shell.FGDatabase import FGDatabase
 from pprint import pprint
 from fgmetric.shell.FGSearch import FGSearch
 from fgmetric.shell.FGInstances import FGInstances
+
 
 class FGMetricsAPI:
     """ FG Metric Python API
 
     This API supports usage statistics in FG Metric way, but rely on database query.
 
-    In a nutshell, 
+    In a nutshell,
     FG Metric retrieves all records on the database and collects matching records on Python programmatically.
     However, FG Metric API retrieves records on the database with search condition, especially 'ownerid' is required field to search.
     Mainly, this API calls database with a query look like " select * from instance where start >= date and end <= date and ownerid = id "
@@ -19,7 +20,7 @@ class FGMetricsAPI:
     Description
     ===========
     FG Metric Python API to provide usage data like FG Metric's cmd tool but through python API.
-    
+
     Requirement
     ^^^^^^^^^^^
     set_user(ownerid) should be set
@@ -83,7 +84,7 @@ class FGMetricsAPI:
         self._get_instances(ownerids)
         self.search.init_stats()
         self._set_search_vars()
-        #pprint(vars(self.search.get_filter()))
+        # pprint(vars(self.search.get_filter()))
         self._calculate_stats()
         return self.search.get_metric()
 
@@ -96,7 +97,8 @@ class FGMetricsAPI:
 
     def _calculate_stats(self):
         for i in range(0, self.instances.count()):
-            instance = self.instances.get_data(i, self.search._is_userinfo_needed())[0]
+            instance = self.instances.get_data(
+                i, self.search._is_userinfo_needed())[0]
             if not self.search._is_in_date(instance):
                 continue
             if not self.search._is_filtered(instance):
@@ -104,25 +106,24 @@ class FGMetricsAPI:
             res = self.search.collect(instance)
 
     def _get_ownerids(self):
-        self.instances.read_userinfo({"username":self.username})
+        self.instances.read_userinfo({"username": self.username})
         userinfo = self.instances.userinfo
         ownerids = [element['ownerid'] for element in userinfo]
         return ownerids
 
     def _get_instances(self, ownerids):
         res = []
-        self.instances.read_instances({}, " and ownerid in " + str(tuple(ownerids)) + "")
+        self.instances.read_instances(
+            {}, " and ownerid in " + str(tuple(ownerids)) + "")
 
     def _set_dict_vars(self):
         self.result = {
-            "start_date"    :   self.start_date,
-            "end_date"      :   self.end_date,
-            "ownerid"       :   self.username,
-            "metric"        :   self.metric,
-            "period"        :   self.period or "All",
-            "clouds"        :   self.cloud or "All",
-            "hostname"      :   self.hostname or "All"
+            "start_date":   self.start_date,
+            "end_date":   self.end_date,
+            "ownerid":   self.username,
+            "metric":   self.metric,
+            "period":   self.period or "All",
+            "clouds":   self.cloud or "All",
+            "hostname":   self.hostname or "All"
         }
         return self.result
-
- 

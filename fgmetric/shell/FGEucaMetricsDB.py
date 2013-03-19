@@ -11,7 +11,8 @@ import sys
 from datetime import datetime
 
 pp = pprint.PrettyPrinter(indent=0)
-    
+
+
 class FGEucaMetricsDB(object):
 
     # Default values
@@ -27,13 +28,13 @@ class FGEucaMetricsDB(object):
     # Initialize
     def __init__(self, configfile="futuregrid.cfg"):
 
-        #read config from file configfile
+        # read config from file configfile
         config = ConfigParser.ConfigParser()
         cfgfile = os.getenv("HOME") + "/.futuregrid/" + configfile
         config.read(cfgfile)
 
         try:
-            #db parameters
+            # db parameters
             dbhost = config.get('CloudMetricsDB', 'host')
             dbport = int(config.get('CloudMetricsDB', 'port'))
             dbuser = config.get('CloudMetricsDB', 'user')
@@ -43,7 +44,7 @@ class FGEucaMetricsDB(object):
             euca_version = config.get('CloudMetricsDB', 'euca_version')
         except ConfigParser.NoSectionError:
             try:
-                #db parameters
+                # db parameters
                 dbhost = config.get('EucaLogDB', 'host')
                 dbport = int(config.get('EucaLogDB', 'port'))
                 dbuser = config.get('EucaLogDB', 'user')
@@ -55,15 +56,15 @@ class FGEucaMetricsDB(object):
                 print cfgfile + " does not exist"
                 sys.exit()
 
-        #set parameters
+        # set parameters
         self.euca_version = euca_version
         self.euca_hostname = euca_hostname
 
-        #connect to db
-        self.conn = MySQLdb.connect (dbhost, dbuser, dbpasswd, dbname, dbport)
-        self.cursor = self.conn.cursor (MySQLdb.cursors.DictCursor)
-        
-        #create table if not exist
+        # connect to db
+        self.conn = MySQLdb.connect(dbhost, dbuser, dbpasswd, dbname, dbport)
+        self.cursor = self.conn.cursor(MySQLdb.cursors.DictCursor)
+
+        # create table if not exist
         create_instance_table = "create table if not exists " + self.instance_table + " (\
                 uidentifier VARCHAR(32) PRIMARY KEY NOT NULL, \
                 instanceId VARCHAR(16), \
@@ -161,26 +162,33 @@ class FGEucaMetricsDB(object):
     def count(self):
         rquery = "select count(*) from " + self.instance_table
         self.cursor.execute(rquery)
-        rows=self.cursor.fetchall()
+        rows = self.cursor.fetchall()
         return rows
 
     def read(self, querydict={}, optional=""):
         ''' read from the database '''
-        
-        foreign_key_for_cloudplatform = self.instance_table + "." + self.column_cp_ins + "=" + self.cloudplatform_table + "." + self.column_cp_cp
-        querystr = "";
+
+        foreign_key_for_cloudplatform = self.instance_table + "." + \
+            self.column_cp_ins + "=" + \
+            self.cloudplatform_table + "." + self.column_cp_cp
+        querystr = ""
         if querydict:
             for key in querydict:
                 value = querydict[key]
                 astr = key + "='" + value + "'"
                 if querystr != "":
                     querystr += " and "
-                querystr += astr            
+                querystr += astr
                 print "qstr:->" + querystr + "<---"
-                rquery = "SELECT * FROM " + self.instance_table + "," + self.cloudplatform_table + " where " + foreign_key_for_cloudplatform + " and " + querystr + optional
-                #rquery = "select * from instance, cloudplatform  where instance.cloudPlatform=cloudplatform.cloudPlatformId limit 5";    
+                rquery = "SELECT * FROM " + self.instance_table + "," + self.cloudplatform_table + \
+                    " where " + foreign_key_for_cloudplatform + \
+                    " and " + querystr + optional
+                # rquery = "select * from instance, cloudplatform  where
+                # instance.cloudPlatform=cloudplatform.cloudPlatformId limit
+                # 5";
         else:
-            rquery = "SELECT * from " + self.instance_table + "," + self.cloudplatform_table + " where " + foreign_key_for_cloudplatform + " " + optional
+            rquery = "SELECT * from " + self.instance_table + "," + self.cloudplatform_table + \
+                " where " + foreign_key_for_cloudplatform + " " + optional
         self.cursor.execute(rquery)
         rows = self.cursor.fetchall()
         multikeys = ["trace", "ccvm", "ccnet"]
@@ -206,8 +214,8 @@ class FGEucaMetricsDB(object):
 
     def _read(self, tablename, querydict, optional=""):
         ''' read from the database '''
-        
-        querystr = "";
+
+        querystr = ""
         ret = []
 
         if querydict:
@@ -216,12 +224,13 @@ class FGEucaMetricsDB(object):
                 astr = key + "='" + value + "'"
                 if querystr != "":
                     querystr += " and "
-                querystr += astr            
+                querystr += astr
                 print "qstr:->" + querystr + "<---"
-                rquery = "SELECT * FROM " + tablename + " where " + querystr + optional
+                rquery = "SELECT * FROM " + tablename + \
+                    " where " + querystr + optional
         else:
             rquery = "SELECT * from " + tablename + optional
-           
+
         try:
             self.cursor.execute(rquery)
         except MySQLdb.Error:
@@ -243,22 +252,23 @@ class FGEucaMetricsDB(object):
         return self._read(self.cloudplatform_table, querydict)
 
     def delete(self, querydict={}):
-        querystr = "";
+        querystr = ""
         if querydict:
             for key in querydict:
                 value = querydict[key]
                 astr = key + "='" + value + "'"
                 if querystr != "":
                     querystr += " and "
-                querystr += astr            
-                rquery = "delete FROM " + self.instance_table + " where " + querystr
+                querystr += astr
+                rquery = "delete FROM " + \
+                    self.instance_table + " where " + querystr
         else:
             rquery = "delete from " + self.instance_table
-        
-	try:
-		self.cursor.execute(rquery)
+
+        try:
+            self.cursor.execute(rquery)
         except MySQLdb.Error:
-		pass
+            pass
         return 0
 
     def delete_instance(self, querydict={}):
@@ -269,33 +279,33 @@ class FGEucaMetricsDB(object):
 
     def _delete(self, tablename, querydict):
 
-        querystr = "";
+        querystr = ""
         if querydict:
             for key in querydict:
                 value = querydict[key]
                 astr = key + "='" + value + "'"
                 if querystr != "":
                     querystr += " and "
-                querystr += astr            
+                querystr += astr
                 rquery = "delete FROM " + tablename + " where " + querystr
         else:
-            rquery = "delete from " + tablename 
-        
-	try:
-	    self.cursor.execute(rquery)
+            rquery = "delete from " + tablename
+
+        try:
+            self.cursor.execute(rquery)
         except MySQLdb.Error:
             pass
-        
+
     def _assignVal2Multi(self, themulti, keys, value=None):
         ''' help function to initialize(if necessary) and assign value to nested dict '''
         tolevel = len(keys) - 1
         curlevel = 0
         nextlevel = curlevel + 1
-        if not themulti.has_key(keys[curlevel]):
+        if keys[curlevel] not in themulti:
             themulti[keys[curlevel]] = {}
         cur = themulti[keys[curlevel]]
         while nextlevel < tolevel:
-            if not cur.has_key(keys[nextlevel]):
+            if keys[nextlevel] not in cur:
                 cur[keys[nextlevel]] = {}
             cur = cur[keys[nextlevel]]
             curlevel += 1
@@ -304,14 +314,16 @@ class FGEucaMetricsDB(object):
         cur[keys[nextlevel]] = value
         return cur
 
-    def value_todate(self,string):
+    def value_todate(self, string):
         return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
 
     def write(self, entryObj):
         ''' write instance object into db '''
         # ts has small variation. we ignore seconds here to create index
-        new_ts = datetime(entryObj["ts"].year, entryObj["ts"].month, entryObj["ts"].day, entryObj["ts"].hour, entryObj["ts"].minute, 0)
-        uidcat = entryObj["instanceId"] + " - " + str(new_ts)#str(entryObj["ts"])
+        new_ts = datetime(entryObj["ts"].year, entryObj["ts"].month, entryObj[
+                          "ts"].day, entryObj["ts"].hour, entryObj["ts"].minute, 0)
+        uidcat = entryObj["instanceId"] + " - " + str(
+            new_ts)  # str(entryObj["ts"])
         m = hashlib.md5()
         m.update(uidcat)
         uid = m.hexdigest()
@@ -412,30 +424,30 @@ class FGEucaMetricsDB(object):
                                     + self._fmtstr(self.euca_hostname) + "," \
                                     + self._fmtstr(self.euca_version) + ")"
 
-
         wquery += " on duplicate key update " \
-                + "t_end=GREATEST(t_end, " \
-                + self._fmtstr(str(entryObj["t_end"])) + ") ," \
-                + " duration=GREATEST(duration, " \
-                + str(entryObj["duration"]) + ") ," \
-                + " trace_pending_start=LEAST(trace_pending_start, " \
-                + self._fmtstr(str(entryObj["trace"]["pending"]["start"])) + ") ," \
-                + " trace_pending_stop=GREATEST(trace_pending_stop, " \
-                + self._fmtstr(str(entryObj["trace"]["pending"]["stop"])) + ") ," \
-                + " trace_extant_start=LEAST(trace_extant_start, " \
-                + self._fmtstr(str(entryObj["trace"]["extant"]["start"])) + ") ," \
-                + " trace_extant_stop=GREATEST(trace_extant_stop, " \
-                + self._fmtstr(str(entryObj["trace"]["extant"]["stop"])) + ") ," \
-                + " trace_teardown_start=LEAST(trace_teardown_start, " \
-                + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + ") ," \
-                + " trace_teardown_stop=GREATEST(trace_teardown_stop, " \
-                + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + ") ," \
-                + " date=GREATEST(date, " \
-                + self._fmtstr(str(entryObj["date"])) + ")," \
-                + " state=IF(state=\"Pending\", " + self._fmtstr(entryObj["state"]) + ", " \
-                + " IF(state=\"Extant\", IF(\"Teardown\"=" + self._fmtstr(entryObj["state"]) + ", " + self._fmtstr(entryObj["state"]) + ", state), state)) "
+            + "t_end=GREATEST(t_end, " \
+            + self._fmtstr(str(entryObj["t_end"])) + ") ," \
+            + " duration=GREATEST(duration, " \
+            + str(entryObj["duration"]) + ") ," \
+            + " trace_pending_start=LEAST(trace_pending_start, " \
+            + self._fmtstr(str(entryObj["trace"]["pending"]["start"])) + ") ," \
+            + " trace_pending_stop=GREATEST(trace_pending_stop, " \
+            + self._fmtstr(str(entryObj["trace"]["pending"]["stop"])) + ") ," \
+            + " trace_extant_start=LEAST(trace_extant_start, " \
+            + self._fmtstr(str(entryObj["trace"]["extant"]["start"])) + ") ," \
+            + " trace_extant_stop=GREATEST(trace_extant_stop, " \
+            + self._fmtstr(str(entryObj["trace"]["extant"]["stop"])) + ") ," \
+            + " trace_teardown_start=LEAST(trace_teardown_start, " \
+            + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + ") ," \
+            + " trace_teardown_stop=GREATEST(trace_teardown_stop, " \
+            + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + ") ," \
+            + " date=GREATEST(date, " \
+            + self._fmtstr(str(entryObj["date"])) + ")," \
+            + " state=IF(state=\"Pending\", " + self._fmtstr(entryObj["state"]) + ", " \
+            + " IF(state=\"Extant\", IF(\"Teardown\"=" + self._fmtstr(entryObj[
+                                                                      "state"]) + ", " + self._fmtstr(entryObj["state"]) + ", state), state)) "
 
-        #print wquery
+        # print wquery
         try:
             self.cursor.execute(wquery)
 
@@ -452,8 +464,9 @@ class FGEucaMetricsDB(object):
         try:
             keys = ", ".join(entryObj.keys())
             values = "'" + "' ,'".join(str(x) for x in entryObj.values()) + "'"
-            wquery = "INSERT INTO " + tablename + " ( " + keys + " ) VALUES ( " + values + " )"
-            #print wquery
+            wquery = "INSERT INTO " + tablename + \
+                " ( " + keys + " ) VALUES ( " + values + " )"
+            # print wquery
         except AttributeError, e:
             print "Error %d: %s" % (e.args[0], e.args[1])
             pass
@@ -466,8 +479,9 @@ class FGEucaMetricsDB(object):
             pass
 
     def change_table(self, table_name):
-	    self.instance_table = table_name
-	    return
+        self.instance_table = table_name
+        return
+
 
 def testing():
     tstobj = '{\
@@ -596,12 +610,13 @@ def testing():
     eucadb.write(testobj2)
     keys = ["instanceId", "ownerId"]
     values = ["i-534109B9", "admin"]
-    qdict = dict(zip(keys,values))
+    qdict = dict(zip(keys, values))
     records = eucadb.read(qdict)
     print records
     print records[0]["instanceId"]
     print records[0]["trace"]["teardown"]["start"]
     print records[0]["trace"]["teardown"]["stop"]
+
 
 def command_clean_database():
     """
@@ -612,32 +627,32 @@ def command_clean_database():
     DESCRIPTION
 
     usage
-	fg-cleanup-db <arguments>
+        fg-cleanup-db <arguments>
 
     fg-cleanup-db
 
-	-t tbl_name
-	   deletes rows from tbl_name
+        -t tbl_name
+           deletes rows from tbl_name
 
-	-d db_name
-	   a database name of a table specified by -t tbl_name
+        -d db_name
+           a database name of a table specified by -t tbl_name
 
-	-w where_condition (optional)
-	   specifies the conditions that identify which rows to delete
+        -w where_condition (optional)
+           specifies the conditions that identify which rows to delete
 
-	--conf filename
-	   configuraton file of the database to be used. The configuration file has the following format
-	   
-	   [EucaLogDB]
-	   host=HOST
-	   port=PORT
-	   user=USER
-	   passwd=PASS
-	   db=DB
-	   
-	   if this parameter is not specified and a database is used the default location for this file is in
-	   
-	   ~/.futuregrid/futuregrid.cfg
+        --conf filename
+           configuraton file of the database to be used. The configuration file has the following format
+
+           [EucaLogDB]
+           host=HOST
+           port=PORT
+           user=USER
+           passwd=PASS
+           db=DB
+
+           if this parameter is not specified and a database is used the default location for this file is in
+
+           ~/.futuregrid/futuregrid.cfg
 
     """
     def_table = "instance"
@@ -646,20 +661,20 @@ def command_clean_database():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-t", dest="table_name", default=def_table,
-			help="table name to delete")
+                        help="table name to delete")
     parser.add_argument("-d", dest="db_name", default=def_db,
-			help="db name")
+                        help="db name")
     parser.add_argument("-w", dest="where_clause",
-			help="WHERE clauses")
+                        help="WHERE clauses")
     parser.add_argument("-C", "--conf", dest="conf", default=def_conf,
-			help="configuraton file of the database to be used")
+                        help="configuraton file of the database to be used")
     args = parser.parse_args()
 
     eucadb = FGEucaMetricsDB(args.conf)
     eucadb.change_table(args.table_name)
 
-    # where_clause need to be query dict type 
-    query_dict=""
+    # where_clause need to be query dict type
+    query_dict = ""
     ret = eucadb.delete(query_dict)
 
 

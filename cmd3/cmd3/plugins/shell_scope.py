@@ -28,6 +28,14 @@ class shell_scope():
         self.scopeless = ['info', 'var', 'use', 'quit', 'q', 'help']
         #self.scopeless = ['use', 'quit', 'q', 'EOF', 'eof', 'help']
 
+    def help_EOF(self):
+        msg = "end of file"
+        print msg
+
+    def do_EOF(self,args):
+        return True
+
+
     def help_use(self):
         msg = """
         DESCRIPTION

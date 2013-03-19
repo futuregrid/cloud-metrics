@@ -5,14 +5,15 @@ import ConfigParser
 import MySQLdb
 import sys
 
+
 class FGNovaDB(object):
 
-    instances_table = "instances" # in nova
-    userinfo_table = "user" # in keystone
+    instances_table = "instances"  # in nova
+    userinfo_table = "user"  # in keystone
 
     def __init__(self, configfile="futuregrid.cfg"):
 
-        #read config from file configfile
+        # read config from file configfile
         config = ConfigParser.ConfigParser()
         cfgfile = os.getenv("HOME") + "/.futuregrid/" + configfile
         config.read(cfgfile)
@@ -23,18 +24,20 @@ class FGNovaDB(object):
             dbuser = config.get('NovaDB', 'user')
             dbpasswd = config.get('NovaDB', 'passwd')
             dbname = config.get('NovaDB', 'novadb')
-            keystonedbname =config.get('NovaDB', 'keystonedb')
+            keystonedbname = config.get('NovaDB', 'keystonedb')
         except ConfigParser.NoSectionError:
             print cfgfile + " does not exist"
             sys.exit()
 
-        #connect to db
-        self.conn = MySQLdb.connect (dbhost, dbuser, dbpasswd, dbname, dbport)
-        self.cursor = self.conn.cursor (MySQLdb.cursors.DictCursor)
+        # connect to db
+        self.conn = MySQLdb.connect(dbhost, dbuser, dbpasswd, dbname, dbport)
+        self.cursor = self.conn.cursor(MySQLdb.cursors.DictCursor)
 
-        self.conn_keystone = MySQLdb.connect (dbhost, dbuser, dbpasswd, keystonedbname, dbport)
-        self.cursor_keystone = self.conn_keystone.cursor (MySQLdb.cursors.DictCursor)
-        
+        self.conn_keystone = MySQLdb.connect(
+            dbhost, dbuser, dbpasswd, keystonedbname, dbport)
+        self.cursor_keystone = self.conn_keystone.cursor(
+            MySQLdb.cursors.DictCursor)
+
     def __del__(self):
         try:
             self.cursor.close()
@@ -54,8 +57,8 @@ class FGNovaDB(object):
 
     # read from the database.
     def _read(self, mysql_cursor, tablename, querydict, optional=""):
-        
-        querystr = "";
+
+        querystr = ""
         ret = []
 
         if querydict:
@@ -64,12 +67,13 @@ class FGNovaDB(object):
                 astr = key + "='" + value + "'"
                 if querystr != "":
                     querystr += " and "
-                querystr += astr            
+                querystr += astr
                 print "qstr:->" + querystr + "<---"
-                rquery = "SELECT * FROM " + tablename + " where " + querystr + optional
+                rquery = "SELECT * FROM " + tablename + \
+                    " where " + querystr + optional
         else:
             rquery = "SELECT * from " + tablename + optional
-           
+
         try:
             mysql_cursor.execute(rquery)
         except MySQLdb.Error:
@@ -87,5 +91,5 @@ class FGNovaDB(object):
     def read_userinfo(self, querydict={}):
         return self._read(self.cursor_keystone, self.userinfo_table, querydict)
 
-    def value_todate(self,string):
+    def value_todate(self, string):
         return datetime.strptime(string, '%Y-%m-%d %H:%M:%S')

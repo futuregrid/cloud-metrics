@@ -47,7 +47,7 @@ Specific arguments can be controlled as follows
 
   -t, --log-type <filename>
       specify a log type to be gathered (default: cc.log)
-      
+
 
 If any of the parameters are used the specification of any
 parameters without named parameters is not allowed. Calling
@@ -139,7 +139,9 @@ E-mail: laszewski@gmail.com
 
 """
 
-import os, errno, glob
+import os
+import errno
+import glob
 import re
 import shutil
 from datetime import datetime
@@ -149,7 +151,8 @@ from fgmetric.util.FGUtility import FGUtility
 from pprint import pprint
 import gzip
 import sys
-import zlib 
+import zlib
+
 
 class FGCollectFiles:
     def_input_dir = "/var/log/eucalyptus/"
@@ -164,17 +167,22 @@ class FGCollectFiles:
     gzipped = None
 
     def set_argparse(self):
-        parser = argparse.ArgumentParser(description="Collect files serialized by the last timestamp without having duplication. file name will be changed to date")
-        parser.add_argument("-i", "--source", dest="input_dir", default=self.def_input_dir,
+        parser = argparse.ArgumentParser(
+            description="Collect files serialized by the last timestamp without having duplication. file name will be changed to date")
+        parser.add_argument(
+            "-i", "--source", dest="input_dir", default=self.def_input_dir,
             help="access the directory to read files (default: " + self.def_input_dir + ")")
-        parser.add_argument("-o", "--backup", dest="output_dir", default=self.def_output_dir,
+        parser.add_argument(
+            "-o", "--backup", dest="output_dir", default=self.def_output_dir,
             help="save the output files in this directory (default: " + self.def_output_dir + ")")
-        parser.add_argument("-r", "--recursive", action="store_true", dest="recursive", default=False,
+        parser.add_argument(
+            "-r", "--recursive", action="store_true", dest="recursive", default=False,
             help="search directories and their contents recursively")
-        parser.add_argument("-t", "--log-type", dest="file_type", default=self.def_file_type,
+        parser.add_argument(
+            "-t", "--log-type", dest="file_type", default=self.def_file_type,
             help="specify a log type to be gathered (default: %s)" % self.def_file_type)
         parser.add_argument("-z", "--gzip", action="store_true", default=False,
-                        help="gzip compressed files will be loaded")
+                            help="gzip compressed files will be loaded")
         args = parser.parse_args()
 
         self.input_dir = args.input_dir
@@ -204,18 +212,19 @@ class FGCollectFiles:
             print "to_path '" + self.output_dir + "' doesn't exist"
             return
 
-        if not os.path.exists (self.input_dir):
+        if not os.path.exists(self.input_dir):
             print "from_path '" + self.input_dir + "' doesn't exist"
             return
 
         for file in self.file_list():
             path = os.path.dirname(file)
             name = os.path.basename(file)
-            new_name = os.path.basename(self.get_filename_from_date(path, name))
-            new_location = os.path.join(self.output_dir,new_name)
+            new_name = os.path.basename(
+                self.get_filename_from_date(path, name))
+            new_location = os.path.join(self.output_dir, new_name)
             if not os.path.exists(new_location):
                 print new_name
-                shutil.copy2 (file, new_location)
+                shutil.copy2(file, new_location)
             else:
                 print new_name + ", WARNING: file exists, copy ignored"
         return
@@ -230,8 +239,9 @@ class FGCollectFiles:
             for filename in filenames:
                 if fnmatch.fnmatch(filename, self.file_type):
                     all_files.append(os.path.join(dirname, filename))
-            if not self.recursive: # if recursive is false, this iteration works like os.listdir()
-                              # Return filenames in the directory given by path except sub directories
+            if not self.recursive:  # if recursive is false, this iteration works like os.listdir()
+                              # Return filenames in the directory given by path
+                              # except sub directories
                 break
         return all_files
 
@@ -249,40 +259,41 @@ class FGCollectFiles:
             line = self.tail_gzipped(old_name)
             filename += ".gz"
         else:
-            FILE = open(old_name, "r", 0) 
-            line = tail(FILE,1)
+            FILE = open(old_name, "r", 0)
+            line = tail(FILE, 1)
         date_object = self.get_date_from_euca(line)
         new_name = self.generate_filename(date_object, '-'+filename)
-        new_name = os.path.join(path,new_name)
+        new_name = os.path.join(path, new_name)
         return new_name
 
     def tail_gzipped(self, filename):
-        CHUNK_SIZE = 1024*1024 
+        CHUNK_SIZE = 1024*1024
         MAX_LINE = 1024
 
-        decompress = zlib.decompressobj(-zlib.MAX_WBITS) 
+        decompress = zlib.decompressobj(-zlib.MAX_WBITS)
 
-        in_file = gzip.open(filename,'r') 
-        in_file._read_gzip_header() 
+        in_file = gzip.open(filename, 'r')
+        in_file._read_gzip_header()
 
-        chunk = prior_chunk = '' 
-        while 1: 
-            buf = in_file.fileobj.read(CHUNK_SIZE) 
-            if not buf: 
-                break 
-            d_buf = decompress.decompress(buf) 
-            # We might not have been at EOF in the read() but still have no 
-            # decompressed data if the only remaining data was not original data 
-            if d_buf: 
-                prior_chunk = chunk 
-                chunk = d_buf 
+        chunk = prior_chunk = ''
+        while 1:
+            buf = in_file.fileobj.read(CHUNK_SIZE)
+            if not buf:
+                break
+            d_buf = decompress.decompress(buf)
+            # We might not have been at EOF in the read() but still have no
+            # decompressed data if the only remaining data was not original
+            # data
+            if d_buf:
+                prior_chunk = chunk
+                chunk = d_buf
 
-        if len(chunk) < MAX_LINE: 
-            chunk = prior_chunk + chunk 
+        if len(chunk) < MAX_LINE:
+            chunk = prior_chunk + chunk
 
-        line = chunk[-MAX_LINE:].splitlines(True)[-1] 
+        line = chunk[-MAX_LINE:].splitlines(True)[-1]
         in_file.close()
-        return line 
+        return line
 
     def get_date_from_euca(self, line):
         """
@@ -295,7 +306,7 @@ class FGCollectFiles:
             msg = line.pop()
         else:
             msg = line
-        tmp = re.split ('\]', msg) 
+        tmp = re.split('\]', msg)
         return datetime.strptime(tmp[0][1:], '%a %b %d %H:%M:%S %Y')
 
     def generate_filename(self, date_object, postfix):
@@ -303,18 +314,19 @@ class FGCollectFiles:
         This function is an internal helper function that converts a date
         object to a string in which all : and " " are replaced with "-"
         """
-        name = str(date_object).replace(" ","-").replace(":","-")
-        return name + postfix 
+        name = str(date_object).replace(" ", "-").replace(":", "-")
+        return name + postfix
 
 
 def tail(f, window=20):
     """
     Returns the last `window` lines of file `f` as a list.
-    f - is the file descriptor 
+    f - is the file descriptor
     window - is the number of lines that will be returned from the end
     """
-    # from 
-    # http://stackoverflow.com/questions/136168/get-last-n-lines-of-a-file-with-python-similar-to-tail
+    # from
+    # http://stackoverflow.com/questions/136168/get-last-n-lines-of-a-file-
+    # with-python-similar-to-tail
 
     BUFSIZ = 1024
     f.seek(0, 2)
@@ -330,7 +342,7 @@ def tail(f, window=20):
             data.insert(0, f.read(BUFSIZ))
         else:
             # file too small, start from begining
-            f.seek(0,0)
+            f.seek(0, 0)
             # only read what was not read
             data.insert(0, f.read(bytes))
         linesFound = data[0].count('\n')
@@ -339,57 +351,62 @@ def tail(f, window=20):
         block -= 1
     return ''.join(data).splitlines()[-window:]
 
+
 def head(file, n=1):
     """
     Returns the first n lines in a file.
     file - is the file descriptor
     n - number of lines to be returned from the begining of the file
     """
-    file.seek(0)                            #Rewind file
+    file.seek(0)  # Rewind file
     return [file.next() for x in xrange(n)]
 
-def rename_euca_log_file (path,name):
+
+def rename_euca_log_file(path, name):
     """
     This function renames a given eucalyptus file located in
     "path/name" based on the timestamp that can be found in the last
     line of the file.
     """
-    old_name = os.path.join(path,name)
-    print " renaming "  + old_name
-    new_name = generate_euca_log_filename(path,name)
+    old_name = os.path.join(path, name)
+    print " renaming " + old_name
+    new_name = generate_euca_log_filename(path, name)
     print new_name
     if not os.path.exists(new_name):
-        os.rename (old_name, new_name)
+        os.rename(old_name, new_name)
     else:
-        print "file existed already: " + new_name, ", deleting: " + old_name   
+        print "file existed already: " + new_name, ", deleting: " + old_name
         os.remove(old_name)
     return
+
 
 def ls(path):
     """
     simply does a unix ls on the path. It is used for debugging.
     """
     print "----"
-    os.system ("ls " + path)
+    os.system("ls " + path)
     print "----"
 
-def works():
-  ''' code for testing that works '''
-  FILE = open("/tmp/cc.log.4", "r", 0) 
-  print "---- head ----\n"
-  print head(FILE,1)
-  print "---- tail ----\n"
-  line = tail(FILE,1)
-  print line
-  date_object = getdate_from_euca_log_line(line)
-  print date_object
-  print generate_filename (date_object,'-cc.log')
 
-  shutil.copy2('/tmp/cc.log.4', '/tmp/cc.log.5')
-  ls("/tmp")
-  rename_euca_log_file("/tmp", "cc.log.5")
-  ls("/tmp")
-  return
+def works():
+    ''' code for testing that works '''
+    FILE = open("/tmp/cc.log.4", "r", 0)
+    print "---- head ----\n"
+    print head(FILE, 1)
+    print "---- tail ----\n"
+    line = tail(FILE, 1)
+    print line
+    date_object = getdate_from_euca_log_line(line)
+    print date_object
+    print generate_filename(date_object, '-cc.log')
+
+    shutil.copy2('/tmp/cc.log.4', '/tmp/cc.log.5')
+    ls("/tmp")
+    rename_euca_log_file("/tmp", "cc.log.5")
+    ls("/tmp")
+    return
+
 
 def main():
 

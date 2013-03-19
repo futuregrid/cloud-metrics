@@ -91,4 +91,9 @@ for m in [01,02,03,04,05,06,07,08,09]
 # Quit
 ######################################################################
 
+help opt_example
+
+opt_example metric -r file
+opt_example db -db file
+
 quit

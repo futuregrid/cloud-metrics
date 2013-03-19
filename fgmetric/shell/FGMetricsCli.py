@@ -7,13 +7,14 @@ from pprint import pprint
 from datetime import datetime, timedelta
 from fgmetric.shell.FGMetricsAPI import FGMetricsAPI
 
+
 class FGMetricsCli:
     """
-    
+
     FGMetricCli
     -----------
     Command Line Interface for fg-metric.
-   
+
     Usage: fg-metric-cli
 
     Description
@@ -22,18 +23,18 @@ class FGMetricsCli:
 
     - Excutable name is fg-metric-cli (defined by setup.py).
     - FG Cloud Mesh would be one of the examples using fg-metric-cli.
-    
+
     Basic data structure
     ====================
 
-    { 
+    {
         "start_date"    :   start date of search    (datetime),
         "end_date"      :   end date of search      (datetime),
         "ownerid"       :   portal user id          (str),
         "metric"        :   selected metric name    (str),
         "period"        :   monthly, weekly, daily  (str),
         "clouds"        :   set of clouds           (list)
-                            [ 
+                            [
                                 { "service"     :   cloud service name  (str),
                                  "hostname"     :   hostname (str),
                                  "stats"        :   value (int) }
@@ -51,8 +52,9 @@ class FGMetricsCli:
     development_status = (2, "Pre-alpha")
 
     def __init__(self):
-        self.default_search_days = 180 # Search usage data for this number
-        self.default_search_end = datetime.now() # Search starts from this date back to days within default_search_days
+        self.default_search_days = 180  # Search usage data for this number
+        self.default_search_end = datetime.now(
+        )  # Search starts from this date back to days within default_search_days
         self.api = FGMetricsAPI()
         self.set_default_options()
 
@@ -62,19 +64,28 @@ class FGMetricsCli:
         self.metric = 'count runtime cores mem disks'
 
     def set_argparse(self):
-        parser = argparse.ArgumentParser(description='Specify search options for usage statistics')
-        parser.add_argument('-s', '--s_date', help="start date of search", default=self.start_date)
-        parser.add_argument('-e', '--e_date', help="end date of search", default=self.end_date)
-        parser.add_argument('-m', '--metric', help="metric name to search", default=self.metric)
-        parser.add_argument('-lm', '--listmetrics', help="list of metric possible to search")
-        parser.add_argument('-u', '--user', help='owerid (i.e. fg portal id) to search', required=True)
+        parser = argparse.ArgumentParser(
+            description='Specify search options for usage statistics')
+        parser.add_argument(
+            '-s', '--s_date', help="start date of search", default=self.start_date)
+        parser.add_argument(
+            '-e', '--e_date', help="end date of search", default=self.end_date)
+        parser.add_argument(
+            '-m', '--metric', help="metric name to search", default=self.metric)
+        parser.add_argument(
+            '-lm', '--listmetrics', help="list of metric possible to search")
+        parser.add_argument(
+            '-u', '--user', help='owerid (i.e. fg portal id) to search', required=True)
         parser.add_argument('-c', '--cloud', help='cloud name to search')
-        parser.add_argument('-lc', '--listclouds', help='list of cloud services possible to search')
+        parser.add_argument(
+            '-lc', '--listclouds', help='list of cloud services possible to search')
         parser.add_argument('-H', '--host', help='host name to search')
-        parser.add_argument('-lh', '--listhost', help='list of hostnames possible to search')
+        parser.add_argument(
+            '-lh', '--listhost', help='list of hostnames possible to search')
         parser.add_argument('-p', '--period', help='search period')
-        parser.add_argument('-lp', '--listperiod', help='list of search period')
-        
+        parser.add_argument(
+            '-lp', '--listperiod', help='list of search period')
+
         args = parser.parse_args()
         self.args = args
 
@@ -95,13 +106,13 @@ class FGMetricsCli:
 
     def _set_dict_vars(self):
         self.result = {
-            "start_date"    :   self.start_date,
-            "end_date"      :   self.end_date,
-            "ownerid"       :   self.args.user,
-            "metric"        :   self.args.metric.split(),
-            "period"        :   self.args.period or "All",
-            "clouds"        :   self.args.cloud or "All",
-            "hostname"      :   self.args.host or "All"
+            "start_date":   self.start_date,
+            "end_date":   self.end_date,
+            "ownerid":   self.args.user,
+            "metric":   self.args.metric.split(),
+            "period":   self.args.period or "All",
+            "clouds":   self.args.cloud or "All",
+            "hostname":   self.args.host or "All"
         }
 
     def get_stats(self):
@@ -110,6 +121,7 @@ class FGMetricsCli:
     def return_dict(self):
         self.result['stats'] = self.stats
         return json.dumps(self.result, default=json_util.default)
+
 
 def main():
     cli = FGMetricsCli()
@@ -122,5 +134,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

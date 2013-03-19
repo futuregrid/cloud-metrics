@@ -13,6 +13,7 @@ from fgmetric.charts.FGCharts import FGCharts
 from fgmetric.shell.FGDatabase import FGDatabase
 from fgmetric.util.FGUtility import FGUtility
 
+
 class FGMetricShell(Cmd):
 
     instances = None
@@ -37,7 +38,7 @@ class FGMetricShell(Cmd):
 
     def load_db(self, option=None):
         """Read the statistical data from database (MySQL, etc)"""
-       
+
         print "\rloading database ..."
         # Get data from the database
         self.instances.read_from_db()
@@ -51,9 +52,9 @@ class FGMetricShell(Cmd):
 
     def show_filter_setting(self, param=None):
         pprint(vars(self.search.get_filter()))
-        #res = vars(self.search.get_filter()).copy()
-        #del res["selected"]
-        #pprint(res)
+        # res = vars(self.search.get_filter()).copy()
+        # del res["selected"]
+        # pprint(res)
 
     def measure(self):
 
@@ -63,22 +64,23 @@ class FGMetricShell(Cmd):
         cnt = cnt2 = cnt3 = 0
         for i in range(0, total_counts):
             try:
-                instance = self.instances.get_data(i, self.search._is_userinfo_needed())[0]
+                instance = self.instances.get_data(
+                    i, self.search._is_userinfo_needed())[0]
                 cnt += 1
                 if not self.search._is_in_date(instance):
-                    continue;
+                    continue
                 cnt2 += 1
                 if not self.search._is_filtered(instance):
-                    continue;
+                    continue
                 cnt3 += 1
                 res = self.search.collect(instance)
 
             except:
-                #print sys.exc_info()
-                pass#raise
+                # print sys.exc_info()
+                pass  # raise
 
         print self.search.get_metric()
-        #print cnt, cnt2, cnt3
+        # print cnt, cnt2, cnt3
 
         '''
         I am where to create a dict/list for data of charts.
@@ -87,7 +89,7 @@ class FGMetricShell(Cmd):
         2) get value from the instance
         3) create data structure for the result
         4) if it has a groupby(s), create multi-dimentional dict/list to save the value in a depth
-           e.g. res[groupby1][groupby2] = 
+           e.g. res[groupby1][groupby2] =
            e.g. res = { groupby1 : { groupby2: val1, ... } }
 
         5) fill missing date? for chart format? this should be done by in a chart module
@@ -105,7 +107,7 @@ class FGMetricShell(Cmd):
 
         try:
             writer = csv.writer(open(dirname + filename, 'wb'), delimiter=",",
-                    quotechar="\"", quoting=csv.QUOTE_NONNUMERIC)#QUOTE_MINIMAL)
+                                quotechar="\"", quoting=csv.QUOTE_NONNUMERIC)  # QUOTE_MINIMAL)
             for row in data:
                 writer.writerow(row)
 
@@ -118,16 +120,22 @@ class FGMetricShell(Cmd):
         print msg
 
     @options([
-        make_option('-f', '--start_date', type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
-        make_option('-t', '--end_date', type="string", help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
-        make_option('-M', '--month', type="int", help="month to analyze (type. MM)"),
-        make_option('-Y', '--year', type="int", help="year to analyze (type. YYYY)"),
-        make_option('-m', '--metric', dest="metric", type="string", help="item name to measure (e.g. runtime, count)"),
-        make_option('-P', '--period', dest="period", type="string", help="search period (monthly, daily)")
-        ])
+        make_option('-f', '--start_date', type="string",
+                    help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-t', '--end_date', type="string",
+                    help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-M', '--month', type="int",
+                    help="month to analyze (type. MM)"),
+        make_option('-Y', '--year', type="int",
+                    help="year to analyze (type. YYYY)"),
+        make_option('-m', '--metric', dest="metric", type="string",
+                    help="item name to measure (e.g. runtime, count)"),
+        make_option('-P', '--period', dest="period",
+                    type="string", help="search period (monthly, daily)")
+    ])
     def do_analyze(self, line, opts=None):
-        """Run analysis for cloud usage data. 
-        
+        """Run analysis for cloud usage data.
+
         Typically, set platform ***, set nodename ***, set date ***  *** are required prior to this command
         Once analysis is finised, 'chart' command is usually following to generate results in a chart html file.
 
@@ -151,8 +159,9 @@ class FGMetricShell(Cmd):
             print sys.exc_info()
 
     @options([
-        make_option('-o', '--output', type="string", dest="filepath", help="filepath to export a csv file")
-        ])
+        make_option('-o', '--output', type="string",
+                    dest="filepath", help="filepath to export a csv file")
+    ])
     def do_csv(self, line, opts=None):
         """Export statistics as a csv file"""
         try:
@@ -170,44 +179,56 @@ class FGMetricShell(Cmd):
             print
 
     @options([
-        make_option('-o', '--directory', type="string", dest="DIR", help="change to directory DIR"),
-        make_option('-t', '--type', type="string", dest="ctype", default="column", help="chart e.g. bar, line, column, pie, and motion"),
-        make_option('-a', '--api', type="string", dest="api", default="highcharts", help="chart api e.g. highchart, google, jquery sparkline")
-        ])
+        make_option('-o', '--directory', type="string",
+                    dest="DIR", help="change to directory DIR"),
+        make_option('-t', '--type', type="string", dest="ctype",
+                    default="column", help="chart e.g. bar, line, column, pie, and motion"),
+        make_option(
+            '-a', '--api', type="string", dest="api", default="highcharts",
+        help="chart api e.g. highchart, google, jquery sparkline")
+    ])
     def do_chart(self, line, opts=None):
         ''' Generate html typed chart file based on the statistics from analyze command '''
         self.chart.set_chart_api(opts.api)
         self.chart.set_type(opts.ctype)
         self.chart.set_output_path(opts.DIR)
-        self.chart.set_filename(self.search.get_filename() + "." + self.chart.output_type)
+        self.chart.set_filename(
+            self.search.get_filename() + "." + self.chart.output_type)
 
         for key, data in self.search.get_metric().iteritems():
-            #self.chart.set_xaxis(key) TBD
+            # self.chart.set_xaxis(key) TBD
             if key == "All":
-                self.chart.set_data_beta(data, self.search.metric, self.search.period, self.search.groupby)
+                self.chart.set_data_beta(
+                    data, self.search.metric, self.search.period, self.search.groupby)
             else:
                 new_key = self.search.adjust_stats_keys(key)
-                self.chart.set_data_beta2(new_key, data, ''.join(self.search.metric), self.search.period or "Total")
-            #self.chart.set_series_beta(data)
+                self.chart.set_data_beta2(new_key, data, ''.join(
+                    self.search.metric), self.search.period or "Total")
+            # self.chart.set_series_beta(data)
 
         self.chart.set_series(self.search.get_series())
-        self.chart.set_title_beta(', '.join(self.search.metric), self.search.period, self.search.groupby)
-        self.chart.set_subtitle("source: " + str(self.search.get_platform_names()) + " on " + str(self.search.get_node_names()))
+        self.chart.set_title_beta(', '.join(
+            self.search.metric), self.search.period, self.search.groupby)
+        self.chart.set_subtitle("source: " + str(
+            self.search.get_platform_names()) + " on " + str(self.search.get_node_names()))
         self.chart.set_yaxis(self.search.timetype or "")
         self.chart.display()
 
     @options([
-        make_option('-u', '--user', type="string", help="Show only image numbers owned by the userid specified."),
-        make_option('-d', '--detail', action="store_true", default=False, help="Show details about images"),
-        make_option('-s', '--summary', action="store_true", default=False, help="Show summary values about images")
-        ])
+        make_option('-u', '--user', type="string",
+                    help="Show only image numbers owned by the userid specified."),
+        make_option('-d', '--detail', action="store_true",
+                    default=False, help="Show details about images"),
+        make_option('-s', '--summary', action="store_true",
+                    default=False, help="Show summary values about images")
+    ])
     def count_images(self, arg, opts=None):
         """Count bucket images per user (development level)
 
-            It is virtual machine image counts grouped by users or accounts based on euca2ools. 
-            It shows that which user or account currently owns how many virtual machine images on the system. 
+            It is virtual machine image counts grouped by users or accounts based on euca2ools.
+            It shows that which user or account currently owns how many virtual machine images on the system.
             This metric is based on the euca2ool command .euca-describe-images. that a eucalyptus user can see
-            a list of machine images. 
+            a list of machine images.
         """
         bucket_dict = {}
         details = {}
@@ -228,10 +249,11 @@ class FGMetricShell(Cmd):
                     values = line.split()
                     bucket, key = values[2].split("/")
                     # replace bucket with accountId - hrlee
-                    # No reason to gather bucket name. Instead, accountid would be meaningful.
+                    # No reason to gather bucket name. Instead, accountid would
+                    # be meaningful.
                     bucket = values[3] + "(" + values[3] + ")"
                     count = bucket_dict.get(bucket, 0)
-                    detail[count] = line 
+                    detail[count] = line
                     details[bucket] = detail
                     bucket_dict[bucket] = count + 1
                     if bucket_dict[bucket] > max_user[1]:
@@ -245,23 +267,26 @@ class FGMetricShell(Cmd):
                 if opts.user != key:
                     continue
             print("\t".join([key, str(value)]))
-            chart_labels.append( key + ":" + str(value))
+            chart_labels.append(key + ":" + str(value))
 
-        # show detail information of image owned by a specific user from -u, --user option
+        # show detail information of image owned by a specific user from -u,
+        # --user option
         if opts.user and opts.detail:
             for key, value in details[opts.user].items():
                 print (value)
 
-        # Show summary of images. i.e. number of total images, number of users, average numbers of images, and maximum numbers of images.
+        # Show summary of images. i.e. number of total images, number of users,
+        # average numbers of images, and maximum numbers of images.
         if opts.summary:
-            total_image_count = str(len(lines) - 1) # Except (-1) last \n line count
+            total_image_count = str(len(
+                lines) - 1)  # Except (-1) last \n line count
             total_user_count = str(len(bucket_dict))
             print ""
             print "= Summary ="
             print "Total image counts:\t" + total_image_count
             print "Total user counts:\t" + total_user_count
             print "Average image counts per user:\t" + str(float(total_image_count) / float(total_user_count))
-            print "Maximum image counts and userid:\t" + max_user[0] + " has " +  str(max_user[1])
+            print "Maximum image counts and userid:\t" + max_user[0] + " has " + str(max_user[1])
             print "=========="
 
     def do_refresh(self, line, opts=None):
@@ -286,7 +311,7 @@ class FGMetricShell(Cmd):
         fg-metric] showconf filter_setting"""
         self.call_attr(line, "show_")
 
-    def do_show (self, line, opts=None):
+    def do_show(self, line, opts=None):
         '''show search options set by a user'''
         self.call_attr(line, "show_", "self.search")
 
@@ -349,7 +374,7 @@ class FGMetricShell(Cmd):
         2. year, month
         3. set date $from $to (set by prior to analyze command)
 
-        For example, 
+        For example,
         if opts.start_date and opts.end_date are given, opts.year and opts.month will be ignored.
 
             Args:
@@ -359,13 +384,14 @@ class FGMetricShell(Cmd):
                 opts.month
                 opts.period
                 opts.metric
-        
+
         """
 
         if opts.year or opts.month:
             now = datetime.now()
             from_date = datetime(opts.year or now.year, opts.month or 1, 1)
-            to_date = datetime(opts.year or now.year, opts.month or 12, monthrange(opts.year or now.year, opts.month or 12)[1])
+            to_date = datetime(opts.year or now.year, opts.month or 12, monthrange(
+                opts.year or now.year, opts.month or 12)[1])
             self.search.set_date([from_date, to_date])
         if opts.start_date and opts.end_date:
             self.search.set_date([opts.start_date, opts.end_date])
@@ -387,6 +413,7 @@ class FGMetricShell(Cmd):
 
     def postloop(self):
         print "Bye ..."
+
 
 def main():
     app = FGMetricShell()

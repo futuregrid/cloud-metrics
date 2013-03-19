@@ -8,6 +8,7 @@ import pprint
 from datetime import datetime
 from fgmetric.shell.FGConstants import FGConst
 
+
 class FGDatabase:
 
     instance_table = "instance"
@@ -22,7 +23,7 @@ class FGDatabase:
 
     query = None
 
-    pp = pprint.PrettyPrinter(indent=0) 
+    pp = pprint.PrettyPrinter(indent=0)
 
     def __init__(self):
         self.config_filename = FGConst.DEFAULT_CONFIG_FILENAME
@@ -86,8 +87,10 @@ class FGDatabase:
 
     def _connect_mysql(self):
         try:
-            self.conn = MySQLdb.connect (self.dbhost, self.dbuser, self.dbpasswd, self.dbname, self.dbport)#, cursorclass=MySQLdb.cursors.DictCursor)
-            self.cursor = self.conn.cursor(cursorclass=MySQLdb.cursors.DictCursor)
+            self.conn = MySQLdb.connect(
+                self.dbhost, self.dbuser, self.dbpasswd, self.dbname, self.dbport)  # , cursorclass=MySQLdb.cursors.DictCursor)
+            self.cursor = self.conn.cursor(
+                cursorclass=MySQLdb.cursors.DictCursor)
         except MySQLdb.Error as e:
             print "Error %s:" % e.args[0]
         except:
@@ -103,8 +106,9 @@ class FGDatabase:
             return d
 
         try:
-            conn = sqlite3.connect(self.get_sqlite3_file(), detect_types = sqlite3.PARSE_COLNAMES)
-            conn.row_factory = dict_factory#lite.Row
+            conn = sqlite3.connect(
+                self.get_sqlite3_file(), detect_types=sqlite3.PARSE_COLNAMES)
+            conn.row_factory = dict_factory  # lite.Row
             conn.text_factory = str
             self.conn = conn
             self.cursor = self.conn.cursor()
@@ -112,7 +116,7 @@ class FGDatabase:
             print "Error %s:" % e.args[0]
 
     def close(self):
-        #if self.cursor:
+        # if self.cursor:
         #    self.cursor.close()
         if self.conn and self.conn.open:
             self.conn.close()
@@ -126,18 +130,24 @@ class FGDatabase:
 
     def read(self, querydict={}, optional=""):
         ''' read from the database '''
-        
-        foreign_key_for_cloudplatform = self.instance_table + "." + self.column_cp_ins + "=" + self.cloudplatform_table + "." + self.column_cp_cp
-        querystr = "";
+
+        foreign_key_for_cloudplatform = self.instance_table + "." + \
+            self.column_cp_ins + "=" + \
+            self.cloudplatform_table + "." + self.column_cp_cp
+        querystr = ""
         if querydict:
             for key in querydict:
                 value = querydict[key]
                 astr = key + "='" + value + "'"
                 if querystr != "":
                     querystr += " and "
-                querystr += astr            
-                rquery = "SELECT * FROM " + self.instance_table + "," + self.cloudplatform_table + " where " + foreign_key_for_cloudplatform + " and " + querystr + optional
-                #rquery = "select * from instance, cloudplatform  where instance.cloudPlatform=cloudplatform.cloudPlatformId limit 5";    
+                querystr += astr
+                rquery = "SELECT * FROM " + self.instance_table + "," + self.cloudplatform_table + \
+                    " where " + foreign_key_for_cloudplatform + \
+                    " and " + querystr + optional
+                # rquery = "select * from instance, cloudplatform  where
+                # instance.cloudPlatform=cloudplatform.cloudPlatformId limit
+                # 5";
         else:
             '''
             rquery = "SELECT uidentifier, t_start, t_end, duration, serviceTag, ownerId, ccvm_mem, ccvm_cores, ccvm_disk, hostname, " + self.cloudplatform_table + ".platform, \
@@ -150,8 +160,8 @@ class FGDatabase:
                     from " + self.instance_table + "," + self.cloudplatform_table + " where " + foreign_key_for_cloudplatform + " " + optional
         self.cursor.execute(rquery)
         rows = self.cursor.fetchall()
-        multikeys = ["trace", "ccvm"]#, "ccnet"]
-        #listvalues = ["groupNames", "volumes"]
+        multikeys = ["trace", "ccvm"]  # , "ccnet"]
+        # listvalues = ["groupNames", "volumes"]
         ret = []
         for arow in rows:
             rowret = {}
@@ -177,11 +187,11 @@ class FGDatabase:
         tolevel = len(keys) - 1
         curlevel = 0
         nextlevel = curlevel + 1
-        if not themulti.has_key(keys[curlevel]):
+        if keys[curlevel] not in themulti:
             themulti[keys[curlevel]] = {}
         cur = themulti[keys[curlevel]]
         while nextlevel < tolevel:
-            if not cur.has_key(keys[nextlevel]):
+            if keys[nextlevel] not in cur:
                 cur[keys[nextlevel]] = {}
             cur = cur[keys[nextlevel]]
             curlevel += 1
@@ -191,8 +201,8 @@ class FGDatabase:
         return cur
 
     def _read(self, cursor, tablename, querydict, optional=""):
-        
-        querystr = "";
+
+        querystr = ""
         ret = []
 
         if querydict:
@@ -201,11 +211,12 @@ class FGDatabase:
                 astr = key + "='" + value + "'"
                 if querystr != "":
                     querystr += " and "
-                querystr += astr            
-                rquery = "SELECT * FROM " + tablename + " where " + querystr + optional
+                querystr += astr
+                rquery = "SELECT * FROM " + tablename + \
+                    " where " + querystr + optional
         else:
             rquery = "SELECT * from " + tablename + optional
-           
+
         try:
             cursor.execute(rquery)
         except (MySQLdb.Error, sqlite3.Error) as e:
@@ -217,7 +228,7 @@ class FGDatabase:
             raise
 
         rows = cursor.fetchall()
-        return rows 
+        return rows
 
         '''
         for arow in list(rows):
@@ -248,19 +259,19 @@ class FGDatabase:
 
     def _delete(self, tablename, querydict):
 
-        querystr = "";
+        querystr = ""
         if querydict:
             for key in querydict:
                 value = querydict[key]
                 astr = key + "='" + value + "'"
                 if querystr != "":
                     querystr += " and "
-                querystr += astr            
+                querystr += astr
                 rquery = "delete FROM " + tablename + " where " + querystr
         else:
-            rquery = "delete from " + tablename 
- 
-	try:
+            rquery = "delete from " + tablename
+
+        try:
             self.cursor.execute(rquery)
         except (MySQLdb.Error, sqlite3.Error) as e:
             print str(e)
@@ -278,9 +289,11 @@ class FGDatabase:
     def write(self, entryObj):
         ''' write instance object into db '''
         # ts has small variation. we ignore seconds here to create index
-        new_ts = datetime(entryObj["ts"].year, entryObj["ts"].month, entryObj["ts"].day, entryObj["ts"].hour, entryObj["ts"].minute, 0)
-        uid = self._get_hash(entryObj["instanceId"] + " - " + str(new_ts))#str(entryObj["ts"]))
-        #self.pp.pprint(entryObj)
+        new_ts = datetime(entryObj["ts"].year, entryObj["ts"].month, entryObj[
+                          "ts"].day, entryObj["ts"].hour, entryObj["ts"].minute, 0)
+        uid = self._get_hash(entryObj[
+                             "instanceId"] + " - " + str(new_ts))  # str(entryObj["ts"]))
+        # self.pp.pprint(entryObj)
         wquery = "INSERT INTO " + self.instance_table + " ( uidentifier, \
                                     instanceId, \
                                     ts, \
@@ -373,31 +386,32 @@ class FGDatabase:
                                     + self._fmtstr(self._fillempty(entryObj, "platform")) + "," \
                                     + self._fmtstr(self._fillempty(entryObj, "bundleTaskStateName")) + "," \
                                     + self._fmtstr(entryObj["reservationId"]) + "," \
-                                    + self._fmtstr(str(entryObj["cloudPlatformIdRef"])) + ")"
+                                    + self._fmtstr(str(entryObj[
+                                                   "cloudPlatformIdRef"])) + ")"
 
         wquery += " on duplicate key update " \
-                + "t_end=" \
-                + self._fmtstr(str(entryObj["t_end"])) + "," \
-                + " duration=" \
-                + str(entryObj["duration"]) + "," \
-                + " trace_pending_start=LEAST(trace_pending_start, " \
-                + self._fmtstr(str(entryObj["trace"]["pending"]["start"])) + ") ," \
-                + " trace_pending_stop=GREATEST(trace_pending_stop, " \
-                + self._fmtstr(str(entryObj["trace"]["pending"]["stop"])) + ") ," \
-                + " trace_extant_start=LEAST(trace_extant_start, " \
-                + self._fmtstr(str(entryObj["trace"]["extant"]["start"])) + ") ," \
-                + " trace_extant_stop=GREATEST(trace_extant_stop, " \
-                + self._fmtstr(str(entryObj["trace"]["extant"]["stop"])) + ") ," \
-                + " trace_teardown_start=LEAST(trace_teardown_start, " \
-                + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + ") ," \
-                + " trace_teardown_stop=GREATEST(trace_teardown_stop, " \
-                + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + ") ," \
-                + " date=" \
-                + self._fmtstr(str(entryObj["date"])) + "," \
-                + " state=" \
-                + self._fmtstr(entryObj["state"])
+            + "t_end=" \
+            + self._fmtstr(str(entryObj["t_end"])) + "," \
+            + " duration=" \
+            + str(entryObj["duration"]) + "," \
+            + " trace_pending_start=LEAST(trace_pending_start, " \
+            + self._fmtstr(str(entryObj["trace"]["pending"]["start"])) + ") ," \
+            + " trace_pending_stop=GREATEST(trace_pending_stop, " \
+            + self._fmtstr(str(entryObj["trace"]["pending"]["stop"])) + ") ," \
+            + " trace_extant_start=LEAST(trace_extant_start, " \
+            + self._fmtstr(str(entryObj["trace"]["extant"]["start"])) + ") ," \
+            + " trace_extant_stop=GREATEST(trace_extant_stop, " \
+            + self._fmtstr(str(entryObj["trace"]["extant"]["stop"])) + ") ," \
+            + " trace_teardown_start=LEAST(trace_teardown_start, " \
+            + self._fmtstr(str(entryObj["trace"]["teardown"]["start"])) + ") ," \
+            + " trace_teardown_stop=GREATEST(trace_teardown_stop, " \
+            + self._fmtstr(str(entryObj["trace"]["teardown"]["stop"])) + ") ," \
+            + " date=" \
+            + self._fmtstr(str(entryObj["date"])) + "," \
+            + " state=" \
+            + self._fmtstr(entryObj["state"])
 
-        #print wquery
+        # print wquery
         try:
             self.cursor.execute(wquery)
 
@@ -415,17 +429,19 @@ class FGDatabase:
         return uid
 
     def write_instance(self, entryObj):
-        if type(entryObj) is list:
+        if isinstance(entryObj, list):
             for entry in entryObj:
                 try:
-                    entry["uidentifier"] = self._get_hash(entry["instanceId"] + " - " + str(entry["ts"]))
+                    entry["uidentifier"] = self._get_hash(entry[
+                                                          "instanceId"] + " - " + str(entry["ts"]))
                     self._write("instance", entry)
                 except:
                     print sys.exc_info()
                     pass
         else:
             try:
-                entryObj["uidentifier"] = self._get_hash(entryObj["instanceId"] + " - " + str(entryObj["ts"]))
+                entryObj["uidentifier"] = self._get_hash(entryObj[
+                                                         "instanceId"] + " - " + str(entryObj["ts"]))
                 self._write("instance", entryObj)
             except:
                 print sys.exc_info()
@@ -433,7 +449,7 @@ class FGDatabase:
 
     def write_userinfo(self, entryObj):
         ''' write userinfo object into db '''
-        if type(entryObj) is list:
+        if isinstance(entryObj, list):
             for entry in entryObj:
                 self._write("userinfo", entry)
         else:
@@ -444,8 +460,9 @@ class FGDatabase:
         try:
             keys = ", ".join(entryObj.keys())
             values = "'" + "' ,'".join(str(x) for x in entryObj.values()) + "'"
-            wquery = "INSERT INTO " + tablename + " ( " + keys + " ) VALUES ( " + values + " )"
-            #print wquery
+            wquery = "INSERT INTO " + tablename + \
+                " ( " + keys + " ) VALUES ( " + values + " )"
+            # print wquery
             self.cursor.execute(wquery)
 
         except (MySQLdb.Error, sqlite3.Error) as e:
@@ -469,12 +486,12 @@ class FGDatabase:
             pass
 
     def change_table(self, table_name):
-	self.instance_table = table_name
+        self.instance_table = table_name
         return
 
     def _fmtstr(self, astr):
-         ret = "'" + astr + "'"
-         return ret
+        ret = "'" + astr + "'"
+        return ret
 
     def _fillempty(self, entry, key):
         if not key in entry:
@@ -483,7 +500,7 @@ class FGDatabase:
             return entry[key]
 
     def convert_nested2list(self, nested, newkey):
-        if type(nested) != type({}):
-            return {newkey[1:]:nested}
+        if not isinstance(nested, type({})):
+            return {newkey[1:]: nested}
         for key in nested:
             return self.convert_nested2list(nested[key], newkey + "_" + key)

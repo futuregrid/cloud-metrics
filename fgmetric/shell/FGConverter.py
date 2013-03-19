@@ -1,4 +1,6 @@
-import argparse, os, sys
+import argparse
+import os
+import sys
 import sqlite3 as lite
 import MySQLdb
 from collections import deque
@@ -7,10 +9,11 @@ from fgmetric.shell.FGConstants import FGConst
 from fgmetric.shell.FGDatabase import FGDatabase
 from fgmetric.util.FGUtility import FGUtility
 
+
 class FGConverter:
 
-    #future = instances.in_the_future
-    #past = instances.in_the_past
+    # future = instances.in_the_future
+    # past = instances.in_the_past
 
     s_date = None
     e_date = None
@@ -23,8 +26,8 @@ class FGConverter:
     dbname_keystone = None
 
     query = None
-    rows = None     #from database
-    records = None  #for fg database
+    rows = None  # from database
+    records = None  # for fg database
 
     userinfo = None
     cloudplatform = None
@@ -54,7 +57,8 @@ class FGConverter:
         self.platform_version = self.platform_version or FGConst.DEFAULT_NIMBUS_VERSION
         self.db.db_type = self.db.db_type or FGConst.DEFAULT_NIMBUS_DB
 
-        # this query is for sqlite3 because [timestamp] is only used on sqlite3?
+        # this query is for sqlite3 because [timestamp] is only used on
+        # sqlite3?
         self.query = 'SELECT t1.time as "t_start [timestamp]",\
                     t3.time as "t_end [timestamp]",\
                     t1.uuid as instanceId,\
@@ -100,7 +104,7 @@ class FGConverter:
                     ephemeral_gb as ccvm_disk \
                     from instances \
                     where updated_at >= \'' + str(self.s_date) + '\' and updated_at <= \'' + str(self.e_date) + '\''
-        #COALESCE(launched_at, created_at, scheduled_at) as t_start, \
+        # COALESCE(launched_at, created_at, scheduled_at) as t_start, \
 
     def db_connect(self):
         self.db.connect()
@@ -140,7 +144,7 @@ class FGConverter:
         userinfo = keystone.query("select user_id, tenant_id, user.name as user_name, tenant.name as tenant_name \
                 from user_tenant_membership, tenant, user \
                 where user.id=user_tenant_membership.user_id \
-                and tenant.id=user_tenant_membership.tenant_id")#select id, name from user")
+                and tenant.id=user_tenant_membership.tenant_id")  # select id, name from user")
         keystone.close()
         records = []
         for row in userinfo:
@@ -165,7 +169,8 @@ class FGConverter:
         self.cloudplatform = self.db_dest.read_cloudplatform()
 
     def get_cloudplatform_id(self, querydict={}):
-        class ContinueOutOfALoop(Exception): pass
+        class ContinueOutOfALoop(Exception):
+            pass
         self.read_cloudplatform()
         for row in self.cloudplatform:
             try:
@@ -181,7 +186,8 @@ class FGConverter:
         rows = self.rows
         records = []
 
-        whereclause = { "platform": self.platform, "hostname": self.hostname, "version": self.platform_version }
+        whereclause = {"platform": self.platform, "hostname":
+                       self.hostname, "version": self.platform_version}
         cloudplatformid = self.get_cloudplatform_id(whereclause)
 
             # 1. draw mapping table between openstack 'instances' and fg 'instance' table.
@@ -195,25 +201,26 @@ class FGConverter:
             try:
                 record["instanceId"] = record["instanceId"][:15]
                 record["ts"] = record["t_start"]
-                #record["calltype"] = ""
-                #record["userData"] = ""
-                #record["kernelId"] = ""
-                #record["emiURL"] = ""
-                #record["t_start"] = row["t_start"]
-                #record["t_end"] = row["t_end"]
+                # record["calltype"] = ""
+                # record["userData"] = ""
+                # record["kernelId"] = ""
+                # record["emiURL"] = ""
+                # record["t_start"] = row["t_start"]
+                # record["t_end"] = row["t_end"]
                 if record["t_end"] and record["t_start"]:
-                    record["duration"] = (record["t_end"] - record["t_start"]).total_seconds()
-                #record["trace"] = {
+                    record["duration"] = (record[
+                                          "t_end"] - record["t_start"]).total_seconds()
+                # record["trace"] = {
                 #    "pending" : { "start" : self.future, "stop" : self.past, "queue" : deque("",10)},
                 #    "extant" : { "start" : self.future, "stop" : self.past, "queue" : deque("",10)},
                 #    "teardown" : { "start" : self.future, "stop" : self.past, "queue" : deque("",10)}
                 #    }
-                #record["serviceTag"] = row["serviceTag"] or ""
-                #record["groupNames"] = ""
-                #record["keyName"] = ""
-                #record["msgtype"] = ""
-                #record["volumesSize"] = 0.0
-                #record["linetype"] = ""
+                # record["serviceTag"] = row["serviceTag"] or ""
+                # record["groupNames"] = ""
+                # record["keyName"] = ""
+                # record["msgtype"] = ""
+                # record["volumesSize"] = 0.0
+                # record["linetype"] = ""
                 if "dn" in record and not "ownerId" in record:
                     if len(record["dn"].split("CN=")) > 1:
                         record["ownerId"] = record["dn"].split("CN=")[1]
@@ -224,29 +231,30 @@ class FGConverter:
                 except:
                     pass
                 record["date"] = record["t_start"]
-                #record["id"] = 0
-                #record["ncHostIdx"] = 0
-                #record["ccvm"] = { "mem" : record["ccvm_mem"], "cores" : record["ccvm_cores"], "disk" : record[0 }
-                #if "ccvm_disk" in row:
+                # record["id"] = 0
+                # record["ncHostIdx"] = 0
+                # record["ccvm"] = { "mem" : record["ccvm_mem"], "cores" : record["ccvm_cores"], "disk" : record[0 }
+                # if "ccvm_disk" in row:
                 #    record["ccvm"]["disk"] = row["ccvm_disk"]
-                #if "emiId" in row:
+                # if "emiId" in row:
                 #    record["emiId"] = row["emiId"]
-                #else:
+                # else:
                 #    record["emiId"] = ""
-                #record["ccnet"] = { "publicIp" : "", "privateMac" : "", "networkIndex" : "", "vlan" : "", "privateIp" : "" }
+                # record["ccnet"] = { "publicIp" : "", "privateMac" : "",
+                # "networkIndex" : "", "vlan" : "", "privateIp" : "" }
 
-                #record["ramdiskURL"] = ""
-                #record["accountId"] = ""
-                #record["kernelURL"] = ""
-                #record["ramdiskId"] = ""
-                #record["volumes"] = ""
-                #record["launchIndex"] = 0
-                #record["bundleTaskStateName"] = ""
-                #record["reservationId"] = ""
+                # record["ramdiskURL"] = ""
+                # record["accountId"] = ""
+                # record["kernelURL"] = ""
+                # record["ramdiskId"] = ""
+                # record["volumes"] = ""
+                # record["launchIndex"] = 0
+                # record["bundleTaskStateName"] = ""
+                # record["reservationId"] = ""
                 record["platform"] = self.platform
-                #record["euca_hostname"] = self.hostname
-                #record["euca_version"] = self.platform_version
-                #record["state"] = "Teardown" # need to be changed
+                # record["euca_hostname"] = self.hostname
+                # record["euca_version"] = self.platform_version
+                # record["state"] = "Teardown" # need to be changed
                 if not "state" in record:
                     record["state"] = "Teardown"
                 record["state"] = self.convert_state(record["state"])
@@ -286,52 +294,52 @@ class FGConverter:
 
         parser = argparse.ArgumentParser()
         parser.add_argument("-s", "--from", dest="s_date", default=def_s_date,
-                help="Start date to begin parsing (type: YYYYMMDD)")
+                            help="Start date to begin parsing (type: YYYYMMDD)")
         parser.add_argument("-e", "--to", dest="e_date", default=def_e_date,
-                help="End date to finish parsing (type: YYYYMMDD)")
+                            help="End date to finish parsing (type: YYYYMMDD)")
 
         parser.add_argument("-p", "--platform", required=True,
-                help="Cloud platform name, required. (e.g. nimbus, openstack, eucalyptus, etc)")
+                            help="Cloud platform name, required. (e.g. nimbus, openstack, eucalyptus, etc)")
         parser.add_argument("-pv", "--platform_version",
-                help="Cloud platform version. (e.g. 2.9 for nimbus, essex for openstack, and  2.0 or 3.1 for eucalyptus)")
+                            help="Cloud platform version. (e.g. 2.9 for nimbus, essex for openstack, and  2.0 or 3.1 for eucalyptus)")
         parser.add_argument("-n", "--hostname", required=True,
-                help="Hostname of the cloud platform, required. (e.g., hotel, sierra, india, alamo, foxtrot)")
+                            help="Hostname of the cloud platform, required. (e.g., hotel, sierra, india, alamo, foxtrot)")
         parser.add_argument("--conf", dest="conf",
-                help="futuregrid.cfg filepath (e.g. $HOME/.futuregrid/futuregrid.cfg)")
+                            help="futuregrid.cfg filepath (e.g. $HOME/.futuregrid/futuregrid.cfg)")
 
         parser.add_argument("-db", "--database", default=def_db,
-                help="database type to load (e.g. mysql or sqlite3)")
+                            help="database type to load (e.g. mysql or sqlite3)")
 
         # sqlite3 for nimbus
         parser.add_argument("-i", "--file", dest="input_file",
-                help="the sqlite3 filename with path (e.g. /home/metric/nimbus/alamo/alamo)")
+                            help="the sqlite3 filename with path (e.g. /home/metric/nimbus/alamo/alamo)")
 
         # mysql for openstack
         parser.add_argument("-dbn", "--dbname_nova", default=def_nova,
-                help="Database of nova to use")
+                            help="Database of nova to use")
         parser.add_argument("-dbk", "--dbname_keystone", default=def_keystone,
-                help="Database of keystone to use")
+                            help="Database of keystone to use")
         parser.add_argument("-dh", "--dbhost",
-                help="Connect to database host")
+                            help="Connect to database host")
         parser.add_argument("-du", "--dbuser",
-                help="User for login of database")
+                            help="User for login of database")
         parser.add_argument("-dp", "--dbpass",
-                help="Password to use when connecting to database server")
+                            help="Password to use when connecting to database server")
         parser.add_argument("-dP", "--dbport", default=3306,
-                help="Port number to use for connection or 3306 for default")
+                            help="Port number to use for connection or 3306 for default")
 
         args = parser.parse_args()
         print args
 
         try:
- 
+
             self.s_date = datetime.strptime(args.s_date, "%Y%m%d")
             self.e_date = datetime.strptime(args.e_date, "%Y%m%d")
             self.platform = args.platform
             self.platform_version = args.platform_version
             self.hostname = args.hostname
             self.confname = self.set_instance_conf(args.conf)
-   
+
             self.db.db_type = args.database
             self.dbname_nova = args.dbname_nova
             self.dbname_keystone = args.dbname_keystone
@@ -343,9 +351,10 @@ class FGConverter:
             self.db.set_sqlite3_file(args.input_file)
 
         except:
-            pass#print sys.exc_info()[0]
+            pass  # print sys.exc_info()[0]
 
         self.argparser = parser
+
 
 def main():
     converter = FGConverter()

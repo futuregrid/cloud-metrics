@@ -18,7 +18,8 @@ import pprint
 import optparse
 from cmd2 import Cmd, make_option, options, Cmd2TestCase
 from datetime import *
-import unittest, sys
+import unittest
+import sys
 import calendar
 import re
 import string
@@ -26,7 +27,7 @@ import string
 from fgmetric.shell.FGParser import Instances
 
 from fgmetric.util.FGUtility import FGUtility
-#GVL: THE NEXT LINE IS NOT IN THE CODE
+# GVL: THE NEXT LINE IS NOT IN THE CODE
 from fgmetric.shell.FGNovaMetric import FGNovaMetric
 
 from fgmetric.charts.FGPygooglechart import FGPyGoogleChart
@@ -34,18 +35,19 @@ from fgmetric.charts.FGGoogleMotionChart import FGGoogleMotionChart
 from fgmetric.charts.FGHighcharts import FGHighcharts
 from fgmetric.charts.FGCharts import FGCharts
 
+
 class CmdLineAnalyzeEucaData(Cmd):
     '''This class analyzes utilization data to make a report
-    
+
     It uses the extended python cmd package to support command-line iterpreter (CLI) programs.
 
     .. note::
-        
+
         Examples of this class are in the examples/ directory from the
         root repository of /futuregrid-cloud-metrics/
-    
+
     '''
-    
+
     instances = {}
     users = {}
     groups = {}
@@ -62,7 +64,7 @@ class CmdLineAnalyzeEucaData(Cmd):
     userid = None
     user_stats = None
     sys_stats = None
-    sys_stat_new = None # sys_stats will be converted to this
+    sys_stat_new = None  # sys_stats will be converted to this
 
     platform = None
     nodename = None
@@ -76,9 +78,9 @@ class CmdLineAnalyzeEucaData(Cmd):
     groupby = None
     nopreload = False
 
-    def calculate_stats (self, from_date="all", to_date="all"):
+    def calculate_stats(self, from_date="all", to_date="all"):
         """Calculate user-based statstics about VM instances per user: count, min time, max time, avg time, total time
-        
+
         Args:
             from_date (str): date to start calculation. Types are 'all' or '%Y-%m-%dT%H:%M:%S'
             to_date (str): end date to finish calculation.
@@ -94,7 +96,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             process_all = (from_date == "all")
             if not process_all:
                 date_from = datetime.strptime(from_date, '%Y-%m-%dT%H:%M:%S')
-                date_to   = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
+                date_to = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
 
         if (type(from_date).__name__ == "None"):
             process_all = True
@@ -107,22 +109,25 @@ class CmdLineAnalyzeEucaData(Cmd):
         for i in range(0, int(self.instances.count())):
             values = self.instances.getdata(i)
             process_entry = process_all
- 
+
             institution = ""
             projectlead = ""
             group = ""
-    
-            #if not values["t_end"]:
+
+            # if not values["t_end"]:
             #    values["t_end"] = self.instances.in_the_future
 
             if not process_all:
-                #process_entry = (values['ts'] >= date_from) and (values['ts'] < date_to)
-                process_entry = (values['t_end'] >= date_from) and (values['t_start'] <= date_to)
+                # process_entry = (values['ts'] >= date_from) and (values['ts']
+                # < date_to)
+                process_entry = (values['t_end'] >= date_from) and (
+                    values['t_start'] <= date_to)
 
             if process_entry:
 
                 # If a nodename is set, stats is only for the compute cluster node specified
-                #if self.nodename and self.nodename != values['euca_hostname']:
+                # if self.nodename and self.nodename !=
+                # values['euca_hostname']:
                 if self.nodename and self.nodename != values['hostname']:
                     continue
 
@@ -136,20 +141,22 @@ class CmdLineAnalyzeEucaData(Cmd):
                     # number of instances
                 except:
                 #          count,sum,min,max,avg
-                    self.users[name] = {'count' : 1,
-                                        'runtime' : 0.0,
-                                        'min' : t_delta,
-                                        'max' : t_delta,
-                                        'avg' : 0.0
+                    self.users[name] = {'count': 1,
+                                        'runtime': 0.0,
+                                        'min': t_delta,
+                                        'max': t_delta,
+                                        'avg': 0.0
                                         }
-   
+
                 try:
                     group = self.instances.userinfo_data2[name]["project"]
                     if not group:
                         raise
                     if group in self.instances.projectinfo_data:
-                        institution = self.instances.projectinfo_data[group]["Institution"]
-                        projectlead = self.instances.projectinfo_data[group]["ProjectLead"]
+                        institution = self.instances.projectinfo_data[
+                            group]["Institution"]
+                        projectlead = self.instances.projectinfo_data[
+                            group]["ProjectLead"]
                 except:
                     group = ""
                     institution = ""
@@ -163,14 +170,13 @@ class CmdLineAnalyzeEucaData(Cmd):
                     if projectlead:
                         self.projectleads[projectlead]["count"] += 1
                 except:
-                    init = { "count" : 1, "runtime" : 0 }
+                    init = {"count": 1, "runtime": 0}
                     if group:
                         self.groups[group] = init
                     if institution:
                         self.institutions[institution] = init
                     if projectlead:
                         self.projectleads[projectlead] = init
-
 
                 if group:
                     self.groups[group]['runtime'] += t_delta
@@ -179,16 +185,19 @@ class CmdLineAnalyzeEucaData(Cmd):
                 if projectlead:
                     self.projectleads[projectlead]['runtime'] += t_delta
 
-                self.users[name]['runtime'] += t_delta  # sum of time 
-                self.users[name]['min'] = min (t_delta, self.users[name]['min'])
-                self.users[name]['max'] = max (t_delta, self.users[name]['max'])
+                self.users[name]['runtime'] += t_delta  # sum of time
+                self.users[name]['min'] = min(
+                    t_delta, self.users[name]['min'])
+                self.users[name]['max'] = max(
+                    t_delta, self.users[name]['max'])
 
                 for name in self.users:
-                    self.users[name]['avg'] = float(self.users[name]['runtime']) / float(self.users[name]['count'])
+                    self.users[name]['avg'] = float(self.users[name][
+                                                    'runtime']) / float(self.users[name]['count'])
 
     def set_date(self, from_date, to_date):
         """Set search/analyze period
-        
+
         Args:
             from_date (str): date to start calculation. '%Y-%m-%dT%H:%M:%S' is only allowed.
             to_date (str): end date to finish calculation.
@@ -204,7 +213,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.to_date = datetime.strptime(to_date, '%Y-%m-%dT%H:%M:%S')
             self.day_count = (self.to_date - self.from_date).days + 1
         except:
-            print "from and to date not specified." 
+            print "from and to date not specified."
             pass
 
     def get_user_stats(self, username, metric, period="daily"):
@@ -219,7 +228,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def _get_stats(self, metric, period="daily", username=""):
         """Return the list of calculated data
-        
+
         Args:
             metric (str): a metric name to be analyzed (i.e. runtime, count, ccvm_cores, ccvm_mem, ccvm_disk)
             period (str): a search term (i.e. weekly, daily)
@@ -239,18 +248,19 @@ class CmdLineAnalyzeEucaData(Cmd):
         for i in range(0, int(self.instances.count())):
             instance = self.instances.getdata(i)
 
-            if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date :
+            if instance["t_end"] < self.from_date or instance["t_start"] > self.to_date:
                 continue
 
-            if username and username != instance["ownerId"] :
+            if username and username != instance["ownerId"]:
                 continue
-            #if self.nodename and self.nodename != instance["euca_hostname"] :
+            # if self.nodename and self.nodename != instance["euca_hostname"] :
             if self.nodename and self.nodename != instance['hostname']:
                 continue
             if self.platform and self.platform != instance["cloudplatform.platform"]:
                 continue
             self._count_node(instance)
-            merged_res = self._daily_stats(instance, metric, merged_res, "sum") # or "avg"
+            merged_res = self._daily_stats(
+                instance, metric, merged_res, "sum")  # or "avg"
 
         if period == "weekly":
             merged_res = self.convert_stats_from_daily_to_weekly(merged_res)
@@ -260,22 +270,23 @@ class CmdLineAnalyzeEucaData(Cmd):
         """Count nodes
 
         Args:
-            instance(dict): instance 
+            instance(dict): instance
 
         Returns:
-            n/a 
+            n/a
         Raises:
             n/a
 
         """
-        
+
         if self.metric != "count_node":
             return
 
-        #sys_stat = self.stats.get('count_node')
+        # sys_stat = self.stats.get('count_node')
         sys_stat = self.sys_stat_new['total']['count_node']
         try:
-            m = re.search(r'http://(.*):8775/axis2/services/EucalyptusNC', str(instance["serviceTag"]), re.M|re.I)
+            m = re.search(r'http://(.*):8775/axis2/services/EucalyptusNC', str(
+                instance["serviceTag"]), re.M | re.I)
             nodename = str(m.group(1))
 
             if nodename in sys_stat:
@@ -300,7 +311,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         j = 0
         k = 0
-        weekly_stats = [ 0 for n in range (0, (len(stats) / 7))]
+        weekly_stats = [0 for n in range(0, (len(stats) / 7))]
         for i in range(0, len(stats)):
             j = j + 1
             weekly_stats[k] = weekly_stats[k] + stats[i]
@@ -317,7 +328,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             return current_stats
         res = self._merge_daily_stat(new_stats, current_stats, type)
         return res
-    
+
     def _daily_stat(self, instance, metric):
         """Return a list of calculated data for the search period on a daily basis
 
@@ -325,10 +336,10 @@ class CmdLineAnalyzeEucaData(Cmd):
         # This logic is kind of messy but it should be changed/updated soon, Hopefully.
 
            Make a list filled with metric values in a daily basis.
-           The size of the list is the date range of analyze. 
-           e.g. [0 (1st), 0 (2nd), ... , 0 (31th)] list will be 
+           The size of the list is the date range of analyze.
+           e.g. [0 (1st), 0 (2nd), ... , 0 (31th)] list will be
            returned when 'analyze -M 01' which is for January 2012
-           is requested. 
+           is requested.
 
         Args:
             instance(dict): Dictionary from the getdata() function of the class Instances. (instances.getdata())
@@ -336,13 +347,13 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         Returns:
             a list of calculated data
-            
+
         Raises:
             n/a
-    
+
         """
 
-        month = [ 0 for n in range(self.day_count) ]
+        month = [0 for n in range(self.day_count)]
         if instance["t_start"] > self.from_date:
             offset = (instance["t_start"] - self.from_date).days
             ins_start = instance["t_start"]
@@ -358,18 +369,20 @@ class CmdLineAnalyzeEucaData(Cmd):
                 break
 
             if metric == "runtime":
-                first_second_of_a_day = datetime.combine(single_date.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
-                last_second_of_a_day = first_second_of_a_day + timedelta(days=1)
-                if i == 0: # First day of instance (same with instance["t_start"] and single_date)
+                first_second_of_a_day = datetime.combine(
+                    single_date.date(), datetime.strptime("00:00:00", "%H:%M:%S").time())
+                last_second_of_a_day = first_second_of_a_day + \
+                    timedelta(days=1)
+                if i == 0:  # First day of instance (same with instance["t_start"] and single_date)
                     td = last_second_of_a_day - single_date
                     hour = int(math.ceil(float(td.seconds) / 60 / 60))
                     month[offset + i] = hour
-                elif i + 1 == day_count_ins: # Last day of instance (same day with instance["t_end"] and single_date)
+                elif i + 1 == day_count_ins:  # Last day of instance (same day with instance["t_end"] and single_date)
                     td = instance["t_end"] - first_second_of_a_day
                     hour = int(math.ceil(float(td.seconds) / 60 / 60))
                     month[offset + i] = hour
-                else: # days between first and last days of instance
-                    month[offset + i] = 24 # hours
+                else:  # days between first and last days of instance
+                    month[offset + i] = 24  # hours
             elif metric == "count":
                 month[offset + i] = 1
             elif metric == "ccvm_cores":
@@ -397,8 +410,8 @@ class CmdLineAnalyzeEucaData(Cmd):
         return month
 
     def _merge_daily_stat(self, new, current, type="sum"):
-        """Merge daily_historam lists 
-            
+        """Merge daily_historam lists
+
             E.g. [1,2,3] + [2,3,4]
             expect => [ 1+2, 2+3, 3+4] = [ 3, 5, 7]
 
@@ -413,7 +426,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         """
 
         if len(current) == 0:
-            current = [0 for n in range(self.day_count) ]
+            current = [0 for n in range(self.day_count)]
 
         if type == "avg":
             divide = 2.0
@@ -425,13 +438,13 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def line_chart(self, chart_data, output):
         """Create python Google Chart (line type) in a PNG file format"""
-        self._create_chart(chart_data, output, chart_type = "line")
-       
+        self._create_chart(chart_data, output, chart_type="line")
+
     def bar_chart(self, chart_data, output):
         """Create python Google Chart (bar type) in a PNG file format"""
-        self._create_chart(chart_data, output, chart_type = "bar")
+        self._create_chart(chart_data, output, chart_type="bar")
 
-    def _create_chart(self, chart_data, output, chart_type = "line"):
+    def _create_chart(self, chart_data, output, chart_type="line"):
         """Create python Google Chart in a PNG file format"""
 
         try:
@@ -439,9 +452,11 @@ class CmdLineAnalyzeEucaData(Cmd):
             chart = FGPyGoogleChart(chart_type, maxY)
             chart.set_data(chart_data)
             topY = maxY + 1
-            chart.set_yaxis([ str(x) for x in range(0, topY, int(math.ceil(topY / 4)))])
-    #        chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1, ((self.day_count + 1) / 9))])
-            chart.set_xaxis([ str(x) for x in range(1, len(chart_data) + 1)])
+            chart.set_yaxis([str(x) for x in range(
+                0, topY, int(math.ceil(topY / 4)))])
+    # chart.set_xaxis([ str(x)+"d" for x in range(0, self.day_count + 1,
+    # ((self.day_count + 1) / 9))])
+            chart.set_xaxis([str(x) for x in range(1, len(chart_data) + 1)])
             chart.set_output_path(output)
             chart.set_filename(chart_type + "chart.png")
             chart.display()
@@ -450,7 +465,7 @@ class CmdLineAnalyzeEucaData(Cmd):
             print "chart is not created.", sys.exc_info()[0]
             pass
 
-    def create_highcharts(self, chart_data, output, chart_type = "column"):
+    def create_highcharts(self, chart_data, output, chart_type="column"):
         """Create highcharts in a javascript html file format"""
         try:
             highchart = FGHighcharts(chart_type)
@@ -466,13 +481,14 @@ class CmdLineAnalyzeEucaData(Cmd):
                 title = "Total VMs count per a node cluster"
                 highchart.set_xaxis(highchart.get_data(0))
                 highchart.set_yaxis(self.metric)
-            elif not self.metric: # This from user stats. display_stats
+            elif not self.metric:  # This from user stats. display_stats
                 highchart.set_xaxis(highchart.get_data(0))
                 highchart.set_yaxis("")
                 title = ""
             else:
                 highchart.set_yaxis(self.metric)
-                highchart.set_xaxis([ d.strftime("%Y-%m-%d") + " ~ " + (d + timedelta(6)).strftime("%Y-%m-%d") for d in (self.from_date + timedelta(n) for n in range(0, self.day_count, 7))])
+                highchart.set_xaxis([d.strftime("%Y-%m-%d") + " ~ " + (d + timedelta(6)).strftime(
+                    "%Y-%m-%d") for d in (self.from_date + timedelta(n) for n in range(0, self.day_count, 7))])
                 if self.metric == "runtime":
                     tmp = " (hour) "
                 else:
@@ -500,10 +516,11 @@ class CmdLineAnalyzeEucaData(Cmd):
             abspath = os.path.abspath(outfile)
             filepath = os.path.dirname(abspath)
             filename = os.path.basename(outfile)
-            #filename = "text.csv"
+            # filename = "text.csv"
             FGUtility.ensure_dir(filepath)
-            writer = csv.writer(open(filepath + "/" + filename, 'wb'), delimiter=",",
-                    quotechar="|", quoting=csv.QUOTE_MINIMAL)
+            writer = csv.writer(
+                open(filepath + "/" + filename, 'wb'), delimiter=",",
+                quotechar="|", quoting=csv.QUOTE_MINIMAL)
             for row in list_of_data:
                 writer.writerow(row)
 
@@ -540,7 +557,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         list_for_csv = []
         list_for_csv.append(["owner id", "user name", "value for metric"])
         ltrs = string.lowercase
-        anonymous = [''.join(["User ",a,b]) for a in ltrs for b in ltrs]
+        anonymous = [''.join(["User ", a, b]) for a in ltrs for b in ltrs]
         a = 0
 
         if self.platform and (self.platform == "nova" or self.platform == "openstack"):
@@ -550,20 +567,20 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         for name in user_list:
             number = user_list[name][metric]
-            # Temporary lines for converting sec to min 
+            # Temporary lines for converting sec to min
             if metric != "count":
-                number = int (math.ceil(number / 60 / 60))
+                number = int(math.ceil(number / 60 / 60))
             values.append(number)
             label = self.convert_ownerId_str(name) + ":" + str(number)
             label_values.append(label)
             list_for_highchart.append([label, number])
             anonymous_for_highchart.append([anonymous[a], number])
-            a+=1
+            a += 1
             list_for_csv.append([name, self.convert_ownerId_str(name), number])
             max_v = max(max_v, number)
 
         gl_chart = []
-        gl_chart_for_csv = ["project id", "project title","value"]
+        gl_chart_for_csv = ["project id", "project title", "value"]
         for prj in self.groups:
             prj_title = ""
             label = prj
@@ -598,30 +615,41 @@ class CmdLineAnalyzeEucaData(Cmd):
             pl_chart.append([plabel, pv])
             pl_chart_for_csv.append([pl, pv])
 
-        #self.generate_pygooglechart(type, label_values, max_v, values, filepath)
+        # self.generate_pygooglechart(type, label_values, max_v, values,
+        # filepath)
         if type == "highchart-column":
-            self.create_highcharts(list_for_highchart, filepath + "/" + metric + "/", "bar")
-            self.create_highcharts(anonymous_for_highchart, filepath + "/" + metric + "/anonymouns/", "bar")
+            self.create_highcharts(
+                list_for_highchart, filepath + "/" + metric + "/", "bar")
+            self.create_highcharts(
+                anonymous_for_highchart, filepath + "/" + metric + "/anonymouns/", "bar")
             if self.platform == "eucalyptus":
-                self.create_highcharts(gl_chart, filepath.replace("user", "group") + "/" + metric + "/", "bar")
-                self.create_highcharts(il_chart, filepath.replace("user", "institution") + "/" + metric + "/", "bar")
-                self.create_highcharts(pl_chart, filepath.replace("user", "projectlead") + "/" + metric + "/", "bar")
+                self.create_highcharts(gl_chart, filepath.replace(
+                    "user", "group") + "/" + metric + "/", "bar")
+                self.create_highcharts(il_chart, filepath.replace(
+                    "user", "institution") + "/" + metric + "/", "bar")
+                self.create_highcharts(pl_chart, filepath.replace(
+                    "user", "projectlead") + "/" + metric + "/", "bar")
 
         elif type == "csv":
-            self.create_csvfile(list_for_csv, filepath + "/" + metric + "/" + metric + "_per_user.csv")
+            self.create_csvfile(
+                list_for_csv, filepath + "/" + metric + "/" + metric + "_per_user.csv")
             if self.platform == "eucalyptus":
-                self.create_csvfile(gl_chart_for_csv, filepath.replace("user", "group") + "/" + metric + "/" + metric + "_per_group.csv")
-                self.create_csvfile(il_chart_for_csv, filepath.replace("user","institution") + "/" + metric + "/" + metric + "_per_institution.csv")
-                self.create_csvfile(pl_chart_for_csv, filepath.replace("user","projectlead") + "/" + metric + "/" + metric + "_per_projectlead.csv")
+                self.create_csvfile(gl_chart_for_csv, filepath.replace(
+                    "user", "group") + "/" + metric + "/" + metric + "_per_group.csv")
+                self.create_csvfile(il_chart_for_csv, filepath.replace(
+                    "user", "institution") + "/" + metric + "/" + metric + "_per_institution.csv")
+                self.create_csvfile(pl_chart_for_csv, filepath.replace(
+                    "user", "projectlead") + "/" + metric + "/" + metric + "_per_projectlead.csv")
 
-    def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200): 
+    def generate_pygooglechart(self, chart_type, labels, max_value, values, filepath, width=500, height=200):
         """Create Python Google Chart but this should be merged to _create_chart()"""
 
-        if chart_type == "pie": 
+        if chart_type == "pie":
             chart = PieChart3D(width, height)
             chart.set_pie_labels(labels)
         if chart_type == "bar":
-            chart = StackedHorizontalBarChart(width, height, x_range=(0, max_value))
+            chart = StackedHorizontalBarChart(
+                width, height, x_range=(0, max_value))
             chart.set_axis_labels('y', reversed(labels))
             # setting the x axis labels
             interval = int(max_value) / 10
@@ -636,7 +664,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         chart.add_data(values)
 
         if filepath == "display":
-            os.system ("open " + filepath)
+            os.system("open " + filepath)
         elif filepath == "url":
             url = chart.get_url()
             print url
@@ -663,7 +691,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def convert_ownerId_str(self, id):
         """Convert a owner id to a user name
-        
+
         * This should be working with retrieving ldap commands
         * Currently, this function is a test version
         """
@@ -694,7 +722,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         if id == "EJMBZFNPMDQ73AUDPOUS3":
             return "eucalyptus-admin"
-        else: 
+        else:
             return id
 
     def convert_accountId_str(self, id):
@@ -703,31 +731,31 @@ class CmdLineAnalyzeEucaData(Cmd):
         * This should be working with retrieving ldap commands
         * Currently, this function is a test version
 
-        # Temporarily add here 
+        # Temporarily add here
         # But it will be replaced by 'euare-accountlist|grep $accountid'
         # e.g. euare-accountlist|grep fg82
         # fg82    281408815495
         """
 
         ## TEST ONLY ~!!!!! ##
-        if id == "458299102773" :
+        if id == "458299102773":
             return "eucalyptus"
-        elif id == "281408815495" :
+        elif id == "281408815495":
             return "fg82"
-        elif id == "000000000001" :
+        elif id == "000000000001":
             return "system"
-        elif id == "081364875274" :
+        elif id == "081364875274":
             return "fg168"
-        elif id == "150119767462" :
+        elif id == "150119767462":
             return "fg3"
-        elif id == "355794507465" :
+        elif id == "355794507465":
             return "fg201"
-        else :
+        else:
             return id
 
     def convert_nova_userid_to_username(self, id):
         """Convert a owner id to a user name
-        
+
         * This should be working with retrieving ldap commands
         * Currently, this function is a test version
         """
@@ -755,14 +783,14 @@ class CmdLineAnalyzeEucaData(Cmd):
         nova = FGNovaMetric()
         res2 = nova.novadb.count()
         print FGUtility.convertOutput(str(res1[0].values()[0]+res2[0].values()[0]), "total")
-        
+
     def realtime_user(self, param):
         users = {}
         metric = param[0]
         # Temporary for test
-        #self.instances.clear()
-        #self.instances.eucadb.change_table("instance_for_realtime")
-        #self.instances.read_from_db()
+        # self.instances.clear()
+        # self.instances.eucadb.change_table("instance_for_realtime")
+        # self.instances.read_from_db()
         for i in range(0, int(self.instances.count())):
             values = self.instances.getdata(i)
             # TEMPORARY
@@ -770,7 +798,7 @@ class CmdLineAnalyzeEucaData(Cmd):
                 continue
             if values["state"] != "Extant":
                 continue
-            #if self.nodename and self.nodename != values['euca_hostname']:
+            # if self.nodename and self.nodename != values['euca_hostname']:
             if self.nodename and self.nodename != values['hostname']:
                 continue
             if self.platform and self.platform != values["cloudplatform.platform"]:
@@ -781,9 +809,10 @@ class CmdLineAnalyzeEucaData(Cmd):
                 metric_val = users[ownerId][metric] + 1
             else:
                 metric_val = 1
-            users[ownerId] = { metric: metric_val }
+            users[ownerId] = {metric: metric_val}
         for user in users:
-            output = self.convert_ownerId_str(user) + ", " + str(users[user][metric])
+            output = self.convert_ownerId_str(
+                user) + ", " + str(users[user][metric])
             print FGUtility.convertOutput(output, "realtime")
 
     def preloop(self):
@@ -792,10 +821,10 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.do_loadnovadb("")
 
         # Initialize values
-        self.sys_stat_new = {'total' : ""}
-        self.sys_stat_new['total'] = { 'count_node' : {}}
+        self.sys_stat_new = {'total': ""}
+        self.sys_stat_new['total'] = {'count_node': {}}
 
-        #self.stats = FGStats()
+        # self.stats = FGStats()
         self.chart = FGCharts()
 
     def postloop(self):
@@ -804,11 +833,9 @@ class CmdLineAnalyzeEucaData(Cmd):
     # def do_server_start (self,arg):
     #     os.system('lighttpd -D -f lighttpd.conf &')
 
-
     # def do_server_stop (self,arg):
     #     os.system('killall lighttpd')
-
-    def do_changecharttype (self, arg):
+    def do_changecharttype(self, arg):
         """Change the default caht type. You can choese bar, pie, motion"""
         if (arg != "pie") and (arg != "bar") and (arg != "motion"):
             print "Error: charttype " + arg + " not supported."
@@ -818,9 +845,11 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     @options([
         make_option('-t', '--type', type="string", help="users"),
-        make_option('-s', '--seperator', type="string", help="seperator between attribute and value"),
-        make_option('-c', '--caption', type="string", help="title of the table"),
-        ])
+        make_option('-s', '--seperator', type="string",
+                    help="seperator between attribute and value"),
+        make_option(
+            '-c', '--caption', type="string", help="title of the table"),
+    ])
     def do_table(self, arg, opts):
         """Print a table from the instance data"""
         print opts.caption
@@ -840,7 +869,7 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def do_loaddb(self, arg):
         """Read the statistical data from MySQL database"""
-        
+
         print "\r... loading data from database"
         self.users = {}
         self.instances = Instances()
@@ -869,7 +898,8 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     def do_dump(self, arg):
         """Print the data from all instances."""
-        # if we specify key, prints it from an instance with a given instance id
+        # if we specify key, prints it from an instance with a given instance
+        # id
         self.instances.dump()
 
     def do_printlist(self, arg):
@@ -900,8 +930,8 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.userid = None
             self.user_stats = None
             self.sys_stats = None
-            self.sys_stat_new = {'total' : ""}
-            self.sys_stat_new['total'] = { 'count_node' : {}}
+            self.sys_stat_new = {'total': ""}
+            self.sys_stat_new['total'] = {'count_node': {}}
             self.metric = None
             self.nodename = None
             self.platform = None
@@ -909,14 +939,20 @@ class CmdLineAnalyzeEucaData(Cmd):
             self.nova.clear_stats()
 
     @options([
-        make_option('-f', '--start', default="all", type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
-        make_option('-t', '--end',  default="all",  type="string", help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
-        make_option('-M', '--month', type="string", help="month to analyze (type. MM)"),
-        make_option('-Y', '--year', type="string", help="year to analyze (type. YYYY)"),
-        make_option('-S', '--stats', dest="metric", type="string", help="item name to measure (e.g. runtime, vms)"),
-        make_option('-P', '--period', dest="period", type="string", help="search period (weekly, daily)")
-        ])
-    def do_analyze (self, arg, opts=None):
+        make_option('-f', '--start', default="all", type="string",
+                    help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-t', '--end',  default="all",  type="string",
+                    help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-M', '--month', type="string",
+                    help="month to analyze (type. MM)"),
+        make_option('-Y', '--year', type="string",
+                    help="year to analyze (type. YYYY)"),
+        make_option('-S', '--stats', dest="metric", type="string",
+                    help="item name to measure (e.g. runtime, vms)"),
+        make_option('-P', '--period', dest="period",
+                    type="string", help="search period (weekly, daily)")
+    ])
+    def do_analyze(self, arg, opts=None):
         """Analyze utilization data
 
         This is main function to get statistical data
@@ -924,7 +960,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         """
         # Default set year and month by current date
         now = datetime.now()
-        analyze_year = str(now.year)  
+        analyze_year = str(now.year)
         analyze_s_month = "01"
         analyze_e_month = "12"
 
@@ -939,20 +975,20 @@ class CmdLineAnalyzeEucaData(Cmd):
         if opts.year or opts.month:
             from_date = "%s-%s-01T00:00:00" % (analyze_year, analyze_s_month)
             to_date = "%s-%s-%sT23:59:59" % (analyze_year, analyze_e_month,
-                    str(calendar.monthrange(int(analyze_year), int(analyze_e_month))[1]))
+                                             str(calendar.monthrange(int(analyze_year), int(analyze_e_month))[1]))
         else:
             from_date = opts.start
             to_date = opts.end
 
-        print "analyze [" + from_date + ", " + to_date + "]" 
+        print "analyze [" + from_date + ", " + to_date + "]"
         self.set_date(from_date, to_date)
-        #self.stats.set_search_date(from_date, to_date)
-        #self.stats.set_metric(opts.metric)
-        #self.stats.set_period(opts.period)
+        # self.stats.set_search_date(from_date, to_date)
+        # self.stats.set_metric(opts.metric)
+        # self.stats.set_period(opts.period)
 
         self.instances.refresh()
         print "now calculating"
-        self.calculate_stats (from_date, to_date)
+        self.calculate_stats(from_date, to_date)
         # new way to calculate metrics
         # get_sys_stats return a list of daily values not specified by a user name
         # It can display daily/weekly/monthly graphs for system utilization
@@ -961,50 +997,56 @@ class CmdLineAnalyzeEucaData(Cmd):
         if self.platform and (self.platform == "nova" or self.platform == "openstack"):
             self.nova.calculate_stats(self.from_date, self.to_date)
 
-    def do_getdaterange(self, arg): 
+    def do_getdaterange(self, arg):
         """Get Date range of the instances table in mysql db"""
 
         res = self.instances.getDateRange()
         print FGUtility.convertOutput(res[0], "first_date")
         print FGUtility.convertOutput(res[1], "last_date")
-        #print self.instances.eucadb.read("", " order by date limit 1")
-        #print self.instances.eucadb.read("", " order by date DESC limit 1")
+        # print self.instances.eucadb.read("", " order by date limit 1")
+        # print self.instances.eucadb.read("", " order by date DESC limit 1")
 
     def do_printusers(self, arg):
         print self.pp.pprint(self.users)
 
-    def do_timing (self, arg):
+    def do_timing(self, arg):
         self.timing = True
 
-    def do_echo (self, arg):
+    def do_echo(self, arg):
         self.echo = True
 
-    def do_open(self,arg):
-        os.system ("open " + arg)
+    def do_open(self, arg):
+        os.system("open " + arg)
 
     @options([
-        make_option('-t', '--type', default = charttype, type="string", help="pie, bar, motion"),
-        make_option('-f', '--filepath', default = "chart.png", type="string", help="the filepath in which we store a chart")
-        ])
+        make_option('-t', '--type', default=charttype,
+                    type="string", help="pie, bar, motion"),
+        make_option('-f', '--filepath', default="chart.png",
+                    type="string", help="the filepath in which we store a chart")
+    ])
     def do_creategraph(self, arg, opts=None):
         """Create PNG graphs (obsolete)"""
-        graph_type =  opts.type
+        graph_type = opts.type
         filepath = opts.filepath
         print graph_type + " typed " + filepath + " file created"
         self.display_stats("all", "count", graph_type, filepath)
 
     @options([
-        make_option('-d', '--directory', type="string", help="directory name which the chart html will be stored.")
-        ])
+        make_option('-d', '--directory', type="string",
+                    help="directory name which the chart html will be stored.")
+    ])
     def do_createhtml(self, arg):
         """Create google motion chart (obsolete)"""
         self.make_google_motion_chart(opts.directory)
 
     @options([
-        make_option('-d', '--directory', type="string", help="directory name which contains report graphs."),
-#        make_option('-t', '--title', type="string", help="A report title in the index.html"),
-        make_option('-f', '--format', type="string", help="A report format. There are 'pie', 'bar' and 'highchart-column' chart types or 'csv' format")
-        ])
+        make_option('-d', '--directory', type="string",
+                    help="directory name which contains report graphs."),
+# make_option('-t', '--title', type="string", help="A report title in the
+# index.html"),
+        make_option('-f', '--format', type="string",
+                    help="A report format. There are 'pie', 'bar' and 'highchart-column' chart types or 'csv' format")
+    ])
     def do_createreport(self, arg, opts=None):
         """Create PNG graphs which display statistics"""
 
@@ -1014,22 +1056,26 @@ class CmdLineAnalyzeEucaData(Cmd):
             output_format = default_format
         else:
             output_format = self.output_format
-        #self.display_stats("count", "pie", opts.directory + "/pie.count.png")
-        #self.display_stats("count", "bar", opts.directory + "/bar.count.png")
-        #self.display_stats("sum", "pie", opts.directory + "/pie.sum.png")
-        #self.display_stats("sum", "bar", opts.directory + "/bar.sum.png")
+        # self.display_stats("count", "pie", opts.directory + "/pie.count.png")
+        # self.display_stats("count", "bar", opts.directory + "/bar.count.png")
+        # self.display_stats("sum", "pie", opts.directory + "/pie.sum.png")
+        # self.display_stats("sum", "bar", opts.directory + "/bar.sum.png")
 
         self.make_google_motion_chart(opts.directory)
         self.display_stats("count", output_format, opts.directory)
         self.display_stats("runtime", output_format, opts.directory)
 
     @options([
-        make_option('-f', '--start', type="string", help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
-        make_option('-t', '--end',  type="string", help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
-        make_option('-M', '--month', default=datetime.now().month, type="string", help="month to analyze (type. MM)"),
-        make_option('-Y', '--year', default=datetime.now().year, type="string", help="year to analyze (type. YYYY)"),
-        ])
-    def do_set_range (self, arg, opts=None):
+        make_option('-f', '--start', type="string",
+                    help="start time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-t', '--end',  type="string",
+                    help="end time of the interval (type. YYYY-MM-DDThh:mm:ss)"),
+        make_option('-M', '--month', default=datetime.now().month,
+                    type="string", help="month to analyze (type. MM)"),
+        make_option('-Y', '--year', default=datetime.now().year,
+                    type="string", help="year to analyze (type. YYYY)"),
+    ])
+    def do_set_range(self, arg, opts=None):
         """Set search period (obsolete)"""
 
         if opts.start and opts.end:
@@ -1038,9 +1084,9 @@ class CmdLineAnalyzeEucaData(Cmd):
         else:
             from_date = "%s-%s-01T00:00:00" % (opts.year, opts.month)
             to_date = "%s-%s-%sT23:59:59" % (opts.year, opts.month,
-                    str(calendar.monthrange(int(opts.year), int(opts.month))[1]))
+                                             str(calendar.monthrange(int(opts.year), int(opts.month))[1]))
 
-        print "Set date range to analyze: [" + from_date + ", " + to_date + "]" 
+        print "Set date range to analyze: [" + from_date + ", " + to_date + "]"
         self.set_date(from_date, to_date)
 
     def _search_range(self, param):
@@ -1049,7 +1095,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         """
         from_date = param[0]
         to_date = param[1]
-        print "Set a date range to analyze: [" + from_date + ", " + to_date + "]" 
+        print "Set a date range to analyze: [" + from_date + ", " + to_date + "]"
         self.set_date(from_date, to_date)
 
     def _set_search_range(self, param):
@@ -1114,8 +1160,9 @@ class CmdLineAnalyzeEucaData(Cmd):
 
     @options([
         make_option('-u', '--user', type="string", help="user id to analyze"),
-        make_option('-m', '--metric', default="runtime", type="string", help="metric name to display (runtime, vms)")
-        ])
+        make_option('-m', '--metric', default="runtime",
+                    type="string", help="metric name to display (runtime, vms)")
+    ])
     def do_analyze_user(self, arg, opts=None):
         """Analyze user statistics"""
 
@@ -1129,14 +1176,16 @@ class CmdLineAnalyzeEucaData(Cmd):
         print self.user_stats
 
     @options([
-        make_option('-o', '--output', type="string", help="Filepath in which we store a chart")
-        ])
+        make_option('-o', '--output', type="string",
+                    help="Filepath in which we store a chart")
+    ])
     def do_user_report(self, arg, opts=None):
         """Generate a user report through Google line chart """
 
         # set default output by Year-month typed string
         if not opts.output:
-            opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
+            opts.output = str(self.from_date.year) + "-" + str(
+                self.from_date.month)
 
         # user_stats has a user's data analyzed by 'analyze_user' command.
         # user_report requires prior execution of 'analyze_user' command.
@@ -1150,15 +1199,18 @@ class CmdLineAnalyzeEucaData(Cmd):
         print
 
     @options([
-        make_option('-o', '--output', type="string", help="Filepath in which we store a chart"),
-        make_option('-A', '--all', action='store_true', default=False, help="report all period data")
-        ])
+        make_option('-o', '--output', type="string",
+                    help="Filepath in which we store a chart"),
+        make_option('-A', '--all', action='store_true',
+                    default=False, help="report all period data")
+    ])
     def do_sys_report(self, arg, opts=None):
         """Generate system reports such as usage of CPU, memories, and disks."""
 
         # Set output directory
         if not opts.output:
-            opts.output = str(self.from_date.year) + "-" + str(self.from_date.month)
+            opts.output = str(self.from_date.year) + "-" + str(
+                self.from_date.month)
 
         '''
         self.chart.set_output_path(opts.output)
@@ -1173,14 +1225,16 @@ class CmdLineAnalyzeEucaData(Cmd):
         '''
 
         if 'count_node' in self.sys_stat_new['total'] and len(self.sys_stat_new['total']['count_node']) != 0:
-            self.create_highcharts(self.sys_stat_new['total']['count_node'], opts.output, "column")
+            self.create_highcharts(self.sys_stat_new[
+                                   'total']['count_node'], opts.output, "column")
             return
-           
-        #self.line_chart(self.sys_stats, opts.output)
-        #self.bar_chart(self.sys_stats, opts.output)
+
+        # self.line_chart(self.sys_stats, opts.output)
+        # self.bar_chart(self.sys_stats, opts.output)
 
         if opts.all:
-            self.create_highcharts(self.sys_stats, opts.output, "master-detail")
+            self.create_highcharts(
+                self.sys_stats, opts.output, "master-detail")
         else:
             self.create_highcharts(self.sys_stats, opts.output)
 
@@ -1190,17 +1244,20 @@ class CmdLineAnalyzeEucaData(Cmd):
         chart.filledLineExample()
 
     @options([
-        make_option('-u', '--user', type="string", help="Show only image numbers owned by the userid specified."),
-        make_option('-d', '--detail', action="store_true", default=False, help="Show details about images"),
-        make_option('-s', '--summary', action="store_true", default=False, help="Show summary values about images")
-        ])
+        make_option('-u', '--user', type="string",
+                    help="Show only image numbers owned by the userid specified."),
+        make_option('-d', '--detail', action="store_true",
+                    default=False, help="Show details about images"),
+        make_option('-s', '--summary', action="store_true",
+                    default=False, help="Show summary values about images")
+    ])
     def do_count_images(self, arg, opts=None):
         """Count bucket images per user
 
-            It is virtual machine image counts grouped by users or accounts based on euca2ools. 
-            It shows that which user or account currently owns how many virtual machine images on the system. 
+            It is virtual machine image counts grouped by users or accounts based on euca2ools.
+            It shows that which user or account currently owns how many virtual machine images on the system.
             This metric is based on the euca2ool command .euca-describe-images. that a eucalyptus user can see
-            a list of machine images. 
+            a list of machine images.
         """
         import subprocess
         bucket_dict = {}
@@ -1221,10 +1278,12 @@ class CmdLineAnalyzeEucaData(Cmd):
                 values = line.split()
                 bucket, key = values[2].split("/")
                 # replace bucket with accountId - hrlee
-                # No reason to gather bucket name. Instead, accountid would be meaningful.
-                bucket = values[3] + "(" + self.convert_accountId_str(values[3]) + ")"
+                # No reason to gather bucket name. Instead, accountid would be
+                # meaningful.
+                bucket = values[3] + "(" + self.convert_accountId_str(
+                    values[3]) + ")"
                 count = bucket_dict.get(bucket, 0)
-                detail[count] = line 
+                detail[count] = line
                 details[bucket] = detail
                 bucket_dict[bucket] = count + 1
                 if bucket_dict[bucket] > max_user[1]:
@@ -1236,35 +1295,39 @@ class CmdLineAnalyzeEucaData(Cmd):
                 if opts.user != key:
                     continue
             print("\t".join([key, str(value)]))
-            chart_labels.append( key + ":" + str(value))
+            chart_labels.append(key + ":" + str(value))
 
         # Generate pygooglchart
         chart_max_v = int(math.ceil(max(bucket_dict.values()) * 1.1))
         chart_type = "bar"
         chart_filepath = "image_counts.png"
         chart_values = bucket_dict.values()
-        self.generate_pygooglechart(chart_type, chart_labels, chart_max_v, chart_values, chart_filepath)
+        self.generate_pygooglechart(
+            chart_type, chart_labels, chart_max_v, chart_values, chart_filepath)
 
-        # show detail information of image owned by a specific user from -u, --user option
+        # show detail information of image owned by a specific user from -u,
+        # --user option
         if opts.user and opts.detail:
             for key, value in details[opts.user].items():
                 print (value)
 
-        # Show summary of images. i.e. number of total images, number of users, average numbers of images, and maximum numbers of images.
+        # Show summary of images. i.e. number of total images, number of users,
+        # average numbers of images, and maximum numbers of images.
         if opts.summary:
-            total_image_count = str(len(lines) - 1) # Except (-1) last \n line count
+            total_image_count = str(len(
+                lines) - 1)  # Except (-1) last \n line count
             total_user_count = str(len(bucket_dict))
             print ""
             print "= Summary ="
             print "Total image counts:\t" + total_image_count
             print "Total user counts:\t" + total_user_count
             print "Average image counts per user:\t" + str(float(total_image_count) / float(total_user_count))
-            print "Maximum image counts and userid:\t" + max_user[0] + " has " +  str(max_user[1])
+            print "Maximum image counts and userid:\t" + max_user[0] + " has " + str(max_user[1])
             print "=========="
 
     @options([
         make_option('-u', '--user', type="string", help="Specify user name")
-        ])
+    ])
     def do_user_stats(self, arg, opts=None):
         """Print user statistics
 
@@ -1282,12 +1345,12 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         """
 
-        print "period:" +  self.from_date + " ~ " + self.to_date
+        print "period:" + self.from_date + " ~ " + self.to_date
 
         # instances stats
         print "instances:"
 
-    def do_set (self, arg, opts=None):
+    def do_set(self, arg, opts=None):
         """Set a function with parameter(s)"""
 
         args = arg.split()
@@ -1303,7 +1366,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         except:
             print ",".join(param) + " isn't set for (" + cmd + ")"
             pass
-        
+
     def do_show(self, arg, opts=None):
         """ Display realtime usage data"""
 
@@ -1322,7 +1385,7 @@ class CmdLineAnalyzeEucaData(Cmd):
         try:
             args = arg.split()
             param = args[0]
-            #param = args[1:]
+            # param = args[1:]
         except:
             param = ""
             pass
@@ -1334,16 +1397,16 @@ class CmdLineAnalyzeEucaData(Cmd):
 
         # check required fields
         if (not param) or (param == "metric"):
-            print self.metric #is_exist(self.metric)
+            print self.metric  # is_exist(self.metric)
         print self.nodename
         print self.platform
         print self.from_date
         print self.to_date
-        #is_exist(self.groupby)
-        #is_exist(self.search_length_of_time)
-        #is_exist(self.search_interval)
+        # is_exist(self.groupby)
+        # is_exist(self.search_length_of_time)
+        # is_exist(self.search_interval)
 
-        #self.select_data_source("instance")
+        # self.select_data_source("instance")
 
     def a(self):
 
@@ -1353,14 +1416,18 @@ class CmdLineAnalyzeEucaData(Cmd):
         second_column = self.get_val("metric")
         third_column = self.get_val("search_interval")
         for i in range(len(data)):
-            row = {first_column:first_value, second_column:second_value, third_column:third_value}
+            row = {first_column: first_value, second_column:
+                   second_value, third_column: third_value}
             result.append()
 
+
 def main():
-    
+
     parser = optparse.OptionParser()
-    parser.add_option('-t', '--test', dest='unittests', action='store_true', default=False, help='Run unit test suite')
-    parser.add_option('-n', '--nopreload', dest='nopreload', action='store_true', default=False, help='Run without pre-loading db')
+    parser.add_option('-t', '--test', dest='unittests',
+                      action='store_true', default=False, help='Run unit test suite')
+    parser.add_option('-n', '--nopreload', dest='nopreload',
+                      action='store_true', default=False, help='Run without pre-loading db')
     (callopts, callargs) = parser.parse_args()
     if callopts.unittests:
         sys.argv = [sys.argv[0]]  # the --test argument upsets unittest.main()
@@ -1372,11 +1439,8 @@ def main():
         app.cmdloop()
 
 
-
 #####################################################################
 # main
 #####################################################################
-
-
 if __name__ == "__main__":
     main()

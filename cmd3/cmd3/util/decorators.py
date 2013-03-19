@@ -4,6 +4,16 @@ from docopt import docopt
 
 # using decorator http://stackoverflow.com/questions/306130/python-decorator-makes-function-forget-that-it-belongs-to-a-class
 
+import inspect
+
+def command_method(myFunc):
+    classname = inspect.getouterframes(inspect.currentframe())[1][3]
+    def new(*args, **keyargs):
+        print 'Entering %s.%s' % (classname, myFunc.__name__)
+        return myFunc(*args, **keyargs)
+    return new
+
+
 class help_method(method_decorator):
     def __call__(self, *args, **kwargs):
         print 70 * "-"

@@ -94,7 +94,7 @@ class FGInstances:
         for ins in instances:
             try:
                 userinfo = self.get_userinfo({"ownerid": ins["ownerId"],
-                    "username": ins["ownerId"]})
+                                              "username": ins["ownerId"]})
                 if userinfo:
                     ins = dict(userinfo.items() + ins.items())
 

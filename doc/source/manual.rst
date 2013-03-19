@@ -147,15 +147,16 @@ but in future we will add additional information sources from other
 information providers. Currently we support Eucalyptus, OpenStack, as
 well as Nimbus.
 
-.. blockdiag::
+.. 
+  .. blockdiag::
 
         blockdiag {
-        Eucalyptus -> 'Log analyzer' -> CloudMetrics
-        OpenStack -> 'MySQL' -> CloudMetrics
-        Nimbus -> 'sqlite3' -> CloudMetrics
-        CloudMetrics <-> Shell
-        CloudMetrics <-> Shpinx
-        CloudMetrics <-> Flask
+        Eucalyptus -> 'Log analyzer' -> AAA ->  CloudMetrics
+        OpenStack -> 'MySQL' -> BBB -> CloudMetrics
+        Nimbus -> 'sqlite3' -> CCC -> CloudMetrics
+        CloudMetrics <-> "Metric API" <-> Shell
+         Shell <-> Shpinx
+         "Metric API" <-> Flask
 
         MySQL [shape = flowchart.database];
         sqlite3 [shape = flowchart.database];

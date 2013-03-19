@@ -27,11 +27,11 @@ Once you do this you can issue some of the metric shell commands. Here
 is a simple example that analyzes the runtime metric for a machine
 india on which openstack is installed and prints a chart::
 
- fg-metric> set nodename india
- fg-metric> set platform openstack
- fg-metric> set metric runtime
- fg-metric> analyze
- fg-metric> chart 
+ set nodename india
+ set platform openstack
+ set metric runtime
+ analyze
+ chart 
 
 The  "set" Command
 -------------------------------------------------------------------------------
@@ -205,13 +205,12 @@ a cloud services in a histogram over the specified period (see Figure
 1). Using the script::
 
  clear
- set nodename %(hostname)s
- set platform %(service)s
- set date %(from_dateT)s %(to_dateT)s
+ set nodename sierra
+ set date 2012-10-01T00:00:00 2012-12-31T23:59:59
  set period daily
  set metric countusers
  analyze
- chart -t line-time-series --directory %(output_directory)s
+ chart -t line-time-series --directory 2012-Q4/
 
 will result in the following image:
 
@@ -231,13 +230,12 @@ fractions  of Launched VM instances by Project groups (Figure
 2). Using the script::
 
  clear
- set nodename %(hostname)s
- set platform %(service)s
- set date %(from_dateT)s %(to_dateT)s
+ set nodename sierra
+ set date 2012-10-01T00:00:00 2012-12-31T23:59:59
  set groupby project
  set metric count
  analyze
- chart -t pie-basic --directory %(output_directory)s
+ chart -t pie-basic --directory 2012-Q4/
 
 will result in the following image:
 
@@ -257,14 +255,13 @@ to Wall Hour (runtime), Count and the number of Users for VM instances
 (Figure 3). Using the script::
 
  clear
- set nodename %(hostname)s
- set platform %(service)s
- set date %(from_dateT)s %(to_dateT)s
+ set nodename sierra
+ set date 2012-10-01T00:00:00 2012-12-31T23:59:59
  set period monthly
  set metric runtime count countusers
  set timetype hour
  analyze
- chart -t combo-multi-axes --directory %(output_directory)s
+ chart -t combo-multi-axes --directory 2012-Q4/
 
 will result in the following image:
 

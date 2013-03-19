@@ -98,7 +98,7 @@ You should have installed mysql on your machine or remote.
  sudo apt-get install mysql-server mysql-client
  sudo mysqladmin -u root -h localhost password 'mypassword'
 
-TODO: Once we have moved mongodb, this should be updated.
+TODO: Once we have moved to mongodb, this section should be replaced with mongodb installation.
 
 Server Access Information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

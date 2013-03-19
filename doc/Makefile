@@ -156,5 +156,5 @@ doctest:
 manpages:
 	#rm -r -f source/modules
 	sphinx-apidoc -f -H "Modules and Classes" -o source/modules ../.
-	rm source/modules/setup.*
+	#rm source/modules/setup.*
 	#echo ignore

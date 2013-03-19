@@ -95,7 +95,11 @@ Get hostname, db name, user id, password, port number.
 DBUser should have permission to write/delete/select/modify tables.
 
 ::
-  sudo apt-get install mysql-server
+
+ sudo apt-get update
+ sudo apt-get dist-upgrade
+ sudo apt-get install mysql-server mysql-client
+ sudo mysqladmin -u root -h localhost password 'mypassword'
 
 TODO: Once we have moved mongodb, this should be updated.
 

@@ -1,0 +1,7 @@
+class bar:
+    
+    def activate_bar(self):
+        pass
+
+    def do_that(self, arg):
+        print "THAT", arg

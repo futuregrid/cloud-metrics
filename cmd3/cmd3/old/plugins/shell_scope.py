@@ -16,6 +16,12 @@ class shell_scope():
     prompt = 'cm> '
     scripts = {}
     variables = {}
+
+    ######################################################################
+    # init
+    ######################################################################
+
+
     
     def __init__(self):
         self.scripts = {}
@@ -34,7 +40,6 @@ class shell_scope():
 
     def do_EOF(self,args):
         return True
-
 
     def help_use(self):
         msg = """
@@ -63,22 +68,30 @@ class shell_scope():
     ######################################################################
     # Scope and use commands
     ######################################################################
-        
+
+    def _add_scopeless(self, name):
+        self.scopeless.append(name)
+
+    def _delete_scopeless(self, name):
+        self.scopeless.remove(name)
+
     def _add_scope(self, name):
-        print "ADDING SCOPE", name
         self.scopes.append(name)
-        self._list_scope()
 
     def _delete_scope(self, name):
-        print "DELETE SCOPE", name
         self.scopes.remove(name)
-        self._list_scope()
             
     def _list_scope(self):
         print 10 * "-"
         print 'Scope'
         print 10 * "-"
         for s in self.scopes:
+            print s
+
+        print 10 * "-"
+        print 'Scopeless'
+        print 10 * "-"
+        for s in self.scopeless:
             print s
 
     def do_use(self, arg):
@@ -112,25 +125,42 @@ class shell_scope():
 
     do_scope = do_use
 
+    ######################################################################
+    # emptyline
+    ######################################################################
+
     def emptyline(self):
         return
 
-    forblock = False
-    block = []
-    forstatement = ""
+    ######################################################################
+    # replace vars
+    ######################################################################
 
-    def replace_vars(self,line):
+    def update_time(self):
         time = datetime.datetime.now().strftime("%H:%M:%S")
         date = datetime.datetime.now().strftime("%Y-%m-%d")
+        
+        self.variables['time'] = time
+        self.variables['date'] = date
+        
+    def replace_vars(self,line):
 
-        newline = line
-        newline = newline.replace("$time",time)
-        newline = newline.replace("$date",date)
+        self.update_time()
+
         for v in self.variables:
             newline = newline.replace("$"+v,self.variables[v])
         for v in os.environ:
             newline = newline.replace("$"+v,os.environ[v])
         return newline
+
+    ######################################################################
+    # line handler
+    ######################################################################
+
+    forblock = False
+    block = []
+    forstatement = ""
+
     
     def precmd(self, line):
         if line == None or line == "":
@@ -294,44 +324,3 @@ class shell_scope():
             self._delete_variable(variable)
             return
 
-    ######################################################################
-    # Scripts
-    ######################################################################
-
-    scripts = {}
-
-    def _import_scripts(self, regex):
-        scripts = glob.glob(regex)
-        if scripts:
-            for filename in scripts:
-                (dir, script) = filename.split("/")
-                (script,ext) = script.split(".")
-                script = script.replace("script_", "")
-                print "Import Script", script, "from", filename
-                self.scripts[script] = filename
-                
-    
-    def do_script(self, name):
-        if name == "load":
-            self.scripts = {}
-            self._import_scripts("scripts/script_*.txt")
-            self._list_scripts()
-        elif name == "list":
-            self._list_scripts()
-        elif name in self.scripts:
-            filename = self.scripts[name]
-            print filename
-            file = open(filename, "r")
-            for line in file:
-                line = self.precmd(line)
-                line = self.onecmd(line)
-            file.close()
-        else:
-            print "script execution not yet defined"
-
-    def _list_scripts(self):
-        print 10 * "-"
-        print 'Scripts'
-        print 10 * "-"
-        for v in self.scripts:
-            print v, '=', self.scripts[v]

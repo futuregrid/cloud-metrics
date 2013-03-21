@@ -10,6 +10,11 @@ class activate:
         plugins = []
 
     def do_plugins(self, args):
+        """
+        Ussage:
+            plugins
+
+        activates the plugins."""
         self.activate()
         
     def activate(self):

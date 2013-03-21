@@ -5,12 +5,37 @@ from  cyberaide.decorators import command
 
 class graphviz:
 
-    def do_graphviz(file):
+    def do_graphviz(self,args, arguments):
+        """
+        Usage:
+               graphviz FILENAME
+
+        Export the data in cvs format to a file. Former cvs command
+
+        Arguments:
+            FILENAME   The filename
+
+        """
+        file = arguments['FILENAME']
         if platform.system() == 'Darwin':
             if os.path.isfile(file):
                 os.system("open -a '\''/Applications/Graphviz.app'\'' " + file)
 
-    def dotTo(file, format):
+
+    def do_dot2(self, args, arguments):
+        """
+        Usage:
+               dot2 FILENAME FORMAT
+
+        Export the data in cvs format to a file. Former cvs command
+
+        Arguments:
+            FILENAME   The filename
+            FORMAT     the export format, pdf, png, ...
+
+        """
+        file = arguments['FILENAME']
+        format = arguments['FORMAT']
         base = file.replace(".dot", "")
         out = base + "." + format
         if format == "pdf":

@@ -12,8 +12,6 @@ class edit:
 
     def activate_edit(self):
         pass
-    
-        print "Edits the screen."
 
     @command
     def do_edit(self, arg, arguments):

@@ -31,12 +31,10 @@ class rst:
         print
         print "Commnad - %s::" % what
 
-        exec('self.do_%s("-h")' % what)
-
         
-        #exec("h = self.do_%s.__doc__" % what)
-        #h = textwrap.dedent(h).replace("\n", "\n    ")
-        #print h
+        exec("h = self.do_%s.__doc__" % what)
+        h = textwrap.dedent(h).replace("\n", "\n    ")
+        print h
 
     @command
     def do_man(self, args,arguments):

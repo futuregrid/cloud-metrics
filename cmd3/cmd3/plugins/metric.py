@@ -84,7 +84,6 @@ class metric:
 	  --api        The chart api library
 	  
         """
-        arguments = _get_doc_args(self.help_chart,args)
         print(arguments)
 
 
@@ -115,5 +114,4 @@ class metric:
 	  --summary    show summary about the image (default)    
 	  
         """
-        arguments = _get_doc_args(self.help_count_images,args)
         print(arguments)

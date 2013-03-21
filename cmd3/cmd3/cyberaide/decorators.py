@@ -15,8 +15,10 @@ def command(func):
             arguments = docopt(doc, help=False, argv=args)
             func(instance, args, arguments)
         except SystemExit:
-            print "Error: Wrong Format"
+            if not args in ('-h','--help'):
+                print "Error: Wrong Format"
             print doc
+    new.__doc__ = doc
     return new
 
 class help_method(method_decorator):

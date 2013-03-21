@@ -3,13 +3,13 @@ from  cyberaide.decorators import command
 import sys
 
 class shell_core:
-
+    
     def do_EOF(self, args):
         """
         Usage:
             EOF
 
-        Action to be performed at the end of a file. If true it terminates reating the file.
+        Action to be performed at the` end of a file. If true it terminates reating the file.
         """
         return True
 

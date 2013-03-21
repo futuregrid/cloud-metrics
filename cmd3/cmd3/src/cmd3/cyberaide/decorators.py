@@ -1,4 +1,4 @@
-from method_decorator import method_decorator
+#from method_decorator import method_decorator
 import textwrap
 from docopt import docopt
 import inspect
@@ -21,11 +21,12 @@ def command(func):
     new.__doc__ = doc
     return new
 
+"""
 class help_method(method_decorator):
     def __call__(self, *args, **kwargs):
         print 70 * "-"
         print textwrap.dedent(self.__doc__)
         print 70 * "-"
-
+"""
         
 

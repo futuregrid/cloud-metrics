@@ -89,10 +89,14 @@ from cyberaide.dynamic_cmd import make_cmd_class
 from cyberaide.dynamic_cmd import DynamicCmd
 from cyberaide.dynamic_cmd import get_plugins
 
-plugins = get_plugins("./plugins")
+def main():
+    plugins = get_plugins("./plugins")
 
-name    = "CmCli"
+    name    = "CmCli"
 
-(cmd, plugin_objects) = DynamicCmd(name, plugins)
-cmd.activate()
-cmd.cmdloop()
+    (cmd, plugin_objects) = DynamicCmd(name, plugins)
+    cmd.activate()
+    cmd.cmdloop()
+
+if __name__ == "__main__":
+    main()

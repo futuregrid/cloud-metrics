@@ -1,18 +1,23 @@
 from method_decorator import method_decorator
 import textwrap
 from docopt import docopt
-
-# using decorator http://stackoverflow.com/questions/306130/python-decorator-makes-function-forget-that-it-belongs-to-a-class
-
 import inspect
 
-def command_method(myFunc):
+def command(func):
     classname = inspect.getouterframes(inspect.currentframe())[1][3]
-    def new(*args, **keyargs):
-        print 'Entering %s.%s' % (classname, myFunc.__name__)
-        return myFunc(*args, **keyargs)
+    name = func.__name__
+    help_name = name.replace("do_","help_")
+    doc = textwrap.dedent(func.__doc__)
+    
+    def new(instance, args):
+        #instance.new.__doc__ = doc
+        try:
+            arguments = docopt(doc, help=False, argv=args)
+            func(instance, args, arguments)
+        except SystemExit:
+            print "Error: Wrong Format"
+            print doc
     return new
-
 
 class help_method(method_decorator):
     def __call__(self, *args, **kwargs):
@@ -20,25 +25,5 @@ class help_method(method_decorator):
         print textwrap.dedent(self.__doc__)
         print 70 * "-"
 
-def _get_doc_args(help,args):
-    arguments = docopt(textwrap.dedent(help.__doc__), argv=args)
-    return arguments
+        
 
-
-"""
-class docopts(method_decorator):
-
-    def __call__(self, *args, **kwargs):
-
-
-        method_name=self.__name__
-        class_name=(self.cls.__name__ if self.cls else None),
-        help_name = method_name.replace("do_", "help_")
-
-        method = getattr(self.cls, help_name)
-
-        arguments = _get_doc_args(method,args)
-        print 70 * "-"
-        print arguments
-        print 70 * "-"
-"""

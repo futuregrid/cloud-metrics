@@ -1,3 +1,5 @@
+import sys
+
 class activate:
 
     verbose = True
@@ -23,4 +25,6 @@ class activate:
             exec("self.%s()" % key)
 
 
+
+        
 

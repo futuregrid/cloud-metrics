@@ -1,3 +1,4 @@
+from  cyberaide.decorators import command
 class bar:
     
     def activate_bar(self):

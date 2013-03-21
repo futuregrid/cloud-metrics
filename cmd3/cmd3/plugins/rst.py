@@ -1,20 +1,21 @@
+from cStringIO import StringIO
+from  cyberaide.decorators import command
 import string
 import textwrap
 from docopt import docopt
 import inspect
 import sys
 import importlib
-from  cyberaide.decorators import help_method
-from  cyberaide.decorators import command_method
-from  cyberaide.decorators import _get_doc_args
+from  cyberaide.decorators import command
+
 
 class rst:
     
     def activate_rst(self):
         pass
-    
-    @help_method
-    def help_rst(self):
+
+    @command
+    def do_rst(self, args, arguments):
         """
         Usage:
                rst COMMAND 
@@ -26,17 +27,25 @@ class rst:
 
         """
 
-    def do_rst(self, args):
-        arguments = _get_doc_args(self.help_rst,args)
-
         what = arguments['COMMAND']
         print
         print "Commnad - %s::" % what
-        exec("h = self.help_%s.__doc__" % what)
-        h = textwrap.dedent(h).replace("\n", "\n    ")
-        print h
 
-    def do_man(self, args):
+        exec('self.do_%s("-h")' % what)
+
+        
+        #exec("h = self.do_%s.__doc__" % what)
+        #h = textwrap.dedent(h).replace("\n", "\n    ")
+        #print h
+
+    @command
+    def do_man(self, args,arguments):
+        """
+        Usage:
+               man
+
+        Prints out the help pages
+        """
 
         print
         print "Commands"

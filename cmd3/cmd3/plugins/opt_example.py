@@ -1,19 +1,22 @@
+import types
 import textwrap
 from docopt import docopt
 import inspect
 import sys
 import importlib
-from  cyberaide.decorators import help_method
-from  cyberaide.decorators import command_method
-from  cyberaide.decorators import _get_doc_args
+from  cyberaide.decorators import command
+
+
+
 
 class opt_example:
+    """opt_example class"""
     
     def activate_opt_example(self):
         pass
     
-    @help_method
-    def help_opt_example(self):
+    @command
+    def do_opt_example(self, args, arguments):
         """
         Usage:
                opt_example [-vr] [FILE] ...
@@ -28,12 +31,47 @@ class opt_example:
           -r       make report
 
         """
+        print(arguments)
+        
 
-    def do_opt_example(self, args):
-        arguments = _get_doc_args(self.help_opt_example,args)
+    @command
+    def do_neu(self, args, arguments):
+        """
+        Usage:
+               opt_example [-vr] [FILE] ...
+
+        Process FILE and optionally apply some options
+
+        Arguments:
+          FILE        optional input file
+
+        Options:
+          -v       verbose mode
+          -r       make report
+
+        """
+        #arguments = _get_doc_args(self.do_neu,args)
 
         print(arguments)
-    
-    def do_neu(self, args):
-        arguments = _get_doc_args(self.help_opt_example,args)
+        return ""
+
+    @command
+    def do_old(self, args, arguments):
+        """
+        Usage:
+               old [-ab] [FILE] ...
+
+        Process FILE and optionally apply some options
+
+        Arguments:
+          FILE        optional input file
+
+        Options:
+          -a       verbose mode
+          -b       make report
+
+        """
+        #arguments = _get_doc_args(self.do_neu,args)
+
         print(arguments)
+        return ""

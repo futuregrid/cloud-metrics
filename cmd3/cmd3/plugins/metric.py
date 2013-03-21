@@ -3,8 +3,7 @@ from docopt import docopt
 import inspect
 import sys
 import importlib
-from  cyberaide.decorators import help_method
-from  cyberaide.decorators import _get_doc_args
+from  cyberaide.decorators import command
 
 class metric:
 
@@ -15,8 +14,8 @@ class metric:
     # analyze commands
     ######################################################################
 
-    @help_method
-    def help_analyze(self):
+    @command
+    def do_analyze(self, args, arguments):
         """
         Usage:
                analyze METRIC --start START --end END 
@@ -38,16 +37,14 @@ class metric:
           --period    the period
 
         """
-
-    def do_analyze(self, args):
-        arguments = _get_doc_args(self.help_analyze,args)
         print(arguments)
 
     ######################################################################
     # CVS commands
     ######################################################################
-    @help_method
-    def help_table(self):
+
+    @command
+    def do_table(self, args, arguments):
         """
         Usage:
                table FILENAME
@@ -62,17 +59,14 @@ class metric:
           --filet     specifies the filename
 
         """
-	
-    def do_table(self, args):
-        arguments = _get_doc_args(self.help_table,args)
         print(arguments)
 
     ######################################################################
     # chart
     ######################################################################
-	
-    @help_method
-    def help_chart(self):
+
+    @command
+    def do_chart(self, args, arguments):
         """
         Usage:
                chart [--dir DIR] --type (bar|line|column|pie|motion)
@@ -90,8 +84,6 @@ class metric:
 	  --api        The chart api library
 	  
         """
-
-    def do_chart(self, line, opts=None):
         arguments = _get_doc_args(self.help_chart,args)
         print(arguments)
 
@@ -100,8 +92,8 @@ class metric:
     # count images
     ######################################################################
 
-    @help_method
-    def help_count_images(self):
+    @command
+    def do_count_images(self, line, opts=None):
         """
         Usage:
                count_images [--detail | --summary] --user USER 
@@ -123,9 +115,5 @@ class metric:
 	  --summary    show summary about the image (default)    
 	  
         """
-
-
-
-    def do_count_images(self, line, opts=None):
         arguments = _get_doc_args(self.help_count_images,args)
         print(arguments)

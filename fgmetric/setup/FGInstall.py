@@ -29,6 +29,7 @@ class FGInstall(object):
         if not self.exist_cfgfile() or self.force_cfgfile():
             self.get_dbinfo()
             self.create_cfgfile()
+            self.chmod_cfgfile()
         self.create_db()
         self.close_db()
 
@@ -47,6 +48,25 @@ class FGInstall(object):
         if input_var.lower() == "y":
             return True
         return False
+
+    def create_cfgfile(self):
+        config = ConfigParser.RawConfigParser()
+        config.add_section(self.cfg_section_name)
+        config.set(self.cfg_section_name, 'host', self.dbinfo['host'])#=suzie.futuregrid.org\n\
+        config.set(self.cfg_section_name, 'port', self.dbinfo['port'])#=3306\n\
+        config.set(self.cfg_section_name, 'user', self.dbinfo['userid'])#=fgmetric\n\
+        config.set(self.cfg_section_name, 'passwd', self.dbinfo['passwd'])#=\n\
+        config.set(self.cfg_section_name, 'db', self.dbinfo['dbname'])#=cloudmetrics\n\
+
+        with open(self.cfgfile, 'wb') as configfile:
+            print
+            print "... creating " + self.cfgfile + " file ..."
+            config.write(configfile)
+            print "... database information successfully saved ..."
+
+    def chmod_cfgfile(self):
+        """Change a file mode to 0600. Only owner is allowed to read and write."""
+        os.chmod(self.cfgfile, 0600)
 
     def get_dbinfo(self):
 
@@ -70,21 +90,6 @@ class FGInstall(object):
         except:
             print sys.exc_info()
             raise
-
-    def create_cfgfile(self):
-        config = ConfigParser.RawConfigParser()
-        config.add_section(self.cfg_section_name)
-        config.set(self.cfg_section_name, 'host', self.dbinfo['host'])#=suzie.futuregrid.org\n\
-        config.set(self.cfg_section_name, 'port', self.dbinfo['port'])#=3306\n\
-        config.set(self.cfg_section_name, 'user', self.dbinfo['userid'])#=fgmetric\n\
-        config.set(self.cfg_section_name, 'passwd', self.dbinfo['passwd'])#=\n\
-        config.set(self.cfg_section_name, 'db', self.dbinfo['dbname'])#=cloudmetrics\n\
-
-        with open(self.cfgfile, 'wb') as configfile:
-            print
-            print "... creating " + self.cfgfile + " file ..."
-            config.write(configfile)
-            print "... database information successfully saved ..."
 
     def create_db(self):
 

@@ -114,7 +114,7 @@ setup(
              'fg-metric-converter = fgmetric.shell.FGConverter:main',
              #'fg-metric-old = fgmetric.shell.FGAnalyzer:main',
              'fg-metric = fgmetric.shell.FGMetricShell:main',
-             'fg-metric-install = fgmetric.setup.FGInstall.main'
+             'fg-metric-install = fgmetric.setup.FGInstall:main'
              # TODO: fg-metric-install will be merged into fg-metric subshell
              ]},
 

@@ -6,6 +6,7 @@ import pprint
 import ConfigParser
 import argparse
 import MySQLdb
+import getpass
 
 pp = pprint.PrettyPrinter(indent=0)
     
@@ -15,18 +16,85 @@ class FGInstall(object):
     userinfo_table = "userinfo"
     projectinfo_table = "projectinfo"
     cloudplatform_table = "cloudplatform"
+    cfg_section_name = "CloudMetricsDB"
+    dbinfo = { "host": None,
+                "port": None,
+                "userid": None,
+                "passwd": None,
+                "dbname": None }
 
     # Initialize
-    def __init__(self, configfile="futuregrid.cfg"):
-        if not configfile:
-            configfile="futuregrid.cfg"
+    def __init__(self):
+        self.get_argparse()
+        if not self.exist_cfgfile() or self.force_cfgfile():
+            self.get_dbinfo()
+            self.create_cfgfile()
+        self.create_db()
+        self.close_db()
 
+    def exist_cfgfile(self):
         #read config from file configfile
-        config = ConfigParser.ConfigParser()
-        cfgfile = os.getenv("HOME") + "/.futuregrid/" + configfile
-        config.read(cfgfile)
+        self.cfgfile = os.getenv("HOME") + "/.futuregrid/" + self.args.conf
+        try:
+            with open(self.cfgfile):
+                return True
+        except IOError:
+            print self.cfgfile + " exist."
+            return False
 
-        print cfgfile + " has been loaded.\n"
+    def force_cfgfile(self):
+        input_var = raw_input("Rewrite cfgfile? [y/N]: ")
+        if input_var.lower() == "y":
+            return True
+        return False
+
+    def get_dbinfo(self):
+
+        print "=" * 30
+        print "Installing Cloud Metrics ..."
+        print "=" * 30
+        print
+        print "If you have installed MySQL database for Cloud Metrics,"
+        print "you will be asked to type the database information."
+        print
+        print "-" * 30
+        print "mysql database information"
+        print "-" * 30
+
+        try:
+            self.dbinfo['host'] = raw_input("db host ip address: ")
+            self.dbinfo['port'] = raw_input("db port (default:3306): ") or "3306"
+            self.dbinfo['userid'] = raw_input("db userid: ")
+            self.dbinfo['passwd'] = getpass.getpass("db password: ")
+            self.dbinfo['dbname'] = raw_input("db name: ")
+        except:
+            print sys.exc_info()
+            raise
+
+    def create_cfgfile(self):
+        config = ConfigParser.RawConfigParser()
+        config.add_section(self.cfg_section_name)
+        config.set(self.cfg_section_name, 'host', self.dbinfo['host'])#=suzie.futuregrid.org\n\
+        config.set(self.cfg_section_name, 'port', self.dbinfo['port'])#=3306\n\
+        config.set(self.cfg_section_name, 'user', self.dbinfo['userid'])#=fgmetric\n\
+        config.set(self.cfg_section_name, 'passwd', self.dbinfo['passwd'])#=\n\
+        config.set(self.cfg_section_name, 'db', self.dbinfo['dbname'])#=cloudmetrics\n\
+
+        with open(self.cfgfile, 'wb') as configfile:
+            print
+            print "... creating " + self.cfgfile + " file ..."
+            config.write(configfile)
+            print "... database information successfully saved ..."
+
+    def create_db(self):
+
+        print "-" * 30
+        print "MySQL table creation"
+        print "-" * 30
+
+        cfgfile = self.cfgfile
+        config = ConfigParser.ConfigParser()
+        config.read(cfgfile)
 
         try:
             #db parameters
@@ -35,25 +103,15 @@ class FGInstall(object):
             dbuser = config.get('CloudMetricsDB', 'user')
             dbpasswd = config.get('CloudMetricsDB', 'passwd')
             dbname = config.get('CloudMetricsDB', 'db')
-            euca_hostname = config.get('CloudMetricsDB', 'euca_hostname')
-            euca_version = config.get('CloudMetricsDB', 'euca_version')
+            #euca_hostname = config.get('CloudMetricsDB', 'euca_hostname')
+            #euca_version = config.get('CloudMetricsDB', 'euca_version')
         except ConfigParser.NoSectionError:
-            try:
-                #db parameters
-                dbhost = config.get('EucaLogDB', 'host')
-                dbport = int(config.get('EucaLogDB', 'port'))
-                dbuser = config.get('EucaLogDB', 'user')
-                dbpasswd = config.get('EucaLogDB', 'passwd')
-                dbname = config.get('EucaLogDB', 'db')
-                euca_hostname = config.get('EucaLogDB', 'euca_hostname')
-                euca_version = config.get('EucaLogDB', 'euca_version')
-            except ConfigParser.NoSectionError:
-                print cfgfile + " does not exist"
-                sys.exit()
+            print cfgfile + " does not exist"
+            sys.exit()
 
         #set parameters
-        self.euca_version = euca_version
-        self.euca_hostname = euca_hostname
+        #self.euca_version = euca_version
+        #self.euca_hostname = euca_hostname
 
         #connect to db
         self.conn = MySQLdb.connect (dbhost, dbuser, dbpasswd, dbname, dbport)
@@ -126,7 +184,7 @@ class FGInstall(object):
                 institution varchar(16), \
                 cores int default 0)"
 
-        create_projectinfo_table = "CREATE TABLE if not exist " + self.projectinfo_table + " (\
+        create_projectinfo_table = "CREATE TABLE if not exists " + self.projectinfo_table + " (\
               `ProjectId` int(11) NOT NULL DEFAULT '0',\
               `Completed` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,\
               `Title` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,\
@@ -139,6 +197,7 @@ class FGInstall(object):
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
 
         try:
+            print "... creating MySQL tables for Cloud Metrics ..."
             self.cursor.execute(create_instance_table)
             print self.instance_table + " created if not exists"
             self.cursor.execute(create_userinfo_table)
@@ -150,21 +209,25 @@ class FGInstall(object):
         except MySQLdb.Error:
             pass
 
-    def __del__(self):
-        ''' destructor '''
+    def close_db(self):
         try:
             self.cursor.close()
             self.conn.close()
         except:
             pass
 
-def main():
+    def get_argparse(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--conf", dest="conf", default="futuregrid.cfg",
+                help="configuraton file for Cloud Metrics")
+        self.args = parser.parse_args()
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--conf", dest="conf",
-            help="configuraton file of the database to be used")
-    args = parser.parse_args()
-    install = FGInstall(args.conf)
+    def __del__(self):
+        ''' destructor '''
+        pass
+
+def main():
+    install = FGInstall()
 
 if __name__ == '__main__':
     main()

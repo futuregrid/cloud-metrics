@@ -8,15 +8,10 @@ Administrator Guide
   .. contents:: Table of Contents
      :depth: 5
 
-
 ..
 
 Installation
 ======================================================================
-
-
-
-
 
 Prerequisites
 ----------------------------------------------------------------------
@@ -24,16 +19,14 @@ Prerequisites
 We assume you have a valid python version (2.7.2 or higher) and all
 the needed libraries on the system where you run the code.
 
-Autorun
-----------------------------------
+Python sphinx-contrib Autorun
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
     $ hg clone http://bitbucket.org/birkenfeld/sphinx-contrib/
     $ cd sphinx-contrib/autorun
     $ python setup.py install
-
-
 
 Linux
 ^^^^^^^^^^^^^^^
@@ -48,7 +41,7 @@ OSX
 
 1. install mysql from the oracle web site
 
-2.  add /usr/local/mysql/bin to your local path
+2. add /usr/local/mysql/bin to your local path
 
 3. and for some reason also do
 
@@ -88,8 +81,8 @@ it and install with::
 Database
 -----------
 
-Installation
-^^^^^^^^^^^^^
+MySQL Installation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 You should have installed mysql on your machine or remote.
 ::
 
@@ -100,25 +93,43 @@ You should have installed mysql on your machine or remote.
 
 TODO: Once we have moved to mongodb, this section should be replaced with mongodb installation.
 
-Server Access Information
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Access Information (futuregrid.cfg) and DB (MySQL) tables creation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 futuregrid.cfg includes dbusername, password, hostname, port number,
-and database name.
+and database name. Database tables (MySQL) will also be created.
 
 ::
 
-   install futuregrid.cfg
-   chmod go-rw ~/.futuregrid/futuregrid.cfg 
+ $ fg-metric-install
+ ==========================================
+ Installing Cloud Metrics ...
+ ==========================================
 
-Database initialization
-^^^^^^^^^^^^^^^^^^^^^^^
-First creation of database and tables
+ If you have installed mysql database for Cloud Metrics,
+ you will be asked to type the database information.
 
-::
+ ---------------------------------------------------
+ mysql database info
+ ---------------------------------------------------
+ db host ip address: <type ip address>
+ db port (default: 3306): <type port number or enter>
+ db username: <type username>
+ db password: <type password>
+ db name: <type dbname>
 
- $ fg-metric-install (...)
- .... database created! ...
+ ... creating $HOME/.futuregrid/futuregrid.cfg file ...
+ ... database information successfully saved. ...
 
+ ----------------------------------------------------
+ MySQL table creation
+ ----------------------------------------------------
+ ... creating MySQL tables for Cloud Metrics ...
+ ... instance table created ...
+ ... userinfo table created ...
+ ... projectinfo table created ...
+ ... cloudplatform table created ...
+
+ MySQL database setup successfully done.
 
 Obtaining metric data from logs and database
 -----------------------------------------------

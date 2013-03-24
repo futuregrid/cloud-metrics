@@ -141,66 +141,88 @@ Eucalyptus
 ^^^^^^^^^^
 For Eucalyptus, Cloud Metrics uses fg-logparser to parse and 
 store metric information to Cloud Metrics database.
-* This is a real-time collector with log watcher python module.
 
-::
+*This is a real-time collector with log watcher python module.*
 
-  TODO: Describe how it works in futuregrid
-  (EXAMPLE, not real)
-  e.g.
-  1. login into management server
-  ssh i135
-
-  2. store futuregrid.cfg file in $HOME/.futuregrid
-
-  3. install fg-metric
-     
-  4. run scripts
-  python logwatcher.py|fg-logparser /var/log/eucalyptus/ ...
+* Log into management node
+  ```ssh $mangement_node_ip```
+* Install Cloud Metrics
+  ```pip install futuregrid-cloud-metrics```
+* Setup configuration
+  ```fg-metric-install```
+* Run a log parser script
+  ```fg-logparser -i /var/log/eucalyptus```
+  *Log directory should be accessible*
+* Run a log parser with real-time logwatcher script (optional)
+  ```logwatcher.py|fg-logparser -i -```
 
 OpenStack
 ^^^^^^^^^
-For OpenStack, Cloud Metrics simply converts OpenStack's MySQL
+For OpenStack, Cloud Metrics converts OpenStack's MySQL database
 to Cloud Metrics database using fg-converter.
-* This is a daily update based on cron.
 
-::
+*This works in a daily basis with cron.*
 
-  TODO: Describe how it works in futuregrid
+* Get SQL database (MySQL/PostgreSQL) access
+
+  + Configuring the SQL Database (MySQL) on the OpenStack Cloud Controller Node
+
+    - Login to the Cloud Controller
+      ``ssh $openstack_controller``
+    - Start the mysql command line client:
+      ``mysql -u root -p``
+    - Create a MySQL user (cloudmetrics) and password for the nova, keystone database that has read control of the database.
+      ::
+    
+        GRANT SELECT ON nova.* to 'cloudmetrics'@'%' IDENTIFIED BY '[YOUR_PASSWORD]';
+        GRANT SELECT ON keystone.* to 'cloudmetrics'@'%' IDENTIFIED BY '[YOUR_PASSWORD]';
+
+  + Configuring the SQL Database (PostgreSQL) on the OpenStack Cloud Controller Node
+
+    - TBD
+
+* Configuring data importer
+  ::
+
+    fg-metric-converter -p openstack -n $nodename -db mysql[postreSQL] -dh $mysql_server_ip -du cloudmetrics -dp YOUR_PASSWORD
+
+  + What fg-metric-converter basically does...
+    ::
   
-  1. get access to openstack database
-  db name, host, id, pass
+      SELECT * from instances (OPENSTACK) 
+      and then 
+      INSERT into instance (CLOUD METRICS)
 
-  2. hook up with fg-converter
-     e.g. fg-converter -db info ...
-     (THIS IS WHERE CRON DOES ACT)
-     5 * * * * fg-converter ...
+* New cron job for fg-metric-converter
+  ::
 
-  3. what fg-converter basically does...
-     SELECT * from instances (OPENSTACK)
-     INSERT into instance (CLOUD METRICS)
+   5 * * * * fg-metric-converter ...
+*If you have several openstack services, iterate these steps.*
 
 Nimbus
 ^^^^^^
 For Nimbus, Cloud Metrics simplys converts Nimbus' sqlite3
 to Cloud Metrics database using fg-converter.
-* This is a daily update based on cron.
 
-::
+*This is a daily update based on cron.*
 
-  TODO: Describe how it works in futuregrid
-  
-  1. get nimbus sqlite3 database files
-     Nimbus group pushes db files into ***fg-ravel4** server
+* Login into Nimbus management node
+  ``ssh $nimbus node``
+* Make a copy of sqlite3 database files to local
+  ``scp -r -i $keyfile  $sqlite3_files $id@$loca_ip:$destination``
 
-  2. hook up with fg-converter
-     e.g. fg-converter -db info ...
-     (THIS IS WHERE CRON DOES ACT)
-     5 * * * * fg-converter ...
+  Example::
+    
+    scp -r -i ssh.key ./nimbus/ cloudmetrics@futuregrid.iu.edu:nimbus/*
+* Import Nimbus' sqlite3 database into Cloud Metrics
+  ``fg-metric-converter -p nimbus -db sqlite3 -i $sqlite3_filepath -n $nodename``
 
-  3. what fg-converter basically does...
-     SELECT * from instances (NIMBUS)
-     INSERT into instance (CLOUD METRICS)
+  Example with cron::
+
+     0 6 * * * fg-metric-converter -p nimbus -db sqlite3 -i /nimbus/hotel/hotel -n hotel
+     0 6 * * * fg-metric-converter -p nimbus -db sqlite3 -i /nimbus/alamo/alamo -n alamo
+     0 6 * * * fg-metric-converter -p nimbus -db sqlite3 -i /nimbus/foxtrot/foxtrot -n foxtrot
+     0 6 * * * fg-metric-converter -p nimbus -db sqlite3 -i /nimbus/sierra/sierra -n sierra
 
 THIS IS ALL INFORMATION (NEED MORE DETAILS TO FILL IN) ABOUT COLLECTING
 RESOURCE INFORMATION FROM IaaS SERVICES.

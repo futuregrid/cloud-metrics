@@ -16,6 +16,9 @@ class FGInstall(object):
     userinfo_table = "userinfo"
     projectinfo_table = "projectinfo"
     cloudplatform_table = "cloudplatform"
+    def_cfg_path = os.getenv("HOME") + "/.futuregrid/"
+    def_cfg_filename = "futuregrid.cfg"
+    def_yaml_filename = "futuregrid.yaml"
     cfg_section_name = "CloudMetricsDB"
     dbinfo = { "host": None,
                 "port": None,
@@ -35,7 +38,7 @@ class FGInstall(object):
 
     def exist_cfgfile(self):
         #read config from file configfile
-        self.cfgfile = os.getenv("HOME") + "/.futuregrid/" + self.args.conf
+        self.cfgfile = self.cfg_path + self.args.conf
         try:
             with open(self.cfgfile):
                 return True
@@ -67,6 +70,12 @@ class FGInstall(object):
     def chmod_cfgfile(self):
         """Change a file mode to 0600. Only owner is allowed to read and write."""
         os.chmod(self.cfgfile, 0600)
+
+    def create_yamlfile(self):
+        f = open(self.cfg_path + self.def_yaml_filename, "w")
+        dataMap = { cfg_section_name : self.dbinfo }
+        yaml.dump(dataMap, f)
+        f.close()
 
     def get_dbinfo(self):
 
@@ -223,8 +232,10 @@ class FGInstall(object):
 
     def get_argparse(self):
         parser = argparse.ArgumentParser()
-        parser.add_argument("--conf", dest="conf", default="futuregrid.cfg",
+        parser.add_argument("--conf", dest="conf", default=self.def_cfg_filename,
                 help="configuraton file for Cloud Metrics")
+        parser.add_argument("--yaml", dest="yaml", default=self.def_yaml_filename,
+                help="configuraton YAML file for Cloud Metrics")
         self.args = parser.parse_args()
 
     def __del__(self):

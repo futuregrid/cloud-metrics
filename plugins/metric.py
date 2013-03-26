@@ -18,7 +18,6 @@ class metric:
 
     def activate_metric(self):
         self.cmetrics = FGMetricsAPI()
-        pass
     
     ######################################################################
     # analyze commands

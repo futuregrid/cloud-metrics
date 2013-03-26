@@ -99,8 +99,8 @@ setup(
     author_email='laszewski@gmail.com',
     url='https://github.com/futuregrid/futuregrid-cloud-metrics',
     license='Apache 2.0',
-    package_dir = {'': '.'},
-    packages = find_packages(exclude=['ez_setup', 'examples', 'tests']),
+    package_dir = {'': 'src'},
+    packages = find_packages('src',exclude=['ez_setup', 'examples', 'tests']),
     #include_package_data=True,
     #zip_safe=True,
     
@@ -111,7 +111,7 @@ setup(
              'fg-euca-gather-log-files = fgmetric.shell.FGCollectFiles:main',
              'fg-parser = fgmetric.shell.FGParser:main',
              'fg-logparser = fgmetric.shell.FGLogParser:main',
-             'fg-metric-converter = fgmetric.shell.FGConverter:main',
+             'fg-metric-converter = gmetric.shell.FGConverter:main',
              #'fg-metric-old = fgmetric.shell.FGAnalyzer:main',
              'fg-metric = fgmetric.shell.FGMetricShell:main',
              'fg-metric-install = fgmetric.setup.FGInstall:main'

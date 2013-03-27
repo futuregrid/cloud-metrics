@@ -92,9 +92,8 @@ class metric:
             self.cmetrics.set_date(arguments["START"], arguments["END"])
         if arguments["METRIC"]:
             self.cmetrics.set_metric(arguments["METRIC"])
-        #self.cmetrics.set_cloud(None) #TEST
-        #self.cmetrics.set_hostname(None) #TEST
-        self.cmetrics.set_period(self._get_period_name(arguments)) #TEST arguments["
+        if arguments["--period"]:
+            self.cmetrics.set_period(self._get_period_name(arguments)) #TEST arguments["
         res = self.cmetrics.get_stats()
         print res
 

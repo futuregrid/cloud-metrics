@@ -15,7 +15,41 @@ class metric:
 
     def activate_metric(self):
         self.cmetrics = FGMetricAPI()
-    
+
+    @command
+    def do_set(self, line, args):
+        """
+        Usage:
+                set date    START_DATE END_DATE
+                set metric  NAME [runtime|count|countuser]
+                set node    NAME
+                set cloud   NAME
+                set period  NAME [monthly|quarterly|weekly|daily]
+
+        Set value for analysis
+
+        Arguments:
+            date        set date
+            START_DATE  start date to analyze 
+            END_DATE    end date to analyze
+            metric      set metric
+            node        set nodename
+            NAME        value
+            cloud       set cloud service [openstack|eucalyptus|nimbus]
+
+        """
+        print(args)
+        #print(vars(self.cmetrics))
+        #print(vars(self.cmetrics.search))
+        if args["date"]:
+            self.cmetrics.set_date(args["START_DATE"], args["END_DATE"])
+        elif args["metric"]:
+            self.cmetrics.set_metric(args["NAME"])
+        elif args["cloud"]:
+            self.cmetrics.set_cloud(args["NAME"])
+        elif args["node"]:
+            self.cmetrics.set_hostname(args["NAME"])
+
     ######################################################################
     # analyze commands
     ######################################################################
@@ -25,9 +59,10 @@ class metric:
         """
         Usage:
                analyze OWNERID METRIC --start START --end END 
-               analyze METRIC --period [monthly|quarterly|daily]
+               analyze METRIC --period [monthly|quarterly|weekly|daily]
                analyze METRIC --month MONTH
                analyze METRIC --year YEAR
+               analyze
 
         Analyze the metric data
 
@@ -49,12 +84,15 @@ class metric:
         """
         #print(arguments)
         #TEST ONLY
-        self.cmetrics.set_user(arguments['OWNERID'])
-        self.cmetrics.set_date(arguments["START"], arguments["END"])
-        self.cmetrics.set_metric(arguments["METRIC"])
-        self.cmetrics.set_cloud(None) #TEST
-        self.cmetrics.set_hostname(None) #TEST
-        self.cmetrics.set_period(self._get_period_name()) #TEST arguments["
+        if arguments["OWNERID"]:
+            self.cmetrics.set_user(arguments['OWNERID'])
+        if arguments["START"] and arguments["END"]:
+            self.cmetrics.set_date(arguments["START"], arguments["END"])
+        if arguments["METRIC"]:
+            self.cmetrics.set_metric(arguments["METRIC"])
+        #self.cmetrics.set_cloud(None) #TEST
+        #self.cmetrics.set_hostname(None) #TEST
+        self.cmetrics.set_period(self._get_period_name(arguments)) #TEST arguments["
         res = self.cmetrics.get_stats()
         print res
 
@@ -63,6 +101,8 @@ class metric:
             return "monthly"
         elif arguments["quarterly"]:
             return "quarterly"
+        elif arguments["weekly"]:
+            return "weekly"
         elif arguments["daily"]:
             return "daily"
         return None

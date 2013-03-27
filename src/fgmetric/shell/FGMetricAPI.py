@@ -118,7 +118,7 @@ class FGMetricAPI:
         if ownerids:
             whereclause = " and ownerid in " + str(tuple(ownerids)) + ""
         else:
-            whereclause = None
+            whereclause = ""
         self.instances.read_instances({}, whereclause)
 
     def _set_dict_vars(self):

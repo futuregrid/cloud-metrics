@@ -133,34 +133,33 @@ class metric:
     @command
     def do_chart(self, line, args):
         """
+        Create a chart of a given type
+
         Usage:
-               chart [--dir DIR] --type name (bar|line|column|pie|motion|line-time-series)
-	             [--api name (highchart|google|jquery|sparkline)] [FILENAME]
+            chart --type (bar|line|column|pie|motion|line-time-series) [-d DIR | --dir=DIR]
+	    chart --api (highcharts|google|jquery|sparkline)
 
-        Creates a chart of a given type
-
-        Arguments:
-            DIR       The directory into which the chart is written
-	    FILENAME  The filename in which the chart is written.
-	    
         Options:
-          --dir        The directory
-	  --type       The type of the chart
-	  --api        The chart api library
+          -d DIR --dir=DIR  The directory [default: ./]
 	  
         """
         print(args)
         if args["--api"]:
-            api = args["name"]
+            api = self._get_keyname(args, "highcharts|google|jquery|sparkline")
         else:
             api = "highcharts"
-        self.chart.set_chart_api(args["api"])
+        self.chart.set_chart_api(api)
         if args["--type"]:
-            self.chart.set_type(args["name"])
-
-        #self.chart.__init__()
-
-
+           self.chart.set_type(self._get_keyname(args, "bar|line|column|pie|motion|line-time-series"))
+        if args["--dir"]:
+           self.chart.set_output_path(args["--dir"])
+        #self.chart.set_filename( "TEST"
+        #"""self.search.get_filename()""" + "." + self.chart.output_type)
+        #self.chart.set_series(self.search.get_series())
+        #self.chart.set_title_beta(', '.join(self.search.metric), self.search.period, self.search.groupby)
+        #self.chart.set_subtitle("source: " + str(self.search.get_platform_names()) + " on " + str(self.search.get_node_names()))
+        #self.chart.set_yaxis(self.search.timetype or "")
+        #self.chart.display()
 
     ######################################################################
     # count images

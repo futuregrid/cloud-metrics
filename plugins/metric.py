@@ -7,17 +7,14 @@ import importlib
 from cmd3.cyberaide.decorators import command
 ############################################################
 
-
-
 # IMPORT PLUGIN MODULE #####################################
-#from fgmetric.shell.FGMetricShell import FGMetricShell
-from fgmetric.shell.FGMetricsAPI import FGMetricsAPI
+from fgmetric.shell.FGMetricAPI import FGMetricAPI
 ############################################################
 
 class metric:
 
     def activate_metric(self):
-        self.cmetrics = FGMetricsAPI()
+        self.cmetrics = FGMetricAPI()
     
     ######################################################################
     # analyze commands
@@ -28,8 +25,9 @@ class metric:
         """
         Usage:
                analyze OWNERID METRIC --start START --end END 
-               analyze METRIC --period [monthly|quaterly|daily]
+               analyze METRIC --period [monthly|quarterly|daily]
                analyze METRIC --month MONTH
+               analyze METRIC --year YEAR
 
         Analyze the metric data
 
@@ -39,10 +37,12 @@ class metric:
             START      The start time n the format YYYY-MM-DDThh:mm:ss
             END        The end time n the format YYYY-MM-DDThh:mm:ss
             MONTH      The month in 01,02, ..., 12
+            YEAR       The year to analyze
 
         Options:
           --start     specifies the time when to start the analysis
           --end       specified the time when to end the analysis
+          --year      the year
           --month     the month
           --period    the period
 
@@ -54,9 +54,18 @@ class metric:
         self.cmetrics.set_metric(arguments["METRIC"])
         self.cmetrics.set_cloud(None) #TEST
         self.cmetrics.set_hostname(None) #TEST
-        self.cmetrics.set_period(None) #TEST arguments["
+        self.cmetrics.set_period(self._get_period_name()) #TEST arguments["
         res = self.cmetrics.get_stats()
         print res
+
+    def _get_period_name(self, arguments):
+        if arguments["monthly"]:
+            return "monthly"
+        elif arguments["quarterly"]:
+            return "quarterly"
+        elif arguments["daily"]:
+            return "daily"
+        return None
 
     ######################################################################
     # CVS commands

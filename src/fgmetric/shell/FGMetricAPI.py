@@ -106,15 +106,20 @@ class FGMetricAPI:
             res = self.search.collect(instance)
 
     def _get_ownerids(self):
-        self.instances.read_userinfo({"username": self.username})
-        userinfo = self.instances.userinfo
-        ownerids = [element['ownerid'] for element in userinfo]
-        return ownerids
+        try:
+            self.instances.read_userinfo({"username": self.username})
+            userinfo = self.instances.userinfo
+            ownerids = [element['ownerid'] for element in userinfo]
+            return ownerids
+        except:
+            return None
 
-    def _get_instances(self, ownerids):
-        res = []
-        self.instances.read_instances(
-            {}, " and ownerid in " + str(tuple(ownerids)) + "")
+    def _get_instances(self, ownerids=None):
+        if ownerids:
+            whereclause = " and ownerid in " + str(tuple(ownerids)) + ""
+        else:
+            whereclause = None
+        self.instances.read_instances({}, whereclause)
 
     def _set_dict_vars(self):
         self.result = {

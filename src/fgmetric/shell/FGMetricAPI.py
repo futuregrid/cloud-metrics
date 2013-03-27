@@ -43,10 +43,19 @@ class FGMetricAPI:
         self.search = FGSearch()
         self.instances = FGInstances()
         self.init_db()
+        self.init_vars()
 
     def init_db(self):
         self.instances.db.conf()
         self.instances.db.connect()
+
+    def init_vars(self):
+        self.start_date = None
+        self.end_date = None
+        self.metric = None
+        self.cloud = None
+        self.hostname = None
+        self.period = None
 
     def set_date(self, *dates):
         self.start_date = dates[0]

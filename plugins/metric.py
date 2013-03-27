@@ -22,8 +22,8 @@ class metric:
         Usage:
                 set date    START_DATE END_DATE
                 set metric  NAME [runtime|count|countuser]
-                set node    NAME
-                set cloud   NAME
+                set [node|nodename|hostname]    NAME
+                set [cloud|platform]            NAME
                 set period  NAME [monthly|quarterly|weekly|daily]
 
         Set value for analysis
@@ -45,10 +45,12 @@ class metric:
             self.cmetrics.set_date(args["START_DATE"], args["END_DATE"])
         elif args["metric"]:
             self.cmetrics.set_metric(args["NAME"])
-        elif args["cloud"]:
+        elif args["cloud"] or args["platform"]:
             self.cmetrics.set_cloud(args["NAME"])
-        elif args["node"]:
+        elif args["node"] or args["nodename"] or args["hostname"]:
             self.cmetrics.set_hostname(args["NAME"])
+        elif args["period"]:
+            self.cmetrics.set_period(args["NAME"])
 
     ######################################################################
     # analyze commands

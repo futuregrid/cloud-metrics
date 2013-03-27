@@ -97,6 +97,9 @@ class FGMetricAPI:
         self._calculate_stats()
         return self.search.get_metric()
 
+    def get_series(self):
+        return self.search.get_series()
+
     def _set_search_vars(self):
         self.search.set_date([self.start_date, self.end_date])
         self.search.set_metric(self.metric)

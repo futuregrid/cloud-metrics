@@ -23,20 +23,18 @@ class metric:
         """
         Usage:
                 set date    START_DATE END_DATE
-                set metric  (runtime|count|countuser)
-                set (node|nodename|hostname)    nname
-                set (cloud|platform)            cname
+                set metric  (runtime|count|countusers)
+                set (node|nodename|hostname) NODE_NAME
+                set (cloud|platform) CLOUD_NAME
                 set period  (monthly|quarterly|weekly|daily)
 
         Set value for analysis
 
         Arguments:
-            date        set date
             START_DATE  start date to analyze 
             END_DATE    end date to analyze
-            metric      set metric
-            node        set nodename
-            cloud       set cloud service [openstack|eucalyptus|nimbus]
+            NODE_NAME   set hostname
+            CLOUD_NAME  set cloud service [openstack|eucalyptus|nimbus]
 
         """
         print(args)
@@ -45,11 +43,11 @@ class metric:
         if args["date"]:
             self.cmetrics.set_date(args["START_DATE"], args["END_DATE"])
         elif args["metric"]:
-            self.cmetrics.set_metric(self._get_keyname(args, "runtime|count|countuser"))
+            self.cmetrics.set_metric(self._get_keyname(args, "runtime|count|countusers"))
         elif args["cloud"] or args["platform"]:
-            self.cmetrics.set_cloud(args["cname"])
+            self.cmetrics.set_cloud(args["CLOUD_NAME"])
         elif args["node"] or args["nodename"] or args["hostname"]:
-            self.cmetrics.set_hostname(args["nname"])
+            self.cmetrics.set_hostname(args["NODE_NAME"])
         elif args["period"]:
             self.cmetrics.set_period(self._get_keyname(args, "monthly|quarterly|weekly|daily"))
 
@@ -136,11 +134,12 @@ class metric:
         Create a chart of a given type
 
         Usage:
-            chart --type (bar|line|column|pie|motion|line-time-series) [-d DIR | --dir=DIR]
+            chart -t (bar|line|column|pie|motion|line-time-series) [-d DIR | --directory=DIR]
+            chart --type (bar|line|column|pie|motion|line-time-series) [-d DIR | --directory=DIR]
 	    chart --api (highcharts|google|jquery|sparkline)
 
         Options:
-          -d DIR --dir=DIR  The directory [default: ./]
+          -d DIR --directory=DIR  The directory [default: ./]
 	  
         """
         print(args)
@@ -151,15 +150,15 @@ class metric:
         self.chart.set_chart_api(api)
         if args["--type"]:
            self.chart.set_type(self._get_keyname(args, "bar|line|column|pie|motion|line-time-series"))
-        if args["--dir"]:
+        if args["--directory"]:
            self.chart.set_output_path(args["--dir"])
-        #self.chart.set_filename( "TEST"
-        #"""self.search.get_filename()""" + "." + self.chart.output_type)
-        #self.chart.set_series(self.search.get_series())
+        self.chart.set_filename( "TEST." + self.chart.output_type)
+        self.chart.set_series(self.cmetrics.get_series())
+        self.chart.set_title("TEST")
+        self.chart.display()
         #self.chart.set_title_beta(', '.join(self.search.metric), self.search.period, self.search.groupby)
         #self.chart.set_subtitle("source: " + str(self.search.get_platform_names()) + " on " + str(self.search.get_node_names()))
         #self.chart.set_yaxis(self.search.timetype or "")
-        #self.chart.display()
 
     ######################################################################
     # count images

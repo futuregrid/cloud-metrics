@@ -9,22 +9,24 @@ from cmd3.cyberaide.decorators import command
 
 # IMPORT PLUGIN MODULE #####################################
 from fgmetric.shell.FGMetricAPI import FGMetricAPI
+from fgmetric.charts.FGCharts import FGCharts
 ############################################################
 
 class metric:
 
     def activate_metric(self):
         self.cmetrics = FGMetricAPI()
+        self.chart = FGCharts()
 
     @command
     def do_set(self, line, args):
         """
         Usage:
                 set date    START_DATE END_DATE
-                set metric  NAME [runtime|count|countuser]
-                set [node|nodename|hostname]    NAME
-                set [cloud|platform]            NAME
-                set period  NAME [monthly|quarterly|weekly|daily]
+                set metric  (runtime|count|countuser)
+                set (node|nodename|hostname)    nname
+                set (cloud|platform)            cname
+                set period  (monthly|quarterly|weekly|daily)
 
         Set value for analysis
 
@@ -34,7 +36,6 @@ class metric:
             END_DATE    end date to analyze
             metric      set metric
             node        set nodename
-            NAME        value
             cloud       set cloud service [openstack|eucalyptus|nimbus]
 
         """
@@ -44,13 +45,19 @@ class metric:
         if args["date"]:
             self.cmetrics.set_date(args["START_DATE"], args["END_DATE"])
         elif args["metric"]:
-            self.cmetrics.set_metric(args["NAME"])
+            self.cmetrics.set_metric(self._get_keyname(args, "runtime|count|countuser"))
         elif args["cloud"] or args["platform"]:
-            self.cmetrics.set_cloud(args["NAME"])
+            self.cmetrics.set_cloud(args["cname"])
         elif args["node"] or args["nodename"] or args["hostname"]:
-            self.cmetrics.set_hostname(args["NAME"])
+            self.cmetrics.set_hostname(args["nname"])
         elif args["period"]:
-            self.cmetrics.set_period(args["NAME"])
+            self.cmetrics.set_period(self._get_keyname(args, "monthly|quarterly|weekly|daily"))
+
+    def _get_keyname(self, args, slist):
+        for i in slist.split("|"):
+            if args[i]:
+                return i
+        return None
 
     ######################################################################
     # analyze commands
@@ -93,20 +100,9 @@ class metric:
         if arguments["METRIC"]:
             self.cmetrics.set_metric(arguments["METRIC"])
         if arguments["--period"]:
-            self.cmetrics.set_period(self._get_period_name(arguments)) #TEST arguments["
+            self.cmetrics.set_period(self._get_keyname(arguments, "monthly|quarterly|weekly|daily")) #TEST arguments["
         res = self.cmetrics.get_stats()
         print res
-
-    def _get_period_name(self, arguments):
-        if arguments["monthly"]:
-            return "monthly"
-        elif arguments["quarterly"]:
-            return "quarterly"
-        elif arguments["weekly"]:
-            return "weekly"
-        elif arguments["daily"]:
-            return "daily"
-        return None
 
     ######################################################################
     # CVS commands
@@ -135,11 +131,11 @@ class metric:
     ######################################################################
 
     @command
-    def do_chart(self, args, arguments):
+    def do_chart(self, line, args):
         """
         Usage:
-               chart [--dir DIR] --type (bar|line|column|pie|motion)
-	             [--api (highchart|google|jquery|sparkline)] [FILENAME]
+               chart [--dir DIR] --type name (bar|line|column|pie|motion|line-time-series)
+	             [--api name (highchart|google|jquery|sparkline)] [FILENAME]
 
         Creates a chart of a given type
 
@@ -153,7 +149,17 @@ class metric:
 	  --api        The chart api library
 	  
         """
-        print(arguments)
+        print(args)
+        if args["--api"]:
+            api = args["name"]
+        else:
+            api = "highcharts"
+        self.chart.set_chart_api(args["api"])
+        if args["--type"]:
+            self.chart.set_type(args["name"])
+
+        #self.chart.__init__()
+
 
 
     ######################################################################

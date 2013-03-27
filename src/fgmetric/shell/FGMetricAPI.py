@@ -4,7 +4,7 @@ from fgmetric.shell.FGSearch import FGSearch
 from fgmetric.shell.FGInstances import FGInstances
 
 
-class FGMetricsAPI:
+class FGMetricAPI:
     """ FG Metric Python API
 
     This API supports usage statistics in FG Metric way, but rely on database query.
@@ -28,7 +28,7 @@ class FGMetricsAPI:
 
     Sample Usage
     ^^^^^^^^^^^^
-    api = FGMetricsAPI()
+    api = FGMetricAPI()
     api.set_user('hrlee')
     api.set_date('2012-01-01', '2012-12-31')
     api.set_metric('count')

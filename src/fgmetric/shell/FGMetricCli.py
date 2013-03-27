@@ -5,10 +5,10 @@ import json
 import argparse
 from pprint import pprint
 from datetime import datetime, timedelta
-from fgmetric.shell.FGMetricsAPI import FGMetricsAPI
+from fgmetric.shell.FGMetricAPI import FGMetricAPI
 
 
-class FGMetricsCli:
+class FGMetricCli:
     """
 
     FGMetricCli
@@ -55,7 +55,7 @@ class FGMetricsCli:
         self.default_search_days = 180  # Search usage data for this number
         self.default_search_end = datetime.now(
         )  # Search starts from this date back to days within default_search_days
-        self.api = FGMetricsAPI()
+        self.api = FGMetricAPI()
         self.set_default_options()
 
     def set_default_options(self):
@@ -124,7 +124,7 @@ class FGMetricsCli:
 
 
 def main():
-    cli = FGMetricsCli()
+    cli = FGMetricCli()
     cli.set_argparse()
     cli.get_stats()
     dic = cli.return_dict()

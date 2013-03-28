@@ -151,7 +151,7 @@ class metric:
         if args["--type"]:
            self.chart.set_type(self._get_keyname(args, "bar|line|column|pie|motion|line-time-series"))
         if args["--directory"]:
-           self.chart.set_output_path(args["--dir"])
+           self.chart.set_output_path(args["--directory"])
         self.chart.set_filename( "TEST." + self.chart.output_type)
         self.chart.set_series(self.cmetrics.get_series())
         self.chart.set_title("TEST")

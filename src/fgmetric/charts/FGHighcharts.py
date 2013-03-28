@@ -59,7 +59,8 @@ class FGHighcharts:
         self.option_preloader = ""
         self.sort = "bykey"
         self.option_legend = { "enabled": 0 }
-        self.load_local_script_path()
+        #self.load_local_script_path()
+        self.load_global_script_path()
 
     def set_type(self, name):
         self.chart_type = name

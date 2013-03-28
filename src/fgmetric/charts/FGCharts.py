@@ -20,7 +20,7 @@ class FGCharts:
         self.title = "FG Charts"#None
         self.subtitle = ""#None
         self.filename = FGUtility.timeStamped("chart") + "." + self.output_type#None
-        self.script_path = "local"
+        self.script_path = "global"#"local"
 
         self.sort = "bykey"
 

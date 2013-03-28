@@ -148,7 +148,7 @@ class metric:
         else:
             api = "highcharts"
         self.chart.set_chart_api(api)
-        if args["--type"]:
+        if args["-t"] or args["--type"]:
            self.chart.set_type(self._get_keyname(args, "bar|line|column|pie|motion|line-time-series"))
         if args["--directory"]:
            self.chart.set_output_path(args["--directory"])

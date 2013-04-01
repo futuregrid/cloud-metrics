@@ -8,6 +8,8 @@ class monitoring:
     name = "nova-api.india" 
 
     def __init__(self):
+        self.get_dbinfo()
+        self.open_handler()
 
     def get_dbinfo(self):
         #access info
@@ -29,3 +31,5 @@ class monitoring:
         log.warn("3 - warn message")
         log.error("4 - error message")
         log.critical("5 - critical message")
+
+

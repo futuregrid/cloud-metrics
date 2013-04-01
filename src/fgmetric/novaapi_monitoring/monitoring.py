@@ -25,11 +25,19 @@ class monitoring:
             password=self.dbinfo["passwd"]))
 
     def _test(self):
-        log.setLevel(logging.DEBUG)
-        log.debug("1 - debug message")
-        log.info("2 - info message")
-        log.warn("3 - warn message")
-        log.error("4 - error message")
-        log.critical("5 - critical message")
+        self.log.setLevel(logging.DEBUG)
+        self.log.debug("1 - debug message")
+        self.log.info("2 - info message")
+        self.log.warn("3 - warn message")
+        self.log.error("4 - error message")
+        self.log.critical("5 - critical message")
 
+if __name__ == "__main__":
+    mon = monitoring()
+    #mon.get_docopt()
+    #mon.parse_file()
+    #mon.tailf_input() - logwatcher?
+    #mon.write_to_db_based on log type
+    #mon.exception for not tagged log message
 
+    

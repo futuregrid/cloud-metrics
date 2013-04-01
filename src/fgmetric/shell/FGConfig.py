@@ -8,10 +8,14 @@ class FGConfig:
     def __init__(self):
         self.yaml_path = self.default_yaml_path
 
-    def get_config(self):
+    def get_config(self, section=None):
         f = open(self.yaml_path)
         dataMap = yaml.safe_load(f)
         f.close()
+        try:
+            dataMap = dataMap[section]
+        except:
+            dataMap = dataMap
         return dataMap
 
     def set_config(self, dataMap):

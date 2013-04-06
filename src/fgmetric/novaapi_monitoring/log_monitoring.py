@@ -16,16 +16,24 @@ class log_monitoring:
 
     def get_dbinfo(self):
         #access info
-        fgconfig = FGConfig()
-        self.dbinfo = fgconfig.get_config("CloudMetricsMongoDB")
+        try:
+            fgconfig = FGConfig()
+            self.dbinfo = fgconfig.get_config("CloudMetricsMongoDB")
+        except:
+            print "Failed to load futuregrid.yaml"
+            raise
 
     def open_handler(self):
         # set logging
-        self.log = logging.getLogger(self.name)
-        self.log.addHandler(MongoHandler.to(db=self.dbinfo["db"], 
-            collection='log', host=self.dbinfo["host"], 
-            port=self.dbinfo["port"], username=self.dbinfo["user"],
-            password=self.dbinfo["passwd"]))
+        try:
+            self.log = logging.getLogger(self.name)
+            self.log.addHandler(MongoHandler.to(db=self.dbinfo["db"], 
+                collection='log', host=self.dbinfo["host"], 
+                port=self.dbinfo["port"], username=self.dbinfo["user"],
+                password=self.dbinfo["passwd"]))
+        except:
+            print "Faild to open mongodb"
+            raise
 
     def get_docopt(self):
         """Log Monitoring

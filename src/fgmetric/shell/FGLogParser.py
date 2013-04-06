@@ -461,6 +461,7 @@ class FGLogParser:
             self.instances.userinfo))
 
     def get_cloudplatform_info(self):
+        self.instances.db.conf()
         self.instances.db.connect()
         whereclause = {"platform": self.args.platform, "hostname":
                        self.args.nodename, "version": self.args.platform_version}

@@ -141,7 +141,7 @@ class FGLogParser:
                     r'\[(.*)\]\[(.*)\]\[(.*)\](.*)', line, re.M | re.I)
                 data['date'] = datetime.strptime(
                     m.group(1), '%a %b %d %H:%M:%S %Y')
-                data['date'] = fgmetric.FGTimeZone.convert_timezone(
+                data['date'] = fgmetric.util.FGTimeZone.convert_timezone(
                     data['date'], self.args.timezone, "EST")
                 data['id'] = m.group(2)
                 data['msgtype'] = m.group(3)

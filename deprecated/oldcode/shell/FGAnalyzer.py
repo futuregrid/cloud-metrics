@@ -507,6 +507,11 @@ class CmdLineAnalyzeEucaData(Cmd):
             print highchart.filepath + "/" + highchart.filename + " created."
         except:
             print "highcharts is not created.", sys.exc_info()[0]
+            FGUtility.ensure_dir(output + "/" + chart_type + "highcharts.html")
+            print output + "/" + chart_type + "highcharts.html" 
+            f = open(output + "/" + chart_type + "highcharts.html", "w")
+            f.write("not available")
+            f.close
             pass
 
     def create_csvfile(self, list_of_data, outfile):

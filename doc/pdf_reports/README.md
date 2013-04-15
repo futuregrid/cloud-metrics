@@ -1,5 +1,7 @@
-Report_eucalyptus_on_sierra
+PDF Report 
 ===========================
+
+PDF Report generates Cloud Usage Reports with Sphinx PDF generation with latex and Restructured Text. PDF Report allows you to automate document generation in a PDF format.
 
 Prerequisite
 ------------

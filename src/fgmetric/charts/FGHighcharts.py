@@ -458,6 +458,7 @@ class FGHighcharts:
             self.series_type = "column"
         elif self.chart_type == "pie-basic":
             chart_name = "pie"
+            self.height = 440
             self.set_chart_option("chart", {"renderTo": 'container'})
             self.set_chart_option("xAxis", {})
             self.set_chart_option("yAxis", {})
@@ -475,7 +476,7 @@ class FGHighcharts:
             '''
             self.set_chart_option("plotOptions", "{'pie': { 'size': 180, 'cursor': 'pointer', 'dataLabels': {'color': '#000000', 'connectorColor': '#000000', 'enabled': 1,formatter: function() {\
                     var strLength = 25; var trimmedString = this.point.name.length > strLength ? this.point.name.substring(0, strLength - 3) + ' ...' : this.point.name.substring(0, strLength);\
-                    return '<b>'+ trimmedString +'</b>: '+ Math.round(this.percentage) +' %';\
+                    return '<b>'+ trimmedString +'</b>: '+ Math.round(this.percentage*100)/100 +' %';\
                     }}, 'allowPointSelect': 1}}")
             self.series_type = chart_name
         elif self.chart_type == "pie-basic-with-table":
@@ -487,7 +488,7 @@ class FGHighcharts:
             self.set_chart_option("tooltip", {"pointFormat":"{series.name}: <b>{point.percentage}</b>", "percentageDecimals":1})
             self.set_chart_option("plotOptions", "{'pie': { 'size': 180, 'cursor': 'pointer', 'dataLabels': {'color': '#000000', 'connectorColor': '#000000', 'enabled': 1,formatter: function() {\
                     var strLength = 25; var trimmedString = this.point.name.length > strLength ? this.point.name.substring(0, strLength - 3) + ' ...' : this.point.name.substring(0, strLength);\
-                    return '<b>'+ trimmedString +'</b>: '+ Math.round(this.percentage) +' %';\
+                    return '<b>'+ trimmedString +'</b>: '+ Math.round(this.percentage*100)/100 +' %';\
                     }}, 'allowPointSelect': 1}}")
             self.series_type = chart_name
             template = self.get_template("datatable2pie")

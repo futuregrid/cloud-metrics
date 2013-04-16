@@ -166,51 +166,51 @@ class Results:
 
         #for metrics groups by a user
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "count"
         groupby = "cluster"
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/master-detailhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         # all-nodes & euca
         number += 1
         metric = "count"
         platform = "eucalyptus"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s for %(month_n_year)s on %(nodename)s"
         main_title = self.get_content_sub_header(nodename, platform)
         content += main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "count"
         groupby = "cluster"
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/master-detailhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         #for metrics groups by a project
@@ -218,36 +218,36 @@ class Results:
         metric = "count"
         groupby = "group"
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         #for metrics groups by a institution
         number += 1
         metric = "count"
         groupby = "institution"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         #for metrics groups by a project lead
         number += 1
         metric = "count"
         groupby = "projectlead"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
 
@@ -258,7 +258,7 @@ class Results:
         platform = "eucalyptus"
         nodename = "india"
         groupby = "user"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s for %(month_n_year)s on %(nodename)s"
         main_title = self.get_content_sub_header(nodename, platform)
         content += main_title + self.get_chart() % vars()
         content = content % vars()
@@ -270,7 +270,7 @@ class Results:
         number += 1
         metric = "runtime"
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
@@ -278,17 +278,17 @@ class Results:
         groupby = "cluster"
         #for metrics groups by a platform
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/master-detailhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "ccvm_cores"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
@@ -310,36 +310,36 @@ class Results:
         groupby = "group"
         #for metrics groups by a project
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         #for metrics groups by a institution
         number += 1
         metric = "count"
         groupby = "institution"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         #for metrics groups by a project lead
         number += 1
         metric = "count"
         groupby = "projectlead"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
 
@@ -354,25 +354,25 @@ class Results:
             main_title = content + self.get_content_sub_header(nodename, platform)
      
             src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
-            title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+            title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s for %(month_n_year)s on %(nodename)s"
             content = main_title + self.get_chart() % vars()
             content = content % vars()
 
             number += 1
             metric = "runtime"
-            title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+            title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s for %(month_n_year)s on %(nodename)s"
             content = content + (self.get_chart() % vars()) % vars()
 
             number += 1
             metric = "count"
             groupby = "cluster"
             src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/master-detailhighcharts.html"
-            title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+            title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
             content = content + (self.get_chart() % vars()) % vars()
 
             number += 1
             metric = "runtime"
-            title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted on %(nodename)s in %(month_n_year)s"
+            title = "Figure %(number)s. Total wall time (hour) of launched VMs over time on %(nodename)s in %(month_n_year)s"
             content = content + (self.get_chart() % vars()) % vars()
 
 
@@ -387,13 +387,13 @@ class Results:
             main_title = content + self.get_content_sub_header(nodename, platform)
      
             src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
-            title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+            title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s for %(month_n_year)s on %(nodename)s"
             content = main_title + self.get_chart() % vars()
             content = content % vars()
 
             number += 1
             metric = "runtime"
-            title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+            title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s for %(month_n_year)s on %(nodename)s"
             content = content + (self.get_chart() % vars()) % vars()
 
             number += 1
@@ -401,17 +401,17 @@ class Results:
             groupby = "cluster"
 
             src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/master-detailhighcharts.html"
-            title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+            title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
             content = content + (self.get_chart() % vars()) % vars()
 
             number += 1
             metric = "runtime"
-            title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted on %(nodename)s in %(month_n_year)s"
+            title = "Figure %(number)s. Total wall time (hour) of launched VMs over time on %(nodename)s in %(month_n_year)s"
             content = content + (self.get_chart() % vars()) % vars()
 
             number += 1
             metric = "ccvm_cores"
-            title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+            title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
             content = content + (self.get_chart() % vars()) % vars()
 
             number += 1
@@ -438,25 +438,25 @@ class Results:
         main_title = content + self.get_content_sub_header(nodename, platform)
  
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "count"
         groupby = "cluster"
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/master-detailhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
@@ -467,13 +467,13 @@ class Results:
         main_title = content + self.get_content_sub_header(nodename, platform)
  
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s for %(month_n_year)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -481,12 +481,12 @@ class Results:
         metric = "count"
         groupby = "cluster"
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/master-detailhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
@@ -497,25 +497,25 @@ class Results:
         main_title = content + self.get_content_sub_header(nodename, platform)
  
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "count"
         groupby = "cluster"
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/master-detailhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
@@ -526,25 +526,25 @@ class Results:
         main_title = content + self.get_content_sub_header(nodename, platform)
  
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per %(groupby)s for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s for %(month_n_year)s on %(nodename)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "count"
         groupby = "cluster"
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(groupby)s/%(metric)s/master-detailhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs over time on %(nodename)s in %(month_n_year)s"
         content = content + (self.get_chart() % vars()) % vars()
 
         content = self.set_width(content, width, "100%")
@@ -577,7 +577,7 @@ class Results:
         main_title += self.get_content_sub_header(nodename, platform)
  
         src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per user for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
@@ -587,7 +587,7 @@ class Results:
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(month_n_year)s on %(nodename)s"
         src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
 
         content = content + (self.get_chart() % vars()) % vars()
@@ -596,7 +596,7 @@ class Results:
         metric = "count"
 
         src = "data/%(month)s/%(nodename)s/%(platform)s/%(metric)s/master-detailhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+        title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
  
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -638,13 +638,13 @@ class Results:
             main_title = content + self.get_content_sub_header(nodename, platform)
      
             src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-            title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+            title = "Figure %(number)s. Total VMs %(metric)s per user for %(month_n_year)s on %(nodename)s"
             content = main_title + self.get_chart() % vars()
             content = content % vars()
 
             number += 1
             metric = "runtime"
-            title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+            title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(month_n_year)s on %(nodename)s"
 
             content = content + (self.get_chart() % vars()) % vars()
 
@@ -658,13 +658,13 @@ class Results:
             main_title = content + self.get_content_sub_header(nodename, platform)
      
             src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-            title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+            title = "Figure %(number)s. Total VMs %(metric)s per user for %(month_n_year)s on %(nodename)s"
             content = main_title + self.get_chart() % vars()
             content = content % vars()
 
             number += 1
             metric = "runtime"
-            title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+            title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(month_n_year)s on %(nodename)s"
 
             content = content + (self.get_chart() % vars()) % vars()
 
@@ -672,7 +672,7 @@ class Results:
             metric = "count"
 
             src = "data/%(month)s/%(nodename)s/%(platform)s/%(metric)s/master-detailhighcharts.html"
-            title = "Figure %(number)s. Total %(metric)s of VMs submitted on %(nodename)s in %(month_n_year)s"
+            title = "Figure %(number)s. Total VMs %(metric)s over time on %(nodename)s in %(month_n_year)s"
      
             content = content + (self.get_chart() % vars()) % vars()
 
@@ -712,13 +712,13 @@ class Results:
         main_title = content + self.get_content_sub_header(nodename, platform)
  
         src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per user for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(month_n_year)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -729,13 +729,13 @@ class Results:
         main_title = content + self.get_content_sub_header(nodename, platform)
  
         src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per user for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(month_n_year)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -746,13 +746,13 @@ class Results:
         main_title = content + self.get_content_sub_header(nodename, platform)
  
         src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per user for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(month_n_year)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -763,13 +763,13 @@ class Results:
         main_title = content + self.get_content_sub_header(nodename, platform)
  
         src = "data/%(month)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per user for %(month_n_year)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(month_n_year)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(month_n_year)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -796,13 +796,13 @@ class Results:
         main_title += self.get_content_sub_header(nodename, platform)
 
         src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
         content = main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -824,13 +824,13 @@ class Results:
             main_title = self.get_content_sub_header(nodename, platform)
      
             src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-            title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+            title = "Figure %(number)s. Total VMs %(metric)s per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
             content = content + main_title + self.get_chart() % vars()
             content = content % vars()
 
             number += 1
             metric = "runtime"
-            title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+            title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
 
             content = content + (self.get_chart() % vars()) % vars()
 
@@ -845,7 +845,7 @@ class Results:
             main_title = self.get_content_sub_header(nodename, platform)
 
             src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-            title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
+            title = "Figure %(number)s. Total VMs %(metric)s per user for %(start_date)s  ~ %(end_date)s on %(nodename)s"
             content = content + main_title + self.get_chart() % vars()
             content = content % vars()
 
@@ -871,13 +871,13 @@ class Results:
         main_title = self.get_content_sub_header(nodename, platform)
  
         src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
         content = content + main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -888,13 +888,13 @@ class Results:
         main_title = self.get_content_sub_header(nodename, platform)
  
         src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
         content = content + main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -905,13 +905,13 @@ class Results:
         main_title = self.get_content_sub_header(nodename, platform)
  
         src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
         content = content + main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 
@@ -922,13 +922,13 @@ class Results:
         main_title = self.get_content_sub_header(nodename, platform)
  
         src = "data/%(end_date)s/%(nodename)s/%(platform)s/user/%(metric)s/barhighcharts.html"
-        title = "Figure %(number)s. Total %(metric)s of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        title = "Figure %(number)s. Total VMs %(metric)s per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
         content = content + main_title + self.get_chart() % vars()
         content = content % vars()
 
         number += 1
         metric = "runtime"
-        title = "Figure %(number)s. Total %(metric)s (hour) of VMs submitted per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
+        title = "Figure %(number)s. Total wall time (hour) of launched VMs per user for %(start_date)s ~ %(end_date)s on %(nodename)s"
 
         content = content + (self.get_chart() % vars()) % vars()
 

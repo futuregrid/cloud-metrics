@@ -1,11 +1,20 @@
-Cloud Metric Results
+Cloud Usage Reports
 ====================
-We have collected cloud utilization data from Eucalyptus on FutureGrid such as India and Sierra resources and provide weekly and monthly reports to show usage of system resources measured by FG Cloud Metric.
+FutureGrid Cloud Metric provides Cloud Usage reports across all sections of IaaS. 
+
+- Period: daily, weekly, monthly, and quarterly
+- Cloud (IaaS):
+   - india.futuregrid.org: Openstack, Eucalyptus
+   - sierra.futuregrid.org: Nimbus
+   - hotel.futuregrid.org: Nimbus
+   - alamo.futuregrid.org: Nimbus
+   - foxtrot.futuregrid.org: Nimbus
+- Metric: VM instance count, instance wall time, VM CPU cores, memories, disks, and VM instance count per compute node.
 
 Contents:
 
 .. toctree::
-	:maxdepth: 2
+	:maxdepth: 3
 
 	results/all
 	results/realtime

@@ -532,7 +532,8 @@ class FGSearch:
         series = sorted(series, key=lambda item: item[1], reverse=True)
 
         # HEADER ADDED
-        header = [[self.groupby or "Total", "value"]]
+        header = [[self.groupby or "Total", "Value"]]
+        header[0][0] = header[0][0].capitalize()
         series = header + series
         return series
 

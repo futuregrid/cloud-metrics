@@ -13,3 +13,4 @@ User table (HPC)
         :header-rows: 1
 
 This table provides detailed information on users, including average job size, average wait time, and average run time. 
+\**** Missing user name is represented as a hidden userid under asterisks.

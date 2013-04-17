@@ -36,6 +36,13 @@ class FGReportGenerator:
         self.service_name = ""
         self.host_name = ""
 
+        # Services per host
+        self.resources = { "india": { "eucalyptus", "openstack" }, \
+                            "sierra": { "eucalyptus", "nimbus" }, \
+                            "alamo": { "nimbus" }, \
+                            "foxtrot": { "nimbus" }, \
+                            "hotel": { "nimbus" } }
+
     def get_parameter(self):
         parser = ArgumentParser()
         parser.add_argument('-n', '--hostname', dest='hostnames', default=[], nargs='*', help="hostname (e.g. india, sierra, alamo, foxtrot, hotel, etc..)")
@@ -61,8 +68,6 @@ class FGReportGenerator:
             from_date = datetime(sixmonthsago.year, sixmonthsago.month, sixmonthsago.day, 0, 0, 0)
             to_date = datetime(today.year, today.month, today.day, 0, 0, 0)
 
-        self.from_dateT = from_date.strftime('%Y-%m-%dT%H:%M:%S')
-        self.to_dateT = to_date.strftime('%Y-%m-%dT%H:%M:%S')
         self.from_date = str(from_date)
         self.to_date = str(to_date)
 
@@ -113,11 +118,11 @@ class FGReportGenerator:
         self.cmd_singlerun_txt = self.raw_cmd_singlerun_txt % vars(self)
 
     def generate_rst_text(self):
+        self.set_vars_for_rst()
         self._generate_rst_per_service_n_hostname()
         self._generate_rst_header_n_footer()
 
     def _generate_rst_per_service_n_hostname(self):
-        self.set_template_vars()
         self.rst_txt = self.replace_vars("rst")
 
     def _generate_rst_header_n_footer(self):
@@ -129,11 +134,23 @@ class FGReportGenerator:
         res = {}
         for host in self.hostnames or ["All"]:
             for serv in self.services or ["All"]:
+            #for serv in self.services or self.resources[host]:
                 self.adjust_names("hostname", host)
                 self.adjust_names("service", serv)
+                self.adjust_names("service_name", ", ".join(self.resources[host]))
                 res[host] = { serv : var % vars(self) }
         return res
 
+    def is_real(self, hostname, service):
+        """Return True/False if service does not exist in the hostname"""
+        try:
+            if service in self.resources[hostname]:
+                return True
+            else:
+                return False
+        except:
+            return False
+                
     def start_with_header_index_rst(self):
         today = date.today().strftime("%a, %d %b %Y")
         msg = ["FG Usage Report", \
@@ -194,7 +211,21 @@ class FGReportGenerator:
         if val != "All":
             setattr(self, name, val)
 
-    def set_template_vars(self):
+    def set_vars_for_rst(self):
+        """Prepare template variables to be replaced in a right format
+
+        Description:
+            Template variables are named with 'tmpl_' prefix. For example,
+            a variable for period would be 'tmpl_period'
+        """
+        
+        # for better readable date format, convert current date to ...
+        from_date = datetime.strptime(self.from_date, '%Y-%m-%d %H:%M:%S')
+        to_date = datetime.strptime(self.to_date, '%Y-%m-%d %H:%M:%S')
+        dfrom = from_date.strftime('%B %d')
+        dto = to_date.strftime('%B %d, %Y')
+        self.tmpl_period = dfrom + " -- " + dto
+
         self.host_name = self.hostname
         self.service_name = self.service
 

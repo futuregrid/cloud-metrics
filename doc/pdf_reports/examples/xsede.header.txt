@@ -5,6 +5,7 @@ set metric runtime
 set timetype hour
 set groups hostname
 analyze
+csv --directory %(output_directory)s
 chart -t pie-basic --directory %(output_directory)s
 
 clear
@@ -21,6 +22,7 @@ set date %(from_dateT)s %(to_dateT)s
 set metric count
 set groups hostname
 analyze
+csv --directory %(output_directory)s
 chart -t pie-basic --directory %(output_directory)s
 
 clear
@@ -36,6 +38,7 @@ set date %(from_dateT)s %(to_dateT)s
 set metric countusers
 set groups hostname
 analyze
+csv --directory %(output_directory)s
 chart -t pie-basic --directory %(output_directory)s
 
 clear

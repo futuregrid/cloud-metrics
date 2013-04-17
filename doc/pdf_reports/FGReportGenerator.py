@@ -108,6 +108,7 @@ class FGReportGenerator:
             pass
 
     def generate_cmd_text(self):
+        self.set_vars_for_template()
         self._generate_cmd_per_service_n_hostname()
         self._generate_cmd_singlerun()
 
@@ -118,7 +119,7 @@ class FGReportGenerator:
         self.cmd_singlerun_txt = self.raw_cmd_singlerun_txt % vars(self)
 
     def generate_rst_text(self):
-        self.set_vars_for_rst()
+        self.set_vars_for_template()
         self._generate_rst_per_service_n_hostname()
         self._generate_rst_header_n_footer()
 
@@ -211,7 +212,7 @@ class FGReportGenerator:
         if val != "All":
             setattr(self, name, val)
 
-    def set_vars_for_rst(self):
+    def set_vars_for_template(self):
         """Prepare template variables to be replaced in a right format
 
         Description:
@@ -222,6 +223,10 @@ class FGReportGenerator:
         # for better readable date format, convert current date to ...
         from_date = datetime.strptime(self.from_date, '%Y-%m-%d %H:%M:%S')
         to_date = datetime.strptime(self.to_date, '%Y-%m-%d %H:%M:%S')
+        self.from_dateT = from_date.strftime('%Y-%m-%dT%H:%M:%S')
+        self.to_dateT = to_date.strftime('%Y-%m-%dT%H:%M:%S')
+
+        #tmpl_period
         dfrom = from_date.strftime('%B %d')
         dto = to_date.strftime('%B %d, %Y')
         self.tmpl_period = dfrom + " -- " + dto

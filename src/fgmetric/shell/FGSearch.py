@@ -678,7 +678,7 @@ class FGSearch:
 
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
-        project = re.sub("fg-None:None", "etc.", "fg-" + str(
+        project = re.sub("fg-None:None", "Others", "fg-" + str(
             selected["ProjectId"]) + ":" + str(selected["Title"]))
         if not project in mdict[self.groupby]:
             mdict[self.groupby][project] = val
@@ -695,7 +695,7 @@ class FGSearch:
 
         if not self.groupby in mdict:
             mdict[self.groupby] = {}
-        project = re.sub("None", "etc.", str(selected["Institution"]))
+        project = re.sub("None", "Others", str(selected["Institution"]))
         if not project in mdict[self.groupby]:
             mdict[self.groupby][project] = val
         else:

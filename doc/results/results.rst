@@ -1,3 +1,4 @@
+.. #Browser check. If IE found, notice message will be displayed. 04/18/2013
 .. raw:: html
 
         <div id="checkbrowser"></div>
@@ -12,7 +13,7 @@
 			//Allow
 			}else{
 			document.getElementById(f).innerHTML = "<b>Notice</b><br>" + 
-			"This application is not officially supported and tested on Internet Explorer. If you detect any issues with your browser, please try a different one, you can use Safari, Chrome and Firefox. " + 
+			"This application is <font color=\"red\"><b>not officially supported and tested on Internet Explorer</b></font>. If you detect any issues with your browser, please try a different one, you can use Safari, Chrome and Firefox. " + 
 			"We also noticed that in some cases you may run out of memory, or have too little space available.  Please clean your machine accordingly. " + 
 			"If you still have issues, please let us know.<br>";
 			document.getElementById(f).className = "warning" ;

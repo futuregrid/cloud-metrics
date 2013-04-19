@@ -11,6 +11,13 @@ Quick Start
 - (linux) ```evince _build/latex/FGResourceReport.pdf```
 - (mac) ```open _build/latex/FGResourceReport.pdf```
 
+***Installing prerequisites is required.***
+
+Prerequisites
+--------------
+- [phantomjs](phantomjs.org/)
+- [futuregrid/cloud-metrics](/)
+
 How does it work?
 ------------------
 PDF Reports takes couple of processing steps to generate a pdf report from reStructuredText(.rst) documentation with data figures. The following steps explain as how it works practically.
@@ -57,10 +64,6 @@ Reference: [Render charts on the Server](http://www.highcharts.com/component/con
 - ```make latexpdf``` performs this step.
 * For implementation, see [Makefile](/doc/pdf_reports/Makefile)
 
-Prerequisites
---------------
-- [phantomjs](phantomjs.org/)
-- [futuregrid/cloud-metrics](/)
 
 How to create report?
 ---------------------

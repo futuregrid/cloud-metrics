@@ -15,7 +15,7 @@ Quick Start
 
 Prerequisites
 --------------
-- [phantomjs](phantomjs.org/)
+- [phantomjs](http://phantomjs.org/)
 - [futuregrid/cloud-metrics](/)
 
 How does it work?

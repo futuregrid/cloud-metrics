@@ -1,3 +1,5 @@
 - doc: user manual
-- pdf_reports: report in pdf format
+   - Example: http://futuregrid.github.com/cloud-metrics
+- pdf_reports: report in pdf format  
 - results: report in html
+   - Example: https://portal.futuregrid.org/metrics

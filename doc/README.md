@@ -1,0 +1,3 @@
+- doc: user manual
+- pdf_reports: report in pdf format
+- results: report in html

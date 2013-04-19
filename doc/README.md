@@ -1,4 +1,4 @@
-- doc: user manual
+- source(doc): user manual
    - Example: http://futuregrid.github.com/cloud-metrics
 - pdf_reports: report in pdf format  
 - results: report in html

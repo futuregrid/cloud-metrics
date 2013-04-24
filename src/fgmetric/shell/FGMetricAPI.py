@@ -97,6 +97,9 @@ class FGMetricAPI:
         self._calculate_stats()
         return self.search.get_metric()
 
+    def get_realtime(self):
+        return
+
     def get_series(self):
         return self.search.get_series()
 

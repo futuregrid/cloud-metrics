@@ -136,6 +136,9 @@ class FGMetricAPI:
             whereclause = ""
         self.instances.read_instances({}, whereclause)
 
+    def get_instances(self):
+        return self.instances.instance
+
     def _set_dict_vars(self):
         self.result = {
             "start_date":   self.start_date,

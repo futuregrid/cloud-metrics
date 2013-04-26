@@ -1,4 +1,5 @@
 # from fgmetric.shell.FGDatabase import FGDatabase
+import sys
 from pprint import pprint
 from fgmetric.shell.FGSearch import FGSearch
 from fgmetric.shell.FGInstances import FGInstances
@@ -56,6 +57,7 @@ class FGMetricAPI:
         self.cloud = None
         self.hostname = None
         self.period = None
+        self.userinfo = None
 
     def set_date(self, *dates):
         self.start_date = dates[0]
@@ -140,7 +142,17 @@ class FGMetricAPI:
         return self.instances.instance
 
     def get_userlist(self):
-        return self.instances.userinfo
+        try:
+            self.userinfo
+        except:
+            try:
+                self.instances.read_userinfo()
+                self.userinfo = self.instances.userinfo
+            except:
+                print "failed to read userinfo %s" % sys.exc_info()
+                return None
+
+        return self.userinfo
 
     def _set_dict_vars(self):
         self.result = {

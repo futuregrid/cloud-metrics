@@ -242,14 +242,14 @@ class FGDatabase:
     def read_instance(self, querydict={}):
         return self._read(self.cursor, self.instance_table, querydict)
 
-    def get_userinfo(self, querydict={}):
-        return self.read_userinfo(querydict)
+    def get_userinfo(self, querydict={}, optional=""):
+        return self.read_userinfo(querydict, optional)
 
     def read_projectinfo(self, querydict={}):
         return self._read(self.cursor, self.projectinfo_table, querydict)
 
-    def read_userinfo(self, querydict={}):
-        return self._read(self.cursor, self.userinfo_table, querydict)
+    def read_userinfo(self, querydict={}, optional=""):
+        return self._read(self.cursor, self.userinfo_table, querydict, optional)
 
     def get_cloudplatform(self, querydict={}):
         return self.read_cloudplatform(querydict)

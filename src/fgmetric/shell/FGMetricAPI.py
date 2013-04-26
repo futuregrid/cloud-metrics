@@ -141,18 +141,16 @@ class FGMetricAPI:
     def get_instances(self):
         return self.instances.instance
 
-    def get_userlist(self):
+    def get_userinfo(self):
+        if self.userinfo:
+            return self.userinfo
         try:
-            self.userinfo
+            self.instances.read_userinfo({}, " group by username ")
+            self.userinfo = self.instances.userinfo
+            return self.userinfo
         except:
-            try:
-                self.instances.read_userinfo()
-                self.userinfo = self.instances.userinfo
-            except:
-                print "failed to read userinfo %s" % sys.exc_info()
-                return None
-
-        return self.userinfo
+            print "failed to read userinfo %s" % sys.exc_info()
+            return None
 
     def _set_dict_vars(self):
         self.result = {

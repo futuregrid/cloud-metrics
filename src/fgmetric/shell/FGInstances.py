@@ -194,10 +194,10 @@ class FGInstances:
     def read_userinfo_from_db(self):
         self.read_userinfo()
 
-    def read_userinfo(self, querydict={}):
+    def read_userinfo(self, querydict={}, optional=""):
 
         self.clear("userinfo")
-        self.userinfo = self.db.read_userinfo(querydict)
+        self.userinfo = self.db.read_userinfo(querydict, optional)
 
     def read_cloudplatform(self, refresh=False):
         if not self.cloudplatform or refresh:

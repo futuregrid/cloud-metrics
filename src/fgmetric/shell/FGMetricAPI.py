@@ -139,6 +139,9 @@ class FGMetricAPI:
     def get_instances(self):
         return self.instances.instance
 
+    def get_userlist(self):
+        returen self.instances.userinfo
+
     def _set_dict_vars(self):
         self.result = {
             "start_date":   self.start_date,

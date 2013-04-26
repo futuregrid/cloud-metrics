@@ -140,7 +140,7 @@ class FGMetricAPI:
         return self.instances.instance
 
     def get_userlist(self):
-        returen self.instances.userinfo
+        return self.instances.userinfo
 
     def _set_dict_vars(self):
         self.result = {

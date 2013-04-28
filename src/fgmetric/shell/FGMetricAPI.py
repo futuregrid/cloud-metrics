@@ -58,6 +58,7 @@ class FGMetricAPI:
         self.hostname = None
         self.period = None
         self.userinfo = None
+        self.projectinfo = None
 
     def set_date(self, *dates):
         self.start_date = dates[0]
@@ -142,6 +143,7 @@ class FGMetricAPI:
         return self.instances.instance
 
     def get_userinfo(self):
+        """Return all users"""
         if self.userinfo:
             return self.userinfo
         try:
@@ -151,6 +153,21 @@ class FGMetricAPI:
         except:
             print "failed to read userinfo %s" % sys.exc_info()
             return None
+
+    def get_projectinfo(self):
+        """Return all projects"""
+        if self.projectinfo:
+            return self.projectinfo
+        try:
+            prj_info = self.instances.get_projectinfo()
+            self.projectinfo = prj_info
+            return self.projectinfo
+            #self.instances.read_projectinfo()
+            #self.projectinfo = self.instances.projectinfo
+        except:
+            print "failed to read project info %s" % sys.exc_info()
+            return None
+
 
     def _set_dict_vars(self):
         self.result = {

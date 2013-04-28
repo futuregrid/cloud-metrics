@@ -169,6 +169,9 @@ class FGInstances:
                     if key in projectinfo and projectinfo[key] == val:
                         return projectinfo
         elif index is None:
+            if not self.projectinfo:
+                self.read_projectinfo_from_db()
+
             return self.projectinfo
         else:
             return None

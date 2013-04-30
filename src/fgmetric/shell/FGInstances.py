@@ -154,7 +154,7 @@ class FGInstances:
                 for userinfo in self.userinfo:
                     if key in userinfo and userinfo[key] == val:
                         return userinfo
-        elif index in None:
+        elif index is None:
             if not self.userinfo:
                 self.read_userinfo_from_db()
             return self.userinfo

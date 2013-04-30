@@ -274,9 +274,9 @@ class FGDatabase:
         return self.read_userinfo(querydict, optional)
 
     def get_userinfo_detail(self):
-        return self._select(cursor=self.cursor, table=self.userinfo_table,
-                            expr=" *, GROUP_CONCAT(distinct project) as
-                            projects, GROUP_CONCAT(distinct hostname) as
+        return self._select(cursor=self.cursor, table=self.userinfo_table, \
+                            expr=" *, GROUP_CONCAT(distinct project) as \
+                            projects, GROUP_CONCAT(distinct hostname) as \
                             hostnames ", where="", optional=" group by username ")
 
     def read_projectinfo(self, querydict={}):

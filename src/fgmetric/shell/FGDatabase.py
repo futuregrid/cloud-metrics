@@ -201,21 +201,42 @@ class FGDatabase:
         return cur
 
     def _read(self, cursor, tablename, querydict, optional=""):
+        return self._select(cursor=cursor, table=tablename, where=querydict,
+                            optional=optional)
 
-        querystr = ""
+    def _select(self, *args, **kwargs):
+        """select table with keyword arguments
+
+            Expected keyword arguments:
+                cursor=
+                table=
+                expr=
+                where=
+                optional=
+
+            Args:
+                *args : arguments
+                **kwargs : keywords  
+        
+        """
+        cursor = kwargs['cursor']
+        tablename = kwargs['table']
+        try:
+            expr = kwargs['expr']
+        except:
+            expr = "*"
+        try:
+            querydict = kwargs['where']
+        except:
+            querydict = {}
+        try:
+            optional = kwargs['optional']
+        except:
+            optional = ""
+        querystr = self._get_querystr(querydict)
         ret = []
 
-        if querydict:
-            for key in querydict:
-                value = querydict[key]
-                astr = key + "='" + value + "'"
-                if querystr != "":
-                    querystr += " and "
-                querystr += astr
-                rquery = "SELECT * FROM " + tablename + \
-                    " where " + querystr + optional
-        else:
-            rquery = "SELECT * from " + tablename + optional
+        rquery = "SELECT " + expr + " FROM " + tablename + querystr + optional
 
         try:
             cursor.execute(rquery)
@@ -230,11 +251,18 @@ class FGDatabase:
         rows = cursor.fetchall()
         return rows
 
-        '''
-        for arow in list(rows):
-            ret.append(arow)
-        return ret
-        '''
+    def _get_querystr(self, querydict):
+        querystr = ""
+        for key in querydict:
+            value = querydict[key]
+            astr = key + "='" + value + "' "
+            if querystr != "":
+                querystr += " and "
+            else:
+                querystr = " where "
+            querystr += astr
+
+        return querystr
 
     def get_instance(self, querydict={}):
         return self.read_instance(querydict)

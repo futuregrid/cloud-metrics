@@ -155,6 +155,8 @@ class FGInstances:
                     if key in userinfo and userinfo[key] == val:
                         return userinfo
         elif index in None:
+            if not self.userinfo:
+                self.read_userinfo_from_db()
             return self.userinfo
         else:
             return None
@@ -171,7 +173,6 @@ class FGInstances:
         elif index is None:
             if not self.projectinfo:
                 self.read_projectinfo_from_db()
-
             return self.projectinfo
         else:
             return None
@@ -201,6 +202,10 @@ class FGInstances:
 
         self.clear("userinfo")
         self.userinfo = self.db.read_userinfo(querydict, optional)
+
+    def read_userinfo_detail(self):
+        self.clear("userinfo")
+        self.userinfo = self.db.get_userinfo_detail()
 
     def read_cloudplatform(self, refresh=False):
         if not self.cloudplatform or refresh:

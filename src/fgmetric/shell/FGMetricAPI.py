@@ -147,8 +147,8 @@ class FGMetricAPI:
         if self.userinfo:
             return self.userinfo
         try:
-            self.instances.read_userinfo({}, " group by username ")
-            self.userinfo = self.instances.userinfo
+            self.instances.read_userinfo_detail()#({}, " group by username ")
+            self.userinfo = self.instances.get_userinfo()
             return self.userinfo
         except:
             print "failed to read userinfo %s" % sys.exc_info()
@@ -167,7 +167,6 @@ class FGMetricAPI:
         except:
             print "failed to read project info %s" % sys.exc_info()
             return None
-
 
     def _set_dict_vars(self):
         self.result = {

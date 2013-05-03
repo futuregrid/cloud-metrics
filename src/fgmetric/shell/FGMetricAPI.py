@@ -91,6 +91,12 @@ class FGMetricAPI:
         # TBD
         return
 
+    def set_groupby(self, name):
+        self.groupby = name
+
+    def get_groupby(self):
+        return self.groupby
+
     def get_stats(self):
         ownerids = self._get_ownerids()
         self._get_instances(ownerids)
@@ -112,6 +118,7 @@ class FGMetricAPI:
         self.search.set_platform(self.cloud)
         self.search.set_nodename(self.hostname)
         self.search.set_period(self.period)
+        self.search.set_groupby(self.groupby)
 
     def _calculate_stats(self):
         for i in range(0, self.instances.count()):

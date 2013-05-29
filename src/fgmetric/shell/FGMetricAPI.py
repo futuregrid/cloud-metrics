@@ -70,6 +70,9 @@ class FGMetricAPI:
     def set_user(self, name):
         self.username = name
 
+    def set_project(self, name):
+        self.project = name
+
     def set_cloud(self, name):
         self.cloud = name
 

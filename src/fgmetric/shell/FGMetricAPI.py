@@ -57,6 +57,7 @@ class FGMetricAPI:
         self.cloud = None
         self.hostname = None
         self.period = None
+        self.project = None
         self.userinfo = None
         self.projectinfo = None
 

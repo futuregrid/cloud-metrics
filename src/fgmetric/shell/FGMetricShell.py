@@ -159,18 +159,19 @@ class FGMetricShell(Cmd):
             print sys.exc_info()
 
     @options([
-        make_option('-o', '--output', type="string",
-                    dest="filepath", help="filepath to export a csv file")
+        make_option('-o', '--directory', type="string",
+                    dest="DIR", help="filepath to export a csv file")
     ])
     def do_csv(self, line, opts=None):
         """Export statistics as a csv file"""
         try:
             data = self.search.get_csv()
-            if not opts.filepath:
+            if not opts.DIR:
                 filedir = "./"
-                filename = self.search.get_filename() + "." + "csv"
             else:
-                filedir, filename = split(opts.filepath)
+                filedir = opts.DIR
+
+            filename = self.search.get_filename() + "." + "csv"
 
             self.create_csvfile(data, filedir, filename)
         except:

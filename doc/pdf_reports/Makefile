@@ -11,7 +11,7 @@ TEMPLATE       = xsede
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
-BUILDDIR      = _build
+BUILDDIR      = _build_$(FROM_DATE)_$(TO_DATE)
 
 # Latest FG Cloud Metrics should be installed to run Makefile.
 FGMETRIC      = fg-metric

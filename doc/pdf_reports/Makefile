@@ -14,7 +14,7 @@ PAPER         =
 BUILDDIR      = _build
 
 # Latest FG Cloud Metrics should be installed to run Makefile.
-FGMETRIC      = fg-metric-beta
+FGMETRIC      = fg-metric
 PHANTOMJS     = phantomjs
 HTMLPATH      = output
 IMGPATH       = images

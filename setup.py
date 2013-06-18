@@ -16,7 +16,10 @@ doclines = __doc__.split("\n")
 try:
     version = open("VERSION.txt").read()
 except:
-    version = open("../VERSION.txt").read()
+    try:
+        version = open("../VERSION.txt").read()
+    except:
+        version = "4.0.1"
 
 
 ######################################################################

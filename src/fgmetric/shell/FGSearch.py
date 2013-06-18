@@ -876,12 +876,12 @@ class FGSearch:
             start_of_end_day = end_day
             if first_day == end_day:
                 dates[first_day] = self.do_time_conversion(
-                    (t_end - t_start).seconds)
+                    (t_end - t_start).total_seconds())
             else:
                 dates[first_day] = self.do_time_conversion(
-                    (end_of_first_day - t_start).seconds)
+                    (end_of_first_day - t_start).total_seconds())
                 dates[end_day] = self.do_time_conversion(
-                    (t_end - start_of_end_day).seconds)
+                    (t_end - start_of_end_day).total_seconds())
         elif set([self.selected_metric]) & set(self.names.metric.countusers):
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(
@@ -905,12 +905,12 @@ class FGSearch:
                 dates[month_key] = self.do_time_conversion(86400 * days)
             if first_month == end_month:
                 dates[first_month] = self.do_time_conversion(
-                    (t_end - t_start).seconds)
+                    (t_end - t_start).total_seconds())
             else:
                 dates[first_month] = self.do_time_conversion(
-                    (end_of_first_month - t_start).seconds)
+                    (end_of_first_month - t_start).total_seconds())
                 dates[end_month] = self.do_time_conversion(
-                    (t_end - start_of_end_month).seconds)
+                    (t_end - start_of_end_month).total_seconds())
         elif set([self.selected_metric]) & set(self.names.metric.countusers):
             for entry_date, entry_value in dates.iteritems():
                 new_value = self._is_unique(

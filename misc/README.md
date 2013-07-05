@@ -1,4 +1,7 @@
-peripheral files (outdated)
+Misc
+=====
+
+Peripheral files (outdated)
 ----------------------------
 This directory contains peripheral files, for example, a script for counting VM buckets and a cron script for updating database and collecting log files.
 

@@ -114,7 +114,7 @@ setup(
              'fg-euca-gather-log-files = fgmetric.shell.FGCollectFiles:main',
              'fg-parser = fgmetric.shell.FGParser:main',
              'fg-logparser = fgmetric.shell.FGLogParser:main',
-             'fg-metric-converter = gmetric.shell.FGConverter:main',
+             'fg-metric-converter = fgmetric.shell.FGConverter:main',
              #'fg-metric-old = fgmetric.shell.FGAnalyzer:main',
              'fg-metric = fgmetric.shell.FGMetricShell:main',
              'fg-metric-install = fgmetric.setup.FGInstall:main'

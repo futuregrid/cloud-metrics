@@ -13,5 +13,5 @@ Cloud Usage Reports in PDF
 
 Cloud Usage Reports in html (by Sphinx)
 ---------------------------------------
-- results: report in html
+- html_reports: report in html
    - Example: https://portal.futuregrid.org/metrics

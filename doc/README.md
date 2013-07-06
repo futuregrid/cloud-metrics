@@ -4,7 +4,7 @@ Cloud Metrics provides three types of documentation. The source directory gives 
 
 Instruction and user manual
 ---------------------------------
-- source(doc): user manual
+- user_manual: user manual
    - Example: http://futuregrid.github.com/cloud-metrics
 
 Cloud Usage Reports in PDF

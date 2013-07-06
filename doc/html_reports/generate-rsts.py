@@ -1,27 +1,45 @@
 import datetime
 from futuregrid.cloud.metric.FGUtility import FGUtility
-class Results:
-    ''' This generates reports from (start_date) to (t_end_date) in (name) directory as restructuredText files.
-        In case that you want to change period of reports, simple change (start_date) and (t_end_date) in this file.
-        And run sphinx-build to generate html files. '''
 
-    name = "results"
-    docs_ext = ".rst"
-    start_date = datetime.date(2011, 11, 01)
-    start_date_for_weekly = start_date
-    #t_end_date = datetime.date(2012, 07, 26)
-    t_end_date = datetime.date.today()
-    end_date = start_date + datetime.timedelta(days=6)
-    week = datetime.timedelta(weeks=1)
-    index_txt = None
-    index_filename = name + docs_ext
+class GenerateRSTs:
+    ''' GenerateRSTs class generates cloud usage reports in 
+    reStructuredText files. Simple run the script without
+    options will generate .rst files in results directory
+    from 'start_date' date to 't_end_date' date which is 
+    the day when you execute the script.
+    In case that you want to change period of reports, 
+    changing (start_date) and (t_end_date) variables in code
+    is required at this time.
+    '''
 
-    docs_path = name + "/"
-    indent = "\t"
-    newline = "\n"
-    count = 0
+    def __init__(self):
+        self.set_filename()
+        self.set_date()
+        self.set_vars()
 
-    def generate_index(self):
+    def set_filename(self):
+
+        self.name = "results"
+        self.docs_ext = ".rst"
+        self.docs_path = self.name + "/"
+
+        self.index_filename = self.name + self.docs_ext
+        self.index_txt = None
+
+    def set_date(self, start_date=None, end_date=None):
+        self.start_date = start_date or datetime.date(2011, 11, 01)
+        self.start_date_for_weekly = self.start_date
+        #t_end_date = datetime.date(2012, 07, 26)
+        self.t_end_date = end_date or datetime.date.today()
+        self.end_date = self.start_date + datetime.timedelta(days=6)
+        self.week = datetime.timedelta(weeks=1)
+
+    def set_vars(self):
+        self.indent = "\t"
+        self.newline = "\n"
+        self.count = 0
+
+    def generate_main_rst(self):
 
         index_txt = ""
         lines = ""
@@ -54,7 +72,7 @@ class Results:
         f.write(self.index_txt)
         f.close
 
-    def generate_contents(self):
+    def generate_sub_rsts(self):
         """ Generate reports in this order: 1) monthly report, 2) weekly reports (normally 4-5 reports per month).
         They are grouped by: 1) nodename e.g. India, Sierra, 2) and platform e.g. eucalyptus, openstack.
 
@@ -988,12 +1006,16 @@ class Results:
                 '4': datetime.date(year, 12, 31)
                 }.get(str(num), datetime.date(year, 1, 1))
 
-
+    def read_targets(self):
+        return
 
 def main():
-    result = Results()
-    result.generate_index()
-    result.generate_contents()
+    result = GenerateRSTs()
+    # check to see which hosts and services need to be reported
+    result.read_targets()
+    #generate index based on period
+    result.generate_main_rst()
+    result.generate_sub_rsts()
 
 if __name__ == "__main__":
     main()

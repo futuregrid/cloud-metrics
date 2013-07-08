@@ -13,15 +13,17 @@ class GenerateRSTs:
     '''
 
     def __init__(self):
+        '''Initialize variables'''
         self.set_filename()
         self.set_date()
         self.set_vars()
 
     def set_filename(self):
-
+        '''Set a default filename and a directory path'''
         self.name = "results"
         self.docs_ext = ".rst"
-        self.docs_path = self.name + "/"
+        self.source_path = "source"
+        self.docs_path = self.source_path + "/" + self.name + "/"
 
         self.index_filename = self.name + self.docs_ext
         self.index_txt = None
@@ -40,6 +42,10 @@ class GenerateRSTs:
         self.count = 0
 
     def generate_main_rst(self):
+        self.get_main_rst()
+        self.write_files(filename=self.index_filename, content=self.index_txt)
+
+    def get_main_rst(self):
 
         index_txt = ""
         lines = ""
@@ -68,8 +74,9 @@ class GenerateRSTs:
 
         self.index_txt = self.get_index_header() + index_txt
 
-        f = open (self.index_filename, "w")
-        f.write(self.index_txt)
+    def write_files(self, filename, content):
+        f = open (self.source_path + "/" + filename, "w")
+        f.write(content)
         f.close
 
     def generate_sub_rsts(self):

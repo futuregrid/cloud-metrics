@@ -14,11 +14,15 @@ class GenerateRSTs:
 
     def __init__(self):
         '''Initialize variables'''
-        self.set_filename()
-        self.set_date()
-        self.set_vars()
 
-    def set_filename(self):
+        default_start_date = datetime.date(2011, 11, 01)
+        default_end_date = datetime.date.today()
+
+        self._set_filename()
+        self._set_date()
+        self._set_vars()
+
+    def _set_filename(self):
         '''Set a default filename and a directory path'''
         self.name = "results"
         self.docs_ext = ".rst"
@@ -28,15 +32,15 @@ class GenerateRSTs:
         self.index_filename = self.name + self.docs_ext
         self.index_txt = None
 
-    def set_date(self, start_date=None, end_date=None):
-        self.start_date = start_date or datetime.date(2011, 11, 01)
+    def _set_date(self, start_date=None, end_date=None):
+        self.start_date = start_date or self.default_start_date
+        self.end_date = end_date or self.default_end_date
+
+        self.start_date_plus_six = self.start_date + datetime.timedelta(days=6)
         self.start_date_for_weekly = self.start_date
-        #t_end_date = datetime.date(2012, 07, 26)
-        self.t_end_date = end_date or datetime.date.today()
-        self.end_date = self.start_date + datetime.timedelta(days=6)
         self.week = datetime.timedelta(weeks=1)
 
-    def set_vars(self):
+    def _set_vars(self):
         self.indent = "\t"
         self.newline = "\n"
         self.count = 0
@@ -51,7 +55,7 @@ class GenerateRSTs:
         lines = ""
 
         start_date = self.start_date
-        end_date = self.t_end_date
+        end_date = self.end_date
 
         while(1):
             if start_date > end_date:
@@ -117,7 +121,7 @@ class GenerateRSTs:
         month = self.start_date.timetuple()[1]
 
         while (1):
-            if self.start_date > self.t_end_date:
+            if self.start_date > self.end_date:
                 break
  
             # If a next month comes, generate contents and clear variables for the next
@@ -146,7 +150,7 @@ class GenerateRSTs:
             content_filename = self.start_date.strftime("%Y-%m")
             content_filepath = self.docs_path + content_filename + self.docs_ext
            
-            self.end_date = self.start_date + datetime.timedelta(days=6)
+            self.start_date_plus_six = self.start_date + datetime.timedelta(days=6)
             if (self.start_date_for_weekly + (10 * self.week)) == self.start_date:
                 self.start_date_for_weekly = self.start_date_for_weekly + self.week
 
@@ -166,7 +170,7 @@ class GenerateRSTs:
         width = "qwertyuioplkjhgfdsa"#800
         height = 1
         start_date = str(self.start_date)
-        end_date = str(self.end_date)
+        end_date = str(self.start_date_plus_six)
         current_month = self.start_date.timetuple()[1]
         quarter = self.get_quarter(current_month)
         title_of_period = self.get_first_date_of_quarter(self.start_date, quarter).strftime("%B %d, %Y") + " to " + self.get_last_date_of_quarter(self.start_date, quarter).strftime("%B %d, %Y")
@@ -582,7 +586,7 @@ class GenerateRSTs:
         width = "qwertyuioplkjhgfdsa"#800
         height = 1
         start_date = str(self.start_date)
-        end_date = str(self.end_date)
+        end_date = str(self.start_date_plus_six)
         month_n_year = self.start_date.strftime("%B %Y")
         month_n_year2 = self.start_date.strftime("%m/%Y")
         month = self.start_date.strftime("%Y-%m")
@@ -806,7 +810,7 @@ class GenerateRSTs:
         width = "qwertyuioplkjhgfdsa"#800
         height = 1
         start_date = str(self.start_date)
-        end_date = str(self.end_date)
+        end_date = str(self.start_date_plus_six)
 
         dummy = "?time=" + datetime.datetime.utcnow().strftime("%s")
         number = self.count + 1
@@ -814,7 +818,7 @@ class GenerateRSTs:
         platform = "eucalyptus"
         nodename = "india"
 
-        main_title = self.newline +  self.start_date.strftime("%m/%d/%Y") + " - " + self.end_date.strftime("%m/%d/%Y") + self.newline + \
+        main_title = self.newline +  self.start_date.strftime("%m/%d/%Y") + " - " + self.start_date_plus_six.strftime("%m/%d/%Y") + self.newline + \
                     "------------------------------------------------------------" + self.newline + \
                     ""
  
@@ -1013,15 +1017,22 @@ class GenerateRSTs:
                 '4': datetime.date(year, 12, 31)
                 }.get(str(num), datetime.date(year, 1, 1))
 
-    def read_targets(self):
+    def get_search_period(self):
+        '''Get start and end date of the reports '''
+        self._set_date()
+        return
+
+    def get_service_info(self):
+        '''Get host and service '''
         return
 
 def main():
     result = GenerateRSTs()
     # check to see which hosts and services need to be reported
-    result.read_targets()
+    result.get_search_period()
     #generate index based on period
     result.generate_main_rst()
+    result.get_service_info()
     result.generate_sub_rsts()
 
 if __name__ == "__main__":

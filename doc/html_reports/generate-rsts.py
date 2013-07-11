@@ -21,6 +21,7 @@ class GenerateRSTs:
         self._set_filename()
         self._set_date()
         self._set_vars()
+        self._set_template()
 
     def _set_filename(self):
         '''Set a default filename and a directory path'''
@@ -45,15 +46,39 @@ class GenerateRSTs:
         self.newline = "\n"
         self.count = 0
 
-    def generate_main_rst(self):
-        self.get_main_rst()
+    def _set_template(self):
+        self.template_path = "template"
+        self.template_index = "index.rst"
+        self.template_month = "YYYY-MM.rst"
+        self.template_quarter = "YYYY-QQ.rst"
+
+    def generate_index_rst(self):
+        self.get_index_rst()
         self.write_files(filename=self.index_filename, content=self.index_txt)
 
-    def get_main_rst(self):
+    def get_index_template(self):
+        return self.get_template(self.template_index)
+
+    def get_monthly_template(self):
+        return self.get_template(self.template_month)
+
+    def get_quarterly_template(self):
+        return self.get_template(self.template_quarter)
+
+    def get_template(self, filename):
+        filepath = self.template_path + "/" + filename
+        with open(filepath, 'r') as content_file:
+            content = content_file.read()
+        return content
+
+    def get_index_rst(self):
+        toctree_list = self._get_toctree_list()
+        index = self.get_index_template()
+        self.index_txt = index % { "main_list" : toctree_list }
+
+    def _get_toctree_list(self):
 
         index_txt = ""
-        lines = ""
-
         start_date = self.start_date
         end_date = self.end_date
 
@@ -71,12 +96,7 @@ class GenerateRSTs:
             new_month = month + 1
             start_date = datetime.date(year + (new_month / 13), (new_month % 12) or 12, day)
 
-        #EXCEPTION FOR this month, realtime, and ALL ENTRY
-        index_txt = self.indent + self.docs_path + "thismonth" + self.newline + index_txt
-        index_txt = self.indent + self.docs_path + "realtime" + self.newline + index_txt
-        index_txt = self.indent + self.docs_path + "all" + self.newline + index_txt
-
-        self.index_txt = self.get_index_header() + index_txt
+        return index_txt
 
     def write_files(self, filename, content):
         f = open (self.source_path + "/" + filename, "w")
@@ -967,6 +987,8 @@ class GenerateRSTs:
         return content
 
     def get_index_header(self):
+        """Return header of index.rst file. (outdated"""
+
         res =   "Cloud Metric Results" + self.newline + \
                 "====================" + self.newline + \
                 "We have collected cloud utilization data from Eucalyptus on FutureGrid such as India and Sierra resources and provide weekly and monthly reports to show usage of system resources measured by FG Cloud Metric." + self.newline + \
@@ -1031,7 +1053,7 @@ def main():
     # check to see which hosts and services need to be reported
     result.get_search_period()
     #generate index based on period
-    result.generate_main_rst()
+    result.generate_index_rst()
     result.get_service_info()
     result.generate_sub_rsts()
 

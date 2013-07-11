@@ -43,4 +43,7 @@ Contents:
 .. toctree::
 	:maxdepth: 3
 
+        results/all
+        results/realtime
+        results/thismonth
 	%(main_list)s

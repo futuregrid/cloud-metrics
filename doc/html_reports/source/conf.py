@@ -62,7 +62,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'results'
+master_doc = 'index'
 
 # General information about the project.
 project = u'Cloud Metrics'
@@ -212,7 +212,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('results', 'CloudMetrics.tex', u'Cloud Metrics Documentation',
+  ('index', 'CloudMetrics.tex', u'Cloud Metrics Documentation',
    u'Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier Diaz', 'manual'),
 ]
 
@@ -242,7 +242,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('results', 'cloudmetrics', u'Cloud Metrics Documentation',
+    ('index', 'cloudmetrics', u'Cloud Metrics Documentation',
      [u'Gregor von Laszewski, Fugang Wang, Hyungro Lee, Javier Diaz'], 1)
 ]
 

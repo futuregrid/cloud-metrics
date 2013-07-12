@@ -1,8 +1,8 @@
 import datetime
 from futuregrid.cloud.metric.FGUtility import FGUtility
 
-class GenerateRSTs:
-    ''' GenerateRSTs class generates cloud usage reports in 
+class HtmlReportsRSTs:
+    ''' HtmlReportsRSTs class generates cloud usage reports in 
     reStructuredText files. Simple run the script without
     options will generate .rst files in results directory
     from 'start_date' date to 't_end_date' date which is 
@@ -54,7 +54,7 @@ class GenerateRSTs:
 
     def generate_index_rst(self):
         self.get_index_rst()
-        self.write_files(filename=self.index_filename, content=self.index_txt)
+        self.write_index_rst()
 
     def get_index_template(self):
         return self.get_template(self.template_index)
@@ -72,8 +72,9 @@ class GenerateRSTs:
         return content
 
     def get_index_rst(self):
-        toctree_list = self._get_toctree_list()
+        '''Fill in the index template with the list variable'''
         index = self.get_index_template()
+        toctree_list = self._get_toctree_list()
         self.index_txt = index % { "main_list" : toctree_list }
 
     def _get_toctree_list(self):
@@ -97,6 +98,9 @@ class GenerateRSTs:
             start_date = datetime.date(year + (new_month / 13), (new_month % 12) or 12, day)
 
         return index_txt
+
+    def write_index_rst(self, content=None):
+        self.write_files(filename=self.index_filename, content=content or self.index_txt)
 
     def write_files(self, filename, content):
         f = open (self.source_path + "/" + filename, "w")
@@ -1049,7 +1053,7 @@ class GenerateRSTs:
         return
 
 def main():
-    result = GenerateRSTs()
+    result = HtmlReportsRSTs()
     # check to see which hosts and services need to be reported
     result.get_search_period()
     #generate index based on period

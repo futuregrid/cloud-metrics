@@ -46,4 +46,4 @@ Contents:
         results/all
         results/realtime
         results/thismonth
-	%(main_list)s
+%(main_list)s

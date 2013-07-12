@@ -15,8 +15,8 @@ class HtmlReportsRSTs:
     def __init__(self):
         '''Initialize variables'''
 
-        default_start_date = datetime.date(2011, 11, 01)
-        default_end_date = datetime.date.today()
+        self.default_start_date = datetime.date(2011, 11, 01)
+        self.default_end_date = datetime.date.today()
 
         self._set_filename()
         self._set_date()
@@ -30,7 +30,7 @@ class HtmlReportsRSTs:
         self.source_path = "source"
         self.docs_path = self.source_path + "/" + self.name + "/"
 
-        self.index_filename = self.name + self.docs_ext
+        self.index_filename = "index" + self.docs_ext
         self.index_txt = None
 
     def _set_date(self, start_date=None, end_date=None):

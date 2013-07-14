@@ -8,21 +8,21 @@ class html:
     newline = "\n"
 
     
-    def heading_c(title, c):
+    def heading_c(self,title, c):
         return "\n" + title + "\n" + 70 * c + "\n\n"
 
 
-    def heading(n=1, title=""):
+    def heading(self,n=1, title=""):
         if n == 1:
-            return heading_c(title, "=")
+            return self.heading_c(title, "=")
         if n == 2:
-            return heading_c(title, "-")
+            return self.heading_c(title, "-")
         if n == 3:
-            return heading_c(title, "^")
+            return self.heading_c(title, "^")
         if n == 4:
-            return heading_c(title, '"')
+            return self.heading_c(title, '"')
         else:
-            return heading_c(title, "=")
+            return self.heading_c(title, "=")
 
 
 class HtmlReportsRSTs:
@@ -136,7 +136,7 @@ class HtmlReportsRSTs:
         f.write(content)
         f.close
 
-    def write_contents(filepath, contents):
+    def write_contents(self, filepath, contents):
         FGUtility.ensure_dir(filepath)
         f = open(filepath, "w")
         f.write(contents)
@@ -262,7 +262,7 @@ class HtmlReportsRSTs:
         number += 1
         metric = "runtime"
         title = "Figure %(number)s. Total wall time (hour) of launched VMs per %(groupby)s for %(month_n_year)s on %(nodename)s"
-        wcontent += (self.get_chart() % vars()) % vars()
+        content += (self.get_chart() % vars()) % vars()
 
         # ---------------------------------------------------------------------
         number += 1

@@ -110,8 +110,8 @@ Users Count by Clusters (Total, monthly)
 .. image:: ../../images/%(output_directory)s/%(from_dateT)s-%(to_dateT)s-countusers-%(service)s--hostname.png
    :alt: Figure 5: Users count by Clusters
 ..   :align: left
-| Figure 5. Users count by Clusters
-| This chart represents total number of active users.
+| Figure 5. Unique User count by Clusters
+| This chart represents total number of unique active users.
 
 - Period: %(tmpl_period)s                   
 - Cloud:
@@ -123,7 +123,7 @@ Users Count by Clusters (Total, monthly)
 .. - Cloud(IaaS): %(all_services)s                               
 .. - Hostname: %(all_hostnames)s                               
 
-.. csv-table:: User count by Clusters
+.. csv-table:: Unique User count by Clusters
    :file: ../../%(output_directory)s/%(from_dateT)s-%(to_dateT)s-countusers-%(service)s--hostname.csv
    :header-rows: 1
 

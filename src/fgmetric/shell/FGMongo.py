@@ -30,12 +30,12 @@ class FGMongo:
         # For test, I use instance_faults collection to look at
 
     def get_single(self, _dict={}):
-        return self.db.posts.find_one(_dict)
+        return self.db.collection.find_one(_dict)
 
     def get_(self, _dict={}):
-        return self.db.posts.find(_dict)
+        return self.db.collection.find(_dict)
 
     def get_count(self, _dict={}):
         if _dict:
-            return self.db.posts.find(_dict).count()
-        return self.db.posts.count()
+            return self.db.collection.find(_dict).count()
+        return self.db.collection.count()

@@ -41,22 +41,24 @@ class FGMongo:
         return self.collection.count()
 
     def get_groupby(self, name):
-        groupby = self.collection.group({
-            "key": {
-                name: true
-            },
-            "initial": {
-                "countstar": 0
-            },
-            "reduce": function(obj, prev) {
-                if (true != null) if (true instanceof Array)
-                prev.countstar += true.length;
-                else prev.countstar++;
-            }
-        });
+        # In [21]: a.collection.group(key={"message":'true'},
+        # condition={},initial= {"countstar":0},reduce='function(obj, prev) {if
+        # (true != null) if (true instanceof Array) prev.countstar +=
+        # true.length; else prev.countstar++;}')
+        groupby = self.collection.group(
+            key = { name : 'true' },
+            condition = {},
+            initial = { "countstar": 0 },
+            reduce = 'function(obj, prev) { \
+                if (true != null) if (true instanceof Array) \
+                prev.countstar += true.length; \
+                else prev.countstar++; \
+            }'
+        );
+
         return groupby
 
     def get_stats(self):
         count = self.get_count()
-        print "Total count:" + count
-        print self.get_groupby()
+        print "Total count:" + str(count)
+        print self.get_groupby("message")

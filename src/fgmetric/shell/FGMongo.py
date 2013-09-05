@@ -12,7 +12,7 @@ class FGMongo:
         return MongoClient(host=hostname, port=port_numer)
 
     def connect(self):
-        self.client = self.connect_mongo(self.dbinfo["mongodb_hostname"],
+        self.client = self.connect_pymongo(self.dbinfo["mongodb_hostname"],
                                          self.dbinfo["mongodb_port"])
 
     def open_pymongodb(self, conn, db_name):

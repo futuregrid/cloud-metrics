@@ -9,7 +9,7 @@ class FGMongo:
         self.dbinfo = yaml.load(stream)
 
     def connect_pymongo(self, hostname="localhost", port_number=27107):
-        return MongoClient(host=hostname, port=port_numer)
+        return MongoClient(host=hostname, port=port_number)
 
     def connect(self):
         self.client = self.connect_pymongo(self.dbinfo["mongodb_hostname"],

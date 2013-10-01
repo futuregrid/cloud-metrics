@@ -141,10 +141,21 @@ class FGConverter:
         keystone = self.db
         keystone.dbname = self.dbname_keystone
         keystone.connect()
-        userinfo = keystone.query("select user_id, tenant_id, user.name as user_name, tenant.name as tenant_name \
-                from user_tenant_membership, tenant, user \
-                where user.id=user_tenant_membership.user_id \
-                and tenant.id=user_tenant_membership.tenant_id")  # select id, name from user")
+        # This is for Grizzly or later version
+        userinfo = keystone.query("select user_id, tenant_id, user.name as \
+                                  user_name, tenant.name as tenant_name \
+                                  from user_tenant_membership, tenant, user \
+                                  where user.id=user_tenant_membership.user_id \
+                                  and tenant.id=user_tenant_membership.tenant_id")  # select id, name from user")
+        if not userinfo:
+            #This is for Folsom or previous version
+            userinfo = keystone.query("select user_id, project_id as tenant_id,\
+                                      user.name as user_name, project.name as \
+                                      tenant_name from user_project_metadata, \
+                                      project, user where \
+                                      user.id=user_project_metadata.user_id and \
+                                      project.id=user_project_metadata.project_id")
+ 
         keystone.close()
         records = []
         for row in userinfo:

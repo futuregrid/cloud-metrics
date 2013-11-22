@@ -76,6 +76,11 @@ class FGResourceReporter:
         for service in self.cloudservice:
             self.euca2ools.init_stats()
             self.euca2ools.init_xml()
+            if service['hostname'] == "sierra" and service['platform'] == \
+               'eucalyptus':
+                continue
+            if service['version'] == 'grizzly' or service['version'] == 'folsom':
+                continue
             # TEMPORARy
             if service["cloudPlatformId"] == 1:
                 continue

@@ -32,16 +32,17 @@ class FGReportGenerator:
         self.output_directory = "output/" # + from and to date
 
         self.all_services = "eucalyptus, openstack, nimbus"
-        self.all_hostnames = "india, sierra, alamo, foxtrot, hotel"
+        self.all_hostnames = "india, sierra, alamo, foxtrot, hotel, p434class"
         self.service_name = ""
         self.host_name = ""
 
         # Services per host
         self.resources = { "india": { "eucalyptus", "openstack" }, \
-                            "sierra": { "eucalyptus", "nimbus" }, \
-                            "alamo": { "nimbus" }, \
+                            "sierra": { "eucalyptus", "openstack", "nimbus" }, \
+                            "alamo": { "nimbus", "openstack" }, \
                             "foxtrot": { "nimbus" }, \
-                            "hotel": { "nimbus" } }
+                            "hotel": { "nimbus" }, \
+                          "p434class": { "openstack" }}
 
     def get_parameter(self):
         parser = ArgumentParser()
@@ -138,8 +139,16 @@ class FGReportGenerator:
             #for serv in self.services or self.resources[host]:
                 self.adjust_names("hostname", host)
                 self.adjust_names("service", serv)
-                self.adjust_names("service_name", ", ".join(self.resources[host]))
-                res[host] = { serv : var % vars(self) }
+                try:
+                    self.adjust_names("service_name", ", ".join(self.resources[host]))
+                except:
+                    self.adjust_names("service_name", self.all_services)
+
+
+                try:
+                    res[host][serv] = var % vars(self)
+                except:
+                    res[host] = { serv : var % vars(self) }
         return res
 
     def is_real(self, hostname, service):

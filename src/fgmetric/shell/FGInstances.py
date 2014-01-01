@@ -103,6 +103,18 @@ class FGInstances:
                     if prj_id:
                         if prj_id.startswith("fg"):
                             prj_id = int(prj_id[2:])
+                        #else:
+                        #    if prj_id.startswith("member"):
+                        #        userinfo = self.get_userinfo({"ownerid":
+                        #                                  ins["ownerId"],"username":
+                        #                                  ins["ownerId"]}, 
+                        #                                 " and project!='member' ")
+                        #    if prj_id == "member":
+                        #    prj_id = userinfo['project']
+                        #    if prj_id:
+                        #        if prj_id.startswith('fg'):
+                        #            prj_id = int(prj_id[2:])
+
                         projectinfo = self.get_projectinfo(
                             prj_id)  # Remove 'fg' prefix
                         if projectinfo:

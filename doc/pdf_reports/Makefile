@@ -7,6 +7,7 @@
 #TO_DATE       = 20121231
 RESOURCES      = india sierra alamo foxtrot hotel
 #RESOURCES      = p434class
+SERVICES	= openstack eucalyptus nimbus
 TEMPLATE       = xsede 
 # You can set these variables from the command line.
 SPHINXOPTS    =
@@ -22,7 +23,7 @@ IMGPATH       = images
 REPORTPATH1   = reports/cmd
 REPORTPATH2   = reports/rst
 PYTHON        = python
-REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n $(RESOURCES) -t $(TEMPLATE) --from $(FROM_DATE)T00:00:00 --to $(TO_DATE)T23:59:59
+REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n $(RESOURCES) -s $(SERVICES) -t $(TEMPLATE) --from $(FROM_DATE)T00:00:00 --to $(TO_DATE)T23:59:59
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4

@@ -32,7 +32,7 @@ class FGReportGenerator:
         self.output_directory = "output/" # + from and to date
 
         self.all_services = "eucalyptus, openstack, nimbus"
-        self.all_hostnames = "india, sierra, alamo, foxtrot, hotel, p434class"
+        self.all_hostnames = "sierra, india, hotel, alamo, foxtrot, p434fall13"
         self.service_name = ""
         self.host_name = ""
 
@@ -42,7 +42,7 @@ class FGReportGenerator:
                             "alamo": { "nimbus", "openstack" }, \
                             "foxtrot": { "nimbus" }, \
                             "hotel": { "nimbus" }, \
-                          "p434class": { "openstack" }}
+                          "p434fall13": { "openstack" }}
 
     def get_parameter(self):
         parser = ArgumentParser()

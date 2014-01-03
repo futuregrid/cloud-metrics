@@ -738,9 +738,19 @@ class FGSearch:
         start = row["t_start"]
         last = row["date"]
 
-        if row["state"] == "Teardown":
-            if row["t_end"]:
-                last = min(row["date"], row["t_end"])
+        #if row["state"] == "Teardown":
+        #    if row["t_end"]:
+        #        last = min(row["date"], row["t_end"])
+        # In a previous version, t_end is missing, so we check.
+        # If it exists, the earlier datetime should be used because we used to
+        # put future time to t_end, i.e. 3000-12-31 11:59:59.
+
+        # We updated this logic and removed the future time to t_end.
+
+        try:
+            last = max(row["date"], row["t_end"])
+        except:
+            pass
 
         t_delta = (last - start).total_seconds()
         if t_delta < 0:

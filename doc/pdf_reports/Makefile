@@ -5,10 +5,16 @@
 # to date chosen to be one second before midnight
 #FROM_DATE     = 20121001
 #TO_DATE       = 20121231
-RESOURCES      = india sierra alamo foxtrot hotel
-#RESOURCES      = p434class
+
+RESOURCES      = sierra india hotel alamo foxtrot
+#RESOURCES      = p434fall13
+
 SERVICES	= openstack eucalyptus nimbus
-TEMPLATE       = xsede 
+#SERVICES	= openstack
+
+#TEMPLATE       = portal # for web
+TEMPLATE       = xsede # for pdf
+
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build

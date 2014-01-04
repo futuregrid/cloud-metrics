@@ -736,7 +736,8 @@ class FGSearch:
     def get_t_delta(self, row):
 
         start = row["t_start"]
-        last = row["date"]
+        last = row['t_end']
+        #last = row["date"]
 
         #if row["state"] == "Teardown":
         #    if row["t_end"]:
@@ -747,10 +748,10 @@ class FGSearch:
 
         # We updated this logic and removed the future time to t_end.
 
-        try:
-            last = max(row["date"], row["t_end"])
-        except:
-            pass
+        #try:
+        #    last = max(row["date"], row["t_end"])
+        #except:
+        #    pass
 
         t_delta = (last - start).total_seconds()
         if t_delta < 0:

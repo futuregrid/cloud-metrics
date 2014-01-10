@@ -140,6 +140,7 @@ class FGSearch:
         print " set metric $name"
         print " set platform $name"
         print " set nodename $name"
+        print " set project $name"
         print " set period $name"
         print
 
@@ -204,6 +205,10 @@ class FGSearch:
 
     def set_nodename(self, name):
         self.nodename = name
+
+    def set_project(self, name):
+        self.project = name
+        self.userinfo_needed = self._is_userinfo_needed(True)
 
     def set_groupby(self, name):
         self.groupby = name
@@ -422,6 +427,9 @@ class FGSearch:
             return False
         if self.username and self.username != instance["ownerId"]:
             return False
+        if self.project:
+            if int(self.project) != instance["ProjectId"]:
+                return False
         return True
 
     def _is_userinfo_needed(self, refresh=False):
@@ -433,6 +441,9 @@ class FGSearch:
             for k in self.groups:
                 if k in {"ProjectLead", "ProjectId", "Institution", "Discipline"}:
                     return True
+        if self.project:
+            # If project is set, userinfo is required.
+            return True
         return False
 
     def set_search_date(self, from_date, to_date):

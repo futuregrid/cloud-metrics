@@ -9,7 +9,7 @@
 RESOURCES      = sierra india hotel alamo foxtrot
 #RESOURCES      = p434fall13
 
-SERVICES	= openstack eucalyptus nimbus
+#SERVICES	= openstack eucalyptus nimbus
 #SERVICES	= openstack
 
 #TEMPLATE       = portal # for web
@@ -29,7 +29,8 @@ IMGPATH       = images
 REPORTPATH1   = reports/cmd
 REPORTPATH2   = reports/rst
 PYTHON        = python
-REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n $(RESOURCES) -s $(SERVICES) -t $(TEMPLATE) --from $(FROM_DATE)T00:00:00 --to $(TO_DATE)T23:59:59
+#REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n $(RESOURCES) -s $(SERVICES) -t $(TEMPLATE) --from $(FROM_DATE)T00:00:00 --to $(TO_DATE)T23:59:59
+REPORTGENERATOR = $(PYTHON) FGReportGenerator.py -n $(RESOURCES) -t $(TEMPLATE) --from $(FROM_DATE)T00:00:00 --to $(TO_DATE)T23:59:59
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4

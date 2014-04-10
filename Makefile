@@ -135,7 +135,7 @@ tag:
 
 PROJECT=`basename $(PWD)`
 DIR=/tmp/$(PROJECT)
-DOC=$(DIR)/doc
+DOC=$(DIR)/doc/user_manual
 
 pages: ghphtml ghpgit
 	echo done

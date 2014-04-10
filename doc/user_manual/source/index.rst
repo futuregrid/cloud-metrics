@@ -164,10 +164,13 @@ framework.
 
     **Figure 1:** cloud metrics components. 
     
-    
-..    Indices and tables
-..    ==================
-..    * :ref:`genindex`
-..    * :ref:`modindex`
-..    * :ref:`search`
 
+Indices and tables
+======================================================================
+
+:ref:`genindex`
+:ref:`modindex`
+:ref:`search`
+
+Modules
+======================================================================

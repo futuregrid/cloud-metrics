@@ -16,7 +16,7 @@ def sdist():
 
 @task
 def install():
-    """install cloudmesh"""
+    """install cloud-metrics"""
     local("pip install -r requirements.txt")
     local("python setup.py install")
 

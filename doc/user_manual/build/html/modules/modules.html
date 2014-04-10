@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modules and Classes &mdash; Cloud Metrics  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.1.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.1.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/fg-favicon.ico"/>
+    <link rel="top" title="Cloud Metrics  documentation" href="../index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img src="../_static/fg-logo-white-24x36.png">
+          Cloud Metrics</a>
+        <span class="navbar-text navbar-version pull-left"><b>4.0.1
+</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html">Administrator Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html#usage-quickstart">Usage Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../manual.html#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#prerequisites">Prerequisites</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../manual.html#install-fabric">Install fabric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../manual.html#quick-deployment">Quick deployment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#production-version">Production Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#development-version">Development Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#database">Database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../manual.html#mysql-installation">MySQL Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../manual.html#access-information-futuregrid-cfg-and-db-mysql-tables-creation">Access Information (futuregrid.cfg) and DB (MySQL) tables creation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#obtaining-metric-data-from-logs-and-database">Obtaining metric data from logs and database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../manual.html#eucalyptus">Eucalyptus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../manual.html#openstack">OpenStack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../manual.html#nimbus">Nimbus</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#generating-pdf-reports">Generating PDF reports</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#creating-the-documentation">Creating the Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#production-web-pages-using-sphinx">Production Web Pages using Sphinx</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../manual.html#database-configuration">Database Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#obtaining-cloud-usage-information">Obtaining Cloud Usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#id1">Eucalyptus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#id2">OpenStack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#id4">Nimbus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../manual.html#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#commands">Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../manual.html#setting-up-a-production-environment">Setting up a Production Environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#id6">Production Web Pages using Sphinx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#production-web-pages-using-flask">Production Web Pages using Flask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../manual.html#production-pdf-reports">Production PDF Reports</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../metrics.html">Metric Shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../metrics.html#starting-the-cloud-metric-shell">Starting the cloud metric shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics.html#the-set-command">The  &#8220;set&#8221; Command</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../metrics.html#set-the-date-range">Set the date range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics.html#set-the-metric">Set the metric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics.html#set-the-hostname">Set the hostname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics.html#set-the-cloud-service">Set the cloud service</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics.html#the-help-command">The &#8220;help&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics.html#the-analyze-command">The &#8220;analyze&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics.html#the-chart-command">The &#8220;chart&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics.html#the-csv-command">The &#8220;csv&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics.html#examples-of-using-the-metric-shell">Examples of using the metric shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../metrics.html#daily-active-user-count">Daily active user count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics.html#vms-count-by-project">VMs count by Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics.html#three-metrics-in-a-single-chart">Three metrics in a single chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics.html#python-program-to-create-a-summary-analysis-for-multiple-month">Python Program to create a summary analysis for multiple month</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Developers Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../highchart.html">Highchart demo in sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">TODO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../todo.html#list">List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../todo.html#observations">Observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../todo.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../todo.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../todo.html#showing-only-image-numbers-owned-by-the-userid-specified">Showing only image numbers owned by the userid specified::</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../todo.html#displaying-details-about-images">Displaying details about images::</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../todo.html#displaying-summary-values-about-images">Displaying summary values about images</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../repository.html">Directory Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../repository.html#file-contents">File contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ubmod.html">UBMoD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lighttpd.html">Stand Allone Web Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lighttpd.html#using-the-standalone-server">Using the Standalone server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lighttpd.html#browsing-the-contents">Browsing the contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Modules and Classes</a><ul>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="modules-and-classes">
+<h1>Modules and Classes<a class="headerlink" href="#modules-and-classes" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, Fugang Wang.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

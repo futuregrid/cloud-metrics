@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>TODO &mdash; Cloud Metrics  documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-3.1.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-3.1.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="_static/fg-favicon.ico"/>
+    <link rel="top" title="Cloud Metrics  documentation" href="index.html" />
+    <link rel="next" title="Directory Structure" href="repository.html" />
+    <link rel="prev" title="Highchart demo in sphinx" href="highchart.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="_static/fg-logo-white-24x36.png">
+          Cloud Metrics</a>
+        <span class="navbar-text navbar-version pull-left"><b>4.0.1
+</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Administrator Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html#usage-quickstart">Usage Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#prerequisites">Prerequisites</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#install-fabric">Install fabric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#quick-deployment">Quick deployment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#production-version">Production Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#development-version">Development Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#database">Database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#mysql-installation">MySQL Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#access-information-futuregrid-cfg-and-db-mysql-tables-creation">Access Information (futuregrid.cfg) and DB (MySQL) tables creation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#obtaining-metric-data-from-logs-and-database">Obtaining metric data from logs and database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#eucalyptus">Eucalyptus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#openstack">OpenStack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#nimbus">Nimbus</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#generating-pdf-reports">Generating PDF reports</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#creating-the-documentation">Creating the Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#production-web-pages-using-sphinx">Production Web Pages using Sphinx</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#database-configuration">Database Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#obtaining-cloud-usage-information">Obtaining Cloud Usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#id1">Eucalyptus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#id2">OpenStack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#id4">Nimbus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#commands">Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#setting-up-a-production-environment">Setting up a Production Environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#id6">Production Web Pages using Sphinx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#production-web-pages-using-flask">Production Web Pages using Flask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#production-pdf-reports">Production PDF Reports</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metric Shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#starting-the-cloud-metric-shell">Starting the cloud metric shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-set-command">The  &#8220;set&#8221; Command</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-date-range">Set the date range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-metric">Set the metric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-hostname">Set the hostname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-cloud-service">Set the cloud service</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-help-command">The &#8220;help&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-analyze-command">The &#8220;analyze&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-chart-command">The &#8220;chart&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-csv-command">The &#8220;csv&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#examples-of-using-the-metric-shell">Examples of using the metric shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#daily-active-user-count">Daily active user count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#vms-count-by-project">VMs count by Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#three-metrics-in-a-single-chart">Three metrics in a single chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#python-program-to-create-a-summary-analysis-for-multiple-month">Python Program to create a summary analysis for multiple month</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developers Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="highchart.html">Highchart demo in sphinx</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">TODO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#list">List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#observations">Observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#showing-only-image-numbers-owned-by-the-userid-specified">Showing only image numbers owned by the userid specified::</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#displaying-details-about-images">Displaying details about images::</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#displaying-summary-values-about-images">Displaying summary values about images</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="repository.html">Directory Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repository.html#file-contents">File contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#using-the-standalone-server">Using the Standalone server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#browsing-the-contents">Browsing the contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">TODO</a><ul>
+<li><a class="reference internal" href="#list">List</a></li>
+<li><a class="reference internal" href="#observations">Observations</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li><a class="reference internal" href="#showing-only-image-numbers-owned-by-the-userid-specified">Showing only image numbers owned by the userid specified::</a></li>
+<li><a class="reference internal" href="#displaying-details-about-images">Displaying details about images::</a></li>
+<li><a class="reference internal" href="#displaying-summary-values-about-images">Displaying summary values about images</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="highchart.html" title="Previous Chapter: Highchart demo in sphinx"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; Highchart demo i...</span>
+    </a>
+  </li>
+  <li>
+    <a href="repository.html" title="Next Chapter: Directory Structure"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">Directory Struct... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="todo">
+<h1><a class="toc-backref" href="#id1">TODO</a><a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h1>
+<div class="sidebar">
+<p class="first sidebar-title">Metrics</p>
+<div class="contents last topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#todo" id="id1">TODO</a><ul>
+<li><a class="reference internal" href="#list" id="id2">List</a></li>
+<li><a class="reference internal" href="#observations" id="id3">Observations</a></li>
+<li><a class="reference internal" href="#examples" id="id4">Examples</a><ul>
+<li><a class="reference internal" href="#show-machine-image-counts-for-eucalyptus" id="id5">Show machine image counts for Eucalyptus</a></li>
+<li><a class="reference internal" href="#showing-only-image-numbers-owned-by-the-userid-specified" id="id6">Showing only image numbers owned by the userid specified::</a></li>
+<li><a class="reference internal" href="#displaying-details-about-images" id="id7">Displaying details about images::</a></li>
+<li><a class="reference internal" href="#displaying-summary-values-about-images" id="id8">Displaying summary values about images</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="list">
+<h2><a class="toc-backref" href="#id2">List</a><a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">The creation of the production pages is prbably not working right</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="manual.html#index-0"><em>original entry</em></a> is located in  /home/hyungro/github/futuregrid/cloud-metrics/doc/user_manual/source/manual.rst, line 579.)</p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Develop the documentation on how to set up the flask environment</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="manual.html#index-1"><em>original entry</em></a> is located in  /home/hyungro/github/futuregrid/cloud-metrics/doc/user_manual/source/manual.rst, line 605.)</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">document the undocumented commands and include new output here once done.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="metrics.html#index-0"><em>original entry</em></a> is located in  /home/hyungro/github/futuregrid/cloud-metrics/doc/user_manual/source/metrics.rst, line 112.)</p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Hyungro</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="metrics.html#index-1"><em>original entry</em></a> is located in  /home/hyungro/github/futuregrid/cloud-metrics/doc/user_manual/source/metrics.rst, line 139.)</p>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">Hyungro, what about the other commands? I do not think they are listed here.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="metrics.html#index-2"><em>original entry</em></a> is located in  /home/hyungro/github/futuregrid/cloud-metrics/doc/user_manual/source/metrics.rst, line 146.)</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">integrate fg-=cleanup into fg-metric shell</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="#index-0"><em>original entry</em></a> is located in  /home/hyungro/github/futuregrid/cloud-metrics/doc/user_manual/source/todo.rst, line 19.)</p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Hyungro, its unclear to me where this code is and how i
+can access it through the shell</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="#index-1"><em>original entry</em></a> is located in  /home/hyungro/github/futuregrid/cloud-metrics/doc/user_manual/source/todo.rst, line 37.)</p>
+</div>
+<div class="section" id="observations">
+<h2><a class="toc-backref" href="#id3">Observations</a><a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">integrate fg-=cleanup into fg-metric shell</p>
+</div>
+<p>There is little need to have a second command to cleanup the table, this
+should become a plugin to the shell and be called with</p>
+<p>fg-metric database .....</p>
+<p>with the parameters from fg-clean-table</p>
+</div>
+<div class="section" id="examples">
+<h2><a class="toc-backref" href="#id4">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>what is here cmd?</p>
+<div class="section" id="show-machine-image-counts-for-eucalyptus">
+<h3><a class="toc-backref" href="#id5">Show machine image counts for Eucalyptus</a><a class="headerlink" href="#show-machine-image-counts-for-eucalyptus" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Hyungro, its unclear to me where this code is and how i
+can access it through the shell</p>
+</div>
+<p>Based on Jonathan&#8217;s code, we are able to get image counts via cmd2 tools.
+It&#8217;s established on &#8216;euca-describe-images&#8217; command:</p>
+<div class="highlight-python"><pre>(Cmd) count_images
+...
+sazh72  1
+debian-rm1984   1
+pegasus-images  3
+wchen-server-stage-1    2
+...</pre>
+</div>
+<p>There are additional options which might be useful,</p>
+</div>
+<div class="section" id="showing-only-image-numbers-owned-by-the-userid-specified">
+<h3><a class="toc-backref" href="#id6">Showing only image numbers owned by the userid specified::</a><a class="headerlink" href="#showing-only-image-numbers-owned-by-the-userid-specified" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>(Cmd) count_image -u jdiaz
+jdiaz   7</div></blockquote>
+</div>
+<div class="section" id="displaying-details-about-images">
+<h3><a class="toc-backref" href="#id7">Displaying details about images::</a><a class="headerlink" href="#displaying-details-about-images" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>(Cmd) count_images -u jdiaz -d
+jdiaz   7
+IMAGE   emi-1CA015A7    centos-image-bucket/centos.5-3.x86-64.img.manifest.xml  taklwu  available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-DBC4106B    ubuntu-0904-saga-1.5.2/image.manifest.xml       luckow  available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-F840162A    myubuntubucket/ubuntufloeserver.img.manifest.xml        sreedharnat1    available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   eki-7A031340    mybucket/vmlinuz-2.6.28-11-generic.manifest.xml ajyounge        available       public          x86_64  kernel                  instance-store
+IMAGE   emi-E5D514DA    jdiaz/ubuntunattyjdiaz3595279807.img_0.manifest.xml     javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-46861248    jdiaz/centos6jdiaz2698814667.img.manifest.xml   javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-431F1230    jdiaz/centos6jdiaz2710350825.img.manifest.xml   javidiaz        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-0E0E165E    ajyounge/ubuntu-twister-memcached.img.manifest.xml      ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-A5B6148A    ajyounge/ubuntu-lucid-minimal.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-4A051306    ajyounge/ubuntu-lucid-mpj.img.manifest.xml      ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-48141244    ajyounge/ajyounge-1563160039.img.manifest.xml   ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store
+IMAGE   emi-FC6A1197    ajyounge/ubuntu-natty.img.manifest.xml  ajyounge        available       public          x86_64  machine eki-78EF12D2    eri-5BB61255    instance-store</div></blockquote>
+</div>
+<div class="section" id="displaying-summary-values-about-images">
+<h3><a class="toc-backref" href="#id8">Displaying summary values about images</a><a class="headerlink" href="#displaying-summary-values-about-images" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>e.g. total image counts, total user counts, average image counts
+per user, and maximum image counts and userid:</p>
+<div class="highlight-python"><pre>(Cmd) count_images -s
+...
+= Summary =
+Total image counts:     128
+Total user counts:      71
+Average image counts per user:  1.80281690141
+Maximum image counts and userid:        ajyounge has 12
+==========</pre>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, Fugang Wang.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

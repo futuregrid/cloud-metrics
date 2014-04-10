@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Metrics &mdash; Cloud Metrics  documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-3.1.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-3.1.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="_static/fg-favicon.ico"/>
+    <link rel="top" title="Cloud Metrics  documentation" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="_static/fg-logo-white-24x36.png">
+          Cloud Metrics</a>
+        <span class="navbar-text navbar-version pull-left"><b>4.0.1
+</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Administrator Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html#usage-quickstart">Usage Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#prerequisites">Prerequisites</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#install-fabric">Install fabric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#quick-deployment">Quick deployment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#production-version">Production Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#development-version">Development Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#database">Database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#mysql-installation">MySQL Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#access-information-futuregrid-cfg-and-db-mysql-tables-creation">Access Information (futuregrid.cfg) and DB (MySQL) tables creation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#obtaining-metric-data-from-logs-and-database">Obtaining metric data from logs and database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#eucalyptus">Eucalyptus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#openstack">OpenStack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="manual.html#nimbus">Nimbus</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#generating-pdf-reports">Generating PDF reports</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#creating-the-documentation">Creating the Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#production-web-pages-using-sphinx">Production Web Pages using Sphinx</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#database-configuration">Database Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#obtaining-cloud-usage-information">Obtaining Cloud Usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#id1">Eucalyptus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#id2">OpenStack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#id4">Nimbus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#commands">Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#setting-up-a-production-environment">Setting up a Production Environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#id6">Production Web Pages using Sphinx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#production-web-pages-using-flask">Production Web Pages using Flask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#production-pdf-reports">Production PDF Reports</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metric Shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#starting-the-cloud-metric-shell">Starting the cloud metric shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-set-command">The  &#8220;set&#8221; Command</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-date-range">Set the date range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-metric">Set the metric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-hostname">Set the hostname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#set-the-cloud-service">Set the cloud service</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-help-command">The &#8220;help&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-analyze-command">The &#8220;analyze&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-chart-command">The &#8220;chart&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#the-csv-command">The &#8220;csv&#8221; command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#examples-of-using-the-metric-shell">Examples of using the metric shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#daily-active-user-count">Daily active user count</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#vms-count-by-project">VMs count by Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#three-metrics-in-a-single-chart">Three metrics in a single chart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#create-a-summary-table-for-the-month-of-january">Create a summary table for the month of January</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#create-a-summary-analysis-for-multiple-month">Create a summary analysis for multiple month</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics.html#python-program-to-create-a-summary-analysis-for-multiple-month">Python Program to create a summary analysis for multiple month</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developers Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="highchart.html">Highchart demo in sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">TODO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#list">List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#observations">Observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="todo.html#show-machine-image-counts-for-eucalyptus">Show machine image counts for Eucalyptus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="todo.html#showing-only-image-numbers-owned-by-the-userid-specified">Showing only image numbers owned by the userid specified::</a></li>
+<li class="toctree-l3"><a class="reference internal" href="todo.html#displaying-details-about-images">Displaying details about images::</a></li>
+<li class="toctree-l3"><a class="reference internal" href="todo.html#displaying-summary-values-about-images">Displaying summary values about images</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="repository.html">Directory Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repository.html#file-contents">File contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubmod.html">UBMoD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lighttpd.html">Stand Allone Web Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#instalation-of-lighttpd">Instalation of lighttpd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#using-the-standalone-server">Using the Standalone server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighttpd.html#browsing-the-contents">Browsing the contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Metrics</a><ul>
+<li><a class="reference internal" href="#current-metrics">Current metrics</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="metrics">
+<h1>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h1>
+<p>There are currently eight different metrics to deliver system utilization, user activities and statistics. These statistical data are collected from log files which contain trackable information and from administrative command tools like euca2ools. The metrics system has simple operations to measure specific items such as virtual machine (VM) instances, registered VM images, virtual system resources, etc and there are count, average, sum, max, and min functions. In this section, you can find descriptions, instructions, and examples for the metrics.</p>
+<div class="section" id="current-metrics">
+<h2>Current metrics<a class="headerlink" href="#current-metrics" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><dl class="first docutils">
+<dt><strong>The number of VM instances used per user</strong></dt>
+<dd><p class="first last">It is virtual machine instance count launched by users or accounts based on log files of eucalyptus. It shows a user&#8217;s activity and a system utilization by counting launched VM instances during a certain period.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Total runtime of VM instance used per user</strong></dt>
+<dd><p class="first last">It is the total runtime for virtual machine instances grouped by users or accounts based on log files of eucalyptus. It shows the amount of resources used by users and a system utilization by adding up the total lifetime of instances during a certain period.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>A count of VM images owned per user</strong></dt>
+<dd><dl class="first last docutils">
+<dt>It is virtual machine image count grouped by users or accounts based on euca2ools. It shows that which user or account currently owns how many virtual machine images on the system. This metric is based on the euca2ool command <em>euca-describe-images</em> that a eucalyptus user can see a list of machine images. For example in Eucalyptus 3.0, the euca-describe-images generates information like below.</dt>
+<dd><div class="first last highlight-python"><pre>$ euca-describe-images
+IMAGE emi-0E19393A jdiaz/ubuntuprecisejdiaz2122518911.img.manifest.xml 281408815495 available public i386 machine eki-226638E6 eri-32DE3771 instance-store
+IMAGE eri-4E163AA8 ramdik/initrd.img-2.6.28-11-generic.manifest.xml 000000000001 available public i386 ramdisk instance-store
+...</pre>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>The total number of VM instances used in a system</strong></dt>
+<dd><p class="first last">It is a count of virtual machine instance used during a certain period in a system. It shows a system utilization and a performance comparison among other systems by counting launched VM instances. It is similar to the metric of the number of VM instances used per user but it is grouped by a system instead of a user.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Total runtime of VM instances used in a system</strong></dt>
+<dd><p class="first last">It is a total wall-clock hour(s) for virtual machine instances used in a system. It shows the amount of resources allocated and a system utilization by adding up the total lifetime of instances during a certain period. It is similar to the metric of total runtime of VM instance used per user but it is grouped by a system instead of a user.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Total CPU cores of VM instances used in a system</strong></dt>
+<dd><p class="first last">It is a total amount of CPU cores for VM instances requested by users in a system. It shows CPU resource allocation by adding up the CPU cores requested during a certain period.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Total memories of VM instances used in a system</strong></dt>
+<dd><p class="first last">It is a total size of memories for VM instances requested by users in a system. It shows memory resource allocation by adding up the size of a memory block requested during a certain period.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Total disks of VM instances used in a system</strong></dt>
+<dd><p class="first last">It is a total size of storage for VM instances requested by users in a system. It shows disk allocation by adding up the the size of a disk requested during a certain period.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>In this section, graphs, and commands for each metric will be viewed.</p>
+<ol class="arabic">
+<li><p class="first">The number of VM instances used per user
+generates a graph like below.</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../../results/data/2012-01/india/bar.count.png"><img alt="The number of VM instances used per user" src="../../results/data/2012-01/india/bar.count.png" /></a>
+<p class="caption">Figure 1. The number of used VM instances grouped by an ownerid (January 2012 in India)</p>
+<div class="legend">
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="92%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&nbsp;</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first last">X-axis</p>
+</td>
+<td><p class="first last">indicates the number of VM instances.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Y-axis</p>
+</td>
+<td><p class="first last">indicates an ownerid and the number of VM instances used by the ownerid.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table 1. Specifications for the example options</p>
+</div>
+</div>
+<p><strong>Example commands</strong></p>
+<p><em>This included block is from examples/example2-1.txt</em></p>
+<p><strong>Related commands</strong></p>
+<dl class="docutils">
+<dt>clear users</dt>
+<dd><p class="first last">clear memory for user data</p>
+</dd>
+<dt>analyze</dt>
+<dd><p class="first last">analyze user data for a certain period</p>
+</dd>
+<dt>createreport</dt>
+<dd><p class="first last">create a graph</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p class="first">Total runtime of VM instance used per user
+generates a graph like below.</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../../results/data/2012-01/india/bar.sum.png"><img alt="The wall-clock hour for all VM instances executed per user" src="../../results/data/2012-01/india/bar.sum.png" /></a>
+<p class="caption">Figure 2. The wall-clock hour for all VM instances executed per user (January 2012 in India)</p>
+<div class="legend">
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="93%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&nbsp;</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first last">X-axis</p>
+</td>
+<td><p class="first last">indicates the total wall-clock hours for all VM instances.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Y-axis</p>
+</td>
+<td><p class="first last">indicates the an ownerid and the total hours of VM instances used by the ownerid.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table 2. Specifications for the example options</p>
+</div>
+</div>
+<p><strong>Example commands</strong></p>
+<p><em>This included block is from examples/example2-1.txt</em></p>
+</div></blockquote>
+</li>
+<li><p class="first">A count of VM images owned per user
+generates a graph like below.</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../../results/data/image_counts.png"><img alt="A count of VM images owned per user in India" src="../../results/data/image_counts.png" /></a>
+<p class="caption">Figure 3. A count of VM images owned per user (Current data in India)</p>
+<div class="legend">
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&nbsp;</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first last">X-axis</p>
+</td>
+<td><p class="first last">indicates a count of VM images owned by an ownerid.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Y-axis</p>
+</td>
+<td><p class="first last">indicates an account id or an user id with the count.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table 3. Specifications for the example options</p>
+</div>
+</div>
+<p><strong>Example commands</strong></p>
+<p><em>This included block is from examples/example4.txt</em></p>
+<p><strong>Related commands</strong></p>
+<dl class="docutils">
+<dt>count_images</dt>
+<dd><div class="first last line-block">
+<div class="line">Count virtual machine images per user id or account id.</div>
+<div class="line">A user should read configurations and credentials of euca2ools from the config file i.e. eucarc.</div>
+<div class="line">Otherwise, this command does not return anything.</div>
+<div class="line">Typically, this is only allowed for administrators.</div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p class="first">The total number of VM instances used in a system
+generates a graph like below.</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../../results/data/2011-11/india/count/linechart.png"><img alt="The total number of VM instances used in a system" src="../../results/data/2011-11/india/count/linechart.png" /></a>
+<p class="caption">Figure 4. The total number of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)</p>
+<div class="legend">
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="91%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><p class="first last">X-axis:</p>
+</td>
+<td><p class="first last">a day for the search range
+(e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Y-axis:</p>
+</td>
+<td><p class="first last">instance counts</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">Search range:</p>
+</td>
+<td><p class="first last">2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Period:</p>
+</td>
+<td><p class="first last">daily</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table 4. Specifications for the example options</p>
+</div>
+</div>
+<p><strong>Example commands</strong></p>
+<p><em>This included block is from examples/example5-1.txt</em></p>
+<p><strong>Related commands</strong></p>
+<dl class="docutils">
+<dt>set_range</dt>
+<dd><p class="first last">Specify search range</p>
+</dd>
+<dt>set_nodename</dt>
+<dd><p class="first last">Specify search node name</p>
+</dd>
+<dt>analyze</dt>
+<dd><p class="first">Analyze for a metric specified by -S option</p>
+<p><em>Options</em></p>
+<dl class="last docutils">
+<dt>count</dt>
+<dd><p class="first last">Analyze for counting the total number of VM instances</p>
+</dd>
+<dt>runtime</dt>
+<dd><p class="first last">Analyze for wall-clock hours for VM instances</p>
+</dd>
+<dt>ccvm_cores</dt>
+<dd><p class="first last">Analyze for CPU cores of VM instances</p>
+</dd>
+<dt>ccvm_mem</dt>
+<dd><p class="first last">Analyze for memory allocation for VM instances</p>
+</dd>
+<dt>ccvm_disk</dt>
+<dd><p class="first last">Analyze for disk allocation for VM instances</p>
+</dd>
+</dl>
+</dd>
+<dt>sys_report</dt>
+<dd><div class="first last line-block">
+<div class="line">Generate a graph for the analyzed data</div>
+<div class="line">&#8216;analyze&#8217; command needs to be executed prior to run this command</div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p class="first">Total runtime of VM instances used in a system
+generates a graph like below.</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../../results/data/2011-11/india/runtime/linechart.png"><img alt="The total wall-clock hours of VM instances used in a system" src="../../results/data/2011-11/india/runtime/linechart.png" /></a>
+<p class="caption">Figure 5. The total wall-clock hours of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)</p>
+<div class="legend">
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="91%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><p class="first last">X-axis:</p>
+</td>
+<td><p class="first last">a day for the search range
+(e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Y-axis:</p>
+</td>
+<td><p class="first last">total wall-clock hours
+(e.g. 1860 indicates maximum used hours during this search range)</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">Search range:</p>
+</td>
+<td><p class="first last">2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Period:</p>
+</td>
+<td><p class="first last">daily</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table 5. Specifications for the example options</p>
+</div>
+</div>
+<p><strong>Example commands</strong></p>
+<p><em>This included block is from examples/example5.txt</em></p>
+<p><strong>Related commands</strong></p>
+<dl class="docutils">
+<dt>set_range</dt>
+<dd><p class="first last">Specify search range</p>
+</dd>
+<dt>set_nodename</dt>
+<dd><p class="first last">Specify search node name</p>
+</dd>
+<dt>analyze</dt>
+<dd><p class="first last">Analyze for a metric specified by -S option</p>
+</dd>
+<dt>sys_report</dt>
+<dd><div class="first last line-block">
+<div class="line">Generate a graph for the analyzed data</div>
+<div class="line">&#8216;analyze&#8217; command needs to be executed prior to run this command</div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p class="first">Total CPU cores of VM instances used in a system
+generates a graph like below.</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../../results/data/2011-11/india/cores/linechart.png"><img alt="The total CPU cores of VM instances used in a system" src="../../results/data/2011-11/india/cores/linechart.png" /></a>
+<p class="caption">Figure 6. The total CPU cores of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)</p>
+<div class="legend">
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="91%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><p class="first last">X-axis:</p>
+</td>
+<td><p class="first last">a day for the search range
+(e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Y-axis:</p>
+</td>
+<td><p class="first last">the number of CPU cores</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">Search range:</p>
+</td>
+<td><p class="first last">2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Period:</p>
+</td>
+<td><p class="first last">daily</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table 6. Specifications for the example options</p>
+</div>
+</div>
+<p><strong>Example commands</strong></p>
+<p><em>This included block is from examples/example5-3.txt</em></p>
+<p><strong>Related commands</strong></p>
+<dl class="docutils">
+<dt>analyze</dt>
+<dd><p class="first">Analyze for a metric specified by -S option</p>
+<p><em>Options</em></p>
+<dl class="last docutils">
+<dt>count</dt>
+<dd><p class="first last">Analyze for counting the total number of VM instances</p>
+</dd>
+<dt>runtime</dt>
+<dd><p class="first last">Analyze for wall-clock hours for VM instances</p>
+</dd>
+<dt>ccvm_cores</dt>
+<dd><p class="first last">Analyze for CPU cores of VM instances</p>
+</dd>
+<dt>ccvm_mem</dt>
+<dd><p class="first last">Analyze for memory allocation for VM instances</p>
+</dd>
+<dt>ccvm_disk</dt>
+<dd><p class="first last">Analyze for disk allocation for VM instances</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p class="first">Total memories of VM instances used in a system
+generates a graph like below.</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../../results/data/2011-11/india/mem/linechart.png"><img alt="The total memories of VM instances used in a system" src="../../results/data/2011-11/india/mem/linechart.png" /></a>
+<p class="caption">Figure 7. The total memories of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)</p>
+<div class="legend">
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="91%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><p class="first last">X-axis:</p>
+</td>
+<td><p class="first last">a day for the search range
+(e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Y-axis:</p>
+</td>
+<td><p class="first last">the total memory allocation</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">Search range:</p>
+</td>
+<td><p class="first last">2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Period:</p>
+</td>
+<td><p class="first last">daily</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table 7. Specifications for the example options</p>
+</div>
+</div>
+<p><strong>Example commands</strong></p>
+<p><em>This included block is from examples/example5-4.txt</em></p>
+</div></blockquote>
+</li>
+<li><p class="first">Total disks of VM instances used in a system
+generates a graph like below.</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../../results/data/2011-11/india/disk/linechart.png"><img alt="The total disk of VM instances used in a system" src="../../results/data/2011-11/india/disk/linechart.png" /></a>
+<p class="caption">Figure 8. The total disks of VM instances used in a system (11/01/2011 ~ 05/14/2012 in India)</p>
+<div class="legend">
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="91%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><p class="first last">X-axis:</p>
+</td>
+<td><p class="first last">a day for the search range
+(e.g. 0d indicates 2011/11/01 which is the first day of this search and 189d indicates 2012/05/14 which is the last day of this search)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Y-axis:</p>
+</td>
+<td><p class="first last">the total disk allocation</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last">Search range:</p>
+</td>
+<td><p class="first last">2011/11/01 00:00:00 ~ 2012/05/14 23:59:59 (189 days)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last">Period:</p>
+</td>
+<td><p class="first last">daily</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table 8. Specifications for the example options</p>
+</div>
+</div>
+<p><strong>Example commands</strong></p>
+<p><em>This included block is from examples/example5-5.txt</em></p>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2013, Developed for FutureGrid by Gregor von Laszewski, Hyungro Lee, Fugang Wang.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

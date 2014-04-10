@@ -1,0 +1,8 @@
+[console_scripts]
+fg-parser = fgmetric.shell.FGParser:main
+fg-metric-install = fgmetric.setup.FGInstall:main
+fg-metric = fgmetric.shell.FGMetricShell:main
+fg-euca-gather-log-files = fgmetric.shell.FGCollectFiles:main
+fg-logparser = fgmetric.shell.FGLogParser:main
+fg-metric-converter = fgmetric.shell.FGConverter:main
+

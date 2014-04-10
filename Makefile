@@ -95,7 +95,7 @@ clean:
 	find . -name "*~" -exec rm {} \;  
 	find . -name "*.pyc" -exec rm {} \;  
 	rm -rf build dist *.egg-info *~ #*
-	cd doc; make clean
+	cd doc/user_manual; make clean
 	rm -rf *.egg-info
 
 
@@ -135,7 +135,7 @@ tag:
 
 PROJECT=`basename $(PWD)`
 DIR=/tmp/$(PROJECT)
-DOC=$(DIR)/doc/user_manual
+DOC=$(DIR)/doc
 
 pages: ghphtml ghpgit
 	echo done
@@ -157,3 +157,9 @@ ghpgit:
 	git push
 	git checkout master
 
+######################################################################
+# sphinx documentation
+######################################################################
+
+sphinx:
+	cd doc/user_manual; make html

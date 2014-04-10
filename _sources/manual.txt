@@ -36,7 +36,7 @@ We assume you have a valid python version (2.7.2 or higher) and all
 the needed libraries on the system where you run the code.
 
 Install fabric
-===========================================================
+----------------------------------------------------------------------
 
 Our setup scripts use Fabric which is a nice management tool and 
 is for our purpose a fancy makefile like tool (with many additional 
@@ -50,14 +50,17 @@ Fabric can now be installed as follows::
 
     $ pip install fabric
 
-Python sphinx-contrib Autorun
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Install Python sphinx-contrib Autorun
+----------------------------------------------------------------------
 
 ::
 
     $ hg clone http://bitbucket.org/birkenfeld/sphinx-contrib/
     $ cd sphinx-contrib/autorun
     $ python setup.py install
+
+Install MySQL Client
+----------------------------
 
 Linux
 ^^^^^^^^^^^^^^^

@@ -14,7 +14,7 @@
 import sys, os
 import sphinx_bootstrap_theme
 
-version = open("../../VERSION.txt").read()
+version = open("../../../VERSION.txt").read()
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the

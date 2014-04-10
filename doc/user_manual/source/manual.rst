@@ -10,6 +10,22 @@ Administrator Guide
 
 ..
 
+**********************************************************************
+Usage Quickstart 
+**********************************************************************
+
+The following are the current steps to bring all services for
+cloud-metrics up and running. After you have Installed the software.
+Naturally we could have included them in the Section `ref:s-installation`
+one script, which we will do at a later time. For now, we want to keep
+the services separated to ease development and debugging of various
+parts. Naturally, if you can just pick the commands that you really
+need and do not have to execute all of them. Over time, you will notice
+which commands are needed for you. An overview of available commands
+can be found with::
+
+   $ fab -l
+
 Installation
 ======================================================================
 
@@ -18,6 +34,21 @@ Prerequisites
 
 We assume you have a valid python version (2.7.2 or higher) and all
 the needed libraries on the system where you run the code.
+
+Install fabric
+===========================================================
+
+Our setup scripts use Fabric which is a nice management tool and 
+is for our purpose a fancy makefile like tool (with many additional 
+feature). This tool (and several other packages) uses the python-dev 
+package. If you do not have it installed already you can get by doing
+the following::
+
+    $ sudo apt-get install python-dev
+
+Fabric can now be installed as follows::
+
+    $ pip install fabric
 
 Python sphinx-contrib Autorun
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -58,6 +89,23 @@ or
   brew install mysql
   pip install MySQL-python
 
+Quick deployment 
+===========================
+
+This quick deployment is targeted for ubuntu. It can be achieved in several easy steps.
+First, obtain a vanilla ubuntu system. Make sure that git is installed, which is standard by now.
+
+Next execute the following commands ::
+
+    $ git clone git@github.com:futuregrid/cloud-metrics.git
+    $ cd cloud-metrics
+    $ fab -f install/fabfile.py deploy
+    $ fab build.install
+
+Some developers may prefer using https for accessing git::
+
+  $ git clone https://github.com/futuregrid/cloud-metrics
+
 Production Version
 ----------------------------------------------------------------------
 
@@ -77,6 +125,19 @@ it and install with::
   cd cloud-metrics
   python setup.py install
 
+Requirements
+------------
+
+Although the install of fabfile contains the automatic 
+installation of
+requirements, we would like to point out that changes in 
+the requirements.txt
+file that you may require additiona execution with::
+
+    pip install -r requirements.txt
+
+If you do not change the requirements file, this step will be
+automatically executed as part of the installation.
 
 Database
 -----------

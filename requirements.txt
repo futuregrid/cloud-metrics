@@ -1,0 +1,12 @@
+setuptools
+pip
+sphinxcontrib-issuetracker
+sphinxcontrib-googlechart
+cherrypy
+pymongo
+cmd2
+pygooglechart
+sqlalchemy
+mysql-connector-python
+mysql-python
+mimerender

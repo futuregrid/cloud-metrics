@@ -2,6 +2,7 @@ setuptools
 pip
 sphinxcontrib-issuetracker
 sphinxcontrib-googlechart
+sphinx_bootstrap_theme
 cherrypy
 pymongo
 cmd2

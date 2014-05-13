@@ -11,13 +11,19 @@ def get_index_page():
     print "The server is running"
     return "The server is running\n"
 
-@app.route('/metric/<cloudname>/<clustername>/<username>/<metric>/<timestart>/<timeend>/<period>')
-def get_metric(cloudname,clustername,username,metric,timestart,timeend,period):
+@app.route('/metric/<cloudname>/<clustername>/<userid>/<metric>/<timestart>/<timeend>/<period>')
+def get_metric(cloudname,clustername,userid,metric,timestart,timeend,period):
 
     lvms = ListVMs()
 
     lvms.search.set_cloud(cloudname)
+    lvms.search.set_date(timestart,timeend)
+    lvms.search.set_metric(metric)
+    lvms.search.set_userid(userid)
+    lvms.search.set_period(period)
+    lvms.search.set_cluster(clustername)
     result = lvms.dispatch_request()
+    print result
     return result
    
 @app.route('/metric/list_vms')
@@ -25,6 +31,7 @@ def get_list_vms():
 
     lvms = ListVMs()
     result = lvms.dispatch_request()
+    print result
     return result
 
 class search_option:
@@ -35,7 +42,7 @@ class search_option:
         self.metric = None
         self.cluster = None
         self.iaas = None
-        self.user = None
+        self.userid = None
 
     def __str__(self):
         result = ""
@@ -45,7 +52,7 @@ class search_option:
         result += "metric:    %s\n" % self.metric
         result += "cluster:    %s\n" % self.cluster
         result += "iaas:      %s\n" % self.iaas
-        result += "user:      %s\n" % self.user
+        result += "userid:      %s\n" % self.userid
         return result
 
     def set_date(self, from_date, to_date):
@@ -67,6 +74,9 @@ class search_option:
     def set_cloud(self, cloud):
         ''' link to set_iaas '''
         self.set_iaas(cloud)
+
+    def set_userid(self, userid):
+        self.userid = userid
 
 class ListVMs(View):
 
@@ -102,7 +112,6 @@ class ListVMs(View):
                 '%%Y %%b') as 'MONTH YEAR', count(*) as VALUE from %(table)s,\
                 %(table2)s %(where_clause)s group by %(table2)s.platform, \
                 YEAR(date), MONTH(date)" % vars()
-        print query
         try:
             cursor.execute(query)
             self.data = cursor.fetchall()

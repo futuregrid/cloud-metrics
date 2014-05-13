@@ -4,6 +4,70 @@ from flask.views import View
 from FGMimerender import mimerender
 from fgmetric.shell.FGDatabase import FGDatabase
 
+app = Flask(__name__)
+
+@app.route('/')
+def get_index_page():
+    print "The server is running"
+    return "The server is running\n"
+
+@app.route('/metric/<cloudname>/<clustername>/<username>/<metric>/<timestart>/<timeend>/<period>')
+def get_metric(cloudname,clustername,username,metric,timestart,timeend,period):
+
+    lvms = ListVMs()
+
+    lvms.search.set_cloud(cloudname)
+    result = lvms.dispatch_request()
+    return result
+   
+@app.route('/metric/list_vms')
+def get_list_vms():
+
+    lvms = ListVMs()
+    result = lvms.dispatch_request()
+    return result
+
+class search_option:
+    def __init__(self):
+        self.from_date = None
+        self.to_date = None
+        self.period = None
+        self.metric = None
+        self.cluster = None
+        self.iaas = None
+        self.user = None
+
+    def __str__(self):
+        result = ""
+        result += "from_date: %s\n" % self.from_date
+        result += "to_date:   %s\n" % self.to_date
+        result += "period:    %s\n" % self.period
+        result += "metric:    %s\n" % self.metric
+        result += "cluster:    %s\n" % self.cluster
+        result += "iaas:      %s\n" % self.iaas
+        result += "user:      %s\n" % self.user
+        return result
+
+    def set_date(self, from_date, to_date):
+        self.from_date = from_date
+        self.to_date = to_date
+
+    def set_period(self, period):
+        self.period = period
+
+    def set_metric(self, metric):
+        self.metric = metric
+
+    def set_cluster(self, cluster):
+        self.cluster = cluster
+
+    def set_iaas(self, cloud):
+        self.iaas = cloud
+
+    def set_cloud(self, cloud):
+        ''' link to set_iaas '''
+        self.set_iaas(cloud)
+
 class ListVMs(View):
 
     def __init__(self):
@@ -12,6 +76,8 @@ class ListVMs(View):
         self.db.connect()
         self.cloudservice = None
         self.data = None
+
+        self.search = search_option()
 
     @mimerender
     def dispatch_request(self):
@@ -25,19 +91,52 @@ class ListVMs(View):
         new_res = {}
         for cloud in res:
             new_res[cloud['cloudPlatformId']] = cloud
-        self.cloudservice = new_res
+            self.cloudservice = new_res
 
     def read_vms(self):
         cursor = self.db.cursor
         table = self.db.instance_table
         table2 = self.db.cloudplatform_table
-        query = "select %(table2)s.platform as CLOUDNAME, DATE_FORMAT(date, '%%Y %%b') as 'MONTH YEAR', count(*) as VALUE from %(table)s, %(table2)s group by %(table2)s.platform, YEAR(date), MONTH(date)" % vars()
-
+        where_clause = self.get_where_clause()
+        query = "select %(table2)s.platform as CLOUDNAME, DATE_FORMAT(date,\
+                '%%Y %%b') as 'MONTH YEAR', count(*) as VALUE from %(table)s,\
+                %(table2)s %(where_clause)s group by %(table2)s.platform, \
+                YEAR(date), MONTH(date)" % vars()
+        print query
         try:
             cursor.execute(query)
             self.data = cursor.fetchall()
         except:
             print sys.exc_info()
+
+    def get_where_clause(self):
+        self.generate_where_clause()
+        return self.where_clause
+
+    def generate_where_clause(self):
+        where = []
+
+        # basic for join table
+        where.append("cloudplatform.cloudplatformid = \
+                     instance.cloudplatformidref")
+
+        if self.search.iaas:
+            iaas_ids = self.get_iaas_ids(self.search.iaas)
+            ids = ', '.join(map(str, iaas_ids))
+            where.append("cloudplatformidref in (%s)" % ids)
+            
+        self.where_clause = " where " + " and ".join(map(str,where))
+        return self.where_clause
+
+    def get_iaas_ids(self, name):
+        ids = []
+
+        self.db.cursor.execute("select cloudPlatformId from cloudplatform" \
+                               + " where platform = '%s'" % name)
+        results = self.db.cursor.fetchall()
+        for row in results:
+            ids.append(row['cloudPlatformId'])
+        return ids
 
     def map_cloudname(self):
         for record in self.data:
@@ -46,8 +145,7 @@ class ListVMs(View):
             except:
                 print record
 
-app = Flask(__name__)
-app.add_url_rule('/list_vms.json', view_func = ListVMs.as_view('list_vms'))
+#app.add_url_rule('/list_vms.json', view_func = ListVMs.as_view('list_vms'))
 
 if __name__ == "__main__":
     app.run(host=os.environ["FG_HOSTING_IP"], debug=True)

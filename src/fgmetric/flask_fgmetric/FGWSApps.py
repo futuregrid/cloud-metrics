@@ -3,6 +3,7 @@ from flask import Flask, jsonify
 from flask.views import View
 from FGMimerender import mimerender
 from fgmetric.shell.FGDatabase import FGDatabase
+from dateutil import parser
 
 app = Flask(__name__)
 
@@ -54,8 +55,8 @@ class SearchSettings:
     collects user inputs to refine results
     '''
     def __init__(self):
-        self.from_date = None
-        self.to_date = None
+        self.from_date = None # datetime
+        self.to_date = None # datetime
         self.period = None
         self.metric = None
         self.cluster = None
@@ -74,8 +75,10 @@ class SearchSettings:
         return result
 
     def set_date(self, from_date, to_date):
-        self.from_date = from_date
-        self.to_date = to_date
+        if from_date != "None":
+            self.from_date = parser.parse(from_date)
+        if to_date != "None":
+            self.to_date = parser.parse(to_date)
 
     def set_period(self, period):
         self.period = period
@@ -140,6 +143,11 @@ class CloudMetric(View):
             if iaas_ids:
                 ids = ', '.join(map(str, iaas_ids))
                 where.append("cloudplatformidref in (%s)" % ids)
+
+        if self.search.from_date:
+            where.append("t_start >= '%s'" % str(self.search.from_date))
+        if self.search.to_date:
+            where.append("t_end <= '%s'" % str(self.search.to_date))
             
         self.where_clause = " where " + " and ".join(map(str,where))
         return self.where_clause

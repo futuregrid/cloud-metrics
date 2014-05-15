@@ -139,25 +139,32 @@ class CloudMetric(View):
             where.append("(userinfo.ownerid = instance.ownerid \
                          or userinfo.username = instance.ownerid)")
 
-        if self.search.iaas:
+        if self.search.iaas != "None":
             iaas_ids = self.get_iaas_ids(self.search.iaas)
             if iaas_ids:
                 ids = ', '.join(map(str, iaas_ids))
-                where.append("cloudplatformidref in (%s)" % ids)
+            else:
+                ids = "'" + self.search.iaas + "'"
+            where.append("cloudplatformidref in (%s)" % ids)
 
-        if self.search.host:
+        if self.search.host != "None":
             host_ids = self.get_host_ids(self.search.host)
             if host_ids:
                 ids = ', '.join(map(str, host_ids))
-                where.append("cloudplatformidref in (%s)" % ids)
+            else:
+                ids = "'" + self.search.host + "'"
+            where.append("cloudplatformidref in (%s)" % ids)
 
-        if self.search.userid:
+        # user id is a bit different.
+        # To include nimbus, userid should be included in the search
+        if self.search.userid != "None":
             owner_ids = self.get_owner_ids(self.search.userid)
             if owner_ids:
+                owner_ids.append(self.search.userid)
                 ids = "'" + "', '".join(map(str, owner_ids)) + "'"
             else: # there is no such user
                 ids = "'" + self.search.userid + "'"
-                where.append("ownerid in (%s)" % ids)
+            where.append("ownerid in (%s)" % ids)
 
         if self.search.from_date:
             where.append("t_start >= '%s'" % str(self.search.from_date))
@@ -185,7 +192,6 @@ class CloudMetric(View):
         for row in results:
             ids.append(row['cloudPlatformId'])
         return ids
-
 
     def get_iaas_ids(self, name):
         ids = []

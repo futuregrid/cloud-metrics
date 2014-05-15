@@ -28,6 +28,9 @@ def get_metric(cloudname,clustername,userid,metric,timestart,timeend,period):
     elif metric.lower() in ["walltime", "runtime", "wallclock"]:
         metrics = WallTime()
         metrics.set_search_settings(search)
+    elif metric.lower() in ["usercount", "user"]:
+        metrics = UserCount()
+        metrics.set_search_settings(search)
 
     result = metrics.dispatch_request()
     #print result
@@ -128,6 +131,10 @@ class CloudMetric(View):
         where.append("cloudplatform.cloudplatformid = \
                      instance.cloudplatformidref")
 
+        if self.search.metric.lower() == "usercount":
+            where.append("(userinfo.ownerid = instance.ownerid \
+                         or userinfo.username = instance.ownerid)")
+
         if self.search.iaas:
             iaas_ids = self.get_iaas_ids(self.search.iaas)
             if iaas_ids:
@@ -203,6 +210,33 @@ class WallTime(CloudMetric):
             self.data = cursor.fetchall()
         except:
             print sys.exc_info()
+
+class UserCount(CloudMetric):
+
+    def __init__(self):
+        CloudMetric.__init__(self)
+
+    def read_vms(self):
+        cursor = self.db.cursor
+        table = self.db.instance_table
+        table2 = self.db.cloudplatform_table
+        table3 = self.db.userinfo_table
+        where_clause = self.get_where_clause()
+                #CONCAT(first_name, " ", last_name) as 'NAME', \
+        query = "select DATE_FORMAT(date,'%%Y %%b') as 'YEAR MONTH', \
+                %(table2)s.platform as 'CLOUDNAME', \
+                COUNT(userinfo.username) as 'USERCOUNT' \
+                from %(table)s, %(table2)s, %(table3)s \
+                %(where_clause)s \
+                group by %(table2)s.platform, \
+                YEAR(date), MONTH(date)" % vars()
+        try:
+            print "Be patient, it takes about 10 to 30 seconds ..."
+            cursor.execute(query)
+            self.data = cursor.fetchall()
+        except:
+            print sys.exc_info()
+
 
 
 #app.add_url_rule('/list_vms.json', view_func = ListVMs.as_view('list_vms'))

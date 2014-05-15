@@ -1,3 +1,4 @@
+import sys
 import os
 from flask import Flask, jsonify
 from flask.views import View
@@ -12,8 +13,8 @@ def get_index_page():
     print "The server is running"
     return "The server is running\n"
 
-@app.route('/metric/<cloudname>/<clustername>/<userid>/<metric>/<timestart>/<timeend>/<period>')
-def get_metric(cloudname,clustername,userid,metric,timestart,timeend,period):
+@app.route('/metric/<cloudname>/<hostname>/<userid>/<metric>/<timestart>/<timeend>/<period>')
+def get_metric(cloudname,hostname,userid,metric,timestart,timeend,period):
 
     search = SearchSettings()
 
@@ -22,7 +23,7 @@ def get_metric(cloudname,clustername,userid,metric,timestart,timeend,period):
     search.set_metric(metric)
     search.set_userid(userid)
     search.set_period(period)
-    search.set_cluster(clustername)
+    search.set_host(hostname)
     if metric.lower() == "vmcount" or metric == "None":
         metrics = VMCount()
         metrics.set_search_settings(search)
@@ -59,7 +60,7 @@ class SearchSettings:
         self.to_date = None # datetime
         self.period = None
         self.metric = None
-        self.cluster = None
+        self.host = None
         self.iaas = None
         self.userid = None
 
@@ -69,7 +70,7 @@ class SearchSettings:
         result += "to_date:   %s\n" % self.to_date
         result += "period:    %s\n" % self.period
         result += "metric:    %s\n" % self.metric
-        result += "cluster:    %s\n" % self.cluster
+        result += "host:    %s\n" % self.host
         result += "iaas:      %s\n" % self.iaas
         result += "userid:      %s\n" % self.userid
         return result
@@ -86,8 +87,8 @@ class SearchSettings:
     def set_metric(self, metric):
         self.metric = metric
 
-    def set_cluster(self, cluster):
-        self.cluster = cluster
+    def set_host(self, host):
+        self.host = host
 
     def set_iaas(self, cloud):
         self.iaas = cloud
@@ -144,6 +145,20 @@ class CloudMetric(View):
                 ids = ', '.join(map(str, iaas_ids))
                 where.append("cloudplatformidref in (%s)" % ids)
 
+        if self.search.host:
+            host_ids = self.get_host_ids(self.search.host)
+            if host_ids:
+                ids = ', '.join(map(str, host_ids))
+                where.append("cloudplatformidref in (%s)" % ids)
+
+        if self.search.userid:
+            owner_ids = self.get_owner_ids(self.search.userid)
+            if owner_ids:
+                ids = "'" + "', '".join(map(str, owner_ids)) + "'"
+            else: # there is no such user
+                ids = "'" + self.search.userid + "'"
+                where.append("ownerid in (%s)" % ids)
+
         if self.search.from_date:
             where.append("t_start >= '%s'" % str(self.search.from_date))
         if self.search.to_date:
@@ -151,6 +166,26 @@ class CloudMetric(View):
             
         self.where_clause = " where " + " and ".join(map(str,where))
         return self.where_clause
+
+    def get_owner_ids(self, name):
+        ids = []
+        self.db.cursor.execute("select ownerid from %s where username='%s'" \
+                               % (self.db.userinfo_table, name))
+        results = self.db.cursor.fetchall()
+        ids = map(lambda x: x['ownerid'],results)
+        return ids
+    
+    def get_host_ids(self, name):
+
+        ids = []
+
+        self.db.cursor.execute("select cloudPlatformId from cloudplatform" \
+                               + " where hostname = '%s'" % name)
+        results = self.db.cursor.fetchall()
+        for row in results:
+            ids.append(row['cloudPlatformId'])
+        return ids
+
 
     def get_iaas_ids(self, name):
         ids = []
@@ -250,4 +285,5 @@ class UserCount(CloudMetric):
 #app.add_url_rule('/list_vms.json', view_func = ListVMs.as_view('list_vms'))
 
 if __name__ == "__main__":
-    app.run(host=os.environ["FG_HOSTING_IP"], debug=True)
+    app.run(host=os.environ["FG_HOSTING_IP"],
+            port=int(os.environ["FG_HOSTING_PORT"]),debug=True)
